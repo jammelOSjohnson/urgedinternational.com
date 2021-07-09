@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Header } from '../Components/Header';
 import { Footer } from '../Components/Footer';
 //import { HomeScreen } from '../Screens/HomeScreen';
-import { AboutScreen } from '../Screens/AboutScreen';
+import { AboutScreen } from '../Screens/About/AboutScreen';
 
 //Import provider
 import AppDataProvider from '../Context/AppDataContext';
