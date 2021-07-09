@@ -4,10 +4,10 @@ interface Props {
     
 }
 
-export const AboutScreen: React.FC = function AboutScreen() {
+export const Section2: React.FC = function Section2() {
     return (
         <div>
-            This is the about screen
+            Section2
         </div>
     )
 }
