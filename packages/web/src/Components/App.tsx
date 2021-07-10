@@ -7,18 +7,24 @@ import { AboutScreen } from '../Screens/About/AboutScreen';
 
 //Import provider
 import AppDataProvider from '../Context/AppDataContext';
+import CssBaseline from '@material-ui/core/CssBaseline';
 
 const App: React.FC = function App() {
   return (
-    <div>
-      <Router>
-        <div>
-          <Header/>
-            <Route path="/" exact component={AboutScreen} />
-          <Footer/>
-        </div>
-      </Router>
-    </div>
+    <>
+      <CssBaseline>
+        <main>
+          <div>
+            <Router>
+              <Header/>
+                <Route path="/" exact component={AboutScreen} />
+              <Footer/>
+            </Router>
+          </div>
+        </main>
+        
+      </CssBaseline>
+    </>
   );
 }
 
