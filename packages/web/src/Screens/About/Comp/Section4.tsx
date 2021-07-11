@@ -18,14 +18,18 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "#1D2635"
         },
         cardGrid2: {
-            padding: "5% 0",
+            padding: "5% 0 10% 0",
+            color: "#1D2635",
+        },
+        cardGrid3: {
+            padding: "5% 0 0 0",
             color: "#1D2635",
         },
         cardImage: {
             backgroundSize: "auto",
             backgroundPosition: "left",
             height: "100px",
-            marginLeft: "4%",
+            marginLeft: "12%",
         },
         cardTitle: {
             fontSize: "20px",
@@ -41,15 +45,28 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         cardContent: {
             flexGrow: 1,
+            paddingLeft: "35px",
+            paddingRight: "35px",
         },
         cardBorder1: {
             borderBottom: "3px solid #0491B2",
+            borderRadius: "16px",
         },
         cardBorder2: {
             borderBottom: "3px solid #F7B614",
+            borderRadius: "16px",
         },
         cardBorder3: {
             borderBottom: "3px solid #E54545",
+            borderRadius: "16px",
+        },
+        cardBorder4: {
+            borderBottom: "3px solid #F25A29",
+            borderRadius: "16px",
+        },
+        cardBorder5: {
+            borderBottom: "3px solid #47934A",
+            borderRadius: "16px",
         },
         secTitle: {
             color: "#1D2635",
@@ -61,6 +78,12 @@ const useStyles = makeStyles((theme: Theme) =>
             fontSize: "35px",
             fontWeight: "bold",
             paddingBottom: "5%"
+        },
+        excitedGirl: {
+            zIndex: -1,
+            width: "320px",
+            position: "relative",
+            bottom: "-115px",
         }
     }),
 );
@@ -148,7 +171,6 @@ export const Section4: React.FC = function Section4() {
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </Typography>
                             </CardContent>
                         </Card>  
@@ -158,10 +180,10 @@ export const Section4: React.FC = function Section4() {
             <Container maxWidth="md" className={classes.cardGrid2}>
                 <Grid container spacing={3} alignContent="center" alignItems="center" style={{justifyContent: "center"}}>
                     <Grid item xs={12} sm={6} md={4}>
-                        <Card className={`${classes.card} ${classes.cardBorder1}`}>
+                        <Card className={`${classes.card} ${classes.cardBorder4}`}>
                             <CardMedia
                                 className={classes.cardImage}
-                                image="/Images/lightbluetruckIconImage.svg"
+                                image="/Images/FoodDeliveryService.svg"
                                 title="lightbluetruck"
                             />
                             <CardContent className={classes.cardContent}>
@@ -188,10 +210,10 @@ export const Section4: React.FC = function Section4() {
                         </Card> 
                     </Grid>
                     <Grid item xs={12} sm={6} md={4}>
-                        <Card className={`${classes.card} ${classes.cardBorder2}`}>
+                        <Card className={`${classes.card} ${classes.cardBorder5}`}>
                             <CardMedia
                                 className={classes.cardImage}
-                                image="/Images/expresserviceImage.svg"
+                                image="/Images/MarketPlaceService.svg"
                                 title="lightbluetruck"
                             />
                             <CardContent className={classes.cardContent}>
@@ -207,6 +229,13 @@ export const Section4: React.FC = function Section4() {
                         </Card>  
                     </Grid>
                 </Grid>
+            </Container>
+            <Container maxWidth="md" className={classes.cardGrid3}>
+                <div style={{textAlign: "center"}}>
+                    <div>
+                        <img src="Images/ExcitedGirl.png" alt="excited girl" className={classes.excitedGirl} />
+                    </div>
+                </div>
             </Container>
         </>
     )
