@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
         heroText1: {
             fontSize: '6vh',
             fontWeight: 700,
-            paddingTop: "10%",
+            paddingTop: "15%",
         },
         heroText2: {
             fontSize: '16px',
