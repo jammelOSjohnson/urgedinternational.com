@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Grid, Typography, makeStyles, createStyles, Theme, Button, Box} from '@material-ui/core';
+import { Container, Grid, Typography, makeStyles, createStyles, Theme, Button, Box, Icon, IconButton} from '@material-ui/core';
 
 interface Props {
     
@@ -24,14 +24,13 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "#F7B614",
             fontSize: "16px",
             fontWeight: "bold",
-            paddingTop: "2.5%",
+            paddingTop: "2%",
         },
         Typo2: {
             textAlign: "center",
             color: "#FFFFFF",
             fontSize: "48px",
             fontWeight: "bold",
-            paddingBottom: "2.5%",
         },
         Typo3: {
             textAlign: "center",
@@ -40,6 +39,13 @@ const useStyles = makeStyles((theme: Theme) =>
             fontWeight: "bold",
             paddingBottom: "2.5%",
         },
+        icon: {
+            width: 30,
+            height: 30,
+            marginRight: 10,
+            marginBottom: 5,
+        },
+
         Button: {
                 backgroundColor: "#FAFAFA",
                 border: "1.21951px solid #F7B614",
@@ -64,6 +70,9 @@ export const Section3: React.FC = function Section3() {
                         Place Orders On Whatsapp or Call
                     </Typography>
                     <Typography className={classes.Typo3}>
+                        <IconButton className={classes.icon}>
+                            <img src="Images/phone.svg" alt="Urged Logo"></img>
+                        </IconButton>
                         876-773-5015 
                     </Typography>
                     <Box textAlign="center">
