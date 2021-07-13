@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         fonts: {
             fontFamily: "Open Sans",
+            marginLeft: "-70px"
         },
         sectionHead: {
             fontSize: "30px",
@@ -32,6 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingRight: "60px",
         },
         rectangle:{
+            position: "absolute",
             marginRight: "0"
         },
         
@@ -43,13 +45,13 @@ export const Section6: React.FC = function Section6() {
 
     return (
         <>
-                <Grid container spacing={3} direction="row" alignContent="center" alignItems="center" className={classes.root}>
+                <Grid container spacing={3} justifyContent="center" alignItems="center" className={classes.root}>
                     <Grid item md={3}></Grid>
-                    <Grid item xs={12} md={3} direction="row">
-                    <Typography>
-                                <img className={classes.imageOne} src="Images/Group 502.svg"></img>
-                                <img className={classes.rectangle} src="Images/Rectangle 101.svg"></img>
-                    </Typography>
+                    <Grid item xs={12} md={3}>
+                        <Typography>
+                            <img className={classes.imageOne} src="Images/Group 502.svg"></img>
+                            <img className={classes.rectangle} src="Images/Rectangle 101.svg"></img>
+                        </Typography>
                     </Grid>
                     <Grid item xs={12} md={5}>
                         <Typography className={`${classes.fonts} ${classes.sectionHead}`}>
