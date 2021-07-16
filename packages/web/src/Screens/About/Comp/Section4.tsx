@@ -192,7 +192,7 @@ export const Section4: React.FC = function Section4() {
                             />
                             <CardContent className={classes.cardContent}>
                                 <Typography gutterBottom className={classes.cardTitle}>
-                                    Errand Solution
+                                    Food Delivery
                                 </Typography>
                                 <Typography className={classes.cardBody}>
                                     we provide delivery solutions for both Restaurant owners and Customers.
@@ -211,7 +211,7 @@ export const Section4: React.FC = function Section4() {
                             />
                             <CardContent className={classes.cardContent}>
                                 <Typography gutterBottom className={classes.cardTitle}>
-                                    Urged Express
+                                    Urged Market Place
                                 </Typography>
                                 <Typography className={classes.cardBody}>
                                     A place for all merchants to sell their good and services. 
