@@ -80,12 +80,12 @@ export const Section5: React.FC = function Section5() {
     const classes = useStyles();
     return (
         <>
-            <div>
             <Container maxWidth="xl" className={classes.Background} >
-              <Typography className={classes.sectionTitle}>
+                <Typography className={classes.sectionTitle}>
                     How It Works
-              </Typography>
-              <Grid container spacing={4} alignContent="center" alignItems="center">
+                </Typography>
+                <Container maxWidth="md">
+                    <Grid container spacing={0} alignContent="center" alignItems="center">
                     <Grid item xs={12} sm={6} md={4}>
                         <Card className={`${classes.card}`}>
                             <CardContent className={classes.cardContent}>
@@ -133,8 +133,8 @@ export const Section5: React.FC = function Section5() {
                         </Card>  
                     </Grid>
                 </Grid>
+                </Container>
             </Container>
-            </div>
         </>
     )
 }

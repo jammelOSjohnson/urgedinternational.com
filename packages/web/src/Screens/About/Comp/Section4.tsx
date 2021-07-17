@@ -103,7 +103,7 @@ export const Section4: React.FC = function Section4() {
                 <Typography align="center" className={classes.secSubTitle}>
                     How Can We Help?
                 </Typography>
-                <Grid container spacing={4} alignContent="center" alignItems="center">
+                <Grid container spacing={1} alignContent="center" alignItems="center">
                     <Grid item xs={12} sm={6} md={4}>
                         <Card className={`${classes.card} ${classes.cardBorder1}`}>
                             <CardMedia
