@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         fonts: {
             fontFamily: "Open Sans",
-            marginLeft: "-70px"
+            marginLeft: "-70px",
         },
         sectionHead: {
             fontSize: "30px",
@@ -27,15 +27,11 @@ const useStyles = makeStyles((theme: Theme) =>
             fontSize: "16px",
             fontWeight: 300,
             lineHeight: "29px",
-            letterSpacing: "0em"
+            letterSpacing: "0em",
         },
         imageOne:{
             paddingRight: "60px",
-        },
-        rectangle:{
-            position: "absolute",
-            marginRight: "0"
-        },
+        }
         
     }),
 );
@@ -47,14 +43,13 @@ export const Section6: React.FC = function Section6() {
         <>
                 <Grid container spacing={3} justifyContent="center" alignItems="center" className={classes.root}>
                     <Grid item md={3}></Grid>
-                    <Grid item xs={12} md={3}>
+                    <Grid item xs={12} md={3} style={{margin: "0% -6% 0% 0%"}}>
                         <Typography>
                             <img className={classes.imageOne} src="Images/Group 502.svg"></img>
-                            <img className={classes.rectangle} src="Images/Rectangle 101.svg"></img>
                         </Typography>
                     </Grid>
-                    <Grid item xs={12} md={5}>
-                        <Typography className={`${classes.fonts} ${classes.sectionHead}`}>
+                    <Grid item xs={12} md={5} style={{borderLeft: "12px solid #3B91B2", padding: "0 0 0 6%"}}>
+                        <Typography  className={`${classes.fonts} ${classes.sectionHead}`}>
                             Our Website is en Route
                         </Typography>
                         <Typography paragraph={true} className={`${classes.fonts} ${classes.secDescription}`}>
