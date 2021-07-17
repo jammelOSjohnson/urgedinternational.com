@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Typography, makeStyles, Theme, createStyles, Card, CardContent } from '@material-ui/core'
+import { Box, Container, Grid, Typography, makeStyles, Theme, createStyles, Card, CardContent, CardMedia } from '@material-ui/core'
 import React from 'react'
 
 interface Props {
@@ -81,6 +81,9 @@ export const Section2: React.FC = function Section2() {
             <Grid item xs={12} container spacing={2}>
                 <Grid item xs={6} md={3}>
                     <Card>
+                        <CardMedia>
+                            <img src="Images/Reliability.svg"></img>
+                        </CardMedia>
                         <CardContent>
                             <Typography>We are reliable, so you can always count on us.</Typography>
                         </CardContent>
@@ -88,6 +91,9 @@ export const Section2: React.FC = function Section2() {
                 </Grid>  
                 <Grid item xs={6} md={3}>
                     <Card>
+                        <CardMedia>
+                            <img src="Images/Fast Delivery.svg"></img>
+                        </CardMedia>
                         <CardContent>
                             <Typography>Where ever you are, we got you covered. Speed is our priority</Typography>
                         </CardContent>
@@ -95,6 +101,9 @@ export const Section2: React.FC = function Section2() {
                 </Grid>      
                 <Grid item xs={6} md={3}>              
                     <Card>
+                        <CardMedia>
+                            <img src="Images/Diversified.svg"></img>
+                        </CardMedia>
                         <CardContent>
                             <Typography>We will take care of all your delivery and errand needs for you,</Typography>
                         </CardContent>
@@ -102,6 +111,9 @@ export const Section2: React.FC = function Section2() {
                 </Grid>      
                 <Grid item xs={6} md={3}>              
                     <Card>
+                        <CardMedia>
+                            <img src="Images/Quality.svg"></img>
+                        </CardMedia>
                         <CardContent>
                             <Typography>We provide quality services, and will never let you down.</Typography>
                         </CardContent>
