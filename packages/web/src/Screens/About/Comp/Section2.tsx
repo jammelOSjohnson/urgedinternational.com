@@ -18,7 +18,8 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "#F7B614",
             fontSize: "40px",
             fontWeight: 700,
-            marginLeft: "auto"
+            marginLeft: "auto",
+            marginTop: "revert"
         },
         s2Span: {
             color: "#000000",
