@@ -10,11 +10,11 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             backgroundColor: "#E5E5E5",
-            height: 644,
+            padding: "7% 0% 7% 0%",
         },
         fonts: {
             fontFamily: "Open Sans",
-            marginLeft: "-70px",
+            paddingLeft: "5%",
         },
         sectionHead: {
             fontSize: "30px",
@@ -31,6 +31,10 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         imageOne:{
             paddingRight: "60px",
+        },
+        mainContainer: {
+            margin: 0,
+            padding: 0,
         }
         
     }),
@@ -41,14 +45,14 @@ export const Section6: React.FC = function Section6() {
 
     return (
         <>
-                <Grid container spacing={3} justifyContent="center" alignItems="center" className={classes.root}>
-                    <Grid item md={3}></Grid>
-                    <Grid item xs={12} md={3} style={{margin: "0% -6% 0% 0%"}}>
+            <Container maxWidth="xl" className={classes.mainContainer}>
+                <Grid container spacing={0} className={classes.root}>
+                    <Grid item xs={12} md={6} lg={6} style={{margin: "0% 0% 0% 0%", textAlign: "right"}}>
                         <Typography>
                             <img className={classes.imageOne} src="Images/Group 502.svg"></img>
                         </Typography>
                     </Grid>
-                    <Grid item xs={12} md={5} style={{borderLeft: "12px solid #3B91B2", padding: "0 0 0 6%"}}>
+                    <Grid item xs={12} md={6} lg={6} style={{borderLeft: "12px solid #3B91B2", padding: "0 0 0 0%"}}>
                         <Typography  className={`${classes.fonts} ${classes.sectionHead}`}>
                             Our Website is en Route
                         </Typography>
@@ -56,8 +60,8 @@ export const Section6: React.FC = function Section6() {
                             Our Consumers look forward to quality delivery and errand services to ease their everyday lives, while merchants and drivers get access to greater earning opportunities because of our growing consumer base. In fact, we are proud that we have delivery-partners that got their very first earning opportunities with Urged.
                         </Typography>
                     </Grid>
-                    <Grid item md={1}></Grid>
                 </Grid>
+            </Container>
         </>
     )
 };
