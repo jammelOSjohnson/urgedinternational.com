@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, AppBar, Button, Toolbar, makeStyles, Theme, createStyles, IconButton, Tabs, Tab } from '@material-ui/core'
+import { Typography, AppBar, Button, Toolbar, makeStyles, Theme, createStyles, IconButton, Tabs, Tab, Grid } from '@material-ui/core'
 import SvgIcon, { SvgIconProps } from '@material-ui/core/SvgIcon';
 
 interface Props {
@@ -12,11 +12,11 @@ const useStyles = makeStyles((theme: Theme) =>
         flexGrow: 1,
     },
     appbar: {
-        position: "fixed",
+        // position: "fixed",
         backgroundColor: "#FFFFFF",
     },
     logoArea: {
-        flex: "auto",
+        // flex: "auto",
     },
     logo: {
         height: 50.49015808105469,
@@ -79,17 +79,29 @@ export const Header: React.FC = function Header() {
        <>
             <AppBar elevation={0} className={classes.appbar}>
                 <Toolbar>
-                    <Typography className={classes.logoArea}>
-                        <img className={classes.logo} src="Images/urged logo.svg" alt="Urged Logo"></img>
-                    </Typography>
-                    <Typography  className={classes.Typo1}>
-                        <PhoneIcon viewBox={"0 0 30 30"} className={classes.icons} />
-                        876-773-5015 
-                    </Typography>
-                    <Typography className={classes.Typo1}>
-                        <ClockIcon viewBox={"0 0 26 25"} className={classes.icons} />
-                        Monday - Saturday 9:00 am - 6:00pm
-                    </Typography>
+                  <Grid spacing={0} container xs={12} justifyContent="center" alignItems="center">
+                    <Grid item xs={12} md={6}>
+                      <Typography className={classes.logoArea}>
+                          <img className={classes.logo} src="Images/urged logo.svg" alt="Urged Logo"></img>
+                      </Typography>
+                    </Grid>
+                    <Grid item container xs={12} md={6}>
+                      <Grid item md={6}></Grid>
+                      <Grid item xs={12} md={3}>
+                        <Typography  className={classes.Typo1}>
+                            <PhoneIcon viewBox={"0 0 30 30"} className={classes.icons} />
+                            876-773-5015 
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={12} md={3}>
+                      <Typography className={classes.Typo1}>
+                          <ClockIcon viewBox={"0 0 26 25"} className={classes.icons} />
+                          Monday - Saturday 9:00 am - 6:00pm
+                      </Typography>
+                      </Grid>
+                      
+                    </Grid>                 
+                  </Grid>
                     {/* <Tabs className={classes.tabs}>
                         <Tab label='Services'/>
                         <Tab label='Industries'/>
