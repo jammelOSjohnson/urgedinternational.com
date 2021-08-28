@@ -120,7 +120,7 @@ export const Section2: React.FC = function Section2() {
                                 <Typography gutterBottom className={classes.cardTitle}>
                                     Fast Delivery
                                 </Typography>
-                                <Typography>Where ever you are, we got you covered. Speed is our priority</Typography>
+                                <Typography>Where ever you are, we got you covered. Speed is our priority.</Typography>
                             </CardContent>
                         </Card>
                     </Grid>      
@@ -133,7 +133,7 @@ export const Section2: React.FC = function Section2() {
                                 <Typography gutterBottom className={classes.cardTitle}>
                                     Diversified
                                 </Typography>
-                                <Typography>We will take care of all your delivery and errand needs for you,</Typography>
+                                <Typography>We will take care of all your delivery and errand needs for you.</Typography>
                             </CardContent>
                         </Card>
                     </Grid>      
@@ -146,7 +146,7 @@ export const Section2: React.FC = function Section2() {
                                 <Typography gutterBottom className={classes.cardTitle}>
                                     Quality
                                 </Typography>
-                                <Typography>We provide quality services, and will never let you down.</Typography>
+                                <Typography>We provide quality services and exceptional customer service.</Typography>
                             </CardContent>
                         </Card>
                     </Grid>                              

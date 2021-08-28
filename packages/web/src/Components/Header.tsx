@@ -98,20 +98,34 @@ export const Header: React.FC = function Header() {
     const theme = useTheme();
 
     const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMaatchMedium = useMediaQuery(theme.breakpoints.down('md'));
     return (
        <>
             <AppBar elevation={0} position="relative" className={classes.appbar}>
                 <Toolbar>
                 <Container maxWidth="xl">
                   <Grid container spacing={0} alignContent="center" alignItems="center">
-                    <Grid item xs={12} sm={12} md={5} style={{textAlign: "center"}}>
-                            <Typography className={classes.logoArea}>
-                                <img className={classes.logo} src="Images/urged logo.svg" alt="Urged Logo"></img>
-                            </Typography>
-                    </Grid>
+                      {isMaatchMedium? (
+                        <>
+                            <Grid item xs={12} sm={12} md={7} style={{textAlign: "center", marginTop: "10%"}}>
+                              <Typography className={classes.logoArea} style={{textAlign: "center"}}>
+                                  <img className={classes.logo} src="Images/urged logo.svg" alt="Urged Logo"></img>
+                              </Typography>
+                            </Grid>
+                        </>
+                      ): (
+                        <>
+                            <Grid item xs={12} sm={12} md={7} style={{textAlign: "center"}}>
+                              <Typography className={classes.logoArea} style={{textAlign: "left"}}>
+                                  <img className={classes.logo} src="Images/urged logo.svg" alt="Urged Logo"></img>
+                              </Typography>
+                            </Grid>
+                        </>
+                      )}
+
                     {isMatch? (
                       <>
-                          <Grid item xs={12} sm={12} md={7} className={classes.mobileGridContainer}>
+                          <Grid item xs={12} sm={12} md={7} className={classes.mobileGridContainer} style={{marginBottom: "10%"}}>
                             <Grid item xs={12} sm={12} md={3} className={classes.mobileGrid}>
                               <Typography  className={classes.Typo1}>
                                   <PhoneIcon viewBox={"0 0 30 30"} className={classes.icons} />
@@ -121,30 +135,29 @@ export const Header: React.FC = function Header() {
                             <Grid item xs={12} sm={12} md={9} className={classes.mobileGrid}>
                               <Typography className={classes.Typo1}>
                                   <ClockIcon viewBox={"0 0 26 25"} className={classes.icons} />
-                                  Monday - Saturday 9:00 am - 6:00pm
+                                  Monday - Saturday 9:00 am - 5:00pm
                               </Typography>
                             </Grid>
                           </Grid>
                       </>
                     ): (
                       <>
-                        <Grid item xs={12} sm={12} md={7} className={classes.desktopGridContainer}>
-                          <Grid item xs={12} sm={12} md={3}>
+                        <Grid item xs={12} sm={12} md={5} className={classes.desktopGridContainer}>
+                          <Grid item xs={12} sm={12} md={4}>
                             <Typography  className={classes.Typo1}>
                                 <PhoneIcon viewBox={"0 0 30 30"} className={classes.icons} />
                                 876-773-5015 
                             </Typography>
                           </Grid>
-                          <Grid item xs={12} sm={12} md={9} className={classes.desktopGrid}>
+                          <Grid item xs={12} sm={12} md={8} className={classes.desktopGrid}>
                             <Typography className={classes.Typo1}>
                                 <ClockIcon viewBox={"0 0 26 25"} className={classes.icons} />
-                                Monday - Saturday 9:00 am - 6:00pm
+                                Monday - Saturday 9:00 am - 5:00pm
                             </Typography>
                           </Grid>
                         </Grid>
                       </>
                     )}
-                    
                   </Grid>
                 </Container>
                 </Toolbar>

@@ -8,8 +8,12 @@ interface Props {
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
-        Background: {
-            backgroundImage: "url(Images/AboutSection5BgPic.jpg)",
+        Background1: {
+            backgroundColor: "#000",
+            padding: 0,
+        },
+        Background2: {
+            backgroundImage: "url(Images/bridge2.jpg)",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             padding: 0,
@@ -80,7 +84,8 @@ export const Section5: React.FC = function Section5() {
     const classes = useStyles();
     return (
         <>
-            <Container maxWidth="xl" className={classes.Background} >
+            <Container maxWidth="xl" className={classes.Background1} >
+            <Container maxWidth="xl" className={classes.Background2} >
                 <Typography className={classes.sectionTitle}>
                     How It Works
                 </Typography>
@@ -112,7 +117,7 @@ export const Section5: React.FC = function Section5() {
                                     <Typography gutterBottom className={classes.cardTitle}>
                                         We Pickup
                                     </Typography>
-                                    We will arrage, pick-up or packages and or food from selected merchants.
+                                    We will arrage or pick-up packages or food from selected merchants.
                                 </Typography>
                             </CardContent>
                         </Card>  
@@ -134,6 +139,7 @@ export const Section5: React.FC = function Section5() {
                     </Grid>
                 </Grid>
                 </Container>
+            </Container>
             </Container>
         </>
     )
