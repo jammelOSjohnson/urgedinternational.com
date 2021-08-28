@@ -69,9 +69,16 @@ export const Section1: React.FC = function Section1() {
                     <img src="Images/yellowtruckIconImage.svg" alt="truck icon"/>
                 </Typography>
                 <Typography align="center" className={classes.heroSocialIcons}>
-                    <Twitter />
-                    <Facebook />
-                    <Instagram />
+                    <a href="https://twitter.com/urgedint" rel="nofollow noreferrer" target="_blank" style={{color: "#FFF"}}>
+                        <Twitter />
+                    </a>
+                    <a href="https://www.facebook.com/URGED-International-Limited-416151199168851/" rel="nofollow noreferrer" target="_blank" style={{color: "#FFF"}}>
+                        <Facebook />
+                    </a>
+                    <a href="https://www.instagram.com/urgedint/?hl=en" rel="nofollow noreferrer" target="_blank" style={{color: "#FFF"}}>
+                        <Instagram />
+                    </a>
+                    
                 </Typography>
             </Container>
         </>

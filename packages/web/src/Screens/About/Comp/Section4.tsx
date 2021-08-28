@@ -103,8 +103,8 @@ export const Section4: React.FC = function Section4() {
                 <Typography align="center" className={classes.secSubTitle}>
                     How Can We Help?
                 </Typography>
-                <Grid container spacing={4} alignContent="center" alignItems="center">
-                    <Grid item xs={12} sm={6} md={4}>
+                <Grid container spacing={2} alignContent="center" alignItems="center" style={{justifyContent: "center"}}>
+                    <Grid item xs={10} sm={6} md={4}>
                         <Card className={`${classes.card} ${classes.cardBorder1}`}>
                             <CardMedia
                                 className={classes.cardImage}
@@ -116,25 +116,14 @@ export const Section4: React.FC = function Section4() {
                                     Errand Solution
                                 </Typography>
                                 <Typography className={classes.cardBody}>
-                                    We Pay Bills &amp; Tax office Transactions on your behalf.
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    <Typography></Typography>
+                                    Is the service that allows you to take back full control of 
+                                    what you do with your time. We will pay your bills and
+                                    complete tax office transactions on your behalf.
                                 </Typography>
                             </CardContent>
                         </Card> 
                     </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={10} sm={6} md={4}>
                         <Card className={`${classes.card} ${classes.cardBorder2}`}>
                             <CardMedia
                                 className={classes.cardImage}
@@ -149,11 +138,13 @@ export const Section4: React.FC = function Section4() {
                                     on-demand delivery solution that helps you to send items 
                                     like parcels, documents and gifts to your family, business 
                                     partners and friends.
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </Typography>
                             </CardContent>
                         </Card>  
                     </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={10} sm={6} md={4}>
                         <Card className={`${classes.card} ${classes.cardBorder3}`}>
                             <CardMedia
                                 className={classes.cardImage}
@@ -165,8 +156,17 @@ export const Section4: React.FC = function Section4() {
                                     Online Grocery
                                 </Typography>
                                 <Typography className={classes.cardBody}>
-                                    <span>Order from <Link className={classes.link} href="https://sallyspantry.com" target="_blank" rel="noreferrer">Sallyspantry.com</Link> and we will deliver your Grocery
-                                    to your grill or door.</span>
+                                    <span>We will deliver your grocery to your grill or door. </span>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -177,13 +177,14 @@ export const Section4: React.FC = function Section4() {
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 </Typography>
                             </CardContent>
+                            {/* <Link className={classes.link} href="https://sallyspantry.com" target="_blank" rel="noreferrer">Sallyspantry.com</Link> */}
                         </Card>  
                     </Grid>
                 </Grid>
             </Container>
             <Container maxWidth="md" className={classes.cardGrid2}>
-                <Grid container spacing={3} alignContent="center" alignItems="center" style={{justifyContent: "center"}}>
-                    <Grid item xs={12} sm={6} md={4}>
+                <Grid container spacing={2} alignContent="center" alignItems="center" style={{justifyContent: "center"}}>
+                    <Grid item xs={10} sm={6} md={4}>
                         <Card className={`${classes.card} ${classes.cardBorder4}`}>
                             <CardMedia
                                 className={classes.cardImage}
@@ -197,12 +198,14 @@ export const Section4: React.FC = function Section4() {
                                 <Typography className={classes.cardBody}>
                                     we provide delivery solutions for both Restaurant owners and Customers.
                                      We deliver from your favorite local restaurant to your door.
+                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <Typography></Typography>
                                 </Typography>
                             </CardContent>
                         </Card> 
                     </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={10} sm={6} md={4}>
                         <Card className={`${classes.card} ${classes.cardBorder5}`}>
                             <CardMedia
                                 className={classes.cardImage}
@@ -216,6 +219,10 @@ export const Section4: React.FC = function Section4() {
                                 <Typography className={classes.cardBody}>
                                     A place for all merchants to sell their good and services. 
                                     Coming soon.
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

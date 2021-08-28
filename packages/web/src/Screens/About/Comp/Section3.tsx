@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
             justifyContent: "center",
         },
         s3Background: {
-            backgroundImage: "url(Images/AboutSection3Bg.png)",
+            backgroundImage: "url(Images/clock.JPG)",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             height: "461px",
@@ -64,7 +64,7 @@ export const Section3: React.FC = function Section3() {
             <Container maxWidth="xl" className={classes.s3Background}>
                 <Grid item xs={12} justifyContent="center">
                     <Typography className={classes.Typo1}>
-                        Mon - Sat 9:00 am - 6:00pm
+                        Mon - Sat 9:00 am - 5:00pm
                     </Typography>
                     <Typography className={classes.Typo2}>
                         Place Orders On Whatsapp or Call
@@ -76,9 +76,11 @@ export const Section3: React.FC = function Section3() {
                         876-773-5015 
                     </Typography>
                     <Box textAlign="center">
-                        <Button variant="contained" disableElevation className={classes.Button}>
-                            Order Now
-                        </Button>
+                        <a href="http://wa.me/18767735015" target="_blank" rel="nofollow noreferrer" style={{textDecoration: "none"}}>
+                            <Button variant="contained" disableElevation className={classes.Button}>
+                                Order Now
+                            </Button>
+                        </a>
                     </Box>
                 </Grid>
             </Container>
