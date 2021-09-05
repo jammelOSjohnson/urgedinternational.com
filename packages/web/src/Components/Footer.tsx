@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom';
 //import CSS
 import { Container, Grid, Typography, makeStyles, createStyles, Theme} from '@material-ui/core';
 
@@ -20,7 +21,18 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const Footer: React.FC = function Footer() {
+    var history = useHistory();
+    var location = history.location;
+    var referralPath = location.pathname;
+    //console.log("pathname is:" + location.pathname);
     const classes = useStyles();
+    if(referralPath === "/Login" || referralPath === "/Register" || referralPath === "/Dashboard"){
+        return(
+          <>
+  
+          </>
+        )
+      }
     return (
         <>
             <Container maxWidth="xl" className={classes.Background}>

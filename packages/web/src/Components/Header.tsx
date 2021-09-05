@@ -1,4 +1,5 @@
 import React from 'react'
+import { useHistory } from 'react-router-dom';
 import { useMediaQuery , useTheme,Typography, AppBar, Button, Toolbar, makeStyles, Theme, createStyles, IconButton, Tabs, Tab, Grid } from '@material-ui/core'
 import SvgIcon, { SvgIconProps } from '@material-ui/core/SvgIcon';
 import { Container } from '@material-ui/core';
@@ -92,13 +93,30 @@ function PhoneIcon(props: SvgIconProps) {
   }
 
 export const Header: React.FC = function Header() {
+    var history = useHistory();
+    var location = history.location;
+    var referralPath = location.pathname;
+    //console.log("pathname is:" + location.pathname);
+
+    
     const classes = useStyles();
 
     //Breakpoints
     const theme = useTheme();
 
+    
+
     const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
     const isMaatchMedium = useMediaQuery(theme.breakpoints.down('md'));
+
+    if(referralPath === "/Login" || referralPath === "/Register" || referralPath === "/Dashboard"){
+      return(
+        <>
+
+        </>
+      )
+    }
+
     return (
        <>
             <AppBar elevation={0} position="relative" className={classes.appbar}>
