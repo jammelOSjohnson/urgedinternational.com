@@ -1,12 +1,10 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom';
-import { useMediaQuery , useTheme,Typography, AppBar, Button, Toolbar, makeStyles, Theme, createStyles, IconButton, Tabs, Tab, Grid } from '@material-ui/core'
+import { useMediaQuery , useTheme,Typography, AppBar, Toolbar, makeStyles, Theme, createStyles, Grid } from '@material-ui/core'
 import SvgIcon, { SvgIconProps } from '@material-ui/core/SvgIcon';
 import { Container } from '@material-ui/core';
 
-interface Props {
-    
-}
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
