@@ -1,11 +1,8 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom';
 //import CSS
-import { Container, Grid, Typography, makeStyles, createStyles, Theme} from '@material-ui/core';
+import { Container, Typography, makeStyles, createStyles, Theme} from '@material-ui/core';
 
-interface Props {
-    
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
