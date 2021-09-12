@@ -129,7 +129,10 @@ const useStyles = makeStyles((theme: Theme) =>
             position: "absolute",
             right: "3%",
             bottom: "3%",
-            color: "#333333"
+            color: "#2C2C2C",
+            "& .MuiIconButton-root" :{
+                color: "#2C2C2C"
+            }
         },
         logoMobile: {
             height: "38px",
@@ -239,7 +242,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
     const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
 
     var { value }  = useAppData();
-    var { login, gLogin } = value;
+    var { signup, gLogin } = value;
     const [values, setValues] = React.useState<State>({
         fullname: '',
         email: '',
@@ -276,23 +279,27 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
 
     var handleSubmit = async function handleSubmit(event) {
         event.preventDefault();
-        console.log(values?.email)
-        console.log(values?.password);
+        //prevents default form refresh
+        //console.log("I am inside fuction");
         try{
             setError('');
             setLoading(true);
-            await login(values.email, values.password, value).then(async function(res1){
+            await signup(values, value).then(async function(res1){
                 if(res1 != null){
-                    setLoading(false);
-                    setSuccess('Sign In Successful.');
+                    if(res1 !== "The email address is already in use by another account."){
+                        setSuccess('Sign In Successful.');
+                    }else{
+                        setError('The email address is already in use by another account.')
+                    }
                 }else{
-                    setLoading(false);
                     setError('Unable to login at this time.'); 
                 }
             });
-        }catch {
-
+            
+        }catch{
+            setError('Failed to sign up');
         }
+        setLoading(false);
     }
 
     var handleGoogleSubmit = async function handleGoogleSubmit(event) {
