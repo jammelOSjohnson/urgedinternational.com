@@ -36,7 +36,7 @@ export const CustomerDashboardScreen: React.FC = function CustomerDashboardScree
       
     return (
         <>
-            Customer Dashboard
+            Customer Dashboard HMM
         </>
     )
 }
