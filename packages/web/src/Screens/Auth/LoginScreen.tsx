@@ -257,6 +257,11 @@ export const LoginScreen: React.FC = function LoginScreen() {
                 if(res1 != null){
                     setLoading(false);
                     setSuccess('Sign In Successful.');
+                    setTimeout(() => {
+                        setSuccess('');
+                        console.log("about to go to dashboard");
+                        history.push('/Dashboard')
+                    }, 1500);
                 }else{
                     setLoading(false);
                     setError('Unable to login at this time.'); 
@@ -278,6 +283,11 @@ export const LoginScreen: React.FC = function LoginScreen() {
                 if(res1 != null){
                     setLoading(false);
                     setSuccess('Sign In Successful.');
+                    setTimeout(() => {
+                        setSuccess('');
+                        console.log("about to go to dashboard");
+                        history.push('/Dashboard')
+                    }, 1500);
                 }else{
                     setLoading(false);
                     setError('Unable to login at this time.'); 
@@ -407,7 +417,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
                 <Container maxWidth="xl" style={{padding: 0, backgroundColor: "#FFF", overflowX: "hidden", overflowY: "hidden"}}>
                     <Button variant="outlined"
                      className={clsx(classes.signUpBtnMobile, mobClasses.root)} onClick={handleClickSignUp}  >
-                            Sign Up
+                            Sign In
                     </Button>
                     <img className={classes.logoMobile} src="Images/urged logo.svg" alt="Urged Logo"></img>
                     <div className={classes.formSectionMobile}>
@@ -462,6 +472,8 @@ export const LoginScreen: React.FC = function LoginScreen() {
                                 />
                             </FormControl>
                             <Typography variant="subtitle2" className={classes.forgotPassTextMobile}>Forgot Password?</Typography>
+                            {error && <Alert severity="error" className={classes.alert}>{error}</Alert>}
+                            {success && <Alert severity="success" className={classes.alert}>{success}</Alert>}
                             <Button variant="contained" 
                                 style={{backgroundColor: "#FEC109"}}
                                 className={classes.loginButtonMobile} type="submit">

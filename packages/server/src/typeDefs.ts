@@ -8,8 +8,8 @@ const typeDefs = gql`
 
     type UserInRole {
         id: ID!
-        UserID: String!
-        RoleID: String!
+        UserID: String
+        RoleID: String
     }
 
     type User {
@@ -40,7 +40,9 @@ const typeDefs = gql`
     type Mutation {
         createRole(description: String): Role!
 
-        getUserInRole(UserID: String): UserInRole!
+        getRole(id: String): Role!
+
+        getUserInRole(UserID: String): UserInRole
 
         addUserToRole(UserID: String, RoleID: String): UserInRole!
 
@@ -50,7 +52,7 @@ const typeDefs = gql`
             City: String, ContactNumber: String
             ): User!
             
-        getUser(Id: String): User!
+        getUser(Id: String): User
 
         createMenuItem(
             RetaurantID: String,

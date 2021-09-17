@@ -18,6 +18,10 @@ const resolvers = {
             return identification.save();
         },
 
+        getRole: async (_,{id}) => {
+            return await Role.findOne({id}); 
+        },
+
         getUserInRole: async (_, {UserID}) => {
             return await UserInRole.find({UserID});
         },

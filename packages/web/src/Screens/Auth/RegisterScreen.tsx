@@ -2,7 +2,7 @@ import { useAppData } from '../../Context/AppDataContext';
 import { Container, Grid, makeStyles, createStyles, Typography, Theme, Button, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, useTheme, useMediaQuery, withWidth, colors } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import { LockRounded, EmailOutlined, PlayArrowRounded, PersonRounded } from "@material-ui/icons/";
@@ -157,7 +157,7 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "#000",
         },
         helloStyleMobile: {
-            paddingTop: "55%",
+            paddingTop: "30%",
             fontWeight: "bold"
         },
         firstTextFieldMobile: {
@@ -242,7 +242,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
     const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
 
     var { value }  = useAppData();
-    var { signup, gLogin } = value;
+    var { signup, gLogin, fetchUserInfoForSignUp, fetchUserInfo } = value;
     const [values, setValues] = React.useState<State>({
         fullname: '',
         email: '',
@@ -273,8 +273,8 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
       history.push("/Dashboard")
     }
 
-    const handleClickSignUp = () => {
-      history.push("/Register")
+    const handleClickSignIn = () => {
+      history.push("/Login")
     }
 
     var handleSubmit = async function handleSubmit(event) {
@@ -282,22 +282,36 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
         //prevents default form refresh
         //console.log("I am inside fuction");
         try{
+            setSuccess('');
             setError('');
             setLoading(true);
             await signup(values, value).then(async function(res1){
                 if(res1 != null){
                     if(res1 !== "The email address is already in use by another account."){
-                        setSuccess('Sign In Successful.');
+                        await fetchUserDetailsSignUp(res1).then(function(res){
+                            if(res){
+                                //console.log("About to navigate to dashboard.");
+                                //console.log(userRolef);
+                                setSuccess('Sign Up Successful.');
+                                setTimeout(() => {
+                                    setSuccess('');
+                                    console.log("about to go to dashboard");
+                                    history.push('/Dashboard')
+                                }, 1500);
+                            }else{
+                                setError('Unable to login at this time'); 
+                            } 
+                        });
                     }else{
                         setError('The email address is already in use by another account.')
                     }
                 }else{
-                    setError('Unable to login at this time.'); 
+                    setError('Unable to Sign Up at this time.'); 
                 }
             });
             
         }catch{
-            setError('Failed to sign up');
+            setError('Failed to Sign Up');
         }
         setLoading(false);
     }
@@ -307,21 +321,62 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
         //prevents default form refresh
         //console.log("I am inside Google Submit fuction");
         try{
+            setSuccess('');
             setError('');
             setLoading(true);
             await gLogin(value).then(async function(res1){
                 if(res1 != null){
-                    setLoading(false);
-                    setSuccess('Sign In Successful.');
+                    await fetchUserDetails(res1).then(function (res){
+                        if(res){
+                            //console.log("About to navigate to dashboard.");
+                            setLoading(false);
+                            setSuccess('Sign Up Successful.');
+                            setTimeout(() => {
+                                setSuccess('');
+                                console.log("about to go to dashboard");
+                                history.push('/Dashboard')
+                            }, 1500);
+                        }else{
+                            setError('Unable to login at this time'); 
+                        }
+                    });
                 }else{
                     setLoading(false);
-                    setError('Unable to login at this time.'); 
+                    setError('Unable to Sign Up at this time.'); 
                 }
             });
         }catch{
-            setError('Failed to login');
+            setError('Failed to Sign Up');
         }
         setLoading(false);
+    }
+
+    var fetchUserDetailsSignUp = async function fetchUserDetailsSignUp(payload) {
+        //console.log("Is current user null");
+        //console.log(value);
+        if(payload.currentUser !== null && payload.currentUser !== undefined){
+            if(payload.currentUser.uid !== null && payload.currentUser.uid !== undefined){
+                //console.log("Fetching user info");
+                //console.log(state);
+                await fetchUserInfoForSignUp(payload.currentUser.uid, payload, value);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    var fetchUserDetails = async function fetchUserDetails(payload) {
+        //console.log("Is current user null");
+        //console.log(value);
+        if(payload.currentUser !== null && payload.currentUser !== undefined){
+            if(payload.currentUser.uid !== null && payload.currentUser.uid !== undefined){
+                //console.log("Fetching user info");
+                //console.log(state);
+                await fetchUserInfo(payload.currentUser.uid, payload);
+                return true;
+            }
+        }
+        return false;
     }
     
     return (
@@ -341,8 +396,8 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                             <Grid item xs={5} md={5} lg={5}>
                                 <div className={classes.formSection}>
                                     <Button variant="outlined"
-                                        color="secondary" className={classes.signUpBtn} onClick={handleClickSignUp}  >
-                                            Sign Up
+                                        color="secondary" className={classes.signUpBtn} onClick={handleClickSignIn}  >
+                                            Sign In
                                     </Button>
                                     <Typography variant="h6" className={classes.helloStyle}>Hello,</Typography>
                                     <Typography variant="subtitle1" className={classes.welcomeStyle}>Welcome Back</Typography>
@@ -419,7 +474,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                                         <Button variant="contained" 
                                             style={{backgroundColor: "#FEC109"}}
                                              className={classes.loginButton} type="submit">
-                                            Register
+                                            Sign Up
                                         </Button>
                                         <Typography variant="subtitle2" className={classes.orText}>Or</Typography>
                                         <Button variant="outlined" fullWidth={true}
@@ -445,14 +500,32 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
             {isMatch? (
                 <Container maxWidth="xl" style={{padding: 0, backgroundColor: "#FFF", overflowX: "hidden", overflowY: "hidden"}}>
                     <Button variant="outlined"
-                     className={clsx(classes.signUpBtnMobile, mobClasses.root)} onClick={handleClickSignUp}  >
-                            Sign Up
+                     className={clsx(classes.signUpBtnMobile, mobClasses.root)} onClick={handleClickSignIn}  >
+                            Sign In
                     </Button>
                     <img className={classes.logoMobile} src="Images/urged logo.svg" alt="Urged Logo"></img>
                     <div className={classes.formSectionMobile}>
                         <Typography variant="h5" className={classes.helloStyleMobile}>Hello,</Typography>
                         <Typography variant="subtitle1" className={classes.welcomeStyle}>Welcome Back</Typography>
                         <form onSubmit={handleSubmit} className={classes.form} noValidate autoComplete="off">
+                            <FormControl fullWidth variant="outlined" >
+                                <InputLabel htmlFor="fullname" className={mobClasses.root}>Full Name</InputLabel>
+                                <OutlinedInput 
+                                    className={clsx(classes.firstTextFieldMobile, mobClasses.root)}
+                                    id="fullname"
+                                    type="text"
+                                    value={values.fullname}
+                                    onChange={handleChange('fullname')}
+                                    startAdornment={
+                                        <InputAdornment position="start">
+                                            <IconButton color="secondary">
+                                                <PersonRounded />
+                                            </IconButton>
+                                        </InputAdornment>}
+                                    labelWidth={103}
+                                    required={true}
+                                />
+                            </FormControl><br />
                             <FormControl fullWidth variant="outlined">
                                 <InputLabel htmlFor="email"  className={mobClasses.root}>Email Address</InputLabel>
                                 <OutlinedInput 
@@ -501,10 +574,12 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                                 />
                             </FormControl>
                             <Typography variant="subtitle2" className={classes.forgotPassTextMobile}>Forgot Password?</Typography>
+                            {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
+                            {success && <Alert variant="filled" severity="success" className={classes.alert}>{success}</Alert>}
                             <Button variant="contained" 
                                 style={{backgroundColor: "#FEC109"}}
                                 className={classes.loginButtonMobile} type="submit">
-                                Sign In
+                                Sign Up
                             </Button>
                             <Typography variant="subtitle2" className={classes.orTextMobile}>Or</Typography>
                             <Button variant="outlined" fullWidth={true}
