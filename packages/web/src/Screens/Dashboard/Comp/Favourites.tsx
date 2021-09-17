@@ -5,14 +5,6 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import { LockRounded, EmailRounded, PlayArrowRounded } from "@material-ui/icons/";
-//Import Components
-import { Sidebar } from './Comp/Sidebar';
-import { OrderTotals } from './Comp/OrderTotals';
-import { Favourites } from './Comp/Favourites';
-import { CurrentPackage } from './Comp/CurrentPackage';
-import { Categories } from './Comp/Categories';
-import { AdvertisementSlider } from './Comp/AdvertisementSlider';
-import { totalmem } from 'os';
 
 interface Props {
     
@@ -30,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const CustomerDashboardScreen: React.FC = function CustomerDashboardScreen() {
+export const Favourites: React.FC = function Favourites() {
     const classes = useStyles();
     const [values, setValues] = React.useState<State>({
         email: '',
@@ -44,14 +36,7 @@ export const CustomerDashboardScreen: React.FC = function CustomerDashboardScree
       
     return (
         <>
-        <Container maxWidth="xl" style={{padding: 0}}>
-            <Sidebar />
-            <AdvertisementSlider />
-            <OrderTotals />
-            <Categories />
-            <CurrentPackage />
-            <Favourites />
-        </Container>
+            Favourites
         </>
     )
 }
