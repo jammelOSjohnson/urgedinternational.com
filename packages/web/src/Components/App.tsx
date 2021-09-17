@@ -10,6 +10,9 @@ import { CustomerDashboardScreen } from '../Screens/Dashboard/CustomerDashboard'
 
 //Import provider
 import AppDataProvider from '../Context/AppDataContext';
+import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, from } from '@apollo/client';
+import {onError} from '@apollo/client/link/error';
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { useEffect } from 'react';
@@ -80,8 +83,23 @@ const theme = createTheme({
   },
 })
 
+const errorLink = onError(({ graphQLErrors, networkError}) => {
+  if(graphQLErrors){
+    graphQLErrors.map(({message, locations, path}) => {
+      console.log(`Graphql error ${message}`)
+    })
+  }
+}); 
 
+const link = from([
+  errorLink,
+  new HttpLink({uri: "http://localhost:4000/graphql"})
+])
 
+const client = new ApolloClient({
+  cache: new InMemoryCache(),
+  link: link
+})
 
 
 const App: React.FC = function App() {
@@ -93,19 +111,19 @@ const App: React.FC = function App() {
     <>
       <ThemeProvider theme={theme}>
         <CssBaseline>
-            <main>
-              <div>
-                <Router>
-                  <Header/>
-                    <Route path="/" exact component={AboutScreen} />
-                    <Route path="/Login" exact component={LoginScreen} />
-                    <Route path="/Register" exact component={RegisterScreen} />
-                    <Route path="/Dashboard" exact component={CustomerDashboardScreen} />
-                  <Footer/>
-                </Router>
-              </div>
-            </main>
-          </CssBaseline>
+          <main>
+            <div>
+              <Router>
+                <Header/>
+                  <Route path="/" exact component={AboutScreen} />
+                  <Route path="/Login" exact component={LoginScreen} />
+                  <Route path="/Register" exact component={RegisterScreen} />
+                  <Route path="/Dashboard" exact component={CustomerDashboardScreen} />
+                <Footer/>
+              </Router>
+            </div>
+          </main>
+        </CssBaseline>
       </ThemeProvider>
     </>
   );
@@ -114,8 +132,10 @@ const App: React.FC = function App() {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function(){
   return (
-    <AppDataProvider>
-      <App />
-    </AppDataProvider>
+    <ApolloProvider client={client}>
+      <AppDataProvider>
+        <App />
+      </AppDataProvider>
+    </ApolloProvider>
   );
 };
