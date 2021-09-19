@@ -26,7 +26,9 @@ interface State {
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
-        
+        gridRoot: {
+            padding: "0px"
+        },
     }),
 );
 
@@ -44,13 +46,19 @@ export const CustomerDashboardScreen: React.FC = function CustomerDashboardScree
       
     return (
         <>
-        <Container maxWidth="xl" style={{padding: 0}}>
-            <Sidebar />
-            <AdvertisementSlider />
-            <OrderTotals />
-            <Categories />
-            <CurrentPackage />
-            <Favourites />
+         <Container maxWidth="xl" style={{padding: 0,backgroundImage: "url(Images/Food portal Background.png)"}}>
+            <Grid container spacing={0} className={classes.gridRoot} alignItems="center">
+                <Grid item xs={2} container spacing={1}>
+                    <Sidebar />
+                </Grid>
+                <Grid item xs={10} container spacing={1}>
+                    <AdvertisementSlider />
+                    <OrderTotals />
+                    <Categories />
+                    <CurrentPackage />
+                    <Favourites />
+                </Grid>
+            </Grid>
         </Container>
         </>
     )
