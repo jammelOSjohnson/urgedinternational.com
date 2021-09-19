@@ -26,10 +26,13 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         cardContent: {
             flexGrow: 1,
-            textAlign: "left"
+            textAlign: "left",
+            paddingBottom: "0px",
+            paddingTop: "0px",
         },
         cardImage: {
-            textAlign: "left"
+            textAlign: "left",
+            position: "relative"
         },
         card: {
             background: "#FFFFFF",
@@ -38,6 +41,22 @@ const useStyles = makeStyles((theme: Theme) =>
             boxShadow: "0px 4.64215px 12.2069px rgba(0, 0, 0, 0.11)",
             borderRadius: "34.3745px",
         },
+        OrderResult1: {
+            position: "absolute",
+            top: "23%",
+            right: "9%",
+            color: "#13ADD1",
+            fontFamily: "PT Sans",
+            fontWeight: "bold"
+        },
+        OrderResult2: {
+            position: "absolute",
+            top: "23%",
+            right: "9%",
+            color: "#13ADD1",
+            fontFamily: "PT Sans",
+            fontWeight: "bold"
+        }
     }),
 );
 
@@ -58,24 +77,24 @@ export const OrderTotals: React.FC = function OrderTotals() {
              <Card className={classes.card}>
                 <CardMedia className={classes.cardImage}>
                     <img src="Images/MediumSpaceShip.png"></img>
+                    <Typography variant="h2" className={classes.OrderResult1}>18</Typography>
                 </CardMedia>
                 <CardContent className={classes.cardContent}>
                     <Typography gutterBottom className={classes.cardTitle}>
                         Total Orders
                     </Typography>
-                    <Typography>18</Typography>
                 </CardContent>
             </Card>
             <br />
             <Card className={classes.card}>
                 <CardMedia className={classes.cardImage}>
                     <img src="Images/SmallSpaceShip.png"></img>
+                    <Typography variant="h2" className={classes.OrderResult2}>03</Typography>
                 </CardMedia>
                 <CardContent className={classes.cardContent}>
                     <Typography gutterBottom className={classes.cardTitle}>
-                        Reliability
+                        Orders In Process
                     </Typography>
-                    <Typography>We are reliable, so you can always count on us.</Typography>
                 </CardContent>
             </Card>
         </>
