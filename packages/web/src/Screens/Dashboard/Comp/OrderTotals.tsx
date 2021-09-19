@@ -1,4 +1,4 @@
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl } from '@material-ui/core';
+import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardMedia, CardContent } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import React from 'react';
@@ -18,7 +18,23 @@ interface State {
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
-        
+        cardTitle: {
+            fontSize: "20px",
+            fontWeight: 700,
+            color: "#1D2635",
+            fontFamily: "PT Sans",
+        },
+        cardContent: {
+            flexGrow: 1,
+            textAlign: "center"
+        },
+        cardImage: {
+            textAlign: "center"
+        },
+        card: {
+            background: "transparent",
+            boxShadow: "none"
+        },
     }),
 );
 
@@ -36,7 +52,28 @@ export const OrderTotals: React.FC = function OrderTotals() {
       
     return (
         <>
-            OrderTotals
+             <Card className={classes.card}>
+                <CardMedia className={classes.cardImage}>
+                    <img src="Images/Reliability.svg"></img>
+                </CardMedia>
+                <CardContent className={classes.cardContent}>
+                    <Typography gutterBottom className={classes.cardTitle}>
+                        Reliability
+                    </Typography>
+                    <Typography>We are reliable, so you can always count on us.</Typography>
+                </CardContent>
+            </Card>
+            <Card className={classes.card}>
+                <CardMedia className={classes.cardImage}>
+                    <img src="Images/Reliability.svg"></img>
+                </CardMedia>
+                <CardContent className={classes.cardContent}>
+                    <Typography gutterBottom className={classes.cardTitle}>
+                        Reliability
+                    </Typography>
+                    <Typography>We are reliable, so you can always count on us.</Typography>
+                </CardContent>
+            </Card>
         </>
     )
 }

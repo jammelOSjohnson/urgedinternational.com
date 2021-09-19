@@ -22,7 +22,7 @@ interface State {
     showPassword: boolean;
 }
 
-const drawerWidth = 240;
+const drawerWidth = "16.5%";
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({

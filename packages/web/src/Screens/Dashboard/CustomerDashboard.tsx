@@ -12,6 +12,8 @@ import { Favourites } from './Comp/Favourites';
 import { CurrentPackage } from './Comp/CurrentPackage';
 import { Categories } from './Comp/Categories';
 import { AdvertisementSlider } from './Comp/AdvertisementSlider';
+import { HeaderLeft } from './Comp/HeaderLeft';
+import { HeaderRight } from './Comp/HeaderRight';
 import { totalmem } from 'os';
 
 interface Props {
@@ -47,16 +49,22 @@ export const CustomerDashboardScreen: React.FC = function CustomerDashboardScree
     return (
         <>
          <Container maxWidth="xl" style={{padding: 0,backgroundImage: "url(Images/Food portal Background.png)"}}>
-            <Grid container spacing={0} className={classes.gridRoot} alignItems="center">
-                <Grid item xs={2} container spacing={1}>
+            <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
+                <Grid item xs={2} spacing={1}>
                     <Sidebar />
                 </Grid>
-                <Grid item xs={10} container spacing={1}>
+                <Grid container direction="row" xs={10} spacing={1}>
+                    <Grid item xs={8}>
+                        <HeaderLeft />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <HeaderRight />
+                    </Grid>
                     {/*Row 1*/}
-                    <Grid item xs={10}>
+                    <Grid item xs={8}>
                         <AdvertisementSlider />
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={4}>
                         <OrderTotals />
                     </Grid>
                     {/*Row 2*/}
