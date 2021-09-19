@@ -26,14 +26,17 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         cardContent: {
             flexGrow: 1,
-            textAlign: "center"
+            textAlign: "left"
         },
         cardImage: {
-            textAlign: "center"
+            textAlign: "left"
         },
         card: {
-            background: "transparent",
-            boxShadow: "none"
+            background: "#FFFFFF",
+            border: "0.813791px solid #E2E2E2",
+            boxSizing: "border-box",
+            boxShadow: "0px 4.64215px 12.2069px rgba(0, 0, 0, 0.11)",
+            borderRadius: "34.3745px",
         },
     }),
 );
@@ -54,18 +57,19 @@ export const OrderTotals: React.FC = function OrderTotals() {
         <>
              <Card className={classes.card}>
                 <CardMedia className={classes.cardImage}>
-                    <img src="Images/Reliability.svg"></img>
+                    <img src="Images/MediumSpaceShip.png"></img>
                 </CardMedia>
                 <CardContent className={classes.cardContent}>
                     <Typography gutterBottom className={classes.cardTitle}>
-                        Reliability
+                        Total Orders
                     </Typography>
-                    <Typography>We are reliable, so you can always count on us.</Typography>
+                    <Typography>18</Typography>
                 </CardContent>
             </Card>
+            <br />
             <Card className={classes.card}>
                 <CardMedia className={classes.cardImage}>
-                    <img src="Images/Reliability.svg"></img>
+                    <img src="Images/SmallSpaceShip.png"></img>
                 </CardMedia>
                 <CardContent className={classes.cardContent}>
                     <Typography gutterBottom className={classes.cardTitle}>

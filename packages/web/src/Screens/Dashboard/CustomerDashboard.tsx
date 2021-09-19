@@ -31,6 +31,10 @@ const useStyles = makeStyles((theme: Theme) =>
         gridRoot: {
             padding: "0px"
         },
+        main: {
+            padding: 0,
+            backgroundImage: "url(Images/FoodPortalBackground.png)"
+        }
     }),
 );
 
@@ -48,7 +52,7 @@ export const CustomerDashboardScreen: React.FC = function CustomerDashboardScree
       
     return (
         <>
-         <Container maxWidth="xl" style={{padding: 0,backgroundImage: "url(Images/Food portal Background.png)"}}>
+         <Container maxWidth="xl" className={classes.main}>
             <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
                 <Grid item xs={2} spacing={1}>
                     <Sidebar />
