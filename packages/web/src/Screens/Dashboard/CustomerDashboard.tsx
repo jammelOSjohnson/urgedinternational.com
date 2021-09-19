@@ -52,11 +52,20 @@ export const CustomerDashboardScreen: React.FC = function CustomerDashboardScree
                     <Sidebar />
                 </Grid>
                 <Grid item xs={10} container spacing={1}>
-                    <AdvertisementSlider />
-                    <OrderTotals />
-                    <Categories />
-                    <CurrentPackage />
-                    <Favourites />
+                    {/*Row 1*/}
+                    <Grid item xs={10}>
+                        <AdvertisementSlider />
+                    </Grid>
+                    <Grid item xs={2}>
+                        <OrderTotals />
+                    </Grid>
+                    <Grid item xs={10}>
+                        <Categories />
+                        <CurrentPackage />                       
+                    </Grid>
+                    <Grid item xs={2}>
+                        <Favourites />
+                    </Grid>
                 </Grid>
             </Grid>
         </Container>
