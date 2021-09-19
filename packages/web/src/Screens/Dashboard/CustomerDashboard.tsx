@@ -72,11 +72,11 @@ export const CustomerDashboardScreen: React.FC = function CustomerDashboardScree
                         <OrderTotals />
                     </Grid>
                     {/*Row 2*/}
-                    <Grid item xs={10}>
+                    <Grid item xs={8}>
                         <Categories />
                         <CurrentPackage />                       
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={4}>
                         <Favourites />
                     </Grid>
                 </Grid>
