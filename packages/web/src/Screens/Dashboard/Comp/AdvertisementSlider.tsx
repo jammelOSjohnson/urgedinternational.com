@@ -22,9 +22,25 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: '#FEC109',
             borderRadius: '30px'
         },
+        sliderSlogan: {
+            color: '#F9F9FB',
+            fontSize: '25px',
+            fontWeight: 700,
+            paddingTop: "15%",
+        },
         sliderText: {
-            color: '#F9F9FB'
-        }
+            color: '#F9F9FB',
+            fontSize: '16px',
+            fontWeight: 600
+        },
+        Button: {
+            backgroundColor: "#FAFAFA",
+            border: "1.21951px solid #F7B614",
+            height: 41,
+            width: 171,
+            borderRadius: 36,
+            color: "#4A4A4A",
+        },
     }),
 );
 
@@ -45,13 +61,13 @@ export const AdvertisementSlider: React.FC = function AdvertisementSlider() {
              <Container maxWidth="xl" className={classes.slider}>
                 <Grid container spacing={0} alignContent="center" alignItems="center">
                     <Grid xs={11} sm={6} md={5} lg={4} xl={3}>
-                        <Typography align="left" className={classes.sliderText}>
+                        <Typography className={classes.sliderSlogan}>
                             We are the definition of SPEED
                         </Typography>
-                        <Typography align="left" className={classes.sliderText}>
+                        <Typography className={classes.sliderText}>
                             Here at Urged, Quality and Time is our main priority. You can trust us to be on-time with your packages and food.
                         </Typography>
-                        <Button>
+                        <Button className={classes.Button}>
                             <Typography>
                                 Categories
                             </Typography>

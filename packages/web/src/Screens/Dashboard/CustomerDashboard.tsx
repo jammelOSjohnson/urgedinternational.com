@@ -59,6 +59,7 @@ export const CustomerDashboardScreen: React.FC = function CustomerDashboardScree
                     <Grid item xs={2}>
                         <OrderTotals />
                     </Grid>
+                    {/*Row 2*/}
                     <Grid item xs={10}>
                         <Categories />
                         <CurrentPackage />                       
