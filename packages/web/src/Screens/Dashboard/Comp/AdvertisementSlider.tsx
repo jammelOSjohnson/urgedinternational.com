@@ -25,18 +25,23 @@ const useStyles = makeStyles((theme: Theme) =>
         fonts: {
             fontFamily: "PT Sans"
         },
+        image: {
+            zIndex: 1,
+            margin: '-16% 0% -88% 0%'
+        },
         sliderSlogan: {
             color: '#F9F9FB',
             fontSize: '30px',
             fontWeight: 700,
-            lineHeight: '26.22px'
-            // paddingTop: "15%",
+            lineHeight: '26.22px',
+            padding: '0% 0% 2% 0%'
         },
         sliderText: {
             color: '#F9F9FB',
             fontSize: '16px',
             fontWeight: 400,
-            lineHeight: '29.34px'
+            lineHeight: '29.34px',
+            margin: '-10% -17% 8% 0%'
         },
         Button: {
             backgroundColor: "#FAFAFA",
@@ -70,10 +75,17 @@ export const AdvertisementSlider: React.FC = function AdvertisementSlider() {
         <>
              <Container maxWidth="xl" className={classes.slider}>
                 <Grid container spacing={0} alignContent="center" alignItems="center">
-                    <Grid xs={11} sm={6} md={5} lg={4} xl={3}>
+                    <Grid xs={7}>
                         <Typography className={`${classes.fonts} ${classes.sliderSlogan}`}>
                             We are the definition of SPEED
                         </Typography>
+                    </Grid>
+                    <Grid xs={5}>
+                        <Typography>
+                                <img className={classes.image} src="Images/Rocket.png" alt="rocket logo"/>
+                        </Typography>
+                    </Grid>
+                    <Grid xs={7} style={{paddingBottom: '6%'}}>
                         <Typography className={`${classes.fonts} ${classes.sliderText}`}>
                             Here at Urged, Quality and Time is our main priority. You can trust us to be on-time with your packages and food.
                         </Typography>
@@ -82,10 +94,7 @@ export const AdvertisementSlider: React.FC = function AdvertisementSlider() {
                                 Categories
                             </Typography>
                         </Button>
-                    </Grid>
-                    <Typography>
-                            <img src="Images/Rocket.png" alt="rocket logo"/>
-                    </Typography>
+                    </Grid>                    
                 </Grid>
             </Container>
         </>
