@@ -22,16 +22,26 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: '#FEC109',
             borderRadius: '30px'
         },
+        fonts: {
+            fontFamily: "PT Sans"
+        },
+        image: {
+            zIndex: 1,
+            margin: '-16% 0% -88% 0%'
+        },
         sliderSlogan: {
             color: '#F9F9FB',
-            fontSize: '25px',
+            fontSize: '30px',
             fontWeight: 700,
-            paddingTop: "15%",
+            lineHeight: '26.22px',
+            padding: '0% 0% 2% 0%'
         },
         sliderText: {
             color: '#F9F9FB',
             fontSize: '16px',
-            fontWeight: 600
+            fontWeight: 400,
+            lineHeight: '29.34px',
+            margin: '-10% -17% 8% 0%'
         },
         Button: {
             backgroundColor: "#FAFAFA",
@@ -39,7 +49,12 @@ const useStyles = makeStyles((theme: Theme) =>
             height: 41,
             width: 171,
             borderRadius: 36,
+        },
+        ButtonText: {
             color: "#4A4A4A",
+            fontWeight: 400,
+            fontSize: '20px',
+            lineHeight: '25.88px'
         },
     }),
 );
@@ -60,19 +75,26 @@ export const AdvertisementSlider: React.FC = function AdvertisementSlider() {
         <>
              <Container maxWidth="xl" className={classes.slider}>
                 <Grid container spacing={0} alignContent="center" alignItems="center">
-                    <Grid xs={11} sm={6} md={5} lg={4} xl={3}>
-                        <Typography className={classes.sliderSlogan}>
+                    <Grid xs={7}>
+                        <Typography className={`${classes.fonts} ${classes.sliderSlogan}`}>
                             We are the definition of SPEED
                         </Typography>
-                        <Typography className={classes.sliderText}>
+                    </Grid>
+                    <Grid xs={5}>
+                        <Typography>
+                                <img className={classes.image} src="Images/Rocket.png" alt="rocket logo"/>
+                        </Typography>
+                    </Grid>
+                    <Grid xs={7} style={{paddingBottom: '6%'}}>
+                        <Typography className={`${classes.fonts} ${classes.sliderText}`}>
                             Here at Urged, Quality and Time is our main priority. You can trust us to be on-time with your packages and food.
                         </Typography>
                         <Button className={classes.Button}>
-                            <Typography>
+                            <Typography className={`${classes.fonts}`}>
                                 Categories
                             </Typography>
                         </Button>
-                    </Grid>
+                    </Grid>                    
                 </Grid>
             </Container>
         </>
