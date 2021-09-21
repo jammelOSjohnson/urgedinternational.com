@@ -149,10 +149,15 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           // This gives you a Google Access Token. You can use it to access the Google API.
           //var token = result.credential.accessToken;
           // The signed-in user info.
+          console.log(result.user);
           var user = result.user;
           var payloadf = { ...payload,
             currentUser: user,
-            loading: false
+            loading: false,
+            userInfo: {
+              ...userInfo, fullName: user!.displayName !== null && user!.displayName !== undefined ? user!.displayName: "" ,
+             email: user!.email !== null && user!.email !== undefined ? user!.email : ""
+            }
           };
           return payloadf;
         }).catch(function (error) {
