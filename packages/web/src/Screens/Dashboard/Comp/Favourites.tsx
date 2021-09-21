@@ -5,6 +5,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import { LockRounded, EmailRounded, PlayArrowRounded } from "@material-ui/icons/";
+import { Link } from "react-router-dom";
 
 interface Props {
     
@@ -19,7 +20,13 @@ interface State {
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
         favorites: {
-            fontWeight: "bold"
+            fontWeight: "bold",
+            textAlign: "left"
+        },
+        viewMore: {
+            ontWeight: "bold",
+            textAlign: "right",
+            color: "#4A4A4A"
         },
         root: {
             padding: "0% 0px 5% 0px"
@@ -33,7 +40,6 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingLeft: 0,
             paddingRight: 0,
             paddingTop: "10px",
-            textAlign: "center"
         },
         cardContent: {
             flexGrow: 1,
@@ -74,13 +80,15 @@ export const Favourites: React.FC = function Favourites() {
                         <Grid item xs={12} container spacing={1} style={{overflowY: "scroll", height: "378.58px"}}>
                             <Grid item xs={8} >
                                 <Typography variant="subtitle1" className={classes.favorites}>
-                                    Favourites
+                                        Favourites
                                 </Typography>
                             </Grid>
                             <Grid item xs={4} >
-                                <Typography variant="subtitle1" className={classes.favorites}>
-                                    View More
-                                </Typography>
+                                <Link to="#" title="View More">
+                                    <Typography variant="subtitle1" className={classes.viewMore}>
+                                        View More
+                                    </Typography>
+                                </Link>
                             </Grid>
                             <Grid item xs={6} >
                                 <Card className={classes.card}>
