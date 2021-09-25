@@ -17,7 +17,7 @@ interface State {
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
         root: {
-            padding: "0% 0px 5% 0px"
+            padding: "0% 0px 1% 0px"
         },
         cardTitle1: {
             fontSize: "20px",
