@@ -58,10 +58,10 @@ export const CustomerDashboardScreen: React.FC = function CustomerDashboardScree
                     <Sidebar />
                 </Grid>
                 <Grid container direction="row" xs={10} spacing={1}>
-                    <Grid item xs={8}>
+                    <Grid item xs={8} style={{marginBottom: "3%"}}>
                         <HeaderLeft />
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={4} style={{marginBottom: "3%"}}>
                         <HeaderRight />
                     </Grid>
                     {/*Row 1*/}
