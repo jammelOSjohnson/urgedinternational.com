@@ -1,4 +1,4 @@
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, CardMedia, Card, CardContent, Link, Stepper, Step, StepLabel, StepIconProps } from '@material-ui/core';
+import { Container, Grid, makeStyles, createStyles, withStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, CardMedia, Card, CardContent, Link, Stepper, Step, StepLabel, StepIconProps, StepConnector } from '@material-ui/core';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import LocalShippingOutlinedIcon from '@material-ui/icons/LocalShippingOutlined';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
@@ -22,6 +22,9 @@ interface State {
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
+        root: {
+            width: '100%',
+          },
         packageRoot: {
             padding: "0% 0px 2% 0px"
         },
@@ -40,8 +43,55 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
+const ColorlibConnector = withStyles({
+    alternativeLabel: {
+      top: 22,
+    },
+    active: {
+      '& $line': {
+        backgroundImage:
+        'linear-gradient( 95deg, #fea709a6 0%, #fec909 50%, #fec109 100%)',
+      },
+    },
+    completed: {
+      '& $line': {
+        backgroundImage:
+            'linear-gradient( 95deg, #fea709a6 0%, #fec909 50%, #fec109 100%)',
+      },
+    },
+    line: {
+      height: 3,
+      border: 0,
+      backgroundColor: '#eaeaf0',
+      borderRadius: 1,
+    },
+  })(StepConnector);
+  
+  const useColorlibStepIconStyles = makeStyles({
+    root: {
+      backgroundColor: '#ccc',
+      zIndex: 1,
+      color: '#fff',
+      width: 50,
+      height: 50,
+      display: 'flex',
+      borderRadius: '50%',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    active: {
+      backgroundImage:
+        'linear-gradient( 136deg, #fea709a6 0%, #fec909 50%, #fec109 100%)',
+      boxShadow: '0 4px 10px 0 #fec109',
+    },
+    completed: {
+      backgroundImage:
+      'linear-gradient( 136deg, #fea709a6 0%, #fec909 50%, #fec109 100%)',
+    },
+  });
+
 function ColorlibStepIcon(props: StepIconProps) {
-    // const classes = useColorlibStepIconStyles();
+    const classes = useColorlibStepIconStyles();
     const { active, completed } = props;
   
     const icons: { [index: string]: React.ReactElement } = {
@@ -62,6 +112,12 @@ function ColorlibStepIcon(props: StepIconProps) {
     );
   }
 
+  function getSteps() {
+    return ['Pick-Up Time', 'In Transit', 'Delivered'];
+    }  
+
+
+
 export const CurrentPackage: React.FC = function CurrentPackage() {
     const classes = useStyles();
     const [values, setValues] = React.useState<State>({
@@ -72,7 +128,20 @@ export const CurrentPackage: React.FC = function CurrentPackage() {
 
     var history = useHistory();
 
-
+    const [activeStep, setActiveStep] = React.useState(1);
+    const steps = getSteps();
+    
+    const handleNext = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    };
+    
+    const handleBack = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    };
+    
+    const handleReset = () => {
+        setActiveStep(0);
+    };
 
     return (
         <>
@@ -106,81 +175,10 @@ export const CurrentPackage: React.FC = function CurrentPackage() {
                                         </Step>
                                     ))}
                                 </Stepper>
-                                <div>
-                                    {activeStep === steps.length ? (
-                                        <div>
-                                            <Typography className={classes.instructions}>
-                                                All steps completed - you&apos;re finished
-                                            </Typography>
-                                            <Button onClick={handleReset} className={classes.button}>
-                                                Reset
-                                            </Button>
-                                        </div>
-                                    ) : (
-                                        <div>
-                                            <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-                                            <div>
-                                                <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                                                    Back
-                                                </Button>
-                                                <Button
-                                                    variant="contained"
-                                                    color="primary"
-                                                    onClick={handleNext}
-                                                    className={classes.button}
-                                                >
-                                                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                                                </Button>
-                                            </div>
-                                        </div>
-                                    )}
-                                </div>
                             </div>
                         </CardContent>
                     </Card>
                 </Grid>
-                {/* <Grid item xs={10} md={3}>
-                    <Card className={classes.card}>
-                        <CardMedia className={classes.cardImage}>
-                            <img src="Images/lightbluetruckIconImageSM.png"></img>
-                        </CardMedia>
-                        <CardContent className={classes.cardContent}>
-                            <Link className={classes.links} to="#" title="Food Delivery">
-                                <Typography gutterBottom className={classes.cardTitle2}>
-                                    Errand Services
-                                </Typography>
-                            </Link>
-                        </CardContent>
-                    </Card>
-                </Grid> */}
-                {/* <Grid item xs={10} md={3}>
-                    <Card className={classes.card}>
-                        <CardMedia className={classes.cardImage}>
-                            <img src="Images/yellowtruckIconImageSM.png"></img>
-                        </CardMedia>
-                        <CardContent className={classes.cardContent}>
-                            <Link className={classes.links} to="#" title="Food Delivery">
-                                <Typography gutterBottom className={classes.cardTitle3}>
-                                    Urged Express
-                                </Typography>
-                            </Link>
-                        </CardContent>
-                    </Card>
-                </Grid> */}
-                {/* <Grid item xs={10} md={3}>
-                    <Card className={classes.card}>
-                        <CardMedia className={classes.cardImage}>
-                            <img src="Images/GreenMarketPlace.png"></img>
-                        </CardMedia>
-                        <CardContent className={classes.cardContent}>
-                            <Link className={classes.links} to="#" title="Food Delivery">
-                                <Typography gutterBottom className={classes.cardTitle4}>
-                                    Market Place
-                                </Typography>
-                            </Link>
-                        </CardContent>
-                    </Card>
-                </Grid> */}
             </Grid>
         </>
     )
