@@ -5,9 +5,6 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import { NotificationImportantRounded, ShoppingCartRounded } from "@material-ui/icons/";
-import { Cart } from "./Cart";
-import { Notification } from "./Notification";
-import { User } from "./User"
 
 interface Props {
     
@@ -23,17 +20,11 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         noti: {
             color: "#FF5E14"
-        },
-        main: {
-            padding: 0,
-        },
-        gridRoot: {
-            padding: "0px"
-        },
+        }
     }),
 );
 
-export const HeaderRight: React.FC = function HeaderRight() {
+export const Cart: React.FC = function Cart() {
     const classes = useStyles();
     const [values, setValues] = React.useState<State>({
         email: '',
@@ -47,21 +38,9 @@ export const HeaderRight: React.FC = function HeaderRight() {
       
     return (
         <>
-            <Container maxWidth="xl" className={classes.main}>
-                <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
-                    <Grid item xs={6} spacing={1}>
-                        <User />
-                    </Grid>
-                    <Grid container direction="row" xs={6} spacing={1}>
-                        <Grid item xs={6} spacing={1}>
-                            <Notification />
-                        </Grid>
-                        <Grid item xs={6} spacing={1}>
-                            <Cart />
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </Container>
+            <Badge badgeContent={4} color="primary">
+                <ShoppingCartRounded className={classes.noti} />
+            </Badge>
         </>
     )
 }
