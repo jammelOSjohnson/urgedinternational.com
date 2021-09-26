@@ -3,14 +3,11 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import clsx from 'clsx';
-import { LockRounded, EmailRounded, PlayArrowRounded } from "@material-ui/icons/";
 
 import MenuIcon from '@material-ui/icons/Menu';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 interface Props {
     
@@ -92,6 +89,18 @@ const useStyles = makeStyles((theme: Theme) =>
             flexGrow: 1,
             padding: theme.spacing(3),
           },
+          activeItem: {
+            backgroundColor: "#FEC109",
+            color: "#FFFFFF",
+            borderRadius: "50px",
+            width: "90%",
+            marginLeft: "auto",
+            marginRight: "auto"
+          },
+          inactiveItemLink: {
+            textDecoration: "none",
+            color: "inherit",
+          }
     }),
 );
 
@@ -108,6 +117,8 @@ export const Sidebar: React.FC = function Sidebar() {
     });
     
     var history = useHistory();
+    var location = history.location;
+    var referralPath = location.pathname;
     
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -143,17 +154,119 @@ export const Sidebar: React.FC = function Sidebar() {
                     <img className={classes.logo} src="Images/urged logo.svg" alt="Urged Logo"></img>
                     <List>
                     {['Overview', 'Food Delivery', 'Package Delivery', 'Market Place', 'Orders'].map((text, index) => (
+                        referralPath === "/Dashboard" && text === "Overview" ?
+                          <ListItem button key={text} className={classes.activeItem}>
+                            <ListItemIcon>
+                              {
+                                index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> : <MailIcon />
+                              }
+                            </ListItemIcon>
+                            <ListItemText primary={text} />
+                          </ListItem>
+                        :
+                        referralPath === "/FoodDelivery" && text === "Food Delivery" ?
+                          <ListItem button key={text} className={classes.activeItem}>
+                            <ListItemIcon>
+                              {
+                                index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> : <MailIcon />
+                              }
+                            </ListItemIcon>
+                            <ListItemText primary={text} />
+                          </ListItem>
+                        :
+                        referralPath === "/PackageDelivery" && text === "Package Delivery" ?
+                          <ListItem button key={text} className={classes.activeItem}>
+                            <ListItemIcon>
+                              {
+                                index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> : <MailIcon />
+                              }
+                            </ListItemIcon>
+                            <ListItemText primary={text} />
+                          </ListItem>
+                        :
+                        referralPath === "/MarketPlace" && text === "Market Place" ?
+                          <ListItem button key={text} className={classes.activeItem}>
+                            <ListItemIcon>
+                              {
+                                index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> : <MailIcon />
+                              }
+                            </ListItemIcon>
+                            <ListItemText primary={text} />
+                          </ListItem>
+                        :
+                        referralPath === "/Orders" && text === "Orders" ?
+                          <ListItem button key={text} className={classes.activeItem}>
+                            <ListItemIcon>
+                              {
+                                index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> : <MailIcon />
+                              }
+                            </ListItemIcon>
+                            <ListItemText primary={text} />
+                          </ListItem>
+                        :
+                        text === "Overview" ?
+                          <Link to="/Dashboard" className={classes.inactiveItemLink}>
+                            <ListItem button key={text}>
+                                <ListItemIcon>
+                                  {
+                                    index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                    index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                    index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                    index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                    index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> : <MailIcon />
+                                  }
+                                </ListItemIcon>
+                                <ListItemText primary={text} />
+                            </ListItem>
+                          </Link>
+                        :
+                        text === "Food Delivery" ?
+                          <Link to="/FoodDelivery" className={classes.inactiveItemLink}>
+                            <ListItem button key={text}>
+                                <ListItemIcon>
+                                  {
+                                    index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                    index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                    index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                    index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                    index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> : <MailIcon />
+                                  }
+                                </ListItemIcon>
+                                <ListItemText primary={text} />
+                            </ListItem>
+                          </Link>
+                        :
                         <ListItem button key={text}>
-                        <ListItemIcon>
-                          {
-                            index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
-                            index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                            index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
-                            index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                            index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> : <MailIcon />
-                          }
-                        </ListItemIcon>
-                        <ListItemText primary={text} />
+                            <ListItemIcon>
+                              {
+                                index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> : <MailIcon />
+                              }
+                            </ListItemIcon>
+                            <ListItemText primary={text} />
                         </ListItem>
                     ))}
                     </List>
