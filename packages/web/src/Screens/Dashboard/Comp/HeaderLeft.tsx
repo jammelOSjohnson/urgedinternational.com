@@ -36,8 +36,8 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
       
     return (
         <>
-            <Typography variant="body1">
-                Protal
+            <Typography variant="h5" style={{fontWeight: "bold"}}>
+                Portal
             </Typography>
         </>
     )

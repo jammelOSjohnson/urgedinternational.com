@@ -107,7 +107,7 @@ export const Header: React.FC = function Header() {
     const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
     const isMaatchMedium = useMediaQuery(theme.breakpoints.down('md'));
 
-    if(referralPath === "/Login" || referralPath === "/Register" || referralPath === "/Dashboard"){
+    if(referralPath === "/Login" || referralPath === "/Register" || referralPath === "/Dashboard" || referralPath === "/login" || referralPath === "/register" || referralPath === "/dashboard"){
       return(
         <>
 
