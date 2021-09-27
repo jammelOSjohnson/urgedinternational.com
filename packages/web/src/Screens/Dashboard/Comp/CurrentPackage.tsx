@@ -35,8 +35,15 @@ const useStyles = makeStyles((theme: Theme) =>
             borderRadius: '30px'
         },
         card: {
-
-        },
+          display: "flex",
+          background: "#FFFFFF",
+          border: "1.14582px solid #F3F3F3",
+          boxSizing: "border-box",
+          boxShadow: "0px 4.58327px 17.1873px rgba(0, 0, 0, 0.11)",
+          borderRadius: "34.3745px",
+          paddingLeft: "20px",
+          paddingTop: "10px"
+      },
         cardContent: {
             fontWeight: "bold"
         }
@@ -160,14 +167,14 @@ export const CurrentPackage: React.FC = function CurrentPackage() {
                         <CardMedia >
                             <img src="Images/Package Image.png" className={classes.image}></img>
                         </CardMedia>
-                        <CardContent >
-                            <Typography gutterBottom className={classes.cardContent}>
+                        <CardContent style={{flexGrow: 1}}>
+                            <Typography className={classes.cardContent}>
                                 Document Delivery
                             </Typography>
-                            <Typography gutterBottom>
+                            <Typography>
                                 Two new files were added for Service Page.
                             </Typography>
-                            <div className={classes.root}>
+                          
                                 <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
                                     {steps.map((label) => (
                                         <Step key={label}>
@@ -175,10 +182,38 @@ export const CurrentPackage: React.FC = function CurrentPackage() {
                                         </Step>
                                     ))}
                                 </Stepper>
-                            </div>
                         </CardContent>
                     </Card>
                 </Grid>
+                {/* <Grid item xs={3}>       
+                    <img src="Images/Package Image.png" className={classes.image} title="Package Image"></img>
+                </Grid>
+                <Grid container direction="row" xs={9}>
+                    <Grid item xs={7}>
+                        <Typography gutterBottom className={classes.cardContent}>
+                            Document Delivery
+                        </Typography>    
+                    </Grid>
+                    <Grid item xs={5}>
+                      <Typography gutterBottom>
+                          Tracking#: <span>URD00585</span>
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography gutterBottom className={classes.cardContent}>
+                          Two new files were added for Service Page.
+                        </Typography>
+                        <div className={classes.root}>
+                        <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
+                            {steps.map((label) => (
+                                <Step key={label}>
+                                    <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+                                </Step>
+                            ))}
+                        </Stepper>
+                      </div>    
+                    </Grid>
+                </Grid> */}
             </Grid>
         </>
     )
