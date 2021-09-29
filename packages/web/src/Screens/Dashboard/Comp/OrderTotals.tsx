@@ -1,3 +1,4 @@
+import { useAppData } from '../../../Context/AppDataContext';
 import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardMedia, CardContent } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
@@ -67,7 +68,11 @@ export const OrderTotals: React.FC = function OrderTotals() {
         password: '',
         showPassword: false,
       });
-    
+      var { value }  = useAppData();
+      var { orders } = value;
+
+      var TotalOrders = orders.length;
+      var OrdersInProcess = 0;
       var history = useHistory();
 
     
@@ -77,7 +82,7 @@ export const OrderTotals: React.FC = function OrderTotals() {
              <Card className={classes.card}>
                 <CardMedia className={classes.cardImage}>
                     <img src="Images/MediumSpaceShip.png"></img>
-                    <Typography variant="h2" className={classes.OrderResult1}>18</Typography>
+                    <Typography variant="h2" className={classes.OrderResult1}>{TotalOrders}</Typography>
                 </CardMedia>
                 <CardContent className={classes.cardContent}>
                     <Typography gutterBottom className={classes.cardTitle}>
@@ -89,7 +94,7 @@ export const OrderTotals: React.FC = function OrderTotals() {
             <Card className={classes.card}>
                 <CardMedia className={classes.cardImage}>
                     <img src="Images/SmallSpaceShip.png"></img>
-                    <Typography variant="h2" className={classes.OrderResult2}>03</Typography>
+                    <Typography variant="h2" className={classes.OrderResult2}>{OrdersInProcess}</Typography>
                 </CardMedia>
                 <CardContent className={classes.cardContent}>
                     <Typography gutterBottom className={classes.cardTitle}>

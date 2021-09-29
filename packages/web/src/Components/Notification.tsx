@@ -1,3 +1,4 @@
+import { useAppData } from '../Context/AppDataContext';
 import { Container, Grid, Badge , makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardMedia, CardContent } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
@@ -24,13 +25,15 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const Cart: React.FC = function Cart() {
+export const Notification: React.FC = function Notification() {
     const classes = useStyles();
     const [values, setValues] = React.useState<State>({
         email: '',
         password: '',
         showPassword: false,
       });
+      var { value }  = useAppData();
+      var { noties } = value;
     
       var history = useHistory();
 
@@ -38,8 +41,8 @@ export const Cart: React.FC = function Cart() {
       
     return (
         <>
-            <Badge badgeContent={4} color="primary">
-                <ShoppingCartRounded className={classes.noti} />
+            <Badge badgeContent={noties.length} color="primary">
+                <NotificationImportantRounded className={classes.noti} />
             </Badge>
         </>
     )

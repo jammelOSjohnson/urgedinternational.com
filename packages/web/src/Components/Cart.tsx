@@ -1,10 +1,9 @@
-import { Container, Grid, Badge , makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardMedia, CardContent } from '@material-ui/core';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import { useAppData } from '../Context/AppDataContext';
+import { Badge , makeStyles, createStyles, Theme, } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
-import { NotificationImportantRounded, ShoppingCartRounded } from "@material-ui/icons/";
+import { ShoppingCartRounded } from "@material-ui/icons/";
 
 interface Props {
     
@@ -24,13 +23,15 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const Notification: React.FC = function Notification() {
+export const Cart: React.FC = function Cart() {
     const classes = useStyles();
     const [values, setValues] = React.useState<State>({
         email: '',
         password: '',
         showPassword: false,
       });
+      var { value }  = useAppData();
+      var { cartItems } = value;
     
       var history = useHistory();
 
@@ -38,8 +39,8 @@ export const Notification: React.FC = function Notification() {
       
     return (
         <>
-            <Badge badgeContent={4} color="primary">
-                <NotificationImportantRounded className={classes.noti} />
+            <Badge badgeContent={cartItems.length} color="primary">
+                <ShoppingCartRounded className={classes.noti} />
             </Badge>
         </>
     )
