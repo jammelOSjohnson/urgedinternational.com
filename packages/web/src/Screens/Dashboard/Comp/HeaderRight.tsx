@@ -5,9 +5,9 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import { NotificationImportantRounded, ShoppingCartRounded } from "@material-ui/icons/";
-import { Cart } from "./Cart";
-import { Notification } from "./Notification";
-import { User } from "./User"
+import { Cart } from "../../../Components/Cart";
+import { Notification } from "../../../Components/Notification";
+import { User } from "../../../Components/User"
 
 interface Props {
     
@@ -47,16 +47,14 @@ export const HeaderRight: React.FC = function HeaderRight() {
       
     return (
         <>
-            <Container maxWidth="xl" className={classes.main}>
+            <Container maxWidth="xl" className={classes.main} style={{background: "transparent"}}>
                 <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
                     <Grid item xs={6} spacing={1}>
                         <User />
                     </Grid>
                     <Grid container direction="row" xs={6} spacing={1}>
-                        <Grid item xs={6} spacing={1}>
-                            <Notification />
-                        </Grid>
-                        <Grid item xs={6} spacing={1}>
+                        <Grid item xs={12} spacing={0}>
+                            <Notification /> <span style={{marginRight: "10%"}}></span>
                             <Cart />
                         </Grid>
                     </Grid>

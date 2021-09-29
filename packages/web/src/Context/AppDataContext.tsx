@@ -67,6 +67,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var currentUser = undefined;
     var loading = true;
     var loggedIn = false;
+    var cartItems = [];
+    var noties = [];
+    var orders = [];
 
     var userInfo = {
       contactNumber: "",
@@ -412,6 +415,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         loggedIn,
         userInfo,
         userRolef,
+        cartItems,
+        noties,
+        orders,
         signup,
         login,
         gLogin,
