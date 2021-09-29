@@ -67,6 +67,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var currentUser = undefined;
     var loading = true;
     var loggedIn = false;
+    var cartItems = [];
+    var noties = [];
+    var orders = [];
 
     var userInfo = {
       contactNumber: "",
@@ -149,10 +152,15 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           // This gives you a Google Access Token. You can use it to access the Google API.
           //var token = result.credential.accessToken;
           // The signed-in user info.
+          console.log(result.user);
           var user = result.user;
           var payloadf = { ...payload,
             currentUser: user,
-            loading: false
+            loading: false,
+            userInfo: {
+              ...userInfo, fullName: user!.displayName !== null && user!.displayName !== undefined ? user!.displayName: "" ,
+             email: user!.email !== null && user!.email !== undefined ? user!.email : ""
+            }
           };
           return payloadf;
         }).catch(function (error) {
@@ -324,71 +332,67 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       console.log("fetching user");
 
       var userRef = getUser({variables: { Id: uid}}).then(async function(response) {
-        //console.log("Checking user result for fetch user info");
-        if (response !== null) {
+        console.log("Checking user result for fetch user info");
+        if (response.data.getUser !== null) {
            console.log("user exist");
            console.log(response);
-        //   console.log("what is inside payload for fetch user info");
-        //   console.log(payloadf);
-        //   //Convert to City object
-        //   var user = doc.data(); //console.log("verify email sent fetch user check ? " + user.verifiedemailsent);
+          console.log("what is inside payload for fetch user info");
+          console.log(payloadf);
+
+        var user = response.data.getUser;
     
-        //   if (user !== null) {
-        //     payloadf.userInfo.contactNumber = user.contactNumber;
-        //     payloadf.userInfo.email = user.email;
-        //     payloadf.userInfo.fullName = user.fullName;
-        //     payloadf.loggedIn = true;
-        //     payloadf.userInfo.addressLine1 = user.addressLine1 !== null && user.addressLine1 !== undefined ? user.addressLine1 : "";
-        //     payloadf.userInfo.addressLine2 = user.addressLine2 !== null && user.addressLine2 !== undefined ? user.addressLine2 : "";
-        //     payloadf.userInfo.city = user.city !== null && user.city !== undefined ? user.city : "";
-        //     payloadf.userInfo.postalCode = user.postalCode !== null && user.postalCode !== undefined ? user.postalCode : "";
-        //     payloadf.userInfo.stateOrparish = user.stateOrparish !== null && user.stateOrparish !== undefined ? user.stateOrparish : "";
-        //     payloadf.userInfo.verifiedemailsent = user.verifiedemailsent !== null && user.verifiedemailsent !== undefined ? user.verifiedemailsent : true;
-        //     payloadf.userInfo.verified = user.verified !== null && user.verified !== undefined ? user.verified : true;
-        //   }
+        if (user !== null) {
+          payloadf.userInfo.contactNumber = user.ContactNumber !== null && user.ContactNumber !== undefined ? user.ContactNumber : "";
+          payloadf.userInfo.email = user.Email !== null && user.Email !== undefined ? user.Email : "";
+          payloadf.userInfo.fullName = user.FirstName !== null && user.FirstName !== undefined? user.FirstName + " " 
+                                     + user.LastName !== null && user.LastName !== undefined? user.LastName : "" + user.LastName !== null && user.LastName !== undefined? user.LastName : "":"";
+          payloadf.loggedIn = true;
+          payloadf.userInfo.addressLine1 = user.AddressLine1 !== null && user.AddressLine1 !== undefined ? user.AddressLine1 : "";
+          payloadf.userInfo.addressLine2 = user.AddressLine2 !== null && user.AddressLine2 !== undefined ? user.AddressLine2 : "";
+          payloadf.userInfo.city = user.City !== null && user.City !== undefined ? user.City : "";
+        }
     
           return payloadf;
         } else {
           console.log("No such user!")
           console.log(response);
           // console.log("creating new user");
-          // var user = {
-          //   contactNumber: payloadf.currentUser.phoneNumber !== null ? payloadf.currentUser.phoneNumber : "",
-          //   email: payloadf.currentUser.email !== null ? payloadf.currentUser.email : "",
-          //   fullName: payloadf.currentUser.displayName !== null ? payloadf.currentUser.displayName.toLowerCase() : "",
-          //   verified: false,
-          //   verifiedemailsent: false,
-          //   addressLine1: "",
-          //   addressLine2: "",
-          //   city: "",
-          //   postalCode: "",
-          //   stateOrparish: ""
-          // };
-          // var storeRes = await db.collection("Users").doc(uid).set(user).then(function (doc) {
-          //   console.log("User info  successfully written!");  
-          //   return true;
-          // }).catch(function (error) {
-          //   console.error("Error writing user info: ", error);
-          //   return false;
-          // });
+          var user2 = {
+            Id: uid,
+            FirstName: payloadf.userInfo.fullName !== null ? payloadf.userInfo.fullName.toLowerCase() : "",
+            LastName: payloadf.userInfo.fullName !== null ? payloadf.userInfo.fullName.toLowerCase() : "",
+            Email: payloadf.currentUser.email !== null ? payloadf.currentUser.email : "",
+            AddressLine1: "",
+            AddressLine2: "",
+            City: "",
+            ContactNumber: ""
+          };
+          var storeRes = await createUser({variables: {...user2}}).then(function (response2) {
+            console.log("User info  successfully written!");
+            console.log(response2.data);  
+            return true;
+          }).catch(function (error) {
+            console.error("Error writing user info: ", error);
+            return false;
+          });
     
-          // if (storeRes) {
-          //   payloadf.userInfo.contactNumber = user.contactNumber;
-          //   payloadf.userInfo.email = user.email;
-          //   payloadf.userInfo.fullName = user.fullName;
-          //   payloadf.userInfo.verified = user.verified;
-          //   payloadf.userInfo.verifiedemailsent = user.verifiedemailsent;
-          //   payloadf.loggedIn = true;
-          //   payloadf.userInfo.addressLine1 = user.addressLine1 !== null && user.addressLine1 !== undefined ? user.addressLine1 : "";
-          //   payloadf.userInfo.addressLine2 = user.addressLine2 !== null && user.addressLine2 !== undefined ? user.addressLine2 : "";
-          //   payloadf.userInfo.city = user.city !== null && user.city !== undefined ? user.city : "";
-          //   payloadf.userInfo.postalCode = user.postalCode !== null && user.postalCode !== undefined ? user.postalCode : "";
-          //   payloadf.userInfo.stateOrparish = user.stateOrparish !== null && user.stateOrparish !== undefined ? user.stateOrparish : "";
-          // }
+          if (storeRes) {
+            payloadf.userInfo.contactNumber = user.ContactNumber;
+            payloadf.userInfo.email = user.Email;
+            payloadf.userInfo.fullName = user2.FirstName;
+            payloadf.loggedIn = true;
+            payloadf.userInfo.addressLine1 = user2.AddressLine1 !== null && user2.AddressLine1 !== undefined ? user2.AddressLine1 : "";
+            payloadf.userInfo.addressLine2 = user2.AddressLine2 !== null && user2.AddressLine2 !== undefined ? user2.AddressLine2 : "";
+            payloadf.userInfo.city = user2.City !== null && user2.City !== undefined ? user2.City : "";
+          }
     
           return payloadf;
         }
+      }).catch(function(err){
+        console.log(err);
       });
+      console.log("user ref b4 fetch role is: ");
+      console.log(userRef);
       var finaluserRef = await userHasRole(uid, userRef).then(function (userRoleRes) {
         console.log("Final user ref is: ");
         console.log(userRoleRes);
@@ -411,6 +415,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         loggedIn,
         userInfo,
         userRolef,
+        cartItems,
+        noties,
+        orders,
         signup,
         login,
         gLogin,
