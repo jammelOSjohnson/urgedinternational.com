@@ -73,7 +73,7 @@ export const FoodDeliveryDashboardScreen: React.FC = function FoodDeliveryDashbo
                     <Grid item xs={12}>
                         <PeoplesChoice />                    
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={12}>
                         <PopularRestaurants />
                     </Grid>
                 </Grid>
