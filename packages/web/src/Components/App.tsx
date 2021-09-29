@@ -7,6 +7,7 @@ import { AboutScreen } from '../Screens/About/AboutScreen';
 import { LoginScreen } from '../Screens/Auth/LoginScreen';
 import { RegisterScreen } from '../Screens/Auth/RegisterScreen';
 import { CustomerDashboardScreen } from '../Screens/Dashboard/CustomerDashboard';
+import { FoodDeliveryDashboardScreen } from '../Screens/Dashboard/FoodDeliveryDashboardScreen';
 
 //Import provider
 import AppDataProvider from '../Context/AppDataContext';
@@ -119,6 +120,7 @@ const App: React.FC = function App() {
                   <Route path="/Login" exact component={LoginScreen} />
                   <Route path="/Register" exact component={RegisterScreen} />
                   <Route path="/Dashboard" exact component={CustomerDashboardScreen} />
+                  <Route path="/FoodDelivery" exact component={FoodDeliveryDashboardScreen} />
                 <Footer/>
               </Router>
             </div>

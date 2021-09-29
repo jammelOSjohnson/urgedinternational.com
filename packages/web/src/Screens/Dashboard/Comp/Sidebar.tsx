@@ -97,6 +97,17 @@ const useStyles = makeStyles((theme: Theme) =>
             marginLeft: "auto",
             marginRight: "auto"
           },
+          activeItem2: {
+            backgroundColor: "#FF5E14",
+            color: "#FFFFFF",
+            borderRadius: "50px",
+            width: "90%",
+            marginLeft: "auto",
+            marginRight: "auto"
+          },
+          activeIcon2: {
+            color: "#FFFFFF"
+          },
           inactiveItemLink: {
             textDecoration: "none",
             color: "inherit",
@@ -169,11 +180,11 @@ export const Sidebar: React.FC = function Sidebar() {
                           </ListItem>
                         :
                         referralPath === "/FoodDelivery" && text === "Food Delivery" ?
-                          <ListItem button key={text} className={classes.activeItem}>
-                            <ListItemIcon>
+                          <ListItem button key={text} className={classes.activeItem2}>
+                            <ListItemIcon className={classes.activeIcon2}>
                               {
                                 index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
-                                index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                index === 1 ? <img src="Images/WhiteFoodDeliveryService.png" alt="Food icon"/> : 
                                 index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
                                 index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
                                 index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> : <MailIcon />
