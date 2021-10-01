@@ -1,12 +1,10 @@
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Slider, useMediaQuery } from '@material-ui/core';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import { makeStyles, createStyles, Typography, Theme, Button, IconButton, Slider, useMediaQuery } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "../CSS/slider.css";
+import "../CSS/FoodSlider.css";
 interface Props {
     
 }
@@ -26,39 +24,51 @@ const useStyles = makeStyles((theme: Theme) =>
         fonts: {
             fontFamily: "PT Sans"
         },
+        btnfonts: {
+            fontFamily: "PT Sans",
+            fontSize: "13px",
+            lineHeight: "16.82px",
+            fontWeight: "bolder",
+            color: "#FF5E14",
+            textTransform: "none"
+        },
         image: {
             zIndex: 1,
             margin: '0% 0% 0% 0%',
             position: "absolute",
-            right: "-53px",
-            top: "-54px",
+            right: "41%",
+            top: "-44%",
+            width: "60%"
         },
         sliderSlogan: {
             color: '#F9F9FB',
-            fontSize: '30px',
+            fontSize: '59.31px',
             fontWeight: 700,
-            lineHeight: '26.22px',
-            padding: '0% 0% 2% 0%',
-            position: "absolute",
-            left: "-17%",
-            top: "-80%"
+            lineHeight: '66.66px',
+            width: "50%",
+            textAlign: "left",
+            //padding: '0% 0% 2% 0%',
+            position: "relative",
+            left: "50%",
+            // top: "-760%"
         },
         sliderText: {
             color: '#F9F9FB',
-            fontSize: '16px',
+            fontSize: '20px',
             fontWeight: 400,
             lineHeight: '29.34px',
-            margin: '-10% -17% 8% 0%',
-            position: "absolute",
-            left: "-17%",
-            width: "86%",
+            //margin: '-10% -17% 8% 0%',
+            position: "relative",
+            left: "50%",
+            // top: "-467%",
+            width: "63%",
             textAlign: "left",
         },
         Button: {
             backgroundColor: "#FAFAFA",
-            border: "1.21951px solid #F7B614",
-            height: 41,
-            width: 171,
+            border: "1.21951px solid #FFFFFF",
+            height: "41px",
+            width: "113px",
             borderRadius: 36,
         },
         ButtonText: {
@@ -79,7 +89,8 @@ const useStyles = makeStyles((theme: Theme) =>
         btnLayout: {
             textAlign: "left",
             width: "100%",
-            left: "-17%",
+            left: "50%",
+            // top: "-108%",
             position: "relative",
             paddingTop: "3%"
         }     
@@ -101,7 +112,86 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
       
     return (
         <>
-                slider2
+               <div style={{position: "relative"}}>
+                    <img className={classes.image} src="Images/KfcAdvertisement.png" alt="KFC Bucket"/>
+                    <Carousel nextIcon={false} prevIcon={false}>
+                        <Carousel.Item>  
+                            <img
+                            className="d-block"
+                            src="Images/SliderFrame2.png"
+                            alt="First slide"
+                            width="100%"
+                            style={{minHeight: "300px"}}
+                            />
+                            <Carousel.Caption>
+                                <Typography className={`${classes.fonts} ${classes.sliderSlogan}`}>
+                                    Delicious Healthy Food
+                                </Typography>
+                                <Typography className={`${classes.fonts} ${classes.sliderText}`}>
+                                With Urged, Quality and Time is our main priority. You can trust us to be on-time with your food from any restaraunt.
+                                </Typography>
+                                <Typography className={classes.btnLayout}>
+                                    <Button className={classes.Button}>
+                                        <Typography className={`${classes.btnfonts}`}>
+                                            Restaurants
+                                        </Typography>
+                                    </Button>
+                                </Typography>
+                                
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                        {/* <Carousel.Item>  
+                            <img
+                            className="d-block"
+                            src="Images/SliderFrame2.png"
+                            alt="First slide"
+                            width="100%"
+                            style={{minHeight: "300px"}}
+                            />
+                            <Carousel.Caption>
+                                <Typography className={`${classes.fonts} ${classes.sliderSlogan}`}>
+                                    Delicious Healthy Food
+                                </Typography>
+                                <Typography className={`${classes.fonts} ${classes.sliderText}`}>
+                                With Urged, Quality and Time is our main priority. You can trust us to be on-time with your food from any restaraunt.
+                                </Typography>
+                                <Typography className={classes.btnLayout}>
+                                    <Button className={classes.Button}>
+                                        <Typography className={`${classes.btnfonts}`}>
+                                            Reataurants
+                                        </Typography>
+                                    </Button>
+                                </Typography>
+                                
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                        <Carousel.Item>  
+                            <img
+                            className="d-block"
+                            src="Images/SliderFrame2.png"
+                            alt="First slide"
+                            width="100%"
+                            style={{minHeight: "300px"}}
+                            />
+                            <Carousel.Caption>
+                                <Typography className={`${classes.fonts} ${classes.sliderSlogan}`}>
+                                    Delicious Healthy Food
+                                </Typography>
+                                <Typography className={`${classes.fonts} ${classes.sliderText}`}>
+                                With Urged, Quality and Time is our main priority. You can trust us to be on-time with your food from any restaraunt.
+                                </Typography>
+                                <Typography className={classes.btnLayout}>
+                                    <Button className={classes.Button}>
+                                        <Typography className={`${classes.btnfonts}`}>
+                                            Reataurants
+                                        </Typography>
+                                    </Button>
+                                </Typography>
+                                
+                            </Carousel.Caption>
+                        </Carousel.Item> */}
+                    </Carousel>
+                </div>
         </>
     )
 }

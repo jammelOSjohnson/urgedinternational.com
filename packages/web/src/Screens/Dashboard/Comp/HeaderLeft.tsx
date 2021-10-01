@@ -38,6 +38,8 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
         <>
             <Typography variant="h6" style={{fontWeight: "bold", background: "transparent"}}>
                 Portal
+                <PlayArrowRounded />
+                Food Delivery
             </Typography>
         </>
     )

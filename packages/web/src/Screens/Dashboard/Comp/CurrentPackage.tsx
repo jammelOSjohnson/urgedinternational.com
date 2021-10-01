@@ -2,7 +2,6 @@ import { Container, Grid, makeStyles, createStyles, withStyles, Typography, Them
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import LocalShippingOutlinedIcon from '@material-ui/icons/LocalShippingOutlined';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
-// import {LocationOnOutlinedIcon, LocalShippingOutlinedIcon, HomeOutlinedIcon} from '@material-ui/icons';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import React from 'react';
@@ -23,7 +22,7 @@ interface State {
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
-            width: '100%',
+            width: '100%'
           },
         packageRoot: {
             padding: "0% 0px 2% 0px"
@@ -44,11 +43,22 @@ const useStyles = makeStyles((theme: Theme) =>
           paddingLeft: "20px",
           paddingTop: "10px"
       },
-        cardContent: {
-            fontWeight: "bold"
+        cardHeading: {
+            fontWeight: "bold",
+            fontFamily: "PT Sans"
         }
     }),
 );
+
+export const CurrentPackage: React.FC = function CurrentPackage() {
+  const classes = useStyles();
+  const [values, setValues] = React.useState<State>({
+      email: '',
+      password: '',
+      showPassword: false,
+  });
+
+  var history = useHistory();
 
 const ColorlibConnector = withStyles({
     alternativeLabel: {
@@ -123,18 +133,6 @@ function ColorlibStepIcon(props: StepIconProps) {
     return ['Pick-Up Time', 'In Transit', 'Delivered'];
     }  
 
-
-
-export const CurrentPackage: React.FC = function CurrentPackage() {
-    const classes = useStyles();
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-    });
-
-    var history = useHistory();
-
     const [activeStep, setActiveStep] = React.useState(1);
     const steps = getSteps();
     
@@ -168,7 +166,7 @@ export const CurrentPackage: React.FC = function CurrentPackage() {
                             <img src="Images/Package Image.png" className={classes.image}></img>
                         </CardMedia>
                         <CardContent style={{flexGrow: 1}}>
-                            <Typography className={classes.cardContent}>
+                            <Typography className={classes.cardHeading}>
                                 Document Delivery
                             </Typography>
                             <Typography>
@@ -185,35 +183,6 @@ export const CurrentPackage: React.FC = function CurrentPackage() {
                         </CardContent>
                     </Card>
                 </Grid>
-                {/* <Grid item xs={3}>       
-                    <img src="Images/Package Image.png" className={classes.image} title="Package Image"></img>
-                </Grid>
-                <Grid container direction="row" xs={9}>
-                    <Grid item xs={7}>
-                        <Typography gutterBottom className={classes.cardContent}>
-                            Document Delivery
-                        </Typography>    
-                    </Grid>
-                    <Grid item xs={5}>
-                      <Typography gutterBottom>
-                          Tracking#: <span>URD00585</span>
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Typography gutterBottom className={classes.cardContent}>
-                          Two new files were added for Service Page.
-                        </Typography>
-                        <div className={classes.root}>
-                        <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
-                            {steps.map((label) => (
-                                <Step key={label}>
-                                    <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
-                                </Step>
-                            ))}
-                        </Stepper>
-                      </div>    
-                    </Grid>
-                </Grid> */}
             </Grid>
         </>
     )
