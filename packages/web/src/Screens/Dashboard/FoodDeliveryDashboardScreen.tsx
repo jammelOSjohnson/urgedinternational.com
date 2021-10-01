@@ -56,10 +56,10 @@ export const FoodDeliveryDashboardScreen: React.FC = function FoodDeliveryDashbo
                     <Sidebar />
                 </Grid>
                 <Grid container direction="row" xs={10} spacing={1} className={classes.main}>
-                    <Grid item xs={8} style={{marginBottom: "1%", marginTop: "1%", background: "transparent"}}>
+                    <Grid item xs={8} style={{marginBottom: "12%", marginTop: "1%", background: "transparent"}}>
                         <HeaderLeft />
                     </Grid>
-                    <Grid item xs={4} style={{marginBottom: "1%", marginTop: "1%", background: "transparent"}}>
+                    <Grid item xs={4} style={{marginBottom: "12%", marginTop: "1%", background: "transparent"}}>
                         <HeaderRight />
                     </Grid>
                     {/*Row 1*/}
