@@ -5,6 +5,8 @@ import clsx from 'clsx';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../CSS/FoodSlider.css";
+import { Link } from "react-router-dom";
+
 interface Props {
     
 }
@@ -92,7 +94,12 @@ const useStyles = makeStyles((theme: Theme) =>
             left: "50%",
             // top: "-108%",
             position: "relative",
-            paddingTop: "3%"
+            paddingTop: "3%",
+            zIndex: 1
+        },
+        inactiveItemLink: {
+            textDecoration: "none",
+            color: "inherit",
         }     
     }),
 );
@@ -131,11 +138,13 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                 With Urged, Quality and Time is our main priority. You can trust us to be on-time with your food from any restaraunt.
                                 </Typography>
                                 <Typography className={classes.btnLayout}>
-                                    <Button className={classes.Button}>
-                                        <Typography className={`${classes.btnfonts}`}>
-                                            Restaurants
-                                        </Typography>
-                                    </Button>
+                                    <Link to="/FoodDelivery/Restaurants" title="Restaurants" className={classes.inactiveItemLink}>
+                                        <Button className={classes.Button}>
+                                            <Typography className={`${classes.btnfonts}`}>
+                                                Restaurants
+                                            </Typography>
+                                        </Button>
+                                    </Link>
                                 </Typography>
                                 
                             </Carousel.Caption>

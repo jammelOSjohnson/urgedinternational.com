@@ -64,6 +64,10 @@ const useStyles = makeStyles((theme: Theme) =>
         links: {
             textDecoration: "none"
         },
+        inactiveItemLink: {
+            textDecoration: "none",
+            color: "inherit",
+        }
     }),
 );
 
@@ -94,120 +98,120 @@ export const Popularcategories: React.FC = function Popularcategories() {
                 <Grid container xs={6} direction="column">
                     <Grid container direction="row" spacing={1}>
                         <Grid item xs={10} md={3}>
-                            <Card className={classes.card}>
-                                <CardMedia className={classes.cardImage}>
-                                    <img src="Images/FoodDeliveryBreakfast.png"></img>
-                                </CardMedia>
-                                <CardContent className={classes.cardContent}>
-                                    <Link className={classes.links} to="#" title="Breakfast">
-                                        <Typography gutterBottom className={classes.cardTitle}>
-                                            Breakfast
-                                        </Typography>
-                                    </Link>
-                                </CardContent>
-                            </Card>
+                            <Link to="/FoodDelivery/Breakfast" title="Breakfast" className={classes.inactiveItemLink}>
+                                <Card className={classes.card}>
+                                    <CardMedia className={classes.cardImage}>
+                                        <img src="Images/FoodDeliveryBreakfast.png"></img>
+                                    </CardMedia>
+                                    <CardContent className={classes.cardContent}>
+                                            <Typography gutterBottom className={classes.cardTitle}>
+                                                Breakfast
+                                            </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Link>
                         </Grid>
                         <Grid item xs={10} md={3}>
-                            <Card className={classes.card}>
-                                <CardMedia className={classes.cardImage}>
-                                    <img src="Images/FoodDeliveryLunch.png"></img>
-                                </CardMedia>
-                                <CardContent className={classes.cardContent}>
-                                    <Link className={classes.links} to="#" title="Lunch">
-                                        <Typography gutterBottom className={classes.cardTitle}>
-                                            Lunch
-                                        </Typography>
-                                    </Link>
-                                </CardContent>
-                            </Card>
+                            <Link to="/FoodDelivery/Lunch" title="Lunch" className={classes.inactiveItemLink}>
+                                <Card className={classes.card}>
+                                    <CardMedia className={classes.cardImage}>
+                                        <img src="Images/FoodDeliveryLunch.png"></img>
+                                    </CardMedia>
+                                    <CardContent className={classes.cardContent}>
+                                            <Typography gutterBottom className={classes.cardTitle}>
+                                                Lunch
+                                            </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Link>
                         </Grid>
                         <Grid item xs={10} md={3}>
-                            <Card className={classes.card}>
-                                <CardMedia className={classes.cardImage}>
-                                    <img src="Images/FoodDeliveryDinner.png"></img>
-                                </CardMedia>
-                                <CardContent className={classes.cardContent}>
-                                    <Link className={classes.links} to="#" title="Dinner">
-                                        <Typography gutterBottom className={classes.cardTitle}>
-                                            Dinner
-                                        </Typography>
-                                    </Link>
-                                </CardContent>
-                            </Card>
+                            <Link to="/FoodDelivery/Dinner" title="Dinner" className={classes.inactiveItemLink}>
+                                <Card className={classes.card}>
+                                    <CardMedia className={classes.cardImage}>
+                                        <img src="Images/FoodDeliveryDinner.png"></img>
+                                    </CardMedia>
+                                    <CardContent className={classes.cardContent}>
+                                            <Typography gutterBottom className={classes.cardTitle}>
+                                                Dinner
+                                            </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Link>
                         </Grid>
                         <Grid item xs={10} md={3}>
-                            <Card className={classes.card}>
-                                <CardMedia className={classes.cardImage}>
-                                    <img src="Images/FoodDeliveryDessert.png"></img>
-                                </CardMedia>
-                                <CardContent className={classes.cardContent}>
-                                    <Link className={classes.links} to="#" title="Dessert">
-                                        <Typography gutterBottom className={classes.cardTitle}>
-                                            Dessert
-                                        </Typography>
-                                    </Link>
-                                </CardContent>
-                            </Card>
+                            <Link to="/FoodDelivery/Dessert" title="Dessert" className={classes.inactiveItemLink}>
+                                <Card className={classes.card}>
+                                    <CardMedia className={classes.cardImage}>
+                                        <img src="Images/FoodDeliveryDessert.png"></img>
+                                    </CardMedia>
+                                    <CardContent className={classes.cardContent}>
+                                            <Typography gutterBottom className={classes.cardTitle}>
+                                                Dessert
+                                            </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Link>
                         </Grid>
                     </Grid>
                 </Grid>
                 <Grid container xs={6} direction="column">
                     <Grid container direction="row" spacing={1}>
                         <Grid item xs={10} md={3}>
-                            <Card className={classes.card}>
-                                <CardMedia className={classes.cardImage}>
-                                    <img src="Images/FoodDeliveryFastFood.png"></img>
-                                </CardMedia>
-                                <CardContent className={classes.cardContent}>
-                                    <Link className={classes.links} to="#" title="Fast Food">
-                                        <Typography gutterBottom className={classes.cardTitle}>
-                                            Fast Food
-                                        </Typography>
-                                    </Link>
-                                </CardContent>
-                            </Card>
+                            <Link to="/FoodDelivery/FastFood" title="Fast Food" className={classes.inactiveItemLink}>
+                                <Card className={classes.card}>
+                                    <CardMedia className={classes.cardImage}>
+                                        <img src="Images/FoodDeliveryFastFood.png"></img>
+                                    </CardMedia>
+                                    <CardContent className={classes.cardContent}>
+                                            <Typography gutterBottom className={classes.cardTitle}>
+                                                Fast Food
+                                            </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Link>
                         </Grid>
                         <Grid item xs={10} md={3}>
-                            <Card className={classes.card}>
-                                <CardMedia className={classes.cardImage}>
-                                    <img src="Images/FoodDeliveryPastry.png"></img>
-                                </CardMedia>
-                                <CardContent className={classes.cardContent}>
-                                    <Link className={classes.links} to="#" title="Pastry">
-                                        <Typography gutterBottom className={classes.cardTitle}>
-                                            Pastry
-                                        </Typography>
-                                    </Link>
-                                </CardContent>
-                            </Card>
+                            <Link to="/FoodDelivery/Pastry" title="Pastry" className={classes.inactiveItemLink}>
+                                <Card className={classes.card}>
+                                    <CardMedia className={classes.cardImage}>
+                                        <img src="Images/FoodDeliveryPastry.png"></img>
+                                    </CardMedia>
+                                    <CardContent className={classes.cardContent}>
+                                            <Typography gutterBottom className={classes.cardTitle}>
+                                                Pastry
+                                            </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Link>
                         </Grid>
                         <Grid item xs={10} md={3}>
-                            <Card className={classes.card}>
-                                <CardMedia className={classes.cardImage}>
-                                    <img src="Images/FoodDeliveryChinese.png"></img>
-                                </CardMedia>
-                                <CardContent className={classes.cardContent}>
-                                    <Link className={classes.links} to="#" title="Chinese">
-                                        <Typography gutterBottom className={classes.cardTitle}>
-                                            Chinese
-                                        </Typography>
-                                    </Link>
-                                </CardContent>
-                            </Card>
+                            <Link to="/FoodDelivery/Chinese" title="Chinese" className={classes.inactiveItemLink}>
+                                <Card className={classes.card}>
+                                    <CardMedia className={classes.cardImage}>
+                                        <img src="Images/FoodDeliveryChinese.png"></img>
+                                    </CardMedia>
+                                    <CardContent className={classes.cardContent}>
+                                            <Typography gutterBottom className={classes.cardTitle}>
+                                                Chinese
+                                            </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Link>
                         </Grid>
                         <Grid item xs={10} md={3}>
-                            <Card className={classes.card}>
-                                <CardMedia className={classes.cardImage} style={{paddingTop: "14px"}}>
-                                    <img src="Images/FoodDeliverySalads.png"></img>
-                                </CardMedia>
-                                <CardContent className={classes.cardContent}>
-                                    <Link className={classes.links} to="#" title="Salads">
-                                        <Typography gutterBottom className={classes.cardTitle}>
-                                            Salads
-                                        </Typography>
-                                    </Link>
-                                </CardContent>
-                            </Card>
+                            <Link to="/FoodDelivery/Salads" title="Salads" className={classes.inactiveItemLink}>
+                                <Card className={classes.card}>
+                                    <CardMedia className={classes.cardImage} style={{paddingTop: "14px"}}>
+                                        <img src="Images/FoodDeliverySalads.png"></img>
+                                    </CardMedia>
+                                    <CardContent className={classes.cardContent}>
+                                            <Typography gutterBottom className={classes.cardTitle}>
+                                                Salads
+                                            </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Link>
                         </Grid>
                     </Grid>
                 </Grid>
