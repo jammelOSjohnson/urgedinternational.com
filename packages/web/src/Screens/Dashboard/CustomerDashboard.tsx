@@ -52,36 +52,38 @@ export const CustomerDashboardScreen: React.FC = function CustomerDashboardScree
       
     return (
         <>
-         <Container maxWidth="xl" >
-            <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
-                <Grid item xs={2} spacing={1}>
-                    <Sidebar />
+        <Sidebar>
+            <Container maxWidth="xl" >
+                <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
+                    {/* <Grid item xs={2} spacing={1}>
+                        <Sidebar />
+                    </Grid> */}
+                    <Grid container direction="row" xs={12} spacing={1} className={classes.main}>
+                        <Grid item xs={8} style={{marginBottom: "1%", marginTop: "1%", background: "transparent"}}>
+                            <HeaderLeft />
+                        </Grid>
+                        <Grid item xs={4} style={{marginBottom: "1%", marginTop: "1%", background: "transparent"}}>
+                            <HeaderRight />
+                        </Grid>
+                        {/*Row 1*/}
+                        <Grid item xs={8}>
+                            <AdvertisementSlider />
+                        </Grid>
+                        <Grid item xs={4}>
+                            <OrderTotals />
+                        </Grid>
+                        {/*Row 2*/}
+                        <Grid item xs={8}>
+                            <Categories />
+                            <CurrentPackage />                       
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Favourites />
+                        </Grid>
+                    </Grid>
                 </Grid>
-                <Grid container direction="row" xs={10} spacing={1} className={classes.main}>
-                    <Grid item xs={8} style={{marginBottom: "1%", marginTop: "1%", background: "transparent"}}>
-                        <HeaderLeft />
-                    </Grid>
-                    <Grid item xs={4} style={{marginBottom: "1%", marginTop: "1%", background: "transparent"}}>
-                        <HeaderRight />
-                    </Grid>
-                    {/*Row 1*/}
-                    <Grid item xs={8}>
-                        <AdvertisementSlider />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <OrderTotals />
-                    </Grid>
-                    {/*Row 2*/}
-                    <Grid item xs={8}>
-                        <Categories />
-                        <CurrentPackage />                       
-                    </Grid>
-                    <Grid item xs={4}>
-                        <Favourites />
-                    </Grid>
-                </Grid>
-            </Grid>
-        </Container>
+            </Container>
+        </Sidebar>
         </>
     )
 }

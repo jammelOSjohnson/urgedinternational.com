@@ -32,7 +32,11 @@ const useStyles = makeStyles((theme: Theme) =>
         main: {
             padding: 0,
             backgroundImage: "url(Images/FoodPortalBackground.png)"
-        }
+        },
+        content: {
+            flexGrow: 1,
+            padding: theme.spacing(3),
+          },
     }),
 );
 
@@ -50,35 +54,37 @@ export const FoodDeliveryDashboardScreen: React.FC = function FoodDeliveryDashbo
       
     return (
         <>
-         <Container maxWidth="xl" >
-            <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
-                <Grid item xs={2} spacing={1}>
-                    <Sidebar />
+        <Sidebar>
+            <Container maxWidth="xl">
+                <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
+                    {/* <Grid item xs={2} spacing={1}>
+                        <Sidebar />
+                    </Grid> */}
+                    <Grid container direction="row" xs={12} spacing={1} className={classes.main}>
+                        <Grid item xs={8} style={{marginBottom: "12%", marginTop: "1%", background: "transparent"}}>
+                            <HeaderLeft />
+                        </Grid>
+                        <Grid item xs={4} style={{marginBottom: "12%", marginTop: "1%", background: "transparent"}}>
+                            <HeaderRight />
+                        </Grid>
+                        {/*Row 1*/}
+                        <Grid item xs={12}>
+                            <AdvertisementSlider2 />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Popularcategories />
+                        </Grid>
+                        {/*Row 2*/}
+                        <Grid item xs={12}>
+                            <PeoplesChoice />                    
+                        </Grid>
+                        <Grid item xs={12}>
+                            <PopularRestaurants />
+                        </Grid>
+                    </Grid>
                 </Grid>
-                <Grid container direction="row" xs={10} spacing={1} className={classes.main}>
-                    <Grid item xs={8} style={{marginBottom: "12%", marginTop: "1%", background: "transparent"}}>
-                        <HeaderLeft />
-                    </Grid>
-                    <Grid item xs={4} style={{marginBottom: "12%", marginTop: "1%", background: "transparent"}}>
-                        <HeaderRight />
-                    </Grid>
-                    {/*Row 1*/}
-                    <Grid item xs={12}>
-                        <AdvertisementSlider2 />
-                    </Grid>
-                    <Grid item xs={12}>
-                        <Popularcategories />
-                    </Grid>
-                    {/*Row 2*/}
-                    <Grid item xs={12}>
-                        <PeoplesChoice />                    
-                    </Grid>
-                    <Grid item xs={12}>
-                        <PopularRestaurants />
-                    </Grid>
-                </Grid>
-            </Grid>
-        </Container>
+            </Container>
+        </Sidebar>
         </>
     )
 }

@@ -1,10 +1,11 @@
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, useTheme, CssBaseline, AppBar, Toolbar, Drawer, Divider, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, useTheme, CssBaseline, AppBar, Toolbar, Drawer, Divider, List, ListItem, ListItemIcon, ListItemText, useMediaQuery } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import React from 'react';
+import React, { Children } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import clsx from 'clsx';
+import "../CSS/sidebar.css";
 
 import MenuIcon from '@material-ui/icons/Menu';
 import MailIcon from '@material-ui/icons/Mail';
@@ -19,7 +20,8 @@ interface State {
     showPassword: boolean;
 }
 
-const drawerWidth = "16.5%";
+// const drawerWidth = "16.5%";
+const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -29,6 +31,13 @@ const useStyles = makeStyles((theme: Theme) =>
             marginLeft: "auto",
             marginRight: "auto" ,
             marginTop: "10%"       
+        },
+        logosmall: {
+          height: "107.72px",
+          width: "37px",
+          marginLeft: "auto",
+          marginRight: "auto" ,
+          marginTop: "10%"       
         },
         root: {
             display: 'flex',
@@ -111,15 +120,29 @@ const useStyles = makeStyles((theme: Theme) =>
           inactiveItemLink: {
             textDecoration: "none",
             color: "inherit",
+          },
+          callapsibleIconStyle: {
+              right: 0,
+              position: "absolute",
+              transform: "rotate(180deg)",
+          },
+          expandIconStyle: {
+            marginLeft: "auto",
+            marginRight: "auto",
           }
+          
     }),
 );
 
 
-export const Sidebar: React.FC = function Sidebar() {
+export const Sidebar: React.FC = function Sidebar({children}) {
     const classes = useStyles();
     const theme = useTheme();
+    const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
+    
     const [open, setOpen] = React.useState(true);
+    const [open1, setOpen1] = React.useState(false);
 
     const [values, setValues] = React.useState<State>({
         email: '',
@@ -138,10 +161,20 @@ export const Sidebar: React.FC = function Sidebar() {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+
+    const handleDrawerOpen1 = () => {
+      setOpen1(true);
+    };
+  
+    const handleDrawerClose1 = () => {
+        setOpen(false);
+    };
     
       
     return (
         <>
+          
+          
             <div className={classes.root}>
                 <CssBaseline />
                 <Drawer
@@ -162,7 +195,9 @@ export const Sidebar: React.FC = function Sidebar() {
                             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                         </IconButton>
                     </div> */}
-                    <img className={classes.logo} src="Images/urged logo.svg" alt="Urged Logo"></img>
+                    
+                    {open && <img className={classes.logo} src="Images/urged logo.svg" alt="Urged Logo"></img>}
+                    {!open && <img className={classes.logosmall} src="Images/SmallSidebarLogo.png" alt="Urged Logo"></img>}
                     <List>
                     {['Overview', 'Food Delivery', 'Package Delivery', 'Market Place', 'Orders'].map((text, index) => (
                         referralPath === "/Dashboard" && text === "Overview" ?
@@ -270,7 +305,7 @@ export const Sidebar: React.FC = function Sidebar() {
                         <ListItem button key={text}>
                             <ListItemIcon>
                               {
-                                index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
                                 index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
                                 index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
                                 index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
@@ -299,14 +334,28 @@ export const Sidebar: React.FC = function Sidebar() {
                             aria-label="open drawer"
                             onClick={handleDrawerOpen}
                             edge="start"
-                            className={clsx(classes.menuButton, {
+                            className={clsx(classes.expandIconStyle,{
                             [classes.hide]: open,
                             })}
                         >
-                            <MenuIcon />
+                            <img src="Images/collapse_icon1.svg" style={{width: "100%"}} alt="icon"/>
+                        </IconButton>
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleDrawerClose}
+                            edge="start"
+                            className={clsx( classes.callapsibleIconStyle, {
+                            [classes.hide]: !open,
+                            })}
+                        >
+                            <img src="Images/collapse_icon1.svg" style={{width: "100%"}} alt="icon"/>
                         </IconButton>
                     </List>
                 </Drawer>
+                <main className={classes.content}>
+                  {children}
+                </main>
             </div>
         </>
     )

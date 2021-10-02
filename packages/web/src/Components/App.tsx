@@ -8,6 +8,7 @@ import { LoginScreen } from '../Screens/Auth/LoginScreen';
 import { RegisterScreen } from '../Screens/Auth/RegisterScreen';
 import { CustomerDashboardScreen } from '../Screens/Dashboard/CustomerDashboard';
 import { FoodDeliveryDashboardScreen } from '../Screens/Dashboard/FoodDeliveryDashboardScreen';
+import { Sidebar } from '../Screens/Dashboard/Comp/Sidebar';
 
 //Import provider
 import AppDataProvider from '../Context/AppDataContext';
@@ -116,6 +117,7 @@ const App: React.FC = function App() {
             <div>
               <Router>
                 <Header/>
+                {/* <Sidebar/> */}
                   <Route path="/" exact component={AboutScreen} />
                   <Route path="/Login" exact component={LoginScreen} />
                   <Route path="/Register" exact component={RegisterScreen} />
