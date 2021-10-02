@@ -123,7 +123,7 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                             width="100%"
                             style={{minHeight: "300px"}}
                             />
-                            <Carousel.Caption>
+                            <Carousel.Caption style={{top: "5%"}}>
                                 <Typography className={`${classes.fonts} ${classes.sliderSlogan}`}>
                                     Delicious Healthy Food
                                 </Typography>
