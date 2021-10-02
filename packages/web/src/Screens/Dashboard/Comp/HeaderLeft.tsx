@@ -30,7 +30,9 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
         showPassword: false,
       });
     
-      var history = useHistory();
+    var history = useHistory();
+    var location = history.location;
+    var referralPath = location.pathname;
 
     
       
@@ -38,6 +40,9 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
         <>
             <Typography variant="h6" style={{fontWeight: "bold", background: "transparent"}}>
                 Portal
+                {referralPath === "/fooddelivery" || referralPath === "/FoodDelivery" ?
+                <span><PlayArrowRounded /> Food Delivery</span> : ""}
+                
             </Typography>
         </>
     )
