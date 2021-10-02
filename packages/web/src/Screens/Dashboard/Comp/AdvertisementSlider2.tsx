@@ -112,10 +112,10 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
       
     return (
         <>
-               <div style={{position: "relative"}}>
+               <div style={{position: "relative"}} id="FoodSlide">
                     <img className={classes.image} src="Images/KfcAdvertisement.png" alt="KFC Bucket"/>
                     <Carousel nextIcon={false} prevIcon={false}>
-                        <Carousel.Item>  
+                        <Carousel.Item >  
                             <img
                             className="d-block"
                             src="Images/SliderFrame2.png"

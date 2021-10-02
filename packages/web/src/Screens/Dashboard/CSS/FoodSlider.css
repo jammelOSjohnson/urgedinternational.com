@@ -18,3 +18,9 @@
     text-align: center;
     top: 5%
 }
+
+#FoodSlide .carousel-indicators {
+    top: 10%;
+    left: -127%;
+    transform: rotate(90deg);
+}
