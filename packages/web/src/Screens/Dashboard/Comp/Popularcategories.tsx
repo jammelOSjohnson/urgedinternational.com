@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingRight: 0,
             paddingTop: "10px",
             minHeight: "142px",
+            minWidth: "120px"
         },
         cardContent: {
             flexGrow: 1,
@@ -67,6 +68,10 @@ const useStyles = makeStyles((theme: Theme) =>
         inactiveItemLink: {
             textDecoration: "none",
             color: "inherit",
+        },
+        gridSpacing: {
+            marginLeft: "auto", 
+            marginRight: "auto"
         }
     }),
 );
@@ -95,9 +100,9 @@ export const Popularcategories: React.FC = function Popularcategories() {
                 </Grid>
             </Grid>
             <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                <Grid container xs={6} direction="column">
+                <Grid container xs={12} direction="column">
                     <Grid container direction="row" spacing={1}>
-                        <Grid item xs={10} md={3}>
+                        <Grid item className={classes.gridSpacing}>
                             <Link to="/FoodDelivery/Breakfast" title="Breakfast" className={classes.inactiveItemLink}>
                                 <Card className={classes.card}>
                                     <CardMedia className={classes.cardImage}>
@@ -111,7 +116,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                 </Card>
                             </Link>
                         </Grid>
-                        <Grid item xs={10} md={3}>
+                        <Grid item className={classes.gridSpacing}>
                             <Link to="/FoodDelivery/Lunch" title="Lunch" className={classes.inactiveItemLink}>
                                 <Card className={classes.card}>
                                     <CardMedia className={classes.cardImage}>
@@ -125,7 +130,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                 </Card>
                             </Link>
                         </Grid>
-                        <Grid item xs={10} md={3}>
+                        <Grid item className={classes.gridSpacing}>
                             <Link to="/FoodDelivery/Dinner" title="Dinner" className={classes.inactiveItemLink}>
                                 <Card className={classes.card}>
                                     <CardMedia className={classes.cardImage}>
@@ -139,7 +144,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                 </Card>
                             </Link>
                         </Grid>
-                        <Grid item xs={10} md={3}>
+                        <Grid item className={classes.gridSpacing}>
                             <Link to="/FoodDelivery/Dessert" title="Dessert" className={classes.inactiveItemLink}>
                                 <Card className={classes.card}>
                                     <CardMedia className={classes.cardImage}>
@@ -153,11 +158,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                 </Card>
                             </Link>
                         </Grid>
-                    </Grid>
-                </Grid>
-                <Grid container xs={6} direction="column">
-                    <Grid container direction="row" spacing={1}>
-                        <Grid item xs={10} md={3}>
+                        <Grid item className={classes.gridSpacing}>
                             <Link to="/FoodDelivery/FastFood" title="Fast Food" className={classes.inactiveItemLink}>
                                 <Card className={classes.card}>
                                     <CardMedia className={classes.cardImage}>
@@ -171,7 +172,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                 </Card>
                             </Link>
                         </Grid>
-                        <Grid item xs={10} md={3}>
+                        <Grid item className={classes.gridSpacing}>
                             <Link to="/FoodDelivery/Pastry" title="Pastry" className={classes.inactiveItemLink}>
                                 <Card className={classes.card}>
                                     <CardMedia className={classes.cardImage}>
@@ -185,7 +186,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                 </Card>
                             </Link>
                         </Grid>
-                        <Grid item xs={10} md={3}>
+                        <Grid item className={classes.gridSpacing}>
                             <Link to="/FoodDelivery/Chinese" title="Chinese" className={classes.inactiveItemLink}>
                                 <Card className={classes.card}>
                                     <CardMedia className={classes.cardImage}>
@@ -199,7 +200,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                 </Card>
                             </Link>
                         </Grid>
-                        <Grid item xs={10} md={3}>
+                        <Grid item className={classes.gridSpacing}>
                             <Link to="/FoodDelivery/Salads" title="Salads" className={classes.inactiveItemLink}>
                                 <Card className={classes.card}>
                                     <CardMedia className={classes.cardImage} style={{paddingTop: "14px"}}>
@@ -215,6 +216,11 @@ export const Popularcategories: React.FC = function Popularcategories() {
                         </Grid>
                     </Grid>
                 </Grid>
+                {/* <Grid container xs={6} md={2} direction="column">
+                    <Grid container direction="row" spacing={1}>
+                        
+                    </Grid>
+                </Grid> */}
             </Grid>
         </>
     )

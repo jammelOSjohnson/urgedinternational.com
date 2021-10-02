@@ -44,9 +44,9 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         sliderSlogan: {
             color: '#F9F9FB',
-            fontSize: '59.31px',
+            fontSize: 'clamp(16px, 3vw, 51.31px)',
             fontWeight: 700,
-            lineHeight: '66.66px',
+            lineHeight: '120%',
             width: "50%",
             textAlign: "left",
             //padding: '0% 0% 2% 0%',
@@ -56,9 +56,9 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         sliderText: {
             color: '#F9F9FB',
-            fontSize: '20px',
+            fontSize: 'clamp(16px, 3vw, 20px)',
             fontWeight: 400,
-            lineHeight: '29.34px',
+            lineHeight: '100%',
             //margin: '-10% -17% 8% 0%',
             position: "relative",
             left: "50%",
