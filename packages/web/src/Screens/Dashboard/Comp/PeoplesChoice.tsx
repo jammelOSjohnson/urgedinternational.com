@@ -65,6 +65,10 @@ const useStyles = makeStyles((theme: Theme) =>
             fontFamily: "PT Sans",
             fontWeight: "bold"
         },
+        gridSpacing: {
+            marginLeft: "auto", 
+            marginRight: "auto"
+        }
     }),
 );
 
@@ -96,56 +100,66 @@ export const PeoplesChoice: React.FC = function PeoplesChoice() {
                 </Grid>
             </Grid>
             <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
-                    <Card className={classes.card}>
-                        <CardMedia className={classes.cardImage}>
-                            <img src="Images/ExampleSalad.png"></img>
-                        </CardMedia>
-                        <CardContent className={classes.cardContent}>
-                                <Typography gutterBottom className={classes.cardTitle}>
-                                    Green Salad
-                                </Typography>
-                        </CardContent>
-                    </Card>
-                    <Card className={classes.card}>
-                        <CardMedia className={classes.cardImage}>
-                            <img src="Images/ExampleSalad.png"></img>
-                        </CardMedia>
-                        <CardContent className={classes.cardContent}>
-                                <Typography gutterBottom className={classes.cardTitle}>
-                                    Green Salad
-                                </Typography>
-                        </CardContent>
-                    </Card>
-                    <Card className={classes.card}>
-                        <CardMedia className={classes.cardImage}>
-                            <img src="Images/ExampleSalad.png"></img>
-                        </CardMedia>
-                        <CardContent className={classes.cardContent}>
-                                <Typography gutterBottom className={classes.cardTitle}>
-                                    Green Salad
-                                </Typography>
-                        </CardContent>
-                    </Card>
-                    <Card className={classes.card}>
-                        <CardMedia className={classes.cardImage}>
-                            <img src="Images/ExampleSalad.png"></img>
-                        </CardMedia>
-                        <CardContent className={classes.cardContent}>
-                                <Typography gutterBottom className={classes.cardTitle}>
-                                    Green Salad
-                                </Typography>
-                        </CardContent>
-                    </Card>       
-                    <Card className={classes.card}>
-                        <CardMedia className={classes.cardImage}>
-                            <img src="Images/ExampleSalad.png"></img>
-                        </CardMedia>
-                        <CardContent className={classes.cardContent}>
-                                <Typography gutterBottom className={classes.cardTitle}>
-                                    Green Salad
-                                </Typography>
-                        </CardContent>
-                    </Card>
+                    <Grid xs={'auto'} className={classes.gridSpacing}>
+                        <Card className={classes.card}>
+                            <CardMedia className={classes.cardImage}>
+                                <img src="Images/ExampleSalad.png"></img>
+                            </CardMedia>
+                            <CardContent className={classes.cardContent}>
+                                    <Typography gutterBottom className={classes.cardTitle}>
+                                        Green Salad
+                                    </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid xs={'auto'} className={classes.gridSpacing}>
+                        <Card className={classes.card}>
+                            <CardMedia className={classes.cardImage}>
+                                <img src="Images/ExampleSalad.png"></img>
+                            </CardMedia>
+                            <CardContent className={classes.cardContent}>
+                                    <Typography gutterBottom className={classes.cardTitle}>
+                                        Green Salad
+                                    </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid xs={'auto'} className={classes.gridSpacing}>
+                        <Card className={classes.card}>
+                            <CardMedia className={classes.cardImage}>
+                                <img src="Images/ExampleSalad.png"></img>
+                            </CardMedia>
+                            <CardContent className={classes.cardContent}>
+                                    <Typography gutterBottom className={classes.cardTitle}>
+                                        Green Salad
+                                    </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid xs={'auto'} className={classes.gridSpacing}>
+                        <Card className={classes.card}>
+                            <CardMedia className={classes.cardImage}>
+                                <img src="Images/ExampleSalad.png"></img>
+                            </CardMedia>
+                            <CardContent className={classes.cardContent}>
+                                    <Typography gutterBottom className={classes.cardTitle}>
+                                        Green Salad
+                                    </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid xs={'auto'} className={classes.gridSpacing}>
+                        <Card className={classes.card}>
+                            <CardMedia className={classes.cardImage}>
+                                <img src="Images/ExampleSalad.png"></img>
+                            </CardMedia>
+                            <CardContent className={classes.cardContent}>
+                                    <Typography gutterBottom className={classes.cardTitle}>
+                                        Green Salad
+                                    </Typography>
+                            </CardContent>
+                        </Card>
+                    </Grid>
             </Grid>
         </>
     )

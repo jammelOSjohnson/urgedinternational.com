@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingLeft: 0,
             paddingRight: 0,
             paddingTop: "10px",
+            minHeight: "142px",
         },
         cardContent: {
             flexGrow: 1,
@@ -196,7 +197,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                         </Grid>
                         <Grid item xs={10} md={3}>
                             <Card className={classes.card}>
-                                <CardMedia className={classes.cardImage}>
+                                <CardMedia className={classes.cardImage} style={{paddingTop: "14px"}}>
                                     <img src="Images/FoodDeliverySalads.png"></img>
                                 </CardMedia>
                                 <CardContent className={classes.cardContent}>
