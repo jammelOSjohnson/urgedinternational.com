@@ -1,5 +1,5 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardMedia, CardContent } from '@material-ui/core';
+import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardMedia, CardContent} from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import React from 'react';
@@ -19,10 +19,16 @@ interface State {
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
+        root: {
+            padding: "0% 0px 5% 0px"
+        },
+        category: {
+            fontWeight: "bold"
+        },
         cardTitle: {
             fontSize: "20px",
             fontWeight: 700,
-            color: "#1D2635",
+            color: "#FFFFFF",
             fontFamily: "PT Sans",
         },
         cardContent: {
@@ -32,11 +38,12 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingTop: "0px",
         },
         cardImage: {
-            textAlign: "left",
-            position: "relative"
+            // textAlign: "left",
+            position: "relative",
+            borderRadius: "30px"
         },
         card: {
-            background: "#FFFFFF",
+            background: "#FEC109",
             border: "0.813791px solid #E2E2E2",
             boxSizing: "border-box",
             boxShadow: "0px 4.64215px 12.2069px rgba(0, 0, 0, 0.11)",
@@ -57,7 +64,7 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "#13ADD1",
             fontFamily: "PT Sans",
             fontWeight: "bold"
-        }
+        },
     }),
 );
 
@@ -79,7 +86,67 @@ export const PeoplesChoice: React.FC = function PeoplesChoice() {
       
     return (
         <>
-            PeoplesChoice
+            <Grid container direction="row" spacing={3} className={classes.root} alignItems="center">
+                <Grid item xs={12} md={6} lg={3} container spacing={1}>
+                    <Grid item xs={10} md={10}>
+                        <Typography variant="subtitle1" className={classes.category}>
+                            People's Choice
+                        </Typography>
+                    </Grid>
+                </Grid>
+            </Grid>
+            <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
+                    <Card className={classes.card}>
+                        <CardMedia className={classes.cardImage}>
+                            <img src="Images/ExampleSalad.png"></img>
+                        </CardMedia>
+                        <CardContent className={classes.cardContent}>
+                                <Typography gutterBottom className={classes.cardTitle}>
+                                    Green Salad
+                                </Typography>
+                        </CardContent>
+                    </Card>
+                    <Card className={classes.card}>
+                        <CardMedia className={classes.cardImage}>
+                            <img src="Images/ExampleSalad.png"></img>
+                        </CardMedia>
+                        <CardContent className={classes.cardContent}>
+                                <Typography gutterBottom className={classes.cardTitle}>
+                                    Green Salad
+                                </Typography>
+                        </CardContent>
+                    </Card>
+                    <Card className={classes.card}>
+                        <CardMedia className={classes.cardImage}>
+                            <img src="Images/ExampleSalad.png"></img>
+                        </CardMedia>
+                        <CardContent className={classes.cardContent}>
+                                <Typography gutterBottom className={classes.cardTitle}>
+                                    Green Salad
+                                </Typography>
+                        </CardContent>
+                    </Card>
+                    <Card className={classes.card}>
+                        <CardMedia className={classes.cardImage}>
+                            <img src="Images/ExampleSalad.png"></img>
+                        </CardMedia>
+                        <CardContent className={classes.cardContent}>
+                                <Typography gutterBottom className={classes.cardTitle}>
+                                    Green Salad
+                                </Typography>
+                        </CardContent>
+                    </Card>       
+                    <Card className={classes.card}>
+                        <CardMedia className={classes.cardImage}>
+                            <img src="Images/ExampleSalad.png"></img>
+                        </CardMedia>
+                        <CardContent className={classes.cardContent}>
+                                <Typography gutterBottom className={classes.cardTitle}>
+                                    Green Salad
+                                </Typography>
+                        </CardContent>
+                    </Card>
+            </Grid>
         </>
     )
 }
