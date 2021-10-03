@@ -72,7 +72,11 @@ const useStyles = makeStyles((theme: Theme) =>
         gridSpacingMobile: {
             marginLeft: "2%", 
             marginRight: "2%"
-        }
+        },
+        wrapper: {
+            display: "inline-flex",
+            overflow: "auto"
+        },
 
     }),
 );
@@ -186,68 +190,68 @@ export const PeoplesChoice: React.FC = function PeoplesChoice() {
                         </Grid>
                     </Grid>
                 </Grid>
-                <div className={classes.root} style={{overflow: "auto"}}>
-                    <div >
-                        <div className={classes.gridSpacingMobile}>
-                            <Card className={classes.card}>
-                                <CardMedia className={classes.cardImage}>
-                                    <img src="Images/ExampleSalad.png"></img>
-                                </CardMedia>
-                                <CardContent className={classes.cardContent}>
-                                        <Typography gutterBottom className={classes.cardTitle}>
-                                            Green Salad
-                                        </Typography>
-                                </CardContent>
-                            </Card>
-                        </div>
-                        <div className={classes.gridSpacingMobile}>
-                            <Card className={classes.card}>
-                                <CardMedia className={classes.cardImage}>
-                                    <img src="Images/ExampleSalad.png"></img>
-                                </CardMedia>
-                                <CardContent className={classes.cardContent}>
-                                        <Typography gutterBottom className={classes.cardTitle}>
-                                            Green Salad
-                                        </Typography>
-                                </CardContent>
-                            </Card>
-                        </div>
-                        <div className={classes.gridSpacingMobile}>
-                            <Card className={classes.card}>
-                                <CardMedia className={classes.cardImage}>
-                                    <img src="Images/ExampleSalad.png"></img>
-                                </CardMedia>
-                                <CardContent className={classes.cardContent}>
-                                        <Typography gutterBottom className={classes.cardTitle}>
-                                            Green Salad
-                                        </Typography>
-                                </CardContent>
-                            </Card>
-                        </div>
-                        <div className={classes.gridSpacingMobile}>
-                            <Card className={classes.card}>
-                                <CardMedia className={classes.cardImage}>
-                                    <img src="Images/ExampleSalad.png"></img>
-                                </CardMedia>
-                                <CardContent className={classes.cardContent}>
-                                        <Typography gutterBottom className={classes.cardTitle}>
-                                            Green Salad
-                                        </Typography>
-                                </CardContent>
-                            </Card>
-                        </div>
-                        <div className={classes.gridSpacingMobile}>
-                            <Card className={classes.card}>
-                                <CardMedia className={classes.cardImage}>
-                                    <img src="Images/ExampleSalad.png"></img>
-                                </CardMedia>
-                                <CardContent className={classes.cardContent}>
-                                        <Typography gutterBottom className={classes.cardTitle}>
-                                            Green Salad
-                                        </Typography>
-                                </CardContent>
-                            </Card>
-                        </div>
+                <div style={{display: "grid"}}>
+                    <div className={classes.wrapper}>
+                            <div className={classes.gridSpacingMobile}>
+                                <Card className={classes.card}>
+                                    <CardMedia className={classes.cardImage}>
+                                        <img src="Images/ExampleSalad.png"></img>
+                                    </CardMedia>
+                                    <CardContent className={classes.cardContent}>
+                                            <Typography gutterBottom className={classes.cardTitle}>
+                                                Green Salad
+                                            </Typography>
+                                    </CardContent>
+                                </Card>
+                            </div>
+                            <div className={classes.gridSpacingMobile}>
+                                <Card className={classes.card}>
+                                    <CardMedia className={classes.cardImage}>
+                                        <img src="Images/ExampleSalad.png"></img>
+                                    </CardMedia>
+                                    <CardContent className={classes.cardContent}>
+                                            <Typography gutterBottom className={classes.cardTitle}>
+                                                Green Salad
+                                            </Typography>
+                                    </CardContent>
+                                </Card>
+                            </div>
+                            <div className={classes.gridSpacingMobile}>
+                                <Card className={classes.card}>
+                                    <CardMedia className={classes.cardImage}>
+                                        <img src="Images/ExampleSalad.png"></img>
+                                    </CardMedia>
+                                    <CardContent className={classes.cardContent}>
+                                            <Typography gutterBottom className={classes.cardTitle}>
+                                                Green Salad
+                                            </Typography>
+                                    </CardContent>
+                                </Card>
+                            </div>
+                            <div className={classes.gridSpacingMobile}>
+                                <Card className={classes.card}>
+                                    <CardMedia className={classes.cardImage}>
+                                        <img src="Images/ExampleSalad.png"></img>
+                                    </CardMedia>
+                                    <CardContent className={classes.cardContent}>
+                                            <Typography gutterBottom className={classes.cardTitle}>
+                                                Green Salad
+                                            </Typography>
+                                    </CardContent>
+                                </Card>
+                            </div>
+                            <div className={classes.gridSpacingMobile}>
+                                <Card className={classes.card}>
+                                    <CardMedia className={classes.cardImage}>
+                                        <img src="Images/ExampleSalad.png"></img>
+                                    </CardMedia>
+                                    <CardContent className={classes.cardContent}>
+                                            <Typography gutterBottom className={classes.cardTitle}>
+                                                Green Salad
+                                            </Typography>
+                                    </CardContent>
+                                </Card>
+                            </div>
                     </div>
                 </div>
                 </>
