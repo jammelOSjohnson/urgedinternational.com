@@ -27,7 +27,10 @@ interface State {
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
         gridRoot: {
-            padding: "0px"
+            padding: "0px",
+            width: "95%",
+            marginLeft: "auto",
+            marginRight: "auto"
         },
         main: {
             padding: 0,
@@ -55,26 +58,21 @@ export const FoodDeliveryDashboardScreen: React.FC = function FoodDeliveryDashbo
     return (
         <>
         <Sidebar>
-            <Container maxWidth="xl">
+            <Container maxWidth="xl" style={{paddingLeft: "8px", paddingRight: "8px"}} className={classes.main}>
                 <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
-                    {/* <Grid item xs={2} spacing={1}>
-                        <Sidebar />
-                    </Grid> */}
-                    <Grid container direction="row" xs={12} spacing={1} className={classes.main}>
-                        <Grid item xs={8} style={{marginBottom: "12%", marginTop: "1%", background: "transparent"}}>
+                    <Grid container direction="row" xs={12} spacing={0}>
+                        <Grid item xs={8} style={{marginBottom: "10%", marginTop: "1%", background: "transparent"}}>
                             <HeaderLeft />
                         </Grid>
-                        <Grid item xs={4} style={{marginBottom: "12%", marginTop: "1%", background: "transparent"}}>
+                        <Grid item xs={4} style={{marginBottom: "10%", marginTop: "1%", background: "transparent"}}>
                             <HeaderRight />
                         </Grid>
-                        {/*Row 1*/}
                         <Grid item xs={12}>
                             <AdvertisementSlider2 />
                         </Grid>
                         <Grid item xs={12}>
                             <Popularcategories />
                         </Grid>
-                        {/*Row 2*/}
                         <Grid item xs={12}>
                             <PeoplesChoice />                    
                         </Grid>

@@ -38,9 +38,9 @@ const useStyles = makeStyles((theme: Theme) =>
             zIndex: 1,
             margin: '0% 0% 0% 0%',
             position: "absolute",
-            right: "41%",
-            top: "-44%",
-            width: "60%"
+            right: "46%",
+            top: "-34%",
+            width: "50%"
         },
         sliderSlogan: {
             color: '#F9F9FB',
