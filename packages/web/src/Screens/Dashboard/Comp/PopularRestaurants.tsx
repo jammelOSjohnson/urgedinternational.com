@@ -1,5 +1,5 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardMedia, CardContent } from '@material-ui/core';
+import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardMedia, CardContent, CardHeader, Avatar } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import React from 'react';
@@ -63,7 +63,14 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "#13ADD1",
             fontFamily: "PT Sans",
             fontWeight: "bold"
-        }
+        },
+        gridSpacing: {
+            marginLeft: "auto", 
+            marginRight: "auto"
+        },
+        avatar: {
+           
+          },
     }),
 );
 
@@ -89,9 +96,31 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
                 <Grid item xs={12} md={6} lg={3} container spacing={1}>
                     <Grid item xs={10} md={10}>
                         <Typography variant="subtitle1" className={classes.category}>
-                            People's Choice
+                            Popular Restaurants
                         </Typography>
                     </Grid>
+                </Grid>
+            </Grid>
+            <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
+                <Grid xs={'auto'} className={classes.gridSpacing}>
+                    <Card className={classes.root}>
+                        <CardHeader
+                            avatar={
+                                <Avatar aria-label="restaurant" className={classes.avatar}>
+                                    <CardMedia className={classes.cardImage}>
+                                        <img src="Images/KFC Avatar.png"></img>
+                                    </CardMedia>
+                                </Avatar>
+                            }
+                            title="Kentucky Fried Chicken"
+                            subheader="Kingston"
+                        />
+                        <CardContent>
+                            <Typography variant="body2" color="textSecondary" component="p">
+                            Menu
+                            </Typography>
+                        </CardContent>
+                    </Card>
                 </Grid>
             </Grid>
 
