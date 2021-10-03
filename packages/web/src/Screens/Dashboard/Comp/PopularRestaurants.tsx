@@ -19,6 +19,12 @@ interface State {
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
+        root: {
+            padding: "0% 0px 5% 0px"
+        },
+        category: {
+            fontWeight: "bold"
+        },
         cardTitle: {
             fontSize: "20px",
             fontWeight: 700,
@@ -79,7 +85,16 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
       
     return (
         <>
-            PopularRestaurants
+           <Grid container direction="row" spacing={3} className={classes.root} alignItems="center">
+                <Grid item xs={12} md={6} lg={3} container spacing={1}>
+                    <Grid item xs={10} md={10}>
+                        <Typography variant="subtitle1" className={classes.category}>
+                            People's Choice
+                        </Typography>
+                    </Grid>
+                </Grid>
+            </Grid>
+
         </>
     )
 }
