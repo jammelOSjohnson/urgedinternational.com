@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
             textAlign: "left",
             //padding: '0% 0% 2% 0%',
             position: "relative",
-            left: "50%",
+            left: "46%",
             // top: "-760%"
         },
         sliderText: {
@@ -105,7 +105,8 @@ const useStyles = makeStyles((theme: Theme) =>
         form: {
             padding: "0% 0px 5% 0px",
             width: "70%",
-            marginLeft: "49%;"
+            marginLeft: "44%;",
+            marginTop: "5%"
         },
         formControl: {
             marginTop: theme.spacing(1),
@@ -113,14 +114,25 @@ const useStyles = makeStyles((theme: Theme) =>
             minWidth: 120,
             backgroundColor: "#FFFFFF"
         },
+        formSelect: {
+            borderBottomLeftRadius: "25px",
+            borderTopLeftRadius: "25px",
+            height: "55px",
+            width: "215px"
+        },
+        formControlSelect: {
+            borderBottomLeftRadius: "25px",
+            borderTopLeftRadius: "25px",
+        },
         firstTextField: {
             marginBottom: "0%",
             width: "100%",
+            height: "55px",
             borderBottomRightRadius: "25px",
             borderTopRightRadius: "25px",
-            border: "1px solid",
+            border: "none",
             backgroundColor: "#FFFFFF",
-            color: "#9B9B9B"
+            color: "#9B9B9B !important"
         },
         firstFormControl: {
             borderBottomRightRadius: "25px",
@@ -137,7 +149,7 @@ const useStyles = makeStyles((theme: Theme) =>
                   color: "#EEE"
             },
             "& .MuiInputBase-root": {
-                color: "#EEE"
+                color: "#9B9B9B "
             },
             "& .MuiOutlinedInput-root": {
                 border: "1px solid #EEE",
@@ -146,7 +158,21 @@ const useStyles = makeStyles((theme: Theme) =>
             "& .MuiIconButton-root": {
                 color: "#EEEEEE"
             },
-            color: "#EEE"
+            "& .MuiFilledInput-underline:hover:before": {
+                borderBottom: "none"
+            },
+            "& .MuiFilledInput-underline:before": {
+                borderBottom: "none"
+            },
+            "& .MuiFilledInput-root": {
+                backgroundColor: "#FFFFFF",
+                borderBottomRightRadius: "25px",
+                borderTopRightRadius: "25px",
+            },
+            "& .MuiFilledInput-input": {
+                padding: "18px 12px 10px",
+                height: "25px"
+            },
         },
         searchBtn: {
             padding: "0px"
@@ -233,7 +259,7 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                     Delicious Healthy Food
                                 </Typography>
                                 <form onSubmit={handleSubmit} className={classes.form} noValidate autoComplete="off">
-                                    <FormControl variant="filled" className={classes.formControl}>
+                                    <FormControl variant="filled" className={clsx(classes.formControlSelect,classes.formControl)}>
                                         {/* <InputLabel id="demo-simple-select-filled-label">Select Location</InputLabel> */}
                                         <Select
                                             labelId="demo-simple-select-filled-label"
@@ -245,7 +271,9 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                                     <IconButton style={{color: "#FF5E14"}}>
                                                         <LocationOnRounded />
                                                     </IconButton>
-                                                </InputAdornment>}
+                                                </InputAdornment>
+                                            }
+                                            className={clsx(classes.formSelect, classes.root)}
                                         >
                                             <MenuItem value="Select Location">
                                                 <em>Select Location</em>
@@ -257,21 +285,6 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                     </FormControl>
                                     
                                     <FormControl variant="outlined" className={classes.firstFormControl}>
-                                        {/* <OutlinedInput 
-                                            className={clsx(classes.firstTextField, classes.root)}
-                                            id="fullname"
-                                            type="text"
-                                            //value={values.fullname}
-                                            //onChange={handleChange('fullname')}
-                                            startAdornment={
-                                                <InputAdornment position="start">
-                                                    <IconButton color="secondary">
-                                                         <PersonRounded />
-                                                    </IconButton>
-                                                </InputAdornment>}
-                                            labelWidth={103}
-                                            required={true}
-                                        /> */}
                                         <TextField 
                                             id="filled-basic"  
                                             variant="filled"
