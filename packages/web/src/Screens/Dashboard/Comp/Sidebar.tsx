@@ -217,7 +217,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                             <ListItemText primary={text} />
                           </ListItem>
                         :
-                        referralPath === "/FoodDelivery" && text === "Food Delivery" ?
+                        (referralPath === "/FoodDelivery" || referralPath === "/Restaurants") && text === "Food Delivery" ?
                           <ListItem button key={text} className={classes.activeItem2}>
                             <ListItemIcon className={classes.activeIcon2}>
                               {
@@ -392,7 +392,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                           <ListItem button key={text} className={classes.activeItem}>
                             <ListItemIcon>
                               {
-                                index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
                                 index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
                                 index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
                                 index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
@@ -402,11 +402,11 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                             <ListItemText primary={text} />
                           </ListItem>
                         :
-                        referralPath === "/FoodDelivery" && text === "Food Delivery" ?
+                        (referralPath === "/FoodDelivery" || referralPath === "/Restaurants")  && text === "Food Delivery" ?
                           <ListItem button key={text} className={classes.activeItem2}>
                             <ListItemIcon className={classes.activeIcon2}>
                               {
-                                index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
                                 index === 1 ? <img src="Images/WhiteFoodDeliveryService.png" alt="Food icon"/> : 
                                 index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
                                 index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
@@ -420,7 +420,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                           <ListItem button key={text} className={classes.activeItem}>
                             <ListItemIcon>
                               {
-                                index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
                                 index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
                                 index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
                                 index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
@@ -434,7 +434,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                           <ListItem button key={text} className={classes.activeItem}>
                             <ListItemIcon>
                               {
-                                index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                index === 0 ? <img src="Images/GroupSquareIcon.png2" alt="square icon"/> :
                                 index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
                                 index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
                                 index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
@@ -448,7 +448,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                           <ListItem button key={text} className={classes.activeItem}>
                             <ListItemIcon>
                               {
-                                index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
                                 index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
                                 index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
                                 index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
@@ -463,7 +463,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                             <ListItem button key={text}>
                                 <ListItemIcon>
                                   {
-                                    index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                    index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
                                     index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
                                     index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
                                     index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
@@ -479,7 +479,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                             <ListItem button key={text}>
                                 <ListItemIcon>
                                   {
-                                    index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                    index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
                                     index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
                                     index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
                                     index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :

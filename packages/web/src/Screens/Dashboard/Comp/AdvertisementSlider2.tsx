@@ -118,7 +118,7 @@ const useStyles = makeStyles((theme: Theme) =>
             borderBottomLeftRadius: "25px",
             borderTopLeftRadius: "25px",
             height: "55px",
-            width: "215px"
+            width: "240px"
         },
         formControlSelect: {
             borderBottomLeftRadius: "25px",
@@ -173,6 +173,9 @@ const useStyles = makeStyles((theme: Theme) =>
                 padding: "18px 12px 10px",
                 height: "25px"
             },
+            "& .MuiInputAdornment-filled.MuiInputAdornment-positionStart:not(.MuiInputAdornment-hiddenLabel)": {
+                marginTop: "6px"
+            }
         },
         searchBtn: {
             padding: "0px"
@@ -278,9 +281,8 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                             <MenuItem value="Select Location">
                                                 <em>Select Location</em>
                                             </MenuItem>
-                                            <MenuItem value={10}>Ten</MenuItem>
-                                            <MenuItem value={20}>Twenty</MenuItem>
-                                            <MenuItem value={30}>Thirty</MenuItem>
+                                            <MenuItem value={10}>MAYPEN</MenuItem>
+                                            <MenuItem value={20}>CHAPELTON</MenuItem>
                                         </Select>
                                     </FormControl>
                                     
@@ -315,7 +317,7 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                 With Urged, Quality and Time is our main priority. You can trust us to be on-time with your food from any restaraunt.
                                 </Typography>
                                 <Typography className={classes.btnLayout}>
-                                    <Link to="/FoodDelivery/Restaurants" title="Restaurants" className={classes.inactiveItemLink}>
+                                    <Link to="/Restaurants" title="Restaurants" className={classes.inactiveItemLink}>
                                         <Button className={classes.Button}>
                                             <Typography className={`${classes.btnfonts}`}>
                                                 Restaurants
