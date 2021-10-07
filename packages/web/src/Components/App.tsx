@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import { Header } from '../Components/Header';
 import { Footer } from '../Components/Footer';
-//import { HomeScreen } from '../Screens/HomeScreen';
+import { HomeScreen } from '../Screens/Home/HomeScreen';
 import { AboutScreen } from '../Screens/About/AboutScreen';
 import { LoginScreen } from '../Screens/Auth/LoginScreen';
 import { RegisterScreen } from '../Screens/Auth/RegisterScreen';
@@ -119,7 +119,8 @@ const App: React.FC = function App() {
               <Router>
                 <Header/>
                 {/* <Sidebar/> */}
-                  <Route path="/" exact component={AboutScreen} />
+                  <Route path="/" exact component={HomeScreen} />
+                  <Route path="/About" exact component={AboutScreen} />
                   <Route path="/Login" exact component={LoginScreen} />
                   <Route path="/Register" exact component={RegisterScreen} />
                   <Route path="/Dashboard" exact component={CustomerDashboardScreen} />
