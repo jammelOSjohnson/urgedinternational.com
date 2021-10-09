@@ -3,6 +3,12 @@
         min-width: 158.53px;
     }
 
+    .cardSizeCategoriesRestarants2{
+        min-width: 58px;
+        text-align: center;
+        background-color: #FF5E14 !important;
+    }
+
 }
 
 
