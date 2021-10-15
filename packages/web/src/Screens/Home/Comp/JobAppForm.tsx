@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAppData } from '../../../Context/AppDataContext';
 //import CSS
-import { Container, Grid, Typography, makeStyles, createStyles, Theme, Card, CardContent, TextField, Button} from '@material-ui/core';
+import { Container, Grid, Typography, makeStyles, createStyles, Theme, Card, CardContent, TextField, Button, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio} from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 
 interface Props {
@@ -14,6 +14,15 @@ interface State {
     email: string;
     position: string;
     contact: string;
+    address: string;
+    ownDLicence: boolean;
+    ownLLicense: boolean;
+    ownSmartPhone: boolean;
+    ownTransportation: boolean;
+    selectedOptionDL: string;
+    selectedOptionLL: string;
+    selectedOptionSM: string;
+    selectedOptionTR: string;
 }
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -26,14 +35,23 @@ const useStyles = makeStyles((theme: Theme) =>
             '& .MuiOutlinedInput-root': {
                 '& fieldset': {
                   borderColor: theme.palette.secondary.light,
+                  color: "black"
                 },
                 '&:hover fieldset': {
                   borderColor: 'yellow',
                 },
                 '&.Mui-focused fieldset': {
                   borderColor: 'green',
+                  color: 'black !important'
                 },
               },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: "black"
+              },
+              '& .MuiInputBase-input': {
+                color: "black"
+                },
+
           },
           alert: {
             marginBottom: "5%"
@@ -49,12 +67,37 @@ export const JobAppForm: React.FC = function JobAppForm() {
         firstname: '',
         lastname: '',
         email: '',
-        position: '',
-        contact: ''
+        position: 'RIDER',
+        contact: '',
+        address: '',
+        ownDLicence: false,
+        ownLLicense: false,
+        ownSmartPhone: false,
+        ownTransportation: false,
+        selectedOptionDL: '',
+        selectedOptionLL: '',
+        selectedOptionSM: '',
+        selectedOptionTR: '',
       });
     var [error, setError] = useState('');
     var [success, setSuccess] = useState('');
+    
+    const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+        setValues({ ...values, [prop]: event.target.value });
+    };
 
+    const handleRadioChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+        var clickVal = event.target.value;
+        var answer = clickVal === 'Yes1' || clickVal === 'Yes2' 
+        || clickVal === 'Yes3' || clickVal === 'Yes4' ? true : false;
+        var selectedOption = ''
+        if(prop === 'ownDLicence'){ selectedOption = 'selectedOptionDL'} 
+        if(prop === 'ownLLicense'){ selectedOption = 'selectedOptionLL'}
+        if(prop === 'ownSmartPhone'){ selectedOption = 'selectedOptionSM'}
+        if(prop === 'ownTransportation'){selectedOption = 'selectedOptionTR'}
+        setValues({ ...values, [prop]: answer, [selectedOption]: clickVal });
+    };
+    
     var handleSubmit = async function handleSubmit(event){
         event.preventDefault();
         try{
@@ -63,10 +106,35 @@ export const JobAppForm: React.FC = function JobAppForm() {
             if(values.firstname === '' || values.lastname === '' 
             || values.email === '' || values.position === '')
             { setError('Please complete every field on the form') } else{
-
+                await JoinUs(values).then(function(res){
+                    if(res){
+                        setSuccess('Thank you for applying.');
+                        setTimeout(() => {
+                            setSuccess('');
+                            setValues({
+                                firstname: '',
+                                lastname: '',
+                                email: '',
+                                position: 'RIDER',
+                                contact: '',
+                                address: '',
+                                ownDLicence: false,
+                                ownLLicense: false,
+                                ownSmartPhone: false,
+                                ownTransportation: false,
+                                selectedOptionDL: '',
+                                selectedOptionLL: '',
+                                selectedOptionSM: '',
+                                selectedOptionTR: '',
+                            });
+                        }, 5000);
+                    }else{
+                        setError('Unable to send emaila at this time.');
+                    }
+                })
             };
         }catch{
-            setError('Unable to send emaila at this time.')
+            setError('Unable to send emaila at this time.');
         }
     }
 
@@ -79,19 +147,58 @@ export const JobAppForm: React.FC = function JobAppForm() {
                     <br/>
                     <Grid container alignContent="center" spacing={2}>
                         <Grid item xs={12} sm={4} md={4} >
-                            <TextField fullWidth id="outlined-basic" label="First Name" variant="outlined" value={values.firstname} required/>
+                            <TextField fullWidth id="outlined-basic" label="First Name" variant="outlined" value={values.firstname} onChange={handleChange('firstname')} required/>
                         </Grid>
                         <Grid item xs={12} sm={4} md={4}>
-                            <TextField fullWidth id="outlined-basic" label="Last Name" variant="outlined" value={values.lastname} required/>
+                            <TextField fullWidth id="outlined-basic" label="Last Name" variant="outlined" value={values.lastname} onChange={handleChange('lastname')} required/>
                         </Grid>
                         <Grid item xs={12} sm={4} md={4}>
-                            <TextField fullWidth id="outlined-basic" label="Phone" variant="outlined" value={values.contact} required/>
+                            <TextField fullWidth id="outlined-basic" label="Phone" variant="outlined" value={values.contact} onChange={handleChange('contact')} required/>
                         </Grid>
                         <Grid item xs={12} sm={6} md={6}>
-                        <TextField fullWidth id="outlined-basic" label="Email" variant="outlined" type="email" value={values.email} required/>
+                            <TextField fullWidth id="outlined-basic" label="Email" variant="outlined" type="email" value={values.email} onChange={handleChange('email')} required/>
                         </Grid>
                         <Grid item xs={12} sm={6} md={6}>
-                        <TextField fullWidth id="outlined-basic" label="Position" variant="outlined" value={values.position} required/>
+                            <TextField fullWidth id="outlined-basic" label="Position" variant="outlined" value={values.position} required disabled/>
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={6}>
+                            <FormControl component="fieldset">
+                                <FormLabel component="legend">Own Transportation?</FormLabel>
+                                <RadioGroup aria-label="ownTransportation" name="ownTransportation" value={values.ownTransportation} onChange={handleRadioChange('ownTransportation')}>
+                                    <FormControlLabel value="Yes1" control={<Radio color="primary" checked={values.selectedOptionTR === 'Yes1'} />} label="Yes" />
+                                    <FormControlLabel value="No1" control={<Radio color="primary" checked={values.selectedOptionTR === 'No1'} />} label="No" />
+                                </RadioGroup>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={6}>
+                            <FormControl component="fieldset">
+                                <FormLabel component="legend">Own Smartphone?</FormLabel>
+                                <RadioGroup aria-label="ownSmartPhone" name="ownSmartPhone" value={values.ownSmartPhone} onChange={handleRadioChange('ownSmartPhone')}>
+                                    <FormControlLabel value="Yes2" control={<Radio color="primary" checked={values.selectedOptionSM === 'Yes2'} />} label="Yes" />
+                                    <FormControlLabel value="No2" control={<Radio color="primary" checked={values.selectedOptionSM === 'No2'} />} label="No" />
+                                </RadioGroup>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={6}>
+                            <FormControl component="fieldset">
+                                <FormLabel component="legend">Own Drivers license?</FormLabel>
+                                <RadioGroup aria-label="ownDLicence" name="ownDLicence" value={values.ownDLicence} onChange={handleRadioChange('ownDLicence')}>
+                                    <FormControlLabel value="Yes3" control={<Radio color="primary" checked={values.selectedOptionDL === 'Yes3'} />} label="Yes" />
+                                    <FormControlLabel value="No3" control={<Radio color="primary" checked={values.selectedOptionDL === 'No3'} />} label="No" />
+                                </RadioGroup>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={6}>
+                            <FormControl component="fieldset">
+                                <FormLabel component="legend">Own Learners license?</FormLabel>
+                                <RadioGroup aria-label="ownLLicense" name="ownLLicense" value={values.ownLLicense} onChange={handleRadioChange('ownLLicense')}>
+                                    <FormControlLabel value="Yes4" control={<Radio color="primary" checked={values.selectedOptionLL === 'Yes4'} />} label="Yes" />
+                                    <FormControlLabel value="No4" control={<Radio color="primary" checked={values.selectedOptionLL === 'No4'} />} label="No" />
+                                </RadioGroup>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={12} md={12}>
+                            <TextField fullWidth id="outlined-basic" label="Address" variant="outlined" value={values.address} onChange={handleChange('address')} required/>
                         </Grid>
                     </Grid>
                     <br/>
