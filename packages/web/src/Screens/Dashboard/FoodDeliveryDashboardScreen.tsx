@@ -9,6 +9,7 @@ import { PeoplesChoice } from './Comp/PeoplesChoice';
 import { PopularRestaurants } from './Comp/PopularRestaurants';
 import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
+import { DashboardFooter } from './Comp/DashboardFooter';
 
 interface Props {
     
@@ -67,6 +68,9 @@ export const FoodDeliveryDashboardScreen: React.FC = function FoodDeliveryDashbo
                         </Grid>
                         <Grid item xs={12}>
                             <PopularRestaurants />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <DashboardFooter />
                         </Grid>
                     </Grid>
                 </Grid>

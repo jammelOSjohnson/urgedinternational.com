@@ -4,6 +4,7 @@ import {useContext, useReducer, createContext} from 'react';
 import  { auth, socialAuth, googleAuthProvider, timeStamp } from '../firebase';
 import { CREATE_USER_MUTATION, GET_USER_MUTATION, GET_USER_IN_ROLE, GET_ROLE, CREATE_ROLE } from '../GraphQL/Mutations';
 import { useMutation } from '@apollo/client';
+import sendEmail from "../email.js";
 
 import serverPI from '../Apis/serverPI';
 
@@ -58,6 +59,10 @@ function appDataReducer(state, action){
 
 //create provider
 export default function AppDataProvider({ children }: { children: ReactNode}) {
+    //Email variables
+    const emailServiceId = "service_bvif53q";
+    const emailNewJobAppTemplate = "template_vt5fmwm";
+    const emailUserId = "user_bDLFbepm6Arcdgh7Akzo3";
     //Declare necessary variables
     const [createUser] = useMutation(CREATE_USER_MUTATION);
     const [getUser, {error}] = useMutation(GET_USER_MUTATION);
@@ -409,6 +414,55 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
        
     }
 
+    var JoinUs = async function JoinUs(currentstate, payload) {
+      var formVals = { ...payload,
+        user_name: currentstate.firstname + " " + currentstate.lastname,
+        user_email: currentstate.email,
+        user_contact: currentstate.contact
+      };
+
+      var result = await sendNewApplicationEmail(formVals);
+
+      return result;
+  };
+
+    var sendNewApplicationEmail = async function sendNewApplicationEmail(formVals) {
+      // var data1 = {event: 'staff add package send new package email',
+      //                 value:{"Wtf is in formVals: " : "Wtf is in formVals:", formVals: formVals}
+      // };
+      // var entry1 = log.entry(METADATA, data1);
+      // log.write(entry1);
+      // console.log("Wtf is in formVals");
+      // console.log(formVals);
+      var RequestParams = {
+        user_name: formVals.user_name,
+        user_email: formVals.user_email,
+        message: "A package from " + formVals.merchant + " with status of " + formVals.status + " was added to your dashboard."
+      }; // var data2 = {event: 'staff add package',
+      //                       value:{"What is in this package b4 email sent for user: " : "What is in this package b4 email sent for user", RequestParams: RequestParams}
+      // };
+      // var entry2 = log.entry(METADATA, data2);
+      // log.write(entry2);
+      // console.log("What is in this package b4 emails sent");
+      // console.log(RequestParams);
+    
+      var fianlRes = await sendEmail(emailServiceId, emailNewJobAppTemplate, RequestParams, emailUserId).then(function (res) {
+        if (res) {
+          return true;
+        }
+      }).catch(function (err) {
+        // var data3 = {event: 'staff add package',
+        //                     value:{"Send email error for user: " : formVals.user_email, error: err}
+        // };
+        // var entry3 = log.entry(METADATA, data3);
+        // log.write(entry3);
+        // console.log("Send email error");
+        // console.log(err);
+        return false;
+      });
+      return fianlRes;
+    };
+
     const [value, dispatch] = useReducer(appDataReducer, {
         currentUser,
         loading,
@@ -418,6 +472,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         cartItems,
         noties,
         orders,
+        JoinUs,
         signup,
         login,
         gLogin,

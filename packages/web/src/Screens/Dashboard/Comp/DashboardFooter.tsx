@@ -56,7 +56,7 @@ export const DashboardFooter: React.FC = function DashboardFooter() {
       
     return (
         <>
-            <Typography style={{textAlign: "center", marginTop: "3%"}}>
+            <Typography style={{textAlign: "center", marginTop: "3%", paddingBottom: "3%"}}>
                 <span className={classes.linkStyle}>
                     Copyright ©2021, Urged. All Rights Reserved. 
                 </span>
