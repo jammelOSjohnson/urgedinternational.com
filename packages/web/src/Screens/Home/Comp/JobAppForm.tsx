@@ -58,6 +58,8 @@ export const JobAppForm: React.FC = function JobAppForm() {
     var handleSubmit = async function handleSubmit(event){
         event.preventDefault();
         try{
+            setSuccess('');
+            setError('');
             if(values.firstname === '' || values.lastname === '' 
             || values.email === '' || values.position === '')
             { setError('Please complete every field on the form') } else{
