@@ -1,4 +1,4 @@
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardMedia, CardContent, useMediaQuery, useTheme, TableContainer, TableHead, TableRow, TableBody, TableCell, Table, Paper } from '@material-ui/core';
+import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, useMediaQuery, Card, CardMedia, CardContent, TableContainer, Table, Paper, TableHead, TableRow, TableCell, TableBody, useTheme } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import React from 'react';
@@ -6,7 +6,8 @@ import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import { LockRounded, EmailRounded, PlayArrowRounded } from "@material-ui/icons/";
 import { Link } from "react-router-dom";
-import  '../CSS/PopularCategories.css';
+import '../CSS/RestaurantCategories.css'
+//Import Components
 
 interface Props {
     
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
             borderRadius: "34.3745px",
             paddingLeft: 0,
             paddingRight: 0,
-            paddingTop: "23%",
+            paddingTop: "4%",
         },
         cardMobile: {
             background: "#FFFFFF",
@@ -53,24 +54,47 @@ const useStyles = makeStyles((theme: Theme) =>
             borderRadius: "34.3745px",
             paddingLeft: 0,
             paddingRight: 0,
-            paddingTop: "10px",
-            minHeight: "142px",
-            minWidth: "120px"
+            paddingTop: "4%",
+            minWidth: "140px"
         },
         cardContent: {
             flexGrow: 1,
-            textAlign: "center",
-            paddingBottom: "0px",
+            // textAlign: "center",
+            display: "inline-block",
+            paddingBottom: "0px !important",
             paddingTop: "0px",
+            paddingLeft: "0px",
+            paddingRight: "0px",
+        },
+        cardContent2: {
+            flexGrow: 1,
+            // textAlign: "center",
+            display: "inline-block",
+            paddingBottom: "0px !important",
+            paddingTop: "0px",
+            paddingLeft: "0px",
+            paddingRight: "0px",
+            textAlign: "center",
         },
         cardImage: {
             textAlign: "center",
-            position: "relative"
+            position: "relative",
+            width: "30%",
+            display: "inline-block",
+        },
+        Images: {
+            width: "55%"
         },
         cardTitle: {
             fontSize: "20px",
             fontWeight: 700,
             color: "#1D2635",
+            fontFamily: "PT Sans",
+        },
+        cardTitle2: {
+            fontSize: "20px",
+            fontWeight: 700,
+            color: "#FFFFFF",
             fontFamily: "PT Sans",
         },
         links: {
@@ -108,7 +132,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const Popularcategories: React.FC = function Popularcategories() {
+export const RestaurantCategories: React.FC = function RestaurantCategories() {
     const classes = useStyles();
     const theme = useTheme();
     const [values, setValues] = React.useState<State>({
@@ -117,21 +141,19 @@ export const Popularcategories: React.FC = function Popularcategories() {
         showPassword: false,
       });
     
-    
+    var history = useHistory();
+
     const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
     const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
     
-    var history = useHistory();
-
-    
       
-    return (
+      return (
         <>
           <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                 <Grid item xs={12} md={6} lg={3} container spacing={1}>
                     <Grid item xs={10} md={10}>
                         <Typography variant="subtitle1" className={classes.category}>
-                            Popular Categories
+                            Categories
                         </Typography>
                     </Grid>
                 </Grid>
@@ -141,56 +163,11 @@ export const Popularcategories: React.FC = function Popularcategories() {
                     <Grid container xs={12} direction="column">
                         <Grid container direction="row" spacing={1}>
                             <Grid item className={classes.gridSpacing}>
-                                <Link to="/FoodDelivery/Breakfast" title="Breakfast" className={classes.inactiveItemLink}>
-                                    <Card className={clsx(classes.card, "cardSizeCategories")}>
-                                        <CardMedia className={classes.cardImage}>
-                                            <img src="Images/FoodDeliveryBreakfast.png"></img>
-                                        </CardMedia>
-                                        <CardContent className={classes.cardContent}>
-                                                <Typography gutterBottom className={classes.cardTitle}>
-                                                    Breakfast
-                                                </Typography>
-                                        </CardContent>
-                                    </Card>
-                                </Link>
-                            </Grid>
-                            <Grid item className={classes.gridSpacing}>
-                                <Link to="/FoodDelivery/Lunch" title="Lunch" className={classes.inactiveItemLink}>
-                                    <Card className={clsx(classes.card, "cardSizeCategories")}>
-                                        <CardMedia className={classes.cardImage}>
-                                            <img src="Images/FoodDeliveryLunch.png"></img>
-                                        </CardMedia>
-                                        <CardContent className={classes.cardContent}>
-                                                <Typography gutterBottom className={classes.cardTitle}>
-                                                    Lunch
-                                                </Typography>
-                                        </CardContent>
-                                    </Card>
-                                </Link>
-                            </Grid>
-                            <Grid item className={classes.gridSpacing}>
-                                <Link to="/FoodDelivery/Dinner" title="Dinner" className={classes.inactiveItemLink}>
-                                    <Card className={clsx(classes.card, "cardSizeCategories")}>
-                                        <CardMedia className={classes.cardImage}>
-                                            <img src="Images/FoodDeliveryDinner.png"></img>
-                                        </CardMedia>
-                                        <CardContent className={classes.cardContent}>
-                                                <Typography gutterBottom className={classes.cardTitle}>
-                                                    Dinner
-                                                </Typography>
-                                        </CardContent>
-                                    </Card>
-                                </Link>
-                            </Grid>
-                            <Grid item className={classes.gridSpacing}>
-                                <Link to="/FoodDelivery/Dessert" title="Dessert" className={classes.inactiveItemLink}>
-                                    <Card className={clsx(classes.card, "cardSizeCategories")}>
-                                        <CardMedia className={classes.cardImage}>
-                                            <img src="Images/FoodDeliveryDessert.png"></img>
-                                        </CardMedia>
-                                        <CardContent className={classes.cardContent}>
-                                                <Typography gutterBottom className={classes.cardTitle}>
-                                                    Dessert
+                                <Link to="/FoodDelivery/FastFood" title="Fast Food" className={classes.inactiveItemLink}>
+                                    <Card className={clsx(classes.card, "cardSizeCategoriesRestarants2")}>
+                                        <CardContent className={classes.cardContent2}>
+                                                <Typography gutterBottom className={classes.cardTitle2}>
+                                                    ALL
                                                 </Typography>
                                         </CardContent>
                                     </Card>
@@ -198,9 +175,9 @@ export const Popularcategories: React.FC = function Popularcategories() {
                             </Grid>
                             <Grid item className={classes.gridSpacing}>
                                 <Link to="/FoodDelivery/FastFood" title="Fast Food" className={classes.inactiveItemLink}>
-                                    <Card className={clsx(classes.card, "cardSizeCategories")}>
+                                    <Card className={clsx(classes.card, "cardSizeCategoriesRestarants")}>
                                         <CardMedia className={classes.cardImage}>
-                                            <img src="Images/FoodDeliveryFastFood.png"></img>
+                                            <img src="Images/FoodDeliveryFastFood.png" className={classes.Images}></img>
                                         </CardMedia>
                                         <CardContent className={classes.cardContent}>
                                                 <Typography gutterBottom className={classes.cardTitle}>
@@ -211,10 +188,52 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                 </Link>
                             </Grid>
                             <Grid item className={classes.gridSpacing}>
-                                <Link to="/FoodDelivery/Pastry" title="Pastry" className={classes.inactiveItemLink}>
-                                    <Card className={clsx(classes.card, "cardSizeCategories")}>
+                                <Link to="/FoodDelivery/Dinner" title="Dinner" className={classes.inactiveItemLink}>
+                                    <Card className={clsx(classes.card, "cardSizeCategoriesRestarants")}>
                                         <CardMedia className={classes.cardImage}>
-                                            <img src="Images/FoodDeliveryPastry.png"></img>
+                                            <img src="Images/FoodDeliveryDinner.png" className={classes.Images}></img>
+                                        </CardMedia>
+                                        <CardContent className={classes.cardContent}>
+                                                <Typography gutterBottom className={classes.cardTitle}>
+                                                    Dinner
+                                                </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Link>
+                            </Grid>
+                            <Grid item className={classes.gridSpacing}>
+                                <Link to="/FoodDelivery/Breakfast" title="Breakfast" className={classes.inactiveItemLink}>
+                                    <Card className={clsx(classes.card, "cardSizeCategoriesRestarants")}>
+                                        <CardMedia className={classes.cardImage}>
+                                            <img src="Images/FoodDeliveryBreakfast.png" className={classes.Images}></img>
+                                        </CardMedia>
+                                        <CardContent className={classes.cardContent}>
+                                                <Typography gutterBottom className={classes.cardTitle}>
+                                                    Breakfast
+                                                </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Link>
+                            </Grid>
+                            <Grid item className={classes.gridSpacing}>
+                                <Link to="/FoodDelivery/Dessert" title="Dessert" className={classes.inactiveItemLink}>
+                                    <Card className={clsx(classes.card, "cardSizeCategoriesRestarants")}>
+                                        <CardMedia className={classes.cardImage}>
+                                            <img src="Images/FoodDeliveryDessert.png" className={classes.Images}></img>
+                                        </CardMedia>
+                                        <CardContent className={classes.cardContent}>
+                                                <Typography gutterBottom className={classes.cardTitle}>
+                                                    Dessert
+                                                </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Link>
+                            </Grid>
+                            <Grid item className={classes.gridSpacing}>
+                                <Link to="/FoodDelivery/Pastry" title="Pastry" className={classes.inactiveItemLink}>
+                                    <Card className={clsx(classes.card, "cardSizeCategoriesRestarants")}>
+                                        <CardMedia className={classes.cardImage}>
+                                            <img src="Images/FoodDeliveryPastry.png" className={classes.Images}></img>
                                         </CardMedia>
                                         <CardContent className={classes.cardContent}>
                                                 <Typography gutterBottom className={classes.cardTitle}>
@@ -226,9 +245,9 @@ export const Popularcategories: React.FC = function Popularcategories() {
                             </Grid>
                             <Grid item className={classes.gridSpacing}>
                                 <Link to="/FoodDelivery/Chinese" title="Chinese" className={classes.inactiveItemLink}>
-                                    <Card className={clsx(classes.card, "cardSizeCategories")}>
+                                    <Card className={clsx(classes.card, "cardSizeCategoriesRestarants")}>
                                         <CardMedia className={classes.cardImage}>
-                                            <img src="Images/FoodDeliveryChinese.png"></img>
+                                            <img src="Images/FoodDeliveryChinese.png" className={classes.Images}></img>
                                         </CardMedia>
                                         <CardContent className={classes.cardContent}>
                                                 <Typography gutterBottom className={classes.cardTitle}>
@@ -239,10 +258,24 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                 </Link>
                             </Grid>
                             <Grid item className={classes.gridSpacing}>
+                                <Link to="/FoodDelivery/Lunch" title="Lunch" className={classes.inactiveItemLink}>
+                                    <Card className={clsx(classes.card, "cardSizeCategoriesRestarants")}>
+                                        <CardMedia className={classes.cardImage}>
+                                            <img src="Images/FoodDeliveryLunch.png" className={classes.Images}></img>
+                                        </CardMedia>
+                                        <CardContent className={classes.cardContent}>
+                                                <Typography gutterBottom className={classes.cardTitle}>
+                                                    Lunch
+                                                </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Link>
+                            </Grid>
+                            <Grid item className={classes.gridSpacing}>
                                 <Link to="/FoodDelivery/Salads" title="Salads" className={classes.inactiveItemLink}>
-                                    <Card className={clsx(classes.card, "cardSizeCategories")}>
-                                        <CardMedia className={classes.cardImage} style={{paddingTop: "14px"}}>
-                                            <img src="Images/FoodDeliverySalads.png"></img>
+                                    <Card className={clsx(classes.card, "cardSizeCategoriesRestarants")}>
+                                        <CardMedia className={classes.cardImage}>
+                                            <img src="Images/FoodDeliverySalads.png" className={classes.Images}></img>
                                         </CardMedia>
                                         <CardContent className={classes.cardContent}>
                                                 <Typography gutterBottom className={classes.cardTitle}>
@@ -276,7 +309,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                     <Link to="/FoodDelivery/Breakfast" title="Breakfast" className={classes.inactiveItemLink}>
                                        <Card className={classes.cardMobile}>
                                            <CardMedia className={classes.cardImage}>
-                                               <img src="Images/FoodDeliveryBreakfast.png"></img>
+                                               <img src="Images/FoodDeliveryBreakfast.png" className={classes.Images}></img>
                                            </CardMedia>
                                            <CardContent className={classes.cardContent}>
                                                    <Typography gutterBottom className={classes.cardTitle}>
@@ -290,7 +323,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                     <Link to="/FoodDelivery/Lunch" title="Lunch" className={classes.inactiveItemLink}>
                                        <Card className={classes.cardMobile}>
                                            <CardMedia className={classes.cardImage}>
-                                               <img src="Images/FoodDeliveryLunch.png"></img>
+                                               <img src="Images/FoodDeliveryLunch.png" className={classes.Images}></img>
                                            </CardMedia>
                                            <CardContent className={classes.cardContent}>
                                                    <Typography gutterBottom className={classes.cardTitle}>
@@ -304,7 +337,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                     <Link to="/FoodDelivery/Dessert" title="Dessert" className={classes.inactiveItemLink}>
                                        <Card className={classes.cardMobile}>
                                            <CardMedia className={classes.cardImage}>
-                                               <img src="Images/FoodDeliveryDessert.png"></img>
+                                               <img src="Images/FoodDeliveryDessert.png" className={classes.Images}></img>
                                            </CardMedia>
                                            <CardContent className={classes.cardContent}>
                                                    <Typography gutterBottom className={classes.cardTitle}>
@@ -318,7 +351,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                     <Link to="/FoodDelivery/Chinese" title="Chinese" className={classes.inactiveItemLink}>
                                        <Card className={classes.cardMobile}>
                                            <CardMedia className={classes.cardImage}>
-                                               <img src="Images/FoodDeliveryChinese.png"></img>
+                                               <img src="Images/FoodDeliveryChinese.png" className={classes.Images}></img>
                                            </CardMedia>
                                            <CardContent className={classes.cardContent}>
                                                    <Typography gutterBottom className={classes.cardTitle}>
@@ -334,7 +367,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                     <Link to="/FoodDelivery/FastFood" title="Fast Food" className={classes.inactiveItemLink}>
                                        <Card className={classes.cardMobile}>
                                            <CardMedia className={classes.cardImage}>
-                                               <img src="Images/FoodDeliveryFastFood.png"></img>
+                                               <img src="Images/FoodDeliveryFastFood.png" className={classes.Images}></img>
                                            </CardMedia>
                                            <CardContent className={classes.cardContent}>
                                                    <Typography gutterBottom className={classes.cardTitle}>
@@ -348,7 +381,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                     <Link to="/FoodDelivery/Dinner" title="Dinner" className={classes.inactiveItemLink}>
                                      <Card className={classes.cardMobile}>
                                          <CardMedia className={classes.cardImage}>
-                                             <img src="Images/FoodDeliveryDinner.png"></img>
+                                             <img src="Images/FoodDeliveryDinner.png" className={classes.Images}></img>
                                          </CardMedia>
                                          <CardContent className={classes.cardContent}>
                                                  <Typography gutterBottom className={classes.cardTitle}>
@@ -362,7 +395,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                     <Link to="/FoodDelivery/Pastry" title="Pastry" className={classes.inactiveItemLink}>
                                        <Card className={classes.cardMobile}>
                                            <CardMedia className={classes.cardImage}>
-                                               <img src="Images/FoodDeliveryPastry.png"></img>
+                                               <img src="Images/FoodDeliveryPastry.png" className={classes.Images}></img>
                                            </CardMedia>
                                            <CardContent className={classes.cardContent}>
                                                    <Typography gutterBottom className={classes.cardTitle}>
@@ -376,7 +409,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                     <Link to="/FoodDelivery/Salads" title="Salads" className={classes.inactiveItemLink}>
                                        <Card className={classes.cardMobile}>
                                            <CardMedia className={classes.cardImage} style={{paddingTop: "14px"}}>
-                                               <img src="Images/FoodDeliverySalads.png"></img>
+                                               <img src="Images/FoodDeliverySalads.png" className={classes.Images}></img>
                                            </CardMedia>
                                            <CardContent className={classes.cardContent}>
                                                    <Typography gutterBottom className={classes.cardTitle}>

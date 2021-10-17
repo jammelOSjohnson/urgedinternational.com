@@ -2,12 +2,13 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import { Header } from '../Components/Header';
 import { Footer } from '../Components/Footer';
-//import { HomeScreen } from '../Screens/HomeScreen';
+import { HomeScreen } from '../Screens/Home/HomeScreen';
 import { AboutScreen } from '../Screens/About/AboutScreen';
 import { LoginScreen } from '../Screens/Auth/LoginScreen';
 import { RegisterScreen } from '../Screens/Auth/RegisterScreen';
 import { CustomerDashboardScreen } from '../Screens/Dashboard/CustomerDashboard';
 import { FoodDeliveryDashboardScreen } from '../Screens/Dashboard/FoodDeliveryDashboardScreen';
+import { RestaurantsScreen } from '../Screens/Dashboard/RestaurantsScreen';
 import { Sidebar } from '../Screens/Dashboard/Comp/Sidebar';
 
 //Import provider
@@ -25,10 +26,14 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: "#FF5E14"
+      main: "#F7B614",
+      light: "#FF5E14",
+      dark: '#002884',
+      contrastText: '#fff',
     },
     secondary: {
-      main: "#ffffff"
+      main: "#ffffff",
+      light: "#C5C5C5"
     }
   },
   overrides: {
@@ -119,10 +124,13 @@ const App: React.FC = function App() {
                 <Header/>
                 {/* <Sidebar/> */}
                   <Route path="/" exact component={AboutScreen} />
-                  <Route path="/Login" exact component={LoginScreen} />
+                  {/* <Route path="/About" exact component={HomeScreen} /> */}
+                  {/* <Route path="/About" exact component={AboutScreen} /> */}
+                  {/* <Route path="/Login" exact component={LoginScreen} />
                   <Route path="/Register" exact component={RegisterScreen} />
                   <Route path="/Dashboard" exact component={CustomerDashboardScreen} />
                   <Route path="/FoodDelivery" exact component={FoodDeliveryDashboardScreen} />
+                  <Route path="/Restaurants" exact component={RestaurantsScreen} /> */}
                 <Footer/>
               </Router>
             </div>

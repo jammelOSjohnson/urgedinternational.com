@@ -1,14 +1,13 @@
 import { Container, Grid, makeStyles, createStyles, Typography, Theme } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import clsx from 'clsx';
 //Import Components
 import { Sidebar } from './Comp/Sidebar';
-import { Popularcategories } from './Comp/Popularcategories';
-import { AdvertisementSlider2 } from './Comp/AdvertisementSlider2';
-import { PeoplesChoice } from './Comp/PeoplesChoice';
-import { PopularRestaurants } from './Comp/PopularRestaurants';
 import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
+import { RestaurantCategories } from './Comp/RestaurantCategories';
+import { RestaurantList } from './Comp/RestaurantList';
 import { DashboardFooter } from './Comp/DashboardFooter';
 
 interface Props {
@@ -40,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const FoodDeliveryDashboardScreen: React.FC = function FoodDeliveryDashboardScreen() {
+export const RestaurantsScreen: React.FC = function RestaurantsScreen() {
     const classes = useStyles();
 
     
@@ -51,23 +50,20 @@ export const FoodDeliveryDashboardScreen: React.FC = function FoodDeliveryDashbo
             <Container maxWidth="xl" style={{paddingLeft: "8px", paddingRight: "8px"}} className={classes.main}>
                 <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
                     <Grid container direction="row" xs={12} spacing={0}>
-                        <Grid item xs={8} style={{marginBottom: "10%", marginTop: "1%", background: "transparent"}}>
+                        <Grid item xs={8} style={{marginBottom: "2%", marginTop: "1%", background: "transparent"}}>
                             <HeaderLeft />
                         </Grid>
-                        <Grid item xs={4} style={{marginBottom: "10%", marginTop: "1%", background: "transparent"}}>
+                        <Grid item xs={4} style={{marginBottom: "2%", marginTop: "1%", background: "transparent"}}>
                             <HeaderRight />
                         </Grid>
                         <Grid item xs={12}>
-                            <AdvertisementSlider2 />
+                            <Typography variant="h3">Resraurants</Typography>
                         </Grid>
                         <Grid item xs={12}>
-                            <Popularcategories />
+                            <RestaurantCategories />
                         </Grid>
                         <Grid item xs={12}>
-                            <PeoplesChoice />                    
-                        </Grid>
-                        <Grid item xs={12}>
-                            <PopularRestaurants />
+                            <RestaurantList />                    
                         </Grid>
                         <Grid item xs={12}>
                             <DashboardFooter />

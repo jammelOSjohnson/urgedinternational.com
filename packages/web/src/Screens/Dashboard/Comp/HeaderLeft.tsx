@@ -1,4 +1,4 @@
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardMedia, CardContent } from '@material-ui/core';
+import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardMedia, CardContent, useMediaQuery, useTheme } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import React from 'react';
@@ -24,11 +24,15 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const HeaderLeft: React.FC = function HeaderLeft() {
     const classes = useStyles();
+    const theme = useTheme();
     const [values, setValues] = React.useState<State>({
         email: '',
         password: '',
         showPassword: false,
       });
+
+    const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
     
     var history = useHistory();
     var location = history.location;
@@ -38,12 +42,20 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
       
     return (
         <>
-            <Typography variant="h6" style={{fontWeight: "bold", background: "transparent"}}>
-                Portal
-                {referralPath === "/fooddelivery" || referralPath === "/FoodDelivery" ?
-                <span><PlayArrowRounded /> Food Delivery</span> : ""}
-                
-            </Typography>
+            {isMatchMedium? (
+                <Typography variant="h6" style={{fontWeight: "bold", background: "transparent"}}>
+                    PORTAL
+                    {referralPath === "/fooddelivery" || referralPath === "/FoodDelivery" ?
+                    <span><PlayArrowRounded /> FOOD DELIVERY</span> :
+                    referralPath === "/Restaurants" || referralPath === "/restaurants" ?
+                    <span><PlayArrowRounded /> FOOD DELIVERY <PlayArrowRounded /> RESTAURANTS</span> : ""}
+                    
+                </Typography>
+            ):<></>}
+
+            {isMatch? (
+                <img src="Images/MobileMenuIcon.png"></img>
+            ):<></>}
         </>
     )
 }

@@ -39,7 +39,7 @@ export const Cart: React.FC = function Cart() {
       
     return (
         <>
-            <Badge badgeContent={cartItems.length} color="primary">
+            <Badge badgeContent={5} color="primary">
                 <ShoppingCartRounded className={classes.noti} />
             </Badge>
         </>

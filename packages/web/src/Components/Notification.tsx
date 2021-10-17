@@ -41,7 +41,7 @@ export const Notification: React.FC = function Notification() {
       
     return (
         <>
-            <Badge badgeContent={noties.length} color="primary">
+            <Badge badgeContent={2} color="primary">
                 <NotificationImportantRounded className={classes.noti} />
             </Badge>
         </>
