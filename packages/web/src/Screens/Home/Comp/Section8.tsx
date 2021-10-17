@@ -76,14 +76,14 @@ export const Section8: React.FC = function Section8() {
 
     return (
         <>
-            <Container maxWidth="lg" style={{paddingLeft: 0, paddingRight: 0}}>
+            <Container maxWidth="lg">
                 <div style={{textAlign: "center"}}>
                     <Typography variant="h5" style={{color: "#1D2635", marginTop: "5%"}}>
                         Become a Member <span style={{color: "#F7B614"}}>Today</span>
                     </Typography>
                 </div>
-                <Grid container alignItems="center" style={{textAlign: "center"}} spacing={1}>
-                    <Grid item xs={10} sm={12} md={12} lg={9}>
+                <Grid container alignItems="center" style={{textAlign: "center"}} spacing={2}>
+                    <Grid item xs={12} sm={12} md={12} lg={9}>
                         <div className={classes.root}>
                             <AppBar position="static" style={{backgroundColor: "#1D2635"}} >
                                 <Tabs
@@ -107,10 +107,10 @@ export const Section8: React.FC = function Section8() {
                             </TabPanel>
                         </div>
                     </Grid>
-                    <Grid item xs={10} md={10} lg={3} >
+                    <Grid item xs={12} md={12} lg={3} >
                         <Typography align="center" variant="h4">Join Us!</Typography>
                         <br/>
-                        <img src="Images/ExcitedGirl2.png" style={{marginLeft: "auto", marginRight: "auto"}} alt="surprised girl"></img>
+                        <img src="Images/ExcitedGirl2.png" width="100%" style={{marginLeft: "auto", marginRight: "auto"}} alt="surprised girl"></img>
                     </Grid>
                 </Grid>
             </Container>

@@ -91,72 +91,72 @@ export const Section2: React.FC = function Section2() {
     return (
         <>
             <Container maxWidth="md" className={classes.mainContainer}>
-            <Grid container direction="row" spacing={2} className={classes.root} alignItems="center">
-                <Grid item xs={12} md={6}>
-                    <Typography variant="h2" className={classes.s2Heading}>We Deliver,<span className={classes.s2Span}>You Enjoy.</span></Typography>
-                    <Typography className={classes.Typo2}>Our customers come first. We provide quality delivery and errand services to ease their everyday lives.</Typography>
+                <Grid container direction="row" spacing={2} className={classes.root} alignItems="center">
+                    <Grid item xs={12} md={6}>
+                        <Typography variant="h2" className={classes.s2Heading}>We Deliver,<span className={classes.s2Span}>You Enjoy.</span></Typography>
+                        <Typography className={classes.Typo2}>Our customers come first. We provide quality delivery and errand services to ease their everyday lives.</Typography>
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <Typography variant="h2" className={classes.marginTypo3}>Ease your everyday life, by allowing us to take care of all your errands and delivery services for you.</Typography>
+                    </Grid>
                 </Grid>
-                <Grid item xs={12} md={6}>
-                    <Typography variant="h2" className={classes.marginTypo3}>Ease your everyday life, by allowing us to take care of all your errands and delivery services for you.</Typography>
+                <Grid container direction="row" spacing={3} className={classes.root} alignItems="center">
+                    <Grid item xs={12} container spacing={1}>
+                        <Grid item xs={6} md={3}>
+                            <Card className={classes.card}>
+                                <CardMedia className={classes.cardImage}>
+                                    <img src="Images/Reliability.svg"></img>
+                                </CardMedia>
+                                <CardContent className={classes.cardContent}>
+                                    <Typography gutterBottom className={classes.cardTitle}>
+                                        Reliability
+                                    </Typography>
+                                    <Typography>We are reliable, so you can always count on us.</Typography>
+                                </CardContent>
+                            </Card>
+                        </Grid>  
+                        <Grid item xs={6} md={3}>
+                            <Card className={classes.card}>
+                                <CardMedia className={classes.cardImage}>
+                                    <img src="Images/Fast Delivery.svg"></img>
+                                </CardMedia>
+                                <CardContent className={classes.cardContent}>
+                                    <Typography gutterBottom className={classes.cardTitle}>
+                                        Fast Delivery
+                                    </Typography>
+                                    <Typography>Where ever you are, we got you covered. Speed is our priority.</Typography>
+                                </CardContent>
+                            </Card>
+                        </Grid>      
+                        <Grid item xs={6} md={3}>              
+                            <Card className={classes.card}>
+                                <CardMedia className={classes.cardImage}>
+                                    <img src="Images/Diversified.svg"></img>
+                                </CardMedia>
+                                <CardContent className={classes.cardContent}>
+                                    <Typography gutterBottom className={classes.cardTitle}>
+                                        Diversified
+                                    </Typography>
+                                    <Typography>We will take care of all your delivery and errand needs for you.</Typography>
+                                </CardContent>
+                            </Card>
+                        </Grid>      
+                        <Grid item xs={6} md={3}>              
+                            <Card className={classes.card}>
+                                <CardMedia className={classes.cardImage}>
+                                    <img src="Images/Quality.svg"></img>
+                                </CardMedia>
+                                <CardContent className={classes.cardContent}>
+                                    <Typography gutterBottom className={classes.cardTitle}>
+                                        Quality
+                                    </Typography>
+                                    <Typography>We provide quality services and exceptional customer service.</Typography>
+                                </CardContent>
+                            </Card>
+                        </Grid>                              
+                    </Grid>
                 </Grid>
-            </Grid>
-            <Grid container direction="row" spacing={3} className={classes.root} alignItems="center">
-                <Grid item xs={12} container spacing={1}>
-                    <Grid item xs={6} md={3}>
-                        <Card className={classes.card}>
-                            <CardMedia className={classes.cardImage}>
-                                <img src="Images/Reliability.svg"></img>
-                            </CardMedia>
-                            <CardContent className={classes.cardContent}>
-                                <Typography gutterBottom className={classes.cardTitle}>
-                                    Reliability
-                                </Typography>
-                                <Typography>We are reliable, so you can always count on us.</Typography>
-                            </CardContent>
-                        </Card>
-                    </Grid>  
-                    <Grid item xs={6} md={3}>
-                        <Card className={classes.card}>
-                            <CardMedia className={classes.cardImage}>
-                                <img src="Images/Fast Delivery.svg"></img>
-                            </CardMedia>
-                            <CardContent className={classes.cardContent}>
-                                <Typography gutterBottom className={classes.cardTitle}>
-                                    Fast Delivery
-                                </Typography>
-                                <Typography>Where ever you are, we got you covered. Speed is our priority.</Typography>
-                            </CardContent>
-                        </Card>
-                    </Grid>      
-                    <Grid item xs={6} md={3}>              
-                        <Card className={classes.card}>
-                            <CardMedia className={classes.cardImage}>
-                                <img src="Images/Diversified.svg"></img>
-                            </CardMedia>
-                            <CardContent className={classes.cardContent}>
-                                <Typography gutterBottom className={classes.cardTitle}>
-                                    Diversified
-                                </Typography>
-                                <Typography>We will take care of all your delivery and errand needs for you.</Typography>
-                            </CardContent>
-                        </Card>
-                    </Grid>      
-                    <Grid item xs={6} md={3}>              
-                        <Card className={classes.card}>
-                            <CardMedia className={classes.cardImage}>
-                                <img src="Images/Quality.svg"></img>
-                            </CardMedia>
-                            <CardContent className={classes.cardContent}>
-                                <Typography gutterBottom className={classes.cardTitle}>
-                                    Quality
-                                </Typography>
-                                <Typography>We provide quality services and exceptional customer service.</Typography>
-                            </CardContent>
-                        </Card>
-                    </Grid>                              
-                </Grid>
-            </Grid>
-        </Container>
+            </Container>
         </>
     )
 }

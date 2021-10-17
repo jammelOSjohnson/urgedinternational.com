@@ -123,14 +123,14 @@ const App: React.FC = function App() {
               <Router>
                 <Header/>
                 {/* <Sidebar/> */}
-                  <Route path="/" exact component={AboutScreen} />
-                  {/* <Route path="/About" exact component={HomeScreen} /> */}
-                  {/* <Route path="/About" exact component={AboutScreen} /> */}
-                  {/* <Route path="/Login" exact component={LoginScreen} />
+                  {/* <Route path="/" exact component={AboutScreen} /> */}
+                  <Route path="/" exact component={HomeScreen} />
+                  <Route path="/About" exact component={AboutScreen} />
+                  <Route path="/Login" exact component={LoginScreen} />
                   <Route path="/Register" exact component={RegisterScreen} />
                   <Route path="/Dashboard" exact component={CustomerDashboardScreen} />
                   <Route path="/FoodDelivery" exact component={FoodDeliveryDashboardScreen} />
-                  <Route path="/Restaurants" exact component={RestaurantsScreen} /> */}
+                  <Route path="/Restaurants" exact component={RestaurantsScreen} />
                 <Footer/>
               </Router>
             </div>
