@@ -20,7 +20,8 @@ interface State {
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
         root: {
-            padding: "0% 0px 5% 0px"
+            padding: "2% 0px 5% 0px",
+            borderRadius: "22px"
         },
         category: {
             fontWeight: "bold"
@@ -103,6 +104,19 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "#FAFAFA",
             textTransform: "none"
         },
+        Btn: {
+            color: "#FFF",
+            backgroundColor: "#FF5E14",
+            width: "150px",
+            borderRadius: "50px",
+            marginLeft: "auto",
+            marginRight: "auto",
+            marginTop: "3%",
+            height: "41px"
+        },
+        menuImages: {
+            borderRadius: "10px"
+        }
     }),
 );
 
@@ -134,73 +148,65 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
                 </Grid>
             </Grid>
             <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
-                <Grid xs={'auto'} className={classes.gridSpacing}>
-                    <Card className={classes.root}>
-                        <CardHeader
-                            avatar={
-                                <Avatar variant="square" aria-label="restaurant" className={classes.avatar}>
-                                    <CardMedia className={classes.cardImage}>
-                                        <img className={classes.kfcImage} src="Images/KFC Avatar.png"></img>
-                                    </CardMedia>
-                                </Avatar>
-                            }
-                            title="Kentucky Fried Chicken"
-                            subheader="Kingston"
-                        />
-                        <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
-                            <Grid item xs={12}>
-                                <CardContent>
-                                    <Typography variant="body2"  component="p">
-                                        Menu
-                                    </Typography>
-                                </CardContent>
-                            </Grid>
-                            <Grid container>
-                                <Grid item xs={4}>
-                                    <CardMedia className={classes.cardImage}>
-                                        <img className={classes.kfcImage} src="Images/KFC Order1.png"></img>
-                                    </CardMedia>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <CardMedia className={classes.cardImage}>
-                                        <img className={classes.kfcImage} src="Images/KFC Order2.png"></img>
-                                    </CardMedia>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <CardMedia className={classes.cardImage}>
-                                        <img className={classes.kfcImage} src="Images/KFC Order3.png"></img>
-                                    </CardMedia>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <CardMedia className={classes.cardImage}>
-                                        <img className={classes.kfcImage} src="Images/KFC Order4.png"></img>
-                                    </CardMedia>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <CardMedia className={classes.cardImage}>
-                                        <img className={classes.kfcImage} src="Images/KFC Order1.png"></img>
-                                    </CardMedia>
-                                </Grid>
-                                <Grid item xs={4}>
-                                    <CardMedia className={classes.cardImage}>
-                                        <img className={classes.kfcImage} src="Images/KFC Order5.png"></img>
-                                    </CardMedia>
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                        <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
-                            <Typography className={classes.btnLayout}>
-                                    <Link to="/FoodDelivery/Order" title="Order Now" className={classes.inactiveItemLink}>
-                                        <Button className={classes.Button}>
-                                            <Typography className={`${classes.btnfonts}`}>
-                                                Place an Order
+                {[1,2,3].map((text, index) => (
+                    <Grid item xs={10} md={6} lg={3} xl={3} className={classes.gridSpacing}>
+                        <Card className={classes.root}>
+                            <CardHeader
+                                avatar={
+                                    <Avatar variant="square" aria-label="restaurant" className={classes.avatar}>
+                                        <CardMedia className={classes.cardImage}>
+                                            <img className={classes.kfcImage} src="Images/KFC Avatar.png"></img>
+                                        </CardMedia>
+                                    </Avatar>
+                                }
+                                // action={
+                                //     <IconButton aria-label="settings">
+                                //         <img className={classes.kfcImage} src="Images/FavIcon.png"></img>
+                                //     </IconButton>
+                                // }
+                                title="Kentucky Fried Chicken"
+                                subheader="Kingston"
+                            />
+                            <CardContent>
+                                <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
+                                    <Grid item xs={6}>
+                                            <Typography variant="body2"  component="p">
+                                                Menu
                                             </Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                            <Typography variant="body2"  component="p">
+                                            {/* <ItemRating rating={3.5}/> */}
+                                            </Typography>
+                                    </Grid>
+                                        <Grid item xs={4}>
+                                                <img className={classes.menuImages} src="Images/KFC Order1.png"></img>
+                                        </Grid>
+                                        <Grid item xs={4}>
+                                                <img className={classes.menuImages} src="Images/KFC Order2.png"></img>
+                                        </Grid>
+                                        <Grid item xs={4}>
+                                                <img className={classes.menuImages} src="Images/KFC Order3.png"></img>
+                                        </Grid>
+                                        <Grid item xs={4}>
+                                                <img className={classes.menuImages} src="Images/KFC Order4.png"></img>
+                                        </Grid>
+                                        <Grid item xs={4}>
+                                                <img className={classes.menuImages} src="Images/KFC Order1.png"></img>
+                                        </Grid>
+                                        <Grid item xs={4}>
+                                                <img className={classes.menuImages} src="Images/KFC Order5.png"></img>
+                                        </Grid>
+                                        <Button variant="contained" fullWidth={true}
+                                            className={classes.Btn} 
+                                            type="button">
+                                            Place an Order
                                         </Button>
-                                    </Link>
-                                </Typography>
-                            </Grid>
-                    </Card>
-                </Grid>
+                                </Grid>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                ))}
             </Grid>
 
         </>
