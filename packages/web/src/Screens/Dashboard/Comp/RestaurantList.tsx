@@ -165,7 +165,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                                         <Grid item xs={4}>
                                                 <img className={classes.menuImages} src="Images/KFC Order3.png"></img>
                                         </Grid>
-                                        <Grid item xs={4}>
+                                        {/* <Grid item xs={4}>
                                                 <img className={classes.menuImages} src="Images/KFC Order4.png"></img>
                                         </Grid>
                                         <Grid item xs={4}>
@@ -173,7 +173,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                                         </Grid>
                                         <Grid item xs={4}>
                                                 <img className={classes.menuImages} src="Images/KFC Order5.png"></img>
-                                        </Grid>
+                                        </Grid> */}
                                 </Grid>
                             </CardContent>
                         </Card>
