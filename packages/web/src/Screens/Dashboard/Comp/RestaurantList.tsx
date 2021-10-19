@@ -16,7 +16,8 @@ interface State {
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
         root: {
-            padding: "0% 0px 5% 0px"
+            padding: "0% 0px 5% 0px",
+            borderRadius: "22px"
         },
         category: {
             fontWeight: "bold"
@@ -99,6 +100,9 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "#FAFAFA",
             textTransform: "none"
         },
+        menuImages: {
+            borderRadius: "10px"
+        },
     }),
 );
 
@@ -153,23 +157,23 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                                             </Typography>
                                     </Grid>
                                         <Grid item xs={4}>
-                                                <img src="Images/KFC Order1.png"></img>
+                                                <img className={classes.menuImages} src="Images/KFC Order1.png"></img>
                                         </Grid>
                                         <Grid item xs={4}>
-                                                <img src="Images/KFC Order2.png"></img>
+                                                <img className={classes.menuImages} src="Images/KFC Order2.png"></img>
                                         </Grid>
                                         <Grid item xs={4}>
-                                                <img src="Images/KFC Order3.png"></img>
+                                                <img className={classes.menuImages} src="Images/KFC Order3.png"></img>
+                                        </Grid>
+                                        {/* <Grid item xs={4}>
+                                                <img className={classes.menuImages} src="Images/KFC Order4.png"></img>
                                         </Grid>
                                         <Grid item xs={4}>
-                                                <img src="Images/KFC Order4.png"></img>
+                                                <img className={classes.menuImages} src="Images/KFC Order1.png"></img>
                                         </Grid>
                                         <Grid item xs={4}>
-                                                <img src="Images/KFC Order1.png"></img>
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                                <img src="Images/KFC Order5.png"></img>
-                                        </Grid>
+                                                <img className={classes.menuImages} src="Images/KFC Order5.png"></img>
+                                        </Grid> */}
                                 </Grid>
                             </CardContent>
                         </Card>
