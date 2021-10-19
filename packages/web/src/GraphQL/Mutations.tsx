@@ -9,8 +9,16 @@ export const CREATE_USER_MUTATION = gql`
         createUser(
             Id: $Id ,FirstName: $FirstName, LastName: $LastName, Email: $Email, 
             AddressLine1: $AddressLine1, AddressLine2: $AddressLine2, City: $City,
-            ContactNumber: $ContactNumber){
+            ContactNumber: $ContactNumber
+        ){
             Id
+            FirstName 
+            LastName
+            Email
+            AddressLine1
+            AddressLine2
+            City
+            ContactNumber
         }
     }
 `

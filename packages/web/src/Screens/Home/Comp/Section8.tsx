@@ -78,7 +78,7 @@ export const Section8: React.FC = function Section8() {
         <>
             <Container maxWidth="lg">
                 <div style={{textAlign: "center"}}>
-                    <Typography variant="h5" style={{color: "#1D2635", marginTop: "5%"}}>
+                    <Typography variant="h5" style={{color: "#1D2635", paddingTop: "5%"}}>
                         Become a Member <span style={{color: "#F7B614"}}>Today</span>
                     </Typography>
                 </div>

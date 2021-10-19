@@ -1,6 +1,6 @@
 import React from 'react';
 //import CSS
-import { Container, Grid, Typography, makeStyles, createStyles, Theme} from '@material-ui/core';
+import { Container, Button, Typography, makeStyles, createStyles, Theme} from '@material-ui/core';
 //import icons
 import Twitter from '@material-ui/icons/Twitter';
 import Facebook from '@material-ui/icons/Facebook';
@@ -12,19 +12,20 @@ interface Props {
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
-        heroText1: {
-            fontSize: '6vh',
+        Text1: {
             fontWeight: 700,
-            paddingTop: "15%",
+            paddingTop: "10%"
         },
-        heroText2: {
-            fontSize: '16px',
-            fontWeight: 600,
-            paddingTop: "5%",
-        },
-        heroSubText: {
-            fontSize: '6vh',
+        Text2: {
+            paddingTop: "3%",
             color: "#F7B614",
+            fontWeight: "bold",
+        },
+        Text3: {
+            paddingTop: "3%",
+            fontWeight: "bold",
+            maxWidth: "620px",
+            paddingBottom: "3%",
         },
         heroBackground: {
             backgroundImage: "url(Images/happy-african.png)",
@@ -33,16 +34,12 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: 0,
             color: "#FFFFFF",
         },
-        heroTruckIcon: {
-            paddingTop: "2.5%"
+        innerContainer: {
+            height: "669px",
+            paddingLeft: "6%", 
         },
-        heroSocialIcons: {
-            paddingTop: "10%",
-            paddingBottom: "5%"
-        },
-        heroTextMargin: {
-            marginLeft: "auto",
-            marginRight: "auto",
+        btn: {
+            borderRadius: "50px"
         }
     }),
 );
@@ -52,15 +49,25 @@ export const Section3: React.FC = function Section3() {
     return (
         <>
             <Container maxWidth="xl" className={classes.heroBackground}>
-            <div style={{height: "669px"}}>
-                <Typography variant="h5" style={{paddingLeft: "5%", paddingTop: "10%"}}>
-                    Stay Home,
-                </Typography>
-                <Typography variant="h3" style={{paddingLeft: "5%", paddingTop: "3%"}}>
-                    We Got You Covered
-                </Typography>
-            </div>
-                
+                <div className={classes.innerContainer}>
+                    <Typography variant="h5" className={classes.Text1}>
+                        Stay Home,
+                    </Typography>
+                    <Typography variant="h3" className={classes.Text2}>
+                        We Got You Covered
+                    </Typography>
+                    <Typography variant="body1" className={classes.Text3}>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vitae cursus
+                        et euismod tempor. Adipiscing elementum vestibulum in eget enim donec
+                        sed tincidunt.
+                    </Typography>
+                    <Button className={classes.btn} variant="contained" color="primary" type="submit">
+                        Get Started
+                    </Button>&nbsp;&nbsp;
+                    <Button className={classes.btn} variant="outlined" color="primary" type="button">
+                        Learn More
+                    </Button>
+                </div>
             </Container>
         </>
     )

@@ -1,6 +1,6 @@
 import React from 'react';
 //import CSS
-import { Container, Grid, Typography, makeStyles, createStyles, Theme, Card, CardContent} from '@material-ui/core';
+import { Container, Button, Grid, Typography, makeStyles, createStyles, Theme, Card, CardContent} from '@material-ui/core';
 //import icons
 import Twitter from '@material-ui/icons/Twitter';
 import Facebook from '@material-ui/icons/Facebook';
@@ -80,6 +80,9 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         gridContainer: {
             paddingLeft: "3%",
+        },
+        btn: {
+            borderRadius: "50px"
         }
     }),
 );
@@ -142,6 +145,14 @@ export const Section5: React.FC = function Section5() {
                         </Card>  
                     </Grid>
                 </Grid>
+                <div style={{textAlign: "center", paddingBottom: "5%"}}>
+                    <Button className={classes.btn} variant="outlined" color="primary" type="submit">
+                        Order Food
+                    </Button>&nbsp;&nbsp;
+                    <Button className={classes.btn} variant="outlined" color="primary" type="button">
+                        Package Delivery
+                    </Button>
+                </div>
                 </Container>
             </Container>
             </Container>

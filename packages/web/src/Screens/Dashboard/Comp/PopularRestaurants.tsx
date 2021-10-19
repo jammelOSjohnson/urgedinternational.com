@@ -149,7 +149,7 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
             </Grid>
             <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
                 {[1,2,3].map((text, index) => (
-                    <Grid item xs={10} md={6} lg={3} xl={3} className={classes.gridSpacing}>
+                    <Grid item xs={10} md={6} lg={3} xl={3} className={classes.gridSpacing} key={text}>
                         <Card className={classes.root}>
                             <CardHeader
                                 avatar={

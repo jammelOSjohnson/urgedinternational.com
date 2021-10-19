@@ -336,7 +336,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       console.log(uid);
       console.log("fetching user");
 
-      var userRef = getUser({variables: { Id: uid}}).then(async function(response) {
+      var userRef = await getUser({variables: { Id: uid}}).then(async function(response) {
         console.log("Checking user result for fetch user info");
         if (response.data.getUser !== null) {
            console.log("user exist");
@@ -382,8 +382,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           });
     
           if (storeRes) {
-            payloadf.userInfo.contactNumber = user.ContactNumber;
-            payloadf.userInfo.email = user.Email;
+            payloadf.userInfo.contactNumber = user2.ContactNumber;
+            payloadf.userInfo.email = user2.Email;
             payloadf.userInfo.fullName = user2.FirstName;
             payloadf.loggedIn = true;
             payloadf.userInfo.addressLine1 = user2.AddressLine1 !== null && user2.AddressLine1 !== undefined ? user2.AddressLine1 : "";

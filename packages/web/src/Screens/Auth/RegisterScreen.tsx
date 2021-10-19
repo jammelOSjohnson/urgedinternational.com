@@ -2,7 +2,7 @@ import { useAppData } from '../../Context/AppDataContext';
 import { Container, Grid, makeStyles, createStyles, Typography, Theme, Button, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, useTheme, useMediaQuery, withWidth, colors } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import { LockRounded, EmailOutlined, PlayArrowRounded, PersonRounded } from "@material-ui/icons/";

@@ -152,7 +152,7 @@ export const Section1: React.FC = function Section1() {
                 </div>
                 <Grid container direction="row" className={classes.root} spacing={2}>
                     <Grid item style={{marginLeft: "auto"}}>
-                        <Link className={classes.links} to="#" title="Food Delivery">
+                        <a className={classes.links} href="/FoodDelivery" title="Food Delivery">
                             <Grid container justifyContent="center" spacing={2}>
                                 <Grid key={0} item>
                                     <Card className={classes.card} style={{paddingBottom: "0px"}}>
@@ -160,17 +160,15 @@ export const Section1: React.FC = function Section1() {
                                             <img src="Images/YellowFoodDeliveryService.png"></img>
                                         </CardMedia>
                                         <CardContent className={classes.cardContent}>
-                                            <Link className={classes.links} to="#" title="Food Delivery">
-                                                <Typography className={classes.cardTitle1}>
-                                                    Food Delivery
-                                                    <br/>&nbsp;
-                                                </Typography>
-                                            </Link>
+                                            <Typography className={classes.cardTitle1}>
+                                                Food Delivery
+                                                <br/>&nbsp;
+                                            </Typography>
                                         </CardContent>
                                     </Card>
                                 </Grid>
                             </Grid>
-                        </Link>
+                        </a>
                     </Grid>
                     <Grid item >
                         <Link className={classes.links} to="#" title="Food Delivery">
