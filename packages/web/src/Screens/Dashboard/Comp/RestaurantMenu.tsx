@@ -167,7 +167,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                 <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button">
                                     Place an Order
                                 </Button>
-                                <Typography variant="body2"  component="p" className={classes.priceText}>
+                                <Typography variant="body2"  component="p" className={classes.priceText} style={{marginLeft: "56%"}}>
                                     $995.00
                                 </Typography>
                             </CardActions>
