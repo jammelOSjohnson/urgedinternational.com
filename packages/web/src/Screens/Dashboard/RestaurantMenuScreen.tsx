@@ -6,8 +6,9 @@ import clsx from 'clsx';
 import { Sidebar } from './Comp/Sidebar';
 import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
+import { RestaurantMenuHeader } from './Comp/RestaurantMenuHeader';
 import { RestaurantCategories } from './Comp/RestaurantCategories';
-import { RestaurantList } from './Comp/RestaurantList';
+import { RestaurantMenu } from './Comp/RestaurantMenu';
 import { DashboardFooter } from './Comp/DashboardFooter';
 
 interface Props {
@@ -57,13 +58,13 @@ export const RestaurantMenuScreen: React.FC = function RestaurantMenuScreen() {
                             <HeaderRight />
                         </Grid>
                         <Grid item xs={12}>
-                            <Typography variant="h3">Resraurants</Typography>
+                            <RestaurantMenuHeader />
                         </Grid>
                         <Grid item xs={12}>
                             <RestaurantCategories />
                         </Grid>
                         <Grid item xs={12}>
-                            <RestaurantList />                    
+                            <RestaurantMenu />                    
                         </Grid>
                         <Grid item xs={12}>
                             <DashboardFooter />
