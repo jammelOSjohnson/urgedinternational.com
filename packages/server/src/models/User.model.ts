@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const { model, Schema } = require('mongoose');
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new Schema({
     Id: {
         type: String,
         required: true
@@ -38,12 +39,12 @@ const UserSchema = new mongoose.Schema({
         required: false
     },
     category: {
-        type: mongoose.Schema.Types.ObjectId, 
+        type: Schema.Types.ObjectId, 
         ref: 'category',
         required: false
     }
 
 });
 
-const User = mongoose.model('user', UserSchema);
+const User = model('user', UserSchema);
 export default User;

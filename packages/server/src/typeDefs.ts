@@ -11,11 +11,6 @@ const typeDefs = gql`
         UserID: String
         RoleID: String
     }
-    
-    type Category {
-        Id: String,
-        Name: String    
-    }
 
     type User {
         Id: String! 
@@ -27,7 +22,13 @@ const typeDefs = gql`
         City: String 
         ContactNumber: String
         OpeningHrs: OpeningHrs
-        category: ID
+        category: Category
+    }
+
+    type Category {
+        _id: ID
+        Id: String,
+        Name: String    
     }
 
     type UserOutput {
@@ -98,8 +99,6 @@ const typeDefs = gql`
         getAllRoles: [Role!]!
 
         getCategories: [Category!]!
-
-        getRestaurants: [UserOutput!]!
     }
     
 
@@ -116,10 +115,12 @@ const typeDefs = gql`
             Id: String, FirstName: String, LastName: String, 
             Email: String, AddressLine1: String, AddressLine2: String, 
             City: String, ContactNumber: String, OpeningHrs: OpeningHrs2,
-            categoryId: ID
+            category: ID
             ): User!
             
         getUser(Id: String): User
+
+        getRestaurants: [User!]!
 
         createMenuItem(
             RetaurantID: String,

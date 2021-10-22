@@ -14,11 +14,6 @@ const resolvers = {
         },
         getCategories: async () => {
             return await Category.find();
-        },
-        getRestaurants: async () => {
-            const res = await User.find().populate({path: "Categories", model: "Category"});
-            console.log(res);
-            return res;
         }
     },
     Mutation: {
@@ -40,8 +35,8 @@ const resolvers = {
             return userPermision.save();
         },
 
-        createUser: (_, {Id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, OpeningHrs, categoryId}) => {
-            const user = new User({Id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, OpeningHrs, categoryId});
+        createUser: (_, {Id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, OpeningHrs, category}) => {
+            const user = new User({Id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, OpeningHrs, category});
             return user.save();
         },
 
@@ -51,7 +46,13 @@ const resolvers = {
         },
 
         getUser: async (_,{Id}) => {
-            return await User.findOne({Id}); 
+            return await User.findOne({Id}).populate({path: "categories", model: "category"});; 
+        },
+
+        getRestaurants: async () => {
+            const res = await User.find().populate("category");
+            console.log(res);
+            return res;
         },
 
         createMenuItem: (_,{ RetaurantID, MenuCategory,ItemName,ItemCost, ItemDescription}) => {
