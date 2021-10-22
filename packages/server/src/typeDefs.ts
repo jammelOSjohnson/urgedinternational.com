@@ -11,6 +11,11 @@ const typeDefs = gql`
         UserID: String
         RoleID: String
     }
+    
+    type Category {
+        Id: String,
+        Name: String    
+    }
 
     type User {
         Id: String! 
@@ -18,9 +23,24 @@ const typeDefs = gql`
         LastName: String 
         Email: String! 
         AddressLine1: String 
-        AddressLine2: String, 
+        AddressLine2: String 
         City: String 
         ContactNumber: String
+        OpeningHrs: OpeningHrs
+        category: ID
+    }
+
+    type UserOutput {
+        Id: String! 
+        FirstName: String 
+        LastName: String 
+        Email: String! 
+        AddressLine1: String 
+        AddressLine2: String 
+        City: String 
+        ContactNumber: String
+        OpeningHrs: OpeningHrs
+        category: Category
     }
 
     type MenuItem {
@@ -31,11 +51,57 @@ const typeDefs = gql`
         ItemDescription: String,
     }
 
+    type OpeningHrs {
+        Sunday: String,
+        Monday: String,
+        Tuesday: String,
+        Wednesday: String,
+        Thursday: String,
+        Friday: String,
+        Saturday: String,
+    }
+
+    input OpeningHrs2 {
+        Sunday: String,
+        Monday: String,
+        Tuesday: String,
+        Wednesday: String,
+        Thursday: String,
+        Friday: String,
+        Saturday: String,
+    }
+
+   
+
+    type Restaurant {
+        Id: String,
+        FirstName: String,
+        LastName: String,
+        Email: String,
+        AddressLine1: String,
+        AddressLine2: String,
+        City: String,
+        ContactNumber: String,
+        OpeningHrs: OpeningHrs,
+        category: ID
+    }
+
+
+    type RestaurantsByCategories {
+        Restaurant: Restaurant
+        Category: Category
+    }
+
     type Query {
         hello: String
 
         getAllRoles: [Role!]!
+
+        getCategories: [Category!]!
+
+        getRestaurants: [UserOutput!]!
     }
+    
 
     type Mutation {
         createRole(description: String): Role!
@@ -49,7 +115,8 @@ const typeDefs = gql`
         createUser(
             Id: String, FirstName: String, LastName: String, 
             Email: String, AddressLine1: String, AddressLine2: String, 
-            City: String, ContactNumber: String
+            City: String, ContactNumber: String, OpeningHrs: OpeningHrs2,
+            categoryId: ID
             ): User!
             
         getUser(Id: String): User
@@ -61,6 +128,17 @@ const typeDefs = gql`
             ItemCost: String,
             ItemDescription: String,
             ): MenuItem!
+        
+        createCategory(
+            Id: String,
+            Name: String
+        ): Category
+
+        fetchRestaurantsByCategory(
+            categoryID: String
+        ):RestaurantsByCategories 
+
+        
     }
 `;
 

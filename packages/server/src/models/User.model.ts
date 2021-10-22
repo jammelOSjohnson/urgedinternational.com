@@ -32,7 +32,17 @@ const UserSchema = new mongoose.Schema({
     ContactNumber: {
         type: String,
         required: false
+    },
+    OpeningHrs: {
+        type: Object,
+        required: false
+    },
+    category: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'category',
+        required: false
     }
+
 });
 
 const User = mongoose.model('user', UserSchema);
