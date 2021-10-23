@@ -2,8 +2,8 @@ import type { ReactNode } from 'react'
 import {useContext, useReducer, createContext} from 'react';
 //import fetchAddressApi from '../Apis/fetchAddressApi';
 import  { auth, socialAuth, googleAuthProvider, timeStamp } from '../firebase';
-import { CREATE_USER_MUTATION, GET_USER_MUTATION, GET_USER_IN_ROLE, GET_ROLE, CREATE_ROLE } from '../GraphQL/Mutations';
-import { useMutation } from '@apollo/client';
+import { GET_RESTAURANTS, CREATE_USER_MUTATION, GET_USER_MUTATION, GET_USER_IN_ROLE, GET_ROLE, CREATE_ROLE } from '../GraphQL/Mutations';
+import { useMutation, useQuery  } from '@apollo/client';
 import sendEmail from "../email.js";
 
 import serverPI from '../Apis/serverPI';
@@ -51,6 +51,11 @@ function appDataReducer(state, action){
             loading: action.payload.loading,
             loggedIn: action.payload.loggedIn
             };
+        case "fetch_restaurants": 
+          return {
+            ...state,
+            restaurants: action.payload.restaurants
+          };
         default:
             return state;
     }
@@ -65,16 +70,18 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const emailUserId = "user_bDLFbepm6Arcdgh7Akzo3";
     //Declare necessary variables
     const [createUser] = useMutation(CREATE_USER_MUTATION);
-    const [getUser, {error}] = useMutation(GET_USER_MUTATION);
+    const [getUser] = useMutation(GET_USER_MUTATION);
     const [getUserInRole] = useMutation(GET_USER_IN_ROLE);
     const [getRole] = useMutation(GET_ROLE);
     const [addUserToRole] = useMutation(CREATE_ROLE);
+    const [getRestaurants] = useMutation(GET_RESTAURANTS);
     var currentUser = undefined;
     var loading = true;
     var loggedIn = false;
     var cartItems = [];
     var noties = [];
     var orders = [];
+    var restaurants = [];
 
     var userInfo = {
       contactNumber: "",
@@ -431,7 +438,31 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         console.error("Error sending job application email: ", error);
         return false;
       };
-  };
+    };
+
+    var fetchRestaurants = async function fetchRestaurants(payload){
+      console.log("about to fetch restaurants");
+        var result = await getRestaurants().then(async function(response) {
+          if (response.data.getRestaurants !== null) {
+            console.log("got list of restaurants");
+            console.log(response);
+
+            var restList = response.data.getRestaurants;
+
+            if (restList !== null) {
+              payload.restaurants = restList;
+              return payload;
+            }
+          }
+        }).catch(function(err){
+          console.log(err);
+        });
+
+        dispatch({
+          type: "fetch_restaurants",
+          payload: result
+        });
+    }
 
     var sendNewApplicationEmail = async function sendNewApplicationEmail(formVals) {
       // var data1 = {event: 'staff add package send new package email',
@@ -482,13 +513,15 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         cartItems,
         noties,
         orders,
+        restaurants,
         JoinUs,
         signup,
         login,
         gLogin,
         getAddress,
         fetchUserInfoForSignUp,
-        fetchUserInfo
+        fetchUserInfo,
+        fetchRestaurants
     });
     
      

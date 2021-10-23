@@ -99,6 +99,7 @@ const typeDefs = gql`
         getAllRoles: [Role!]!
 
         getCategories: [Category!]!
+
     }
     
 

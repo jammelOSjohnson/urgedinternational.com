@@ -63,3 +63,32 @@ export const CREATE_ROLE = gql`
         }
     }
 `
+
+export const GET_RESTAURANTS = gql`
+    mutation getRestaurants {
+        getRestaurants{
+            Id
+            FirstName
+            LastName
+            Email
+            AddressLine1
+            AddressLine2
+            City
+            ContactNumber
+            OpeningHrs{
+            Sunday
+            Monday
+            Tuesday
+            Wednesday
+            Thursday
+            Friday
+            Saturday
+            }
+            category{
+                _id
+                Name
+                Id
+            }
+        }
+    }
+`
