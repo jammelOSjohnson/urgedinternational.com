@@ -125,13 +125,13 @@ const useStyles = makeStyles((theme: Theme) =>
               right: 0,
               position: "absolute",
               transform: "rotate(180deg)",
-              bottom: "-102%",
+              bottom: "-65%",
           },
           expandIconStyle: {
             marginLeft: "auto",
             marginRight: "auto",
             position: "absolute",
-            bottom: "-102%",
+            bottom: "-65%",
           }
           
     }),

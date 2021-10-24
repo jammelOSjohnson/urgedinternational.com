@@ -67,6 +67,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         mainContainer: {
             //margin: 0,
+            overflowY: "hidden"
         },
         cardTitle: {
             fontSize: "20px",

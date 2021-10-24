@@ -15,7 +15,8 @@ interface State {
     flavour2: string;
     drink: string;
     otherIntructions: string;
-    itemName: string
+    itemName: string;
+    itemCost: number;
 }
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -108,7 +109,7 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "inherit",
         },
         Button: {
-            backgroundColor: "#FF5E14",
+            backgroundColor: theme.palette.primary.light,
             border: "1.21951px solid #FFFFFF",
             height: "41px",
             width: "113px",
@@ -127,7 +128,7 @@ const useStyles = makeStyles((theme: Theme) =>
             fontWeight: "bolder",
         },
         media: {
-            height: 312,
+            height: 274,
             margin: "1% 1% 0% 1%",
             borderRadius: "5% 5% 0% 0%",
         },
@@ -178,7 +179,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
         flavour2: 'Select Flavour',
         drink: 'Select Drink',
         otherIntructions: '',
-        itemName: ''
+        itemName: '',
+        itemCost: 0.00
       });
 
     const [open, setOpen] = React.useState(false);
@@ -196,7 +198,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
     var history = useHistory();
 
     const handleChange = (event) => {
-        setValues({...values,[event.target.name]:event.target.value, itemName: selectedItem.ItemName});
+        setValues({...values,[event.target.name]:event.target.value, itemName: selectedItem.ItemName, itemCost: selectedItem.ItemCost});
     };
 
     const handleChange2 = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -215,9 +217,11 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                     flavour2: 'Select Flavour',
                     drink: 'Select Drink',
                     otherIntructions: '',
-                    itemName: ''
+                    itemName: '',
+                    itemCost: 0.00
                 }
             );
+            setOpen(false);
         })
     }
 
@@ -355,9 +359,9 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                             <Card className={classes.root}>
                                 <CardActionArea>
                                 <CardMedia
-                                className={classes.media}
-                                image="Images/menu-Big Deal.png"
-                                title="Contemplative Reptile"
+                                    className={classes.media}
+                                    image="Images/menu-Big Deal.png"
+                                    title="Contemplative Reptile"
                                 />
                                 </CardActionArea>
                                 <CardContent>

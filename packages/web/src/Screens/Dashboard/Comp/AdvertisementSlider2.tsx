@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme: Theme) =>
             lineHeight: '100%',
             //margin: '-10% -17% 8% 0%',
             position: "relative",
-            left: "50%",
+            left: "45%",
             // top: "-467%",
             width: "63%",
             textAlign: "left",
@@ -92,7 +92,7 @@ const useStyles = makeStyles((theme: Theme) =>
         btnLayout: {
             textAlign: "left",
             width: "100%",
-            left: "50%",
+            left: "45%",
             // top: "-108%",
             position: "relative",
             paddingTop: "3%",
@@ -103,7 +103,7 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "inherit",
         },
         form: {
-            padding: "0% 0px 5% 0px",
+            padding: "0% 0px 2% 0px",
             width: "70%",
             marginLeft: "44%;",
             marginTop: "5%"
@@ -305,13 +305,6 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                     >
                                         <img src="Images/searchicon.png" style={{width: "100%"}} alt="icon"/>
                                     </IconButton>
-                                    {/* <Button variant="contained" 
-                                        style={{backgroundColor: "#FEC109"}}
-                                         className={classes.loginButton} 
-                                         type="submit"
-                                    >
-                                        Sign Up
-                                    </Button> */}
                                 </form>
                                 <Typography className={`${classes.fonts} ${classes.sliderText}`}>
                                 With Urged, Quality and Time is our main priority. You can trust us to be on-time with your food from any restaraunt.
@@ -325,59 +318,8 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                         </Button>
                                     </Link>
                                 </Typography>
-                                
                             </Carousel.Caption>
                         </Carousel.Item>
-                        {/* <Carousel.Item>  
-                            <img
-                            className="d-block"
-                            src="Images/SliderFrame2.png"
-                            alt="First slide"
-                            width="100%"
-                            style={{minHeight: "300px"}}
-                            />
-                            <Carousel.Caption>
-                                <Typography className={`${classes.fonts} ${classes.sliderSlogan}`}>
-                                    Delicious Healthy Food
-                                </Typography>
-                                <Typography className={`${classes.fonts} ${classes.sliderText}`}>
-                                With Urged, Quality and Time is our main priority. You can trust us to be on-time with your food from any restaraunt.
-                                </Typography>
-                                <Typography className={classes.btnLayout}>
-                                    <Button className={classes.Button}>
-                                        <Typography className={`${classes.btnfonts}`}>
-                                            Reataurants
-                                        </Typography>
-                                    </Button>
-                                </Typography>
-                                
-                            </Carousel.Caption>
-                        </Carousel.Item>
-                        <Carousel.Item>  
-                            <img
-                            className="d-block"
-                            src="Images/SliderFrame2.png"
-                            alt="First slide"
-                            width="100%"
-                            style={{minHeight: "300px"}}
-                            />
-                            <Carousel.Caption>
-                                <Typography className={`${classes.fonts} ${classes.sliderSlogan}`}>
-                                    Delicious Healthy Food
-                                </Typography>
-                                <Typography className={`${classes.fonts} ${classes.sliderText}`}>
-                                With Urged, Quality and Time is our main priority. You can trust us to be on-time with your food from any restaraunt.
-                                </Typography>
-                                <Typography className={classes.btnLayout}>
-                                    <Button className={classes.Button}>
-                                        <Typography className={`${classes.btnfonts}`}>
-                                            Reataurants
-                                        </Typography>
-                                    </Button>
-                                </Typography>
-                                
-                            </Carousel.Caption>
-                        </Carousel.Item> */}
                     </Carousel>
                 </div>
         </>

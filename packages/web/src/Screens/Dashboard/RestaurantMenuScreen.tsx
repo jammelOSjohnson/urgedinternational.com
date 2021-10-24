@@ -7,7 +7,7 @@ import { Sidebar } from './Comp/Sidebar';
 import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
 import { RestaurantMenuHeader } from './Comp/RestaurantMenuHeader';
-import { RestaurantCategories } from './Comp/RestaurantCategories';
+import { RestaurantMenuCategories } from './Comp/RestaurantMenuCategories';
 import { RestaurantMenu } from './Comp/RestaurantMenu';
 import { DashboardFooter } from './Comp/DashboardFooter';
 
@@ -61,7 +61,7 @@ export const RestaurantMenuScreen: React.FC = function RestaurantMenuScreen() {
                             <RestaurantMenuHeader />
                         </Grid>
                         <Grid item xs={12}>
-                            <RestaurantCategories />
+                            <RestaurantMenuCategories />
                         </Grid>
                         <Grid item xs={12}>
                             <RestaurantMenu />                    
