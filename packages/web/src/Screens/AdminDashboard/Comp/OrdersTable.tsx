@@ -27,14 +27,14 @@ function createData(
 }
 
 const rows = [
-  createData('UG977KN9NHD1','2000-01-01', 'Completed', 'Food', 'Kingston', 44.00, 'Marcus Henry'),
+  createData('UG977KN9NHD1','2000-01-01', 'Completed', 'Food', 'Kingston', 22.87, 'Marcus Henry'),
   createData('UG977KN9NHD4', '2000-01-01', 'In Progress', 'Errands', 'Mandeville', 44.00, 'Janiesha James'),
-  createData('UG977KN9NH59', '2000-01-01', 'New', 'Urged', 'Mandeville', 44.00, 'Leon Gordon'),
-  createData('UG977KN9D960','2000-01-01', 'Completed', 'Errands', 'Kingston', 44.00, 'Marcia Duffus'),
-  createData('UG977KN9NHD2', '2000-01-01', 'Completed', 'Errands', 'Mandeville', 44.00, 'David Grey'),
-  createData('UG977KN9NH58','2000-01-01', 'Cancelled', 'Urged', 'Mandeville', 44.00, 'Rudeus Greyrat'),
-  createData('UG977KN9D961','2000-01-01', 'In Progress', 'Food', 'Kingston', 44.00, 'Uzumaki Boruto'),
-  createData('UG977KN9NHD3','2000-01-01', 'Completed', 'Food', 'Kingston', 44.00, 'Uchiha Sarada'),
+  createData('UG977KN9NH59', '2000-01-01', 'New', 'Urged', 'Mandeville', 68.76, 'Leon Gordon'),
+  createData('UG977KN9D960','2000-01-01', 'Completed', 'Errands', 'Kingston', 944.45, 'Marcia Duffus'),
+  createData('UG977KN9NHD2', '2000-01-01', 'Completed', 'Errands', 'Mandeville', 1000.50, 'David Grey'),
+  createData('UG977KN9NH58','2000-01-01', 'Cancelled', 'Urged', 'Mandeville', 36.99, 'Rudeus Greyrat'),
+  createData('UG977KN9D961','2000-01-01', 'In Progress', 'Food', 'Kingston', 20.25, 'Uzumaki Boruto'),
+  createData('UG977KN9NHD3','2000-01-01', 'Completed', 'Food', 'Kingston', 78.57, 'Uchiha Sarada'),
 ];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -337,7 +337,7 @@ export const OrdersTable: React.FC = function OrdersTable () {
                       <TableCell align="right">{row.status}</TableCell>
                       <TableCell align="right">{row.category}</TableCell>
                       <TableCell align="right">{row.location}</TableCell>
-                      <TableCell align="right">{row.cost}</TableCell>
+                      <TableCell align="right">${row.cost.toFixed(2)}</TableCell>
                       <TableCell align="right">{row.deliveredBy}</TableCell>
                     </TableRow>
                   );
