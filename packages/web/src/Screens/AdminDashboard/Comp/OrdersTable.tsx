@@ -5,32 +5,36 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 
 interface Data {
-    name: string;
     orderId: string;
-    orderDate: number;
-    status: number;
-    category: number;
+    orderDate: string;
+    status: string;
+    category: string;
+    location: string;
+    cost: number;
+    deliveredBy: string;
 }
 
 function createData(
-    name: string,
     orderId: string,
-    orderDate: number,
-    status: number,
-    category: number,
+    orderDate: string,
+    status: string,
+    category: string,
+    location: string,
+    cost: number,
+    deliveredBy: string,
 ): Data {
-  return { name, orderId, orderDate, status, category };
+  return { orderId, orderDate, status, category, location, cost, deliveredBy };
 }
 
 const rows = [
-  createData('Cupcake', 'UG977KN9NHD1', 3.7, 67, 4.3),
-  createData('Donut', 'UG977KN9NHD4', 25.0, 51, 4.9),
-  createData('Eclair', 'UG977KN9NH59', 16.0, 24, 6.0),
-  createData('Frozen yoghurt', 'UG977KN9D960', 6.0, 24, 4.0),
-  createData('Gingerbread', 'UG977KN9NHD4', 16.0, 49, 3.9),
-  createData('Honeycomb', 'UG977KN9NH59', 3.2, 87, 6.5),
-  createData('Ice cream sandwich', 'UG977KN9D960', 9.0, 37, 4.3),
-  createData('Jelly Bean', 'UG977KN9NHD1', 0.0, 94, 0.0),
+  createData('UG977KN9NHD1','2000-01-01', 'Completed', 'Food', 'Kingston', 44.00, 'Marcus Henry'),
+  createData('UG977KN9NHD4', '2000-01-01', 'In Progress', 'Errands', 'Mandeville', 44.00, 'Janiesha James'),
+  createData('UG977KN9NH59', '2000-01-01', 'New', 'Urged', 'Mandeville', 44.00, 'Leon Gordon'),
+  createData('UG977KN9D960','2000-01-01', 'Completed', 'Errands', 'Kingston', 44.00, 'Marcia Duffus'),
+  createData('UG977KN9NHD2', '2000-01-01', 'Completed', 'Errands', 'Mandeville', 44.00, 'David Grey'),
+  createData('UG977KN9NH58','2000-01-01', 'Cancelled', 'Urged', 'Mandeville', 44.00, 'Rudeus Greyrat'),
+  createData('UG977KN9D961','2000-01-01', 'In Progress', 'Food', 'Kingston', 44.00, 'Uzumaki Boruto'),
+  createData('UG977KN9NHD3','2000-01-01', 'Completed', 'Food', 'Kingston', 44.00, 'Uchiha Sarada'),
 ];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -72,11 +76,13 @@ interface HeadCell {
 }
 
 const headCells: HeadCell[] = [
-  { id: 'name', numeric: false, disablePadding: true, label: 'Dessert (100g serving)' },
-  { id: 'orderId', numeric: true, disablePadding: false, label: 'Order ID' },
+  { id: 'orderId', numeric: false, disablePadding: true, label: 'Order ID' },
   { id: 'orderDate', numeric: true, disablePadding: false, label: 'Order Date' },
   { id: 'status', numeric: true, disablePadding: false, label: 'Status' },
   { id: 'category', numeric: true, disablePadding: false, label: 'Category' },
+  { id: 'location', numeric: true, disablePadding: false, label: 'Location' },
+  { id: 'cost', numeric: true, disablePadding: false, label: 'Cost' },
+  { id: 'deliveredBy', numeric: true, disablePadding: false, label: 'Delivered By' },
 ];
 
 interface EnhancedTableProps {
@@ -158,41 +164,41 @@ interface EnhancedTableToolbarProps {
   numSelected: number;
 }
 
-const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
-  const classes = useToolbarStyles();
-  const { numSelected } = props;
+// const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
+//   const classes = useToolbarStyles();
+//   const { numSelected } = props;
 
-  return (
-    <Toolbar
-      className={clsx(classes.root, {
-        [classes.highlight]: numSelected > 0,
-      })}
-    >
-      {numSelected > 0 ? (
-        <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
-          {numSelected} selected
-        </Typography>
-      ) : (
-        <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-          Nutrition
-        </Typography>
-      )}
-      {numSelected > 0 ? (
-        <Tooltip title="Delete">
-          <IconButton aria-label="delete">
-            <DeleteIcon />
-          </IconButton>
-        </Tooltip>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
-      )}
-    </Toolbar>
-  );
-};
+//   return (
+//     <Toolbar
+//       className={clsx(classes.root, {
+//         [classes.highlight]: numSelected > 0,
+//       })}
+//     >
+//       {numSelected > 0 ? (
+//         <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
+//           {numSelected} selected
+//         </Typography>
+//       ) : (
+//         <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
+//           Nutrition
+//         </Typography>
+//       )}
+//       {numSelected > 0 ? (
+//         <Tooltip title="Delete">
+//           <IconButton aria-label="delete">
+//             <DeleteIcon />
+//           </IconButton>
+//         </Tooltip>
+//       ) : (
+//         <Tooltip title="Filter list">
+//           <IconButton aria-label="filter list">
+//             <FilterListIcon />
+//           </IconButton>
+//         </Tooltip>
+//       )}
+//     </Toolbar>
+//   );
+// };
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -237,7 +243,7 @@ export const OrdersTable: React.FC = function OrdersTable () {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.name);
+      const newSelecteds = rows.map((n) => n.orderId);
       setSelected(newSelecteds);
       return;
     }
@@ -284,7 +290,7 @@ export const OrdersTable: React.FC = function OrdersTable () {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
         <TableContainer>
           <Table
             className={classes.table}
@@ -305,17 +311,17 @@ export const OrdersTable: React.FC = function OrdersTable () {
               {stableSort(rows, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
-                  const isItemSelected = isSelected(row.name);
+                  const isItemSelected = isSelected(row.orderId);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.name)}
+                      onClick={(event) => handleClick(event, row.orderId)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
-                      key={row.name}
+                      key={row.orderId}
                       selected={isItemSelected}
                     >
                       <TableCell padding="checkbox">
@@ -325,12 +331,14 @@ export const OrdersTable: React.FC = function OrdersTable () {
                         />
                       </TableCell>
                       <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.name}
+                        {row.orderId}
                       </TableCell>
-                      <TableCell align="right">{row.orderId}</TableCell>
                       <TableCell align="right">{row.orderDate}</TableCell>
                       <TableCell align="right">{row.status}</TableCell>
                       <TableCell align="right">{row.category}</TableCell>
+                      <TableCell align="right">{row.location}</TableCell>
+                      <TableCell align="right">{row.cost}</TableCell>
+                      <TableCell align="right">{row.deliveredBy}</TableCell>
                     </TableRow>
                   );
                 })}

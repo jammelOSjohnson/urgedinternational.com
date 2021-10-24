@@ -55,9 +55,6 @@ export const AdminOrdersScreen: React.FC = function AdminOrdersScreen () {
                                 <HeaderRight />
                             </Grid>
                             <Grid item xs={12}>
-                                Filter Bar
-                            </Grid>
-                            <Grid item xs={12}>
                                 <OrdersTable />
                             </Grid>
                         </Grid>
