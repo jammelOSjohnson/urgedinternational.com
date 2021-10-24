@@ -10,6 +10,7 @@ import { CustomerDashboardScreen } from '../Screens/Dashboard/CustomerDashboard'
 import { FoodDeliveryDashboardScreen } from '../Screens/Dashboard/FoodDeliveryDashboardScreen';
 import { RestaurantsScreen } from '../Screens/Dashboard/RestaurantsScreen';
 import { RestaurantMenuScreen } from '../Screens/Dashboard/RestaurantMenuScreen';
+import { AdminOrdersScreen } from '../Screens/AdminDashboard/AdminOrdersScreen';
 import { Sidebar } from '../Screens/Dashboard/Comp/Sidebar';
 
 //Import provider
@@ -132,6 +133,7 @@ const App: React.FC = function App() {
                   <Route path="/Dashboard" exact component={CustomerDashboardScreen} />
                   <Route path="/FoodDelivery" exact component={FoodDeliveryDashboardScreen} />
                   <Route path="/Restaurants" exact component={RestaurantsScreen} />
+                  <Route path="/AdminOrders" exact component={AdminOrdersScreen} />
                   {/* <Route path="/Menu/:id" exact component={RestaurantMenuScreen} /> */}
                   <Route path="/Menu" exact component={RestaurantMenuScreen} />
                 <Footer/>
