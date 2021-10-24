@@ -1,0 +1,9 @@
+.MuiDrawer-paperAnchorDockedLeft {
+    border-right: none !important;
+}
+
+@media only screen and (max-width: 768px){
+    .hideOnMobile{
+        display: none;
+    }
+}
