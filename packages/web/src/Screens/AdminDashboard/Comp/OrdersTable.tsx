@@ -220,7 +220,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export const OrdersTable: React.FC = () => {
+export const OrdersTable: React.FC = function OrdersTable () {
   const classes = useStyles();
   const [order, setOrder] = React.useState<Order>('asc');
   const [orderBy, setOrderBy] = React.useState<keyof Data>('orderId');
