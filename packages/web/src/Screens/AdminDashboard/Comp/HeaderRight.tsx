@@ -5,7 +5,6 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import { NotificationImportantRounded, ShoppingCartRounded } from "@material-ui/icons/";
-import { Cart } from "../../../Components/Cart";
 import { Notification } from "../../../Components/Notification";
 import { User } from "../../../Components/User"
 
@@ -55,7 +54,6 @@ export const HeaderRight: React.FC = function HeaderRight() {
                     <Grid container direction="row" xs={6} spacing={1}>
                         <Grid item xs={12} spacing={0}>
                             <Notification /> <span style={{marginRight: "10%"}}></span>
-                            <Cart />
                         </Grid>
                     </Grid>
                 </Grid>
