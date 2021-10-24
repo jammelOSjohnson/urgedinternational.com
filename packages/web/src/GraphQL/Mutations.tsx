@@ -89,6 +89,12 @@ export const GET_RESTAURANTS = gql`
                 Name
                 Id
             }
+            MenuItems{
+                MenuCategory
+                ItemName
+                ItemCost
+                ItemDescription
+            }
         }
     }
 `

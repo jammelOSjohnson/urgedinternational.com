@@ -56,6 +56,17 @@ function appDataReducer(state, action){
             ...state,
             restaurants: action.payload.restaurants
           };
+        case "view_menu_items":
+          return {
+            ...state,
+            selectedRestaurant: action.payload.selectedRestaurant,
+            prevSelectedrestaurant: action.payload.prevSelectedrestaurant
+          }
+        case "add_cart_item":
+          return {
+            ...state,
+            cartItems: action.payload.cartItems
+          }
         default:
             return state;
     }
@@ -76,6 +87,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const [addUserToRole] = useMutation(CREATE_ROLE);
     const [getRestaurants] = useMutation(GET_RESTAURANTS);
     var currentUser = undefined;
+    var selectedRestaurant = undefined;
+    var prevSelectedrestaurant = undefined; 
     var loading = true;
     var loggedIn = false;
     var cartItems = [];
@@ -464,6 +477,25 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         });
     }
 
+    var viewMenuItems = async function viewMenuItems(payload){
+      if(payload.selectedRestaurant !== undefined){
+          dispatch({
+            type: "view_menu_items",
+            payload: payload
+          });
+      }
+    }
+
+    var addItemToCart = async function addItemToCart(payload, item){
+      if(item.length !== 0){
+          payload.cartItems.push(item);
+          dispatch({
+            type: "add_cart_item",
+            payload: payload
+          });
+      }
+    }
+
     var sendNewApplicationEmail = async function sendNewApplicationEmail(formVals) {
       // var data1 = {event: 'staff add package send new package email',
       //                 value:{"Wtf is in formVals: " : "Wtf is in formVals:", formVals: formVals}
@@ -514,6 +546,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         noties,
         orders,
         restaurants,
+        selectedRestaurant,
+        prevSelectedrestaurant,
         JoinUs,
         signup,
         login,
@@ -521,7 +555,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         getAddress,
         fetchUserInfoForSignUp,
         fetchUserInfo,
-        fetchRestaurants
+        fetchRestaurants,
+        viewMenuItems,
+        addItemToCart
     });
     
      

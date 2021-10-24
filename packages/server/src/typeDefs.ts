@@ -12,44 +12,26 @@ const typeDefs = gql`
         RoleID: String
     }
 
-    type User {
-        Id: String! 
-        FirstName: String 
-        LastName: String 
-        Email: String! 
-        AddressLine1: String 
-        AddressLine2: String 
-        City: String 
-        ContactNumber: String
-        OpeningHrs: OpeningHrs
-        category: Category
-    }
-
     type Category {
         _id: ID
         Id: String,
         Name: String    
     }
 
-    type UserOutput {
-        Id: String! 
-        FirstName: String 
-        LastName: String 
-        Email: String! 
-        AddressLine1: String 
-        AddressLine2: String 
-        City: String 
-        ContactNumber: String
-        OpeningHrs: OpeningHrs
-        category: Category
-    }
-
     type MenuItem {
-        RetaurantID: String,
         MenuCategory:  String,
         ItemName:String,
-        ItemCost: String,
+        ItemCost: Float,
         ItemDescription: String,
+        ImageName: String
+    }
+
+    input MenuItem2 {
+        MenuCategory:  String,
+        ItemName:String,
+        ItemCost: Float,
+        ItemDescription: String,
+        ImageName: String
     }
 
     type OpeningHrs {
@@ -71,6 +53,24 @@ const typeDefs = gql`
         Friday: String,
         Saturday: String,
     }
+
+    type User {
+        Id: String! 
+        FirstName: String 
+        LastName: String 
+        Email: String! 
+        AddressLine1: String 
+        AddressLine2: String 
+        City: String 
+        ContactNumber: String
+        OpeningHrs: OpeningHrs
+        category: Category
+        MenuItems: [MenuItem]
+    }
+
+    
+
+    
 
    
 
@@ -116,7 +116,7 @@ const typeDefs = gql`
             Id: String, FirstName: String, LastName: String, 
             Email: String, AddressLine1: String, AddressLine2: String, 
             City: String, ContactNumber: String, OpeningHrs: OpeningHrs2,
-            category: ID
+            category: ID, MenuItems: [MenuItem2]
             ): User!
             
         getUser(Id: String): User

@@ -42,6 +42,10 @@ const UserSchema = new Schema({
         type: Schema.Types.ObjectId, 
         ref: 'category',
         required: false
+    },
+    MenuItems: {
+        type: [Object],
+        required: false
     }
 
 });

@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 //Import Components
 import { ItemRating } from '../../../Components/ItemRating';
+import { Link } from "react-router-dom";
 
 
 
@@ -104,6 +105,9 @@ const useStyles = makeStyles((theme: Theme) =>
         menuImages: {
             borderRadius: "10px"
         },
+        link: {
+            textDecoration: "none"
+        }
     }),
 );
 
@@ -111,7 +115,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
     const classes = useStyles();
     
     var { value }  = useAppData();
-    var { fetchRestaurants, restaurants } = value;
+    var { fetchRestaurants, restaurants, viewMenuItems } = value;
     
     useEffect(() => {
         console.log("inside use effect");
@@ -127,9 +131,19 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
         showPassword: false,
       });
     
-      var history = useHistory();
+    var history = useHistory();
 
-    
+    var handleSelectedRestaurant = async function(index){
+        if(index !== undefined || index !== null){
+            console.log("Index is");
+            console.log(index);
+            var payload = value;
+            payload.selectedRestaurant = index;
+            await viewMenuItems(payload).then(() => {
+                history.push("/Menu")
+            })
+        } 
+    }
     if (restaurants.length !== 0){  
         return (
             <>
@@ -141,7 +155,9 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                         console.log("restaurant is");
                         console.log(restaurant);
                         return(
+                            
                             <Grid item xs={10} md={6} lg={3} xl={3} className={classes.gridSpacing} key={index}>
+                                <Link onClick={() =>handleSelectedRestaurant(index)} className={classes.link}>
                                 <Card className={classes.root}>
                                     <CardHeader
                                         avatar={
@@ -183,7 +199,9 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                                         </Grid>
                                     </CardContent>
                                 </Card>
+                                </Link>
                             </Grid>
+                            
                         )
                     })}
                 </Grid>
