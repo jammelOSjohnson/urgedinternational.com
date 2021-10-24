@@ -351,6 +351,7 @@ export const OrdersTable: React.FC = function OrdersTable () {
           </Table>
         </TableContainer>
         <TablePagination
+          labelRowsPerPage = "Items per page"
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
           count={rows.length}
