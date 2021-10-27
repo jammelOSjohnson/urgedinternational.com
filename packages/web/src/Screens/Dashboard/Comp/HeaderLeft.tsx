@@ -3,6 +3,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import { PlayArrowRounded } from "@material-ui/icons/";
+import { Link } from "react-router-dom";
 
 
 interface State {
@@ -13,7 +14,10 @@ interface State {
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
-        
+        link: {
+            textDecoration: "none",
+            color: "inherit"
+        }
     }),
 );
 
@@ -39,7 +43,9 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
         <>
             {isMatchMedium? (
                 <Typography variant="h6" style={{fontWeight: "bold", background: "transparent"}}>
-                    PORTAL
+                    <Link to="/Dashboard" className={classes.link}>
+                        PORTAL
+                    </Link>
                     {referralPath === "/fooddelivery" || referralPath === "/FoodDelivery" ?
                     <span><PlayArrowRounded /> FOOD DELIVERY</span> :
                     referralPath === "/Restaurants" || referralPath === "/restaurants" ?

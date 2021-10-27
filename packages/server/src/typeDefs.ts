@@ -68,7 +68,11 @@ const typeDefs = gql`
         MenuItems: [MenuItem]
     }
 
-    
+    type MenuCategory {
+        _id: ID
+        restaurant: String
+        Category: String
+    }
 
     
 
@@ -121,6 +125,8 @@ const typeDefs = gql`
             
         getUser(Id: String): User
 
+        getMenucategories(Id: String): User
+
         getRestaurants: [User!]!
 
         createMenuItem(
@@ -135,6 +141,11 @@ const typeDefs = gql`
             Id: String,
             Name: String
         ): Category
+
+        createMenuCategory(
+            restaurant: String,
+            Category: String
+        ): MenuCategory
 
         fetchRestaurantsByCategory(
             categoryID: String

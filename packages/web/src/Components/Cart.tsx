@@ -61,6 +61,9 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "#FAFAFA",
             textTransform: "none"
         },
+        link:{
+            textDecoration: "none"
+        }
     }),
 );
 
@@ -166,7 +169,7 @@ export const Cart: React.FC = function Cart() {
                                 </MenuList>
                             </Grid>
                             <Grid item xs={12} style={{textAlign: "center"}}>
-                                <Link onClick={handleCheckout}>
+                                <Link onClick={handleCheckout} className={classes.link}>
                                     <Button size="large"  fullWidth={true} className={clsx(classes.Button,classes.btnfonts)}   type="button"> {/*onClick={handleCheckout}*/}
                                             Checkout 
                                     </Button>

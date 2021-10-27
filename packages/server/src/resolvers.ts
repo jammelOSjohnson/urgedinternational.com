@@ -3,6 +3,7 @@ import User from './models/User.model';
 import UserInRole from './models/UserInRole.model';
 import MenuItem from './models/MenuItem.model';
 import Category from './models/Category.model';
+import MenuCategory from './models/MenuCategory.model';
 
 const resolvers = {
     Query: {
@@ -50,10 +51,20 @@ const resolvers = {
             return await User.findOne({Id}).populate({path: "categories", model: "category"});; 
         },
 
+        getMenucategories: async (_,{Id}) => {
+            return await User.findOne({Id});
+        },
+
         createMenuItem: (_,{ RetaurantID, MenuCategory,ItemName,ItemCost, ItemDescription}) => {
             const menuItem =  new MenuItem({RetaurantID, MenuCategory,ItemName,ItemCost, ItemDescription});
             return menuItem.save();
         },
+
+        createMenuCategory: (_,{restaurant, Category}) => {
+            const menuCategory = new MenuCategory({restaurant, Category});
+            return menuCategory.save();
+        },
+        
 
         getRestaurants: async () => {
             const res = await User.find().populate("category").where('OpeningHrs').ne(null).where('category').ne(null);

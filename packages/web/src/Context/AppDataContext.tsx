@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import {useContext, useReducer, createContext} from 'react';
 //import fetchAddressApi from '../Apis/fetchAddressApi';
 import  { auth, socialAuth, googleAuthProvider, timeStamp } from '../firebase';
-import { GET_RESTAURANTS, CREATE_USER_MUTATION, GET_USER_MUTATION, GET_USER_IN_ROLE, GET_ROLE, CREATE_ROLE } from '../GraphQL/Mutations';
+import { GET_RESTAURANTS, CREATE_USER_MUTATION, GET_USER_MUTATION, GET_USER_IN_ROLE, GET_ROLE, CREATE_ROLE, GET_MENU_CATEGORIES } from '../GraphQL/Mutations';
 import { useMutation, useQuery  } from '@apollo/client';
 import sendEmail from "../email.js";
 
@@ -86,6 +86,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const [getRole] = useMutation(GET_ROLE);
     const [addUserToRole] = useMutation(CREATE_ROLE);
     const [getRestaurants] = useMutation(GET_RESTAURANTS);
+    const [getMenucategories] = useMutation(GET_MENU_CATEGORIES);
     var currentUser = undefined;
     var selectedRestaurant = undefined;
     var prevSelectedrestaurant = undefined; 
@@ -486,6 +487,36 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       }
     }
 
+    var getMenuCats = async function getMenuCats(payload, Id){
+      if(Id !== null && Id !== undefined){
+        var menuCatRef = await getMenucategories({variables: {Id: Id}}).then(async function(response) {
+          console.log("menu categories result");
+          if (response.data.getMenucategories.MenuItems !== null) {
+            console.log("menu categories exist");
+            console.log(response.data.getMenucategories.MenuItems);
+            var distinct = (value, index, self) => {
+              return self.indexOf(value) === index;
+            }
+            
+            var menuRes = response.data.getMenucategories.MenuItems;
+            const menuResF = [] as any;
+            menuRes.forEach(element => {
+              console.log(element);
+              menuResF.push(element.MenuCategory)
+            });
+            
+
+            const distinctCats = menuResF.filter(distinct);
+            console.log(distinctCats); 
+            
+           
+      
+            return payload;
+          }
+        });
+      }
+    }
+
     var addItemToCart = async function addItemToCart(payload, item){
       if(item.length !== 0){
           payload.cartItems.push(item);
@@ -557,7 +588,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         fetchUserInfo,
         fetchRestaurants,
         viewMenuItems,
-        addItemToCart
+        addItemToCart,
+        getMenuCats
     });
     
      

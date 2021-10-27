@@ -1,7 +1,8 @@
+import { useAppData } from '../../../Context/AppDataContext';
 import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, useMediaQuery, Card, CardMedia, CardContent, TableContainer, Table, Paper, TableHead, TableRow, TableCell, TableBody, useTheme } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import { LockRounded, EmailRounded, PlayArrowRounded } from "@material-ui/icons/";
@@ -140,12 +141,21 @@ export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategor
         password: '',
         showPassword: false,
       });
-    
+
+    var { value }  = useAppData();
+    var { getMenuCats, selectedRestaurant, restaurants } = value;
+    var restaurant = restaurants[selectedRestaurant];
+
     var history = useHistory();
 
     const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
     const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
     
+    useEffect(function(){
+        console.log("fetching menu cats");
+        console.log(restaurant);
+        getMenuCats(value, restaurant.Id);
+    }, [])
       
       return (
         <>

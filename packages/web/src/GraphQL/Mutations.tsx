@@ -98,3 +98,13 @@ export const GET_RESTAURANTS = gql`
         }
     }
 `
+
+export const GET_MENU_CATEGORIES = gql`
+    mutation getMenucategories($Id: String!) {
+        getMenucategories(Id: $Id){
+            MenuItems{
+                MenuCategory
+            }
+        }
+    }
+`

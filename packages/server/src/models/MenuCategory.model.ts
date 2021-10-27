@@ -2,9 +2,8 @@ const mongoose = require('mongoose');
 const { model, Schema } = require('mongoose');
 
 const MenuCategorySchema = new mongoose.Schema({
-    retaurant: {
-        type: Schema.Types.ObjectId, 
-        ref: 'user',
+    restaurant: {
+        type: String,
         required: true
     },
     Category: {
