@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const AdminOrdersScreen: React.FC = function AdminOrdersScreen () {
+export const EmployeeDetailsScreen: React.FC = () => {
     const classes = useStyles();
 
 
@@ -55,7 +55,7 @@ export const AdminOrdersScreen: React.FC = function AdminOrdersScreen () {
                                 <HeaderRight />
                             </Grid>
                             <Grid item xs={12}>
-                               Employee Details
+                                Employee Details
                             </Grid>
                         </Grid>
                     </Grid>
