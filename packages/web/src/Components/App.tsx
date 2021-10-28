@@ -99,7 +99,7 @@ const errorLink = onError(({ graphQLErrors, networkError}) => {
   }
 }); 
 
-var db_server = process.env.NODE_ENV === 'development'? process.env.REACT_APP_DEV_DB_URL : process.env.REACT_APP_PROD_DB_URL
+var db_server = process.env.NODE_ENV === 'development'? process.env.REACT_APP_DEV_DB_URL : process.env.REACT_APP_PROD_DB_URL;
 
 const link = from([
   errorLink,

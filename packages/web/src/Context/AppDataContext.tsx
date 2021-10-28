@@ -464,7 +464,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             var restList = response.data.getRestaurants;
 
             if (restList !== null) {
-              payload.restaurants = restList;
+              payload.restaurants = restList !== undefined && restList !== null? restList : [];
               return payload;
             }
           }
@@ -474,7 +474,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
 
         dispatch({
           type: "fetch_restaurants",
-          payload: result
+          payload: payload
         });
     }
 

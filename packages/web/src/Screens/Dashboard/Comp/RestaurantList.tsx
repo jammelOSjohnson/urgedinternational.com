@@ -69,7 +69,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         avatar: {
             width: "52px",
-            height: "52px"
+            height: "52px",
+            backgroundColor: "#FFFFFF"
           },
         kfcImage: {
             marginTop: "-24%"
@@ -163,7 +164,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                                         avatar={
                                             <Avatar variant="square" aria-label="restaurant" className={classes.avatar}>
                                                 <CardMedia className={classes.cardImage}>
-                                                    <img className={classes.kfcImage} src="Images/KFC Avatar.png"></img>
+                                                    <img className={classes.kfcImage} src={restaurant.ImageName}></img>
                                                 </CardMedia>
                                             </Avatar>
                                         }

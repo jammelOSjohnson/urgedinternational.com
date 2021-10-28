@@ -94,7 +94,9 @@ export const GET_RESTAURANTS = gql`
                 ItemName
                 ItemCost
                 ItemDescription
-            }
+                ImageName
+            },
+            ImageName
         }
     }
 `

@@ -360,7 +360,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                 <CardActionArea>
                                 <CardMedia
                                     className={classes.media}
-                                    image="Images/menu-Big Deal.png"
+                                    image={item.ImageName}
                                     title="Contemplative Reptile"
                                 />
                                 </CardActionArea>

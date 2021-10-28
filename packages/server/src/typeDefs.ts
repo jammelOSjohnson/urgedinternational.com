@@ -65,7 +65,8 @@ const typeDefs = gql`
         ContactNumber: String
         OpeningHrs: OpeningHrs
         category: Category
-        MenuItems: [MenuItem]
+        MenuItems: [MenuItem],
+        ImageName: String
     }
 
     type MenuCategory {

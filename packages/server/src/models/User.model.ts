@@ -46,6 +46,10 @@ const UserSchema = new Schema({
     MenuItems: {
         type: [Object],
         required: false
+    },
+    ImageName: {
+        type: String,
+        required: false
     }
 
 });

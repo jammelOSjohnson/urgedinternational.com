@@ -49,7 +49,9 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                     {referralPath === "/fooddelivery" || referralPath === "/FoodDelivery" ?
                     <span><PlayArrowRounded /> FOOD DELIVERY</span> :
                     referralPath === "/Restaurants" || referralPath === "/restaurants" ?
-                    <span><PlayArrowRounded /> FOOD DELIVERY <PlayArrowRounded /> RESTAURANTS</span> : ""}
+                    <span><PlayArrowRounded /> <Link to="/FoodDelivery" className={classes.link}>FOOD DELIVERY</Link> <PlayArrowRounded /> RESTAURANTS</span> :
+                    referralPath === "/Menu" || referralPath === "/menu" ?
+                    <span><PlayArrowRounded /> <Link to="/FoodDelivery" className={classes.link}>FOOD DELIVERY</Link> <PlayArrowRounded /> <Link to="/Restaurants" className={classes.link}>RESTAURANTS</Link> <PlayArrowRounded /> Menu</span> : ""}
                     
                 </Typography>
             ):<></>}
