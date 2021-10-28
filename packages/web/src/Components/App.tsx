@@ -10,6 +10,7 @@ import { CustomerDashboardScreen } from '../Screens/Dashboard/CustomerDashboard'
 import { FoodDeliveryDashboardScreen } from '../Screens/Dashboard/FoodDeliveryDashboardScreen';
 import { RestaurantsScreen } from '../Screens/Dashboard/RestaurantsScreen';
 import { RestaurantMenuScreen } from '../Screens/Dashboard/RestaurantMenuScreen';
+import { OrdersHistory } from '../Screens/Dashboard/OrderHistoryScreen';
 import { AdminDashboard } from '../Screens/AdminDashboard/AdminDashboard';
 import { OrdersScreen } from '../Screens/AdminDashboard/OrdersScreen';
 import { OrdersDetailsScreen } from '../Screens/AdminDashboard/OrdersDetailsScreen';
@@ -132,12 +133,15 @@ const App: React.FC = function App() {
                 {/* <Sidebar/> */}
                   {/* <Route path="/" exact component={AboutScreen} /> */}
                   <Route path="/" exact component={HomeScreen} />
+                  {/* Customer Screens */}
                   <Route path="/About" exact component={AboutScreen} />
                   <Route path="/Login" exact component={LoginScreen} />
                   <Route path="/Register" exact component={RegisterScreen} />
                   <Route path="/Dashboard" exact component={CustomerDashboardScreen} />
                   <Route path="/FoodDelivery" exact component={FoodDeliveryDashboardScreen} />
                   <Route path="/Restaurants" exact component={RestaurantsScreen} />
+                  <Route path="/OrdersHistory" exact component={OrdersHistory} />
+                  {/* Admin Screens */}
                   <Route path="/AdminDashboard" exact component={AdminDashboard} />
                   <Route path="/AdminOrders" exact component={OrdersScreen} />
                   <Route path="/AdminOrderSDetails" exact component={OrdersDetailsScreen} />
