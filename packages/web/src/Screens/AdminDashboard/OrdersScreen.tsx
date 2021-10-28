@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const AdminOrdersScreen: React.FC = function AdminOrdersScreen () {
+export const OrdersScreen: React.FC = function OrdersScreen () {
     const classes = useStyles();
 
 
