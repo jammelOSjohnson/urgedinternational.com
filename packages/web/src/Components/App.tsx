@@ -99,9 +99,11 @@ const errorLink = onError(({ graphQLErrors, networkError}) => {
   }
 }); 
 
+var db_server = process.env.NODE_ENV === 'development'? process.env.REACT_APP_DEV_DB_URL : process.env.REACT_APP_PROD_DB_URL
+
 const link = from([
   errorLink,
-  new HttpLink({uri: "http://localhost:4000/graphql"})
+  new HttpLink({uri: db_server})
 ])
 
 const client = new ApolloClient({
