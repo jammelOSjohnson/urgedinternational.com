@@ -74,7 +74,8 @@ export const Footer: React.FC = function Footer() {
                     </Grid>
                     <Grid item xs={12} sm={6} lg={3} >
                         <Typography variant="h6">Quick Links</Typography>
-                        <a href="/FoodDelivery" className={classes.linkDisabled}>
+                        <a href="#" className={classes.linkDisabled}>
+                        {/* <a href="/FoodDelivery" className={classes.linkDisabled}> */}
                             <Typography>Order Food</Typography>
                         </a>
                         <Typography>Order Pickup</Typography>

@@ -1,3 +1,4 @@
+import { useAppData } from '../../Context/AppDataContext';
 import { Container, Grid, makeStyles, createStyles, Typography, Theme, FormControl, InputLabel, Select, TextField, MenuItem, Button } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
@@ -82,9 +83,12 @@ export const CheckoutScreen: React.FC = function CheckoutScreen() {
         deliveryAddress: '',
         paymentMethod: 'Select Method',
         additionalIntructions: '',
-      });
+    });
     
-      const handleChange = (event) => {
+    var { value }  = useAppData();
+    var { cartItems } = value;
+    
+    const handleChange = (event) => {
         setValues({...values,[event.target.name]:event.target.value});
     };
 
