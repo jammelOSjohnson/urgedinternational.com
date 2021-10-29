@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const OrdersHistory: React.FC = function OrdersHistory () {
+export const ErrandScreen: React.FC = function ErrandScreen () {
     const classes = useStyles();
 
 
@@ -55,6 +55,9 @@ export const OrdersHistory: React.FC = function OrdersHistory () {
                             </Grid>
                             <Grid item xs={4} style={{ marginBottom: "2%", marginTop: "1%", background: "transparent" }}>
                                 <HeaderRight />
+                            </Grid>
+                            <Grid item xs={12} >
+                                <ErrandCards />
                             </Grid>
                             <Grid item xs={12}>
                                 <HistoryHeaderBar />
