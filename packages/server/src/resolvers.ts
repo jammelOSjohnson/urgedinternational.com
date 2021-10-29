@@ -4,6 +4,7 @@ import UserInRole from './models/UserInRole.model';
 import MenuItem from './models/MenuItem.model';
 import Category from './models/Category.model';
 import MenuCategory from './models/MenuCategory.model';
+import Order from './models/Order.model';
 
 const resolvers = {
     Query: {
@@ -18,7 +19,9 @@ const resolvers = {
         },
         
     },
+
     Mutation: {
+        //Roles
         createRole: (_, {description}) => {
             const identification = new Role({ description });
             return identification.save();
@@ -37,24 +40,27 @@ const resolvers = {
             return userPermision.save();
         },
 
+        //Users
         createUser: (_, {Id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, OpeningHrs, category, MenuItems}) => {
             const user = new User({Id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, OpeningHrs, category, MenuItems});
             return user.save();
-        },
-
-        createCategory: (_, {Id , Name}) => { 
-            const category = new Category({Id, Name});
-            return category.save();
         },
 
         getUser: async (_,{Id}) => {
             return await User.findOne({Id}).populate({path: "categories", model: "category"});; 
         },
 
+        //Categories
+        createCategory: (_, {Id , Name}) => { 
+            const category = new Category({Id, Name});
+            return category.save();
+        },
+
         getMenucategories: async (_,{Id}) => {
             return await User.findOne({Id});
         },
 
+        //Menus
         createMenuItem: (_,{ RetaurantID, MenuCategory,ItemName,ItemCost, ItemDescription}) => {
             const menuItem =  new MenuItem({RetaurantID, MenuCategory,ItemName,ItemCost, ItemDescription});
             return menuItem.save();
@@ -64,15 +70,19 @@ const resolvers = {
             const menuCategory = new MenuCategory({restaurant, Category});
             return menuCategory.save();
         },
-        
 
+        //Orders
+        createOrder: (_,{Id,OrderItems,OrderStatus,OrderTotal,OrderDate,Rider}) => {
+            const orderItem = new Order({Id, OrderItems, OrderStatus, OrderTotal, OrderDate, Rider});
+            return orderItem.save();
+        },
+        
+        //Reastaurants
         getRestaurants: async () => {
             const res = await User.find().populate("category").where('OpeningHrs').ne(null).where('category').ne(null);
             console.log(res);
             return res;
-        },
-
-        
+        }
     }
 };
 
