@@ -10,6 +10,15 @@ import { CustomerDashboardScreen } from '../Screens/Dashboard/CustomerDashboard'
 import { FoodDeliveryDashboardScreen } from '../Screens/Dashboard/FoodDeliveryDashboardScreen';
 import { RestaurantsScreen } from '../Screens/Dashboard/RestaurantsScreen';
 import { RestaurantMenuScreen } from '../Screens/Dashboard/RestaurantMenuScreen';
+import { OrdersHistory } from '../Screens/Dashboard/OrderHistoryScreen';
+import { ErrandScreen } from '../Screens/Dashboard/ErrandScreen';
+import { AdminDashboard } from '../Screens/AdminDashboard/AdminDashboard';
+import { OrdersScreen } from '../Screens/AdminDashboard/OrdersScreen';
+import { OrdersDetailsScreen } from '../Screens/AdminDashboard/OrdersDetailsScreen';
+import { EmployeesScreen } from '../Screens/AdminDashboard/EmployeesScreen';
+import { EmployeeDetailsScreen } from '../Screens/AdminDashboard/EmployeeDetailsScreen';
+import { OrganisationsScreen } from '../Screens/AdminDashboard/OrganisationsScreen';
+import { Sidebar } from '../Screens/Dashboard/Comp/Sidebar';
 import { CheckoutScreen } from '../Screens/Checkout/CheckoutScreen';
 
 //Import provider
@@ -128,12 +137,22 @@ const App: React.FC = function App() {
                 {/* <Sidebar/> */}
                   {/* <Route path="/" exact component={AboutScreen} /> */}
                   <Route path="/" exact component={HomeScreen} />
+                  {/* Customer Screens */}
                   <Route path="/About" exact component={AboutScreen} />
                   <Route path="/Login" exact component={LoginScreen} />
                   <Route path="/Register" exact component={RegisterScreen} />
                   <Route path="/Dashboard" exact component={CustomerDashboardScreen} />
                   <Route path="/FoodDelivery" exact component={FoodDeliveryDashboardScreen} />
                   <Route path="/Restaurants" exact component={RestaurantsScreen} />
+                  <Route path="/OrdersHistory" exact component={OrdersHistory} />
+                  <Route path="/Errands" exact component={ErrandScreen} />
+                  {/* Admin Screens */}
+                  <Route path="/AdminDashboard" exact component={AdminDashboard} />
+                  <Route path="/AdminOrders" exact component={OrdersScreen} />
+                  <Route path="/AdminOrderSDetails" exact component={OrdersDetailsScreen} />
+                  <Route path="/Employees" exact component={EmployeesScreen} />
+                  <Route path="/EmployeeDetails" exact component={EmployeeDetailsScreen} />
+                  <Route path="/Organisations" exact component={OrganisationsScreen} />
                   {/* <Route path="/Menu/:id" exact component={RestaurantMenuScreen} /> */}
                   <Route path="/Menu" exact component={RestaurantMenuScreen} />
                   <Route path="/Checkout" exact component={CheckoutScreen} />
