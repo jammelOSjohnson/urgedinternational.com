@@ -14,11 +14,11 @@ const useStyles = makeStyles((theme: Theme) =>
             flexDirection: "column",
         },
         cardGrid: {
-            padding: "5% 0",
+            paddingTop: "5%",
             color: "#1D2635"
         },
         cardGrid2: {
-            padding: "5% 0 10% 0",
+            padding: "5%",
             color: "#1D2635",
         },
         cardGrid3: {
@@ -88,7 +88,10 @@ const useStyles = makeStyles((theme: Theme) =>
         link: {
             color: "#E54545",
             textDecoration: "underline"
-        }
+        },
+        root: {
+            padding: "0% 0px 5% 0px"
+        },
     }),
 );
 
@@ -97,13 +100,17 @@ export const Section4: React.FC = function Section4() {
     return (
         <>
             <Container maxWidth="md" className={classes.cardGrid}>
-                <Typography align="center" className={classes.secTitle}>
-                    Services
-                </Typography>
-                <Typography align="center" className={classes.secSubTitle}>
-                    How Can We Help?
-                </Typography>
-                <Grid container spacing={2} alignContent="center" alignItems="center" style={{justifyContent: "center"}}>
+                <Grid container direction="row" spacing={2} className={classes.root}  alignItems="center">
+                    <Grid item xs={12}>
+                        <Typography align="center" className={classes.secTitle}>
+                            Services
+                        </Typography>
+                        <Typography align="center" className={classes.secSubTitle}>
+                            How Can We Help?
+                        </Typography>
+                    </Grid>
+                </Grid>
+                <Grid container spacing={2} className={classes.root} alignContent="center" alignItems="center" style={{justifyContent: "center"}}>
                     <Grid item xs={10} sm={6} md={4}>
                         <Card className={`${classes.card} ${classes.cardBorder1}`}>
                             <CardMedia

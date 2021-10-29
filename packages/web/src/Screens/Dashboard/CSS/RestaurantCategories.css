@@ -1,0 +1,26 @@
+@media only screen and (min-width: 1643px){
+    .cardSizeCategoriesRestarants{
+        min-width: 158.53px;
+    }
+
+    .cardSizeCategoriesRestarants2{
+        min-width: 58px;
+        text-align: center;
+        background-color: #FF5E14 !important;
+    }
+
+}
+
+
+@media only screen and (max-width: 1642px){
+    .cardSizeCategoriesRestarants{
+        min-width: 140px;
+    }
+
+    .cardSizeCategoriesRestarants2{
+        min-width: 58px;
+        text-align: center;
+        background-color: #FF5E14 !important;
+    }
+
+}

@@ -2,12 +2,24 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import { Header } from '../Components/Header';
 import { Footer } from '../Components/Footer';
-//import { HomeScreen } from '../Screens/HomeScreen';
+import { HomeScreen } from '../Screens/Home/HomeScreen';
 import { AboutScreen } from '../Screens/About/AboutScreen';
 import { LoginScreen } from '../Screens/Auth/LoginScreen';
 import { RegisterScreen } from '../Screens/Auth/RegisterScreen';
 import { CustomerDashboardScreen } from '../Screens/Dashboard/CustomerDashboard';
 import { FoodDeliveryDashboardScreen } from '../Screens/Dashboard/FoodDeliveryDashboardScreen';
+import { RestaurantsScreen } from '../Screens/Dashboard/RestaurantsScreen';
+import { RestaurantMenuScreen } from '../Screens/Dashboard/RestaurantMenuScreen';
+import { OrdersHistory } from '../Screens/Dashboard/OrderHistoryScreen';
+import { ErrandScreen } from '../Screens/Dashboard/ErrandScreen';
+import { AdminDashboard } from '../Screens/AdminDashboard/AdminDashboard';
+import { OrdersScreen } from '../Screens/AdminDashboard/OrdersScreen';
+import { OrdersDetailsScreen } from '../Screens/AdminDashboard/OrdersDetailsScreen';
+import { EmployeesScreen } from '../Screens/AdminDashboard/EmployeesScreen';
+import { EmployeeDetailsScreen } from '../Screens/AdminDashboard/EmployeeDetailsScreen';
+import { OrganisationsScreen } from '../Screens/AdminDashboard/OrganisationsScreen';
+import { Sidebar } from '../Screens/Dashboard/Comp/Sidebar';
+import { CheckoutScreen } from '../Screens/Checkout/CheckoutScreen';
 
 //Import provider
 import AppDataProvider from '../Context/AppDataContext';
@@ -24,10 +36,14 @@ const theme = createTheme({
   },
   palette: {
     primary: {
-      main: "#FF5E14"
+      main: "#F7B614",
+      light: "#FF5E14",
+      dark: '#002884',
+      contrastText: '#fff',
     },
     secondary: {
-      main: "#ffffff"
+      main: "#ffffff",
+      light: "#C5C5C5"
     }
   },
   overrides: {
@@ -92,9 +108,11 @@ const errorLink = onError(({ graphQLErrors, networkError}) => {
   }
 }); 
 
+var db_server = process.env.NODE_ENV === 'development'? process.env.REACT_APP_DEV_DB_URL : process.env.REACT_APP_PROD_DB_URL;
+
 const link = from([
   errorLink,
-  new HttpLink({uri: "http://localhost:4000/graphql"})
+  new HttpLink({uri: db_server})
 ])
 
 const client = new ApolloClient({
@@ -116,11 +134,28 @@ const App: React.FC = function App() {
             <div>
               <Router>
                 <Header/>
-                  <Route path="/" exact component={AboutScreen} />
+                {/* <Sidebar/> */}
+                  {/* <Route path="/" exact component={AboutScreen} /> */}
+                  <Route path="/" exact component={HomeScreen} />
+                  {/* Customer Screens */}
+                  <Route path="/About" exact component={AboutScreen} />
                   <Route path="/Login" exact component={LoginScreen} />
                   <Route path="/Register" exact component={RegisterScreen} />
                   <Route path="/Dashboard" exact component={CustomerDashboardScreen} />
                   <Route path="/FoodDelivery" exact component={FoodDeliveryDashboardScreen} />
+                  <Route path="/Restaurants" exact component={RestaurantsScreen} />
+                  <Route path="/OrdersHistory" exact component={OrdersHistory} />
+                  <Route path="/Errands" exact component={ErrandScreen} />
+                  {/* Admin Screens */}
+                  <Route path="/AdminDashboard" exact component={AdminDashboard} />
+                  <Route path="/AdminOrders" exact component={OrdersScreen} />
+                  <Route path="/AdminOrderSDetails" exact component={OrdersDetailsScreen} />
+                  <Route path="/Employees" exact component={EmployeesScreen} />
+                  <Route path="/EmployeeDetails" exact component={EmployeeDetailsScreen} />
+                  <Route path="/Organisations" exact component={OrganisationsScreen} />
+                  {/* <Route path="/Menu/:id" exact component={RestaurantMenuScreen} /> */}
+                  <Route path="/Menu" exact component={RestaurantMenuScreen} />
+                  <Route path="/Checkout" exact component={CheckoutScreen} />
                 <Footer/>
               </Router>
             </div>

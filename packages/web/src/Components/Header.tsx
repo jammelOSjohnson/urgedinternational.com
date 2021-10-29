@@ -1,8 +1,10 @@
-import React from 'react'
+import { useAppData } from '../Context/AppDataContext';
+import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom';
 import { useMediaQuery , useTheme,Typography, AppBar, Toolbar, makeStyles, Theme, createStyles, Grid } from '@material-ui/core'
 import SvgIcon, { SvgIconProps } from '@material-ui/core/SvgIcon';
 import { Container } from '@material-ui/core';
+import  { auth, socialAuth } from '../firebase';
 
 
 
@@ -94,6 +96,8 @@ export const Header: React.FC = function Header() {
     var history = useHistory();
     var location = history.location;
     var referralPath = location.pathname;
+    var { value }  = useAppData();
+    var { fetchUserInfo } = value;
     //console.log("pathname is:" + location.pathname);
 
     
@@ -106,9 +110,45 @@ export const Header: React.FC = function Header() {
 
     const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
     const isMaatchMedium = useMediaQuery(theme.breakpoints.down('md'));
+    useEffect(function(){
+      var unsubscribe = auth.onAuthStateChanged(function (user){
+        //update the state for current user to the user logged in
+        //console.log("about to set current user");
+        //console.log(user);
+        //var userInfo = fetchUserInfo();
+        //const payload = {currentUser : user, loading: false, userInfo: userInfo}
+        var signonStatus = false;
+        if(user !== null){
+          signonStatus = user.uid !== null && user.uid !== undefined? true : false
+        
+        
+            var payload = {...value,currentUser : user, loading: false, loggedIn: signonStatus}
+            if(value.userInfo.email === "" ){
+                 fetchUserDetails(payload);
+                //  .then(function(res){
+                //     if(!res){
+                //         //console.log('Unable to fetch user data at this time'); 
+                //     }
+                // });
+            }
+         } 
+      });
+    },[value.userRolef])
 
-    if(referralPath === "/Login" || referralPath === "/Register" || referralPath === "/Dashboard" || referralPath === "/FoodDelivery" 
-       ||referralPath === "/login" || referralPath === "/register" || referralPath === "/dashboard" || referralPath === "/fooddelivery"){
+    var fetchUserDetails = function  fetchUserDetails (payload) {
+      //console.log("Is current user null");
+      //console.log(payload);
+      if(payload.currentUser !== null && payload.currentUser !== undefined){
+          if(payload.currentUser.uid !== null && payload.currentUser.uid !== undefined){
+              //console.log("Fetching user info");
+              fetchUserInfo(payload.currentUser.uid, payload);
+              return true;
+          }
+      }
+      return false;
+  }
+
+    if(referralPath !== '/'){
       return(
         <>
 
