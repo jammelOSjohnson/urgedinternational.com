@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const { model, Schema } = require('mongoose');
 
-const UserSchema = new mongoose.Schema({
+const UserSchema = new Schema({
     Id: {
         type: String,
         required: true
@@ -32,8 +33,26 @@ const UserSchema = new mongoose.Schema({
     ContactNumber: {
         type: String,
         required: false
+    },
+    OpeningHrs: {
+        type: Object,
+        required: false
+    },
+    category: {
+        type: Schema.Types.ObjectId, 
+        ref: 'category',
+        required: false
+    },
+    MenuItems: {
+        type: [Object],
+        required: false
+    },
+    ImageName: {
+        type: String,
+        required: false
     }
+
 });
 
-const User = mongoose.model('user', UserSchema);
+const User = model('user', UserSchema);
 export default User;

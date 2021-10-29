@@ -1,13 +1,10 @@
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, useTheme, CssBaseline, AppBar, Toolbar, Drawer, Divider, List, ListItem, ListItemIcon, ListItemText, useMediaQuery } from '@material-ui/core';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import React, { Children } from 'react';
+import { makeStyles, createStyles, Theme, IconButton, useTheme, CssBaseline, Drawer, Divider, List, ListItem, ListItemIcon, ListItemText, useMediaQuery } from '@material-ui/core';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import clsx from 'clsx';
 import "../CSS/sidebar.css";
 
-import MenuIcon from '@material-ui/icons/Menu';
 import MailIcon from '@material-ui/icons/Mail';
 
 interface Props {
@@ -125,13 +122,13 @@ const useStyles = makeStyles((theme: Theme) =>
               right: 0,
               position: "absolute",
               transform: "rotate(180deg)",
-              bottom: "-102%",
+              bottom: "-65%",
           },
           expandIconStyle: {
             marginLeft: "auto",
             marginRight: "auto",
             position: "absolute",
-            bottom: "-102%",
+            bottom: "-65%",
           }
           
     }),

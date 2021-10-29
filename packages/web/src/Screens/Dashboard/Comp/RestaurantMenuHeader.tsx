@@ -1,13 +1,9 @@
-import { Container, Grid, Badge , makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardMedia, CardContent, Avatar } from '@material-ui/core';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import { useAppData } from '../../../Context/AppDataContext';
+import { Container, Grid, Badge , makeStyles, createStyles, Typography, Theme, Avatar } from '@material-ui/core';
 import React from 'react';
+import { LocationOnRounded, ScheduleRounded } from "@material-ui/icons/";
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
-import { NotificationImportantRounded, ShoppingCartRounded } from "@material-ui/icons/";
-import { Cart } from "../../../Components/Cart";
-import { Notification } from "../../../Components/Notification";
-import { User } from "../../../Components/User"
 
 interface Props {
     
@@ -31,13 +27,14 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: "0px"
         },
         avatar: {
-            width: "70px",
-            height: "76px",
+            width: "100%",
+            height: "100%",
             backgroundColor: "#FFFFFF",
             borderRadius: "22px"
           },
         kfcImage: {
-            marginTop: "0"
+            marginTop: "0",
+            width: "80%"
         },
         Btn: {
             color: "#FFF",
@@ -49,11 +46,21 @@ const useStyles = makeStyles((theme: Theme) =>
             marginTop: "3%",
             height: "41px"
         },
+        Open: {
+            backgroundColor: "#47934A",
+            color: "#FFF",
+            borderRadius: "5px",
+            padding: "8px",
+            width: "69px"
+        }
     }),
 );
 
 export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
     const classes = useStyles();
+    var { value }  = useAppData();
+    var { restaurants, selectedRestaurant } = value;
+    var restaurant = restaurants[selectedRestaurant];
     const [values, setValues] = React.useState<State>({
         email: '',
         password: '',
@@ -67,28 +74,32 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
     return (
         <>
             <Container maxWidth="xl" className={classes.main} style={{background: "transparent"}}>
-                <Grid container xs={6} direction="row" spacing={1} className={classes.gridRoot} alignItems="center">
-                    <Grid item direction="row" spacing={1}>
-                        <Grid item xs={2} spacing={1}>
+                <Grid container xs={12} direction="row" spacing={1} className={classes.gridRoot} alignItems="center">
+                    <Grid container direction="row" spacing={1}>
+                        <Grid item xs={6} sm={2}>
                             <Avatar variant="square" aria-label="restaurant" className={classes.avatar}>     
                                 <img className={classes.kfcImage} src="Images/KFC Avatar.png"></img>
                             </Avatar>
                         </Grid>
-                    </Grid>
-                    <Grid item direction="row" spacing={1}>
-                        <Grid item xs={12} spacing={1}>
-                            <Typography variant={'h4'}>Kentucky Fried Chicken</Typography>
-                        </Grid>
-                        <Grid item xs={12} spacing={1}>
-                            <Typography variant={'h6'}>Kentucky Fried Chicken</Typography>
-                        </Grid>
-                        <Grid item xs={12} spacing={1}>
-                            <Typography variant={'h6'}>Kentucky Fried Chicken</Typography>
-                        </Grid>
-                    </Grid>
-                    <Grid item direction="row" spacing={1}>
-                        <Grid item xs={2} spacing={1}>
-                            <Typography variant={'h6'}>Open</Typography>
+                        <Grid item xs={12} sm={10} >
+                            <Grid item direction="row" spacing={1}>
+                                <Grid item xs={12} >
+                                    <Grid item direction="row" spacing={1}>
+                                        <Grid item xs={12} sm={6}>
+                                            <Typography variant={'h4'}>Kentucky Fried Chicken</Typography>
+                                        </Grid>
+                                        <Grid item xs={12} sm={6} >
+                                            <Typography variant={'h6'} className={classes.Open}>Open</Typography>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Typography variant={'h6'}><LocationOnRounded color="primary" /> Address: {restaurant.City}</Typography>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Typography variant={'h6'}><ScheduleRounded color="primary" />Hours: Open <span style={{fontWeight: "bolder"}}>{restaurant.OpeningHrs.Sunday}</span> Today </Typography>
+                                </Grid>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>

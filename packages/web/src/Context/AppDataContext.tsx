@@ -2,8 +2,8 @@ import type { ReactNode } from 'react'
 import {useContext, useReducer, createContext} from 'react';
 //import fetchAddressApi from '../Apis/fetchAddressApi';
 import  { auth, socialAuth, googleAuthProvider, timeStamp } from '../firebase';
-import { CREATE_USER_MUTATION, GET_USER_MUTATION, GET_USER_IN_ROLE, GET_ROLE, CREATE_ROLE } from '../GraphQL/Mutations';
-import { useMutation } from '@apollo/client';
+import { GET_RESTAURANTS, CREATE_USER_MUTATION, GET_USER_MUTATION, GET_USER_IN_ROLE, GET_ROLE, CREATE_ROLE, GET_MENU_CATEGORIES } from '../GraphQL/Mutations';
+import { useMutation, useQuery  } from '@apollo/client';
 import sendEmail from "../email.js";
 
 import serverPI from '../Apis/serverPI';
@@ -51,6 +51,22 @@ function appDataReducer(state, action){
             loading: action.payload.loading,
             loggedIn: action.payload.loggedIn
             };
+        case "fetch_restaurants": 
+          return {
+            ...state,
+            restaurants: action.payload.restaurants
+          };
+        case "view_menu_items":
+          return {
+            ...state,
+            selectedRestaurant: action.payload.selectedRestaurant,
+            prevSelectedrestaurant: action.payload.prevSelectedrestaurant
+          }
+        case "add_cart_item":
+          return {
+            ...state,
+            cartItems: action.payload.cartItems
+          }
         default:
             return state;
     }
@@ -65,16 +81,21 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const emailUserId = "user_bDLFbepm6Arcdgh7Akzo3";
     //Declare necessary variables
     const [createUser] = useMutation(CREATE_USER_MUTATION);
-    const [getUser, {error}] = useMutation(GET_USER_MUTATION);
+    const [getUser] = useMutation(GET_USER_MUTATION);
     const [getUserInRole] = useMutation(GET_USER_IN_ROLE);
     const [getRole] = useMutation(GET_ROLE);
     const [addUserToRole] = useMutation(CREATE_ROLE);
+    const [getRestaurants] = useMutation(GET_RESTAURANTS);
+    const [getMenucategories] = useMutation(GET_MENU_CATEGORIES);
     var currentUser = undefined;
+    var selectedRestaurant = undefined;
+    var prevSelectedrestaurant = undefined; 
     var loading = true;
     var loggedIn = false;
     var cartItems = [];
     var noties = [];
     var orders = [];
+    var restaurants = [];
 
     var userInfo = {
       contactNumber: "",
@@ -431,7 +452,80 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         console.error("Error sending job application email: ", error);
         return false;
       };
-  };
+    };
+
+    var fetchRestaurants = async function fetchRestaurants(payload){
+      console.log("about to fetch restaurants");
+        var result = await getRestaurants().then(async function(response) {
+          if (response.data.getRestaurants !== null) {
+            console.log("got list of restaurants");
+            console.log(response);
+
+            var restList = response.data.getRestaurants;
+
+            if (restList !== null) {
+              payload.restaurants = restList !== undefined && restList !== null? restList : [];
+              return payload;
+            }
+          }
+        }).catch(function(err){
+          console.log(err);
+        });
+
+        dispatch({
+          type: "fetch_restaurants",
+          payload: payload
+        });
+    }
+
+    var viewMenuItems = async function viewMenuItems(payload){
+      if(payload.selectedRestaurant !== undefined){
+          dispatch({
+            type: "view_menu_items",
+            payload: payload
+          });
+      }
+    }
+
+    var getMenuCats = async function getMenuCats(payload, Id){
+      if(Id !== null && Id !== undefined){
+        var menuCatRef = await getMenucategories({variables: {Id: Id}}).then(async function(response) {
+          console.log("menu categories result");
+          if (response.data.getMenucategories.MenuItems !== null) {
+            console.log("menu categories exist");
+            console.log(response.data.getMenucategories.MenuItems);
+            var distinct = (value, index, self) => {
+              return self.indexOf(value) === index;
+            }
+            
+            var menuRes = response.data.getMenucategories.MenuItems;
+            const menuResF = [] as any;
+            menuRes.forEach(element => {
+              console.log(element);
+              menuResF.push(element.MenuCategory)
+            });
+            
+
+            const distinctCats = menuResF.filter(distinct);
+            console.log(distinctCats); 
+            
+           
+      
+            return payload;
+          }
+        });
+      }
+    }
+
+    var addItemToCart = async function addItemToCart(payload, item){
+      if(item.length !== 0){
+          payload.cartItems.push(item);
+          dispatch({
+            type: "add_cart_item",
+            payload: payload
+          });
+      }
+    }
 
     var sendNewApplicationEmail = async function sendNewApplicationEmail(formVals) {
       // var data1 = {event: 'staff add package send new package email',
@@ -482,13 +576,20 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         cartItems,
         noties,
         orders,
+        restaurants,
+        selectedRestaurant,
+        prevSelectedrestaurant,
         JoinUs,
         signup,
         login,
         gLogin,
         getAddress,
         fetchUserInfoForSignUp,
-        fetchUserInfo
+        fetchUserInfo,
+        fetchRestaurants,
+        viewMenuItems,
+        addItemToCart,
+        getMenuCats
     });
     
      

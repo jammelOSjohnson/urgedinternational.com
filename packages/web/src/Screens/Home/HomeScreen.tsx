@@ -10,6 +10,7 @@ import { Section5 } from "./Comp/Section5";
 import { Section6 } from "./Comp/Section6";
 import { Section7 } from "./Comp/Section7";
 import { Section8 } from "./Comp/Section8";
+import {ExternalApp} from "./Comp/ExternalApp";
 
 
 interface Props {
@@ -21,13 +22,13 @@ export const HomeScreen: React.FC = function HomeScreen() {
         <>
             <Container maxWidth="xl" style={{padding: 0, overflowX: "hidden"}}>
                 <Section1 />
-                <Section2 />
+                <ExternalApp />
                 <Section3 />
                 <Section4 />
                 <Section5 />
                 <Section6 />
                 <Section7 />
-                <Section8 />
+                <Section2 />
             </Container>
         </>
     )

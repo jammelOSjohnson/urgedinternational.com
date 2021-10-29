@@ -19,6 +19,7 @@ import { EmployeesScreen } from '../Screens/AdminDashboard/EmployeesScreen';
 import { EmployeeDetailsScreen } from '../Screens/AdminDashboard/EmployeeDetailsScreen';
 import { OrganisationsScreen } from '../Screens/AdminDashboard/OrganisationsScreen';
 import { Sidebar } from '../Screens/Dashboard/Comp/Sidebar';
+import { CheckoutScreen } from '../Screens/Checkout/CheckoutScreen';
 
 //Import provider
 import AppDataProvider from '../Context/AppDataContext';
@@ -107,9 +108,11 @@ const errorLink = onError(({ graphQLErrors, networkError}) => {
   }
 }); 
 
+var db_server = process.env.NODE_ENV === 'development'? process.env.REACT_APP_DEV_DB_URL : process.env.REACT_APP_PROD_DB_URL;
+
 const link = from([
   errorLink,
-  new HttpLink({uri: "http://localhost:4000/graphql"})
+  new HttpLink({uri: db_server})
 ])
 
 const client = new ApolloClient({
@@ -152,6 +155,7 @@ const App: React.FC = function App() {
                   <Route path="/Organisations" exact component={OrganisationsScreen} />
                   {/* <Route path="/Menu/:id" exact component={RestaurantMenuScreen} /> */}
                   <Route path="/Menu" exact component={RestaurantMenuScreen} />
+                  <Route path="/Checkout" exact component={CheckoutScreen} />
                 <Footer/>
               </Router>
             </div>

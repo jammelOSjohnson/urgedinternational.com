@@ -1,5 +1,6 @@
 import { Container } from '@material-ui/core';
 import React from 'react'
+import { ExternalApp } from '../Home/Comp/ExternalApp';
 import { Section8 } from '../Home/Comp/Section8';
 
 //Import Sections
@@ -20,7 +21,8 @@ export const AboutScreen: React.FC = function AboutScreen() {
         <>
             <Container maxWidth="xl" style={{padding: 0}}>
                 <Section1 />
-                <Section8 />
+                {/* <Section8 /> */}
+                <ExternalApp />
                 <Section3 />
                 <Section4 />
                 <Section5 />
