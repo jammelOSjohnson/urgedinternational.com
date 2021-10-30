@@ -78,7 +78,7 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                     <Grid container direction="row" spacing={1}>
                         <Grid item xs={6} sm={2}>
                             <Avatar variant="square" aria-label="restaurant" className={classes.avatar}>     
-                                <img className={classes.kfcImage} src="Images/KFC Avatar.png"></img>
+                                <img className={classes.kfcImage} src={restaurant.ImageName}></img>
                             </Avatar>
                         </Grid>
                         <Grid item xs={12} sm={10} >
@@ -86,7 +86,7 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                                 <Grid item xs={12} >
                                     <Grid item direction="row" spacing={1}>
                                         <Grid item xs={12} sm={6}>
-                                            <Typography variant={'h4'}>Kentucky Fried Chicken</Typography>
+                                            <Typography variant={'h4'}>{restaurant.FirstName}</Typography>
                                         </Grid>
                                         <Grid item xs={12} sm={6} >
                                             <Typography variant={'h6'} className={classes.Open}>Open</Typography>

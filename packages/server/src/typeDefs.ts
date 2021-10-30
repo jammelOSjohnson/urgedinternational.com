@@ -1,6 +1,7 @@
 import { gql } from 'apollo-server-express';
 
 const typeDefs = gql`
+    scalar GraphQLDateTime
     type Role {
         id: ID!
         description: String!
@@ -19,39 +20,39 @@ const typeDefs = gql`
     }
 
     type MenuItem {
-        MenuCategory:  String,
-        ItemName:String,
-        ItemCost: Float,
-        ItemDescription: String,
+        MenuCategory:  String
+        ItemName:String
+        ItemCost: Float
+        ItemDescription: String
         ImageName: String
     }
 
     input MenuItem2 {
-        MenuCategory:  String,
-        ItemName:String,
-        ItemCost: Float,
-        ItemDescription: String,
+        MenuCategory:  String
+        ItemName:String
+        ItemCost: Float
+        ItemDescription: String
         ImageName: String
     }
 
     type OpeningHrs {
-        Sunday: String,
-        Monday: String,
-        Tuesday: String,
-        Wednesday: String,
-        Thursday: String,
-        Friday: String,
-        Saturday: String,
+        Sunday: String
+        Monday: String
+        Tuesday: String
+        Wednesday: String
+        Thursday: String
+        Friday: String
+        Saturday: String
     }
 
     input OpeningHrs2 {
-        Sunday: String,
-        Monday: String,
-        Tuesday: String,
-        Wednesday: String,
-        Thursday: String,
-        Friday: String,
-        Saturday: String,
+        Sunday: String
+        Monday: String
+        Tuesday: String
+        Wednesday: String
+        Thursday: String
+        Friday: String
+        Saturday: String
     }
 
     type User {
@@ -65,7 +66,7 @@ const typeDefs = gql`
         ContactNumber: String
         OpeningHrs: OpeningHrs
         category: Category
-        MenuItems: [MenuItem],
+        MenuItems: [MenuItem]
         ImageName: String
     }
 
@@ -77,18 +78,17 @@ const typeDefs = gql`
 
     
 
-   
 
     type Restaurant {
-        Id: String,
-        FirstName: String,
-        LastName: String,
-        Email: String,
-        AddressLine1: String,
-        AddressLine2: String,
-        City: String,
-        ContactNumber: String,
-        OpeningHrs: OpeningHrs,
+        Id: String
+        FirstName: String
+        LastName: String
+        Email: String
+        AddressLine1: String
+        AddressLine2: String
+        City: String
+        ContactNumber: String
+        OpeningHrs: OpeningHrs
         category: ID
     }
 
@@ -96,6 +96,35 @@ const typeDefs = gql`
     type RestaurantsByCategories {
         Restaurant: Restaurant
         Category: Category
+    }
+
+    type OrderItem {
+        itemName: String
+        chickenFlavour1: String
+        chickenFlavour2: String
+        drink: String
+        otherIntructions: String
+        itemCost: Float
+        imageName: String
+    }
+
+    input OrderItem2 {
+        itemName: String
+        chickenFlavour1: String
+        chickenFlavour2: String
+        drink: String
+        otherIntructions: String
+        itemCost: Float
+        imageName: String
+    }
+
+    type Order{
+        Id: String,
+        OrderItems: [OrderItem]
+        OrderStatus:  String
+        OrderTotal: Float
+        OrderDate: GraphQLDateTime
+        Rider: String
     }
 
     type Query {
@@ -148,11 +177,24 @@ const typeDefs = gql`
             Category: String
         ): MenuCategory
 
+        createOrder(
+            Id: String,
+            OrderItems: [OrderItem2],
+            OrderStatus:  String,
+            OrderTotal: Float,
+            OrderDate: GraphQLDateTime,
+            Rider: String
+        ): Order
+
+        getOrdersByUserId(
+            Id: String
+        ): [Order]
+
+        getOrders: [Order]
+
         fetchRestaurantsByCategory(
             categoryID: String
-        ):RestaurantsByCategories 
-
-        
+        ): RestaurantsByCategories 
     }
 `;
 

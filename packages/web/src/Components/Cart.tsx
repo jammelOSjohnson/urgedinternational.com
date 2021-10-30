@@ -153,7 +153,7 @@ export const Cart: React.FC = function Cart() {
                                             <Grid item xs={8}>
                                                 <Grid container direction="row" spacing={1}>
                                                     <Grid item xs={6}>
-                                                        <img className={classes.img} src="Images/menu-Big Deal.png" alt="meal display"/>
+                                                        <img className={classes.img} src={item.imageName} alt="meal display"/>
                                                     </Grid>
                                                     <Grid item xs={6}>
                                                         <Typography>{item.itemName}</Typography>

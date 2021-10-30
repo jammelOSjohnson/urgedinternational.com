@@ -8,15 +8,19 @@ import { ItemRating } from '../../../Components/ItemRating';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
+import { Link } from "react-router-dom";
 
 
 interface State {
-    flavour1: string;
-    flavour2: string;
+    chickenFlavour1: string;
+    chickenFlavour2: string;
     drink: string;
     otherIntructions: string;
     itemName: string;
     itemCost: number;
+    imageName: string;
+    orderStatus: string;
+    deliveredBy: string;
 }
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -161,7 +165,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
     const classes = useStyles();
     
     var { value }  = useAppData();
-    var { restaurants, selectedRestaurant, addItemToCart } = value;
+    var { restaurants, selectedRestaurant, addItemToCart, userInfo } = value;
     var restaurant = restaurants[selectedRestaurant];
     console.log("Menu Screen Menu");
     console.log(selectedRestaurant);
@@ -171,16 +175,20 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
         ItemCost: 0.00,
         ItemDescription: "3 pcs. Chicken, 1 Reg. Fries 1, 1 475mL drink",
         ItemName: "",
-        MenuCategory: ""
+        MenuCategory: "",
+        ImageName: ""
     });
 
     const [values, setValues] = React.useState<State>({
-        flavour1: 'Select Flavour',
-        flavour2: 'Select Flavour',
+        chickenFlavour1: 'Select Flavour',
+        chickenFlavour2: 'Select Flavour',
         drink: 'Select Drink',
         otherIntructions: '',
         itemName: '',
-        itemCost: 0.00
+        itemCost: 0.00,
+        imageName: "",
+        orderStatus: "New",
+        deliveredBy: "No one"
       });
 
     const [open, setOpen] = React.useState(false);
@@ -188,6 +196,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
 
     const handleOpen = (item) => {
         setItem(item);
+        setValues({...values, itemName: item.ItemName ,itemCost: item.ItemCost ,imageName: item.ImageName});
         setOpen(true);
     };
 
@@ -213,12 +222,15 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
             console.log("item should be successfully added");
             setValues(
                 {
-                    flavour1: 'Select Flavour',
-                    flavour2: 'Select Flavour',
+                    chickenFlavour1: 'Select Flavour',
+                    chickenFlavour2: 'Select Flavour',
                     drink: 'Select Drink',
                     otherIntructions: '',
                     itemName: '',
-                    itemCost: 0.00
+                    itemCost: 0.00,
+                    imageName: "",
+                    orderStatus: "New",
+                    deliveredBy: "No one"
                 }
             );
             setOpen(false);
@@ -248,7 +260,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                         <h2 id="transition-modal-title">Order Request Details</h2>
                         <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                             <Grid item xs={10} sm={6} md={4} lg={4} xl={4}>
-                                <img style={{borderRadius: "5px"}} src="Images/menu-Big Deal.png" height="81.25px" width="125px" alt="cart item" />
+                                <img style={{borderRadius: "5px"}} src={selectedItem.ImageName} height="81.25px" width="125px" alt="cart item" />
                             </Grid>
                             <Grid item xs={10} sm={6} md={8} lg={8} xl={8}>
                                 <Typography>{selectedItem.ItemName}</Typography>
@@ -259,69 +271,93 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                 <Typography>{selectedItem.ItemDescription}</Typography>
                             </Grid>
                             <Grid item xs={12}>
+                                {restaurant.FirstName === "Kentucky Fried Chicken"?
+                                    <form>
+                                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                            <Grid item xs={10} sm={6} md={6} lg={6}>
+                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                    <InputLabel id="demo-simple-select-outlined-label">1st choice</InputLabel>
+                                                    <Select
+                                                        labelId="demo-simple-select-outlined-label"
+                                                        id="demo-simple-select-outlined"
+                                                        value={values.chickenFlavour1}
+                                                        onChange={handleChange}
+                                                        label="Flavour1"
+                                                        name="chickenFlavour1"
+                                                        className={classes.root}
+                                                    >
+                                                        <MenuItem value={"Select Flavour"}>Select Flavour</MenuItem>
+                                                        <MenuItem value={"Original"}>Original</MenuItem>
+                                                        <MenuItem value={"Barbeque"}>Barbeque</MenuItem>
+                                                        <MenuItem value={"Spicy"}>Spicy</MenuItem>
+                                                    </Select>
+                                                </FormControl>
+                                            </Grid>
+                                            <Grid item xs={10} sm={6} md={6} lg={6}>
+                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                    <InputLabel id="demo-simple-select-outlined-label">2nd choice</InputLabel>
+                                                    <Select
+                                                        labelId="demo-simple-select-outlined-label"
+                                                        id="demo-simple-select-outlined"
+                                                        value={values.chickenFlavour2 }
+                                                        onChange={handleChange}
+                                                        label="Flavour2"
+                                                        name="chickenFlavour2"
+                                                        className={classes.root}
+                                                    >
+                                                        <MenuItem value={"Select Flavour"}>Select Flavour</MenuItem>
+                                                        <MenuItem value={"Original"}>Original</MenuItem>
+                                                        <MenuItem value={"Barbeque"}>Barbeque</MenuItem>
+                                                        <MenuItem value={"Spicy"}>Spicy</MenuItem>
+                                                    </Select>
+                                                </FormControl>
+                                            </Grid>
+                                            <Grid item xs={10} sm={12} >
+                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                    <InputLabel id="demo-simple-select-outlined-label">Drink</InputLabel>
+                                                    <Select
+                                                        labelId="demo-simple-select-outlined-label"
+                                                        id="demo-simple-select-outlined"
+                                                        value={values.drink }
+                                                        onChange={handleChange}
+                                                        label="drink"
+                                                        name="drink"
+                                                        className={classes.root}
+                                                    >
+                                                        <MenuItem value={"Select Drink"}>Select Drink</MenuItem>
+                                                        <MenuItem value={"Water"}>Water</MenuItem>
+                                                        <MenuItem value={"Pepsi"}>Pepsi</MenuItem>
+                                                        <MenuItem value={"Ginger Beer"}>Ginger Beer</MenuItem>
+                                                        <MenuItem value={"Flavour Splash"}>Flavour Splash</MenuItem>
+                                                        <MenuItem value={"Tropics Orangeade"}>Tropics Orangeade</MenuItem>
+                                                        <MenuItem value={"Topics Fruit Punch"}>Topics Fruit Punch</MenuItem>
+                                                        <MenuItem value={"Tropics Grape"}>Tropics Grape</MenuItem>
+                                                    </Select>
+                                                </FormControl>
+                                            </Grid>
+                                            <Grid item xs={10} sm={12} >
+                                                <TextField
+                                                    id="outlined-multiline-static"
+                                                    label="Special Intructions"
+                                                    multiline
+                                                    rows={4}
+                                                    defaultValue={values.otherIntructions}
+                                                    onChange={handleChange2('otherIntructions')}
+                                                    variant="outlined"
+                                                    placeholder="Enter Instructions Here"
+                                                    fullWidth
+                                                />
+                                            </Grid>
+                                            <Grid item xs={10} sm={12} >
+                                                <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => AddToCart(values)} type="button">
+                                                    Add To Cart 
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+                                    </form>
+                                :restaurant.FirstName === "Elle B Catering And Events"?
                                 <form>
                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                        <Grid item xs={10} sm={6} md={6} lg={6}>
-                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                <InputLabel id="demo-simple-select-outlined-label">1st choice</InputLabel>
-                                                <Select
-                                                    labelId="demo-simple-select-outlined-label"
-                                                    id="demo-simple-select-outlined"
-                                                    value={values.flavour1}
-                                                    onChange={handleChange}
-                                                    label="Flavour1"
-                                                    name="flavour1"
-                                                    className={classes.root}
-                                                >
-                                                    <MenuItem value={"Select Flavour"}>Select Flavour</MenuItem>
-                                                    <MenuItem value={"Original"}>Original</MenuItem>
-                                                    <MenuItem value={"Barbeque"}>Barbeque</MenuItem>
-                                                    <MenuItem value={"Spicy"}>Spicy</MenuItem>
-                                                </Select>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={10} sm={6} md={6} lg={6}>
-                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                <InputLabel id="demo-simple-select-outlined-label">2nd choice</InputLabel>
-                                                <Select
-                                                    labelId="demo-simple-select-outlined-label"
-                                                    id="demo-simple-select-outlined"
-                                                    value={values.flavour2 }
-                                                    onChange={handleChange}
-                                                    label="Flavour2"
-                                                    name="flavour2"
-                                                    className={classes.root}
-                                                >
-                                                    <MenuItem value={"Select Flavour"}>Select Flavour</MenuItem>
-                                                    <MenuItem value={"Original"}>Original</MenuItem>
-                                                    <MenuItem value={"Barbeque"}>Barbeque</MenuItem>
-                                                    <MenuItem value={"Spicy"}>Spicy</MenuItem>
-                                                </Select>
-                                            </FormControl>
-                                        </Grid>
-                                        <Grid item xs={10} sm={12} >
-                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                <InputLabel id="demo-simple-select-outlined-label">Drink</InputLabel>
-                                                <Select
-                                                    labelId="demo-simple-select-outlined-label"
-                                                    id="demo-simple-select-outlined"
-                                                    value={values.drink }
-                                                    onChange={handleChange}
-                                                    label="drink"
-                                                    name="drink"
-                                                    className={classes.root}
-                                                >
-                                                    <MenuItem value={"Select Drink"}>Select Drink</MenuItem>
-                                                    <MenuItem value={"Water"}>Water</MenuItem>
-                                                    <MenuItem value={"Pepsi"}>Pepsi</MenuItem>
-                                                    <MenuItem value={"Ginger Beer"}>Ginger Beer</MenuItem>
-                                                    <MenuItem value={"Flavour Splash"}>Flavour Splash</MenuItem>
-                                                    <MenuItem value={"Tropics Orangeade"}>Tropics Orangeade</MenuItem>
-                                                    <MenuItem value={"Topics Fruit Punch"}>Topics Fruit Punch</MenuItem>
-                                                    <MenuItem value={"Tropics Grape"}>Tropics Grape</MenuItem>
-                                                </Select>
-                                            </FormControl>
-                                        </Grid>
                                         <Grid item xs={10} sm={12} >
                                             <TextField
                                                 id="outlined-multiline-static"
@@ -342,6 +378,9 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         </Grid>
                                     </Grid>
                                 </form>
+                                :
+                                <></>
+                                }
                             </Grid>
                         </Grid>
                     </div>
@@ -384,9 +423,18 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         </Grid>
                                 </CardContent>
                                 <CardActions>
-                                    <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
-                                        Add To Cart 
-                                    </Button>
+                                    {
+                                        userInfo.email === ""?
+                                            <Link to="Login" style={{textDecoration: "none"}}>
+                                                <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button">
+                                                    LOGIN 
+                                                </Button>
+                                            </Link> :
+                                            <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
+                                                Add To Cart 
+                                            </Button> 
+                                    }
+                                    
                                     <Typography variant="body2"  component="p" className={classes.priceText} style={{marginLeft: "56%", width: "70px"}}>
                                         {`$ ${ parseFloat(item.ItemCost).toFixed(2)}`}
                                     </Typography>
