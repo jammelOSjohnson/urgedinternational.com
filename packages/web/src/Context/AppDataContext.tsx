@@ -5,6 +5,7 @@ import  { auth, socialAuth, googleAuthProvider, timeStamp } from '../firebase';
 import { CREATE_ORDER, GET_ORDERS_BY_USERID, GET_ORDERS, GET_RESTAURANTS, CREATE_USER_MUTATION, GET_USER_MUTATION, GET_USER_IN_ROLE, GET_ROLE, CREATE_ROLE, GET_MENU_CATEGORIES } from '../GraphQL/Mutations';
 import { useMutation, useQuery  } from '@apollo/client';
 import sendEmail from "../email.js";
+import moment from 'moment-timezone';
 
 import serverPI from '../Apis/serverPI';
 
@@ -51,6 +52,11 @@ function appDataReducer(state, action){
             loading: action.payload.loading,
             loggedIn: action.payload.loggedIn
             };
+        case "logout_user":
+            return {
+              currentUser: action.payload.currentUser,
+              loggedIn: action.payload.loggedIn
+            }
         case "fetch_restaurants": 
           return {
             ...state,
@@ -66,6 +72,13 @@ function appDataReducer(state, action){
           return {
             ...state,
             cartItems: action.payload.cartItems
+          }
+        case "checkout": 
+          return {
+            ...state,
+            cartItems: action.payload.cartItems,
+            orders: action.payload.orders,
+            selectedRestaurant: action.payload.selectedRestaurant
           }
         default:
             return state;
@@ -209,7 +222,19 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           return null;
         });
         return result;
-      };
+    };
+
+    var logout = function logout(payload) {
+      //retuns a promise
+      payload.loggedIn = false;
+      auth.signOut().then(function () {
+        payload.currentUser = null;
+        dispatch({
+          type: "logout_user",
+          payload: payload
+        });
+      }); //return res;
+    };
     
     var userHasRole = async function userHasRole(uid, payload) {
       console.log("User id is: ");
@@ -531,6 +556,62 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       }
     }
 
+    var checkoutOrder  = async function checkoutOrder(payload, cartItems, state){
+      if(cartItems.length !== 0){
+        var orderItems : object[] = [];
+        var total = 0;
+        const now = new Date();
+        const estTime = moment.tz(now, "America/Jamaica").format();
+        console.log("Jamaican Time is:");
+        console.log(estTime);
+        cartItems.map((item, index) => {
+          total = total + item.itemCost;
+          var body = {
+            itemName: item.itemName,
+            chickenFlavour1: item.chickenFlavour1,
+            chickenFlavour2: item.chickenFlavour2,
+            drink: item.drink,
+            otherIntructions: item.otherIntructions,
+            itemCost: item.itemCost,
+            imageName: value.imageName
+          } as object;
+          orderItems.push(body);
+          return null;
+        })
+        var orderBody = {
+          Id: payload.currentUser.uid,
+          OrderItems: orderItems,
+          OrderStatus: "Pending",
+          OrderTotal: total,
+          OrderDate: estTime,
+          Rider: "Rider 1"
+        }
+        var order = await createOrder({variables: orderBody}).then(async function(response) {
+          console.log("create orer result");
+          if (response.data.createOrder !== null) {
+            console.log("Order Exist");
+            console.log(response.data.createOrder);
+            payload.cartItems = [];
+            payload.selectedRestaurant = undefined;
+            var OrderHistory = await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
+              if (response.data.getOrdersByUserId !== null) {
+                payload.orders = response.data.getOrdersByUserId;
+                dispatch({
+                  type: "checkout",
+                  payload: payload
+                })
+              }
+            });
+            
+           
+      
+            return payload;
+          }
+        });
+        
+      }
+    }
+
     var sendNewApplicationEmail = async function sendNewApplicationEmail(formVals) {
       // var data1 = {event: 'staff add package send new package email',
       //                 value:{"Wtf is in formVals: " : "Wtf is in formVals:", formVals: formVals}
@@ -587,13 +668,15 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         signup,
         login,
         gLogin,
+        logout,
         getAddress,
         fetchUserInfoForSignUp,
         fetchUserInfo,
         fetchRestaurants,
         viewMenuItems,
         addItemToCart,
-        getMenuCats
+        getMenuCats,
+        checkoutOrder
     });
     
      
