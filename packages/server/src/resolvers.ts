@@ -76,12 +76,20 @@ const resolvers = {
             const orderItem = new Order({Id, OrderItems, OrderStatus, OrderTotal, OrderDate, Rider});
             return orderItem.save();
         },
+
+        getOrdersByUserId: async (_,{Id}) => {
+            return await Order.find().where("Id").equals(Id);    
+        },
+
+        getOrders: async () => {
+            return await Order.find();
+        },
         
         //Reastaurants
         getRestaurants: async () => {
-            const res = await User.find().populate("category").where('OpeningHrs').ne(null).where('category').ne(null);
-            console.log(res);
-            return res;
+            return await User.find().populate("category").where('OpeningHrs').ne(null).where('category').ne(null);
+            //console.log(res);
+            //return res;
         }
     }
 };

@@ -12,8 +12,8 @@ import { Link } from "react-router-dom";
 
 
 interface State {
-    flavour1: string;
-    flavour2: string;
+    chickenFlavour1: string;
+    chickenFlavour2: string;
     drink: string;
     otherIntructions: string;
     itemName: string;
@@ -180,8 +180,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
     });
 
     const [values, setValues] = React.useState<State>({
-        flavour1: 'Select Flavour',
-        flavour2: 'Select Flavour',
+        chickenFlavour1: 'Select Flavour',
+        chickenFlavour2: 'Select Flavour',
         drink: 'Select Drink',
         otherIntructions: '',
         itemName: '',
@@ -222,8 +222,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
             console.log("item should be successfully added");
             setValues(
                 {
-                    flavour1: 'Select Flavour',
-                    flavour2: 'Select Flavour',
+                    chickenFlavour1: 'Select Flavour',
+                    chickenFlavour2: 'Select Flavour',
                     drink: 'Select Drink',
                     otherIntructions: '',
                     itemName: '',
@@ -280,10 +280,10 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     <Select
                                                         labelId="demo-simple-select-outlined-label"
                                                         id="demo-simple-select-outlined"
-                                                        value={values.flavour1}
+                                                        value={values.chickenFlavour1}
                                                         onChange={handleChange}
                                                         label="Flavour1"
-                                                        name="flavour1"
+                                                        name="chickenFlavour1"
                                                         className={classes.root}
                                                     >
                                                         <MenuItem value={"Select Flavour"}>Select Flavour</MenuItem>
@@ -299,10 +299,10 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     <Select
                                                         labelId="demo-simple-select-outlined-label"
                                                         id="demo-simple-select-outlined"
-                                                        value={values.flavour2 }
+                                                        value={values.chickenFlavour2 }
                                                         onChange={handleChange}
                                                         label="Flavour2"
-                                                        name="flavour2"
+                                                        name="chickenFlavour2"
                                                         className={classes.root}
                                                     >
                                                         <MenuItem value={"Select Flavour"}>Select Flavour</MenuItem>

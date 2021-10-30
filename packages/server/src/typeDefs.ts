@@ -1,6 +1,7 @@
 import { gql } from 'apollo-server-express';
 
 const typeDefs = gql`
+    scalar GraphQLDateTime
     type Role {
         id: ID!
         description: String!
@@ -77,7 +78,6 @@ const typeDefs = gql`
 
     
 
-   
 
     type Restaurant {
         Id: String
@@ -100,30 +100,30 @@ const typeDefs = gql`
 
     type OrderItem {
         itemName: String
-        flavour1: String
-        flavour2: String
+        chickenFlavour1: String
+        chickenFlavour2: String
         drink: String
         otherIntructions: String
         itemCost: Float
         imageName: String
     }
 
-    input OrderItem {
+    input OrderItem2 {
         itemName: String
-        flavour1: string
-        flavour2: string
-        drink: string
-        otherIntructions: string
-        itemCost: number
-        imageName: string
+        chickenFlavour1: String
+        chickenFlavour2: String
+        drink: String
+        otherIntructions: String
+        itemCost: Float
+        imageName: String
     }
 
-    type Order {
+    type Order{
         Id: String,
         OrderItems: [OrderItem]
         OrderStatus:  String
-        OrderTotal: Number
-        OrderDate: Date
+        OrderTotal: Float
+        OrderDate: GraphQLDateTime
         Rider: String
     }
 
@@ -179,12 +179,18 @@ const typeDefs = gql`
 
         createOrder(
             Id: String,
-            OrderItems: [OrderItem],
+            OrderItems: [OrderItem2],
             OrderStatus:  String,
-            OrderTotal: Number,
-            OrderDate: Date,
+            OrderTotal: Float,
+            OrderDate: GraphQLDateTime,
             Rider: String
         ): Order
+
+        getOrdersByUserId(
+            Id: String
+        ): [Order]
+
+        getOrders: [Order]
 
         fetchRestaurantsByCategory(
             categoryID: String

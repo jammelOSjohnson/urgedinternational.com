@@ -110,3 +110,88 @@ export const GET_MENU_CATEGORIES = gql`
         }
     }
 `
+
+export const CREATE_ORDER = gql`
+    scalar GraphQLDateTime
+
+    input OrderItem2 {
+        itemName: String
+        chickenFlavour1: String
+        chickenFlavour2: String
+        drink: String
+        otherIntructions: String
+        itemCost: Float
+        imageName: String
+    }
+
+    mutation createOrder(
+        $Id: String!, 
+        $OrderItems: OrderItem2,
+        $OrderStatus: String,
+        $OrderTotal: Float,
+        $OrderDate: GraphQLDateTime,
+        $Rider: String
+        ) {
+        createOrder(Id: $Id){
+            Id
+            OrderItems {
+                itemName
+                chickenFlavour1
+                chickenFlavour2
+                drink
+                otherIntructions
+                itemCost
+                imageName
+                }
+                OrderStatus
+                OrderTotal
+                OrderDate
+                Rider
+            }
+        }
+    }
+`
+
+export const GET_ORDERS_BY_USERID = gql`
+    mutation getOrdersByUserId($Id: String!) {
+        getOrdersByUserId(Id: $Id){
+            Id
+            OrderItems {
+                itemName
+                chickenFlavour1
+                chickenFlavour2
+                drink
+                otherIntructions
+                itemCost
+                imageName
+                }
+                OrderStatus
+                OrderTotal
+                OrderDate
+                Rider
+            }
+        }
+    }
+`
+
+export const GET_ORDERS = gql`
+    mutation getOrders {
+        getOrdersByUserId(Id: $Id){
+            Id
+            OrderItems {
+                itemName
+                chickenFlavour1
+                chickenFlavour2
+                drink
+                otherIntructions
+                itemCost
+                imageName
+                }
+                OrderStatus
+                OrderTotal
+                OrderDate
+                Rider
+            }
+        }
+    }
+`
