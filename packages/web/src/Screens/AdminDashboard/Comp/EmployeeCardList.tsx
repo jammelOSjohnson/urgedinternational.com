@@ -178,31 +178,31 @@ export const EmployeeCardList: React.FC = function EmployeeCardList(props) {
                                     />
                                     <CardContent>
                                         <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
-                                            <Grid item xs={6}>
-                                                    <Typography variant="body2"  component="p">
-                                                        Menu
-                                                    </Typography>
+                                            <Grid item xs={12}>
+                                                <Typography variant="body2"  component="p" align="center">
+                                                Jacob Jones
+                                                </Typography>
                                             </Grid>
-                                            <Grid item xs={6}>
-                                                    <Typography variant="body2"  component="p">
-                                                    <ItemRating rating={3.5}/>
-                                                    </Typography>
+                                            <Grid item xs={12}>
+                                                <Typography variant="body2"  component="p" align="center">
+                                                jacob.jones@example.com
+                                                </Typography>
                                             </Grid>
-                                                <Grid item xs={4}>
-                                                        <img className={classes.menuImages} src="Images/KFC Order1.png"></img>
-                                                </Grid>
-                                                <Grid item xs={4}>
-                                                        <img className={classes.menuImages} src="Images/KFC Order2.png"></img>
-                                                </Grid>
-                                                <Grid item xs={4}>
-                                                        <img className={classes.menuImages} src="Images/KFC Order3.png"></img>
-                                                </Grid>
+                                            <Grid item xs={12}>
+                                                <Typography variant="body2"  component="p" align="center">
+                                                Errand Runner
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <Typography variant="body2"  component="p" align="center">
+                                                Active
+                                                </Typography>
+                                            </Grid>
                                         </Grid>
                                     </CardContent>
                                 </Card>
                                 </Link>
-                            </Grid>
-                            
+                            </Grid>       
                         )
                     })}
                 </Grid>
