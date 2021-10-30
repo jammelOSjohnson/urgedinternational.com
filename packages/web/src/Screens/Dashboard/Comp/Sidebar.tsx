@@ -1,3 +1,4 @@
+import { useAppData } from '../../../Context/AppDataContext';
 import { makeStyles, createStyles, Theme, IconButton, useTheme, CssBaseline, Drawer, Divider, List, ListItem, ListItemIcon, ListItemText, useMediaQuery } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
@@ -141,6 +142,9 @@ export const Sidebar: React.FC = function Sidebar({children}) {
     const isMatch = useMediaQuery(theme.breakpoints.down('lg'));
     const isMatchMedium = useMediaQuery(theme.breakpoints.up('xl'));
     
+    var { value }  = useAppData();
+    var { logout, userInfo } = value;
+
     const [open, setOpen] = React.useState(true);
     const [open1, setOpen1] = React.useState(false);
 
@@ -169,6 +173,15 @@ export const Sidebar: React.FC = function Sidebar({children}) {
     const handleDrawerClose1 = () => {
         setOpen1(false);
     };
+
+    const handleLogout = (event) => {
+      try{
+        event.preventDefault();
+        logout(value);
+      }catch{
+        //////console.log('Failed to logout.');
+      }
+    }
     
       
     return (
@@ -318,7 +331,21 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                     </List>
                     <Divider />
                     <List>
-                        {['Settings', 'Logout'].map((text, index) => (
+                        {userInfo.fullName !== null && userInfo.fullName !== "" && userInfo.fullName !== undefined?
+                        ['Settings', 'Logout'].map((text, index) => (
+                            text === 'Logout'?
+                            <a href="/" onClick={handleLogout} className={classes.inactiveItemLink}>
+                              <ListItem button key={text} >
+                                <ListItemIcon>
+                                  {
+                                    index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                    index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
+                                  }
+                                </ListItemIcon>
+                                <ListItemText primary={text} />
+                              </ListItem>
+                            </a>
+                            :
                             <ListItem button key={text}>
                             <ListItemIcon>
                               {
@@ -328,7 +355,32 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                             </ListItemIcon>
                             <ListItemText primary={text} />
                             </ListItem>
-                        ))}
+                        )) :
+                        ['Settings', 'Login'].map((text, index) => (
+                          text === 'Login'?
+                          <Link to="/Login" className={classes.inactiveItemLink}>
+                            <ListItem button key={text}>
+                              <ListItemIcon>
+                                {
+                                  index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                  index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
+                                }
+                              </ListItemIcon>
+                              <ListItemText primary={text} />
+                              </ListItem>
+                          </Link>
+                          :
+                          <ListItem button key={text}>
+                          <ListItemIcon>
+                            {
+                              index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                              index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
+                            }
+                          </ListItemIcon>
+                          <ListItemText primary={text} />
+                          </ListItem>
+                      ))
+                      }
                         <IconButton
                             color="inherit"
                             aria-label="open drawer"
@@ -517,17 +569,56 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                     </List>
                     <Divider />
                     <List>
-                        {['Settings', 'Logout'].map((text, index) => (
-                            <ListItem button key={text} style={{marginTop: "5%"}}>
-                            <ListItemIcon>
-                              {
-                                index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
-                                index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
-                              }
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                            </ListItem>
-                        ))}
+                        {userInfo.fullName !== null && userInfo.fullName !== "" && userInfo.fullName !== undefined?
+                            ['Settings', 'Logout'].map((text, index) => (
+                                text === 'Logout'?
+                                <a href="/" onClick={handleLogout} className={classes.inactiveItemLink}>
+                                  <ListItem button key={text} >
+                                    <ListItemIcon>
+                                      {
+                                        index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                        index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
+                                      }
+                                    </ListItemIcon>
+                                    <ListItemText primary={text} />
+                                  </ListItem>
+                                </a>
+                                :
+                                <ListItem button key={text}>
+                                <ListItemIcon>
+                                  {
+                                    index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                    index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
+                                  }
+                                </ListItemIcon>
+                                <ListItemText primary={text} />
+                                </ListItem>
+                            )) :
+                            ['Settings', 'Login'].map((text, index) => (
+                              text === 'Login'?
+                              <Link to="/Login" className={classes.inactiveItemLink}>
+                                <ListItem button key={text}>
+                                  <ListItemIcon>
+                                    {
+                                      index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                      index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
+                                    }
+                                  </ListItemIcon>
+                                  <ListItemText primary={text} />
+                                  </ListItem>
+                              </Link>
+                              :
+                              <ListItem button key={text}>
+                              <ListItemIcon>
+                                {
+                                  index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                  index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
+                                }
+                              </ListItemIcon>
+                              <ListItemText primary={text} />
+                              </ListItem>
+                          ))
+                        }
                         <IconButton
                             color="inherit"
                             aria-label="open drawer"

@@ -130,25 +130,31 @@ export const CREATE_ORDER = gql`
         $OrderStatus: String,
         $OrderTotal: Float,
         $OrderDate: GraphQLDateTime,
-        $Rider: String
+        $Rider: String 
         ) {
-        createOrder(Id: $Id){
-            Id
-            OrderItems {
-                itemName
-                chickenFlavour1
-                chickenFlavour2
-                drink
-                otherIntructions
-                itemCost
-                imageName
-                }
-                OrderStatus
-                OrderTotal
-                OrderDate
-                Rider
+            createOrder(
+                Id: $Id, 
+                OrderItems: $OrderItems, 
+                OrderStatus: $OrderStatus,
+                OrderTotal: $OrderTotal,
+                OrderDate: $OrderDate,
+                Rider: $Rider
+                ){
+                    Id
+                    OrderItems {
+                        itemName
+                        chickenFlavour1
+                        chickenFlavour2
+                        drink
+                        otherIntructions
+                        itemCost
+                        imageName
+                    }
+                    OrderStatus
+                    OrderTotal
+                    OrderDate
+                    Rider
             }
-        }
     }
 `
 
@@ -164,12 +170,11 @@ export const GET_ORDERS_BY_USERID = gql`
                 otherIntructions
                 itemCost
                 imageName
-                }
-                OrderStatus
-                OrderTotal
-                OrderDate
-                Rider
             }
+            OrderStatus
+            OrderTotal
+            OrderDate
+            Rider
         }
     }
 `
@@ -186,12 +191,11 @@ export const GET_ORDERS = gql`
                 otherIntructions
                 itemCost
                 imageName
-                }
-                OrderStatus
-                OrderTotal
-                OrderDate
-                Rider
             }
+            OrderStatus
+            OrderTotal
+            OrderDate
+            Rider
         }
     }
 `
