@@ -615,6 +615,20 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       }
     }
 
+    var fetchOrdersByUser  = async function fetchOrdersByUser(payload){
+      if(payload.currentUser !== undefined){
+        var OrderHistory = await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
+          if (response.data.getOrdersByUserId !== null) {
+            payload.orders = response.data.getOrdersByUserId;
+            dispatch({
+              type: "checkout",
+              payload: payload
+            })
+          }
+        });
+      }
+    }
+
     var sendNewApplicationEmail = async function sendNewApplicationEmail(formVals) {
       // var data1 = {event: 'staff add package send new package email',
       //                 value:{"Wtf is in formVals: " : "Wtf is in formVals:", formVals: formVals}
@@ -679,7 +693,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         viewMenuItems,
         addItemToCart,
         getMenuCats,
-        checkoutOrder
+        checkoutOrder,
+        fetchOrdersByUser
     });
     
      

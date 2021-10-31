@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(2),
     },
     bar: {
-        background: "#13ADD1",
+        background: theme.palette.primary.main,
         borderRadius: "10px",
         marginBottom: "1%"
     }

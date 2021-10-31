@@ -124,6 +124,7 @@ const typeDefs = gql`
     }
 
     type Order{
+        _id: ID
         Id: String,
         OrderItems: JSONObject 
         OrderStatus:  String

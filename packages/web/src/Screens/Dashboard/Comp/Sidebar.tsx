@@ -512,8 +512,8 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                             <ListItemText primary={text} />
                           </ListItem>
                         :
-                        referralPath === "/Orders" && text === "Orders" ?
-                          <Link to="/OrdersHistory">
+                        referralPath === "/OrderHistory" && text === "Orders" ?
+                          <Link to="/OrdersHistory" className={classes.inactiveItemLink}>
                             <ListItem button key={text} className={classes.activeItem}>
                               <ListItemIcon>
                                 {
@@ -521,7 +521,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                   index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
                                   index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
                                   index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                  index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                  index === 4 ? <HistoryRounded style={{width: "36px", height: "38px", color: "#FFF"}}  /> : <MailIcon />
                                 }
                               </ListItemIcon>
                               <ListItemText primary={text} />
