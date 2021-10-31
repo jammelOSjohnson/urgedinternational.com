@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { Sidebar } from './Comp/Sidebar';
 import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
+import { FilterBar } from './Comp/FilterBar'
 import { OrdersTable} from './Comp/OrdersTable'
 
 interface Props {
@@ -55,6 +56,7 @@ export const OrdersScreen: React.FC = function OrdersScreen () {
                                 <HeaderRight />
                             </Grid>
                             <Grid item xs={12}>
+                                <FilterBar />
                                 <OrdersTable />
                             </Grid>
                         </Grid>
