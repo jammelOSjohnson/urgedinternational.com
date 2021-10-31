@@ -1,7 +1,12 @@
 import { gql } from 'apollo-server-express';
+import { json } from 'express';
+
 
 const typeDefs = gql`
     scalar GraphQLDateTime
+    scalar JSONObject  
+    scalar Json
+
     type Role {
         id: ID!
         description: String!
@@ -120,11 +125,14 @@ const typeDefs = gql`
 
     type Order{
         Id: String,
-        OrderItems: [OrderItem]
+        OrderItems: JSONObject 
         OrderStatus:  String
         OrderTotal: Float
-        OrderDate: GraphQLDateTime
-        Rider: String
+        OrderDate: String
+        Rider: String,
+        DeliveryAddress: String,
+        PaymentMethod: String,
+        AdditionalInfo: String
     }
 
     type Query {
@@ -179,11 +187,14 @@ const typeDefs = gql`
 
         createOrder(
             Id: String,
-            OrderItems: [OrderItem2],
+            OrderItems: JSONObject ,
             OrderStatus:  String,
             OrderTotal: Float,
-            OrderDate: GraphQLDateTime,
-            Rider: String
+            OrderDate: String,
+            Rider: String,
+            DeliveryAddress: String,
+            PaymentMethod: String,
+            AdditionalInfo: String
         ): Order
 
         getOrdersByUserId(

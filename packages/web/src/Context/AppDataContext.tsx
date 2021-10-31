@@ -584,7 +584,10 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           OrderStatus: "Pending",
           OrderTotal: total,
           OrderDate: estTime,
-          Rider: "Rider 1"
+          Rider: "Rider 1",
+          DeliveryAddress: state.DeliveryAddress,
+          PaymentMethod: state.PaymentMethod,
+          AdditionalInfo: state.AdditionalInfo
         }
         var order = await createOrder({variables: orderBody}).then(async function(response) {
           console.log("create orer result");

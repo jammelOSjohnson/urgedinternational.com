@@ -7,7 +7,7 @@ const OrderSchema = new Schema({
         required: true
     },
     OrderItems: {
-        type: [Object],
+        type: Object,
         required: true
     },
     OrderStatus: {
@@ -19,11 +19,24 @@ const OrderSchema = new Schema({
         required: true
     },
     OrderDate: {
-        type: Schema.Types.Date
+        type: Schema.Types.Date,
+        required: true
     },
     Rider: {
         type: String,
         required: false
+    },
+    DeliveryAddress: {
+        type: String,
+        required: true
+    },
+    PaymentMethod: {
+        type: String,
+        required: true
+    },
+    AdditionalInfo: {
+        type: String,
+        required: true
     }
 });
 
