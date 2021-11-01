@@ -40,4 +40,21 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+  <script>
+    // before React is loaded
+    // if (typeof window.__REACT_DEVTOOLS_GLOBAL_HOOK__ === 'object') {
+    //     __REACT_DEVTOOLS_GLOBAL_HOOK__.inject = function() {};
+    // }
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+    var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    //console.log("Safari result is:" + isSafari);
+    //console.log(msie);
+      
+    if (msie > 0 && !isSafari){
+      if (window.location.port != 3000) {
+        __REACT_DEVTOOLS_GLOBAL_HOOK__.inject = function() {};
+      }
+    }
+  </script>
 </html>

@@ -90,7 +90,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         gridSpacing: {
             marginLeft: "auto", 
-            marginRight: "auto"
+            marginRight: "auto",
+            minHeight: "446.99px"
         },
         avatar: {
             width: "52px",
@@ -167,9 +168,9 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
     var { value }  = useAppData();
     var { restaurants, selectedRestaurant, addItemToCart, userInfo } = value;
     var restaurant = restaurants[selectedRestaurant];
-    console.log("Menu Screen Menu");
-    console.log(selectedRestaurant);
-    console.log(restaurants[selectedRestaurant]);
+    //console.log("Menu Screen Menu");
+    //console.log(selectedRestaurant);
+    //console.log(restaurants[selectedRestaurant]);
 
     const [selectedItem, setItem] = React.useState({
         ItemCost: 0.00,
@@ -215,11 +216,11 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
       };
 
     var AddToCart = async function(item){
-        console.log("item selected");
-        console.log(item);
+        //console.log("item selected");
+        //console.log(item);
         var payload = value;
         await addItemToCart(payload, item).then(() => {
-            console.log("item should be successfully added");
+            //console.log("item should be successfully added");
             setValues(
                 {
                     chickenFlavour1: 'Select Flavour',
@@ -392,10 +393,10 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                 <Typography variant="body1" style={{ paddingBottom: "3%"}}>
                     Please select item from the list of meals listed below. 
                 </Typography>
-                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                <Grid container direction="row" spacing={2} className={classes.root} alignItems="center">
                     {restaurant.MenuItems.map((item, index) => (
                         <Grid item xs={10} md={6} lg={4} xl={4} className={classes.gridSpacing}>
-                            <Card className={classes.root}>
+                            <Card className={classes.root} style={{minHeight: "446.99px"}}>
                                 <CardActionArea>
                                 <CardMedia
                                     className={classes.media}
@@ -406,13 +407,13 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                 <CardContent>
                                         <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
                                             <Grid item xs={6}>
-                                                    <Typography variant="h6"  component="p">
+                                                    <Typography variant="h6"  component="p" style={{height: "64px"}}>
                                                         {item.ItemName}
                                                     </Typography>
                                             </Grid>
                                             <Grid item xs={6}>
-                                                    <Typography variant="body2"  component="p">
-                                                    <ItemRating rating={3.5}/>
+                                                    <Typography variant="body2"  component="p" style={{height: "64px"}}>
+                                                        <ItemRating rating={3.5}/>
                                                     </Typography>
                                             </Grid>
                                             <Grid item xs={12} >
@@ -435,7 +436,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                             </Button> 
                                     }
                                     
-                                    <Typography variant="body2"  component="p" className={classes.priceText} style={{marginLeft: "56%", width: "70px"}}>
+                                    <Typography variant="body2"  component="p" className={classes.priceText} style={{marginLeft: "55%", width: "70px"}}>
                                         {`$ ${ parseFloat(item.ItemCost).toFixed(2)}`}
                                     </Typography>
                                 </CardActions>

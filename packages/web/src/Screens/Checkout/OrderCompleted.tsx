@@ -1,4 +1,4 @@
-import { Container, Grid, makeStyles, createStyles, Typography, Theme } from '@material-ui/core';
+import { Container, Grid, makeStyles, createStyles, Typography, Theme, Button } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
@@ -7,6 +7,7 @@ import { Sidebar } from '../Dashboard/Comp/Sidebar';
 import { HeaderLeft } from '../Dashboard/Comp/HeaderLeft';
 import { HeaderRight } from '../Dashboard/Comp/HeaderRight';
 import { DashboardFooter } from '../Dashboard/Comp/DashboardFooter';
+import { Link } from "react-router-dom";
 
 interface Props {
     
@@ -34,6 +35,24 @@ const useStyles = makeStyles((theme: Theme) =>
             flexGrow: 1,
             padding: theme.spacing(3),
           },
+          Button: {
+            backgroundColor: theme.palette.primary.light,
+            border: "1.21951px solid #FFFFFF",
+            height: "41px",
+            width: "50%",
+            borderRadius: 36,
+        },
+        btnfonts: {
+            fontFamily: "PT Sans",
+            fontSize: "13px",
+            lineHeight: "16.82px",
+            fontWeight: "bolder",
+            color: "#FAFAFA",
+            textTransform: "none"
+        },
+        link:{
+            textDecoration: "none"
+        }
     }),
 );
 
@@ -54,14 +73,25 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
                         <Grid item xs={4} style={{marginBottom: "2%", marginTop: "1%", background: "transparent"}}>
                             <HeaderRight />
                         </Grid>
-                        <Grid item xs={12}>
-                            <Typography variant="h3">Oder SuccessFul</Typography>
+                        <Grid item xs={12} style={{paddingBottom: "15%", textAlign: "center"}}>
+                            <Typography variant="h3">Oder Successful</Typography>
                         </Grid>
-                        <Grid item xs={6}>
-                            Return to dashboard
+                        <Grid item xs={12} sm={6} style={{textAlign: "center"}}>
+                            <Link to="/FoodDelivery" className={classes.link}>
+                                <Button size="small"   className={clsx(classes.Button,classes.btnfonts)}   type="button">
+                                    Return to dashboard
+                                </Button>
+                            </Link>
                         </Grid>
-                        <Grid item xs={6}>
-                            View Order History
+                        <Grid item xs={12} sm={6} style={{textAlign: "center"}}>
+                            <Link to="/OrderHistory" className={classes.link}>
+                                <Button size="small"   className={clsx(classes.Button,classes.btnfonts)}   type="button">
+                                        View Order History 
+                                </Button>
+                            </Link>
+                        </Grid>
+                        <Grid item xs={12} style={{paddingBottom: "26%"}}>
+                            
                         </Grid>
                         <Grid item xs={12}>
                             <DashboardFooter />
