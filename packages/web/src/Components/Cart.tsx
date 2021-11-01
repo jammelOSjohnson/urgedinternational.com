@@ -6,15 +6,6 @@ import clsx from 'clsx';
 import { ShoppingCartRounded } from "@material-ui/icons/";
 import { Link } from "react-router-dom";
 
-interface Props {
-    
-}
-
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -70,12 +61,6 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Cart: React.FC = function Cart() {
     const classes = useStyles();
     var history = useHistory();
-
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-      });
     
     var { value }  = useAppData();
     var { cartItems } = value;

@@ -1,44 +1,40 @@
 import React from 'react';
 //import CSS
-import { Container, Grid, Typography, makeStyles, createStyles, Theme, AppBar, Tabs, Tab, Box, TextField, Button} from '@material-ui/core';
-import { JobAppForm } from './JobAppForm';
+import { Container, Grid, Typography, makeStyles, createStyles, Theme, Button} from '@material-ui/core';
 
-interface Props {
-    
-}
 
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: any;
-    value: any;
-}
+// interface TabPanelProps {
+//     children?: React.ReactNode;
+//     index: any;
+//     value: any;
+// }
 
-function TabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
+// function TabPanel(props: TabPanelProps) {
+//     const { children, value, index, ...other } = props;
   
-    return (
-      <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`scrollable-auto-tabpanel-${index}`}
-        aria-labelledby={`scrollable-auto-tab-${index}`}
-        {...other}
-      >
-        {value === index && (
-          <Box p={3}>
-            <Typography>{children}</Typography>
-          </Box>
-        )}
-      </div>
-    );
-  }
+//     return (
+//       <div
+//         role="tabpanel"
+//         hidden={value !== index}
+//         id={`scrollable-auto-tabpanel-${index}`}
+//         aria-labelledby={`scrollable-auto-tab-${index}`}
+//         {...other}
+//       >
+//         {value === index && (
+//           <Box p={3}>
+//             <Typography>{children}</Typography>
+//           </Box>
+//         )}
+//       </div>
+//     );
+//   }
 
-  function a11yProps(index: any) {
-    return {
-      id: `scrollable-auto-tab-${index}`,
-      'aria-controls': `scrollable-auto-tabpanel-${index}`,
-    };
-  }
+//   function a11yProps(index: any) {
+//     return {
+//       id: `scrollable-auto-tab-${index}`,
+//       'aria-controls': `scrollable-auto-tabpanel-${index}`,
+//     };
+//   }
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -71,11 +67,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const ExternalApp: React.FC = function ExternalApp() {
     const classes = useStyles();
-    const [value, setValue] = React.useState(1);
+    // const [value, setValue] = React.useState(1);
 
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-        setValue(newValue);
-    };
+    // const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
+    //     setValue(newValue);
+    // };
 
     return (
         <>

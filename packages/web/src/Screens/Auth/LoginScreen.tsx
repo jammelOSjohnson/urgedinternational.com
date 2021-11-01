@@ -221,6 +221,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
 
     var [error, setError] = useState('');
     var [success, setSuccess] = useState('');
+    // eslint-disable-next-line
     var [loading, setLoading] = useState(false);
     
     var history = useHistory();

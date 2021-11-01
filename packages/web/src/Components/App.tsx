@@ -18,7 +18,7 @@ import { OrdersDetailsScreen } from '../Screens/AdminDashboard/OrdersDetailsScre
 import { EmployeesScreen } from '../Screens/AdminDashboard/EmployeesScreen';
 import { EmployeeDetailsScreen } from '../Screens/AdminDashboard/EmployeeDetailsScreen';
 import { OrganisationsScreen } from '../Screens/AdminDashboard/OrganisationsScreen';
-import { Sidebar } from '../Screens/Dashboard/Comp/Sidebar';
+//import { Sidebar } from '../Screens/Dashboard/Comp/Sidebar';
 import { CheckoutScreen } from '../Screens/Checkout/CheckoutScreen';
 import { OrderCompleted } from '../Screens/Checkout/OrderCompleted'
 
@@ -104,7 +104,8 @@ const theme = createTheme({
 const errorLink = onError(({ graphQLErrors, networkError}) => {
   if(graphQLErrors){
     graphQLErrors.map(({message, locations, path}) => {
-      console.log(`Graphql error ${message}`)
+      if(process.env.NODE_ENV === 'development'){console.log(`Graphql error ${message}`)};
+      return message;
     })
   }
 }); 

@@ -1,15 +1,7 @@
 import React from 'react';
 //import CSS
-import { Container, Grid, Typography, makeStyles, createStyles, Theme, Button, Card, CardMedia, CardContent, Paper} from '@material-ui/core';
+import { Container, Grid, Typography, makeStyles, createStyles, Theme, Button, Card, CardMedia, CardContent} from '@material-ui/core';
 import { Link } from "react-router-dom";
-//import icons
-import Twitter from '@material-ui/icons/Twitter';
-import Facebook from '@material-ui/icons/Facebook';
-import Instagram from "@material-ui/icons/Instagram";
-
-interface Props {
-    
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -152,13 +144,13 @@ export const Section1: React.FC = function Section1() {
                 </div>
                 <Grid container direction="row" className={classes.root} spacing={2}>
                     <Grid item style={{marginLeft: "auto"}}>
-                        <a className={classes.links} href="#" title="Food Delivery">
+                        <a className={classes.links} href="javascipt();" title="Food Delivery">
                         {/* <a className={classes.links} href="/FoodDelivery" title="Food Delivery"> */}
                             <Grid container justifyContent="center" spacing={2}>
                                 <Grid key={0} item>
                                     <Card className={classes.card} style={{paddingBottom: "0px"}}>
                                         <CardMedia className={classes.cardImage}>
-                                            <img src="Images/YellowFoodDeliveryService.png"></img>
+                                            <img src="Images/YellowFoodDeliveryService.png" alt="YellowFoodDeliveryService"></img>
                                         </CardMedia>
                                         <CardContent className={classes.cardContent}>
                                             <Typography className={classes.cardTitle1}>
@@ -177,7 +169,7 @@ export const Section1: React.FC = function Section1() {
                                 <Grid key={1} item>
                                     <Card className={classes.cardMiddle}>
                                         <CardMedia className={classes.cardImage}>
-                                            <img src="Images/whitetruckIconImage.png"></img>
+                                            <img src="Images/whitetruckIconImage.png" alt="whitetruckIconImage"></img>
                                         </CardMedia>
                                         <CardContent className={classes.cardContent}>
                                             <Link className={classes.links} to="#" title="Food Delivery">
@@ -197,7 +189,7 @@ export const Section1: React.FC = function Section1() {
                                 <Grid key={2} item>
                                     <Card className={classes.card}>
                                         <CardMedia className={classes.cardImage}>
-                                            <img src="Images/YellowMarketPlaceService.png"></img>
+                                            <img src="Images/YellowMarketPlaceService.png" alt="YellowMarketPlaceService"></img>
                                         </CardMedia>
                                         <CardContent className={classes.cardContent}>
                                             <Link className={classes.links} to="#" title="Food Delivery">

@@ -2,14 +2,6 @@ import React from 'react';
 //import CSS
 import { Container, Grid, Typography, makeStyles, createStyles, Theme, useMediaQuery, Button} from '@material-ui/core';
 import { Link } from "react-router-dom";
-//import icons
-import Twitter from '@material-ui/icons/Twitter';
-import Facebook from '@material-ui/icons/Facebook';
-import Instagram from "@material-ui/icons/Instagram";
-
-interface Props {
-    
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -69,7 +61,7 @@ export const Section6: React.FC = function Section6() {
                         <>
                             <Grid item xs={12} md={6} lg={6} style={{margin: "0% 0% 0% 0%", textAlign: "center"}}>
                                 <Typography>
-                                    <img className={classes.imageOnemd} src="Images/Group 5022.png"></img>
+                                    <img className={classes.imageOnemd} src="Images/Group 5022.png" alt="Group 5022 1"></img>
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} md={3} lg={6} style={{borderLeft: "12px solid #F7B614", padding: "0 0 0 0%", maxWidth: "80%", marginLeft: "auto", marginRight: "auto"}}>
@@ -91,7 +83,7 @@ export const Section6: React.FC = function Section6() {
                       <>
                             <Grid item xs={12} md={6} lg={6} style={{margin: "0% 0% 0% 0%", textAlign: "right"}}>
                                 <Typography>
-                                    <img className={classes.imageOne} src="Images/Group 5022.png"></img>
+                                    <img className={classes.imageOne} src="Images/Group 5022.png" alt="Group 5022 2"></img>
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} md={3} lg={6} style={{borderLeft: "12px solid #F7B614", padding: "0 0 0 0%"}}>

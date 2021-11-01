@@ -1,23 +1,12 @@
-import { Container, Grid, makeStyles, createStyles, withStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, CardMedia, Card, CardContent, Link, Stepper, Step, StepLabel, StepIconProps, StepConnector } from '@material-ui/core';
+import { Grid, makeStyles, createStyles, withStyles, Typography, Theme, CardMedia, Card, CardContent, Stepper, Step, StepLabel, StepIconProps, StepConnector } from '@material-ui/core';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import LocalShippingOutlinedIcon from '@material-ui/icons/LocalShippingOutlined';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
-import { LockRounded, EmailRounded, PlayArrowRounded } from "@material-ui/icons/";
 
-interface Props {
 
-}
 
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -52,13 +41,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const CurrentPackage: React.FC = function CurrentPackage() {
   const classes = useStyles();
-  const [values, setValues] = React.useState<State>({
-      email: '',
-      password: '',
-      showPassword: false,
-  });
-
-  var history = useHistory();
 
 const ColorlibConnector = withStyles({
     alternativeLabel: {
@@ -133,20 +115,21 @@ function ColorlibStepIcon(props: StepIconProps) {
     return ['Pick-Up Time', 'In Transit', 'Delivered'];
     }  
 
+    // eslint-disable-next-line
     const [activeStep, setActiveStep] = React.useState(1);
     const steps = getSteps();
     
-    const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    };
+    // const handleNext = () => {
+    //     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    // };
     
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
+    // const handleBack = () => {
+    //     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    // };
     
-    const handleReset = () => {
-        setActiveStep(0);
-    };
+    // const handleReset = () => {
+    //     setActiveStep(0);
+    // };
 
     return (
         <>
@@ -163,7 +146,8 @@ function ColorlibStepIcon(props: StepIconProps) {
                 <Grid item xs={12}>
                     <Card className={classes.card}>
                         <CardMedia >
-                            <img src="Images/Package Image.png" className={classes.image}></img>
+                            {/* eslint-disable-next-line */}
+                            <img src="Images/Package Image.png" className={classes.image} alt="Package Image"></img>
                         </CardMedia>
                         <CardContent style={{flexGrow: 1}}>
                             <Typography className={classes.cardHeading}>

@@ -1,14 +1,6 @@
 import React from 'react';
 //import CSS
 import { Container, Grid, Typography, makeStyles, createStyles, Theme, Card, CardMedia, CardContent} from '@material-ui/core';
-//import icons
-import Twitter from '@material-ui/icons/Twitter';
-import Facebook from '@material-ui/icons/Facebook';
-import Instagram from "@material-ui/icons/Instagram";
-
-interface Props {
-    
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -103,7 +95,7 @@ export const Section2: React.FC = function Section2() {
                                 <Grid item xs={6} md={6}>
                                     <Card className={classes.card}>
                                         <CardMedia className={classes.cardImage}>
-                                            <img src="Images/ReliabilityYellow.svg"></img>
+                                            <img src="Images/ReliabilityYellow.svg" alt="ReliabilityYellow"></img>
                                         </CardMedia>
                                         <CardContent className={classes.cardContent}>
                                             <Typography gutterBottom className={classes.cardTitle}>
@@ -116,7 +108,7 @@ export const Section2: React.FC = function Section2() {
                                 <Grid item xs={6} md={6}>
                                     <Card className={classes.card}>
                                         <CardMedia className={classes.cardImage}>
-                                            <img src="Images/Fast DeliveryYellow.svg"></img>
+                                            <img src="Images/Fast DeliveryYellow.svg" alt="ReliabilityYellow 2"></img>
                                         </CardMedia>
                                         <CardContent className={classes.cardContent}>
                                             <Typography gutterBottom className={classes.cardTitle}>
@@ -129,7 +121,7 @@ export const Section2: React.FC = function Section2() {
                                 <Grid item xs={6} md={6}>              
                                     <Card className={classes.card}>
                                         <CardMedia className={classes.cardImage}>
-                                            <img src="Images/QualityYellow.svg"></img>
+                                            <img src="Images/QualityYellow.svg" alt="QualityYellow"></img>
                                         </CardMedia>
                                         <CardContent className={classes.cardContent}>
                                             <Typography gutterBottom className={classes.cardTitle}>
@@ -142,7 +134,7 @@ export const Section2: React.FC = function Section2() {
                                 <Grid item xs={6} md={6}>              
                                     <Card className={classes.card}>
                                         <CardMedia className={classes.cardImage}>
-                                            <img src="Images/DiversifiedYellow.svg"></img>
+                                            <img src="Images/DiversifiedYellow.svg" alt="DiversifiedYellow"></img>
                                         </CardMedia>
                                         <CardContent className={classes.cardContent}>
                                             <Typography gutterBottom className={classes.cardTitle}>
@@ -157,7 +149,7 @@ export const Section2: React.FC = function Section2() {
                     </Grid>
                     <Grid item xs={12} md={6}>
                         <Typography variant="h2" className={classes.marginTypo3}>Ease your everyday life, by allowing us to take care of all your errands and delivery services for you.</Typography>
-                        <img src="Images/signginggirl.png" width="100%"></img>
+                        <img src="Images/signginggirl.png" width="100%" alt="signginggirl"></img>
                     </Grid>
                 </Grid>
             </Container>

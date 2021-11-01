@@ -1,14 +1,6 @@
 import React from 'react';
 //import CSS
 import { Container, Button, Grid, Typography, makeStyles, createStyles, Theme, Card, CardContent} from '@material-ui/core';
-//import icons
-import Twitter from '@material-ui/icons/Twitter';
-import Facebook from '@material-ui/icons/Facebook';
-import Instagram from "@material-ui/icons/Instagram";
-
-interface Props {
-    
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({

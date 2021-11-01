@@ -1,23 +1,12 @@
-import { Container, Grid, Badge , makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardMedia, CardContent } from '@material-ui/core';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import { Container, Grid, makeStyles, createStyles, Theme } from '@material-ui/core';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
-import { NotificationImportantRounded, ShoppingCartRounded } from "@material-ui/icons/";
 import { Cart } from "../../../Components/Cart";
 import { Notification } from "../../../Components/Notification";
 import { User } from "../../../Components/User"
 
-interface Props {
-    
-}
 
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
+
+
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -35,13 +24,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const HeaderRight: React.FC = function HeaderRight() {
     const classes = useStyles();
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-      });
-    
-      var history = useHistory();
 
     
       

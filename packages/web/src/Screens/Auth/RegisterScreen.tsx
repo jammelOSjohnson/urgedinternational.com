@@ -1,5 +1,5 @@
 import { useAppData } from '../../Context/AppDataContext';
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, Button, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, useTheme, useMediaQuery, withWidth, colors } from '@material-ui/core';
+import { Container, Grid, makeStyles, createStyles, Typography, Theme, Button, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, useTheme, useMediaQuery } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import React, { useState } from 'react';
@@ -252,6 +252,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
 
     var [error, setError] = useState('');
     var [success, setSuccess] = useState('');
+    // eslint-disable-next-line
     var [loading, setLoading] = useState(false);
     
     var history = useHistory();

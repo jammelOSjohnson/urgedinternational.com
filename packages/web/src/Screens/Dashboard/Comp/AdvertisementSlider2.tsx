@@ -1,17 +1,12 @@
-import { makeStyles, createStyles, Typography, Theme, Button, IconButton, Slider, useMediaQuery, FormControl, OutlinedInput, InputAdornment, InputLabel, Select, MenuItem, TextField } from '@material-ui/core';
+import { makeStyles, createStyles, Typography, Theme, Button, IconButton, FormControl, InputAdornment, Select, MenuItem, TextField } from '@material-ui/core';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../CSS/FoodSlider.css";
 import { Link } from "react-router-dom";
-import { useAppData } from '../../../Context/AppDataContext';
+//import { useAppData } from '../../../Context/AppDataContext';
 import { LocationOnRounded } from "@material-ui/icons/";
-
-interface Props {
-    
-}
 
 interface State {
     address: string;
@@ -187,15 +182,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
     const classes = useStyles();
-    var { value }  = useAppData();
+    //var { value }  = useAppData();
     const [values, setValues] = React.useState<State>({
         address: 'Select Location',
         searchquery: '',
       });
-    
-      var history = useHistory();
 
-      const matches = useMediaQuery("(max-width:8000px)");
+      //const matches = useMediaQuery("(max-width:8000px)");
       
       const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues({ ...values, [prop]: event.target.value });

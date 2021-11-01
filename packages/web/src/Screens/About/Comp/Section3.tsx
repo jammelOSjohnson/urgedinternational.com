@@ -1,9 +1,6 @@
 import React from 'react'
-import { Container, Grid, Typography, makeStyles, createStyles, Theme, Button, Box, Icon, IconButton} from '@material-ui/core';
+import { Container, Grid, Typography, makeStyles, createStyles, Theme, Button, Box, IconButton} from '@material-ui/core';
 
-interface Props {
-    
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({

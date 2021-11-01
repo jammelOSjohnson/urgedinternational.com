@@ -1,10 +1,6 @@
-import { useMediaQuery, makeStyles, createStyles,Theme, Container, Grid, Typography, Icon } from '@material-ui/core';
+import { useMediaQuery, makeStyles, createStyles,Theme, Container, Grid, Typography } from '@material-ui/core';
 import {  } from '@material-ui/core';
 import React from 'react'
-
-interface Props {
-    
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -55,7 +51,7 @@ export const Section6: React.FC = function Section6() {
                         <>
                             <Grid item xs={12} md={6} lg={6} style={{margin: "0% 0% 0% 0%", textAlign: "center"}}>
                                 <Typography>
-                                    <img className={classes.imageOnemd} src="Images/Group 502.svg"></img>
+                                    <img className={classes.imageOnemd} src="Images/Group 502.svg" alt="Group 502 4"></img>
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} md={3} lg={6} style={{borderLeft: "12px solid #3B91B2", padding: "0 0 0 0%", maxWidth: "80%", marginLeft: "auto", marginRight: "auto"}}>
@@ -71,7 +67,7 @@ export const Section6: React.FC = function Section6() {
                       <>
                             <Grid item xs={12} md={6} lg={6} style={{margin: "0% 0% 0% 0%", textAlign: "right"}}>
                                 <Typography>
-                                    <img className={classes.imageOne} src="Images/Group 502.svg"></img>
+                                    <img className={classes.imageOne} src="Images/Group 502.svg" alt="Group 502 5"></img>
                                 </Typography>
                             </Grid>
                             <Grid item xs={12} md={3} lg={6} style={{borderLeft: "12px solid #3B91B2", padding: "0 0 0 0%"}}>

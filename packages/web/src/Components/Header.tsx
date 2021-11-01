@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { useMediaQuery , useTheme,Typography, AppBar, Toolbar, makeStyles, Theme, createStyles, Grid } from '@material-ui/core'
 import SvgIcon, { SvgIconProps } from '@material-ui/core/SvgIcon';
 import { Container } from '@material-ui/core';
+// eslint-disable-next-line
 import  { auth, socialAuth } from '../firebase';
 
 
@@ -111,7 +112,7 @@ export const Header: React.FC = function Header() {
     const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
     const isMaatchMedium = useMediaQuery(theme.breakpoints.down('md'));
     useEffect(function(){
-      var unsubscribe = auth.onAuthStateChanged(function (user){
+      auth.onAuthStateChanged(function (user){
         //update the state for current user to the user logged in
         //console.log("about to set current user");
         //console.log(user);
@@ -132,6 +133,7 @@ export const Header: React.FC = function Header() {
                 // });
             }
          } 
+         // eslint-disable-next-line
       });
     },[value.userRolef])
 

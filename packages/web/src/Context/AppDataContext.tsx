@@ -1,13 +1,13 @@
 import type { ReactNode } from 'react'
 import {useContext, useReducer, createContext} from 'react';
 //import fetchAddressApi from '../Apis/fetchAddressApi';
-import  { auth, socialAuth, googleAuthProvider, timeStamp } from '../firebase';
+import  { auth, socialAuth, googleAuthProvider } from '../firebase';
 import { CREATE_ORDER, GET_ORDERS_BY_USERID, GET_ORDERS, GET_RESTAURANTS, CREATE_USER_MUTATION, GET_USER_MUTATION, GET_USER_IN_ROLE, GET_ROLE, CREATE_ROLE, GET_MENU_CATEGORIES } from '../GraphQL/Mutations';
-import { useMutation, useQuery  } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import sendEmail from "../email.js";
 import moment from 'moment-timezone';
 
-import serverPI from '../Apis/serverPI';
+//import serverPI from '../Apis/serverPI';
 
 const defaultState = undefined
 export type Action = 'get_address';
@@ -105,6 +105,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const [addUserToRole] = useMutation(CREATE_ROLE);
     const [getRestaurants] = useMutation(GET_RESTAURANTS);
     const [getMenucategories] = useMutation(GET_MENU_CATEGORIES);
+    // eslint-disable-next-line
     const [getOrders] = useMutation(GET_ORDERS);
     const [getOrdersByUserId] = useMutation(GET_ORDERS_BY_USERID);
     const [createOrder] = useMutation(CREATE_ORDER);
@@ -491,7 +492,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
 
     var fetchRestaurants = async function fetchRestaurants(payload){
       //console.log("about to fetch restaurants");
-        var result = await getRestaurants().then(async function(response) {
+        await getRestaurants().then(async function(response) {
           if (response.data.getRestaurants !== null) {
             //console.log("got list of restaurants");
             //console.log(response);
@@ -524,11 +525,13 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
 
     var getMenuCats = async function getMenuCats(payload, Id){
       if(Id !== null && Id !== undefined){
-        var menuCatRef = await getMenucategories({variables: {Id: Id}}).then(async function(response) {
+         await getMenucategories({variables: {Id: Id}}).then(async function(response) {
           ////console.log("menu categories result");
           if (response.data.getMenucategories.MenuItems !== null) {
             ////console.log("menu categories exist");
             ////console.log(response.data.getMenucategories.MenuItems);
+
+            // eslint-disable-next-line
             var distinct = (value, index, self) => {
               return self.indexOf(value) === index;
             }
@@ -596,14 +599,15 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           PaymentMethod: state.PaymentMethod,
           AdditionalInfo: state.AdditionalInfo
         }
-        var order = await createOrder({variables: orderBody}).then(async function(response) {
+
+        await createOrder({variables: orderBody}).then(async function(response) {
           //console.log("create orer result");
           if (response.data.createOrder !== null) {
             //console.log("Order Exist");
             //console.log(response.data.createOrder);
             payload.cartItems = [];
             payload.selectedRestaurant = undefined;
-            var OrderHistory = await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
+            await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
               if (response.data.getOrdersByUserId !== null) {
                 payload.orders = response.data.getOrdersByUserId;
                 dispatch({
@@ -624,7 +628,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
 
     var fetchOrdersByUser  = async function fetchOrdersByUser(payload){
       if(payload.currentUser !== undefined){
-        var OrderHistory = await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
+        await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
           if (response.data.getOrdersByUserId !== null) {
             payload.orders = response.data.getOrdersByUserId;
             dispatch({

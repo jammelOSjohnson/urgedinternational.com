@@ -1,21 +1,8 @@
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardMedia, CardContent } from '@material-ui/core';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import { Grid, makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent } from '@material-ui/core';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
-import { LockRounded, EmailRounded, PlayArrowRounded } from "@material-ui/icons/";
 import { Link } from "react-router-dom";
 
-interface Props {
-    
-}
 
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -62,13 +49,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Favourites: React.FC = function Favourites() {
     const classes = useStyles();
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-      });
-    
-      var history = useHistory();
 
     
       
@@ -93,7 +73,7 @@ export const Favourites: React.FC = function Favourites() {
                             <Grid item xs={6} >
                                 <Card className={classes.card}>
                                     <CardMedia className={classes.cardImage}>
-                                        <img src="Images/ExampleBigDeal1.png"></img>
+                                        <img src="Images/ExampleBigDeal1.png" alt="ExampleBigDeal1"></img>
                                     </CardMedia>
                                     <CardContent className={classes.cardContent}>
                                         <Typography gutterBottom className={classes.cardTitle}>
@@ -105,7 +85,7 @@ export const Favourites: React.FC = function Favourites() {
                             <Grid item xs={6} >
                                 <Card className={classes.card}>
                                     <CardMedia className={classes.cardImage}>
-                                        <img src="Images/ExampleBigDeal2.png"></img>
+                                        <img src="Images/ExampleBigDeal2.png" alt="ExampleBigDeal2"></img>
                                     </CardMedia>
                                     <CardContent className={classes.cardContent}>
                                         <Typography gutterBottom className={classes.cardTitle}>
@@ -117,7 +97,7 @@ export const Favourites: React.FC = function Favourites() {
                             <Grid item xs={6} >
                                 <Card className={classes.card}>
                                     <CardMedia className={classes.cardImage}>
-                                        <img src="Images/ExampleSalad.png"></img>
+                                        <img src="Images/ExampleSalad.png" alt="ExampleSalad"></img>
                                     </CardMedia>
                                     <CardContent className={classes.cardContent}>
                                         <Typography gutterBottom className={classes.cardTitle}>
@@ -129,7 +109,7 @@ export const Favourites: React.FC = function Favourites() {
                             <Grid item xs={6} >
                                 <Card className={classes.card}>
                                     <CardMedia className={classes.cardImage}>
-                                        <img src="Images/ExampleBigDeal2.png"></img>
+                                        <img src="Images/ExampleBigDeal2.png" alt="ExampleBigDeal2 3"></img>
                                     </CardMedia>
                                     <CardContent className={classes.cardContent}>
                                         <Typography gutterBottom className={classes.cardTitle}>
@@ -141,7 +121,7 @@ export const Favourites: React.FC = function Favourites() {
                             <Grid item xs={6} >
                                 <Card className={classes.card}>
                                     <CardMedia className={classes.cardImage}>
-                                        <img src="Images/ExampleBigDeal2.png"></img>
+                                        <img src="Images/ExampleBigDeal2.png" alt="ExampleBigDeal2 4"></img>
                                     </CardMedia>
                                     <CardContent className={classes.cardContent}>
                                         <Typography gutterBottom className={classes.cardTitle}>
@@ -153,7 +133,7 @@ export const Favourites: React.FC = function Favourites() {
                             <Grid item xs={6} >
                                 <Card className={classes.card}>
                                     <CardMedia className={classes.cardImage}>
-                                        <img src="Images/ExampleBigDeal2.png"></img>
+                                        <img src="Images/ExampleBigDeal2.png" alt="ExampleBigDeal2 5"></img>
                                     </CardMedia>
                                     <CardContent className={classes.cardContent}>
                                         <Typography gutterBottom className={classes.cardTitle}>

@@ -1,18 +1,8 @@
 import { Grid, makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent } from '@material-ui/core';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
 import { Link } from "react-router-dom";
 
-interface Props {
-    
-}
 
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -72,13 +62,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Categories: React.FC = function Categories() {
     const classes = useStyles();
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-      });
-    
-      var history = useHistory();
 
     
       
@@ -97,7 +80,7 @@ export const Categories: React.FC = function Categories() {
                 <Grid item xs={10} md={3}>
                     <Card className={classes.card}>
                         <CardMedia className={classes.cardImage}>
-                            <img src="Images/FoodDeliveryServiceSM.png"></img>
+                            <img src="Images/FoodDeliveryServiceSM.png" alt="FoodDeliveryServiceSM"></img>
                         </CardMedia>
                         <CardContent className={classes.cardContent}>
                             <Link className={classes.links} to="#" title="Food Delivery">
@@ -111,7 +94,7 @@ export const Categories: React.FC = function Categories() {
                 <Grid item xs={10} md={3}>
                     <Card className={classes.card}>
                         <CardMedia className={classes.cardImage}>
-                            <img src="Images/lightbluetruckIconImageSM.png"></img>
+                            <img src="Images/lightbluetruckIconImageSM.png" alt="lightbluetruckIconImageSM"></img>
                         </CardMedia>
                         <CardContent className={classes.cardContent}>
                             <Link className={classes.links} to="#" title="Food Delivery">
@@ -125,7 +108,7 @@ export const Categories: React.FC = function Categories() {
                 <Grid item xs={10} md={3}>
                     <Card className={classes.card}>
                         <CardMedia className={classes.cardImage}>
-                            <img src="Images/yellowtruckIconImageSM.png"></img>
+                            <img src="Images/yellowtruckIconImageSM.png" alt="yellowtruckIconImageSM"></img>
                         </CardMedia>
                         <CardContent className={classes.cardContent}>
                             <Link className={classes.links} to="#" title="Food Delivery">
@@ -139,7 +122,7 @@ export const Categories: React.FC = function Categories() {
                 <Grid item xs={10} md={3}>
                     <Card className={classes.card}>
                         <CardMedia className={classes.cardImage}>
-                            <img src="Images/GreenMarketPlace.png"></img>
+                            <img src="Images/GreenMarketPlace.png" alt="GreenMarketPlace"></img>
                         </CardMedia>
                         <CardContent className={classes.cardContent}>
                             <Link className={classes.links} to="#" title="Food Delivery">

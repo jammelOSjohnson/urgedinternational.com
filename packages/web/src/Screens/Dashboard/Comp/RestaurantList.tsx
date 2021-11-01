@@ -1,19 +1,14 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardHeader, Avatar, CardMedia, CardContent } from '@material-ui/core';
+import { Grid, makeStyles, createStyles, Typography, Theme, IconButton, Card, CardHeader, Avatar, CardMedia, CardContent } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
 //Import Components
 import { ItemRating } from '../../../Components/ItemRating';
 import { Link } from "react-router-dom";
 
 
 
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
+
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -124,13 +119,9 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
         if(restaurants.length === 0){
             fetchRestaurants(value);
         }
+        // eslint-disable-next-line
     }, [restaurants])
 
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-      });
     
     var history = useHistory();
 
@@ -163,13 +154,13 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                                         avatar={
                                             <Avatar variant="square" aria-label="restaurant" className={classes.avatar}>
                                                 <CardMedia className={classes.cardImage}>
-                                                    <img className={classes.kfcImage} src={restaurant.ImageName}></img>
+                                                    <img className={classes.kfcImage} src={restaurant.ImageName} alt="kfcImage"></img>
                                                 </CardMedia>
                                             </Avatar>
                                         }
                                         action={
                                             <IconButton aria-label="settings">
-                                                <img className={classes.kfcImage} src="Images/FavIcon.png"></img>
+                                                <img className={classes.kfcImage} src="Images/FavIcon.png" alt="FavIcon"></img>
                                             </IconButton>
                                         }
                                         title={restaurant.FirstName}
@@ -188,13 +179,13 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                                                     </Typography>
                                             </Grid>
                                                 <Grid item xs={4}>
-                                                        <img className={classes.menuImages} src="Images/KFC Order1.png"></img>
+                                                        <img className={classes.menuImages} src="Images/KFC Order1.png" alt="KFC Order1"></img>
                                                 </Grid>
                                                 <Grid item xs={4}>
-                                                        <img className={classes.menuImages} src="Images/KFC Order2.png"></img>
+                                                        <img className={classes.menuImages} src="Images/KFC Order2.png" alt="KFC Order2"></img>
                                                 </Grid>
                                                 <Grid item xs={4}>
-                                                        <img className={classes.menuImages} src="Images/KFC Order3.png"></img>
+                                                        <img className={classes.menuImages} src="Images/KFC Order3.png" alt="KFC Order3"></img>
                                                 </Grid>
                                         </Grid>
                                     </CardContent>

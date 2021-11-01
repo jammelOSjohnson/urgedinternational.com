@@ -1,21 +1,8 @@
-import { useAppData } from '../../../Context/AppDataContext';
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardMedia, CardContent, CardHeader, Avatar } from '@material-ui/core';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+//import { useAppData } from '../../../Context/AppDataContext';
+import { Grid, makeStyles, createStyles, Typography, Theme, Button, Card, CardMedia, CardContent, CardHeader, Avatar } from '@material-ui/core';
 import React from 'react';
-import { useHistory, Link } from 'react-router-dom';
-import clsx from 'clsx';
-import { LockRounded, EmailRounded, PlayArrowRounded } from "@material-ui/icons/";
 
-interface Props {
-    
-}
 
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -122,17 +109,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const PopularRestaurants: React.FC = function PopularRestaurants() {
     const classes = useStyles();
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-      });
-      var { value }  = useAppData();
-      var { orders } = value;
 
-      var TotalOrders = orders.length;
-      var OrdersInProcess = 0;
-      var history = useHistory();
+    //var { value }  = useAppData();
 
     
       
@@ -155,13 +133,13 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
                                 avatar={
                                     <Avatar variant="square" aria-label="restaurant" className={classes.avatar}>
                                         <CardMedia className={classes.cardImage}>
-                                            <img className={classes.kfcImage} src="Images/KFC Avatar.png"></img>
+                                            <img className={classes.kfcImage} src="Images/KFC Avatar.png"alt="img1"></img>
                                         </CardMedia>
                                     </Avatar>
                                 }
                                 // action={
                                 //     <IconButton aria-label="settings">
-                                //         <img className={classes.kfcImage} src="Images/FavIcon.png"></img>
+                                //         <img className={classes.kfcImage} src="Images/FavIcon.png"alt="img2"></img>
                                 //     </IconButton>
                                 // }
                                 title="Kentucky Fried Chicken"
@@ -180,22 +158,22 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
                                             </Typography>
                                     </Grid>
                                         <Grid item xs={4}>
-                                                <img className={classes.menuImages} src="Images/KFC Order1.png"></img>
+                                                <img className={classes.menuImages} src="Images/KFC Order1.png"alt="img3"></img>
                                         </Grid>
                                         <Grid item xs={4}>
-                                                <img className={classes.menuImages} src="Images/KFC Order2.png"></img>
+                                                <img className={classes.menuImages} src="Images/KFC Order2.png"alt="img4"></img>
                                         </Grid>
                                         <Grid item xs={4}>
-                                                <img className={classes.menuImages} src="Images/KFC Order3.png"></img>
+                                                <img className={classes.menuImages} src="Images/KFC Order3.png"alt="img5"></img>
                                         </Grid>
                                         <Grid item xs={4}>
-                                                <img className={classes.menuImages} src="Images/KFC Order4.png"></img>
+                                                <img className={classes.menuImages} src="Images/KFC Order4.png"alt="img6"></img>
                                         </Grid>
                                         <Grid item xs={4}>
-                                                <img className={classes.menuImages} src="Images/KFC Order1.png"></img>
+                                                <img className={classes.menuImages} src="Images/KFC Order1.png"alt="img7"></img>
                                         </Grid>
                                         <Grid item xs={4}>
-                                                <img className={classes.menuImages} src="Images/KFC Order5.png"></img>
+                                                <img className={classes.menuImages} src="Images/KFC Order5.png"alt="img8"></img>
                                         </Grid>
                                         <Button variant="contained" fullWidth={true}
                                             className={classes.Btn} 

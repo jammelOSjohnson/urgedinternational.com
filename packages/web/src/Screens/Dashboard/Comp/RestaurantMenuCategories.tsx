@@ -1,24 +1,11 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, useMediaQuery, Card, CardMedia, CardContent, TableContainer, Table, Paper, TableHead, TableRow, TableCell, TableBody, useTheme } from '@material-ui/core';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import { Grid, makeStyles, createStyles, Typography, Theme, useMediaQuery, Card, CardMedia, CardContent, TableContainer, Table, Paper, TableHead, TableRow, TableCell, TableBody, useTheme } from '@material-ui/core';
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
-import { LockRounded, EmailRounded, PlayArrowRounded } from "@material-ui/icons/";
 import { Link } from "react-router-dom";
 import '../CSS/RestaurantCategories.css'
 //Import Components
 
-interface Props {
-    
-}
-
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -136,17 +123,10 @@ const useStyles = makeStyles((theme: Theme) =>
 export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategories() {
     const classes = useStyles();
     const theme = useTheme();
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-      });
 
     var { value }  = useAppData();
     var { getMenuCats, selectedRestaurant, restaurants, menuCategories } = value;
     var restaurant = restaurants[selectedRestaurant];
-
-    var history = useHistory();
 
     const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
     const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
@@ -155,6 +135,7 @@ export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategor
         //console.log("fetching menu cats");
         //console.log(restaurant);
         getMenuCats(value, restaurant.Id);
+        // eslint-disable-next-line
     }, [])
     
     if(menuCategories.length !== 0){
@@ -190,7 +171,7 @@ export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategor
                                             <Link to="/FoodDelivery/FastFood" title="Fast Food" className={classes.inactiveItemLink}>
                                                 <Card className={clsx(classes.card, "cardSizeCategoriesRestarants")}>
                                                     <CardMedia className={classes.cardImage}>
-                                                        <img src="Images/FoodDeliveryFastFood.png" className={classes.Images}></img>
+                                                        <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt="FoodDeliveryFastFood"></img>
                                                     </CardMedia>
                                                     <CardContent className={classes.cardContent}>
                                                             <Typography gutterBottom className={classes.cardTitle}>
@@ -337,7 +318,7 @@ export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategor
                                 <TableCell align="center">
                                             <Card className={classes.cardMobile}>
                                                 <CardMedia className={classes.cardImage}>
-                                                    <img src="Images/FoodDeliveryFastFood.png" className={classes.Images}></img>
+                                                    <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt="FoodDeliveryFastFood 2"></img>
                                                 </CardMedia>
                                                 <CardContent className={classes.cardContent}>
                                                         <Typography gutterBottom className={classes.cardTitle}>
@@ -351,7 +332,7 @@ export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategor
                                         <TableCell align="center">
                                             <Card className={classes.cardMobile}>
                                                 <CardMedia className={classes.cardImage}>
-                                                    <img src="Images/FoodDeliveryFastFood.png" className={classes.Images}></img>
+                                                    <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt=" FoodDeliveryFastFood 3"></img>
                                                 </CardMedia>
                                                 <CardContent className={classes.cardContent}>
                                                         <Typography gutterBottom className={classes.cardTitle}>

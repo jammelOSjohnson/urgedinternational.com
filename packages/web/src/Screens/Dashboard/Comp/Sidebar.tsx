@@ -9,15 +9,7 @@ import "../CSS/sidebar.css";
 import MailIcon from '@material-ui/icons/Mail';
 import {HistoryRounded} from "@material-ui/icons";
 
-interface Props {
-    
-}
 
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
 
 // const drawerWidth = "16.5%";
 const drawerWidth = 240;
@@ -148,12 +140,6 @@ export const Sidebar: React.FC = function Sidebar({children}) {
 
     const [open, setOpen] = React.useState(true);
     const [open1, setOpen1] = React.useState(false);
-
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-    });
     
     var history = useHistory();
     var location = history.location;
@@ -228,7 +214,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                             <ListItemText primary={text} />
                           </ListItem>
                         :
-                        (referralPath === "/FoodDelivery" || referralPath === "/Restaurants") && text === "Food Delivery" ?
+                        (referralPath === "/FoodDelivery" || referralPath === "/Restaurants" || referralPath === "/Menu") && text === "Food Delivery" ?
                           <ListItem button key={text} className={classes.activeItem2}>
                             <ListItemIcon className={classes.activeIcon2}>
                               {
@@ -470,7 +456,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                             <ListItemText primary={text} />
                           </ListItem>
                         :
-                        (referralPath === "/FoodDelivery" || referralPath === "/Restaurants")  && text === "Food Delivery" ?
+                        (referralPath === "/FoodDelivery" || referralPath === "/Restaurants" || referralPath === "/Menu")  && text === "Food Delivery" ?
                           <ListItem button key={text} className={classes.activeItem2}>
                             <ListItemIcon className={classes.activeIcon2}>
                               {

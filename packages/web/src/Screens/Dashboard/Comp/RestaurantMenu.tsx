@@ -1,8 +1,7 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { Select, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardHeader, CardActionArea, Avatar, CardMedia, CardContent, CardActions, MenuItem } from '@material-ui/core';
+import { Select, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, InputLabel, FormControl, Card, CardActionArea, CardMedia, CardContent, CardActions, MenuItem } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
 //Import Components
 import { ItemRating } from '../../../Components/ItemRating';
 import Modal from '@material-ui/core/Modal';

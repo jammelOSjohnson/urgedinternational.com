@@ -1,6 +1,5 @@
 import { Container, Grid, makeStyles, createStyles, Typography, Theme, Button } from '@material-ui/core';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 //Import Components
 import { Sidebar } from '../Dashboard/Comp/Sidebar';
@@ -9,15 +8,6 @@ import { HeaderRight } from '../Dashboard/Comp/HeaderRight';
 import { DashboardFooter } from '../Dashboard/Comp/DashboardFooter';
 import { Link } from "react-router-dom";
 
-interface Props {
-    
-}
-
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({

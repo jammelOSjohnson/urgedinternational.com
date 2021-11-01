@@ -1,8 +1,6 @@
 import React, {useEffect} from 'react';
-import clsx from 'clsx';
-import { createStyles, lighten, makeStyles, Theme, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TableSortLabel, Toolbar, Typography, Paper, Checkbox, IconButton, Tooltip, FormControlLabel, Switch, Collapse, Box } from '@material-ui/core';
 import { useAppData } from '../../../Context/AppDataContext';
-import { DataGrid, GridColDef, GridValueGetterParams } from '@material-ui/data-grid';
+import { DataGrid, GridColDef } from '@material-ui/data-grid';
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'Transaction', width: 414 },
@@ -52,6 +50,7 @@ export const HistoryTable: React.FC = function HistoryTable () {
     }catch(e){
       console.log(e)
     }
+    // eslint-disable-next-line
   }, [currentUser]);
 
   if(orders.length !== 0){
