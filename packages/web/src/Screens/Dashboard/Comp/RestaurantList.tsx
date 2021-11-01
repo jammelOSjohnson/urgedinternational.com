@@ -178,15 +178,15 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                                                     <ItemRating rating={3.5}/>
                                                     </Typography>
                                             </Grid>
-                                                <Grid item xs={4}>
-                                                        <img className={classes.menuImages} src="Images/KFC Order1.png" alt="KFC Order1"></img>
-                                                </Grid>
-                                                <Grid item xs={4}>
-                                                        <img className={classes.menuImages} src="Images/KFC Order2.png" alt="KFC Order2"></img>
-                                                </Grid>
-                                                <Grid item xs={4}>
-                                                        <img className={classes.menuImages} src="Images/KFC Order3.png" alt="KFC Order3"></img>
-                                                </Grid>
+                                            {
+                                                restaurant.MenuItems.filter((item, index) => index < 3).map((item, index)=> {
+                                                    return(
+                                                        <Grid item xs={4} key={index}>
+                                                                <img className={classes.menuImages} src={item.ImageName} height="81px" width="81px" alt="img3"></img>
+                                                        </Grid>
+                                                    )
+                                                })
+                                            }
                                         </Grid>
                                     </CardContent>
                                 </Card>

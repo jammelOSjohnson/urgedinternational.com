@@ -1,6 +1,6 @@
-//import { useAppData } from '../../../Context/AppDataContext';
+import { useAppData } from '../../../Context/AppDataContext';
 import { Grid, makeStyles, createStyles, Typography, Theme, Button, Card, CardMedia, CardContent, CardHeader, Avatar } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 
 
@@ -110,83 +110,92 @@ const useStyles = makeStyles((theme: Theme) =>
 export const PopularRestaurants: React.FC = function PopularRestaurants() {
     const classes = useStyles();
 
-    //var { value }  = useAppData();
+    var { value }  = useAppData();
+    var {restaurants, fetchRestaurants } = value;
 
-    
-      
-    return (
-        <>
-           <Grid container direction="row" spacing={3} className={classes.root} alignItems="center">
-                <Grid item xs={12} md={6} lg={3} container spacing={1}>
-                    <Grid item xs={10} md={10}>
-                        <Typography variant="subtitle1" className={classes.category}>
-                            Popular Restaurants
-                        </Typography>
+    useEffect(() => {
+        //console.log("inside use effect");
+        //console.log(restaurants);
+        if(restaurants.length === 0){
+            fetchRestaurants(value);
+        }
+        // eslint-disable-next-line
+    }, [restaurants])
+
+    if(restaurants.legth !== 0){
+        return (
+            <>
+            <Grid container direction="row" spacing={3} className={classes.root} alignItems="center">
+                    <Grid item xs={12} md={6} lg={3} container spacing={1}>
+                        <Grid item xs={10} md={10}>
+                            <Typography variant="subtitle1" className={classes.category}>
+                                Popular Restaurants
+                            </Typography>
+                        </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
-            <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
-                {[1,2,3].map((text, index) => (
-                    <Grid item xs={10} md={6} lg={3} xl={3} className={classes.gridSpacing} key={text}>
-                        <Card className={classes.root}>
-                            <CardHeader
-                                avatar={
-                                    <Avatar variant="square" aria-label="restaurant" className={classes.avatar}>
-                                        <CardMedia className={classes.cardImage}>
-                                            <img className={classes.kfcImage} src="Images/KFC Avatar.png"alt="img1"></img>
-                                        </CardMedia>
-                                    </Avatar>
-                                }
-                                // action={
-                                //     <IconButton aria-label="settings">
-                                //         <img className={classes.kfcImage} src="Images/FavIcon.png"alt="img2"></img>
-                                //     </IconButton>
-                                // }
-                                title="Kentucky Fried Chicken"
-                                subheader="Kingston"
-                            />
-                            <CardContent>
-                                <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
-                                    <Grid item xs={6}>
-                                            <Typography variant="body2"  component="p">
-                                                Menu
-                                            </Typography>
+                <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
+                    {restaurants.map((item, index) => (
+                        <Grid item xs={10} md={6} lg={3} xl={3} className={classes.gridSpacing} key={index}>
+                            <Card className={classes.root}>
+                                <CardHeader
+                                    avatar={
+                                        <Avatar variant="square" aria-label="restaurant" className={classes.avatar}>
+                                            <CardMedia className={classes.cardImage}>
+                                                <img className={classes.kfcImage} src={item.ImageName}alt="img1"></img>
+                                            </CardMedia>
+                                        </Avatar>
+                                    }
+                                    // action={
+                                    //     <IconButton aria-label="settings">
+                                    //         <img className={classes.kfcImage} src="Images/FavIcon.png"alt="img2"></img>
+                                    //     </IconButton>
+                                    // }
+                                    title={item.FirstName}
+                                    subheader={item.City}
+                                />
+                                <CardContent>
+                                    <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
+                                        <Grid item xs={6}>
+                                                <Typography variant="body2"  component="p">
+                                                    Menu
+                                                </Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                                <Typography variant="body2"  component="p">
+                                                {/* <ItemRating rating={3.5}/> */}
+                                                </Typography>
+                                        </Grid>
+                                            {
+                                                item.MenuItems.filter((item, index) => index < 6).map((item, index)=> {
+                                                    return(
+                                                        <Grid item xs={4} key={index}>
+                                                                <img className={classes.menuImages} src={item.ImageName} height="81px" width="81px" alt="img3"></img>
+                                                        </Grid>
+                                                    )
+                                                })
+                                            }
+                                            <Button variant="contained" fullWidth={true}
+                                                className={classes.Btn} 
+                                                type="button">
+                                                Place an Order
+                                            </Button>
                                     </Grid>
-                                    <Grid item xs={6}>
-                                            <Typography variant="body2"  component="p">
-                                            {/* <ItemRating rating={3.5}/> */}
-                                            </Typography>
-                                    </Grid>
-                                        <Grid item xs={4}>
-                                                <img className={classes.menuImages} src="Images/KFC Order1.png"alt="img3"></img>
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                                <img className={classes.menuImages} src="Images/KFC Order2.png"alt="img4"></img>
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                                <img className={classes.menuImages} src="Images/KFC Order3.png"alt="img5"></img>
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                                <img className={classes.menuImages} src="Images/KFC Order4.png"alt="img6"></img>
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                                <img className={classes.menuImages} src="Images/KFC Order1.png"alt="img7"></img>
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                                <img className={classes.menuImages} src="Images/KFC Order5.png"alt="img8"></img>
-                                        </Grid>
-                                        <Button variant="contained" fullWidth={true}
-                                            className={classes.Btn} 
-                                            type="button">
-                                            Place an Order
-                                        </Button>
-                                </Grid>
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                ))}
-            </Grid>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                    ))}
+                </Grid>
 
-        </>
-    )
+            </>
+        )
+    }else{
+        return (
+            <>
+                <Typography variant="body1" style={{paddingTop: "3%", paddingBottom: "3%"}}>
+                            Loading...
+                </Typography>
+            </>
+        )
+    }
 }

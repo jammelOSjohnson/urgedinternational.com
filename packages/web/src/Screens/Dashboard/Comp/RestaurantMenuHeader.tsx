@@ -2,6 +2,7 @@ import { useAppData } from '../../../Context/AppDataContext';
 import { Container, Grid, makeStyles, createStyles, Typography, Theme, Avatar } from '@material-ui/core';
 import React from 'react';
 import { LocationOnRounded, ScheduleRounded } from "@material-ui/icons/";
+import moment from 'moment-timezone';
 
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -53,6 +54,15 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
 
     
     if(restaurants.length !== 0){
+        const now = new Date();
+        let jaday = moment.tz(now, "America/Jamaica").format();
+        let today = new Date(jaday).getDay();
+        let OpeningHrs = restaurant.OpeningHrs;
+        let TodayOpeningHrs = today === 0 ? OpeningHrs.Sunday : today === 1 ? OpeningHrs.Monday :
+                              today === 2 ? OpeningHrs.Tuesday : today === 3 ? OpeningHrs.Wednesday :
+                              today === 4 ? OpeningHrs.Thursday : today === 5 ? OpeningHrs.Friday :
+                              today === 6 ? OpeningHrs.Saurday : "";
+
         return (
             <>
                 <Container maxWidth="xl" className={classes.main} style={{background: "transparent"}}>
@@ -79,7 +89,15 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                                         <Typography variant={'h6'}><LocationOnRounded color="primary" /> Address: {restaurant.City}</Typography>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <Typography variant={'h6'}><ScheduleRounded color="primary" />Hours: Open <span style={{fontWeight: "bolder"}}>{restaurant.OpeningHrs.Sunday}</span> Today </Typography>
+                                        <Typography variant={'h6'}><ScheduleRounded color="primary" />
+                                            Hours: Open <span style={{fontWeight: "bolder"}}>
+                                            {
+                                              TodayOpeningHrs
+                                            }
+                                            
+                                            </span> Today 
+                                            
+                                        </Typography>
                                     </Grid>
                                 </Grid>
                             </Grid>
