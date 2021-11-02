@@ -133,14 +133,14 @@ export const Section1: React.FC = function Section1() {
                     <img src="Images/yellowtruckIconImage.svg" alt="truck icon"/>
                 </Typography> */}
                 <div style={{textAlign: "center", marginBottom: "10%"}}>
-                    <Link to="/Dashboard" className={classes.links}>
+                    {/* <Link to="/Dashboard" className={classes.links}> */}
                         <Button variant="contained" fullWidth={true}
                             className={classes.placeOrderBtn} 
                             startIcon={ <img src="Images/yellowtruckIconImage.svg" style={{width: "50%"}} alt="google icon"/>}  
                             type="button">
                             Place an Order
                         </Button>
-                    </Link>
+                    {/* </Link> */}
                 </div>
                 <Grid container direction="row" className={classes.root} spacing={2}>
                     <Grid item style={{marginLeft: "auto"}}>

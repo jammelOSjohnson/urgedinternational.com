@@ -142,13 +142,14 @@ export const Cart: React.FC = function Cart() {
                                                     </Grid>
                                                     <Grid item xs={6}>
                                                         <Typography>{item.itemName}</Typography>
-                                                        <Typography>x1</Typography>
+                                                        <p style={{display: "flex"}}>
+                                                        <Typography>x1</Typography>&nbsp; &nbsp;&nbsp;
+                                                        <Typography><span>$</span>{ parseFloat(item.itemCost).toFixed(2)}</Typography>
+                                                        </p>
                                                     </Grid>
                                                 </Grid>
                                             </Grid>
-                                            <Grid item xs={4}>
-                                                <Typography><span>$</span>{ parseFloat(item.itemCost).toFixed(2)}</Typography>
-                                            </Grid>
+                                            
                                         </MenuItem>
                                     ))}
                                 </MenuList>

@@ -135,6 +135,28 @@ export const Header: React.FC = function Header() {
          } 
          // eslint-disable-next-line
       });
+
+      socialAuth.onAuthStateChanged( function (user) {
+        //update the state for current user to the user logged in
+        //console.log("about to set current user google");
+        //console.log(user);
+        //var userInfo = fetchUserInfo();
+        //var payload = {currentUser : user, loading: false, userInfo: userInfo}
+        var signonStatus = false;
+        if(user !== null){
+            signonStatus = user.uid !== null && user.uid !== undefined? true : false;
+            var payload = {...value,currentUser : user, loading: false, loggedIn: signonStatus}
+            if(value.userInfo.email === "" ){
+                fetchUserDetails(payload)
+                // .then(function(res){
+                //     if(!res){
+                //         //console.log('Unable to fetch user data at this time'); 
+                //     }
+                // });
+            }
+        }
+      });
+      
     },[value.userRolef])
 
     var fetchUserDetails = function  fetchUserDetails (payload) {
