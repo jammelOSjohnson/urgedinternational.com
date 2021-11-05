@@ -165,7 +165,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
     const classes = useStyles();
     
     var { value }  = useAppData();
-    var { restaurants, selectedRestaurant, addItemToCart, userInfo } = value;
+    var { restaurants, selectedRestaurant, addItemToCart, userInfo, filteredMenuItems } = value;
     var restaurant = restaurants[selectedRestaurant];
     //console.log("Menu Screen Menu");
     //console.log(selectedRestaurant);
@@ -393,55 +393,108 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                     Please select item from the list of meals listed below. 
                 </Typography>
                 <Grid container direction="row" spacing={2} className={classes.root} alignItems="center">
-                    {restaurant.MenuItems.map((item, index) => (
-                        <Grid item xs={10} md={6} lg={4} xl={4} className={classes.gridSpacing}>
-                            <Card className={classes.root} style={{minHeight: "446.99px"}}>
-                                <CardActionArea>
-                                <CardMedia
-                                    className={classes.media}
-                                    image={item.ImageName}
-                                    title="Contemplative Reptile"
-                                />
-                                </CardActionArea>
-                                <CardContent>
-                                        <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
-                                            <Grid item xs={6}>
-                                                    <Typography variant="h6"  component="p" style={{height: "64px"}}>
-                                                        {item.ItemName}
-                                                    </Typography>
+                    {
+                        filteredMenuItems.length !== 0?
+                            filteredMenuItems.map((item, index) => (
+                                <Grid item xs={10} md={6} lg={4} xl={4} className={classes.gridSpacing}>
+                                    <Card className={classes.root} style={{minHeight: "446.99px"}}>
+                                        <CardActionArea>
+                                        <CardMedia
+                                            className={classes.media}
+                                            image={item.ImageName}
+                                            title="Contemplative Reptile"
+                                        />
+                                        </CardActionArea>
+                                        <CardContent>
+                                                <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                    <Grid item xs={6}>
+                                                            <Typography variant="h6"  component="p" style={{height: "64px"}}>
+                                                                {item.ItemName}
+                                                            </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                            <Typography variant="body2"  component="p" style={{height: "64px"}}>
+                                                                <ItemRating rating={3.5}/>
+                                                            </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={12} >
+                                                            <Typography variant="body2"  component="p" >
+                                                                {item.ItemDescription}
+                                                            </Typography>
+                                                    </Grid>
+                                                </Grid>
+                                        </CardContent>
+                                        <CardActions>
+                                            {
+                                                userInfo.email === ""?
+                                                    <Link to="Login" style={{textDecoration: "none"}}>
+                                                        <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button">
+                                                            LOGIN 
+                                                        </Button>
+                                                    </Link> :
+                                                    <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
+                                                        Add To Cart 
+                                                    </Button> 
+                                            }
+                                            
+                                            <Typography variant="body2"  component="p" className={classes.priceText} style={{marginLeft: "55%", width: "70px"}}>
+                                                {`$ ${ parseFloat(item.ItemCost).toFixed(2)}`}
+                                            </Typography>
+                                        </CardActions>
+                                    </Card>
+                                </Grid>
+                            ))
+                        :
+                        restaurant.MenuItems.map((item, index) => (
+                            <Grid item xs={10} md={6} lg={4} xl={4} className={classes.gridSpacing}>
+                                <Card className={classes.root} style={{minHeight: "446.99px"}}>
+                                    <CardActionArea>
+                                    <CardMedia
+                                        className={classes.media}
+                                        image={item.ImageName}
+                                        title="Contemplative Reptile"
+                                    />
+                                    </CardActionArea>
+                                    <CardContent>
+                                            <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                <Grid item xs={6}>
+                                                        <Typography variant="h6"  component="p" style={{height: "64px"}}>
+                                                            {item.ItemName}
+                                                        </Typography>
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                        <Typography variant="body2"  component="p" style={{height: "64px"}}>
+                                                            <ItemRating rating={3.5}/>
+                                                        </Typography>
+                                                </Grid>
+                                                <Grid item xs={12} >
+                                                        <Typography variant="body2"  component="p" >
+                                                            {item.ItemDescription}
+                                                        </Typography>
+                                                </Grid>
                                             </Grid>
-                                            <Grid item xs={6}>
-                                                    <Typography variant="body2"  component="p" style={{height: "64px"}}>
-                                                        <ItemRating rating={3.5}/>
-                                                    </Typography>
-                                            </Grid>
-                                            <Grid item xs={12} >
-                                                    <Typography variant="body2"  component="p" >
-                                                        {item.ItemDescription}
-                                                    </Typography>
-                                            </Grid>
-                                        </Grid>
-                                </CardContent>
-                                <CardActions>
-                                    {
-                                        userInfo.email === ""?
-                                            <Link to="Login" style={{textDecoration: "none"}}>
-                                                <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button">
-                                                    LOGIN 
-                                                </Button>
-                                            </Link> :
-                                            <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
-                                                Add To Cart 
-                                            </Button> 
-                                    }
-                                    
-                                    <Typography variant="body2"  component="p" className={classes.priceText} style={{marginLeft: "55%", width: "70px"}}>
-                                        {`$ ${ parseFloat(item.ItemCost).toFixed(2)}`}
-                                    </Typography>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                    ))}
+                                    </CardContent>
+                                    <CardActions>
+                                        {
+                                            userInfo.email === ""?
+                                                <Link to="Login" style={{textDecoration: "none"}}>
+                                                    <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button">
+                                                        LOGIN 
+                                                    </Button>
+                                                </Link> :
+                                                <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
+                                                    Add To Cart 
+                                                </Button> 
+                                        }
+                                        
+                                        <Typography variant="body2"  component="p" className={classes.priceText} style={{marginLeft: "55%", width: "70px"}}>
+                                            {`$ ${ parseFloat(item.ItemCost).toFixed(2)}`}
+                                        </Typography>
+                                    </CardActions>
+                                </Card>
+                            </Grid>
+                        ))
+                    }
                 </Grid>
             </>
         )

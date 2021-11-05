@@ -71,7 +71,15 @@ function appDataReducer(state, action){
         case "menu_categories":
           return {
             ...state,
-            menuCategories: action.payload.menuCategories
+            menuCategories: action.payload.menuCategories,
+            filteredMenuItems: [],
+            filterCategory: undefined
+          }
+        case "filter_menu_category": 
+          return {
+            ...state,
+            filteredMenuItems: action.payload.filteredMenuItems,
+            filterCategory: action.payload.filterCategory
           }
         case "add_cart_item":
           return {
@@ -112,6 +120,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
 
     var currentUser = undefined;
     var selectedRestaurant = undefined;
+    var selectedMenuCategory = undefined;
+    var filteredMenuItems = [];
+    var filterCategory = undefined;
     var prevSelectedrestaurant = undefined; 
     var loading = true;
     var loggedIn = false;
@@ -556,6 +567,35 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       }
     }
 
+    var getMenuBycategory = async function getMenuBycategory(payload, restaurant, category){
+      if(category !== "All"){
+        var newMenuItems = [] as Object[];
+        restaurant.MenuItems.map((item, index) => {
+          if(item.MenuCategory === category){
+            newMenuItems.push(item);
+          }
+        });
+        //return newMenuItems;
+        payload.filteredMenuItems = newMenuItems;
+        payload.filterCategory = category;
+
+        dispatch({
+          type: "filter_menu_category",
+          payload: payload
+        });
+      }else{
+        payload.filteredMenuItems = [];
+        payload.filterCategory = undefined;
+
+        dispatch({
+          type: "filter_menu_category",
+          payload: payload
+        });
+      }
+      
+      
+    }
+
     var addItemToCart = async function addItemToCart(payload, item){
       if(item.length !== 0){
           payload.cartItems.push(item);
@@ -691,8 +731,11 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         orders,
         restaurants,
         selectedRestaurant,
+        selectedMenuCategory,
         prevSelectedrestaurant,
         menuCategories,
+        filteredMenuItems,
+        filterCategory,
         JoinUs,
         signup,
         login,
@@ -703,6 +746,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         fetchUserInfo,
         fetchRestaurants,
         viewMenuItems,
+        getMenuBycategory,
         addItemToCart,
         getMenuCats,
         checkoutOrder,
