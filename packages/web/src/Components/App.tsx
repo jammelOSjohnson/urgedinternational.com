@@ -10,6 +10,7 @@ import { CustomerDashboardScreen } from '../Screens/Dashboard/CustomerDashboard'
 import { FoodDeliveryDashboardScreen } from '../Screens/Dashboard/FoodDeliveryDashboardScreen';
 import { RestaurantsScreen } from '../Screens/Dashboard/RestaurantsScreen';
 import { RestaurantMenuScreen } from '../Screens/Dashboard/RestaurantMenuScreen';
+import { ShoppingCartScreen } from '../Screens/Dashboard/ShoppingCartScreen';
 import { OrdersHistory } from '../Screens/Dashboard/OrderHistoryScreen';
 import { ErrandScreen } from '../Screens/Dashboard/ErrandScreen';
 import { AdminDashboard } from '../Screens/AdminDashboard/AdminDashboard';
@@ -146,6 +147,7 @@ const App: React.FC = function App() {
                   <Route path="/Dashboard" exact component={CustomerDashboardScreen} />
                   <Route path="/FoodDelivery" exact component={FoodDeliveryDashboardScreen} />
                   <Route path="/Restaurants" exact component={RestaurantsScreen} />
+                  <Route path="/ShoppingCart" exact component={ShoppingCartScreen} />
                   <Route path="/OrderHistory" exact component={OrdersHistory} />
                   <Route path="/Errands" exact component={ErrandScreen} />
                   {/* Admin Screens */}
