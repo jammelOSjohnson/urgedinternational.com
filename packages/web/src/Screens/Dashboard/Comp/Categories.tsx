@@ -77,21 +77,23 @@ export const Categories: React.FC = function Categories() {
                 </Grid>
             </Grid>
             <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                <Grid item xs={10} md={3}>
-                    <Card className={classes.card}>
-                        <CardMedia className={classes.cardImage}>
-                            <img src="Images/FoodDeliveryServiceSM.png" alt="FoodDeliveryServiceSM"></img>
-                        </CardMedia>
-                        <CardContent className={classes.cardContent}>
-                            <Link className={classes.links} to="#" title="Food Delivery">
-                                <Typography gutterBottom className={classes.cardTitle1}>
-                                    Food Delivery
-                                </Typography>
-                            </Link>
-                        </CardContent>
-                    </Card>
+                <Grid item xs={12} md={3}>
+                    <Link to="/FoodDelivery" className={classes.links}>
+                        <Card className={classes.card}>
+                            <CardMedia className={classes.cardImage}>
+                                <img src="Images/FoodDeliveryServiceSM.png" alt="FoodDeliveryServiceSM"></img>
+                            </CardMedia>
+                            <CardContent className={classes.cardContent}>
+                                <Link className={classes.links} to="#" title="Food Delivery">
+                                    <Typography gutterBottom className={classes.cardTitle1}>
+                                        Food Delivery
+                                    </Typography>
+                                </Link>
+                            </CardContent>
+                        </Card>
+                    </Link>
                 </Grid>
-                <Grid item xs={10} md={3}>
+                <Grid item xs={12} md={3}>
                     <Card className={classes.card}>
                         <CardMedia className={classes.cardImage}>
                             <img src="Images/lightbluetruckIconImageSM.png" alt="lightbluetruckIconImageSM"></img>
@@ -105,7 +107,7 @@ export const Categories: React.FC = function Categories() {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={10} md={3}>
+                <Grid item xs={12} md={3}>
                     <Card className={classes.card}>
                         <CardMedia className={classes.cardImage}>
                             <img src="Images/yellowtruckIconImageSM.png" alt="yellowtruckIconImageSM"></img>
@@ -119,7 +121,7 @@ export const Categories: React.FC = function Categories() {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={10} md={3}>
+                <Grid item xs={12} md={3}>
                     <Card className={classes.card}>
                         <CardMedia className={classes.cardImage}>
                             <img src="Images/GreenMarketPlace.png" alt="GreenMarketPlace"></img>

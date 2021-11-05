@@ -45,18 +45,18 @@ export const CustomerDashboardScreen: React.FC = function CustomerDashboardScree
                             <HeaderRight />
                         </Grid>
                         {/*Row 1*/}
-                        <Grid item xs={8}>
+                        <Grid item xs={12} md={8}>
                             <AdvertisementSlider />
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item xs={12} md={4}>
                             <OrderTotals />
                         </Grid>
                         {/*Row 2*/}
-                        <Grid item xs={8}>
+                        <Grid item xs={12} md={8}>
                             <Categories />
                             <CurrentPackage />                       
                         </Grid>
-                        <Grid item xs={4}>
+                        <Grid item xs={12} md={4}>
                             <Favourites />
                         </Grid>
                     </Grid>
