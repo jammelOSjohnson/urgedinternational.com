@@ -1,18 +1,37 @@
 import { useAppData } from '../Context/AppDataContext';
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom';
-import { useMediaQuery , useTheme,Typography, AppBar, Toolbar, makeStyles, Theme, createStyles, Grid } from '@material-ui/core'
+import { useMediaQuery , useTheme,Typography, AppBar, Toolbar, makeStyles, Theme, createStyles, Grid, Modal, Fade, FormControl, InputLabel, Select, MenuItem, Backdrop } from '@material-ui/core'
 import SvgIcon, { SvgIconProps } from '@material-ui/core/SvgIcon';
 import { Container } from '@material-ui/core';
 // eslint-disable-next-line
 import  { auth, socialAuth } from '../firebase';
 
 
+interface State {
+  genralLocation: string;
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
         flexGrow: 1,
+        "& .MuiInputBase-root": {
+          color: "#9B9B9B ",
+          borderColor: "#888888",
+          border: "0.1px dotted"
+        },
+        "& .MuiSelect-select:$focus": {
+            backgroundColor: "inherit",
+            color: "#9B9B9B"
+        },
+        "& .MuiFormLabel-root": {
+            fontWeight: 700,
+            fontSize: "1.2rem"
+        },
+        "& .MuiInputLabel-root.Mui-focused":{
+            color: "#9B9B9B"
+        }
     },
     appbar: {
         // position: "fixed",
@@ -57,6 +76,28 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex", 
       justifyContent: "space-evenly",
     },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+      marginLeft: "0px"
+    },
+    paper: {
+      backgroundColor: theme.palette.background.paper,
+      border: '2px solid #000',
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+      minWidth: "34%",
+      maxWidth: "400px",
+      borderRadius: "50px",
+      borderColor: theme.palette.primary.light
+     
+    },
+    modal: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+     
+    },
     // tabs: {
     //     fontStyle: "normal",
     //     fontWeight: "bold",
@@ -98,7 +139,7 @@ export const Header: React.FC = function Header() {
     var location = history.location;
     var referralPath = location.pathname;
     var { value }  = useAppData();
-    var { fetchUserInfo } = value;
+    var { fetchUserInfo, generalLocation, AddGeneralLocation } = value;
     //console.log("pathname is:" + location.pathname);
 
     
@@ -108,10 +149,22 @@ export const Header: React.FC = function Header() {
     const theme = useTheme();
 
     
-
+    const [open, setOpen] = React.useState(false);
+    var [error, setError] = React.useState('');
     const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
     const isMaatchMedium = useMediaQuery(theme.breakpoints.down('md'));
+
+    const [values, setValues] = React.useState<State>({
+      genralLocation: 'Select Location',
+    });
+
     useEffect(function(){
+      if(generalLocation === undefined){
+        setOpen(true);
+      }else{
+        setOpen(false);
+      }
+
       auth.onAuthStateChanged(function (user){
         //update the state for current user to the user logged in
         //console.log("about to set current user");
@@ -156,8 +209,10 @@ export const Header: React.FC = function Header() {
             }
         }
       });
+
       
-    },[value.userRolef])
+      
+    },[value.userRolef ,generalLocation])
 
     var fetchUserDetails = function  fetchUserDetails (payload) {
       //console.log("Is current user null");
@@ -170,18 +225,192 @@ export const Header: React.FC = function Header() {
           }
       }
       return false;
-  }
+    }
+
+    const handleChange = (event) => {
+      try{
+        setError('');
+        if(event.target.value !== "Select Location"){
+          setValues({...values,[event.target.name]:event.target.value});
+          AddGeneralLocation(value, event.target.value);
+        }else{
+          setError('Please Select Location');
+        }
+      }catch(err){
+        console.log(err);
+      }
+    };
+
+    const handleOpen = (item) => {
+      setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     if(referralPath !== '/'){
       return(
         <>
-
+          <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    className={classes.modal}
+                    open={open}
+                    onClose={handleClose}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                    timeout: 500,
+                    }}
+                >
+                    <Fade in={open}>
+                    <div className={classes.paper}>
+                        <h2 id="transition-modal-title">Welcome</h2>
+                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                            <Grid item xs={10} sm={6} md={4} lg={4} xl={4}>
+                                
+                            </Grid>
+                            <Grid item xs={12}>
+                                    <form>
+                                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                            <Grid item xs={12} >
+                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                    <InputLabel id="demo-simple-select-outlined-label">Deliver To</InputLabel>
+                                                    <Select
+                                                        labelId="demo-simple-select-outlined-label"
+                                                        id="demo-simple-select-outlined"
+                                                        value={values.genralLocation}
+                                                        onChange={handleChange}
+                                                        label="Flavour1"
+                                                        name="chickenFlavour1"
+                                                        className={classes.root}
+                                                        fullWidth={true}
+                                                    >
+                                                        <MenuItem value={"Select Location"}>Select Location</MenuItem>
+                                                        <MenuItem value={"May Pen Hospital"}>May Pen Hospital</MenuItem>
+                                                        <MenuItem value={"May Pen"}>May Pen</MenuItem>
+                                                        <MenuItem value={"Bushy park"}>Bushy park</MenuItem>
+                                                        <MenuItem value={"Bucknor"}>Bucknor</MenuItem>
+                                                        <MenuItem value={"Clarendon park"}>Clarendon park</MenuItem>
+                                                        <MenuItem value={"Curatoe Hil"}>Curatoe Hil</MenuItem>
+                                                        <MenuItem value={"Denbigh"}>Denbigh</MenuItem>
+                                                        <MenuItem value={"Four paths"}>Four paths</MenuItem>
+                                                        <MenuItem value={"Foga Road"}>Foga Road</MenuItem>
+                                                        <MenuItem value={"Glenmuir"}>Glenmuir</MenuItem>
+                                                        <MenuItem value={"Halse Hall"}>Halse Hall</MenuItem>
+                                                        <MenuItem value={"Hartwell Gardens"}>Hartwell Gardens</MenuItem>
+                                                        <MenuItem value={"Hayes corn piece"}>Hayes corn piece</MenuItem>
+                                                        <MenuItem value={"Hazard"}>Hazard</MenuItem>
+                                                        <MenuItem value={"Inglewood"}>Inglewood</MenuItem>
+                                                        <MenuItem value={"Juno Crescent"}>Juno Crescent</MenuItem>
+                                                        <MenuItem value={"Midland Glades"}>Midland Glades</MenuItem>
+                                                        <MenuItem value={"Muirhead Avenue"}>Muirhead Avenue</MenuItem>
+                                                        <MenuItem value={"Mineral Heights"}>Mineral Heights</MenuItem>
+                                                        <MenuItem value={"Osborne Store"}>Osborne Store</MenuItem>
+                                                        <MenuItem value={"Paisley"}>Paisley</MenuItem>
+                                                        <MenuItem value={"Palmers Cross"}>Palmers Cross</MenuItem>
+                                                        <MenuItem value={"Race Track"}>Race Track</MenuItem>
+                                                        <MenuItem value={"Sandy Bay"}>Sandy Bay</MenuItem>
+                                                        <MenuItem value={"Swansea"}>Swansea</MenuItem>
+                                                        <MenuItem value={"Toll gate"}>Toll gate</MenuItem>
+                                                        <MenuItem value={"Trenton Road"}>Trenton Road</MenuItem>
+                                                        <MenuItem value={"Treadlight"}>Treadlight</MenuItem>
+                                                        <MenuItem value={"Twin Palm Estate"}>Twin Palm Estate</MenuItem>
+                                                        <MenuItem value={"Vere"}>Vere</MenuItem>
+                                                    </Select>
+                                                </FormControl>
+                                            </Grid>
+                                        </Grid>
+                                    </form>
+                            </Grid>
+                        </Grid>
+                    </div>
+                    </Fade>
+          </Modal>
         </>
       )
     }
 
+    
+
     return (
        <>
+            <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    className={classes.modal}
+                    open={open}
+                    onClose={handleClose}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                    timeout: 500,
+                    }}
+                >
+                    <Fade in={open}>
+                    <div className={classes.paper}>
+                        <h2 id="transition-modal-title">Welcome</h2>
+                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                            <Grid item xs={10} sm={6} md={4} lg={4} xl={4}>
+                                
+                            </Grid>
+                            <Grid item xs={12}>
+                                    <form>
+                                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                            <Grid item xs={12}>
+                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                    <InputLabel id="demo-simple-select-outlined-label">Deliver To</InputLabel>
+                                                    <Select
+                                                        labelId="demo-simple-select-outlined-label"
+                                                        id="demo-simple-select-outlined"
+                                                        value={values.genralLocation}
+                                                        onChange={handleChange}
+                                                        label="Flavour1"
+                                                        name="chickenFlavour1"
+                                                        className={classes.root}
+                                                    >
+                                                        <MenuItem value={"Select Location"}>Select Location</MenuItem>
+                                                        <MenuItem value={"May Pen Hospital"}>May Pen Hospital</MenuItem>
+                                                        <MenuItem value={"May Pen"}>May Pen</MenuItem>
+                                                        <MenuItem value={"Bushy park"}>Bushy park</MenuItem>
+                                                        <MenuItem value={"Bucknor"}>Bucknor</MenuItem>
+                                                        <MenuItem value={"Clarendon park"}>Clarendon park</MenuItem>
+                                                        <MenuItem value={"Curatoe Hil"}>Curatoe Hil</MenuItem>
+                                                        <MenuItem value={"Denbigh"}>Denbigh</MenuItem>
+                                                        <MenuItem value={"Four paths"}>Four paths</MenuItem>
+                                                        <MenuItem value={"Foga Road"}>Foga Road</MenuItem>
+                                                        <MenuItem value={"Glenmuir"}>Glenmuir</MenuItem>
+                                                        <MenuItem value={"Halse Hall"}>Halse Hall</MenuItem>
+                                                        <MenuItem value={"Hartwell Gardens"}>Hartwell Gardens</MenuItem>
+                                                        <MenuItem value={"Hayes corn piece"}>Hayes corn piece</MenuItem>
+                                                        <MenuItem value={"Hazard"}>Hazard</MenuItem>
+                                                        <MenuItem value={"Inglewood"}>Inglewood</MenuItem>
+                                                        <MenuItem value={"Juno Crescent"}>Juno Crescent</MenuItem>
+                                                        <MenuItem value={"Midland Glades"}>Midland Glades</MenuItem>
+                                                        <MenuItem value={"Muirhead Avenue"}>Muirhead Avenue</MenuItem>
+                                                        <MenuItem value={"Mineral Heights"}>Mineral Heights</MenuItem>
+                                                        <MenuItem value={"Osborne Store"}>Osborne Store</MenuItem>
+                                                        <MenuItem value={"Paisley"}>Paisley</MenuItem>
+                                                        <MenuItem value={"Palmers Cross"}>Palmers Cross</MenuItem>
+                                                        <MenuItem value={"Race Track"}>Race Track</MenuItem>
+                                                        <MenuItem value={"Sandy Bay"}>Sandy Bay</MenuItem>
+                                                        <MenuItem value={"Swansea"}>Swansea</MenuItem>
+                                                        <MenuItem value={"Toll gate"}>Toll gate</MenuItem>
+                                                        <MenuItem value={"Trenton Road"}>Trenton Road</MenuItem>
+                                                        <MenuItem value={"Treadlight"}>Treadlight</MenuItem>
+                                                        <MenuItem value={"Twin Palm Estate"}>Twin Palm Estate</MenuItem>
+                                                        <MenuItem value={"Vere"}>Vere</MenuItem>
+                                                    </Select>
+                                                </FormControl>
+                                            </Grid>
+                                        </Grid>
+                                    </form>
+                            </Grid>
+                        </Grid>
+                    </div>
+                    </Fade>
+                </Modal>
             <AppBar elevation={0} position="relative" className={classes.appbar}>
                 <Toolbar>
                 <Container maxWidth="xl">

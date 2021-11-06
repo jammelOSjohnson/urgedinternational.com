@@ -3,7 +3,7 @@ import { Badge , makeStyles, createStyles, Theme, Popper, Paper, Grow, MenuList,
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
-import { ShoppingCartRounded } from "@material-ui/icons/";
+import { PlayArrowRounded, ShoppingCartRounded } from "@material-ui/icons/";
 import { Link } from "react-router-dom";
 
 
@@ -36,6 +36,11 @@ const useStyles = makeStyles((theme: Theme) =>
             fontWeight: 700,
             paddingLeft: "16px",
             paddingTop: "8px"
+        },
+        seeMore: {
+            paddingLeft: "16px",
+            color: theme.palette.primary.light,
+            fontWeight: "bolder"
         },
         Button: {
             backgroundColor: theme.palette.primary.light,
@@ -130,6 +135,13 @@ export const Cart: React.FC = function Cart() {
                                 <Link className={classes.cartIcon} onClick={handleClose}>
                                     <img src="Images/CartCloseIcon.png" alt="closecart" />
                                 </Link>
+                                {cartItems.length > 0 ?
+                                <Link to="/Checkout" className={classes.link}>
+                                    <Typography className={classes.seeMore}>See More <PlayArrowRounded /></Typography>
+                                </Link>
+                                :
+                                <></>
+                                }
                             </Grid>
                             <Grid item xs={12}>
                                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>

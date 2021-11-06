@@ -278,7 +278,7 @@ export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategor
                                                     <Card className={clsx(classes.cardMobile, "cardSizeCategoriesRestarants2")}>
                                                         <CardMedia className={classes.cardImage}>
                                                             <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt="FoodDeliveryFastFood 2"></img>
-                                                        </CardMedia>
+                                                        </CardMedia><br/>
                                                         <CardContent className={classes.cardContent}>
                                                                 <Typography gutterBottom className={classes.cardTitle} style={{color: "#FFFFFF"}}>
                                                                     All
@@ -291,7 +291,7 @@ export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategor
                                                     <Card className={clsx(classes.cardMobile, "cardSizeCategoriesRestarants3")}>
                                                         <CardMedia className={classes.cardImage}>
                                                             <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt="FoodDeliveryFastFood 2"></img>
-                                                        </CardMedia>
+                                                        </CardMedia><br/>
                                                         <CardContent className={classes.cardContent}>
                                                                 <Typography gutterBottom className={classes.cardTitle}>
                                                                     All
@@ -310,7 +310,7 @@ export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategor
                                                             <Card className={clsx(classes.cardMobile, "cardSizeCategoriesRestarants2")}>
                                                                 <CardMedia className={classes.cardImage}>
                                                                     <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt=" FoodDeliveryFastFood 3"></img>
-                                                                </CardMedia>
+                                                                </CardMedia><br/>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography gutterBottom className={classes.cardTitle}>
                                                                             {item}
@@ -325,7 +325,7 @@ export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategor
                                                             <Card className={classes.cardMobile}>
                                                                 <CardMedia className={classes.cardImage}>
                                                                     <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt=" FoodDeliveryFastFood 3"></img>
-                                                                </CardMedia>
+                                                                </CardMedia><br/>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography gutterBottom className={classes.cardTitle}>
                                                                             {item}
@@ -343,7 +343,7 @@ export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategor
                                                             <Card className={classes.cardMobile}>
                                                                 <CardMedia className={classes.cardImage}>
                                                                     <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt=" FoodDeliveryFastFood 3"></img>
-                                                                </CardMedia>
+                                                                </CardMedia><br/>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography gutterBottom className={classes.cardTitle}>
                                                                             {item}

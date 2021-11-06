@@ -93,6 +93,11 @@ function appDataReducer(state, action){
             orders: action.payload.orders,
             selectedRestaurant: action.payload.selectedRestaurant
           }
+        case "set_general_location":
+          return {
+            ...state,
+            generalLocation: action.payload.generalLocation
+          }
         default:
             return state;
     }
@@ -123,6 +128,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var selectedMenuCategory = undefined;
     var filteredMenuItems = [];
     var filterCategory = undefined;
+    var generalLocation = undefined;
     var prevSelectedrestaurant = undefined; 
     var loading = true;
     var loggedIn = false;
@@ -720,6 +726,14 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       return fianlRes;
     };
 
+    var AddGeneralLocation = async function AddGeneralLocation(payload, location) {
+        payload.generalLocation = location;
+        dispatch({
+          type: "set_general_location",
+          payload: payload
+        })
+    }
+
     const [value, dispatch] = useReducer(appDataReducer, {
         currentUser,
         loading,
@@ -736,6 +750,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         menuCategories,
         filteredMenuItems,
         filterCategory,
+        generalLocation,
         JoinUs,
         signup,
         login,
@@ -750,7 +765,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         addItemToCart,
         getMenuCats,
         checkoutOrder,
-        fetchOrdersByUser
+        fetchOrdersByUser,
+        AddGeneralLocation
     });
     
      

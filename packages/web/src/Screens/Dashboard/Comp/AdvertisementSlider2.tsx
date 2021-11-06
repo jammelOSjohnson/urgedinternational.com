@@ -101,7 +101,8 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: "0% 0px 2% 0px",
             width: "70%",
             marginLeft: "44%;",
-            marginTop: "5%"
+            marginTop: "5%",
+            textAlign: "left"
         },
         formControl: {
             marginTop: theme.spacing(1),
@@ -125,6 +126,8 @@ const useStyles = makeStyles((theme: Theme) =>
             height: "55px",
             borderBottomRightRadius: "25px",
             borderTopRightRadius: "25px",
+            borderBottomLeftRadius: "25px",
+            borderTopLeftRadius: "25px",
             border: "none",
             backgroundColor: "#FFFFFF",
             color: "#9B9B9B !important"
@@ -132,7 +135,8 @@ const useStyles = makeStyles((theme: Theme) =>
         firstFormControl: {
             borderBottomRightRadius: "25px",
             borderTopRightRadius: "25px",
-            width: "47%",
+            // width: "47%",
+            minWidth: "247px",
             marginTop: theme.spacing(1),
             marginBottom: theme.spacing(1),
         },
@@ -163,6 +167,8 @@ const useStyles = makeStyles((theme: Theme) =>
                 backgroundColor: "#FFFFFF",
                 borderBottomRightRadius: "25px",
                 borderTopRightRadius: "25px",
+                borderBottomLeftRadius: "25px",
+                borderTopLeftRadius: "25px",
             },
             "& .MuiFilledInput-input": {
                 padding: "18px 12px 10px",
@@ -180,7 +186,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const useMobileStyles = makeStyles((theme: Theme) => 
     createStyles({
-    
+        image: {
+            zIndex: 1,
+            margin: '0% 0% 0% 0%',
+            position: "absolute",
+            right: "46%",
+            top: "-8%",
+            width: "50%"
+        },
     })
 );
     
@@ -240,8 +253,7 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                     Delicious Healthy Food
                                 </Typography>
                                 <form onSubmit={handleSubmit} className={classes.form} noValidate autoComplete="off">
-                                    <FormControl variant="filled" className={clsx(classes.formControlSelect,classes.formControl)}>
-                                        {/* <InputLabel id="demo-simple-select-filled-label">Select Location</InputLabel> */}
+                                    {/* <FormControl variant="filled" className={clsx(classes.formControlSelect,classes.formControl)}>
                                         <Select
                                             labelId="demo-simple-select-filled-label"
                                             id="demo-simple-select-filled"
@@ -262,7 +274,7 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                             <MenuItem value={10}>MAYPEN</MenuItem>
                                             <MenuItem value={20}>CHAPELTON</MenuItem>
                                         </Select>
-                                    </FormControl>
+                                    </FormControl> */}
                                     
                                     <FormControl variant="outlined" className={classes.firstFormControl}>
                                         <TextField 
@@ -305,7 +317,7 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
             }
             {isMatch?
                 <div style={{position: "relative"}} id="FoodSlide">
-                    <img className={classes.image} src="Images/KfcAdvertisement.png" alt="KFC Bucket"/>
+                    <img className={classesMobile.image} src="Images/KfcAdvertisement.png" alt="KFC Bucket"/>
                     <Carousel nextIcon={false} prevIcon={false}>
                         <Carousel.Item >  
                             <img
@@ -320,8 +332,7 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                     Delicious Healthy Food
                                 </Typography>
                                 <form onSubmit={handleSubmit} className={classes.form} noValidate autoComplete="off">
-                                    <FormControl variant="filled" className={clsx(classes.formControlSelect,classes.formControl)}>
-                                        {/* <InputLabel id="demo-simple-select-filled-label">Select Location</InputLabel> */}
+                                    {/* <FormControl variant="filled" className={clsx(classes.formControlSelect,classes.formControl)}>
                                         <Select
                                             labelId="demo-simple-select-filled-label"
                                             id="demo-simple-select-filled"
@@ -342,7 +353,7 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                             <MenuItem value={10}>MAYPEN</MenuItem>
                                             <MenuItem value={20}>CHAPELTON</MenuItem>
                                         </Select>
-                                    </FormControl>
+                                    </FormControl> */}
                                     
                                     <FormControl variant="outlined" className={classes.firstFormControl}>
                                         <TextField 
@@ -364,9 +375,9 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                         <img src="Images/searchicon.png" style={{width: "100%"}} alt="icon"/>
                                     </IconButton>
                                 </form>
-                                <Typography className={`${classes.fonts} ${classes.sliderText}`}>
+                                {/* <Typography className={`${classes.fonts} ${classes.sliderText}`}>
                                 With Urged, Quality and Time is our main priority. You can trust us to be on-time with your food from any restaraunt.
-                                </Typography>
+                                </Typography> */}
                                 <Typography className={classes.btnLayout}>
                                     <Link to="/Restaurants" title="Restaurants" className={classes.inactiveItemLink}>
                                         <Button className={classes.Button}>
