@@ -168,17 +168,9 @@ export const GET_ORDERS_BY_USERID = gql`
 
 export const GET_ORDERS = gql`
     mutation getOrders {
-        getOrdersByUserId(Id: $Id){
+        getOrders(Id: $Id){
             Id
-            OrderItems {
-                itemName
-                chickenFlavour1
-                chickenFlavour2
-                drink
-                otherIntructions
-                itemCost
-                imageName
-            }
+            OrderItems
             OrderStatus
             OrderTotal
             OrderDate

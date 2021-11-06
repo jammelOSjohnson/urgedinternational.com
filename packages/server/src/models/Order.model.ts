@@ -36,7 +36,7 @@ const OrderSchema = new Schema({
     },
     AdditionalInfo: {
         type: String,
-        required: true
+        required: false
     }
 });
 

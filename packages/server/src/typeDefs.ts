@@ -195,7 +195,7 @@ const typeDefs = gql`
             Rider: String,
             DeliveryAddress: String,
             PaymentMethod: String,
-            AdditionalInfo: String
+            AdditionalInfo: String,
         ): Order
 
         getOrdersByUserId(

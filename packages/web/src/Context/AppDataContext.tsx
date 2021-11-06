@@ -629,7 +629,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             drink: item.drink,
             otherIntructions: item.otherIntructions,
             itemCost: item.itemCost,
-            imageName: value.imageName
+            imageName: value.imageName,
+            ifnotAvailable: item.ifnotAvailable
           } as object;
           orderItems.push(body);
           return null;
@@ -643,7 +644,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           Rider: "Rider 1",
           DeliveryAddress: state.DeliveryAddress,
           PaymentMethod: state.PaymentMethod,
-          AdditionalInfo: state.AdditionalInfo
+          AdditionalInfo: state.AdditionalInfo,
+          IfnotAvailable: state.IfNotAvailable
         }
 
         await createOrder({variables: orderBody}).then(async function(response) {
