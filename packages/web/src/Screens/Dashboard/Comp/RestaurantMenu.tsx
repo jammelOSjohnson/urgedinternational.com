@@ -23,6 +23,7 @@ interface State {
     deliveredBy: string;
     itemCategory: string;
     ifnotAvailable: string;
+    itemDescription: string;
 }
 
 interface Props {
@@ -200,7 +201,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
         orderStatus: "New",
         deliveredBy: "No one",
         itemCategory: "",
-        ifnotAvailable: "Contact me"
+        ifnotAvailable: "Contact me",
+        itemDescription: ""
       });
 
     const [open, setOpen] = React.useState(false);
@@ -219,7 +221,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
     var history = useHistory();
 
     const handleChange = (event) => {
-        setValues({...values,[event.target.name]:event.target.value, itemName: selectedItem.ItemName, itemCost: selectedItem.ItemCost});
+        setValues({...values,[event.target.name]:event.target.value, itemName: selectedItem.ItemName, itemCost: selectedItem.ItemCost, itemDescription: selectedItem.ItemDescription});
     };
 
     const handleChange2 = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -244,7 +246,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                     orderStatus: "New",
                     deliveredBy: "No one",
                     itemCategory: "",
-                    ifnotAvailable: "Contact me"
+                    ifnotAvailable: "Contact me",
+                    itemDescription: ""
                 }
             );
             setOpen(false);

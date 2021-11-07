@@ -86,6 +86,11 @@ function appDataReducer(state, action){
             ...state,
             cartItems: action.payload.cartItems
           }
+        case "remove_cart_item":
+          return {
+            ...state,
+            cartItems: action.payload.cartItems
+          }
         case "checkout": 
           return {
             ...state,
@@ -612,6 +617,17 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       }
     }
 
+    var removeCartItem = async function removeCartItem(index, payload, cartItems){
+      if(cartItems.length > 0){
+        cartItems.splice(index, 1);
+        payload.cartItems = cartItems;
+        dispatch({
+          type: "remove_cart_item",
+          payload: payload
+        });
+      }
+    }
+
     var checkoutOrder  = async function checkoutOrder(payload, cartItems, state){
       if(cartItems.length !== 0){
         var orderItems : object[] = [];
@@ -765,6 +781,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         viewMenuItems,
         getMenuBycategory,
         addItemToCart,
+        removeCartItem,
         getMenuCats,
         checkoutOrder,
         fetchOrdersByUser,

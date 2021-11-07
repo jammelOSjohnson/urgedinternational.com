@@ -6,6 +6,7 @@ import { ShoppingCartItems } from './Comp/ShoppingCartItems';
 import { PaymentOptionsForm } from './Comp/PaymentOptionsForm';
 import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
+import { DashboardFooter } from './Comp/DashboardFooter';
 
 
 
@@ -44,6 +45,9 @@ export const ShoppingCartScreen: React.FC = function ShoppingCartScreen() {
                         {/*Row 1*/}
                         <Grid item xs={12}>
                             <ShoppingCartItems />                     
+                        </Grid>
+                        <Grid item xs={12}>
+                                <DashboardFooter />
                         </Grid>
                         {/* <Grid item xs={4}>
                             <PaymentOptionsForm />

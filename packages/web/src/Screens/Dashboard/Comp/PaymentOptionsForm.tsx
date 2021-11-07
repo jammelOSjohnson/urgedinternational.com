@@ -1,6 +1,14 @@
 import { useAppData } from '../../../Context/AppDataContext';
 import { makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent, Grid, Paper, Divider, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, TextField, Button } from '@material-ui/core';
-import React from 'react';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import Alert from '@material-ui/lab/Alert';
+
+interface State {
+    DeliveryAddress: string;
+    PaymentMethod: string;
+    AdditionalInfo: string;
+}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -66,35 +74,47 @@ const useStyles = makeStyles((theme: Theme) =>
             margin: theme.spacing(1),
             color: "#FFFFFF",
             backgroundColor: "#FF5E14",
-            borderRadius: "22px"
+            borderRadius: "22px",
+            width: "95%"
         },
+        alert: {
+            marginBottom: "5%"
+        }
     }),
 );
 
 export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
     const classes = useStyles();
 
-      var { value }  = useAppData();
-      var { orders } = value;
+    const [values, setValues] = React.useState<State>({
+        DeliveryAddress: '',
+        PaymentMethod: 'Cash on Delivery',
+        AdditionalInfo: '',
+    });
 
-      var TotalOrders = orders.length;
-      var OrdersInProcess = 0;
+    var { value }  = useAppData();
+    var { cartItems, checkoutOrder } = value;
+    var history = useHistory();
+    var [error, setError] = useState('');
+    var [success, setSuccess] = useState('');
 
-    
+    const handleSubmit = async () => {
+        try{
+            setError('');
+            setSuccess('');
+            await checkoutOrder(value, cartItems, values).then(() => {
+                history.push("/OrderCompleted");
+            });
+        }catch(e: any) { 
+            //console.log(e.message)
+            let path = e.message
+            let result = path.split("Path")
+            setError(result[1]);
+        }
+    }
       
     return (
         <>
-             {/* <Card className={classes.card}>
-                <CardMedia className={classes.cardImage}>
-                    <img src="Images/MediumSpaceShip.png" alt="MediumSpaceShip"></img>
-                    <Typography variant="h2" className={classes.OrderResult1}>{TotalOrders}</Typography>
-                </CardMedia>
-                <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom className={classes.cardTitle}>
-                        Total Orders
-                    </Typography>
-                </CardContent>
-            </Card> */}
             <div>
                 <Paper elevation={3} className={classes.paper}>
                     <Grid container direction="row" spacing={2} alignItems="center"> 
@@ -102,7 +122,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                             <form className={classes.form}>
                             <Grid container direction="row" alignItems="center">
                                 <Grid item xs={12}>
-                                    <Typography>Payment Options</Typography>
+                                    <Typography variant="h6">Payment Options</Typography>
                                     <Divider variant="middle" className={classes.divider}/>
                                 </Grid>
                                 <Grid item xs={12}>
@@ -112,29 +132,41 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                                             <FormControlLabel
                                             value="Visa"
                                             control={<Radio color="primary" />}
-                                            label="Start"
+                                            label=""
                                             labelPlacement="start"
+                                            style={{marginLeft: 0}}
+                                            disabled
                                             />
+                                            
+                                            <img src="Images/visa-logo.png" width="79.14px" height="26px" style={{marginTop: "1%", marginLeft: "2%"}} alt="visa" />
                                             
                                             <FormControlLabel
                                             value="MasterCard"
                                             control={<Radio color="primary" />}
-                                            label="Start"
+                                            label=""
                                             labelPlacement="start"
+                                            disabled
                                             />
+
+                                            <img src="Images/mastercard-logo.png" width="42px" height="32.86px" style={{marginTop: "1%", marginLeft: "2%"}} alt="visa" />
                                             
                                             <FormControlLabel
                                             value="Cash on Delivery"
                                             control={<Radio color="primary" />}
-                                            label="Start"
+                                            label=""
                                             labelPlacement="start"
                                             />
+
+                                            <img src="Images/cashOnDelivery-logo.png" width="66px" height="33px" style={{marginTop: "1%", marginLeft: "2%"}} alt="visa" />
                                         </RadioGroup>
                                     </FormControl>
                                 </Grid>
-                                <Grid container item xs={12}>
-                                <FormLabel component="legend">Delivery Address</FormLabel>
-                                    <Divider variant="middle" className={classes.divider}/>
+                                <Grid container>
+                                    <Grid item xs={12}>
+                                        <Typography variant="h6">Delivery Address</Typography>
+                                        <Divider variant="middle" className={classes.divider}/>
+                                        <Typography >Please enter delivery address below.</Typography>
+                                    </Grid>
                                     <Grid item xs={12}>
                                         <TextField id="street" label="Street" variant="outlined" />
                                     </Grid>
@@ -144,14 +176,17 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                                     <Grid item xs={12}>
                                         <TextField id="parish" label="Parish" variant="outlined" />
                                     </Grid>
-                                    
+                                    <Grid item xs={12}>
+                                        {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
+                                        {success && <Alert variant="filled" severity="success" className={classes.alert}>{success}</Alert>}
+                                        <Button variant="contained" size="large" className={classes.button} onClick={handleSubmit}>
+                                            Checkout
+                                        </Button> 
+                                    </Grid>
                                 </Grid>
                             </Grid>
                         </form>
-                        </Grid>                        
-                            <Button variant="contained" size="large" className={classes.button}>
-                                Checkout
-                            </Button>
+                        </Grid>     
                     </Grid>
                 </Paper>
             </div>      

@@ -86,8 +86,7 @@ export const Cart: React.FC = function Cart() {
 
     const handleCheckout =(event) =>{
         //setOpen(false);
-        console.log("here");
-        history.push("/Checkout");
+        history.push("/ShoppingCart");
     }
     
     function handleListKeyDown(event: React.KeyboardEvent) {
@@ -136,7 +135,7 @@ export const Cart: React.FC = function Cart() {
                                     <img src="Images/CartCloseIcon.png" alt="closecart" />
                                 </Link>
                                 {cartItems.length > 0 ?
-                                <Link to="/Checkout" className={classes.link}>
+                                <Link to="/ShoppingCart" className={classes.link}>
                                     <Typography className={classes.seeMore}>See More <PlayArrowRounded /></Typography>
                                 </Link>
                                 :
