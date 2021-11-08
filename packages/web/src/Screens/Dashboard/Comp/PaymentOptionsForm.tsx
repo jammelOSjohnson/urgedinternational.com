@@ -137,7 +137,13 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
         try{
             setError('');
             setSuccess('');
-            await checkoutOrder(value, cartItems, values).then(() => {
+            values.Street === '' || values.ContactNum === undefined?
+                setError('Please enter Street Address')
+            :
+            values.ContactNum === '' || values.Street === undefined?
+                setError('Please enter Contact number')
+            :
+            await checkoutOrder(value, cartItems, values, deliveryFee, GCT, serviceFee, cartItemsSum, Total).then(() => {
                 setValues({
                     Street: '',
                     Town: 'Select Town',
@@ -155,112 +161,117 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
     }
 
     const handleChange = (event) => {
+        console.log(event.target.name);
+        console.log(event.target.value);
         setValues({...values,[event.target.name]:event.target.value});
     };
 
     const handleChange2 = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(prop);
+        console.log(event.target.value);
         setValues({ ...values, [prop]: event.target.value });
     };
 
     useEffect(() =>{
         if(generalLocation !== "" && generalLocation !== undefined){
-            if(generalLocation !== values.Town){
+            if(generalLocation !== values.Town && values.Town === 'Select Town'){
                 setValues({...values, Town: generalLocation});
             }
         }
 
-        let delFee = generalLocation === "May Pen Hospital" ?
+        let delFee = values.Town === "May Pen Hospital" ?
             process.env.REACT_APP_FEE_MayPenHospital?.toString()
         :
-        generalLocation === "May Pen" ?
+        values.Town === "May Pen" ?
             process.env.REACT_APP_FEE_MayPen?.toString()
         :
-        generalLocation === "Bushy park" ?
+        values.Town === "Bushy park" ?
             process.env.REACT_APP_FEE_Bushypark?.toString()
         :
-        generalLocation === "Bucknor" ?
+        values.Town === "Bucknor" ?
             process.env.REACT_APP_FEE_Bucknor?.toString()
         :
-        generalLocation === "Clarendon park" ?
+        values.Town === "Clarendon park" ?
             process.env.REACT_APP_FEE_Clarendonpark?.toString()
         :
-        generalLocation === "Curatoe Hil" ?
+        values.Town === "Curatoe Hil" ?
             process.env.REACT_APP_FEE_CuratoeHil?.toString()
         :
-        generalLocation === "Denbigh" ?
+        values.Town === "Denbigh" ?
             process.env.REACT_APP_FEE_Denbigh?.toString()
         :
-        generalLocation === "Four paths" ?
+        values.Town === "Four paths" ?
             process.env.REACT_APP_FEE_Fourpaths?.toString()
         :
-        generalLocation === "Foga Road" ?
+        values.Town === "Foga Road" ?
             process.env.REACT_APP_FEE_FogaRoad?.toString()
         :
-        generalLocation === "Glenmuir" ?
+        values.Town === "Glenmuir" ?
             process.env.REACT_APP_FEE_Glenmuir?.toString()
         :
-        generalLocation === "Halse Hall" ?
+        values.Town === "Halse Hall" ?
             process.env.REACT_APP_FEE_HalseHall?.toString()
         :
-        generalLocation === "Hartwell Gardens" ?
+        values.Town === "Hartwell Gardens" ?
             process.env.REACT_APP_FEE_HartwellGardens?.toString()
         :
-        generalLocation === "Hayes corn piece" ?
+        values.Town === "Hayes corn piece" ?
             process.env.REACT_APP_FEE_Hayescornpiece?.toString()
         :
-        generalLocation === "Hazard" ?
+        values.Town === "Hazard" ?
             process.env.REACT_APP_FEE_Hazard?.toString()
         :
-        generalLocation === "Inglewood" ?
+        values.Town === "Inglewood" ?
             process.env.REACT_APP_FEE_Inglewood?.toString()
         :
-        generalLocation === "Juno Crescent" ?
+        values.Town === "Juno Crescent" ?
             process.env.REACT_APP_FEE_JunoCrescent?.toString()
         :  
-        generalLocation === "Midland Glades" ?
+        values.Town === "Midland Glades" ?
             process.env.REACT_APP_FEE_MidlandGlades?.toString()
         :
-        generalLocation === "Muirhead Avenue" ?
+        values.Town === "Muirhead Avenue" ?
             process.env.REACT_APP_FEE_MuirheadAvenue?.toString()
         :
-        generalLocation === "Mineral Heights" ?
+        values.Town === "Mineral Heights" ?
             process.env.REACT_APP_FEE_MineralHeights?.toString()
         :
-        generalLocation === "Osborne Store" ?
+        values.Town === "Osborne Store" ?
             process.env.REACT_APP_FEE_OsborneStore?.toString()
         :
-        generalLocation === "Paisley" ?
+        values.Town === "Paisley" ?
             process.env.REACT_APP_FEE_Paisley?.toString()
         :
-        generalLocation === "Palmers Cross" ?
+        values.Town === "Palmers Cross" ?
             process.env.REACT_APP_FEE_PalmersCross?.toString()
         :
-        generalLocation === "Race Track" ?
+        values.Town === "Race Track" ?
             process.env.REACT_APP_FEE_RaceTrack?.toString()
         :
-        generalLocation === "Sandy Bay" ?
+        values.Town === "Sandy Bay" ?
             process.env.REACT_APP_FEE_SandyBay?.toString()
         :
-        generalLocation === "Swansea" ?
+        values.Town === "Swansea" ?
             process.env.REACT_APP_FEE_Swansea?.toString()
         :
-        generalLocation === "Toll gate" ?
+        values.Town === "Toll gate" ?
             process.env.REACT_APP_FEE_Tollgate?.toString()
         :
-        generalLocation === "Trenton Road" ?
+        values.Town === "Trenton Road" ?
             process.env.REACT_APP_FEE_TrentonRoad?.toString()
         :
-        generalLocation === "Treadlight" ?
+        values.Town === "Treadlight" ?
             process.env.REACT_APP_FEE_Treadlight?.toString()
         :
-        generalLocation === "Twin Palm Estate" ?
+        values.Town === "Twin Palm Estate" ?
             process.env.REACT_APP_FEE_TwinPalmEstate?.toString()
         :
-        generalLocation === "Vere" ?
+        values.Town === "Vere" ?
             process.env.REACT_APP_FEE_Vere?.toString()
         :
         "0.00";
 
+        //Calc Delivery Fee
         if(delFee !== deliveryFee.Cost && delFee !== "0.00" && delFee !== undefined){
             let newFee:Fee = {
                 Cost: delFee
@@ -268,16 +279,56 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
             setdeliveryFee(newFee);
         }
 
-        // if(serviceFee === "0.00"){
-        //     let sum:number = 0.00
-        //     cartItems.map((item, index)=> (
-        //         sum = sum + item.itemCost
-        //     ))
-        //     let sFee:string|undefined = process.env.REACT_APP_ServiceFee?.toString()
-        //     let fsfee:number = parseFloat(sFee).toFixed(2)
-        //     let calcServiceFee:number = sum * fsfee;
-        // }
-    },[deliveryFee.Cost, generalLocation, values])
+        //Calc cart total
+        let cartTotal = 0.00;
+        cartItems.map((item, index)=>(
+            cartTotal = cartTotal + item.itemCost
+        ));
+
+        let newcartTotal:Fee = {
+            Cost: cartTotal.toString()
+        }
+
+        setcartItemsSum(newcartTotal);
+
+        //Calc gct
+        let gct = process.env.REACT_APP_GCT?.toString()
+        if(gct !== undefined){
+            var fetchGCT:number = Number(gct);
+            let finalgct = cartTotal * fetchGCT
+
+            let newGCT:Fee = {
+                Cost: finalgct.toString()
+            }
+            setGCT(newGCT);
+        }
+
+        //Calc service Fee
+        let serviceCharge = process.env.REACT_APP_ServiceFee?.toString()
+        if(serviceCharge !== undefined){
+            var fetchserviceCharge:number = Number(serviceCharge);
+            let finalserviceCharge = cartTotal * fetchserviceCharge
+
+            let newserviceCharge:Fee = {
+                Cost: finalserviceCharge.toString()
+            }
+            setserviceFee(newserviceCharge);
+        }
+
+        //Calc grand total
+        if(serviceCharge !== undefined && gct !== undefined && cartTotal !== undefined && delFee !== undefined){
+            var fetchserviceCharge:number = Number(serviceCharge);
+            var fetchGCT:number = Number(gct);
+            var fetchDelFee = Number(delFee)
+
+            let finalTotal = cartTotal + fetchserviceCharge + fetchGCT + fetchDelFee
+
+            let newTotal:Fee = {
+                Cost: finalTotal.toString()
+            }
+            setTotal(newTotal);
+        }
+    },[deliveryFee.Cost, generalLocation, values.Town])
       
     return (
         <>
@@ -390,11 +441,11 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                                         <TextField id="contact" label="Contact #" variant="outlined" onChange={handleChange2('ContactNum')} fullWidth/>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        {/* <Typography>Cart Items: $100</Typography> */}
-                                        <Typography>Delivery Fee: {`$ ${ parseFloat(deliveryFee.Cost).toFixed(2)}`}</Typography>
-                                        {/* <Typography>Service Fee: $100</Typography>
-                                        <Typography>GCT: $100</Typography>
-                                        <Typography>Total: $100</Typography> */}
+                                        <Typography><b>Cart Items:</b> {`$ ${ parseFloat(cartItemsSum.Cost).toFixed(2)}`}</Typography>
+                                        <Typography><b>Delivery Fee:</b> {`$ ${ parseFloat(deliveryFee.Cost).toFixed(2)}`}</Typography>
+                                        <Typography><b>Service Fee:</b> {`$ ${ parseFloat(serviceFee.Cost).toFixed(2)}`}</Typography>
+                                        <Typography><b>GCT:</b> {`$ ${ parseFloat(GCT.Cost).toFixed(2)}`}</Typography>
+                                        <Typography><b>Total:</b> {`$ ${ parseFloat(Total.Cost).toFixed(2)}`}</Typography>
                                     </Grid>
                                     <Grid item xs={12}>
                                         {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}

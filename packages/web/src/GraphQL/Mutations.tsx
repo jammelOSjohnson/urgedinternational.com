@@ -126,7 +126,11 @@ export const CREATE_ORDER = gql`
         $Rider: String ,
         $DeliveryAddress: String, 
         $PaymentMethod: String, 
-        $AdditionalInfo: String
+        $AdditionalInfo: String,
+        $DeliveryFee: Float,
+        $GCT: Float,
+        $ServiceCharge: Float,
+        $CartTotal: Float
         ) {
             createOrder(
                 Id: $Id, 
@@ -137,7 +141,11 @@ export const CREATE_ORDER = gql`
                 Rider: $Rider,
                 DeliveryAddress: $DeliveryAddress, 
                 PaymentMethod: $PaymentMethod, 
-                AdditionalInfo: $AdditionalInfo
+                AdditionalInfo: $AdditionalInfo,
+                DeliveryFee: $DeliveryFee,
+                GCT: $GCT,
+                ServiceCharge: $ServiceCharge,
+                CartTotal: $CartTotal
                 ){
                     Id
                     OrderItems 
@@ -148,6 +156,10 @@ export const CREATE_ORDER = gql`
                     DeliveryAddress 
                     PaymentMethod
                     AdditionalInfo
+                    DeliveryFee
+                    GCT
+                    ServiceCharge
+                    CartTotal
                 }
     }
 `
@@ -162,6 +174,13 @@ export const GET_ORDERS_BY_USERID = gql`
             OrderTotal
             OrderDate
             Rider
+            DeliveryAddress 
+            PaymentMethod
+            AdditionalInfo
+            DeliveryFee
+            GCT
+            ServiceCharge
+            CartTotal
         }
     }
 `

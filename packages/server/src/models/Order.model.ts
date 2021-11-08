@@ -37,6 +37,22 @@ const OrderSchema = new Schema({
     AdditionalInfo: {
         type: String,
         required: false
+    },
+    DeliveryFee: {
+        type: Number,
+        required: true
+    },
+    GCT:{
+        type: Number,
+        required: true
+    },
+    ServiceCharge: {
+        type: Number,
+        required: true
+    },
+    CartTotal: {
+        type: Number,
+        required: true
     }
 });
 

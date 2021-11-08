@@ -638,16 +638,14 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       }
     }
 
-    var checkoutOrder  = async function checkoutOrder(payload, cartItems, state){
+    var checkoutOrder  = async function checkoutOrder(payload, cartItems, state, deliveryFee, GCT, serviceFee, cartItemsSum, Total){
       if(cartItems.length !== 0){
         var orderItems : object[] = [];
-        var total = 0;
         const now = new Date();
         const estTime = moment.tz(now, "America/Jamaica").format();
         //console.log("Jamaican Time is:");
         //console.log(estTime);
         cartItems.map((item, index) => {
-          total = total + item.itemCost;
           var body = {
             itemName: item.itemName,
             chickenFlavour1: item.chickenFlavour1,
@@ -665,12 +663,16 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           Id: payload.currentUser.uid,
           OrderItems: orderItems,
           OrderStatus: "Pending",
-          OrderTotal: total,
+          OrderTotal: Number(Total.Cost),
           OrderDate: estTime,
           Rider: "Rider 1",
           DeliveryAddress: state.Street + "," + state.Town + ",Clarendon",
           PaymentMethod: state.PaymentMethod,
           AdditionalInfo: state.ContactNum,
+          DeliveryFee: Number(deliveryFee.Cost),
+          GCT: Number(GCT.Cost),
+          ServiceCharge: Number(serviceFee.Cost),
+          CartTotal: Number(cartItemsSum.Cost)
         }
 
         await createOrder({variables: orderBody}).then(async function(response) {

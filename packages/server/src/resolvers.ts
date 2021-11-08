@@ -102,8 +102,8 @@ const resolvers = {
         },
 
         //Orders
-        createOrder: (_,{Id,OrderItems,OrderStatus,OrderTotal,OrderDate,Rider, DeliveryAddress, PaymentMethod, AdditionalInfo}) => {
-            const orderItem = new Order({Id, OrderItems, OrderStatus, OrderTotal, OrderDate, Rider, DeliveryAddress, PaymentMethod, AdditionalInfo});
+        createOrder: (_,{Id,OrderItems,OrderStatus,OrderTotal,OrderDate,Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal}) => {
+            const orderItem = new Order({Id, OrderItems, OrderStatus, OrderTotal, OrderDate, Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal});
             return orderItem.save();
         },
 

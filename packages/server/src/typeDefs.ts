@@ -134,6 +134,10 @@ const typeDefs = gql`
         DeliveryAddress: String,
         PaymentMethod: String,
         AdditionalInfo: String
+        DeliveryFee: Float,
+        GCT: Float,
+        ServiceCharge: Float,
+        CartTotal: Float
     }
 
     type Query {
@@ -196,6 +200,10 @@ const typeDefs = gql`
             DeliveryAddress: String,
             PaymentMethod: String,
             AdditionalInfo: String,
+            DeliveryFee: Float,
+            GCT: Float,
+            ServiceCharge: Float,
+            CartTotal: Float
         ): Order
 
         getOrdersByUserId(

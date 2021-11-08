@@ -357,6 +357,26 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                 fullWidth
                                             />
                                         </Grid>
+                                        <Grid item xs={12} >
+                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                    <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                    <Select
+                                                        labelId="demo-simple-select-outlined-label"
+                                                        id="demo-simple-select-outlined"
+                                                        value={values.ifnotAvailable}
+                                                        onChange={handleChange}
+                                                        label="ifnotAvailable"
+                                                        name="ifnotAvailable"
+                                                        className={classes.root}
+                                                        fullWidth
+                                                    >
+                                                        <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                        <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                        <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                        <MenuItem value={"Cancel my order"}>Cancel my order</MenuItem>
+                                                    </Select>
+                                                </FormControl>
+                                        </Grid>
                                         <Grid item xs={10} sm={12} >
                                             <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => AddToCart(values)} type="button">
                                                 Add To Cart 

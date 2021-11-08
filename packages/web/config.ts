@@ -43,6 +43,7 @@ interface ENV {
     REACT_APP_FEE_Glenmuir:string|undefined;
     REACT_APP_FEE_Inglewood:string|undefined;
     REACT_APP_FEE_FogaRoad:string|undefined;
+    REACT_APP_GCT: string|undefined;
 }
 
 interface Config {
@@ -80,6 +81,7 @@ interface Config {
     REACT_APP_FEE_Glenmuir:string;
     REACT_APP_FEE_Inglewood:string;
     REACT_APP_FEE_FogaRoad:string;
+    REACT_APP_GCT: string;
 }
 
 // Loading process.env as ENV interface
@@ -120,6 +122,7 @@ const getConfig = (): ENV => {
     REACT_APP_FEE_Glenmuir:process.env.REACT_APP_FEE_Glenmuir,
     REACT_APP_FEE_Inglewood:process.env.REACT_APP_FEE_Inglewood,
     REACT_APP_FEE_FogaRoad:process.env.REACT_APP_FEE_FogaRoad,
+    REACT_APP_GCT:process.env.REACT_APP_GCT,
   };
 };
 
