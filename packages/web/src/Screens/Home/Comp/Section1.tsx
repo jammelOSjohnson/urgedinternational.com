@@ -1,6 +1,6 @@
 import React from 'react';
 //import CSS
-import { Container, Grid, Typography, makeStyles, createStyles, Theme, Button, Card, CardMedia, CardContent} from '@material-ui/core';
+import { Container, Grid, Typography, makeStyles, createStyles, Theme, Button, Card, CardMedia, CardContent, useMediaQuery, useTheme} from '@material-ui/core';
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -118,7 +118,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Section1: React.FC = function Section1() {
     const classes = useStyles();
-
+    const theme = useTheme();
+    
     const handleFood = (event) => {
         try{
             event.preventDefault();
@@ -127,6 +128,10 @@ export const Section1: React.FC = function Section1() {
         }
         
     }
+
+    const isMatch = useMediaQuery(theme.breakpoints.down('xs'));
+    const isMatchMedium = useMediaQuery(theme.breakpoints.up('sm'));
+    
     return (
         <>
             <Container maxWidth="xl" className={classes.heroBackground}>
@@ -152,66 +157,138 @@ export const Section1: React.FC = function Section1() {
                     {/* </Link> */}
                 </div>
                 <Grid container direction="row" className={classes.root} spacing={2}>
-                    <Grid item style={{marginLeft: "auto"}}>
-                        <a className={classes.links} href="javascipt();" onClick={handleFood} title="Food Delivery">
-                        {/* <a className={classes.links} href="/FoodDelivery" title="Food Delivery"> */}
-                            <Grid container justifyContent="center" spacing={2}>
-                                <Grid key={0} item>
-                                    <Card className={classes.card} style={{paddingBottom: "0px"}}>
-                                        <CardMedia className={classes.cardImage}>
-                                            <img src="Images/YellowFoodDeliveryService.png" alt="YellowFoodDeliveryService"></img>
-                                        </CardMedia>
-                                        <CardContent className={classes.cardContent}>
-                                            <Typography className={classes.cardTitle1}>
-                                                Food Delivery
-                                                <br/>&nbsp;
-                                            </Typography>
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
-                            </Grid>
-                        </a>
-                    </Grid>
-                    <Grid item >
-                        <Link className={classes.links} to="#" title="Food Delivery">
-                            <Grid container justifyContent="center" spacing={2}>
-                                <Grid key={1} item>
-                                    <Card className={classes.cardMiddle}>
-                                        <CardMedia className={classes.cardImage}>
-                                            <img src="Images/whitetruckIconImage.png" alt="whitetruckIconImage"></img>
-                                        </CardMedia>
-                                        <CardContent className={classes.cardContent}>
-                                            <Link className={classes.links} to="#" title="Food Delivery">
-                                                <Typography gutterBottom className={classes.cardTitleMiddle}>
-                                                    Package Delivery Services
-                                                </Typography>
-                                            </Link>
-                                        </CardContent>
-                                    </Card>
-                                </Grid>
-                            </Grid>
-                        </Link>
-                    </Grid>
-                    <Grid item style={{marginRight: "auto"}}>
-                        <Link className={classes.links} to="#" title="Food Delivery">
-                            <Grid container justifyContent="center" spacing={2}>
-                                <Grid key={2} item>
-                                    <Card className={classes.card}>
-                                        <CardMedia className={classes.cardImage}>
-                                            <img src="Images/YellowMarketPlaceService.png" alt="YellowMarketPlaceService"></img>
-                                        </CardMedia>
-                                        <CardContent className={classes.cardContent}>
-                                            <Link className={classes.links} to="#" title="Food Delivery">
+                    {isMatch?
+                        <> 
+                        <Grid item xs={12} sm={6}>
+                            <a className={classes.links} href="javascipt();" onClick={handleFood} title="Food Delivery">
+                            {/* <a className={classes.links} href="/FoodDelivery" title="Food Delivery"> */}
+                                <Grid container justifyContent="center" spacing={2}>
+                                    <Grid key={0} item>
+                                        <Card className={classes.card} style={{paddingBottom: "0px"}}>
+                                            <CardMedia className={classes.cardImage}>
+                                                <img src="Images/YellowFoodDeliveryService.png" alt="YellowFoodDeliveryService"></img>
+                                            </CardMedia>
+                                            <CardContent className={classes.cardContent}>
                                                 <Typography style={{width: "150px"}} className={classes.cardTitle1}>
-                                                    Market Place Services
+                                                    Food Delivery
+                                                    <br/>&nbsp;
                                                 </Typography>
-                                            </Link>
-                                        </CardContent>
-                                    </Card>
+                                            </CardContent>
+                                        </Card>
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                        </Link>
-                    </Grid>
+                            </a>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <Link className={classes.links} to="#" title="Food Delivery">
+                                <Grid container justifyContent="center" spacing={2}>
+                                    <Grid key={1} item>
+                                        <Card className={classes.cardMiddle}>
+                                            <CardMedia className={classes.cardImage}>
+                                                <img src="Images/whitetruckIconImage.png" alt="whitetruckIconImage"></img>
+                                            </CardMedia>
+                                            <CardContent className={classes.cardContent}>
+                                                <Link className={classes.links} to="#" title="Food Delivery">
+                                                    <Typography gutterBottom className={classes.cardTitleMiddle}>
+                                                        Package Delivery Services
+                                                    </Typography>
+                                                </Link>
+                                            </CardContent>
+                                        </Card>
+                                    </Grid>
+                                </Grid>
+                            </Link>
+                        </Grid>
+                        <Grid item xs={12} >
+                            <Link className={classes.links} to="#" title="Food Delivery">
+                                <Grid container justifyContent="center" spacing={2}>
+                                    <Grid key={2} item>
+                                        <Card className={classes.card}>
+                                            <CardMedia className={classes.cardImage}>
+                                                <img src="Images/YellowMarketPlaceService.png" alt="YellowMarketPlaceService"></img>
+                                            </CardMedia>
+                                            <CardContent className={classes.cardContent}>
+                                                <Link className={classes.links} to="#" title="Food Delivery">
+                                                    <Typography style={{width: "150px"}} className={classes.cardTitle1}>
+                                                        Market Place Services
+                                                    </Typography>
+                                                </Link>
+                                            </CardContent>
+                                        </Card>
+                                    </Grid>
+                                </Grid>
+                            </Link>
+                        </Grid>
+                        </>
+                        :
+                        <></>
+                    }
+                    {isMatchMedium?
+                        <> 
+                        <Grid item style={{marginLeft: "auto"}}>
+                            <a className={classes.links} href="javascipt();" onClick={handleFood} title="Food Delivery">
+                            {/* <a className={classes.links} href="/FoodDelivery" title="Food Delivery"> */}
+                                <Grid container justifyContent="center" spacing={2}>
+                                    <Grid key={0} item>
+                                        <Card className={classes.card} style={{paddingBottom: "0px"}}>
+                                            <CardMedia className={classes.cardImage}>
+                                                <img src="Images/YellowFoodDeliveryService.png" alt="YellowFoodDeliveryService"></img>
+                                            </CardMedia>
+                                            <CardContent className={classes.cardContent}>
+                                                <Typography className={classes.cardTitle1}>
+                                                    Food Delivery
+                                                    <br/>&nbsp;
+                                                </Typography>
+                                            </CardContent>
+                                        </Card>
+                                    </Grid>
+                                </Grid>
+                            </a>
+                        </Grid>
+                        <Grid item>
+                            <Link className={classes.links} to="#" title="Food Delivery">
+                                <Grid container justifyContent="center" spacing={2}>
+                                    <Grid key={1} item>
+                                        <Card className={classes.cardMiddle}>
+                                            <CardMedia className={classes.cardImage}>
+                                                <img src="Images/whitetruckIconImage.png" alt="whitetruckIconImage"></img>
+                                            </CardMedia>
+                                            <CardContent className={classes.cardContent}>
+                                                <Link className={classes.links} to="#" title="Food Delivery">
+                                                    <Typography gutterBottom className={classes.cardTitleMiddle}>
+                                                        Package Delivery Services
+                                                    </Typography>
+                                                </Link>
+                                            </CardContent>
+                                        </Card>
+                                    </Grid>
+                                </Grid>
+                            </Link>
+                        </Grid>
+                        <Grid item style={{marginRight: "auto"}}>
+                            <Link className={classes.links} to="#" title="Food Delivery">
+                                <Grid container justifyContent="center" spacing={2}>
+                                    <Grid key={2} item>
+                                        <Card className={classes.card}>
+                                            <CardMedia className={classes.cardImage}>
+                                                <img src="Images/YellowMarketPlaceService.png" alt="YellowMarketPlaceService"></img>
+                                            </CardMedia>
+                                            <CardContent className={classes.cardContent}>
+                                                <Link className={classes.links} to="#" title="Food Delivery">
+                                                    <Typography style={{width: "150px"}} className={classes.cardTitle1}>
+                                                        Market Place Services
+                                                    </Typography>
+                                                </Link>
+                                            </CardContent>
+                                        </Card>
+                                    </Grid>
+                                </Grid>
+                            </Link>
+                        </Grid>
+                        </>
+                        :
+                        <></>
+                    }
                 </Grid>
                 {/* <Typography align="center" className={classes.heroSocialIcons}>
                     <a href="https://twitter.com/urgedint" rel="nofollow noreferrer" target="_blank" style={{color: "#FFF"}}>

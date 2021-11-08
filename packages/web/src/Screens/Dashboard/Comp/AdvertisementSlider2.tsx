@@ -1,4 +1,4 @@
-import { makeStyles, createStyles, Typography, Theme, Button, IconButton, FormControl, InputAdornment, Select, MenuItem, TextField, useTheme, useMediaQuery } from '@material-ui/core';
+import { makeStyles, createStyles, Typography, Theme, Button, IconButton, FormControl, InputAdornment, Select, MenuItem, TextField, useTheme, useMediaQuery, Input } from '@material-ui/core';
 import React from 'react';
 import clsx from 'clsx';
 import Carousel from 'react-bootstrap/Carousel';
@@ -191,8 +191,29 @@ const useMobileStyles = makeStyles((theme: Theme) =>
             margin: '0% 0% 0% 0%',
             position: "absolute",
             right: "46%",
-            top: "-8%",
-            width: "50%"
+            top: "-34%",
+            left: "0%",
+            width: "82%"
+        },
+        firstFormControl: {
+            borderBottomRightRadius: "25px",
+            borderTopRightRadius: "25px",
+            // width: "47%",
+            minWidth: "100%",
+            marginTop: theme.spacing(1),
+            marginBottom: theme.spacing(1),
+        },
+        form: {
+            padding: "0% 0px 2% 0px",
+            width: "100%",
+            marginLeft: "0%",
+            marginTop: "0%",
+            textAlign: "left",
+            position: 'absolute',
+            bottom: 0
+        },
+        slider: {
+            borderRadius: '30px'
         },
     })
 );
@@ -239,43 +260,20 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
             {isMatchMedium?
                <div style={{position: "relative"}} id="FoodSlide">
                     <img className={classes.image} src="Images/KfcAdvertisement.png" alt="KFC Bucket"/>
-                    <Carousel nextIcon={false} prevIcon={false}>
+                    <Carousel nextIcon={false} prevIcon={false} className={classesMobile.slider}>
                         <Carousel.Item >  
                             <img
                             className="d-block"
                             src="Images/SliderFrame2.png"
                             alt="First slide"
                             width="100%"
-                            style={{minHeight: "300px"}}
+                            style={{minHeight: "30%"}}
                             />
                             <Carousel.Caption style={{top: "5%"}}>
                                 <Typography className={`${classes.fonts} ${classes.sliderSlogan}`}>
                                     Delicious Healthy Food
                                 </Typography>
                                 <form onSubmit={handleSubmit} className={classes.form} noValidate autoComplete="off">
-                                    {/* <FormControl variant="filled" className={clsx(classes.formControlSelect,classes.formControl)}>
-                                        <Select
-                                            labelId="demo-simple-select-filled-label"
-                                            id="demo-simple-select-filled"
-                                            value={values.address}
-                                            onChange={handleChange2}
-                                            startAdornment={
-                                                <InputAdornment position="start">
-                                                    <IconButton style={{color: "#FF5E14"}}>
-                                                        <LocationOnRounded />
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            }
-                                            className={clsx(classes.formSelect, classes.root)}
-                                        >
-                                            <MenuItem value="Select Location">
-                                                <em>Select Location</em>
-                                            </MenuItem>
-                                            <MenuItem value={10}>MAYPEN</MenuItem>
-                                            <MenuItem value={20}>CHAPELTON</MenuItem>
-                                        </Select>
-                                    </FormControl> */}
-                                    
                                     <FormControl variant="outlined" className={classes.firstFormControl}>
                                         <TextField 
                                             id="filled-basic"  
@@ -331,41 +329,30 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                 <Typography className={`${classes.fonts} ${classes.sliderSlogan}`}>
                                     Delicious Healthy Food
                                 </Typography>
-                                <form onSubmit={handleSubmit} className={classes.form} noValidate autoComplete="off">
-                                    {/* <FormControl variant="filled" className={clsx(classes.formControlSelect,classes.formControl)}>
-                                        <Select
-                                            labelId="demo-simple-select-filled-label"
-                                            id="demo-simple-select-filled"
-                                            value={values.address}
-                                            onChange={handleChange2}
-                                            startAdornment={
-                                                <InputAdornment position="start">
-                                                    <IconButton style={{color: "#FF5E14"}}>
-                                                        <LocationOnRounded />
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            }
-                                            className={clsx(classes.formSelect, classes.root)}
-                                        >
-                                            <MenuItem value="Select Location">
-                                                <em>Select Location</em>
-                                            </MenuItem>
-                                            <MenuItem value={10}>MAYPEN</MenuItem>
-                                            <MenuItem value={20}>CHAPELTON</MenuItem>
-                                        </Select>
-                                    </FormControl> */}
-                                    
-                                    <FormControl variant="outlined" className={classes.firstFormControl}>
-                                        <TextField 
+                                <form onSubmit={handleSubmit} className={classesMobile.form} noValidate autoComplete="off">
+                                    <FormControl variant="outlined" className={classesMobile.firstFormControl}>
+                                        {/* <TextField 
                                             id="filled-basic"  
                                             variant="filled"
                                             value={values.searchquery} 
                                             onChange={handleChange('searchquery')}
                                             className={clsx(classes.firstTextField, classes.root)}
                                             placeholder="Search restaurants or dishes."
+                                        /> */}
+                                        <Input
+                                            id="input-with-icon-adornment"
+                                            value={values.searchquery} 
+                                            onChange={handleChange('searchquery')}
+                                            className={clsx(classes.firstTextField, classes.root)}
+                                            placeholder="Search restaurants or dishes."
+                                            startAdornment={
+                                                <InputAdornment position="start">
+                                                    <img src="Images/searchicongrey.png" style={{width: "100%"}} alt="icon"/>
+                                                </InputAdornment>
+                                            }
                                         />
                                     </FormControl>
-                                    <IconButton
+                                    {/* <IconButton
                                         color="inherit"
                                         aria-label="open drawer"
                                         edge="start"
@@ -373,12 +360,10 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                         type="submit"
                                     >
                                         <img src="Images/searchicon.png" style={{width: "100%"}} alt="icon"/>
-                                    </IconButton>
+                                    </IconButton> */}
                                 </form>
-                                {/* <Typography className={`${classes.fonts} ${classes.sliderText}`}>
-                                With Urged, Quality and Time is our main priority. You can trust us to be on-time with your food from any restaraunt.
-                                </Typography> */}
-                                <Typography className={classes.btnLayout}>
+                                
+                                {/* <Typography className={classes.btnLayout}>
                                     <Link to="/Restaurants" title="Restaurants" className={classes.inactiveItemLink}>
                                         <Button className={classes.Button}>
                                             <Typography className={`${classes.btnfonts}`}>
@@ -386,7 +371,7 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                             </Typography>
                                         </Button>
                                     </Link>
-                                </Typography>
+                                </Typography> */}
                             </Carousel.Caption>
                         </Carousel.Item>
                     </Carousel>
