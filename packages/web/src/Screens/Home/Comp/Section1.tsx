@@ -118,6 +118,15 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Section1: React.FC = function Section1() {
     const classes = useStyles();
+
+    const handleFood = (event) => {
+        try{
+            event.preventDefault();
+        }catch{
+            
+        }
+        
+    }
     return (
         <>
             <Container maxWidth="xl" className={classes.heroBackground}>
@@ -144,7 +153,7 @@ export const Section1: React.FC = function Section1() {
                 </div>
                 <Grid container direction="row" className={classes.root} spacing={2}>
                     <Grid item style={{marginLeft: "auto"}}>
-                        <a className={classes.links} href="javascipt();" title="Food Delivery">
+                        <a className={classes.links} href="javascipt();" onClick={handleFood} title="Food Delivery">
                         {/* <a className={classes.links} href="/FoodDelivery" title="Food Delivery"> */}
                             <Grid container justifyContent="center" spacing={2}>
                                 <Grid key={0} item>

@@ -228,6 +228,15 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
         setValues({ ...values, [prop]: event.target.value });
       };
 
+      const handleLogin = (event) => {
+        try{
+          event.preventDefault();
+          history.push('/Login', { from: history.location.pathname});
+        }catch{
+          //////console.log('Failed to logout.');
+        }
+      }
+
     var AddToCart = async function(item){
         //console.log("item selected");
         //console.log(item);
@@ -404,11 +413,11 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         <CardActions>
                                             {
                                                 userInfo.email === ""?
-                                                    <Link to="Login" style={{textDecoration: "none"}}>
+                                                    <a href="/Login" style={{textDecoration: "none"}} onClick={handleLogin}>
                                                         <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button">
                                                             LOGIN 
                                                         </Button>
-                                                    </Link> :
+                                                    </a> :
                                                     <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
                                                         Add To Cart 
                                                     </Button> 
@@ -454,11 +463,11 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                     <CardActions>
                                         {
                                             userInfo.email === ""?
-                                                <Link to="Login" style={{textDecoration: "none"}}>
+                                                <a href="/Login" style={{textDecoration: "none"}} onClick={handleLogin}>
                                                     <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button">
                                                         LOGIN 
                                                     </Button>
-                                                </Link> :
+                                                </a> :
                                                 <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
                                                     Add To Cart 
                                                 </Button> 

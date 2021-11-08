@@ -54,8 +54,10 @@ function appDataReducer(state, action){
             };
         case "logout_user":
             return {
+              ...state,
               currentUser: action.payload.currentUser,
-              loggedIn: action.payload.loggedIn
+              loggedIn: action.payload.loggedIn,
+              userInfo: action.payload.userInfo
             }
         case "fetch_restaurants": 
           return {
@@ -258,6 +260,14 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       payload.loggedIn = false;
       auth.signOut().then(function () {
         payload.currentUser = null;
+        payload.userInfo = {
+          contactNumber: "",
+          email: "",
+          fullName: "",
+          addressLine1: "",
+          addressLine2: "",
+          city: ""
+        };
         dispatch({
           type: "logout_user",
           payload: payload
@@ -658,10 +668,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           OrderTotal: total,
           OrderDate: estTime,
           Rider: "Rider 1",
-          DeliveryAddress: state.DeliveryAddress,
+          DeliveryAddress: state.Street + "," + state.Town + ",Clarendon",
           PaymentMethod: state.PaymentMethod,
-          AdditionalInfo: state.AdditionalInfo,
-          IfnotAvailable: state.IfNotAvailable
+          AdditionalInfo: state.ContactNum,
         }
 
         await createOrder({variables: orderBody}).then(async function(response) {
@@ -695,6 +704,20 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
           if (response.data.getOrdersByUserId !== null) {
             payload.orders = response.data.getOrdersByUserId;
+            dispatch({
+              type: "checkout",
+              payload: payload
+            })
+          }
+        });
+      }
+    }
+
+    var fetchOrders  = async function fetchOrders(payload){
+      if(payload.currentUser !== undefined){
+        await getOrders().then(async function(response) {
+          if (response.data.getOrders !== null) {
+            payload.orders = response.data.getOrders;
             dispatch({
               type: "checkout",
               payload: payload
@@ -785,6 +808,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         getMenuCats,
         checkoutOrder,
         fetchOrdersByUser,
+        fetchOrders,
         AddGeneralLocation
     });
     

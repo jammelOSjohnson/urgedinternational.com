@@ -13,7 +13,8 @@ import { DashboardFooter } from './Comp/DashboardFooter';
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
         gridRoot: {
-            padding: "0px"
+            padding: "0px",
+            height: "100vh"
         },
         main: {
             padding: 0,

@@ -57,7 +57,7 @@ export const HistoryTable: React.FC = function HistoryTable () {
     orders.map((item, index) => {
       let row = {
         id: item._id, 
-        OrderDate: item.OrderDate, 
+        OrderDate: new Date(parseInt(item.OrderDate, 10)), 
         OrderStatus: item.OrderStatus, 
         OrderTotal: `$ ${item.OrderTotal}`, 
         Rider: item.Rider

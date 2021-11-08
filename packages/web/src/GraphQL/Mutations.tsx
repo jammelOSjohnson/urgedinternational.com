@@ -168,7 +168,8 @@ export const GET_ORDERS_BY_USERID = gql`
 
 export const GET_ORDERS = gql`
     mutation getOrders {
-        getOrders(Id: $Id){
+        getOrders{
+            _id
             Id
             OrderItems
             OrderStatus

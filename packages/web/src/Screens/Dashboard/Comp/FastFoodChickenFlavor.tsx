@@ -267,6 +267,32 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any}> =
                         </FormControl>
                     </Grid>
                 </>
+                :props.itemCategory === "Zingers"?
+                <>
+                    <Grid item xs={10} sm={12} >
+                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                            <InputLabel id="demo-simple-select-outlined-label">Drink</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-outlined-label"
+                                id="demo-simple-select-outlined"
+                                value={props.drink }
+                                onChange={handleChange}
+                                label="drink"
+                                name="drink"
+                                className={classes.root}
+                            >
+                                <MenuItem value={"Select Drink"}>Select Drink</MenuItem>
+                                <MenuItem value={"Water"}>Water</MenuItem>
+                                <MenuItem value={"Pepsi"}>Pepsi</MenuItem>
+                                <MenuItem value={"Ginger Beer"}>Ginger Beer</MenuItem>
+                                <MenuItem value={"Flavour Splash"}>Flavour Splash</MenuItem>
+                                <MenuItem value={"Tropics Orangeade"}>Tropics Orangeade</MenuItem>
+                                <MenuItem value={"Topics Fruit Punch"}>Topics Fruit Punch</MenuItem>
+                                <MenuItem value={"Tropics Grape"}>Tropics Grape</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                </>
                 :props.itemCategory === "Famous Bowl" ?
                 <>
                     <Grid item xs={12} >

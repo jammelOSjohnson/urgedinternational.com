@@ -287,14 +287,15 @@ export const LoginScreen: React.FC = function LoginScreen() {
                     setTimeout(() => {
                         setSuccess('');
                         console.log("about to go to dashboard");
-                        history.push('/Dashboard')
+                        //console.log(history.location); 
+                        history.push(history.location.state.from)
                     }, 1500);
                 }else{
                     setLoading(false);
                     setError('Unable to login at this time.'); 
                 }
             });
-        }catch{
+        }catch(err){
             setError('Failed to login');
         }
         setLoading(false);
