@@ -769,6 +769,41 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       return fianlRes;
     };
 
+    var sendOrderCompletedEmail = async function sendOrderCompletedEmail(formVals) {
+      // //console.log("Wtf is in formVals");
+      // //console.log(formVals);
+      var RequestParams = {
+        from_name: formVals.user_name,
+        user_email: formVals.user_email,
+        order_id: formVals.order_id,
+        message: "Fullname: " + formVals.user_name + " Email: " + formVals.user_email + " Phone Number: " + formVals.user_contact 
+        + " Own Transportation? " + formVals.own_TR + " Own Smartphone? " + formVals.own_SM  + " Own Drivers license? " + formVals.own_DL 
+        + " Own Learners License " + formVals.own_LL + " ."
+      }; // var data2 = {event: 'staff add package',
+      //                       value:{"What is in this package b4 email sent for user: " : "What is in this package b4 email sent for user", RequestParams: RequestParams}
+      // };
+      // var entry2 = log.entry(METADATA, data2);
+      // log.write(entry2);
+      // //console.log("What is in this package b4 emails sent");
+      // //console.log(RequestParams);
+    
+      var fianlRes = await sendEmail(emailServiceId, emailNewJobAppTemplate, RequestParams, emailUserId).then(function (res) {
+        if (res) {
+          return true;
+        }
+      }).catch(function (err) {
+        // var data3 = {event: 'staff add package',
+        //                     value:{"Send email error for user: " : formVals.user_email, error: err}
+        // };
+        // var entry3 = log.entry(METADATA, data3);
+        // log.write(entry3);
+        // //console.log("Send email error");
+        // //console.log(err);
+        return false;
+      });
+      return fianlRes;
+    };
+
     var AddGeneralLocation = async function AddGeneralLocation(payload, location) {
         payload.generalLocation = location;
         dispatch({
