@@ -1,10 +1,11 @@
 import React, {useEffect} from 'react';
-  import { useAppData } from '../../../Context/AppDataContext';
-  import { DataGrid, GridColDef } from '@material-ui/data-grid';
+import { useAppData } from '../../../Context/AppDataContext';
+import { DataGrid, GridColDef } from '@material-ui/data-grid';
 import moment from 'moment';
+import { EditRounded } from "@material-ui/icons/";
   
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'Transaction', width: 414 },
+    { field: 'id', headerName: 'Transaction', width: 200 },
     {
       field: 'OrderDate',
       headerName: 'Date',
@@ -30,6 +31,13 @@ import moment from 'moment';
       sortable: false,
       width: 160
     },
+    {
+      field: 'Actions',
+      headerName: 'Action',
+      description: 'This column has a value getter and is not sortable.',
+      sortable: false,
+      width: 100
+    },
   ];
   
   
@@ -53,7 +61,10 @@ import moment from 'moment';
       }
       // eslint-disable-next-line
     }, [currentUser]);
-  
+    
+    const handleEdit = (event) => {
+      event.preventDefault();
+    }
     if(orders.length !== 0){
       orders.map((item, index) => {
         const now = new Date(item.OrderDate * 100);
@@ -63,7 +74,8 @@ import moment from 'moment';
           OrderDate: new Date(parseInt(item.OrderDate, 10)),
           OrderStatus: item.OrderStatus, 
           OrderTotal: `$ ${item.OrderTotal}`, 
-          Rider: item.Rider
+          Rider: item.Rider,
+          Actions: <><a href="javascript()" title="edit" onClick={() => handleEdit}><EditRounded color="primary" /></a></>
         };
   
         rows.push(row)

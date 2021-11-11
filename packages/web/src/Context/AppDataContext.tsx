@@ -276,26 +276,26 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     };
     
     var userHasRole = async function userHasRole(uid, payload) {
-      //console.log("User id is: ");
-      //console.log(uid);
-      //console.log("fetching user role");
+      console.log("User id is: ");
+      console.log(uid);
+      console.log("fetching user role");
       var userRef = await getUserInRole({variables: {UserID: uid}}).then(async function(response) {
-        //console.log("Checking user result");
+        console.log("Checking user result");
         if (response.data.getUserInRole.RoleID !== null) {
-          //console.log("user role exist");
-          //console.log(response);
+          console.log("user role exist");
+          console.log(response);
           //console.log("what is inside payload");
           //console.log(payload);
           // Convert to City object
            var userRoleID = response.data.getUserInRole.RoleID;
-          //console.log("user in role res:");
-          //console.log(userRoleID);
+          console.log("user in role res:");
+          console.log(userRoleID);
           if (userRoleID !== null) {
-            payload.userRolef = await getRole({variables: {id:userRoleID}}).then(async function (response2) {
+            payload.userRolef = await getRole({variables: {_id:userRoleID}}).then(async function (response2) {
               if (response2.data.getRole !== null) {
                 var res = response2.data.getRole;
-                //console.log("Role Exists is?");
-                //console.log(res);
+                console.log("Role Exists is?");
+                console.log(res);
                 return res.description;
               }
             });
@@ -434,12 +434,14 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           //console.log(payloadf);
 
         var user = response.data.getUser;
-    
+        console.log("firstname is:");
+        console.log(user.FirstName);
         if (user !== null) {
           payloadf.userInfo.contactNumber = user.ContactNumber !== null && user.ContactNumber !== undefined ? user.ContactNumber : "";
           payloadf.userInfo.email = user.Email !== null && user.Email !== undefined ? user.Email : "";
-          payloadf.userInfo.fullName = user.FirstName !== null && user.FirstName !== undefined? user.FirstName + " " 
-                                     + user.LastName !== null && user.LastName !== undefined? user.LastName : "" + user.LastName !== null && user.LastName !== undefined? user.LastName : "":"";
+          payloadf.userInfo.fullName = user.FirstName !== null && user.FirstName !== undefined? user.FirstName : "";
+          // + " " 
+          //                            + user.LastName !== null && user.LastName !== undefined? user.LastName : "" + user.LastName !== null && user.LastName !== undefined? user.LastName : "":"";
           payloadf.loggedIn = true;
           payloadf.userInfo.addressLine1 = user.AddressLine1 !== null && user.AddressLine1 !== undefined ? user.AddressLine1 : "";
           payloadf.userInfo.addressLine2 = user.AddressLine2 !== null && user.AddressLine2 !== undefined ? user.AddressLine2 : "";
@@ -703,15 +705,18 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
 
     var fetchOrdersByUser  = async function fetchOrdersByUser(payload){
       if(payload.currentUser !== undefined){
-        await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
-          if (response.data.getOrdersByUserId !== null) {
-            payload.orders = response.data.getOrdersByUserId;
-            dispatch({
-              type: "checkout",
-              payload: payload
-            })
-          }
-        });
+        if(payload.currentUser.uid !== undefined){
+          await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
+            if (response.data.getOrdersByUserId !== null) {
+              payload.orders = response.data.getOrdersByUserId;
+              dispatch({
+                type: "checkout",
+                payload: payload
+              })
+            }
+          });
+        }
+        
       }
     }
 

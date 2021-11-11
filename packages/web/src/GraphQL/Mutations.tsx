@@ -48,8 +48,9 @@ export const GET_USER_IN_ROLE = gql`
 `
 
 export const GET_ROLE = gql`
-    mutation getRole($id: String!) {
-        getRole(id: $id){
+    mutation getRole($_id: String!) {
+        getRole(_id: $_id){
+            _id
             description
         }
     }

@@ -57,12 +57,12 @@ const resolvers = {
             return identification.save();
         },
 
-        getRole: async (_,{id}) => {
-            return await Role.findOne({id}); 
+        getRole: async (_,{_id}) => {
+            return await Role.findOne({_id}); 
         },
 
         getUserInRole: async (_, {UserID}) => {
-            return await UserInRole.find({UserID});
+            return await UserInRole.findOne({UserID});
         },
 
         addUserToRole: (_, {UserID, RoleID}) => {

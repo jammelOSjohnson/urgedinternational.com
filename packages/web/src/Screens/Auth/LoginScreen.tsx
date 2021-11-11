@@ -212,7 +212,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
     const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
 
     var { value }  = useAppData();
-    var { login, gLogin } = value;
+    var { login, gLogin, fetchUserInfo, userRolef } = value;
     const [values, setValues] = React.useState<State>({
         email: '',
         password: '',
@@ -256,13 +256,38 @@ export const LoginScreen: React.FC = function LoginScreen() {
             setLoading(true);
             await login(values.email, values.password, value).then(async function(res1){
                 if(res1 != null){
-                    setLoading(false);
-                    setSuccess('Sign In Successful.');
-                    setTimeout(() => {
-                        setSuccess('');
-                        console.log("about to go to dashboard");
-                        history.push('/Dashboard')
-                    }, 1500);
+                    await fetchUserDetails(res1).then(function(res){
+                        if(res){
+                            //console.log("About to close login modal.");
+                            //closeModal();
+                            //setLoggedIn(true);
+                            //console.log("About to navigate to dashboard.");
+                            //history.push("/Dashboard");
+                            console.log("role is:")
+                            console.log(userRolef);
+                            if(userRolef !== undefined && userRolef === "Admin"){
+                                setLoading(false);
+                                setSuccess('Sign In Successful.');
+                                setTimeout(() => {
+                                    setSuccess('');
+                                    //console.log("about to go to dashboard");
+                                    history.push("/AdminOrders")
+                                }, 1500);
+                                
+                            }else{
+                                setLoading(false);
+                                setSuccess('Sign In Successful.');
+                                setTimeout(() => {
+                                    setSuccess('');
+                                    //console.log("about to go to dashboard");
+                                    history.push(history.location.state.from);
+                                }, 1500);
+                            }
+                        }else{
+                            setError('Unable to login at this time'); 
+                        }
+                    });
+                    
                 }else{
                     setLoading(false);
                     setError('Unable to login at this time.'); 
@@ -299,6 +324,19 @@ export const LoginScreen: React.FC = function LoginScreen() {
             setError('Failed to login');
         }
         setLoading(false);
+    }
+
+    var fetchUserDetails = async function fetchUserDetails(payload) {
+        //console.log("Is current user null");
+        //console.log(payload);
+        if(payload.currentUser !== null && payload.currentUser !== undefined){
+            if(payload.currentUser.uid !== null && payload.currentUser.uid !== undefined){
+                //console.log("Fetching user info");
+                await fetchUserInfo(payload.currentUser.uid, payload);
+                return true;
+            }
+        }
+        return false;
     }
     
     return (

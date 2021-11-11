@@ -48,7 +48,7 @@ export const ShoppingCartScreen: React.FC = function ShoppingCartScreen() {
                             <ShoppingCartItems />                     
                         </Grid>
                         <Grid item xs={12}>
-                                <DashboardFooter />
+                            <DashboardFooter />
                         </Grid>
                         {/* <Grid item xs={4}>
                             <PaymentOptionsForm />

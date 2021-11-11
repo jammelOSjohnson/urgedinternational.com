@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const { model, Schema } = require('mongoose');
+const autoIncrement = require('mongoose-sequence')(mongoose);
 
 const OrderSchema = new Schema({
+    _id: Number,
     Id: {
         type: String,
         required: true
@@ -55,6 +57,8 @@ const OrderSchema = new Schema({
         required: true
     }
 });
+
+OrderSchema.plugin(autoIncrement);
 
 const Order = model('order', OrderSchema);
 export default Order;
