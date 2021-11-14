@@ -117,7 +117,8 @@ const useStyles = makeStyles((theme: Theme) =>
         statusDot: {
                 height: "10px",
                 width: "10px",
-                backgroundColor: "#22F810",
+                backgroundColor: "#22F810" /*Active*/ ,
+                /*backgroundColor: "#F86363", In-Active*/
                 borderRadius: "50%",
                 display: "inline-block"
         }
