@@ -6,6 +6,7 @@ import clsx from 'clsx';
 //Import Components
 import { ItemRating } from '../../../Components/ItemRating';
 import { Link } from "react-router-dom";
+import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 
 
@@ -68,12 +69,16 @@ const useStyles = makeStyles((theme: Theme) =>
             marginRight: "auto"
         },
         avatar: {
-            width: "52px",
-            height: "52px",
-            backgroundColor: "#FFFFFF"
+            width: "105px",
+            height: "105px",
+            backgroundColor: "#FFFFFF",
+            marginLeft: "auto", 
+            marginRight: "auto"
           },
         kfcImage: {
-            marginTop: "-24%"
+            width: "105px",
+            height: "105px",
+            margin: "0% 0% 14% 8%",
         },
         btnLayout: {
             textAlign: "left",
@@ -161,23 +166,32 @@ export const EmployeeCardList: React.FC = function EmployeeCardList(props) {
                                 <Link onClick={() =>handleSelectedRestaurant(index)} className={classes.link}>
                                 <Card className={classes.root}>
                                     <CardHeader
-                                        avatar={
-                                            <Avatar variant="square" aria-label="restaurant" className={classes.avatar}>
-                                                <CardMedia className={classes.cardImage}>
-                                                    <img className={classes.kfcImage} src={restaurant.ImageName}></img>
-                                                </CardMedia>
-                                            </Avatar>
-                                        }
                                         action={
                                             <IconButton aria-label="settings">
-                                                <img className={classes.kfcImage} src="Images/FavIcon.png"></img>
+                                                <MoreVertIcon />
                                             </IconButton>
                                         }
-                                        title={restaurant.FirstName}
-                                        subheader={restaurant.City}
                                     />
                                     <CardContent>
                                         <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
+                                            <Grid item xs={12}>
+                                                <Avatar variant="circle" aria-label="restaurant" className={classes.avatar}>
+                                                    <CardMedia className={classes.cardImage}>
+                                                        <img className={classes.kfcImage} src={restaurant.ImageName}></img>
+                                                    </CardMedia>
+                                                </Avatar>
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <Typography variant="h5"  component="p" align="center">
+                                                    {restaurant.FirstName}
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <Typography variant="h6"  component="p" align="center">
+                                                    {restaurant.City}
+                                                </Typography>
+                                            </Grid>
+                                            <br />
                                             <Grid item xs={12}>
                                                 <Typography variant="body2"  component="p" align="center">
                                                 Jacob Jones
