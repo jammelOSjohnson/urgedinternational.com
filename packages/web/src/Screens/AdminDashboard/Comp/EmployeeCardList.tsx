@@ -113,6 +113,13 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         link: {
             textDecoration: "none"
+        },
+        statusDot: {
+                height: "10px",
+                width: "10px",
+                backgroundColor: "#22F810",
+                borderRadius: "50%",
+                display: "inline-block"
         }
     }),
 );
@@ -209,7 +216,7 @@ export const EmployeeCardList: React.FC = function EmployeeCardList(props) {
                                             </Grid>
                                             <Grid item xs={12}>
                                                 <Typography variant="body2"  component="p" align="center">
-                                                Active
+                                                <span className={classes.statusDot}></span> Active
                                                 </Typography>
                                             </Grid>
                                         </Grid>
