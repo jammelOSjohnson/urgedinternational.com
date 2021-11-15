@@ -150,7 +150,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                     ContactNum: '',
                     PaymentMethod: "Cash on Delivery"
                 });
-                history.push("/OrderHistory");
+                history.push("/OrderCompleted");
             });
         }catch(e: any) { 
             //console.log(e.message)

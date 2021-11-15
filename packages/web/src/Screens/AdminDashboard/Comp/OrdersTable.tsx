@@ -67,11 +67,11 @@ import { EditRounded } from "@material-ui/icons/";
     }
     if(orders.length !== 0){
       orders.map((item, index) => {
-        const now = new Date(item.OrderDate * 100);
+        const now = new Date(parseInt(item.OrderDate, 10));
         const estTime = moment.tz(now, "America/Jamaica").format();
         let row = {
           id: item._id, 
-          OrderDate: new Date(parseInt(item.OrderDate, 10)),
+          OrderDate: estTime,
           OrderStatus: item.OrderStatus, 
           OrderTotal: `$ ${item.OrderTotal}`, 
           Rider: item.Rider,

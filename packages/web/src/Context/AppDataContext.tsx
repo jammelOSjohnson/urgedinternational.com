@@ -98,7 +98,8 @@ function appDataReducer(state, action){
             ...state,
             cartItems: action.payload.cartItems,
             orders: action.payload.orders,
-            selectedRestaurant: action.payload.selectedRestaurant
+            selectedRestaurant: action.payload.selectedRestaurant,
+            receiptDetails: action.payload.receiptDetails
           }
         case "set_general_location":
           return {
@@ -144,6 +145,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var orders = [];
     var restaurants = [];
     var menuCategories = [];
+    var receiptDetails = undefined;
 
     var userInfo = {
       contactNumber: "",
@@ -664,7 +666,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         var orderBody = {
           Id: payload.currentUser.uid,
           OrderItems: orderItems,
-          OrderStatus: "Pending",
+          OrderStatus: "Ordered",
           OrderTotal: Number(Total.Cost),
           OrderDate: estTime,
           Rider: "Rider 1",
@@ -684,6 +686,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             //console.log(response.data.createOrder);
             payload.cartItems = [];
             payload.selectedRestaurant = undefined;
+            payload.receiptDetails = response.data.createOrder;
+
             await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
               if (response.data.getOrdersByUserId !== null) {
                 payload.orders = response.data.getOrdersByUserId;
@@ -834,6 +838,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         filteredMenuItems,
         filterCategory,
         generalLocation,
+        receiptDetails,
         JoinUs,
         signup,
         login,

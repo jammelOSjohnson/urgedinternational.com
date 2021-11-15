@@ -1,5 +1,7 @@
+import { useAppData } from '../../Context/AppDataContext';
 import { Container, makeStyles, createStyles, Theme } from '@material-ui/core';
 import React from 'react';
+import moment from 'moment';
 //Import Components
 //import { Link } from "react-router-dom";
 
@@ -43,7 +45,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const OrderCompleted: React.FC = function OrderCompleted() {
     const classes = useStyles();
-
+    var { value }  = useAppData();
+    var { receiptDetails, userInfo } = value;
+    const now = new Date(parseInt(receiptDetails.OrderDate, 10));
+    const estTime = moment.tz(now, "America/Jamaica").format("DD-MM-YYYY H:mma");
     
       
     return (
@@ -202,108 +207,10 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
                         </div>
                         <div
                             className="u-row-container"
-                            style={{ padding: 0, backgroundColor: "transparent" }}
+                            style={{ padding: 0, textAlign: "center", borderLeft: "1px solid #2cb4f3", borderRight: "1px solid #2cb4f3"}}
                         >
-                            <div
-                            className="u-row"
-                            style={{
-                                margin: "0 auto",
-                                minWidth: 320,
-                                maxWidth: 600,
-                                overflowWrap: "break-word",
-                                wordWrap: "break-word",
-                                wordBreak: "break-word",
-                                backgroundColor: "#d9eef8"
-                            }}
-                            >
-                            <div
-                                style={{
-                                borderCollapse: "collapse",
-                                display: "table",
-                                width: "100%",
-                                backgroundColor: "transparent"
-                                }}
-                            >
-                                {/*[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #d9eef8;"><![endif]*/}
-                                {/*[if (mso)|(IE)]><td align="center" width="598" style="width: 598px;padding: 0px;border-top: 0px solid transparent;border-left: 1px solid #2cb4f3;border-right: 1px solid #2cb4f3;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
-                                <div
-                                className="u-col u-col-100"
-                                style={{
-                                    maxWidth: 320,
-                                    minWidth: 600,
-                                    display: "table-cell",
-                                    verticalAlign: "top"
-                                }}
-                                >
-                                <div style={{ width: "100% !important" }}>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    <div
-                                    style={{
-                                        padding: 0,
-                                        borderTop: "0px solid transparent",
-                                        borderLeft: "1px solid #2cb4f3",
-                                        borderRight: "1px solid #2cb4f3",
-                                        borderBottom: "0px solid transparent"
-                                    }}
-                                    >
-                                    {/*<![endif]*/}
-                                    <table
-                                        id="u_content_text_89"
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            // className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: "0px 10px 30px 15px",
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <div
-                                                // className="v-text-align"
-                                                style={{
-                                                color: "#34495e",
-                                                lineHeight: "150%",
-                                                textAlign: "left",
-                                                wordWrap: "break-word"
-                                                }}
-                                            >
-                                                <p style={{ fontSize: 14, lineHeight: "1%" }}>
-                                                <span
-                                                    style={{
-                                                    fontFamily: "Lato, sans-serif",
-                                                    fontSize: 14,
-                                                    lineHeight: 21
-                                                    }}
-                                                >
-                                                    <span
-                                                    style={{ fontSize: 16, lineHeight: 24 }}
-                                                    >
-                                                    Please see order details below.
-                                                    </span>
-                                                </span>
-                                                </p>
-                                            </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    </div>
-                                    {/*<![endif]*/}
-                                </div>
-                                </div>
-                                {/*[if (mso)|(IE)]></td><![endif]*/}
-                                {/*[if (mso)|(IE)]></tr></table></td></tr></table><![endif]*/}
-                            </div>
+                            <div className="u-row u-col-100" style={{backgroundColor: "#d9eef8", marginLeft: "auto",marginRight: "auto"}}>
+                                Please see order details below.
                             </div>
                         </div>
                         <div
@@ -705,7 +612,7 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
                                                     lineHeight: "22.4px"
                                                     }}
                                                 >
-                                                    {`${"delivery_address"}`}
+                                                    {`${receiptDetails.DeliveryAddress}`}
                                                 </span>
                                                 </p>
                                             </div>
@@ -822,7 +729,7 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
                                                     lineHeight: "22.4px"
                                                     }}
                                                 >
-                                                    {`${"order_number"}`}
+                                                    {`${receiptDetails._id}`}
                                                 </span>
                                                 </p>
                                             </div>
@@ -911,7 +818,9 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
                                                     lineHeight: "22.4px"
                                                     }}
                                                 >
-                                                    {`${"order_date"}`}
+                                                    {
+                                                        `${estTime}`
+                                                    }
                                                 </span>
                                                 </p>
                                             </div>
@@ -1031,9 +940,9 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
                                                 >
                                                     <strong>
                                                     <span
-                                                        style={{ fontSize: 20, lineHeight: 28 }}
+                                                        style={{ fontSize: 20, lineHeight: 1 }}
                                                     >
-                                                        ${`${"total"}`}
+                                                        ${`${receiptDetails.OrderTotal}`}
                                                     </span>
                                                     </strong>
                                                 </span>
@@ -1412,1894 +1321,394 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
                             </div>
                             </div>
                         </div>
-                        <div
-                            className="u-row-container"
-                            style={{ padding: 0, backgroundColor: "transparent" }}
-                        >
+                        {receiptDetails.OrderItems.map((item,index) => (
+                        <>
                             <div
-                            className="u-row"
-                            style={{
-                                margin: "0 auto",
-                                minWidth: 320,
-                                maxWidth: 600,
-                                overflowWrap: "break-word",
-                                wordWrap: "break-word",
-                                wordBreak: "break-word",
-                                backgroundColor: "#ffffff"
-                            }}
+                                className="u-row-container"
+                                style={{ padding: 0, backgroundColor: "transparent" }}
+                                key={index}
                             >
-                            <div
-                                style={{
-                                borderCollapse: "collapse",
-                                display: "table",
-                                width: "100%",
-                                backgroundColor: "transparent"
-                                }}
-                            >
-                                {/*[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #ffffff;"><![endif]*/}
-                                {/*[if (mso)|(IE)]><td align="center" width="200" style="width: 200px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
                                 <div
-                                className="u-col u-col-33p33"
+                                className="u-row"
                                 style={{
-                                    maxWidth: 320,
-                                    minWidth: 200,
-                                    display: "table-cell",
-                                    verticalAlign: "top"
+                                    margin: "0 auto",
+                                    minWidth: 320,
+                                    maxWidth: 600,
+                                    overflowWrap: "break-word",
+                                    wordWrap: "break-word",
+                                    wordBreak: "break-word",
+                                    backgroundColor: "#ffffff"
                                 }}
                                 >
-                                <div style={{ width: "100% !important" }}>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    <div
-                                    style={{
-                                        padding: 0,
-                                        borderTop: "0px solid transparent",
-                                        borderLeft: "0px solid transparent",
-                                        borderRight: "0px solid transparent",
-                                        borderBottom: "0px solid transparent"
-                                    }}
-                                    >
-                                    {/*<![endif]*/}
-                                    <table
-                                        id="u_content_text_72"
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: "10px 10px 5px 15px",
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <div
-                                                className="v-text-align"
-                                                style={{
-                                                color: "#34495e",
-                                                lineHeight: "140%",
-                                                textAlign: "left",
-                                                wordWrap: "break-word"
-                                                }}
-                                            >
-                                                <p style={{ fontSize: 14, lineHeight: "140%" }}>
-                                                <strong>
-                                                    {"{"}
-                                                    {"{"}item1_name{"}"}
-                                                    {"}"}
-                                                </strong>
-                                                </p>
-                                            </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <table
-                                        id="u_content_text_73"
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: "0px 10px 10px 15px",
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <div
-                                                className="v-text-align"
-                                                style={{
-                                                color: "#34495e",
-                                                lineHeight: "140%",
-                                                textAlign: "left",
-                                                wordWrap: "break-word"
-                                                }}
-                                            >
-                                                <p style={{ fontSize: 14, lineHeight: "140%" }}>
-                                                {"{"}
-                                                {"{"}item1_desc
-                                                </p>
-                                            </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    </div>
-                                    {/*<![endif]*/}
-                                </div>
-                                </div>
-                                {/*[if (mso)|(IE)]></td><![endif]*/}
-                                {/*[if (mso)|(IE)]><td align="center" width="200" style="width: 200px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
                                 <div
-                                className="u-col u-col-33p33"
-                                style={{
-                                    maxWidth: 320,
-                                    minWidth: 200,
-                                    display: "table-cell",
-                                    verticalAlign: "top"
-                                }}
-                                >
-                                <div style={{ width: "100% !important" }}>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    <div
                                     style={{
-                                        padding: 0,
-                                        borderTop: "0px solid transparent",
-                                        borderLeft: "0px solid transparent",
-                                        borderRight: "0px solid transparent",
-                                        borderBottom: "0px solid transparent"
+                                    borderCollapse: "collapse",
+                                    display: "table",
+                                    width: "100%",
+                                    backgroundColor: "transparent"
+                                    }}
+                                >
+                                    {/*[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #ffffff;"><![endif]*/}
+                                    {/*[if (mso)|(IE)]><td align="center" width="200" style="width: 200px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
+                                    <div
+                                    className="u-col u-col-33p33"
+                                    style={{
+                                        maxWidth: 320,
+                                        minWidth: 200,
+                                        display: "table-cell",
+                                        verticalAlign: "top"
                                     }}
                                     >
-                                    {/*<![endif]*/}
-                                    <table
-                                        id="u_content_text_76"
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: "10px 15px 10px 10px",
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <div
-                                                className="v-text-align"
+                                    <div style={{ width: "100% !important" }}>
+                                        {/*[if (!mso)&(!IE)]><!*/}
+                                        <div
+                                        style={{
+                                            padding: 0,
+                                            borderTop: "0px solid transparent",
+                                            borderLeft: "0px solid transparent",
+                                            borderRight: "0px solid transparent",
+                                            borderBottom: "0px solid transparent"
+                                        }}
+                                        >
+                                        {/*<![endif]*/}
+                                        <table
+                                            id="u_content_text_72"
+                                            style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
+                                            role="presentation"
+                                            cellPadding={0}
+                                            cellSpacing={0}
+                                            width="100%"
+                                        >
+                                            <tbody>
+                                            <tr>
+                                                <td
+                                                className="v-container-padding-padding"
                                                 style={{
-                                                color: "#34495e",
-                                                lineHeight: "140%",
-                                                textAlign: "right",
-                                                wordWrap: "break-word"
+                                                    overflowWrap: "break-word",
+                                                    wordBreak: "break-word",
+                                                    padding: "10px 10px 5px 15px",
+                                                    fontFamily: '"Montserrat",sans-serif'
                                                 }}
-                                            >
-                                                <p style={{ fontSize: 14, lineHeight: "140%" }}>
-                                                <strong>
-                                                    $ {"{"}
-                                                    {"{"}order_item1_cost{"}"}
-                                                    {"}"}
-                                                </strong>
-                                                </p>
-                                            </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    </div>
-                                    {/*<![endif]*/}
-                                </div>
-                                </div>
-                                {/*[if (mso)|(IE)]></td><![endif]*/}
-                                {/*[if (mso)|(IE)]><td align="center" width="200" style="width: 200px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
-                                <div
-                                className="u-col u-col-33p33"
-                                style={{
-                                    maxWidth: 320,
-                                    minWidth: 200,
-                                    display: "table-cell",
-                                    verticalAlign: "top"
-                                }}
-                                >
-                                <div style={{ width: "100% !important" }}>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    <div
-                                    style={{
-                                        padding: 0,
-                                        borderTop: "0px solid transparent",
-                                        borderLeft: "0px solid transparent",
-                                        borderRight: "0px solid transparent",
-                                        borderBottom: "0px solid transparent"
-                                    }}
-                                    >
-                                    {/*<![endif]*/}
-                                    <table
-                                        id="u_content_text_75"
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: 10,
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <div
-                                                className="v-text-align"
-                                                style={{
-                                                color: "#34495e",
-                                                lineHeight: "140%",
-                                                textAlign: "left",
-                                                wordWrap: "break-word"
-                                                }}
-                                            >
-                                                <p style={{ fontSize: 14, lineHeight: "140%" }}>
-                                                <strong>1</strong>
-                                                </p>
-                                            </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    </div>
-                                    {/*<![endif]*/}
-                                </div>
-                                </div>
-                                {/*[if (mso)|(IE)]></td><![endif]*/}
-                                {/*[if (mso)|(IE)]></tr></table></td></tr></table><![endif]*/}
-                            </div>
-                            </div>
-                        </div>
-                        <div
-                            className="u-row-container"
-                            style={{ padding: 0, backgroundColor: "transparent" }}
-                        >
-                            <div
-                            className="u-row"
-                            style={{
-                                margin: "0 auto",
-                                minWidth: 320,
-                                maxWidth: 600,
-                                overflowWrap: "break-word",
-                                wordWrap: "break-word",
-                                wordBreak: "break-word",
-                                backgroundColor: "#ffffff"
-                            }}
-                            >
-                            <div
-                                style={{
-                                borderCollapse: "collapse",
-                                display: "table",
-                                width: "100%",
-                                backgroundColor: "transparent"
-                                }}
-                            >
-                                {/*[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #ffffff;"><![endif]*/}
-                                {/*[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
-                                <div
-                                className="u-col u-col-100"
-                                style={{
-                                    maxWidth: 320,
-                                    minWidth: 600,
-                                    display: "table-cell",
-                                    verticalAlign: "top"
-                                }}
-                                >
-                                <div style={{ width: "100% !important" }}>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    <div
-                                    style={{
-                                        padding: 0,
-                                        borderTop: "0px solid transparent",
-                                        borderLeft: "0px solid transparent",
-                                        borderRight: "0px solid transparent",
-                                        borderBottom: "0px solid transparent"
-                                    }}
-                                    >
-                                    {/*<![endif]*/}
-                                    <table
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: "5px 10px",
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <table
-                                                cellPadding={0}
-                                                cellSpacing={0}
-                                                width="100%"
-                                                style={{
-                                                height:"0px",
-                                                textAlign:"center",
-                                                border:0,
-                                                tableLayout: "fixed",
-                                                borderSpacing: 0,
-                                                verticalAlign: "top",
-                                                borderTop: "1px solid #BBBBBB",
-                                                WebkitTextSizeAdjust: "100%"
-                                                }}
-                                                className="table3"
-                                            >
-                                                <tbody>
-                                                <tr style={{ verticalAlign: "top" }}>
-                                                    <td
+                                                align="left"
+                                                >
+                                                <div
+                                                    className="v-text-align"
                                                     style={{
-                                                        wordBreak: "break-word",
-                                                        verticalAlign: "top",
-                                                        fontSize: 0,
-                                                        lineHeight: 0,
-                                                        WebkitTextSizeAdjust: "100%"
-                                                    }}
-                                                    className="td3"
-                                                    >
-                                                    <span>&nbsp;</span>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    </div>
-                                    {/*<![endif]*/}
-                                </div>
-                                </div>
-                                {/*[if (mso)|(IE)]></td><![endif]*/}
-                                {/*[if (mso)|(IE)]></tr></table></td></tr></table><![endif]*/}
-                            </div>
-                            </div>
-                        </div>
-                        <div
-                            className="u-row-container"
-                            style={{ padding: 0, backgroundColor: "transparent" }}
-                        >
-                            <div
-                            className="u-row"
-                            style={{
-                                margin: "0 auto",
-                                minWidth: 320,
-                                maxWidth: 600,
-                                overflowWrap: "break-word",
-                                wordWrap: "break-word",
-                                wordBreak: "break-word",
-                                backgroundColor: "#ffffff"
-                            }}
-                            >
-                            <div
-                                style={{
-                                borderCollapse: "collapse",
-                                display: "table",
-                                width: "100%",
-                                backgroundColor: "transparent"
-                                }}
-                            >
-                                {/*[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #ffffff;"><![endif]*/}
-                                {/*[if (mso)|(IE)]><td align="center" width="200" style="width: 200px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
-                                <div
-                                className="u-col u-col-33p33"
-                                style={{
-                                    maxWidth: 320,
-                                    minWidth: 200,
-                                    display: "table-cell",
-                                    verticalAlign: "top"
-                                }}
-                                >
-                                <div style={{ width: "100% !important" }}>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    <div
-                                    style={{
-                                        padding: 0,
-                                        borderTop: "0px solid transparent",
-                                        borderLeft: "0px solid transparent",
-                                        borderRight: "0px solid transparent",
-                                        borderBottom: "0px solid transparent"
-                                    }}
-                                    >
-                                    {/*<![endif]*/}
-                                    <table
-                                        id="u_content_text_77"
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: "10px 10px 5px 15px",
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <div
-                                                className="v-text-align"
-                                                style={{
-                                                color: "#34495e",
-                                                lineHeight: "140%",
-                                                textAlign: "left",
-                                                wordWrap: "break-word"
-                                                }}
-                                            >
-                                                <p style={{ fontSize: 14, lineHeight: "140%" }}>
-                                                <strong>
-                                                    {"{"}
-                                                    {"{"}item2_name{"}"}
-                                                    {"}"}
-                                                </strong>
-                                                </p>
-                                            </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <table
-                                        id="u_content_text_78"
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: "0px 10px 10px 15px",
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <div
-                                                className="v-text-align"
-                                                style={{
-                                                color: "#34495e",
-                                                lineHeight: "140%",
-                                                textAlign: "left",
-                                                wordWrap: "break-word"
-                                                }}
-                                            >
-                                                <p style={{ fontSize: 14, lineHeight: "140%" }}>
-                                                {"{"}
-                                                {"{"}item2_desc{"}"}
-                                                {"}"}
-                                                </p>
-                                            </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    </div>
-                                    {/*<![endif]*/}
-                                </div>
-                                </div>
-                                {/*[if (mso)|(IE)]></td><![endif]*/}
-                                {/*[if (mso)|(IE)]><td align="center" width="200" style="width: 200px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
-                                <div
-                                className="u-col u-col-33p33"
-                                style={{
-                                    maxWidth: 320,
-                                    minWidth: 200,
-                                    display: "table-cell",
-                                    verticalAlign: "top"
-                                }}
-                                >
-                                <div style={{ width: "100% !important" }}>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    <div
-                                    style={{
-                                        padding: 0,
-                                        borderTop: "0px solid transparent",
-                                        borderLeft: "0px solid transparent",
-                                        borderRight: "0px solid transparent",
-                                        borderBottom: "0px solid transparent"
-                                    }}
-                                    >
-                                    {/*<![endif]*/}
-                                    <table
-                                        id="u_content_text_81"
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: "10px 15px 10px 10px",
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <div
-                                                className="v-text-align"
-                                                style={{
-                                                color: "#34495e",
-                                                lineHeight: "140%",
-                                                textAlign: "right",
-                                                wordWrap: "break-word"
-                                                }}
-                                            >
-                                                <p style={{ fontSize: 14, lineHeight: "140%" }}>
-                                                <strong>
-                                                    $ {"{"}
-                                                    {"{"}order_item2_cost{"}"}
-                                                    {"}"}
-                                                </strong>
-                                                </p>
-                                            </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    </div>
-                                    {/*<![endif]*/}
-                                </div>
-                                </div>
-                                {/*[if (mso)|(IE)]></td><![endif]*/}
-                                {/*[if (mso)|(IE)]><td align="center" width="200" style="width: 200px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
-                                <div
-                                className="u-col u-col-33p33"
-                                style={{
-                                    maxWidth: 320,
-                                    minWidth: 200,
-                                    display: "table-cell",
-                                    verticalAlign: "top"
-                                }}
-                                >
-                                <div style={{ width: "100% !important" }}>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    <div
-                                    style={{
-                                        padding: 0,
-                                        borderTop: "0px solid transparent",
-                                        borderLeft: "0px solid transparent",
-                                        borderRight: "0px solid transparent",
-                                        borderBottom: "0px solid transparent"
-                                    }}
-                                    >
-                                    {/*<![endif]*/}
-                                    <table
-                                        id="u_content_text_80"
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: 10,
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <div
-                                                className="v-text-align"
-                                                style={{
-                                                color: "#34495e",
-                                                lineHeight: "140%",
-                                                textAlign: "left",
-                                                wordWrap: "break-word"
-                                                }}
-                                            >
-                                                <p style={{ fontSize: 14, lineHeight: "140%" }}>
-                                                <strong>1</strong>
-                                                </p>
-                                            </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    </div>
-                                    {/*<![endif]*/}
-                                </div>
-                                </div>
-                                {/*[if (mso)|(IE)]></td><![endif]*/}
-                                {/*[if (mso)|(IE)]></tr></table></td></tr></table><![endif]*/}
-                            </div>
-                            </div>
-                        </div>
-                        <div
-                            className="u-row-container"
-                            style={{ padding: 0, backgroundColor: "transparent" }}
-                        >
-                            <div
-                            className="u-row"
-                            style={{
-                                margin: "0 auto",
-                                minWidth: 320,
-                                maxWidth: 600,
-                                overflowWrap: "break-word",
-                                wordWrap: "break-word",
-                                wordBreak: "break-word",
-                                backgroundColor: "#ffffff"
-                            }}
-                            >
-                            <div
-                                style={{
-                                borderCollapse: "collapse",
-                                display: "table",
-                                width: "100%",
-                                backgroundColor: "transparent"
-                                }}
-                            >
-                                {/*[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #ffffff;"><![endif]*/}
-                                {/*[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
-                                <div
-                                className="u-col u-col-100"
-                                style={{
-                                    maxWidth: 320,
-                                    minWidth: 600,
-                                    display: "table-cell",
-                                    verticalAlign: "top"
-                                }}
-                                >
-                                <div style={{ width: "100% !important" }}>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    <div
-                                    style={{
-                                        padding: 0,
-                                        borderTop: "0px solid transparent",
-                                        borderLeft: "0px solid transparent",
-                                        borderRight: "0px solid transparent",
-                                        borderBottom: "0px solid transparent"
-                                    }}
-                                    >
-                                    {/*<![endif]*/}
-                                    <table
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: "5px 10px",
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <table
-                                                cellPadding={0}
-                                                cellSpacing={0}
-                                                width="100%"
-                                                style={{
-                                                borderCollapse: "collapse",
-                                                tableLayout: "fixed",
-                                                borderSpacing: 0,
-                                                height:"0px",
-                                                textAlign:"center",
-                                                border:0,
-                                                verticalAlign: "top",
-                                                borderTop: "1px solid #BBBBBB",
-                                                WebkitTextSizeAdjust: "100%"
-                                                }}
-                                                className="table4"
-                                            >
-                                                <tbody>
-                                                <tr style={{ verticalAlign: "top" }}>
-                                                    <td
-                                                    style={{
-                                                        wordBreak: "break-word",
-                                                        verticalAlign: "top",
-                                                        fontSize: 0,
-                                                        lineHeight: 0,
-                                                        WebkitTextSizeAdjust: "100%"
-                                                    }}
-                                                    className="td4"
-                                                    >
-                                                    <span>&nbsp;</span>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    </div>
-                                    {/*<![endif]*/}
-                                </div>
-                                </div>
-                                {/*[if (mso)|(IE)]></td><![endif]*/}
-                                {/*[if (mso)|(IE)]></tr></table></td></tr></table><![endif]*/}
-                            </div>
-                            </div>
-                        </div>
-                        <div
-                            className="u-row-container"
-                            style={{ padding: 0, backgroundColor: "transparent" }}
-                        >
-                            <div
-                            className="u-row"
-                            style={{
-                                margin: "0 auto",
-                                minWidth: 320,
-                                maxWidth: 600,
-                                overflowWrap: "break-word",
-                                wordWrap: "break-word",
-                                wordBreak: "break-word",
-                                backgroundColor: "#ffffff"
-                            }}
-                            >
-                            <div
-                                style={{
-                                borderCollapse: "collapse",
-                                display: "table",
-                                width: "100%",
-                                backgroundColor: "transparent"
-                                }}
-                            >
-                                {/*[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #ffffff;"><![endif]*/}
-                                {/*[if (mso)|(IE)]><td align="center" width="200" style="width: 200px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
-                                <div
-                                className="u-col u-col-33p33"
-                                style={{
-                                    maxWidth: 320,
-                                    minWidth: 200,
-                                    display: "table-cell",
-                                    verticalAlign: "top"
-                                }}
-                                >
-                                <div style={{ width: "100% !important" }}>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    <div
-                                    style={{
-                                        padding: 0,
-                                        borderTop: "0px solid transparent",
-                                        borderLeft: "0px solid transparent",
-                                        borderRight: "0px solid transparent",
-                                        borderBottom: "0px solid transparent"
-                                    }}
-                                    >
-                                    {/*<![endif]*/}
-                                    <table
-                                        id="u_content_text_82"
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: "10px 10px 5px 15px",
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <div
-                                                className="v-text-align"
-                                                style={{
-                                                color: "#34495e",
-                                                lineHeight: "140%",
-                                                textAlign: "left",
-                                                wordWrap: "break-word"
-                                                }}
-                                            >
-                                                <p style={{ fontSize: 14, lineHeight: "140%" }}>
-                                                <strong>
-                                                    {"{"}
-                                                    {"{"}item3_name{"}"}
-                                                    {"}"}
-                                                </strong>
-                                                </p>
-                                            </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <table
-                                        id="u_content_text_83"
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: "0px 10px 10px 15px",
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <div
-                                                className="v-text-align"
-                                                style={{
-                                                color: "#34495e",
-                                                lineHeight: "140%",
-                                                textAlign: "left",
-                                                wordWrap: "break-word"
-                                                }}
-                                            >
-                                                <p style={{ fontSize: 14, lineHeight: "140%" }}>
-                                                {"{"}
-                                                {"{"}item3_desc{"}"}
-                                                {"}"}
-                                                </p>
-                                            </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    </div>
-                                    {/*<![endif]*/}
-                                </div>
-                                </div>
-                                {/*[if (mso)|(IE)]></td><![endif]*/}
-                                {/*[if (mso)|(IE)]><td align="center" width="200" style="width: 200px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
-                                <div
-                                className="u-col u-col-33p33"
-                                style={{
-                                    maxWidth: 320,
-                                    minWidth: 200,
-                                    display: "table-cell",
-                                    verticalAlign: "top"
-                                }}
-                                >
-                                <div style={{ width: "100% !important" }}>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    <div
-                                    style={{
-                                        padding: 0,
-                                        borderTop: "0px solid transparent",
-                                        borderLeft: "0px solid transparent",
-                                        borderRight: "0px solid transparent",
-                                        borderBottom: "0px solid transparent"
-                                    }}
-                                    >
-                                    {/*<![endif]*/}
-                                    <table
-                                        id="u_content_text_86"
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: "10px 15px 10px 10px",
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <div
-                                                className="v-text-align"
-                                                style={{
-                                                color: "#34495e",
-                                                lineHeight: "140%",
-                                                textAlign: "right",
-                                                wordWrap: "break-word"
-                                                }}
-                                            >
-                                                <p style={{ fontSize: 14, lineHeight: "140%" }}>
-                                                <strong>
-                                                    $ {"{"}
-                                                    {"{"}order_item2_cost{"}"}
-                                                    {"}"}
-                                                </strong>
-                                                </p>
-                                            </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    </div>
-                                    {/*<![endif]*/}
-                                </div>
-                                </div>
-                                {/*[if (mso)|(IE)]></td><![endif]*/}
-                                {/*[if (mso)|(IE)]><td align="center" width="200" style="width: 200px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
-                                <div
-                                className="u-col u-col-33p33"
-                                style={{
-                                    maxWidth: 320,
-                                    minWidth: 200,
-                                    display: "table-cell",
-                                    verticalAlign: "top"
-                                }}
-                                >
-                                <div style={{ width: "100% !important" }}>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    <div
-                                    style={{
-                                        padding: 0,
-                                        borderTop: "0px solid transparent",
-                                        borderLeft: "0px solid transparent",
-                                        borderRight: "0px solid transparent",
-                                        borderBottom: "0px solid transparent"
-                                    }}
-                                    >
-                                    {/*<![endif]*/}
-                                    <table
-                                        id="u_content_text_85"
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: 10,
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <div
-                                                className="v-text-align"
-                                                style={{
-                                                color: "#34495e",
-                                                lineHeight: "140%",
-                                                textAlign: "left",
-                                                wordWrap: "break-word"
-                                                }}
-                                            >
-                                                <p style={{ fontSize: 14, lineHeight: "140%" }}>
-                                                <strong>1</strong>
-                                                </p>
-                                            </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    </div>
-                                    {/*<![endif]*/}
-                                </div>
-                                </div>
-                                {/*[if (mso)|(IE)]></td><![endif]*/}
-                                {/*[if (mso)|(IE)]></tr></table></td></tr></table><![endif]*/}
-                            </div>
-                            </div>
-                        </div>
-                        <div
-                            className="u-row-container"
-                            style={{ padding: 0, backgroundColor: "transparent" }}
-                        >
-                            <div
-                            className="u-row"
-                            style={{
-                                margin: "0 auto",
-                                minWidth: 320,
-                                maxWidth: 600,
-                                overflowWrap: "break-word",
-                                wordWrap: "break-word",
-                                wordBreak: "break-word",
-                                backgroundColor: "#ffffff"
-                            }}
-                            >
-                            <div
-                                style={{
-                                borderCollapse: "collapse",
-                                display: "table",
-                                width: "100%",
-                                backgroundColor: "transparent"
-                                }}
-                            >
-                                {/*[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #ffffff;"><![endif]*/}
-                                {/*[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
-                                <div
-                                className="u-col u-col-100"
-                                style={{
-                                    maxWidth: 320,
-                                    minWidth: 600,
-                                    display: "table-cell",
-                                    verticalAlign: "top"
-                                }}
-                                >
-                                <div style={{ width: "100% !important" }}>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    <div
-                                    style={{
-                                        padding: 0,
-                                        borderTop: "0px solid transparent",
-                                        borderLeft: "0px solid transparent",
-                                        borderRight: "0px solid transparent",
-                                        borderBottom: "0px solid transparent"
-                                    }}
-                                    >
-                                    {/*<![endif]*/}
-                                    <table
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: "5px 10px",
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <table
-                                                cellPadding={0}
-                                                cellSpacing={0}
-                                                width="100%"
-                                                style={{
-                                                height:"0px",
-                                                textAlign:"center",
-                                                border:0,
-                                                borderCollapse: "collapse",
-                                                tableLayout: "fixed",
-                                                borderSpacing: 0,
-                                                verticalAlign: "top",
-                                                borderTop: "1px solid #BBBBBB",
-                                                WebkitTextSizeAdjust: "100%"
-                                                }}
-                                                className="table5"
-                                            >
-                                                <tbody>
-                                                <tr style={{ verticalAlign: "top" }}>
-                                                    <td
-                                                    style={{
-                                                        wordBreak: "break-word",
-                                                        verticalAlign: "top",
-                                                        fontSize: 0,
-                                                        lineHeight: 0,
-                                                        WebkitTextSizeAdjust: "100%"
-                                                    }}
-                                                    className="td5"
-                                                    >
-                                                    <span>&nbsp;</span>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    </div>
-                                    {/*<![endif]*/}
-                                </div>
-                                </div>
-                                {/*[if (mso)|(IE)]></td><![endif]*/}
-                                {/*[if (mso)|(IE)]></tr></table></td></tr></table><![endif]*/}
-                            </div>
-                            </div>
-                        </div>
-                        <div
-                            className="u-row-container"
-                            style={{ padding: 0, backgroundColor: "transparent" }}
-                        >
-                            <div
-                            className="u-row"
-                            style={{
-                                margin: "0 auto",
-                                minWidth: 320,
-                                maxWidth: 600,
-                                overflowWrap: "break-word",
-                                wordWrap: "break-word",
-                                wordBreak: "break-word",
-                                backgroundColor: "#ffffff"
-                            }}
-                            >
-                            <div
-                                style={{
-                                borderCollapse: "collapse",
-                                display: "table",
-                                width: "100%",
-                                backgroundColor: "transparent"
-                                }}
-                            >
-                                {/*[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #ffffff;"><![endif]*/}
-                                {/*[if (mso)|(IE)]><td align="center" width="200" style="width: 200px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
-                                <div
-                                className="u-col u-col-33p33"
-                                style={{
-                                    maxWidth: 320,
-                                    minWidth: 200,
-                                    display: "table-cell",
-                                    verticalAlign: "top"
-                                }}
-                                >
-                                <div style={{ width: "100% !important" }}>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    <div
-                                    style={{
-                                        padding: 0,
-                                        borderTop: "0px solid transparent",
-                                        borderLeft: "0px solid transparent",
-                                        borderRight: "0px solid transparent",
-                                        borderBottom: "0px solid transparent"
-                                    }}
-                                    >
-                                    {/*<![endif]*/}
-                                    <table
-                                        id="u_content_text_53"
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: "10px 10px 5px 15px",
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <div
-                                                className="v-text-align"
-                                                style={{
-                                                color: "#34495e",
-                                                lineHeight: "140%",
-                                                textAlign: "left",
-                                                wordWrap: "break-word"
-                                                }}
-                                            >
-                                                <p style={{ fontSize: 14, lineHeight: "140%" }}>
-                                                <strong>
-                                                    {"{"}
-                                                    {"{"}item4_name{"}"}
-                                                    {"}"}
-                                                </strong>
-                                                </p>
-                                            </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <table
-                                        id="u_content_text_54"
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: "0px 10px 10px 15px",
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <div
-                                                className="v-text-align"
-                                                style={{
-                                                color: "#34495e",
-                                                lineHeight: "140%",
-                                                textAlign: "left",
-                                                wordWrap: "break-word"
-                                                }}
-                                            >
-                                                <p style={{ fontSize: 14, lineHeight: "140%" }}>
-                                                {"{"}
-                                                {"{"}item4_desc{"}"}
-                                                {"}"}
-                                                </p>
-                                            </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    </div>
-                                    {/*<![endif]*/}
-                                </div>
-                                </div>
-                                {/*[if (mso)|(IE)]></td><![endif]*/}
-                                {/*[if (mso)|(IE)]><td align="center" width="200" style="width: 200px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
-                                <div
-                                className="u-col u-col-33p33"
-                                style={{
-                                    maxWidth: 320,
-                                    minWidth: 200,
-                                    display: "table-cell",
-                                    verticalAlign: "top"
-                                }}
-                                >
-                                <div style={{ width: "100% !important" }}>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    <div
-                                    style={{
-                                        padding: 0,
-                                        borderTop: "0px solid transparent",
-                                        borderLeft: "0px solid transparent",
-                                        borderRight: "0px solid transparent",
-                                        borderBottom: "0px solid transparent"
-                                    }}
-                                    >
-                                    {/*<![endif]*/}
-                                    <table
-                                        id="u_content_text_57"
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: "10px 15px 10px 10px",
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <div
-                                                className="v-text-align"
-                                                style={{
-                                                color: "#34495e",
-                                                lineHeight: "140%",
-                                                textAlign: "right",
-                                                wordWrap: "break-word"
-                                                }}
-                                            >
-                                                <p style={{ fontSize: 14, lineHeight: "140%" }}>
-                                                <strong>
-                                                    $ {"{"}
-                                                    {"{"}order_item4_cost{"}"}
-                                                    {"}"}
-                                                </strong>
-                                                </p>
-                                            </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    </div>
-                                    {/*<![endif]*/}
-                                </div>
-                                </div>
-                                {/*[if (mso)|(IE)]></td><![endif]*/}
-                                {/*[if (mso)|(IE)]><td align="center" width="200" style="width: 200px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
-                                <div
-                                className="u-col u-col-33p33"
-                                style={{
-                                    maxWidth: 320,
-                                    minWidth: 200,
-                                    display: "table-cell",
-                                    verticalAlign: "top"
-                                }}
-                                >
-                                <div style={{ width: "100% !important" }}>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    <div
-                                    style={{
-                                        padding: 0,
-                                        borderTop: "0px solid transparent",
-                                        borderLeft: "0px solid transparent",
-                                        borderRight: "0px solid transparent",
-                                        borderBottom: "0px solid transparent"
-                                    }}
-                                    >
-                                    {/*<![endif]*/}
-                                    <table
-                                        id="u_content_text_56"
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: 10,
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <div
-                                                className="v-text-align"
-                                                style={{
-                                                color: "#34495e",
-                                                lineHeight: "140%",
-                                                textAlign: "left",
-                                                wordWrap: "break-word"
-                                                }}
-                                            >
-                                                <p style={{ fontSize: 14, lineHeight: "140%" }}>
-                                                <strong>1</strong>
-                                                </p>
-                                            </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    </div>
-                                    {/*<![endif]*/}
-                                </div>
-                                </div>
-                                {/*[if (mso)|(IE)]></td><![endif]*/}
-                                {/*[if (mso)|(IE)]></tr></table></td></tr></table><![endif]*/}
-                            </div>
-                            </div>
-                        </div>
-                        <div
-                            className="u-row-container"
-                            style={{ padding: 0, backgroundColor: "transparent" }}
-                        >
-                            <div
-                            className="u-row"
-                            style={{
-                                margin: "0 auto",
-                                minWidth: 320,
-                                maxWidth: 600,
-                                overflowWrap: "break-word",
-                                wordWrap: "break-word",
-                                wordBreak: "break-word",
-                                backgroundColor: "#ffffff"
-                            }}
-                            >
-                            <div
-                                style={{
-                                borderCollapse: "collapse",
-                                display: "table",
-                                width: "100%",
-                                backgroundColor: "transparent"
-                                }}
-                            >
-                                {/*[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #ffffff;"><![endif]*/}
-                                {/*[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
-                                <div
-                                className="u-col u-col-100"
-                                style={{
-                                    maxWidth: 320,
-                                    minWidth: 600,
-                                    display: "table-cell",
-                                    verticalAlign: "top"
-                                }}
-                                >
-                                <div style={{ width: "100% !important" }}>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    <div
-                                    style={{
-                                        padding: 0,
-                                        borderTop: "0px solid transparent",
-                                        borderLeft: "0px solid transparent",
-                                        borderRight: "0px solid transparent",
-                                        borderBottom: "0px solid transparent"
-                                    }}
-                                    >
-                                    {/*<![endif]*/}
-                                    <table
-                                        id="u_content_divider_13"
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: "5px 10px 10px",
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <table
-                                                cellPadding={0}
-                                                cellSpacing={0}
-                                                style={{
-                                                width:"100%",
-                                                height:"0px",
-                                                textAlign:"center",
-                                                border:0,
-                                                borderCollapse: "collapse",
-                                                tableLayout: "fixed",
-                                                borderSpacing: 0,
-                                                verticalAlign: "top",
-                                                borderTop: "1px solid #BBBBBB",
-                                                WebkitTextSizeAdjust: "100%"
-                                                }}
-                                                className="table7"
-                                            >
-                                                <tbody>
-                                                <tr style={{ verticalAlign: "top" }}>
-                                                    <td
-                                                    style={{
-                                                        wordBreak: "break-word",
-                                                        verticalAlign: "top",
-                                                        fontSize: 0,
-                                                        lineHeight: 0,
-                                                        WebkitTextSizeAdjust: "100%"
-                                                    }}
-                                                    className="td7"
-                                                    >
-                                                    <span>&nbsp;</span>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    </div>
-                                    {/*<![endif]*/}
-                                </div>
-                                </div>
-                                {/*[if (mso)|(IE)]></td><![endif]*/}
-                                {/*[if (mso)|(IE)]></tr></table></td></tr></table><![endif]*/}
-                            </div>
-                            </div>
-                        </div>
-                        <div
-                            className="u-row-container"
-                            style={{ padding: 0, backgroundColor: "transparent" }}
-                        >
-                            <div
-                            className="u-row"
-                            style={{
-                                margin: "0 auto",
-                                minWidth: 320,
-                                maxWidth: 600,
-                                overflowWrap: "break-word",
-                                wordWrap: "break-word",
-                                wordBreak: "break-word",
-                                backgroundColor: "#ffffff"
-                            }}
-                            >
-                            <div
-                                style={{
-                                borderCollapse: "collapse",
-                                display: "table",
-                                width: "100%",
-                                backgroundColor: "transparent"
-                                }}
-                            >
-                                {/*[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #ffffff;"><![endif]*/}
-                                {/*[if (mso)|(IE)]><td align="center" width="179" style="width: 179px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
-                                <div
-                                className="u-col u-col-29p84"
-                                style={{
-                                    maxWidth: 320,
-                                    minWidth: 179,
-                                    display: "table-cell",
-                                    verticalAlign: "top"
-                                }}
-                                >
-                                <div style={{ width: "100% !important" }}>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    <div
-                                    style={{
-                                        padding: 0,
-                                        borderTop: "0px solid transparent",
-                                        borderLeft: "0px solid transparent",
-                                        borderRight: "0px solid transparent",
-                                        borderBottom: "0px solid transparent"
-                                    }}
-                                    >
-                                    {/*<![endif]*/}
-                                    <table
-                                        className="hide-mobile"
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: 10,
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <table
-                                                cellPadding={0}
-                                                cellSpacing={0}
-                                                width="100%"
-                                                style={{
-                                                height:"0px",
-                                                textAlign:"center",
-                                                border:0,
-                                                borderCollapse: "collapse",
-                                                tableLayout: "fixed",
-                                                borderSpacing: 0,
-                                                verticalAlign: "top",
-                                                borderTop: "0px solid #BBBBBB",
-                                                WebkitTextSizeAdjust: "100%"
-                                                }}
-                                                className="td6"
-                                            >
-                                                <tbody>
-                                                <tr style={{ verticalAlign: "top" }}>
-                                                    <td
-                                                    style={{
-                                                        wordBreak: "break-word",
-                                                        verticalAlign: "top",
-                                                        fontSize: 0,
-                                                        lineHeight: 0,
-                                                        WebkitTextSizeAdjust: "100%"
-                                                    }}
-                                                    className="td8"
-                                                    >
-                                                    <span>&nbsp;</span>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    </div>
-                                    {/*<![endif]*/}
-                                </div>
-                                </div>
-                                {/*[if (mso)|(IE)]></td><![endif]*/}
-                                {/*[if (mso)|(IE)]><td align="center" width="116" style="width: 116px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
-                                <div
-                                className="u-col u-col-19p33"
-                                style={{
-                                    maxWidth: 320,
-                                    minWidth: 116,
-                                    display: "table-cell",
-                                    verticalAlign: "top"
-                                }}
-                                >
-                                <div style={{ width: "100% !important" }}>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    <div
-                                    style={{
-                                        padding: 0,
-                                        borderTop: "0px solid transparent",
-                                        borderLeft: "0px solid transparent",
-                                        borderRight: "0px solid transparent",
-                                        borderBottom: "0px solid transparent"
-                                    }}
-                                    >
-                                    {/*<![endif]*/}
-                                    <table
-                                        className="hide-mobile"
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: 10,
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <table
-                                                cellPadding={0}
-                                                cellSpacing={0}
-                                                style={{
-                                                width:"100%",
-                                                height:"0px",
-                                                textAlign:"center",
-                                                border:0,
-                                                borderCollapse: "collapse",
-                                                tableLayout: "fixed",
-                                                borderSpacing: 0,
-                                                verticalAlign: "top",
-                                                borderTop: "0px solid #BBBBBB",
-                                                WebkitTextSizeAdjust: "100%"
-                                                }}
-                                                className="table8"
-                                            >
-                                                <tbody>
-                                                <tr style={{ verticalAlign: "top" }}>
-                                                    <td
-                                                    style={{
-                                                        wordBreak: "break-word",
-                                                        verticalAlign: "top",
-                                                        fontSize: 0,
-                                                        lineHeight: 0,
-                                                        WebkitTextSizeAdjust: "100%"
-                                                    }}
-                                                    className="td9"
-                                                    >
-                                                    <span>&nbsp;</span>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    </div>
-                                    {/*<![endif]*/}
-                                </div>
-                                </div>
-                                {/*[if (mso)|(IE)]></td><![endif]*/}
-                                {/*[if (mso)|(IE)]><td align="center" width="121" style="width: 121px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
-                                <div
-                                className="u-col u-col-20p14"
-                                style={{
-                                    maxWidth: 320,
-                                    minWidth: 121,
-                                    display: "table-cell",
-                                    verticalAlign: "top"
-                                }}
-                                >
-                                <div style={{ width: "100% !important" }}>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    <div
-                                    style={{
-                                        padding: 0,
-                                        borderTop: "0px solid transparent",
-                                        borderLeft: "0px solid transparent",
-                                        borderRight: "0px solid transparent",
-                                        borderBottom: "0px solid transparent"
-                                    }}
-                                    >
-                                    {/*<![endif]*/}
-                                    <table
-                                        id="u_content_text_48"
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: "10px 10px 5px",
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <div
-                                                className="v-text-align"
-                                                style={{
-                                                color: "#0d83dd",
-                                                lineHeight: "140%",
-                                                textAlign: "left",
-                                                wordWrap: "break-word"
-                                                }}
-                                            >
-                                                <p style={{ fontSize: 14, lineHeight: "140%" }}>
-                                                <span
-                                                    style={{
-                                                    fontSize: 16,
-                                                    lineHeight: "22.4px"
+                                                    color: "#34495e",
+                                                    lineHeight: "140%",
+                                                    textAlign: "left",
+                                                    wordWrap: "break-word"
                                                     }}
                                                 >
-                                                    <strong>Sub Total</strong>
-                                                </span>
-                                                </p>
-                                            </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    </div>
-                                    {/*<![endif]*/}
-                                </div>
-                                </div>
-                                {/*[if (mso)|(IE)]></td><![endif]*/}
-                                {/*[if (mso)|(IE)]><td align="center" width="184" style="width: 184px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
-                                <div
-                                className="u-col u-col-30p69"
-                                style={{
-                                    maxWidth: 320,
-                                    minWidth: 184,
-                                    display: "table-cell",
-                                    verticalAlign: "top"
-                                }}
-                                >
-                                <div style={{ width: "100% !important" }}>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    <div
-                                    style={{
-                                        padding: 0,
-                                        borderTop: "0px solid transparent",
-                                        borderLeft: "0px solid transparent",
-                                        borderRight: "0px solid transparent",
-                                        borderBottom: "0px solid transparent"
-                                    }}
-                                    >
-                                    {/*<![endif]*/}
-                                    <table
-                                        id="u_content_text_52"
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: "10px 15px 10px 10px",
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <div
-                                                className="v-text-align"
-                                                style={{
-                                                color: "#34495e",
-                                                lineHeight: "140%",
-                                                textAlign: "right",
-                                                wordWrap: "break-word"
-                                                }}
-                                            >
-                                                <p style={{ fontSize: 14, lineHeight: "140%" }}>
-                                                <span
-                                                    style={{
-                                                    fontSize: 18,
-                                                    lineHeight: "25.2px"
-                                                    }}
-                                                >
+                                                    <p style={{ fontSize: 14, lineHeight: "140%" }}>
                                                     <strong>
-                                                    $ {"{"}
-                                                    {"{"}sub_total{"}"}
-                                                    {"}"}
+                                                        {`${item.itemName}`}
                                                     </strong>
-                                                </span>
-                                                </p>
-                                            </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    {/*[if (!mso)&(!IE)]><!*/}
+                                                    </p>
+                                                </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <table
+                                            id="u_content_text_73"
+                                            style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
+                                            role="presentation"
+                                            cellPadding={0}
+                                            cellSpacing={0}
+                                            width="100%"
+                                        >
+                                            <tbody>
+                                            <tr>
+                                                <td
+                                                className="v-container-padding-padding"
+                                                style={{
+                                                    overflowWrap: "break-word",
+                                                    wordBreak: "break-word",
+                                                    padding: "0px 10px 10px 15px",
+                                                    fontFamily: '"Montserrat",sans-serif'
+                                                }}
+                                                align="left"
+                                                >
+                                                <div
+                                                    className="v-text-align"
+                                                    style={{
+                                                    color: "#34495e",
+                                                    lineHeight: "140%",
+                                                    textAlign: "left",
+                                                    wordWrap: "break-word"
+                                                    }}
+                                                >
+                                                    <p style={{ fontSize: 14, lineHeight: "140%" }}>
+                                                    {item.chickenFlavour1 != "" ?
+                                                        `${item.chickenFlavour1}\n${item.chickenFlavour2}
+                                                        \n${item.drink}\n${item.otherIntructions}\n${item.ifnotAvailable}` :
+                                                        `${item.drink}\n${item.otherIntructions}\n${item.ifnotAvailable}`
+                                                    }
+                                                    </p>
+                                                </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        {/*[if (!mso)&(!IE)]><!*/}
+                                        </div>
+                                        {/*<![endif]*/}
                                     </div>
-                                    {/*<![endif]*/}
+                                    </div>
+                                    {/*[if (mso)|(IE)]></td><![endif]*/}
+                                    {/*[if (mso)|(IE)]><td align="center" width="200" style="width: 200px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
+                                    <div
+                                    className="u-col u-col-33p33"
+                                    style={{
+                                        maxWidth: 320,
+                                        minWidth: 200,
+                                        display: "table-cell",
+                                        verticalAlign: "top"
+                                    }}
+                                    >
+                                    <div style={{ width: "100% !important" }}>
+                                        {/*[if (!mso)&(!IE)]><!*/}
+                                        <div
+                                        style={{
+                                            padding: 0,
+                                            borderTop: "0px solid transparent",
+                                            borderLeft: "0px solid transparent",
+                                            borderRight: "0px solid transparent",
+                                            borderBottom: "0px solid transparent"
+                                        }}
+                                        >
+                                        {/*<![endif]*/}
+                                        <table
+                                            id="u_content_text_76"
+                                            style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
+                                            role="presentation"
+                                            cellPadding={0}
+                                            cellSpacing={0}
+                                            width="100%"
+                                        >
+                                            <tbody>
+                                            <tr>
+                                                <td
+                                                className="v-container-padding-padding"
+                                                style={{
+                                                    overflowWrap: "break-word",
+                                                    wordBreak: "break-word",
+                                                    padding: "10px 15px 10px 10px",
+                                                    fontFamily: '"Montserrat",sans-serif'
+                                                }}
+                                                align="left"
+                                                >
+                                                <div
+                                                    className="v-text-align"
+                                                    style={{
+                                                    color: "#34495e",
+                                                    lineHeight: "140%",
+                                                    textAlign: "right",
+                                                    wordWrap: "break-word"
+                                                    }}
+                                                >
+                                                    <p style={{ fontSize: 14, lineHeight: "140%" }}>
+                                                    <strong>
+                                                        $ {`${item.itemCost}`}
+                                                    </strong>
+                                                    </p>
+                                                </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        {/*[if (!mso)&(!IE)]><!*/}
+                                        </div>
+                                        {/*<![endif]*/}
+                                    </div>
+                                    </div>
+                                    {/*[if (mso)|(IE)]></td><![endif]*/}
+                                    {/*[if (mso)|(IE)]><td align="center" width="200" style="width: 200px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
+                                    <div
+                                    className="u-col u-col-33p33"
+                                    style={{
+                                        maxWidth: 320,
+                                        minWidth: 200,
+                                        display: "table-cell",
+                                        verticalAlign: "top"
+                                    }}
+                                    >
+                                    <div style={{ width: "100% !important" }}>
+                                        {/*[if (!mso)&(!IE)]><!*/}
+                                        <div
+                                        style={{
+                                            padding: 0,
+                                            borderTop: "0px solid transparent",
+                                            borderLeft: "0px solid transparent",
+                                            borderRight: "0px solid transparent",
+                                            borderBottom: "0px solid transparent"
+                                        }}
+                                        >
+                                        {/*<![endif]*/}
+                                        <table
+                                            id="u_content_text_75"
+                                            style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
+                                            role="presentation"
+                                            cellPadding={0}
+                                            cellSpacing={0}
+                                            width="100%"
+                                        >
+                                            <tbody>
+                                            <tr>
+                                                <td
+                                                className="v-container-padding-padding"
+                                                style={{
+                                                    overflowWrap: "break-word",
+                                                    wordBreak: "break-word",
+                                                    padding: 10,
+                                                    fontFamily: '"Montserrat",sans-serif'
+                                                }}
+                                                align="left"
+                                                >
+                                                <div
+                                                    className="v-text-align"
+                                                    style={{
+                                                    color: "#34495e",
+                                                    lineHeight: "140%",
+                                                    textAlign: "left",
+                                                    wordWrap: "break-word"
+                                                    }}
+                                                >
+                                                    <p style={{ fontSize: 14, lineHeight: "140%" }}>
+                                                    <strong>1</strong>
+                                                    </p>
+                                                </div>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        {/*[if (!mso)&(!IE)]><!*/}
+                                        </div>
+                                        {/*<![endif]*/}
+                                    </div>
+                                    </div>
+                                    {/*[if (mso)|(IE)]></td><![endif]*/}
+                                    {/*[if (mso)|(IE)]></tr></table></td></tr></table><![endif]*/}
                                 </div>
                                 </div>
-                                {/*[if (mso)|(IE)]></td><![endif]*/}
-                                {/*[if (mso)|(IE)]></tr></table></td></tr></table><![endif]*/}
                             </div>
+                            <div
+                                className="u-row-container"
+                                style={{ padding: 0, backgroundColor: "transparent" }}
+                            >
+                                <div
+                                className="u-row"
+                                style={{
+                                    margin: "0 auto",
+                                    minWidth: 320,
+                                    maxWidth: 600,
+                                    overflowWrap: "break-word",
+                                    wordWrap: "break-word",
+                                    wordBreak: "break-word",
+                                    backgroundColor: "#ffffff"
+                                }}
+                                >
+                                <div
+                                    style={{
+                                    borderCollapse: "collapse",
+                                    display: "table",
+                                    width: "100%",
+                                    backgroundColor: "transparent"
+                                    }}
+                                >
+                                    {/*[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #ffffff;"><![endif]*/}
+                                    {/*[if (mso)|(IE)]><td align="center" width="600" style="width: 600px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
+                                    <div
+                                    className="u-col u-col-100"
+                                    style={{
+                                        maxWidth: 320,
+                                        minWidth: 600,
+                                        display: "table-cell",
+                                        verticalAlign: "top"
+                                    }}
+                                    >
+                                    <div style={{ width: "100% !important" }}>
+                                        {/*[if (!mso)&(!IE)]><!*/}
+                                        <div
+                                        style={{
+                                            padding: 0,
+                                            borderTop: "0px solid transparent",
+                                            borderLeft: "0px solid transparent",
+                                            borderRight: "0px solid transparent",
+                                            borderBottom: "0px solid transparent"
+                                        }}
+                                        >
+                                        {/*<![endif]*/}
+                                        <table
+                                            style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
+                                            role="presentation"
+                                            cellPadding={0}
+                                            cellSpacing={0}
+                                            width="100%"
+                                        >
+                                            <tbody>
+                                            <tr>
+                                                <td
+                                                className="v-container-padding-padding"
+                                                style={{
+                                                    overflowWrap: "break-word",
+                                                    wordBreak: "break-word",
+                                                    padding: "5px 10px",
+                                                    fontFamily: '"Montserrat",sans-serif'
+                                                }}
+                                                align="left"
+                                                >
+                                                <table
+                                                    cellPadding={0}
+                                                    cellSpacing={0}
+                                                    width="100%"
+                                                    style={{
+                                                    height:"0px",
+                                                    textAlign:"center",
+                                                    border:0,
+                                                    tableLayout: "fixed",
+                                                    borderSpacing: 0,
+                                                    verticalAlign: "top",
+                                                    borderTop: "1px solid #BBBBBB",
+                                                    WebkitTextSizeAdjust: "100%"
+                                                    }}
+                                                    className="table3"
+                                                >
+                                                    <tbody>
+                                                    <tr style={{ verticalAlign: "top" }}>
+                                                        <td
+                                                        style={{
+                                                            wordBreak: "break-word",
+                                                            verticalAlign: "top",
+                                                            fontSize: 0,
+                                                            lineHeight: 0,
+                                                            WebkitTextSizeAdjust: "100%"
+                                                        }}
+                                                        className="td3"
+                                                        >
+                                                        <span>&nbsp;</span>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        {/*[if (!mso)&(!IE)]><!*/}
+                                        </div>
+                                        {/*<![endif]*/}
+                                    </div>
+                                    </div>
+                                    {/*[if (mso)|(IE)]></td><![endif]*/}
+                                    {/*[if (mso)|(IE)]></tr></table></td></tr></table><![endif]*/}
+                                </div>
+                                </div>
                             </div>
-                        </div>
+                        </>
+                        ))}
+                        
                         <div
                             className="u-row-container"
                             style={{ padding: 0, backgroundColor: "transparent" }}
@@ -3628,9 +2037,7 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
                                                     }}
                                                 >
                                                     <strong>
-                                                    $ {"{"}
-                                                    {"{"}service_fee{"}"}
-                                                    {"}"}
+                                                    $ {`${receiptDetails.ServiceCharge}`}
                                                     </strong>
                                                 </span>
                                                 </p>
@@ -3976,9 +2383,7 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
                                                     }}
                                                 >
                                                     <strong>
-                                                    $ {"{"}
-                                                    {"{"}gct{"}"}
-                                                    {"}"}
+                                                    $ {`${receiptDetails.GCT}`}
                                                     </strong>
                                                 </span>
                                                 </p>
@@ -4323,9 +2728,7 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
                                                     }}
                                                 >
                                                     <strong>
-                                                    $ {"{"}
-                                                    {"{"}total{"}"}
-                                                    {"}"}
+                                                    $ {`${receiptDetails.OrderTotal}`}
                                                     </strong>
                                                 </span>
                                                 </p>
@@ -4428,9 +2831,7 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
                                                     Thank you for choosing us,
                                                 </span>
                                                 <br />
-                                                {"{"}
-                                                {"{"}to_name{"}"}
-                                                {"}"}
+                                                {userInfo.fullName}
                                                 </p>
                                             </div>
                                             </td>
@@ -4515,7 +2916,7 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
                                             >
                                             <div style={{textAlign:"center"}}>
                                                 <div
-                                                style={{ display: "table", maxWidth: 125 }}
+                                                style={{ display: "flex", maxWidth: 125, marginLeft: "auto", marginRight: "auto" }}
                                                 >
                                                 {/*[if (mso)|(IE)]><table width="125" cellpadding="0" cellspacing="0" border="0"><tr><td style="border-collapse:collapse;" align="center"><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; mso-table-lspace: 0pt;mso-table-rspace: 0pt; width:125px;"><tr><![endif]*/}
                                                 {/*[if (mso)|(IE)]><td width="32" style="width:32px; padding-right: 10px;" valign="top"><![endif]*/}
@@ -4712,12 +3113,12 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
                                                 className="v-text-align"
                                                 style={{
                                                 color: "#ffffff",
-                                                lineHeight: "150%",
+                                                lineHeight: 1,
                                                 textAlign: "center",
                                                 wordWrap: "break-word"
                                                 }}
                                             >
-                                                <p style={{ fontSize: 14, lineHeight: "150%" }}>
+                                                <p style={{ fontSize: 14, lineHeight: 1, height: "170px" }}>
                                                 If you have any questions, feel free message
                                                 us at{" "}
                                                 <a
@@ -4737,15 +3138,15 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
                                                     .
                                                 </span>
                                                 </p>
-                                                <p style={{ fontSize: 14, lineHeight: "150%" }}>
+                                                <p style={{ fontSize: 14, lineHeight: 2 }}>
                                                 All right reserved. <br />
                                                 876 960 1004
                                                 </p>
-                                                <p style={{ fontSize: 14, lineHeight: "150%" }}>
+                                                <p style={{ fontSize: 14, lineHeight: 2 }}>
                                                 <br />
                                                 77 Manchester Ave, May Pen
                                                 </p>
-                                                <p style={{ fontSize: 14, lineHeight: "150%" }}>
+                                                <p style={{ fontSize: 14, lineHeight: 2 }}>
                                                 &nbsp;
                                                 </p>
                                             </div>
