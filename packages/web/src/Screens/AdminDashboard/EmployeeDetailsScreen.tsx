@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { Sidebar } from './Comp/Sidebar';
 import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
+import { OrdersCounters } from './Comp/OrdersCounters';
 
 
 interface Props {
@@ -53,6 +54,9 @@ export const EmployeeDetailsScreen: React.FC = () => {
                             </Grid>
                             <Grid item xs={4} style={{ marginBottom: "2%", marginTop: "1%", background: "transparent" }}>
                                 <HeaderRight />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <OrdersCounters />
                             </Grid>
                             <Grid item xs={12}>
                                 Employee Details
