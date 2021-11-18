@@ -54,8 +54,10 @@ function appDataReducer(state, action){
             };
         case "logout_user":
             return {
+              ...state,
               currentUser: action.payload.currentUser,
-              loggedIn: action.payload.loggedIn
+              loggedIn: action.payload.loggedIn,
+              userInfo: action.payload.userInfo
             }
         case "fetch_restaurants": 
           return {
@@ -71,9 +73,22 @@ function appDataReducer(state, action){
         case "menu_categories":
           return {
             ...state,
-            menuCategories: action.payload.menuCategories
+            menuCategories: action.payload.menuCategories,
+            filteredMenuItems: [],
+            filterCategory: undefined
+          }
+        case "filter_menu_category": 
+          return {
+            ...state,
+            filteredMenuItems: action.payload.filteredMenuItems,
+            filterCategory: action.payload.filterCategory
           }
         case "add_cart_item":
+          return {
+            ...state,
+            cartItems: action.payload.cartItems
+          }
+        case "remove_cart_item":
           return {
             ...state,
             cartItems: action.payload.cartItems
@@ -83,7 +98,13 @@ function appDataReducer(state, action){
             ...state,
             cartItems: action.payload.cartItems,
             orders: action.payload.orders,
-            selectedRestaurant: action.payload.selectedRestaurant
+            selectedRestaurant: action.payload.selectedRestaurant,
+            receiptDetails: action.payload.receiptDetails
+          }
+        case "set_general_location":
+          return {
+            ...state,
+            generalLocation: action.payload.generalLocation
           }
         default:
             return state;
@@ -112,6 +133,10 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
 
     var currentUser = undefined;
     var selectedRestaurant = undefined;
+    var selectedMenuCategory = undefined;
+    var filteredMenuItems = [];
+    var filterCategory = undefined;
+    var generalLocation = undefined;
     var prevSelectedrestaurant = undefined; 
     var loading = true;
     var loggedIn = false;
@@ -120,6 +145,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var orders = [];
     var restaurants = [];
     var menuCategories = [];
+    var receiptDetails = undefined;
 
     var userInfo = {
       contactNumber: "",
@@ -236,6 +262,14 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       payload.loggedIn = false;
       auth.signOut().then(function () {
         payload.currentUser = null;
+        payload.userInfo = {
+          contactNumber: "",
+          email: "",
+          fullName: "",
+          addressLine1: "",
+          addressLine2: "",
+          city: ""
+        };
         dispatch({
           type: "logout_user",
           payload: payload
@@ -244,26 +278,26 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     };
     
     var userHasRole = async function userHasRole(uid, payload) {
-      //console.log("User id is: ");
-      //console.log(uid);
-      //console.log("fetching user role");
+      console.log("User id is: ");
+      console.log(uid);
+      console.log("fetching user role");
       var userRef = await getUserInRole({variables: {UserID: uid}}).then(async function(response) {
-        //console.log("Checking user result");
+        console.log("Checking user result");
         if (response.data.getUserInRole.RoleID !== null) {
-          //console.log("user role exist");
-          //console.log(response);
+          console.log("user role exist");
+          console.log(response);
           //console.log("what is inside payload");
           //console.log(payload);
           // Convert to City object
            var userRoleID = response.data.getUserInRole.RoleID;
-          //console.log("user in role res:");
-          //console.log(userRoleID);
+          console.log("user in role res:");
+          console.log(userRoleID);
           if (userRoleID !== null) {
-            payload.userRolef = await getRole({variables: {id:userRoleID}}).then(async function (response2) {
+            payload.userRolef = await getRole({variables: {_id:userRoleID}}).then(async function (response2) {
               if (response2.data.getRole !== null) {
                 var res = response2.data.getRole;
-                //console.log("Role Exists is?");
-                //console.log(res);
+                console.log("Role Exists is?");
+                console.log(res);
                 return res.description;
               }
             });
@@ -402,12 +436,14 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           //console.log(payloadf);
 
         var user = response.data.getUser;
-    
+        console.log("firstname is:");
+        console.log(user.FirstName);
         if (user !== null) {
           payloadf.userInfo.contactNumber = user.ContactNumber !== null && user.ContactNumber !== undefined ? user.ContactNumber : "";
           payloadf.userInfo.email = user.Email !== null && user.Email !== undefined ? user.Email : "";
-          payloadf.userInfo.fullName = user.FirstName !== null && user.FirstName !== undefined? user.FirstName + " " 
-                                     + user.LastName !== null && user.LastName !== undefined? user.LastName : "" + user.LastName !== null && user.LastName !== undefined? user.LastName : "":"";
+          payloadf.userInfo.fullName = user.FirstName !== null && user.FirstName !== undefined? user.FirstName : "";
+          // + " " 
+          //                            + user.LastName !== null && user.LastName !== undefined? user.LastName : "" + user.LastName !== null && user.LastName !== undefined? user.LastName : "":"";
           payloadf.loggedIn = true;
           payloadf.userInfo.addressLine1 = user.AddressLine1 !== null && user.AddressLine1 !== undefined ? user.AddressLine1 : "";
           payloadf.userInfo.addressLine2 = user.AddressLine2 !== null && user.AddressLine2 !== undefined ? user.AddressLine2 : "";
@@ -556,6 +592,35 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       }
     }
 
+    var getMenuBycategory = async function getMenuBycategory(payload, restaurant, category){
+      if(category !== "All"){
+        var newMenuItems = [] as Object[];
+        restaurant.MenuItems.map((item, index) => {
+          if(item.MenuCategory === category){
+            newMenuItems.push(item);
+          }
+        });
+        //return newMenuItems;
+        payload.filteredMenuItems = newMenuItems;
+        payload.filterCategory = category;
+
+        dispatch({
+          type: "filter_menu_category",
+          payload: payload
+        });
+      }else{
+        payload.filteredMenuItems = [];
+        payload.filterCategory = undefined;
+
+        dispatch({
+          type: "filter_menu_category",
+          payload: payload
+        });
+      }
+      
+      
+    }
+
     var addItemToCart = async function addItemToCart(payload, item){
       if(item.length !== 0){
           payload.cartItems.push(item);
@@ -566,16 +631,25 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       }
     }
 
-    var checkoutOrder  = async function checkoutOrder(payload, cartItems, state){
+    var removeCartItem = async function removeCartItem(index, payload, cartItems){
+      if(cartItems.length > 0){
+        cartItems.splice(index, 1);
+        payload.cartItems = cartItems;
+        dispatch({
+          type: "remove_cart_item",
+          payload: payload
+        });
+      }
+    }
+
+    var checkoutOrder  = async function checkoutOrder(payload, cartItems, state, deliveryFee, GCT, serviceFee, cartItemsSum, Total){
       if(cartItems.length !== 0){
         var orderItems : object[] = [];
-        var total = 0;
         const now = new Date();
         const estTime = moment.tz(now, "America/Jamaica").format();
         //console.log("Jamaican Time is:");
         //console.log(estTime);
         cartItems.map((item, index) => {
-          total = total + item.itemCost;
           var body = {
             itemName: item.itemName,
             chickenFlavour1: item.chickenFlavour1,
@@ -583,7 +657,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             drink: item.drink,
             otherIntructions: item.otherIntructions,
             itemCost: item.itemCost,
-            imageName: value.imageName
+            imageName: value.imageName,
+            ifnotAvailable: item.ifnotAvailable
           } as object;
           orderItems.push(body);
           return null;
@@ -591,13 +666,17 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         var orderBody = {
           Id: payload.currentUser.uid,
           OrderItems: orderItems,
-          OrderStatus: "Pending",
-          OrderTotal: total,
+          OrderStatus: "Ordered",
+          OrderTotal: Number(Total.Cost),
           OrderDate: estTime,
           Rider: "Rider 1",
-          DeliveryAddress: state.DeliveryAddress,
+          DeliveryAddress: state.Street + "," + state.Town + ",Clarendon",
           PaymentMethod: state.PaymentMethod,
-          AdditionalInfo: state.AdditionalInfo
+          AdditionalInfo: state.ContactNum,
+          DeliveryFee: Number(deliveryFee.Cost),
+          GCT: Number(GCT.Cost),
+          ServiceCharge: Number(serviceFee.Cost),
+          CartTotal: Number(cartItemsSum.Cost)
         }
 
         await createOrder({variables: orderBody}).then(async function(response) {
@@ -607,6 +686,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             //console.log(response.data.createOrder);
             payload.cartItems = [];
             payload.selectedRestaurant = undefined;
+            payload.receiptDetails = response.data.createOrder;
+
             await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
               if (response.data.getOrdersByUserId !== null) {
                 payload.orders = response.data.getOrdersByUserId;
@@ -628,9 +709,26 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
 
     var fetchOrdersByUser  = async function fetchOrdersByUser(payload){
       if(payload.currentUser !== undefined){
-        await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
-          if (response.data.getOrdersByUserId !== null) {
-            payload.orders = response.data.getOrdersByUserId;
+        if(payload.currentUser.uid !== undefined){
+          await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
+            if (response.data.getOrdersByUserId !== null) {
+              payload.orders = response.data.getOrdersByUserId;
+              dispatch({
+                type: "checkout",
+                payload: payload
+              })
+            }
+          });
+        }
+        
+      }
+    }
+
+    var fetchOrders  = async function fetchOrders(payload){
+      if(payload.currentUser !== undefined){
+        await getOrders().then(async function(response) {
+          if (response.data.getOrders !== null) {
+            payload.orders = response.data.getOrders;
             dispatch({
               type: "checkout",
               payload: payload
@@ -680,6 +778,49 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       return fianlRes;
     };
 
+    var sendOrderCompletedEmail = async function sendOrderCompletedEmail(formVals) {
+      // //console.log("Wtf is in formVals");
+      // //console.log(formVals);
+      var RequestParams = {
+        from_name: formVals.user_name,
+        user_email: formVals.user_email,
+        order_id: formVals.order_id,
+        message: "Fullname: " + formVals.user_name + " Email: " + formVals.user_email + " Phone Number: " + formVals.user_contact 
+        + " Own Transportation? " + formVals.own_TR + " Own Smartphone? " + formVals.own_SM  + " Own Drivers license? " + formVals.own_DL 
+        + " Own Learners License " + formVals.own_LL + " ."
+      }; // var data2 = {event: 'staff add package',
+      //                       value:{"What is in this package b4 email sent for user: " : "What is in this package b4 email sent for user", RequestParams: RequestParams}
+      // };
+      // var entry2 = log.entry(METADATA, data2);
+      // log.write(entry2);
+      // //console.log("What is in this package b4 emails sent");
+      // //console.log(RequestParams);
+    
+      var fianlRes = await sendEmail(emailServiceId, emailNewJobAppTemplate, RequestParams, emailUserId).then(function (res) {
+        if (res) {
+          return true;
+        }
+      }).catch(function (err) {
+        // var data3 = {event: 'staff add package',
+        //                     value:{"Send email error for user: " : formVals.user_email, error: err}
+        // };
+        // var entry3 = log.entry(METADATA, data3);
+        // log.write(entry3);
+        // //console.log("Send email error");
+        // //console.log(err);
+        return false;
+      });
+      return fianlRes;
+    };
+
+    var AddGeneralLocation = async function AddGeneralLocation(payload, location) {
+        payload.generalLocation = location;
+        dispatch({
+          type: "set_general_location",
+          payload: payload
+        })
+    }
+
     const [value, dispatch] = useReducer(appDataReducer, {
         currentUser,
         loading,
@@ -691,8 +832,13 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         orders,
         restaurants,
         selectedRestaurant,
+        selectedMenuCategory,
         prevSelectedrestaurant,
         menuCategories,
+        filteredMenuItems,
+        filterCategory,
+        generalLocation,
+        receiptDetails,
         JoinUs,
         signup,
         login,
@@ -703,10 +849,14 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         fetchUserInfo,
         fetchRestaurants,
         viewMenuItems,
+        getMenuBycategory,
         addItemToCart,
+        removeCartItem,
         getMenuCats,
         checkoutOrder,
-        fetchOrdersByUser
+        fetchOrdersByUser,
+        fetchOrders,
+        AddGeneralLocation
     });
     
      

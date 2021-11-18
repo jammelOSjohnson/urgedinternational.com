@@ -7,6 +7,7 @@ import { Sidebar } from '../Dashboard/Comp/Sidebar';
 import { HeaderLeft } from '../Dashboard/Comp/HeaderLeft';
 import { HeaderRight } from '../Dashboard/Comp/HeaderRight';
 import Alert from '@material-ui/lab/Alert';
+import { DashboardFooter } from '../Dashboard/Comp/DashboardFooter';
 
 
 
@@ -64,6 +65,8 @@ const useStyles = makeStyles((theme: Theme) =>
             height: "41px",
             width: "113px",
             borderRadius: 36,
+            marginTop: "5%",
+            marginBottom: "5%"
         },
         btnfonts: {
             fontFamily: "PT Sans",
@@ -137,7 +140,7 @@ export const CheckoutScreen: React.FC = function CheckoutScreen() {
                     </Typography>
                     <form>
                         <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                            <Grid item xs={10} sm={12} >
+                            <Grid item xs={12} sm={12} >
                                 <TextField
                                     id="outlined-multiline-static1"
                                     label="Delivery Address"
@@ -150,7 +153,7 @@ export const CheckoutScreen: React.FC = function CheckoutScreen() {
                                     fullWidth
                                 />
                             </Grid>
-                            <Grid item xs={10} sm={12}>
+                            <Grid item xs={12} sm={12}>
                                 <FormControl variant="outlined" className={classes.formControl} fullWidth>
                                     <InputLabel id="demo-simple-select-outlined-label">Payment Method</InputLabel>
                                     <Select
@@ -168,7 +171,7 @@ export const CheckoutScreen: React.FC = function CheckoutScreen() {
                                     </Select>
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={10} sm={12} >
+                            <Grid item xs={12} sm={12} >
                                 <TextField
                                     id="outlined-multiline-static"
                                     label="Additionl Info"
@@ -181,12 +184,15 @@ export const CheckoutScreen: React.FC = function CheckoutScreen() {
                                     fullWidth
                                 />
                             </Grid>
-                            <Grid item xs={10} sm={12} >
+                            <Grid item xs={12} sm={12} >
                                 {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
                                 {success && <Alert variant="filled" severity="success" className={classes.alert}>{success}</Alert>}
                                 <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button" onClick={handleSubmit}>
                                     Complete Order 
                                 </Button>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <DashboardFooter />
                             </Grid>
                         </Grid>
                     </form>

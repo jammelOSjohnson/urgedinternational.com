@@ -41,8 +41,6 @@ const useStyles = makeStyles((theme: Theme) =>
 export const OrdersScreen: React.FC = function OrdersScreen () {
     const classes = useStyles();
 
-
-
     return (
         <>
             <Sidebar>
@@ -56,7 +54,7 @@ export const OrdersScreen: React.FC = function OrdersScreen () {
                                 <HeaderRight />
                             </Grid>
                             <Grid item xs={12}>
-                                <FilterBar />
+                                {/* <FilterBar /> */}
                                 <OrdersTable />
                             </Grid>
                         </Grid>

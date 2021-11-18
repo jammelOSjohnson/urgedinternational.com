@@ -57,12 +57,12 @@ const resolvers = {
             return identification.save();
         },
 
-        getRole: async (_,{id}) => {
-            return await Role.findOne({id}); 
+        getRole: async (_,{_id}) => {
+            return await Role.findOne({_id}); 
         },
 
         getUserInRole: async (_, {UserID}) => {
-            return await UserInRole.find({UserID});
+            return await UserInRole.findOne({UserID});
         },
 
         addUserToRole: (_, {UserID, RoleID}) => {
@@ -102,8 +102,8 @@ const resolvers = {
         },
 
         //Orders
-        createOrder: (_,{Id,OrderItems,OrderStatus,OrderTotal,OrderDate,Rider, DeliveryAddress, PaymentMethod, AdditionalInfo}) => {
-            const orderItem = new Order({Id, OrderItems, OrderStatus, OrderTotal, OrderDate, Rider, DeliveryAddress, PaymentMethod, AdditionalInfo});
+        createOrder: (_,{Id,OrderItems,OrderStatus,OrderTotal,OrderDate,Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal}) => {
+            const orderItem = new Order({Id, OrderItems, OrderStatus, OrderTotal, OrderDate, Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal});
             return orderItem.save();
         },
 

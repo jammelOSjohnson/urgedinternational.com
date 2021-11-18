@@ -45,7 +45,8 @@ export async function startServer() {
         //console.log(process.env);
         await mongoose.connect(conn_string, {
             useUnifiedTopology: true,
-            useNewUrlParser: true
+            useNewUrlParser: true,
+            useCreateIndex: true
         });
     }catch(err){
         console.log(err);

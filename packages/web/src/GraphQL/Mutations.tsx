@@ -48,8 +48,9 @@ export const GET_USER_IN_ROLE = gql`
 `
 
 export const GET_ROLE = gql`
-    mutation getRole($id: String!) {
-        getRole(id: $id){
+    mutation getRole($_id: String!) {
+        getRole(_id: $_id){
+            _id
             description
         }
     }
@@ -126,7 +127,11 @@ export const CREATE_ORDER = gql`
         $Rider: String ,
         $DeliveryAddress: String, 
         $PaymentMethod: String, 
-        $AdditionalInfo: String
+        $AdditionalInfo: String,
+        $DeliveryFee: Float,
+        $GCT: Float,
+        $ServiceCharge: Float,
+        $CartTotal: Float
         ) {
             createOrder(
                 Id: $Id, 
@@ -137,8 +142,13 @@ export const CREATE_ORDER = gql`
                 Rider: $Rider,
                 DeliveryAddress: $DeliveryAddress, 
                 PaymentMethod: $PaymentMethod, 
-                AdditionalInfo: $AdditionalInfo
+                AdditionalInfo: $AdditionalInfo,
+                DeliveryFee: $DeliveryFee,
+                GCT: $GCT,
+                ServiceCharge: $ServiceCharge,
+                CartTotal: $CartTotal
                 ){
+                    _id
                     Id
                     OrderItems 
                     OrderStatus
@@ -148,6 +158,10 @@ export const CREATE_ORDER = gql`
                     DeliveryAddress 
                     PaymentMethod
                     AdditionalInfo
+                    DeliveryFee
+                    GCT
+                    ServiceCharge
+                    CartTotal
                 }
     }
 `
@@ -162,23 +176,23 @@ export const GET_ORDERS_BY_USERID = gql`
             OrderTotal
             OrderDate
             Rider
+            DeliveryAddress 
+            PaymentMethod
+            AdditionalInfo
+            DeliveryFee
+            GCT
+            ServiceCharge
+            CartTotal
         }
     }
 `
 
 export const GET_ORDERS = gql`
     mutation getOrders {
-        getOrdersByUserId(Id: $Id){
+        getOrders{
+            _id
             Id
-            OrderItems {
-                itemName
-                chickenFlavour1
-                chickenFlavour2
-                drink
-                otherIntructions
-                itemCost
-                imageName
-            }
+            OrderItems
             OrderStatus
             OrderTotal
             OrderDate

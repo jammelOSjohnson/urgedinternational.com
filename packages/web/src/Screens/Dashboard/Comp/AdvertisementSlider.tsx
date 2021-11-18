@@ -1,4 +1,4 @@
-import { makeStyles, createStyles, Typography, Theme, Button } from '@material-ui/core';
+import { makeStyles, createStyles, Typography, Theme, Button, useMediaQuery, useTheme } from '@material-ui/core';
 import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -73,14 +73,54 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
+const useMobileStyles = makeStyles((theme: Theme) => 
+    createStyles({
+        imageMobile: {
+            zIndex: 1,
+            margin: '0% 0% 0% 0%',
+            position: "absolute",
+            right: "2%",
+            top: "20%",
+            width: "35%"
+        },
+        sliderSlogan: {
+            color: '#F9F9FB',
+            fontSize: '30px',
+            fontWeight: 700,
+            lineHeight: '26.22px',
+            padding: '0% 0% 2% 0%',
+            position: "absolute",
+            left: "-17%",
+            top: "-138%",
+            width: "300px"
+        },
+        sliderText: {
+            color: '#F9F9FB',
+            fontSize: '16px',
+            fontWeight: 400,
+            lineHeight: '29.34px',
+            margin: '-10% -17% 8% 0%',
+            position: "absolute",
+            left: "-17%",
+            top: "-28%",
+            width: "86%",
+            textAlign: "left",
+        },
+    })
+)
+
 export const AdvertisementSlider: React.FC = function AdvertisementSlider() {
     const classes = useStyles();
-
-    //const matches = useMediaQuery("(max-width:8000px)");
+    const classesMobile = useMobileStyles();
+    const theme = useTheme();
     
+    //const matches = useMediaQuery("(max-width:8000px)");
+    const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
       
     return (
         <>
+            {isMatchMedium?
                 <div style={{position: "relative"}}>
                     <img className={classes.image} src="Images/Rocket.png" alt="rocket logo"/>
                     <Carousel nextIcon={false} prevIcon={false}>
@@ -109,32 +149,45 @@ export const AdvertisementSlider: React.FC = function AdvertisementSlider() {
                                 
                             </Carousel.Caption>
                         </Carousel.Item>
-                        {/* <Carousel.Item>
-                            <img
-                            className="d-block w-100"
-                            src="holder.js/800x400?text=Second slide&bg=282c34"
-                            alt="Second slide"
-                            />
-
-                            <Carousel.Caption>
-                            <h3>Second slide label</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            </Carousel.Caption>
-                        </Carousel.Item>
-                        <Carousel.Item>
-                            <img
-                            className="d-block w-100"
-                            src="holder.js/800x400?text=Third slide&bg=20232a"
-                            alt="Third slide"
-                            />
-
-                            <Carousel.Caption>
-                            <h3>Third slide label</h3>
-                            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-                            </Carousel.Caption>
-                        </Carousel.Item> */}
                     </Carousel>
                 </div>
+                :
+                <></>
+            }
+            {isMatch?
+                <div style={{position: "relative"}}>
+                    <img className={classesMobile.imageMobile} src="Images/Rocket.png" alt="rocket logo"/>
+                    <Carousel nextIcon={false} prevIcon={false}>
+                        <Carousel.Item>  
+                            <img
+                            className="d-block"
+                            src="Images/SliderFrame.png"
+                            alt="First slide"
+                            width="100%"
+                            style={{minHeight: "300px"}}
+                            />
+                            <Carousel.Caption>
+                                <Typography className={`${classes.fonts} ${classesMobile.sliderSlogan}`}>
+                                    We are the definition of SPEED
+                                </Typography>
+                                <Typography className={`${classes.fonts} ${classesMobile.sliderText}`}>
+                                    Here at Urged, Quality and Time is our main priority. You can trust us to be on-time with your packages and food.
+                                </Typography>
+                                <Typography className={classes.btnLayout}>
+                                    <Button className={classes.Button}>
+                                        <Typography className={`${classes.fonts}`}>
+                                            Categories
+                                        </Typography>
+                                    </Button>
+                                </Typography>
+                                
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                    </Carousel>
+                </div>
+                :
+                <></>
+            }
         </>
     )
 }

@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react';
 import { useAppData } from '../../../Context/AppDataContext';
 import { DataGrid, GridColDef } from '@material-ui/data-grid';
+import moment from 'moment';
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'Transaction', width: 414 },
@@ -55,9 +56,11 @@ export const HistoryTable: React.FC = function HistoryTable () {
 
   if(orders.length !== 0){
     orders.map((item, index) => {
+      const now = new Date(parseInt(item.OrderDate, 10));
+      const estTime = moment.tz(now, "America/Jamaica").format();
       let row = {
         id: item._id, 
-        OrderDate: item.OrderDate, 
+        OrderDate: estTime, 
         OrderStatus: item.OrderStatus, 
         OrderTotal: `$ ${item.OrderTotal}`, 
         Rider: item.Rider

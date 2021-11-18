@@ -123,6 +123,9 @@ const useStyles = makeStyles((theme: Theme) =>
             marginRight: "auto",
             position: "absolute",
             bottom: "-65%",
+          },
+          loginIconStyle: {
+            transform: "rotate(180deg)",
           }
           
     }),
@@ -165,6 +168,15 @@ export const Sidebar: React.FC = function Sidebar({children}) {
       try{
         event.preventDefault();
         logout(value);
+      }catch{
+        //////console.log('Failed to logout.');
+      }
+    }
+
+    const handleLogin = (event) => {
+      try{
+        event.preventDefault();
+        history.push('/Login', { from: history.location.pathname});
       }catch{
         //////console.log('Failed to logout.');
       }
@@ -363,17 +375,17 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                         )) :
                         ['Settings', 'Login'].map((text, index) => (
                           text === 'Login'?
-                          <Link to="/Login" className={classes.inactiveItemLink}>
+                          <a href="/Login" onClick={handleLogin} className={classes.inactiveItemLink}>
                             <ListItem button key={text}>
                               <ListItemIcon>
                                 {
                                   index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
-                                  index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
+                                  index === 1 ? <img src="Images/Logout.png" className={classes.loginIconStyle} alt="BlackMarket icon"/> : <MailIcon />
                                 }
                               </ListItemIcon>
                               <ListItemText primary={text} />
                               </ListItem>
-                          </Link>
+                          </a>
                           :
                           <ListItem button key={text}>
                           <ListItemIcon>
@@ -619,17 +631,17 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                             )) :
                             ['Settings', 'Login'].map((text, index) => (
                               text === 'Login'?
-                              <Link to="/Login" className={classes.inactiveItemLink}>
+                              <a href="/Login" onClick={handleLogin} className={classes.inactiveItemLink}>
                                 <ListItem button key={text}>
                                   <ListItemIcon>
                                     {
                                       index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
-                                      index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
+                                      index === 1 ? <img src="Images/Logout.png" className={classes.loginIconStyle} alt="BlackMarket icon"/> : <MailIcon />
                                     }
                                   </ListItemIcon>
                                   <ListItemText primary={text} />
                                   </ListItem>
-                              </Link>
+                              </a>
                               :
                               <ListItem button key={text}>
                               <ListItemIcon>

@@ -8,7 +8,7 @@ const typeDefs = gql`
     scalar Json
 
     type Role {
-        id: ID!
+        _id: ID
         description: String!
     }
 
@@ -124,7 +124,7 @@ const typeDefs = gql`
     }
 
     type Order{
-        _id: ID
+        _id: Float
         Id: String,
         OrderItems: JSONObject 
         OrderStatus:  String
@@ -134,6 +134,10 @@ const typeDefs = gql`
         DeliveryAddress: String,
         PaymentMethod: String,
         AdditionalInfo: String
+        DeliveryFee: Float,
+        GCT: Float,
+        ServiceCharge: Float,
+        CartTotal: Float
     }
 
     type Query {
@@ -149,7 +153,7 @@ const typeDefs = gql`
     type Mutation {
         createRole(description: String): Role!
 
-        getRole(id: String): Role!
+        getRole(_id: String): Role!
 
         getUserInRole(UserID: String): UserInRole
 
@@ -195,7 +199,11 @@ const typeDefs = gql`
             Rider: String,
             DeliveryAddress: String,
             PaymentMethod: String,
-            AdditionalInfo: String
+            AdditionalInfo: String,
+            DeliveryFee: Float,
+            GCT: Float,
+            ServiceCharge: Float,
+            CartTotal: Float
         ): Order
 
         getOrdersByUserId(

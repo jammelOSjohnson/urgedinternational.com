@@ -4,6 +4,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 //Import Components
 import { ItemRating } from '../../../Components/ItemRating';
+import {FastFoodChickenFlavor} from './FastFoodChickenFlavor';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
@@ -20,6 +21,16 @@ interface State {
     imageName: string;
     orderStatus: string;
     deliveredBy: string;
+    itemCategory: string;
+    ifnotAvailable: string;
+    itemDescription: string;
+}
+
+interface Props {
+    itemCategory: string;
+    handleChange: any;
+    chickenFlavour1: string;
+    chickenFlavour2: string;
 }
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -165,7 +176,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
     const classes = useStyles();
     
     var { value }  = useAppData();
-    var { restaurants, selectedRestaurant, addItemToCart, userInfo } = value;
+    var { restaurants, selectedRestaurant, addItemToCart, userInfo, filteredMenuItems } = value;
     var restaurant = restaurants[selectedRestaurant];
     //console.log("Menu Screen Menu");
     //console.log(selectedRestaurant);
@@ -188,7 +199,10 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
         itemCost: 0.00,
         imageName: "",
         orderStatus: "New",
-        deliveredBy: "No one"
+        deliveredBy: "No one",
+        itemCategory: "",
+        ifnotAvailable: "Contact me",
+        itemDescription: ""
       });
 
     const [open, setOpen] = React.useState(false);
@@ -196,7 +210,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
 
     const handleOpen = (item) => {
         setItem(item);
-        setValues({...values, itemName: item.ItemName ,itemCost: item.ItemCost ,imageName: item.ImageName});
+        setValues({...values, itemName: item.ItemName ,itemCost: item.ItemCost ,imageName: item.ImageName, itemCategory: item.MenuCategory});
         setOpen(true);
     };
 
@@ -207,12 +221,21 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
     var history = useHistory();
 
     const handleChange = (event) => {
-        setValues({...values,[event.target.name]:event.target.value, itemName: selectedItem.ItemName, itemCost: selectedItem.ItemCost});
+        setValues({...values,[event.target.name]:event.target.value, itemName: selectedItem.ItemName, itemCost: selectedItem.ItemCost, itemDescription: selectedItem.ItemDescription});
     };
 
     const handleChange2 = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues({ ...values, [prop]: event.target.value });
       };
+
+      const handleLogin = (event) => {
+        try{
+          event.preventDefault();
+          history.push('/Login', { from: history.location.pathname});
+        }catch{
+          //////console.log('Failed to logout.');
+        }
+      }
 
     var AddToCart = async function(item){
         //console.log("item selected");
@@ -230,7 +253,10 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                     itemCost: 0.00,
                     imageName: "",
                     orderStatus: "New",
-                    deliveredBy: "No one"
+                    deliveredBy: "No one",
+                    itemCategory: "",
+                    ifnotAvailable: "Contact me",
+                    itemDescription: ""
                 }
             );
             setOpen(false);
@@ -274,67 +300,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                 {restaurant.FirstName === "Kentucky Fried Chicken"?
                                     <form>
                                         <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                            <Grid item xs={10} sm={6} md={6} lg={6}>
-                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                    <InputLabel id="demo-simple-select-outlined-label">1st choice</InputLabel>
-                                                    <Select
-                                                        labelId="demo-simple-select-outlined-label"
-                                                        id="demo-simple-select-outlined"
-                                                        value={values.chickenFlavour1}
-                                                        onChange={handleChange}
-                                                        label="Flavour1"
-                                                        name="chickenFlavour1"
-                                                        className={classes.root}
-                                                    >
-                                                        <MenuItem value={"Select Flavour"}>Select Flavour</MenuItem>
-                                                        <MenuItem value={"Original"}>Original</MenuItem>
-                                                        <MenuItem value={"Barbeque"}>Barbeque</MenuItem>
-                                                        <MenuItem value={"Spicy"}>Spicy</MenuItem>
-                                                    </Select>
-                                                </FormControl>
-                                            </Grid>
-                                            <Grid item xs={10} sm={6} md={6} lg={6}>
-                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                    <InputLabel id="demo-simple-select-outlined-label">2nd choice</InputLabel>
-                                                    <Select
-                                                        labelId="demo-simple-select-outlined-label"
-                                                        id="demo-simple-select-outlined"
-                                                        value={values.chickenFlavour2 }
-                                                        onChange={handleChange}
-                                                        label="Flavour2"
-                                                        name="chickenFlavour2"
-                                                        className={classes.root}
-                                                    >
-                                                        <MenuItem value={"Select Flavour"}>Select Flavour</MenuItem>
-                                                        <MenuItem value={"Original"}>Original</MenuItem>
-                                                        <MenuItem value={"Barbeque"}>Barbeque</MenuItem>
-                                                        <MenuItem value={"Spicy"}>Spicy</MenuItem>
-                                                    </Select>
-                                                </FormControl>
-                                            </Grid>
-                                            <Grid item xs={10} sm={12} >
-                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                    <InputLabel id="demo-simple-select-outlined-label">Drink</InputLabel>
-                                                    <Select
-                                                        labelId="demo-simple-select-outlined-label"
-                                                        id="demo-simple-select-outlined"
-                                                        value={values.drink }
-                                                        onChange={handleChange}
-                                                        label="drink"
-                                                        name="drink"
-                                                        className={classes.root}
-                                                    >
-                                                        <MenuItem value={"Select Drink"}>Select Drink</MenuItem>
-                                                        <MenuItem value={"Water"}>Water</MenuItem>
-                                                        <MenuItem value={"Pepsi"}>Pepsi</MenuItem>
-                                                        <MenuItem value={"Ginger Beer"}>Ginger Beer</MenuItem>
-                                                        <MenuItem value={"Flavour Splash"}>Flavour Splash</MenuItem>
-                                                        <MenuItem value={"Tropics Orangeade"}>Tropics Orangeade</MenuItem>
-                                                        <MenuItem value={"Topics Fruit Punch"}>Topics Fruit Punch</MenuItem>
-                                                        <MenuItem value={"Tropics Grape"}>Tropics Grape</MenuItem>
-                                                    </Select>
-                                                </FormControl>
-                                            </Grid>
+                                            <FastFoodChickenFlavor props={values} handleChange={handleChange} />
                                             <Grid item xs={10} sm={12} >
                                                 <TextField
                                                     id="outlined-multiline-static"
@@ -347,6 +313,26 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     placeholder="Enter Instructions Here"
                                                     fullWidth
                                                 />
+                                            </Grid>
+                                            <Grid item xs={12} >
+                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                    <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                    <Select
+                                                        labelId="demo-simple-select-outlined-label"
+                                                        id="demo-simple-select-outlined"
+                                                        value={values.ifnotAvailable}
+                                                        onChange={handleChange}
+                                                        label="ifnotAvailable"
+                                                        name="ifnotAvailable"
+                                                        className={classes.root}
+                                                        fullWidth
+                                                    >
+                                                        <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                        <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                        <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                        <MenuItem value={"Cancel my order"}>Cancel my order</MenuItem>
+                                                    </Select>
+                                                </FormControl>
                                             </Grid>
                                             <Grid item xs={10} sm={12} >
                                                 <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => AddToCart(values)} type="button">
@@ -371,6 +357,26 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                 fullWidth
                                             />
                                         </Grid>
+                                        <Grid item xs={12} >
+                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                    <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                    <Select
+                                                        labelId="demo-simple-select-outlined-label"
+                                                        id="demo-simple-select-outlined"
+                                                        value={values.ifnotAvailable}
+                                                        onChange={handleChange}
+                                                        label="ifnotAvailable"
+                                                        name="ifnotAvailable"
+                                                        className={classes.root}
+                                                        fullWidth
+                                                    >
+                                                        <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                        <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                        <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                        <MenuItem value={"Cancel my order"}>Cancel my order</MenuItem>
+                                                    </Select>
+                                                </FormControl>
+                                        </Grid>
                                         <Grid item xs={10} sm={12} >
                                             <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => AddToCart(values)} type="button">
                                                 Add To Cart 
@@ -393,55 +399,108 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                     Please select item from the list of meals listed below. 
                 </Typography>
                 <Grid container direction="row" spacing={2} className={classes.root} alignItems="center">
-                    {restaurant.MenuItems.map((item, index) => (
-                        <Grid item xs={10} md={6} lg={4} xl={4} className={classes.gridSpacing}>
-                            <Card className={classes.root} style={{minHeight: "446.99px"}}>
-                                <CardActionArea>
-                                <CardMedia
-                                    className={classes.media}
-                                    image={item.ImageName}
-                                    title="Contemplative Reptile"
-                                />
-                                </CardActionArea>
-                                <CardContent>
-                                        <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
-                                            <Grid item xs={6}>
-                                                    <Typography variant="h6"  component="p" style={{height: "64px"}}>
-                                                        {item.ItemName}
-                                                    </Typography>
+                    {
+                        filteredMenuItems.length !== 0?
+                            filteredMenuItems.map((item, index) => (
+                                <Grid item xs={10} md={6} lg={4} xl={4} className={classes.gridSpacing}>
+                                    <Card className={classes.root} style={{minHeight: "446.99px"}}>
+                                        <CardActionArea>
+                                        <CardMedia
+                                            className={classes.media}
+                                            image={item.ImageName}
+                                            title="Contemplative Reptile"
+                                        />
+                                        </CardActionArea>
+                                        <CardContent>
+                                                <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                    <Grid item xs={6}>
+                                                            <Typography variant="h6"  component="p" style={{height: "64px"}}>
+                                                                {item.ItemName}
+                                                            </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                            <Typography variant="body2"  component="p" style={{height: "64px"}}>
+                                                                <ItemRating rating={3.5}/>
+                                                            </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={12} >
+                                                            <Typography variant="body2"  component="p" >
+                                                                {item.ItemDescription}
+                                                            </Typography>
+                                                    </Grid>
+                                                </Grid>
+                                        </CardContent>
+                                        <CardActions>
+                                            {
+                                                userInfo.email === ""?
+                                                    <a href="/Login" style={{textDecoration: "none"}} onClick={handleLogin}>
+                                                        <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button">
+                                                            LOGIN 
+                                                        </Button>
+                                                    </a> :
+                                                    <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
+                                                        Add To Cart 
+                                                    </Button> 
+                                            }
+                                            
+                                            <Typography variant="body2"  component="p" className={classes.priceText} style={{marginLeft: "55%", width: "70px"}}>
+                                                {`$ ${ parseFloat(item.ItemCost).toFixed(2)}`}
+                                            </Typography>
+                                        </CardActions>
+                                    </Card>
+                                </Grid>
+                            ))
+                        :
+                        restaurant.MenuItems.map((item, index) => (
+                            <Grid item xs={10} md={6} lg={4} xl={4} className={classes.gridSpacing}>
+                                <Card className={classes.root} style={{minHeight: "446.99px"}}>
+                                    <CardActionArea>
+                                    <CardMedia
+                                        className={classes.media}
+                                        image={item.ImageName}
+                                        title="Contemplative Reptile"
+                                    />
+                                    </CardActionArea>
+                                    <CardContent>
+                                            <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                <Grid item xs={6}>
+                                                        <Typography variant="h6"  component="p" style={{height: "64px"}}>
+                                                            {item.ItemName}
+                                                        </Typography>
+                                                </Grid>
+                                                <Grid item xs={6}>
+                                                        <Typography variant="body2"  component="p" style={{height: "64px"}}>
+                                                            <ItemRating rating={3.5}/>
+                                                        </Typography>
+                                                </Grid>
+                                                <Grid item xs={12} >
+                                                        <Typography variant="body2"  component="p" >
+                                                            {item.ItemDescription}
+                                                        </Typography>
+                                                </Grid>
                                             </Grid>
-                                            <Grid item xs={6}>
-                                                    <Typography variant="body2"  component="p" style={{height: "64px"}}>
-                                                        <ItemRating rating={3.5}/>
-                                                    </Typography>
-                                            </Grid>
-                                            <Grid item xs={12} >
-                                                    <Typography variant="body2"  component="p" >
-                                                        {item.ItemDescription}
-                                                    </Typography>
-                                            </Grid>
-                                        </Grid>
-                                </CardContent>
-                                <CardActions>
-                                    {
-                                        userInfo.email === ""?
-                                            <Link to="Login" style={{textDecoration: "none"}}>
-                                                <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button">
-                                                    LOGIN 
-                                                </Button>
-                                            </Link> :
-                                            <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
-                                                Add To Cart 
-                                            </Button> 
-                                    }
-                                    
-                                    <Typography variant="body2"  component="p" className={classes.priceText} style={{marginLeft: "55%", width: "70px"}}>
-                                        {`$ ${ parseFloat(item.ItemCost).toFixed(2)}`}
-                                    </Typography>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                    ))}
+                                    </CardContent>
+                                    <CardActions>
+                                        {
+                                            userInfo.email === ""?
+                                                <a href="/Login" style={{textDecoration: "none"}} onClick={handleLogin}>
+                                                    <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button">
+                                                        LOGIN 
+                                                    </Button>
+                                                </a> :
+                                                <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
+                                                    Add To Cart 
+                                                </Button> 
+                                        }
+                                        
+                                        <Typography variant="body2"  component="p" className={classes.priceText} style={{marginLeft: "55%", width: "70px"}}>
+                                            {`$ ${ parseFloat(item.ItemCost).toFixed(2)}`}
+                                        </Typography>
+                                    </CardActions>
+                                </Card>
+                            </Grid>
+                        ))
+                    }
                 </Grid>
             </>
         )

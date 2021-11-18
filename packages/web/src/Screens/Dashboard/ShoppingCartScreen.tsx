@@ -6,13 +6,15 @@ import { ShoppingCartItems } from './Comp/ShoppingCartItems';
 import { PaymentOptionsForm } from './Comp/PaymentOptionsForm';
 import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
+import { DashboardFooter } from './Comp/DashboardFooter';
 
 
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
         gridRoot: {
-            padding: "0px"
+            padding: "0px",
+            height: "100vh"
         },
         main: {
             padding: 0,
@@ -44,6 +46,9 @@ export const ShoppingCartScreen: React.FC = function ShoppingCartScreen() {
                         {/*Row 1*/}
                         <Grid item xs={12}>
                             <ShoppingCartItems />                     
+                        </Grid>
+                        <Grid item xs={12}>
+                            <DashboardFooter />
                         </Grid>
                         {/* <Grid item xs={4}>
                             <PaymentOptionsForm />
