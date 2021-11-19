@@ -117,6 +117,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     //Email variables
     const emailServiceId = "service_9xw19wc";
     const emailNewJobAppTemplate = "template_vt5fmwm";
+    const emailNewInvoiceUploadTemplate = "template_a7m014a";
     const emailUserId = "user_bDLFbepm6Arcdgh7Akzo3";
     //Declare necessary variables
     const [createUser] = useMutation(CREATE_USER_MUTATION);
@@ -657,7 +658,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             drink: item.drink,
             otherIntructions: item.otherIntructions,
             itemCost: item.itemCost,
-            imageName: value.imageName,
+            imageName: item.imageName,
             ifnotAvailable: item.ifnotAvailable
           } as object;
           orderItems.push(body);
@@ -778,36 +779,70 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       return fianlRes;
     };
 
-    var sendOrderCompletedEmail = async function sendOrderCompletedEmail(formVals) {
-      // //console.log("Wtf is in formVals");
-      // //console.log(formVals);
+    var sendOrderCompletedEmail = async function sendOrderCompletedEmail(fileType,file, UserInfo, orderNum) {
+      var fileType = fileType;
       var RequestParams = {
-        from_name: formVals.user_name,
+        user_email: "",
+        user_name: "",
+        content: file,
+        order_number: orderNum
+      };
+
+      if (UserInfo !== null && UserInfo !== undefined && UserInfo.email !== "") {
+        RequestParams.user_email = UserInfo.email;
+        RequestParams.user_name = UserInfo.fullName; //console.log("Params going to sendNewPackageMethod");
+        //console.log(RequestParams)
+        var emailRes = await uploadInvoiceEmail(RequestParams, fileType).then(function (emailSentRes) {
+          if (emailSentRes) {
+            return true;
+          } else {
+            //console.log("Unable to send add package email at this time.")
+            return true;
+          }
+        }).catch(function (err) {
+          //console.log("Unable to send add package email at this time.")
+          //console.log(err);
+          return true;
+        });
+        return emailRes;
+      } else {
+        return false;
+      }
+    };
+
+    var uploadInvoiceEmail = async function uploadInvoiceEmail(formVals, filetype) {
+      //console.log("Wtf is in formVals");
+      //console.log(formVals);
+      var RequestParams = {
+        to_name: formVals.user_name,
         user_email: formVals.user_email,
-        order_id: formVals.order_id,
-        message: "Fullname: " + formVals.user_name + " Email: " + formVals.user_email + " Phone Number: " + formVals.user_contact 
-        + " Own Transportation? " + formVals.own_TR + " Own Smartphone? " + formVals.own_SM  + " Own Drivers license? " + formVals.own_DL 
-        + " Own Learners License " + formVals.own_LL + " ."
-      }; // var data2 = {event: 'staff add package',
-      //                       value:{"What is in this package b4 email sent for user: " : "What is in this package b4 email sent for user", RequestParams: RequestParams}
-      // };
-      // var entry2 = log.entry(METADATA, data2);
-      // log.write(entry2);
-      // //console.log("What is in this package b4 emails sent");
-      // //console.log(RequestParams);
+        message: `Thank you for choosing Urged Internationals food delivery service.\n Please see receipt attatched.`,
+        content_pdf: undefined,
+        content_svg: undefined,
+        content_jpeg: undefined,
+        content_png: undefined,
+        order_id: formVals.order_number
+      };
     
-      var fianlRes = await sendEmail(emailServiceId, emailNewJobAppTemplate, RequestParams, emailUserId).then(function (res) {
+      if (filetype.toLowerCase() === "application/pdf") {
+        RequestParams.content_pdf = formVals.content;
+      } else if (filetype.toLowerCase() === "image/png") {
+        RequestParams.content_png = formVals.content;
+      } else if (filetype.toLowerCase() === "image/svg+xml") {
+        RequestParams.content_svg = formVals.content;
+      } else if (filetype.toLowerCase() === "image/jpeg") {
+        RequestParams.content_jpeg = formVals.content;
+      } //console.log("What is in this package b4 emails sent");
+      //console.log(RequestParams);
+    
+    
+      var fianlRes = await sendEmail(emailServiceId, emailNewInvoiceUploadTemplate, RequestParams, emailUserId).then(function (res) {
         if (res) {
           return true;
         }
       }).catch(function (err) {
-        // var data3 = {event: 'staff add package',
-        //                     value:{"Send email error for user: " : formVals.user_email, error: err}
-        // };
-        // var entry3 = log.entry(METADATA, data3);
-        // log.write(entry3);
-        // //console.log("Send email error");
-        // //console.log(err);
+        //console.log("Send email error");
+        //console.log(err);
         return false;
       });
       return fianlRes;
@@ -856,7 +891,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         checkoutOrder,
         fetchOrdersByUser,
         fetchOrders,
-        AddGeneralLocation
+        AddGeneralLocation,
+        sendOrderCompletedEmail
     });
     
      

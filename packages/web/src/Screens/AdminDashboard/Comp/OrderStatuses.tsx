@@ -1,3 +1,4 @@
+import { useAppData } from '../../../Context/AppDataContext';
 import { Container, Grid, makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
@@ -29,6 +30,17 @@ const useStyles = makeStyles((theme: Theme) =>
         content: {
             flexGrow: 1,
             padding: theme.spacing(3),
+        },
+        cardDisabled: {
+            display: "flex",
+            background: "#FFFFFF",
+            border: "1.14582px solid #F3F3F3",
+            boxSizing: "border-box",
+            paddingLeft: "20px",
+            paddingTop: "10px",
+            boxShadow: "0px 4px 11px rgba(0, 0, 0, 0.11)",
+            borderRadius: "18px",
+            borderBottom: "4px solid #BEBEBE"
         },
         card1: {
             display: "flex",
@@ -87,14 +99,241 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const OrderStatuses: React.FC = () => {
     const classes = useStyles();
+    var history = useHistory();
+    var { value }  = useAppData();
+    var { orders } = value;
+    const orderIndex = parseInt(history.location.state.from);
 
+    if(orders.length !== 0 && orderIndex !== undefined){
+        return orders[orderIndex].OrderStatus === "Ordered" && orders[orderIndex].OrderStatus !== "Picked Up"
+               && orders[orderIndex].OrderStatus !== "In Transit" && orders[orderIndex].OrderStatus !== "Delivered"  ?
+            <>
+                    <Container maxWidth="xl"  className={classes.main}>
+                        <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
+                            <Grid container direction="row" spacing={1}>
+    
+                                <Grid item xs={3}>
+                                    <Card style={{marginBottom: "12px"}} className={classes.card1}>
+                                        <CardMedia >
+                                            {/* eslint-disable-next-line */}
+                                            <img src="Images/ordered_status.png" alt="ordered"></img>
+                                        </CardMedia>
+                                        <CardContent className={classes.cardContent}>
+                                            <Typography className={classes.cardHeading}>
+                                                Ordered
+                                            </Typography>
+                                            <Typography>
+                                                Selections
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Card style={{marginBottom: "12px"}} className={classes.cardDisabled}>
+                                        <CardMedia >
+                                            {/* eslint-disable-next-line */}
+                                            <img src="Images/pickedup_status_disabled.png" alt="ordered"></img>
+                                        </CardMedia>
+                                        <CardContent className={classes.cardContent}>
+                                            <Typography className={classes.cardHeading}>
+                                                Picked Up
+                                            </Typography>
+                                            <Typography>
+                                                Selections
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Card style={{marginBottom: "12px"}} className={classes.cardDisabled}>
+                                        <CardMedia >
+                                            {/* eslint-disable-next-line */}
+                                            <img src="Images/intransit_status_disabled.png" alt="ordered"></img>
+                                        </CardMedia>
+                                        <CardContent className={classes.cardContent}>
+                                            <Typography className={classes.cardHeading}>
+                                                In Transit
+                                            </Typography>
+                                            <Typography>
+                                                Selections
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Card style={{marginBottom: "12px"}} className={classes.cardDisabled}>
+                                        <CardMedia >
+                                            {/* eslint-disable-next-line */}
+                                            <img src="Images/delivered_status_disabled.png" alt="ordered"></img>
+                                        </CardMedia>
+                                        <CardContent className={classes.cardContent}>
+                                            <Typography className={classes.cardHeading}>
+                                                Delivered
+                                            </Typography>
+                                            <Typography>
+                                                Selections
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Container>
+            </>
+    : orders[orderIndex].OrderStatus === "Picked Up"?
+            <>
+                    <Container maxWidth="xl"  className={classes.main}>
+                        <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
+                            <Grid container direction="row" spacing={1}>
 
-
-    return (
+                                <Grid item xs={3}>
+                                    <Card style={{marginBottom: "12px"}} className={classes.card1}>
+                                        <CardMedia >
+                                            {/* eslint-disable-next-line */}
+                                            <img src="Images/ordered_status.png" alt="ordered"></img>
+                                        </CardMedia>
+                                        <CardContent className={classes.cardContent}>
+                                            <Typography className={classes.cardHeading}>
+                                                Ordered
+                                            </Typography>
+                                            <Typography>
+                                                Selections
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Card style={{marginBottom: "12px"}} className={classes.card2}>
+                                        <CardMedia >
+                                            {/* eslint-disable-next-line */}
+                                            <img src="Images/pickedup_status.png" alt="ordered"></img>
+                                        </CardMedia>
+                                        <CardContent className={classes.cardContent}>
+                                            <Typography className={classes.cardHeading}>
+                                                Picked Up
+                                            </Typography>
+                                            <Typography>
+                                                Selections
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Card style={{marginBottom: "12px"}} className={classes.card3}>
+                                        <CardMedia >
+                                            {/* eslint-disable-next-line */}
+                                            <img src="Images/intransit_status_disabled.png" alt="ordered"></img>
+                                        </CardMedia>
+                                        <CardContent className={classes.cardContent}>
+                                            <Typography className={classes.cardHeading}>
+                                                In Transit
+                                            </Typography>
+                                            <Typography>
+                                                Selections
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                                <Grid item xs={3}>
+                                    <Card style={{marginBottom: "12px"}} className={classes.card4}>
+                                        <CardMedia >
+                                            {/* eslint-disable-next-line */}
+                                            <img src="Images/delivered_status_disabled.png" alt="ordered"></img>
+                                        </CardMedia>
+                                        <CardContent className={classes.cardContent}>
+                                            <Typography className={classes.cardHeading}>
+                                                Delivered
+                                            </Typography>
+                                            <Typography>
+                                                Selections
+                                            </Typography>
+                                        </CardContent>
+                                    </Card>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Container>
+            </>
+    : orders[orderIndex].OrderStatus === "In Transit"?
         <>
                 <Container maxWidth="xl"  className={classes.main}>
                     <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
                         <Grid container direction="row" spacing={1}>
+
+                            <Grid item xs={3}>
+                                <Card style={{marginBottom: "12px"}} className={classes.card1}>
+                                    <CardMedia >
+                                        {/* eslint-disable-next-line */}
+                                        <img src="Images/ordered_status.png" alt="ordered"></img>
+                                    </CardMedia>
+                                    <CardContent className={classes.cardContent}>
+                                        <Typography className={classes.cardHeading}>
+                                            Ordered
+                                        </Typography>
+                                        <Typography>
+                                            Selections
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <Card style={{marginBottom: "12px"}} className={classes.card2}>
+                                    <CardMedia >
+                                        {/* eslint-disable-next-line */}
+                                        <img src="Images/pickedup_status.png" alt="ordered"></img>
+                                    </CardMedia>
+                                    <CardContent className={classes.cardContent}>
+                                        <Typography className={classes.cardHeading}>
+                                            Picked Up
+                                        </Typography>
+                                        <Typography>
+                                            Selections
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <Card style={{marginBottom: "12px"}} className={classes.card3}>
+                                    <CardMedia >
+                                        {/* eslint-disable-next-line */}
+                                        <img src="Images/intransit_status.png" alt="ordered"></img>
+                                    </CardMedia>
+                                    <CardContent className={classes.cardContent}>
+                                        <Typography className={classes.cardHeading}>
+                                            In Transit
+                                        </Typography>
+                                        <Typography>
+                                            Selections
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                            <Grid item xs={3}>
+                                <Card style={{marginBottom: "12px"}} className={classes.card4}>
+                                    <CardMedia >
+                                        {/* eslint-disable-next-line */}
+                                        <img src="Images/delivered_status_disabled.png" alt="ordered"></img>
+                                    </CardMedia>
+                                    <CardContent className={classes.cardContent}>
+                                        <Typography className={classes.cardHeading}>
+                                            Delivered
+                                        </Typography>
+                                        <Typography>
+                                            Selections
+                                        </Typography>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Container>
+        </>
+        : orders[orderIndex].OrderStatus === "Delivered"?
+        <>
+                <Container maxWidth="xl"  className={classes.main}>
+                    <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
+                        <Grid container direction="row" spacing={1}>
+
                             <Grid item xs={3}>
                                 <Card style={{marginBottom: "12px"}} className={classes.card1}>
                                     <CardMedia >
@@ -163,5 +402,9 @@ export const OrderStatuses: React.FC = () => {
                     </Grid>
                 </Container>
         </>
-    );
+    :
+        <></>
+    }else{
+        return <></>
+    }
 }

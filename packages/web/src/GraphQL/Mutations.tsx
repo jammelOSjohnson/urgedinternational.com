@@ -197,6 +197,8 @@ export const GET_ORDERS = gql`
             OrderTotal
             OrderDate
             Rider
+            DeliveryAddress
+            AdditionalInfo
         }
     }
 `

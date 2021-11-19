@@ -1,7 +1,9 @@
 import { useAppData } from '../../Context/AppDataContext';
 import { Container, makeStyles, createStyles, Theme } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 import moment from 'moment';
+import jsPDF from 'jspdf';
+import { useHistory } from 'react-router-dom';
 //Import Components
 //import { Link } from "react-router-dom";
 
@@ -46,14 +48,44 @@ const useStyles = makeStyles((theme: Theme) =>
 export const OrderCompleted: React.FC = function OrderCompleted() {
     const classes = useStyles();
     var { value }  = useAppData();
-    var { receiptDetails, userInfo } = value;
+    var { receiptDetails, userInfo, sendOrderCompletedEmail } = value;
     const now = new Date(parseInt(receiptDetails.OrderDate, 10));
     const estTime = moment.tz(now, "America/Jamaica").format("DD-MM-YYYY H:mma");
-    
-      
+    var history = useHistory();
+
+    const generatePDF = async () => {
+        var doc = new jsPDF("p", "pt", "a2");
+        var getReciept: HTMLElement|null = document.querySelector("#receipt");
+        if(getReciept !== null){
+            doc.setDisplayMode("fullwidth");
+            doc.html(getReciept,{
+                callback: async function(pdf){
+                    //console.log(pdf)
+                    //pdf.save("mypdf.pdf")
+                    //var filename = `${userInfo.fullName} order#${receiptDetails._id}`;
+                    var file = pdf.output("datauri");
+                    //console.log(file);
+                    await sendOrderCompletedEmail("application/pdf", file, userInfo, receiptDetails._id).then((res) => {
+                        setTimeout(()=> {
+                            history.push("/OrderHistory");
+                        }, 5000)
+                    })
+                }
+            })
+        }
+        
+    }
+     
+    useEffect(() => {
+        try{
+            generatePDF();
+        }catch(err){
+            console.log(err);
+        }
+    }, [])
     return (
         <>
-            <Container maxWidth="xl" style={{paddingLeft: "0px", paddingRight: "0px"}} className={classes.main}>
+            <Container id="receipt" maxWidth="xl" style={{paddingLeft: "0px", paddingRight: "0px"}} className={classes.main}>
             <style
             type="text/css"
             dangerouslySetInnerHTML={{

@@ -29,7 +29,7 @@ export async function startServer() {
     apolloServer.applyMiddleware({ app: app});
 
     app.use((req: any, res: { send: (arg0: string) => void; }) => {
-        res.send("Hello from express apollo server");
+        res.send("hmm, what do you think you are doing?");
     })
     try{
         let conn_string = "";

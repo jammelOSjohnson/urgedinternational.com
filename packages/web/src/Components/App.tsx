@@ -31,6 +31,7 @@ import {onError} from '@apollo/client/link/error';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { useEffect } from 'react';
+import "jspdf/dist/polyfills.es.js";
 
 const theme = createTheme({
   typography: {
