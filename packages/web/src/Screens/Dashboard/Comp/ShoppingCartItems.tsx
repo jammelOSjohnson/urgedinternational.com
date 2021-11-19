@@ -1,11 +1,14 @@
+import { Avatar, Grid, makeStyles, createStyles, withStyles, Typography, Theme, CardMedia, Card, CardContent, Stepper, Step, StepLabel, StepIconProps, StepConnector, Divider, CardHeader, IconButton } from '@material-ui/core';
 import { useAppData } from '../../../Context/AppDataContext';
-import { IconButton,Avatar,CardHeader,Grid, makeStyles, createStyles, withStyles, Typography, Theme, CardMedia, Card, CardContent, Stepper, Step, StepLabel, StepIconProps, StepConnector } from '@material-ui/core';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import LocalShippingOutlinedIcon from '@material-ui/icons/LocalShippingOutlined';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import { PaymentOptionsForm } from './PaymentOptionsForm';
 import React from 'react';
 import clsx from 'clsx';
+import RemoveIcon from '@material-ui/icons/Remove';
+import AddIcon from '@material-ui/icons/Add';
+import CloseIcon from '@material-ui/icons/Close';
 import {CloseRounded} from '@material-ui/icons';
 
 
@@ -13,8 +16,29 @@ import {CloseRounded} from '@material-ui/icons';
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
+            display: 'flex',
             width: '100%'
           },
+        details: {
+            display: 'flex',
+            flexDirection: 'row'
+        },
+        removeButton: {
+          backgroundColor: "#F6F6F6",
+          width: '5px',
+          height: '5px'
+
+        },
+        addButton: {
+          backgroundColor: "#FF5E14",
+          width: '5px',
+          height: '5px'
+        },
+        divider: {
+            height: "30px",
+            width: '20px',
+            backgroundColor: "#FF5E14"
+        },
         packageRoot: {
             padding: "0% 0px 2% 0px"
         },
@@ -22,8 +46,9 @@ const useStyles = makeStyles((theme: Theme) =>
             fontWeight: "bold"
         },
         image: {
-            width: "102px",
-            height: "81.01px"
+            maxWidth: '102px',
+            maxHeight: '81px',
+            marginLeft: "12px"
         },
         card: {
           display: "block",
@@ -36,8 +61,23 @@ const useStyles = makeStyles((theme: Theme) =>
           paddingTop: "10px"
       },
       cardHeading: {
-          fontWeight: "bold",
-          fontFamily: "PT Sans"
+            fontWeight: "bold",
+            fontFamily: "PT Sans"
+      },
+      cardBody1: {
+        marginTop: '10px',
+        fontFamily: 'Open Sans',
+        fontWeight: 400,
+        fontSize: 14,
+        lineHeight: "12px"
+      },
+      cardBody2: {
+        marginTop: '10px',
+        fontFamily: 'Roboto',
+        fontSize: 14,
+        lineHeight: "22px",
+        fontWeight: "bold",
+        // fontFamily: "PT Sans"
       },
       cardHeader: {
         background: "#FFF",
@@ -158,6 +198,16 @@ function ColorlibStepIcon(props: StepIconProps) {
         console.log(err)
       }
     }
+    
+    const[quantity, setQuantity] = React.useState(1);
+    
+    const increment = () => {
+       return (quantity >= 1 ? setQuantity(quantity + 1): quantity);
+    }
+    
+    const decrement = () => {
+      return(quantity > 1 ? setQuantity(quantity - 1): quantity);
+    }
 
     return (
         <>
@@ -187,13 +237,21 @@ function ColorlibStepIcon(props: StepIconProps) {
                                     </Avatar>
                                   }
                                   action={
-                                    <IconButton aria-label="settings" onClick={() => handleRemove(index)}>
-                                      <Avatar aria-label="recipe" className={classes.close}>
-                                        <CloseRounded />
-                                      </Avatar>
-                                    </IconButton>
+                                    <>
+                                      <IconButton className={classes.removeButton} onClick={() => decrement()}>
+                                        <RemoveIcon />
+                                      </IconButton>
+                                      <IconButton className={classes.addButton} onClick={() => increment()}>
+                                          <AddIcon />
+                                      </IconButton>
+                                      <IconButton aria-label="settings" onClick={() => handleRemove(index)}>
+                                        <Avatar aria-label="recipe" className={classes.close}>
+                                          <CloseRounded />
+                                        </Avatar>
+                                      </IconButton>
+                                    </>
                                   }
-                                  title="Quantity Goes Here"
+                                  title={`Quantity:${quantity}`}
                                   className={classes.cardHeader}
                                 />
                                 </div>
@@ -228,13 +286,21 @@ function ColorlibStepIcon(props: StepIconProps) {
                                     </Avatar>
                                   }
                                   action={
-                                    <IconButton aria-label="settings" onClick={() => handleRemove(index)}>
-                                      <Avatar aria-label="recipe" className={classes.close}>
-                                        <CloseRounded />
-                                      </Avatar>
-                                    </IconButton>
+                                    <>
+                                      <IconButton className={classes.removeButton} onClick={() => decrement()}>
+                                        <RemoveIcon />
+                                      </IconButton>
+                                      <IconButton className={classes.addButton} onClick={() => increment()}>
+                                          <AddIcon />
+                                      </IconButton>
+                                      <IconButton aria-label="settings" onClick={() => handleRemove(index)}>
+                                        <Avatar aria-label="recipe" className={classes.close}>
+                                          <CloseRounded />
+                                        </Avatar>
+                                      </IconButton>
+                                    </>
                                   }
-                                  title="Quantity Goes Here"
+                                  title={`Quantity:${quantity}`}
                                   className={classes.cardHeader}
                                 />
                                 </div>
