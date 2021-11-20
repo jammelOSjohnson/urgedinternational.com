@@ -6,7 +6,8 @@ import clsx from 'clsx';
 //Import Components
 import { ItemRating } from '../../../Components/ItemRating';
 import { Link } from "react-router-dom";
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import PhoneEnabledIcon from '@material-ui/icons/PhoneEnabled';
 
 
 
@@ -16,11 +17,14 @@ interface State {
     showPassword: boolean;
 }
 
+// Phone Number to test
+const phoneNumber = " (876)-888-8888"
+
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
         root: {
-            padding: "0% 0px 5% 0px",
-            borderRadius: "22px"
+            padding: "2% 0% 5% 0%",
+            // borderRadius: "22px"
         },
         category: {
             fontWeight: "bold"
@@ -47,6 +51,7 @@ const useStyles = makeStyles((theme: Theme) =>
             boxSizing: "border-box",
             boxShadow: "0px 4.64215px 12.2069px rgba(0, 0, 0, 0.11)",
             borderRadius: "34.3745px",
+            height: "185px"
         },
         OrderResult1: {
             position: "absolute",
@@ -173,7 +178,7 @@ export const OrganisationsCardList: React.FC = function OrganisationsCardList(pr
                                 <Link onClick={() =>handleSelectedRestaurant(index)} className={classes.link}>
                                 <Card className={classes.root}>
                                     <CardHeader
-                                        title={restaurant.FirstName}
+                                        title={`${index + 1}. ${restaurant.FirstName}`}
                                         action={
                                             <Avatar variant="square" aria-label="restaurant" className={classes.avatar}>
                                                     <CardMedia className={classes.cardImage}>
@@ -186,30 +191,30 @@ export const OrganisationsCardList: React.FC = function OrganisationsCardList(pr
                                         <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
                                             <Grid item xs={12}>
                                             </Grid>
-                                            <Grid item xs={12}>
-                                                <Typography variant="h6"  component="p" align="center">
-                                                    {restaurant.City}
-                                                </Typography>
+                                            <Grid item container xs={12} direction="row" spacing={0}>
+                                                <Grid item xs={1}>
+                                                    <LocationOnIcon color="primary"/>
+                                                </Grid>
+                                                <Grid item xs={11}>
+                                                    <Typography variant="h6"  component="p">
+                                                        {`${restaurant.AddressLine1}`}
+                                                    </Typography>    
+                                                </Grid>                                            
                                             </Grid>
                                             <br />
-                                            <Grid item xs={12}>
-                                                <Typography variant="body2"  component="p" align="center">
-                                                Jacob Jones
-                                                </Typography>
+                                            <Grid item container xs={8} direction="row">
+                                                <Grid item xs={1}>
+                                                    <PhoneEnabledIcon color="primary"/>
+                                                </Grid>
+                                                <Grid item xs={11}>
+                                                    <Typography variant="h6"  component="p">
+                                                         (876)-888-8888
+                                                    </Typography>
+                                                </Grid>
                                             </Grid>
-                                            <Grid item xs={12}>
-                                                <Typography variant="body2"  component="p" align="center">
-                                                jacob.jones@example.com
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <Typography variant="body2"  component="p" align="center">
-                                                Errand Runner
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <Typography variant="body2"  component="p" align="center">
-                                                <span className={classes.statusDot}></span> Active
+                                            <Grid item xs={4}>
+                                                <Typography variant="body2"  component="p" align="center" style={{ background: "#13ADD1", color: "#FFFFFF", padding: "0% 0% 0% 0%"}}>
+                                                    Open
                                                 </Typography>
                                             </Grid>
                                         </Grid>
