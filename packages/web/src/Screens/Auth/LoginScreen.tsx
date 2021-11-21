@@ -274,6 +274,15 @@ export const LoginScreen: React.FC = function LoginScreen() {
                                     history.push("/AdminOrders")
                                 }, 1500);
                                 
+                            }else if(userRolef !== undefined && userRolef === "Rider"){
+                                setLoading(false);
+                                setSuccess('Sign In Successful.');
+                                setTimeout(() => {
+                                    setSuccess('');
+                                    //console.log("about to go to dashboard");
+                                    history.push("/DeliveryOrders")
+                                }, 1500);
+                                
                             }else{
                                 setLoading(false);
                                 setSuccess('Sign In Successful.');
@@ -307,14 +316,34 @@ export const LoginScreen: React.FC = function LoginScreen() {
             setLoading(true);
             await gLogin(value).then(async function(res1){
                 if(res1 != null){
-                    setLoading(false);
-                    setSuccess('Sign In Successful.');
-                    setTimeout(() => {
-                        setSuccess('');
-                        console.log("about to go to dashboard");
-                        //console.log(history.location); 
-                        history.push(history.location.state.from)
-                    }, 1500);
+                    if(userRolef !== undefined && userRolef === "Admin"){
+                        setLoading(false);
+                        setSuccess('Sign In Successful.');
+                        setTimeout(() => {
+                            setSuccess('');
+                            //console.log("about to go to dashboard");
+                            history.push("/AdminOrders")
+                        }, 1500);
+                        
+                    }
+                    else if(userRolef !== undefined && userRolef === "Rider"){
+                        setLoading(false);
+                        setSuccess('Sign In Successful.');
+                        setTimeout(() => {
+                            setSuccess('');
+                            //console.log("about to go to dashboard");
+                            history.push("/DeliveryOrders")
+                        }, 1500);
+                        
+                    }else{
+                        setLoading(false);
+                        setSuccess('Sign In Successful.');
+                        setTimeout(() => {
+                            setSuccess('');
+                            //console.log("about to go to dashboard");
+                            history.push(history.location.state.from);
+                        }, 1500);
+                    }
                 }else{
                     setLoading(false);
                     setError('Unable to login at this time.'); 

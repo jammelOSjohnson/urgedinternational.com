@@ -102,6 +102,24 @@ export const GET_RESTAURANTS = gql`
     }
 `
 
+export  const GET_RIDERS = gql`
+     mutation getRiders {
+        getRiders{
+            _id
+            Id
+            FirstName
+            LastName
+            Email
+            AddressLine1
+            AddressLine2
+            City
+            ContactNumber
+            isAvailable
+            disabled
+        }
+    }
+`
+
 export const GET_MENU_CATEGORIES = gql`
     mutation getMenucategories($Id: String!) {
         getMenucategories(Id: $Id){
@@ -154,7 +172,20 @@ export const CREATE_ORDER = gql`
                     OrderStatus
                     OrderTotal
                     OrderDate
-                    Rider
+                    Rider{
+                        _id
+                        Id 
+                        FirstName 
+                        LastName 
+                        Email
+                        AddressLine1
+                        AddressLine2
+                        City 
+                        ContactNumber
+                        ImageName
+                        isAvailable
+                        disabled
+                    }
                     DeliveryAddress 
                     PaymentMethod
                     AdditionalInfo
@@ -175,7 +206,20 @@ export const GET_ORDERS_BY_USERID = gql`
             OrderStatus
             OrderTotal
             OrderDate
-            Rider
+            Rider{
+                _id
+                Id 
+                FirstName 
+                LastName 
+                Email
+                AddressLine1
+                AddressLine2
+                City 
+                ContactNumber
+                ImageName
+                isAvailable
+                disabled
+            }
             DeliveryAddress 
             PaymentMethod
             AdditionalInfo
@@ -196,7 +240,20 @@ export const GET_ORDERS = gql`
             OrderStatus
             OrderTotal
             OrderDate
-            Rider
+            Rider{
+                _id
+                Id 
+                FirstName 
+                LastName 
+                Email
+                AddressLine1
+                AddressLine2
+                City 
+                ContactNumber
+                ImageName
+                isAvailable
+                disabled
+            }
             DeliveryAddress
             AdditionalInfo
         }

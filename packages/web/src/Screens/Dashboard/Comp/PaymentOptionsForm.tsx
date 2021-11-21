@@ -153,7 +153,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                 history.push("/OrderCompleted");
             });
         }catch(e: any) { 
-            //console.log(e.message)
+            console.log(e.message)
             let path = e.message
             let result = path.split("Path")
             setError(result[1]);

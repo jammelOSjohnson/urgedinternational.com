@@ -112,12 +112,19 @@ const resolvers = {
         },
 
         getOrders: async () => {
-            return await Order.find();
+            return await Order.find().populate("Rider");
         },
         
         //Reastaurants
         getRestaurants: async () => {
             return await User.find().populate("category").where('OpeningHrs').ne(null).where('category').ne(null);
+            //console.log(res);
+            //return res;
+        },
+
+        //Riders
+        getRiders: async () => {
+            return await User.find().where('isAvailable').ne(null).where('disabled').ne(null);
             //console.log(res);
             //return res;
         }

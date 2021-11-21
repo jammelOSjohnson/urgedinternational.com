@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import {useContext, useReducer, createContext} from 'react';
 //import fetchAddressApi from '../Apis/fetchAddressApi';
 import  { auth, socialAuth, googleAuthProvider } from '../firebase';
-import { CREATE_ORDER, GET_ORDERS_BY_USERID, GET_ORDERS, GET_RESTAURANTS, CREATE_USER_MUTATION, GET_USER_MUTATION, GET_USER_IN_ROLE, GET_ROLE, CREATE_ROLE, GET_MENU_CATEGORIES } from '../GraphQL/Mutations';
+import { GET_RIDERS ,CREATE_ORDER, GET_ORDERS_BY_USERID, GET_ORDERS, GET_RESTAURANTS, CREATE_USER_MUTATION, GET_USER_MUTATION, GET_USER_IN_ROLE, GET_ROLE, CREATE_ROLE, GET_MENU_CATEGORIES } from '../GraphQL/Mutations';
 import { useMutation } from '@apollo/client';
 import sendEmail from "../email.js";
 import moment from 'moment-timezone';
@@ -106,6 +106,16 @@ function appDataReducer(state, action){
             ...state,
             generalLocation: action.payload.generalLocation
           }
+        case "status_change":
+          return {
+            ...state,
+            orders: action.payload.orders
+          }
+        case "fetch_riders":
+          return {
+            ...state,
+            riders: action.payload.riders
+          }
         default:
             return state;
     }
@@ -126,6 +136,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const [getRole] = useMutation(GET_ROLE);
     const [addUserToRole] = useMutation(CREATE_ROLE);
     const [getRestaurants] = useMutation(GET_RESTAURANTS);
+    const [getRiders] = useMutation(GET_RIDERS);
     const [getMenucategories] = useMutation(GET_MENU_CATEGORIES);
     // eslint-disable-next-line
     const [getOrders] = useMutation(GET_ORDERS);
@@ -146,6 +157,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var orders = [];
     var restaurants = [];
     var menuCategories = [];
+    var riders = [];
     var receiptDetails = undefined;
 
     var userInfo = {
@@ -664,46 +676,56 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           orderItems.push(body);
           return null;
         })
-        var orderBody = {
-          Id: payload.currentUser.uid,
-          OrderItems: orderItems,
-          OrderStatus: "Ordered",
-          OrderTotal: Number(Total.Cost),
-          OrderDate: estTime,
-          Rider: "Rider 1",
-          DeliveryAddress: state.Street + "," + state.Town + ",Clarendon",
-          PaymentMethod: state.PaymentMethod,
-          AdditionalInfo: state.ContactNum,
-          DeliveryFee: Number(deliveryFee.Cost),
-          GCT: Number(GCT.Cost),
-          ServiceCharge: Number(serviceFee.Cost),
-          CartTotal: Number(cartItemsSum.Cost)
-        }
-
-        await createOrder({variables: orderBody}).then(async function(response) {
-          //console.log("create orer result");
-          if (response.data.createOrder !== null) {
-            //console.log("Order Exist");
-            //console.log(response.data.createOrder);
-            payload.cartItems = [];
-            payload.selectedRestaurant = undefined;
-            payload.receiptDetails = response.data.createOrder;
-
-            await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
-              if (response.data.getOrdersByUserId !== null) {
-                payload.orders = response.data.getOrdersByUserId;
-                dispatch({
-                  type: "checkout",
-                  payload: payload
-                })
-              }
-            });
-            
-           
-      
-            return payload;
+        await fetchRidersForOrder().then(async (res) => {
+          //Generate rand number
+          const min = 0;
+          const max = res.length;
+          console.log(max);
+          const rand = min + Math.random() * (max + 1);
+          const randRider = parseInt(rand.toString());
+          console.log(randRider);
+          var orderBody = {
+            Id: payload.currentUser.uid,
+            OrderItems: orderItems,
+            OrderStatus: "Ordered",
+            OrderTotal: Number(Total.Cost),
+            OrderDate: estTime,
+            Rider: res[randRider]._id,
+            DeliveryAddress: state.Street + "," + state.Town + ",Clarendon",
+            PaymentMethod: state.PaymentMethod,
+            AdditionalInfo: state.ContactNum + " " + payload.userInfo.email + " " + payload.userInfo.fullName,
+            DeliveryFee: Number(deliveryFee.Cost),
+            GCT: Number(GCT.Cost),
+            ServiceCharge: Number(serviceFee.Cost),
+            CartTotal: Number(cartItemsSum.Cost)
           }
-        });
+  
+          await createOrder({variables: orderBody}).then(async function(response) {
+            //console.log("create orer result");
+            if (response.data.createOrder !== null) {
+              //console.log("Order Exist");
+              //console.log(response.data.createOrder);
+              payload.cartItems = [];
+              payload.selectedRestaurant = undefined;
+              payload.receiptDetails = response.data.createOrder;
+  
+              await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
+                if (response.data.getOrdersByUserId !== null) {
+                  payload.orders = response.data.getOrdersByUserId;
+                  dispatch({
+                    type: "checkout",
+                    payload: payload
+                  })
+                }
+              });
+              
+             
+        
+              return payload;
+            }
+          });
+        })
+        
         
       }
     }
@@ -848,6 +870,55 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       return fianlRes;
     };
 
+    var changeOrderStatus = async function changeOrderStatus(payload){
+      dispatch({
+        type: "status_change",
+        payload: payload
+      })
+    }
+
+    var fetchRiders = async function fetchRiders(payload){
+      //console.log("about to fetch restaurants");
+        await getRiders().then(async function(response) {
+          if (response.data.getRiders !== null) {
+            //console.log("got list of restaurants");
+            //console.log(response);
+
+            var restList = response.data.getRiders;
+
+            if (restList !== null) {
+              payload.riders = restList !== undefined && restList !== null? restList : [];
+              return payload;
+            }
+          }
+        }).catch(function(err){
+          //console.log(err);
+        });
+
+        dispatch({
+          type: "fetch_riders",
+          payload: payload
+        });
+    }
+
+    var fetchRidersForOrder = async function fetchRidersForOrder(){
+      //console.log("about to fetch restaurants");
+        return await getRiders().then(async function(response) {
+          if (response.data.getRiders !== null) {
+            //console.log("got list of restaurants");
+            //console.log(response);
+
+            var restList = response.data.getRiders;
+
+            if (restList !== null) {  
+              return restList;
+            }
+          }
+        }).catch(function(err){
+          //console.log(err);
+        });
+    }
+
     var AddGeneralLocation = async function AddGeneralLocation(payload, location) {
         payload.generalLocation = location;
         dispatch({
@@ -874,6 +945,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         filterCategory,
         generalLocation,
         receiptDetails,
+        riders,
         JoinUs,
         signup,
         login,
@@ -892,7 +964,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         fetchOrdersByUser,
         fetchOrders,
         AddGeneralLocation,
-        sendOrderCompletedEmail
+        sendOrderCompletedEmail,
+        changeOrderStatus,
+        fetchRiders
     });
     
      

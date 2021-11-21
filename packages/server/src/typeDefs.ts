@@ -60,7 +60,23 @@ const typeDefs = gql`
         Saturday: String
     }
 
+    type Rider {
+        _id: ID,
+        Id: String 
+        FirstName: String 
+        LastName: String 
+        Email: String 
+        AddressLine1: String 
+        AddressLine2: String 
+        City: String 
+        ContactNumber: String
+        ImageName: String
+        isAvailable: Boolean
+        disabled: Boolean
+    }
+
     type User {
+        _id: ID,
         Id: String! 
         FirstName: String 
         LastName: String 
@@ -73,6 +89,8 @@ const typeDefs = gql`
         category: Category
         MenuItems: [MenuItem]
         ImageName: String
+        isAvailable: Boolean
+        disabled: Boolean
     }
 
     type MenuCategory {
@@ -130,7 +148,7 @@ const typeDefs = gql`
         OrderStatus:  String
         OrderTotal: Float
         OrderDate: String
-        Rider: String,
+        Rider: Rider,
         DeliveryAddress: String,
         PaymentMethod: String,
         AdditionalInfo: String
@@ -171,6 +189,8 @@ const typeDefs = gql`
         getMenucategories(Id: String): User
 
         getRestaurants: [User!]!
+
+        getRiders: [User!]!
 
         createMenuItem(
             RetaurantID: String,

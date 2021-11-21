@@ -13,12 +13,17 @@ import { RestaurantMenuScreen } from '../Screens/Dashboard/RestaurantMenuScreen'
 import { ShoppingCartScreen } from '../Screens/Dashboard/ShoppingCartScreen';
 import { OrdersHistory } from '../Screens/Dashboard/OrderHistoryScreen';
 import { ErrandScreen } from '../Screens/Dashboard/ErrandScreen';
+//Admin
 import { AdminDashboard } from '../Screens/AdminDashboard/AdminDashboard';
 import { OrdersScreen } from '../Screens/AdminDashboard/OrdersScreen';
 import { OrdersDetailsScreen } from '../Screens/AdminDashboard/OrdersDetailsScreen';
 import { EmployeesScreen } from '../Screens/AdminDashboard/EmployeesScreen';
 import { EmployeeDetailsScreen } from '../Screens/AdminDashboard/EmployeeDetailsScreen';
 import { OrganisationsScreen } from '../Screens/AdminDashboard/OrganisationsScreen';
+//Rider
+import { RiderOrderDetailsScreen } from '../Screens/RiderDashboard/RiderOrderDetailsScreen';
+import { RiderOrdersScreen } from '../Screens/RiderDashboard/RiderOrdersScreen';
+import { RiderDashboard } from '../Screens/RiderDashboard/RiderDashboard';
 //import { Sidebar } from '../Screens/Dashboard/Comp/Sidebar';
 import { CheckoutScreen } from '../Screens/Checkout/CheckoutScreen';
 import { OrderCompleted } from '../Screens/Checkout/OrderCompleted'
@@ -158,6 +163,9 @@ const App: React.FC = function App() {
                   <Route path="/Employees" exact component={EmployeesScreen} />
                   <Route path="/EmployeeDetails" exact component={EmployeeDetailsScreen} />
                   <Route path="/Organisations" exact component={OrganisationsScreen} />
+                  {/* Rider Screens */}
+                  <Route path="/DeliveryOrders" exact component={RiderOrdersScreen} />
+                  <Route path="/DeliveryOrdersDetails" exact component={RiderOrderDetailsScreen} />
                   {/* <Route path="/Menu/:id" exact component={RestaurantMenuScreen} /> */}
                   <Route path="/Menu" exact component={RestaurantMenuScreen} />
                   <Route path="/Checkout" exact component={CheckoutScreen} />

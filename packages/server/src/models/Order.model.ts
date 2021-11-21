@@ -25,7 +25,8 @@ const OrderSchema = new Schema({
         required: true
     },
     Rider: {
-        type: String,
+        type: Schema.Types.ObjectId,
+        ref: 'user',
         required: false
     },
     DeliveryAddress: {

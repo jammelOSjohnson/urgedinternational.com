@@ -1,6 +1,6 @@
 import { useAppData } from '../../../Context/AppDataContext';
 import { Button, Container, Grid, makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import moment from 'moment';
@@ -10,7 +10,11 @@ interface Props {
     
 }
 
-
+interface State {
+    email: string;
+    password: string;
+    showPassword: boolean;
+}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -98,65 +102,32 @@ export const OrderFullDetails: React.FC = () => {
     const classes = useStyles();
     var history = useHistory();
     var { value }  = useAppData();
-    var { orders, riders, fetchRiders } = value;
+    var { orders } = value;
     const orderIndex = parseInt(history.location.state.from);
-    const [rider, setRider] = useState(orders[orderIndex].Rider.FirstName);
-    const [selectedRider, setSelectedRider] = useState()
+    const [rider, setRider] = useState(orders[orderIndex].Rider)
     
 
     const handleChange = (event) => {
         // console.log(event.target.name);
         // console.log(event.target.value);
-        if(event.target.value !== "Assigned To"){
-            setSelectedRider(event.target.value);
-            setRider(riders[event.target.value].FirstName);
-        }
+        setRider(event.target.value);
     };
-
-    useEffect(() => {
-        try{
-            if(riders.length === 0){
-                fetchRiders(value);
-            }
-        }catch(err){
-
-        }
-        
-    }, [riders])
     
     //console.log();
     if(orders.length !== 0 && orderIndex !== undefined){
         const now = new Date(parseInt(orders[orderIndex].OrderDate, 10));
         const estTime = moment.tz(now, "America/Jamaica").format("YYYY-MM-DD h:mm a");
         var region = orders[orderIndex].DeliveryAddress.split(',');
-        var personalInfo = orders[orderIndex].AdditionalInfo.split(' ');
-        var email = '';
-        var contactnum = '';
-        var fullname = '';
-
-        console.log(personalInfo);
-        if(personalInfo !== undefined && personalInfo !== null){
-            if(personalInfo.length === 4){
-                fullname = personalInfo[2] + " " + personalInfo[3];
-                email = personalInfo[1];
-                contactnum = personalInfo[0];
-            }else if(personalInfo.length === 3){
-                fullname = personalInfo[1] + " " + personalInfo[2];
-                email = personalInfo[0];
-            }else{
-                email = personalInfo[0];
-            }
-        }
         return (
             <>
                     <Container maxWidth="xl"  className={classes.main}>
                         <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
                             <Grid container direction="row" spacing={1}>
-                                <Grid item xs={12} md={8}>
-                                    <Card style={{marginBottom: "12px"}} className={clsx(classes.card, "mobile-display")}>
+                                <Grid item xs={8}>
+                                    <Card style={{marginBottom: "12px"}} className={classes.card}>
                                         <CardMedia >
                                             {/* eslint-disable-next-line */}
-                                            <img className={"main-image"} src={orders[orderIndex].OrderItems[0].imageName} alt="ordered"></img>
+                                            <img style={{maxWidth: "244.26px"}} src={orders[orderIndex].OrderItems[0].imageName} alt="ordered"></img>
                                             <Grid container direction="row" spacing={1} style={{paddingTop: "7px"}}>
                                                 {orders[orderIndex].OrderItems.map((item, index) => (
                                                     index !== 0?
@@ -168,7 +139,7 @@ export const OrderFullDetails: React.FC = () => {
                                                 ))}
                                                 <Grid item xs={12}>
                                                     <form>
-                                                    <Button type="button" className={clsx(classes.Button, "update-order")}>
+                                                    <Button type="button" className={classes.Button}>
                                                         <Typography className={`${classes.btnfonts}`}>
                                                             Update Order
                                                         </Typography>
@@ -197,20 +168,20 @@ export const OrderFullDetails: React.FC = () => {
                                             </Grid>
                                             </Typography><br/>
                                             <Grid container direction="row" spacing={1}>
-                                                <Grid item xs={12} md={4}>
+                                                <Grid item xs={4}>
                                                     Order Id
                                                     <Typography>
                                                         {orders[orderIndex]._id}
                                                     </Typography>
                                                 </Grid>
-                                                <Grid item xs={12} md={4}>
+                                                <Grid item xs={4}>
                                                     Order Date
                                                     <Typography>
                                                     <img src={"Images/order-details-calendar.png"} alt="calendar" /> 
                                                     &nbsp;<span style={{verticalAlign: "middle"}}>{estTime}</span>
                                                     </Typography>
                                                 </Grid>
-                                                <Grid item xs={12} md={4}>
+                                                <Grid item xs={4}>
                                                     Status
                                                     <Typography>
                                                     {orders[orderIndex].OrderStatus}
@@ -219,19 +190,19 @@ export const OrderFullDetails: React.FC = () => {
                                             </Grid>
                                             <br />
                                             <Grid container direction="row" spacing={1}>
-                                                <Grid item xs={12} md={4}>
+                                                <Grid item xs={4}>
                                                     Location
                                                     <Typography>
                                                         {orders[orderIndex].DeliveryAddress}
                                                     </Typography>
                                                 </Grid>
-                                                <Grid item xs={12} md={4}>
+                                                <Grid item xs={4}>
                                                     Cost
                                                     <Typography>
                                                     {`$${ parseFloat(orders[orderIndex].OrderTotal).toFixed(2)}`}
                                                     </Typography>
                                                 </Grid>
-                                                <Grid item xs={12} md={4}>
+                                                <Grid item xs={4}>
                                                     <FormControl variant="outlined" className={clsx(classes.formControl, classes.root)} fullWidth>
                                                         {/* <InputLabel id="demo-simple-select-outlined-label">Town</InputLabel> */}
                                                         <Select
@@ -240,15 +211,11 @@ export const OrderFullDetails: React.FC = () => {
                                                             value="Assigned To"
                                                             onChange={handleChange}
                                                             // label="Town"
-                                                            name="rider"
+                                                            name="Town"
                                                             className={classes.root}
                                                         >
                                                             <MenuItem value={"Assigned To"}>Assigned To</MenuItem>
-                                                            {
-                                                                riders.map((item, index) => (
-                                                                    <MenuItem key={index} value={index}>{item.FirstName}</MenuItem>
-                                                                ))
-                                                            }
+                                                            {/* <MenuItem value={"May Pen Hospital"}>May Pen Hospital</MenuItem> */}
                                                         </Select>
                                                     </FormControl>
                                                     Assigned To
@@ -260,8 +227,8 @@ export const OrderFullDetails: React.FC = () => {
                                         </CardContent>
                                     </Card>
                                 </Grid>
-                                <Grid item xs={12} md={4}>
-                                    <Card style={{marginBottom: "12px", display: "block", textAlign: "center"}} className={clsx(classes.card, "user-info")}>
+                                <Grid item xs={4}>
+                                    <Card style={{marginBottom: "12px", display: "block", textAlign: "center"}} className={classes.card}>
                                         <CardMedia >
                                             {/* eslint-disable-next-line */}
                                             <img src="Images/rider_placeholder.png" alt="ordered"></img>
@@ -269,15 +236,15 @@ export const OrderFullDetails: React.FC = () => {
                                         <CardContent className={classes.cardContent}>
                                             <br />
                                             <Typography className={classes.cardHeading}>
-                                                {fullname}
+                                                Jane Cooper
                                             </Typography>
                                             <br />
                                             <Typography>
-                                                {email}
+                                            Jane@example.com
                                             </Typography>
                                             <br />
                                             <Typography>
-                                            + {contactnum}
+                                            + {orders[orderIndex].AdditionalInfo}
                                             </Typography>
                                             <br />
                                             <Typography>
@@ -289,34 +256,6 @@ export const OrderFullDetails: React.FC = () => {
                             </Grid>
                         </Grid>
                     </Container>
-                    <style>
-                        {`
-                            .main-image{
-                                max-width: 244.26px
-                            }
-
-                            @media only screen and (max-width: 480px) {
-                                .main-image{
-                                    max-width: 100%;
-                                }
-
-                                .update-order {
-                                    width: 100%;
-                                    margin-bottom: 5px;
-                                }
-
-                                .mobile-display{
-                                    display: block;
-                                    padding-left: 5px;
-                                    padding-right: 5px;
-                                }
-
-                                .user-info{
-                                    padding-left: 0px;
-                                }
-                            }
-                        `}
-                    </style>
             </>
         );
     }else{

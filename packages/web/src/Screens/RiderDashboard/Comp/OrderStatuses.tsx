@@ -127,7 +127,7 @@ export const OrderStatuses: React.FC = () => {
                     <Container maxWidth="xl"  className={classes.main}>
                         <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
                             <Grid container direction="row" spacing={1}>
-                                <Grid item xs={12} sm={6} md={3}>
+                                <Grid item xs={3}>
                                     <a href="javascript()"
                                         className={classes.links} 
                                         onClick={(e) => {e.preventDefault(); handleStatus("Ordered")}}>
@@ -147,7 +147,7 @@ export const OrderStatuses: React.FC = () => {
                                         </Card>
                                     </a>
                                 </Grid>
-                                <Grid item xs={12} sm={6} md={3}>
+                                <Grid item xs={3}>
                                     <a href="javascript()"
                                             className={classes.links} 
                                             onClick={(e) => {e.preventDefault(); handleStatus("Picked Up")}}>
@@ -167,7 +167,7 @@ export const OrderStatuses: React.FC = () => {
                                         </Card>
                                     </a>
                                 </Grid>
-                                <Grid item xs={12} sm={6} md={3}>
+                                <Grid item xs={3}>
                                     <a href="javascript()"
                                             className={classes.links} 
                                             onClick={(e) => {e.preventDefault(); handleStatus("In Transit")}}>
@@ -187,7 +187,7 @@ export const OrderStatuses: React.FC = () => {
                                         </Card>
                                     </a>
                                 </Grid>
-                                <Grid item xs={12} sm={6} md={3}>
+                                <Grid item xs={3}>
                                     <a href="javascript()"
                                             className={classes.links} 
                                             onClick={(e) => {e.preventDefault(); handleStatus("Delivered")}}>
@@ -217,7 +217,7 @@ export const OrderStatuses: React.FC = () => {
                         <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
                             <Grid container direction="row" spacing={1}>
                                 
-                                <Grid item xs={12} sm={6} md={3}>
+                                <Grid item xs={3}>
                                     <a href="javascript()"
                                             className={classes.links} 
                                             onClick={(e) => {e.preventDefault(); handleStatus("Ordered")}}>
@@ -237,7 +237,7 @@ export const OrderStatuses: React.FC = () => {
                                         </Card>
                                     </a>
                                 </Grid>
-                                <Grid item xs={12} sm={6} md={3}>
+                                <Grid item xs={3}>
                                     <a href="javascript()"
                                             className={classes.links} 
                                             onClick={(e) => {e.preventDefault(); handleStatus("Picked Up")}}>
@@ -257,7 +257,7 @@ export const OrderStatuses: React.FC = () => {
                                         </Card>
                                     </a>
                                 </Grid>
-                                <Grid item xs={12} sm={6} md={3}>
+                                <Grid item xs={3}>
                                     <a href="javascript()"
                                             className={classes.links} 
                                             onClick={(e) => {e.preventDefault(); handleStatus("In Transit")}}>
@@ -277,7 +277,7 @@ export const OrderStatuses: React.FC = () => {
                                         </Card>
                                     </a>
                                 </Grid>
-                                <Grid item xs={12} sm={6} md={3}>
+                                <Grid item xs={3}>
                                     <a href="javascript()"
                                             className={classes.links} 
                                             onClick={(e) => {e.preventDefault(); handleStatus("Delivered")}}>
@@ -307,7 +307,7 @@ export const OrderStatuses: React.FC = () => {
                     <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
                         <Grid container direction="row" spacing={1}>
 
-                            <Grid item xs={12} sm={6} md={3}>
+                            <Grid item xs={3}>
                                 <a href="javascript()"
                                             className={classes.links} 
                                             onClick={(e) => {e.preventDefault(); handleStatus("Ordered")}}>
@@ -327,7 +327,7 @@ export const OrderStatuses: React.FC = () => {
                                     </Card>
                                 </a>
                             </Grid>
-                            <Grid item xs={12} sm={6} md={3}>
+                            <Grid item xs={3}>
                                 <a href="javascript()"
                                             className={classes.links} 
                                             onClick={(e) => {e.preventDefault(); handleStatus("Picked Up")}}>
@@ -347,7 +347,7 @@ export const OrderStatuses: React.FC = () => {
                                     </Card>
                                 </a>
                             </Grid>
-                            <Grid item xs={12} sm={6} md={3}>
+                            <Grid item xs={3}>
                                 <a href="javascript()"
                                             className={classes.links} 
                                             onClick={(e) => {e.preventDefault(); handleStatus("In Transit")}}>
@@ -367,7 +367,7 @@ export const OrderStatuses: React.FC = () => {
                                     </Card>
                                 </a>
                             </Grid>
-                            <Grid item xs={12} sm={6} md={3}>
+                            <Grid item xs={3}>
                                 <a href="javascript()"
                                             className={classes.links} 
                                             onClick={(e) => {e.preventDefault(); handleStatus("Delivered")}}>
@@ -397,7 +397,7 @@ export const OrderStatuses: React.FC = () => {
                     <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
                         <Grid container direction="row" spacing={1}>
 
-                            <Grid item xs={12} sm={6} md={3}>
+                            <Grid item xs={3}>
                                 <a href="javascript()"
                                             className={classes.links} 
                                             onClick={(e) => {e.preventDefault(); handleStatus("Ordered")}}>
@@ -417,7 +417,7 @@ export const OrderStatuses: React.FC = () => {
                                     </Card>
                                 </a>
                             </Grid>
-                            <Grid item xs={12} sm={6} md={3}>
+                            <Grid item xs={3}>
                                 <a href="javascript()"
                                             className={classes.links} 
                                             onClick={(e) => {e.preventDefault(); handleStatus("Picked Up")}}>
@@ -437,7 +437,7 @@ export const OrderStatuses: React.FC = () => {
                                     </Card>
                                 </a>
                             </Grid>
-                            <Grid item xs={12} sm={6} md={3}>
+                            <Grid item xs={3}>
                                 <a href="javascript()"
                                             className={classes.links} 
                                             onClick={(e) => {e.preventDefault(); handleStatus("In Transit")}}>
@@ -457,7 +457,7 @@ export const OrderStatuses: React.FC = () => {
                                     </Card>
                                 </a>
                             </Grid>
-                            <Grid item xs={12} sm={6} md={3}>
+                            <Grid item xs={3}>
                                 <a href="javascript()"
                                             className={classes.links} 
                                             onClick={(e) => {e.preventDefault(); handleStatus("Delivered")}}>

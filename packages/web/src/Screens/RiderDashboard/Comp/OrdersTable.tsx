@@ -137,7 +137,7 @@ import { Backdrop, CircularProgress, createStyles, makeStyles, Theme } from '@ma
           OrderDate: estTime,
           OrderStatus: item.OrderStatus, 
           OrderTotal: `$ ${item.OrderTotal}`, 
-          Rider: item.Rider.FirstName,
+          Rider: item.Rider,
           Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); history.push('/AdminOrderSDetails', { from: index});}}><EditRounded color="primary" /></a></>
         };
   
