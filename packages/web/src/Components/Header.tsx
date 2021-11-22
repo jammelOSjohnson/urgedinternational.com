@@ -166,49 +166,55 @@ export const Header: React.FC = function Header() {
       }
 
       auth.onAuthStateChanged(function (user){
-        //update the state for current user to the user logged in
-        //console.log("about to set current user");
-        //console.log(user);
-        //var userInfo = fetchUserInfo();
-        //const payload = {currentUser : user, loading: false, userInfo: userInfo}
-        var signonStatus = false;
-        if(user !== null){
-          signonStatus = user.uid !== null && user.uid !== undefined? true : false
-        
-        
-            var payload = {...value,currentUser : user, loading: false, loggedIn: signonStatus}
-            if(value.userInfo.email === "" ){
-                 fetchUserDetails(payload);
-                //  .then(function(res){
-                //     if(!res){
-                //         //console.log('Unable to fetch user data at this time'); 
-                //     }
-                // });
-            }
-         } 
-         // eslint-disable-next-line
-      });
-
-      socialAuth.onAuthStateChanged( function (user) {
-        //update the state for current user to the user logged in
-        //console.log("about to set current user google");
-        //console.log(user);
-        //var userInfo = fetchUserInfo();
-        //var payload = {currentUser : user, loading: false, userInfo: userInfo}
-        var signonStatus = false;
-        if(user !== null){
-            signonStatus = user.uid !== null && user.uid !== undefined? true : false;
-            var payload = {...value,currentUser : user, loading: false, loggedIn: signonStatus}
-            if(value.userInfo.email === "" ){
-                fetchUserDetails(payload)
-                // .then(function(res){
-                //     if(!res){
-                //         //console.log('Unable to fetch user data at this time'); 
-                //     }
-                // });
-            }
+        console.log("auth");
+        if(referralPath !== "/Register"){
+          //update the state for current user to the user logged in
+          //console.log("about to set current user");
+          //console.log(user);
+          //var userInfo = fetchUserInfo();
+          //const payload = {currentUser : user, loading: false, userInfo: userInfo}
+          var signonStatus = false;
+          if(user !== null){
+            signonStatus = user.uid !== null && user.uid !== undefined? true : false
+          
+          
+              var payload = {...value,currentUser : user, loading: false, loggedIn: signonStatus}
+              if(value.userInfo.email === "" ){
+                  fetchUserDetails(payload);
+                  //  .then(function(res){
+                  //     if(!res){
+                  //         //console.log('Unable to fetch user data at this time'); 
+                  //     }
+                  // });
+              }
+          } 
+          // eslint-disable-next-line
         }
       });
+
+      // socialAuth.onAuthStateChanged( function (user) {
+      //   console.log("Soical auth");
+      //   if(referralPath !== "/Register"){
+      //     //update the state for current user to the user logged in
+      //     //console.log("about to set current user google");
+      //     //console.log(user);
+      //     //var userInfo = fetchUserInfo();
+      //     //var payload = {currentUser : user, loading: false, userInfo: userInfo}
+      //     var signonStatus = false;
+      //     if(user !== null){
+      //         signonStatus = user.uid !== null && user.uid !== undefined? true : false;
+      //         var payload = {...value,currentUser : user, loading: false, loggedIn: signonStatus}
+      //         if(value.userInfo.email === "" ){
+      //             fetchUserDetails(payload)
+      //             // .then(function(res){
+      //             //     if(!res){
+      //             //         //console.log('Unable to fetch user data at this time'); 
+      //             //     }
+      //             // });
+      //         }
+      //     }
+      //   }
+      // });
 
       
       
@@ -256,7 +262,7 @@ export const Header: React.FC = function Header() {
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
                     className={classes.modal}
-                    open={open}
+                    open={referralPath !== "/Register" && referralPath !== "/Login" && referralPath !== "/404" ? open : false}
                     onClose={handleClose}
                     closeAfterTransition
                     BackdropComponent={Backdrop}

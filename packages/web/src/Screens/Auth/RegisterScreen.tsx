@@ -26,22 +26,22 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         root: {
             "& .MuiFormLabel-root": {
-                color: "#EEE"
+                color: "#000"
             },
             "&.MuiFormLabel-root.Mui-focused": {
-                  color: "#EEE"
+                  color: "#000"
             },
             "& .MuiInputBase-root": {
-                color: "#EEE"
+                color: "#000"
             },
             "& .MuiOutlinedInput-root": {
-                border: "1px solid #EEE",
-                color: "#EEEEEE !important"
+                border: "0.1px solid grey",
+                color: "#000000 !important"
             },
             "& .MuiIconButton-root": {
                 color: "#EEEEEE"
             },
-            color: "#EEE"
+            color: "#000"
         },
         gridRoot: {
             padding: "0px"
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
         textBox: {
             width: "100%",
             borderRadius: "25px",
-            border: "1px solid #EEEEEE"
+            border: "0.1px solid grey"
         },
         section1H1: {
             fontSize: "44.6667px",
@@ -123,7 +123,7 @@ const useStyles = makeStyles((theme: Theme) =>
             marginBottom: "8%",
             width: "100%",
             borderRadius: "25px",
-            border: "1px solid"
+            border: "0.1px solid grey"
         },
         skipBtn: {
             position: "absolute",
@@ -163,12 +163,15 @@ const useStyles = makeStyles((theme: Theme) =>
         firstTextFieldMobile: {
             marginBottom: "3%",
             width: "100%",
+            borderColor: "#EEEEEE",
             borderRadius: "25px",
+            border: "0.1px solid grey"
         },
         textBoxMobile: {
             width: "100%",
             borderColor: "#EEEEEE",
             borderRadius: "25px",
+            border: "0.1px solid grey"
         },
         forgotPassTextMobile: {
             color: "#FEC109",
@@ -212,22 +215,22 @@ const mobileStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             "& .MuiFormLabel-root": {
-              color: "#EEE"
+              color: "#000"
             },
             "&.MuiFormLabel-root.Mui-focused": {
-                color: "#EEE"
+                color: "#000"
             },
             "& .MuiInputBase-root": {
-                color: "#EEE"
+                color: "#000"
             },
             "& .MuiOutlinedInput-root": {
                 border: "1px solid #EEE",
-                color: "#EEEEEE !important"
+                color: "#000000 !important"
             },
             "& .MuiIconButton-root": {
                 color: "#EEEEEE"
             },
-            color: "#EEE"
+            color: "#000"
         },
     })
 );
@@ -271,11 +274,13 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
     };
 
     const handleClickSkip = () => {
-      history.push("/Dashboard")
+    //   history.push("/Dashboard")
+        history.push("/");
     }
 
     const handleClickSignIn = () => {
-      history.push("/Login")
+      //history.push("/Login")
+      history.push("/");
     }
 
     var handleSubmit = async function handleSubmit(event) {
@@ -286,7 +291,13 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
             setSuccess('');
             setError('');
             setLoading(true);
-            await signup(values, value).then(async function(res1){
+            values.fullname === ''?
+                setError('Please enter your Full Name')
+            :values.email === '' || !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.email))?
+                setError('Please enter a valid Email')
+            :values.password === ''?
+                setError('Please enter a valid Password')
+            :await signup(values, value).then(async function(res1){
                 if(res1 != null){
                     if(res1 !== "The email address is already in use by another account."){
                         await fetchUserDetailsSignUp(res1).then(function(res){
@@ -297,10 +308,11 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                                 setTimeout(() => {
                                     setSuccess('');
                                     console.log("about to go to dashboard");
-                                    history.push('/Dashboard')
+                                    //history.push('/Dashboard')
+                                    history.push("/");
                                 }, 1500);
                             }else{
-                                setError('Unable to login at this time'); 
+                                setError('Unable to Sign Up at this time'); 
                             } 
                         });
                     }else{
@@ -335,7 +347,8 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                             setTimeout(() => {
                                 setSuccess('');
                                 console.log("about to go to dashboard");
-                                history.push('/Dashboard')
+                                //history.push('/Dashboard')
+                                history.push("/");
                             }, 1500);
                         }else{
                             setError('Unable to login at this time'); 
@@ -359,7 +372,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
             if(payload.currentUser.uid !== null && payload.currentUser.uid !== undefined){
                 //console.log("Fetching user info");
                 //console.log(state);
-                await fetchUserInfoForSignUp(payload.currentUser.uid, payload, value);
+                fetchUserInfoForSignUp(payload.currentUser.uid, payload, value);
                 return true;
             }
         }

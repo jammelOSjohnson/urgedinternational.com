@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
 import { Header } from '../Components/Header';
 import { Footer } from '../Components/Footer';
@@ -37,6 +37,9 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { useEffect } from 'react';
 import "jspdf/dist/polyfills.es.js";
+
+//not found page
+import {NotFound} from './NotFound';
 
 const theme = createTheme({
   typography: {
@@ -142,34 +145,40 @@ const App: React.FC = function App() {
           <main>
             <div>
               <Router>
-                <Header/>
-                {/* <Sidebar/> */}
-                  {/* <Route path="/" exact component={AboutScreen} /> */}
-                  <Route path="/" exact component={HomeScreen} />
-                  {/* Customer Screens */}
-                  <Route path="/About" exact component={AboutScreen} />
-                  <Route path="/Login" exact component={LoginScreen} />
-                  <Route path="/Register" exact component={RegisterScreen} />
-                  <Route path="/Dashboard" exact component={CustomerDashboardScreen} />
-                  <Route path="/FoodDelivery" exact component={FoodDeliveryDashboardScreen} />
-                  <Route path="/Restaurants" exact component={RestaurantsScreen} />
-                  <Route path="/ShoppingCart" exact component={ShoppingCartScreen} />
-                  <Route path="/OrderHistory" exact component={OrdersHistory} />
-                  <Route path="/Errands" exact component={ErrandScreen} />
-                  {/* Admin Screens */}
-                  <Route path="/AdminDashboard" exact component={AdminDashboard} />
-                  <Route path="/AdminOrders" exact component={OrdersScreen} />
-                  <Route path="/AdminOrderSDetails" exact component={OrdersDetailsScreen} />
-                  <Route path="/Employees" exact component={EmployeesScreen} />
-                  <Route path="/EmployeeDetails" exact component={EmployeeDetailsScreen} />
-                  <Route path="/Organisations" exact component={OrganisationsScreen} />
-                  {/* Rider Screens */}
-                  <Route path="/DeliveryOrders" exact component={RiderOrdersScreen} />
-                  <Route path="/DeliveryOrdersDetails" exact component={RiderOrderDetailsScreen} />
-                  {/* <Route path="/Menu/:id" exact component={RestaurantMenuScreen} /> */}
-                  <Route path="/Menu" exact component={RestaurantMenuScreen} />
-                  <Route path="/Checkout" exact component={CheckoutScreen} />
-                  <Route path="/OrderCompleted" exact component={OrderCompleted} />
+              <Header/>
+                <Switch>
+                  {/* <Sidebar/> */}
+                    {/* <Route path="/" exact component={AboutScreen} /> */}
+                    <Route path="/" exact component={HomeScreen} />
+                    {/* Customer Screens */}
+                    <Route path="/About" exact component={AboutScreen} />
+                    <Route path="/Login">
+                      <LoginScreen />
+                    </Route>
+                    <Route path="/Register"  component={RegisterScreen} />
+                    <Route path="/Dashboard" exact component={CustomerDashboardScreen} />
+                    <Route path="/FoodDelivery" exact component={FoodDeliveryDashboardScreen} />
+                    <Route path="/Restaurants" exact component={RestaurantsScreen} />
+                    <Route path="/ShoppingCart" exact component={ShoppingCartScreen} />
+                    <Route path="/OrderHistory" exact component={OrdersHistory} />
+                    <Route path="/Errands" exact component={ErrandScreen} />
+                    {/* Admin Screens */}
+                    <Route path="/AdminDashboard" exact component={AdminDashboard} />
+                    <Route path="/AdminOrders" exact component={OrdersScreen} />
+                    <Route path="/AdminOrderSDetails" exact component={OrdersDetailsScreen} />
+                    <Route path="/Employees" exact component={EmployeesScreen} />
+                    <Route path="/EmployeeDetails" exact component={EmployeeDetailsScreen} />
+                    <Route path="/Organisations" exact component={OrganisationsScreen} />
+                    {/* Rider Screens */}
+                    <Route path="/DeliveryOrders" exact component={RiderOrdersScreen} />
+                    <Route path="/DeliveryOrdersDetails" exact component={RiderOrderDetailsScreen} />
+                    {/* <Route path="/Menu/:id" exact component={RestaurantMenuScreen} /> */}
+                    <Route path="/Menu" exact component={RestaurantMenuScreen} />
+                    <Route path="/Checkout" exact component={CheckoutScreen} />
+                    <Route path="/OrderCompleted" exact component={OrderCompleted} />
+                    <Route path='/404' component={NotFound} />
+                    <Redirect from='*' to="/404" />
+                </Switch>
                 <Footer/>
               </Router>
             </div>

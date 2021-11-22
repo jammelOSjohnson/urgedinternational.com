@@ -25,9 +25,9 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         root: {
             "& .MuiFormLabel-root": {
-              color: "#fff"
+              color: "#eee"
             },
-            color: "#fff"
+            color: "#eee"
         },
         gridRoot: {
             padding: "0px"
@@ -134,10 +134,12 @@ const useStyles = makeStyles((theme: Theme) =>
             marginBottom: "3%",
             width: "100%",
             borderRadius: "25px",
+            border: "1px solid #EEEEEE",
         },
         textBoxMobile: {
             width: "100%",
             borderColor: "#EEEEEE",
+            border: "1px solid #EEEEEE",
             borderRadius: "25px",
         },
         forgotPassTextMobile: {
@@ -182,22 +184,22 @@ const mobileStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             "& .MuiFormLabel-root": {
-              color: "#EEE"
+              color: "#000"
             },
             "&.MuiFormLabel-root.Mui-focused": {
-                color: "#EEE"
+                color: "#000"
             },
             "& .MuiInputBase-root": {
-                color: "#EEE"
+                color: "#000"
             },
             "& .MuiOutlinedInput-root": {
-                border: "1px solid #EEE",
-                color: "#EEEEEE !important"
+                border: "1px solid #EEEEEE",
+                color: "#000000 !important"
             },
             "& .MuiIconButton-root": {
                 color: "#EEEEEE"
             },
-            color: "#EEE"
+            color: "#000"
         },
     })
 );
@@ -240,7 +242,8 @@ export const LoginScreen: React.FC = function LoginScreen() {
     };
 
     const handleClickSkip = () => {
-      history.push("/Dashboard")
+      //history.push("/Dashboard")
+      history.push("/");
     }
 
     const handleClickSignUp = () => {
@@ -271,7 +274,8 @@ export const LoginScreen: React.FC = function LoginScreen() {
                                 setTimeout(() => {
                                     setSuccess('');
                                     //console.log("about to go to dashboard");
-                                    history.push("/AdminOrders")
+                                    //history.push("/AdminOrders");
+                                    history.push("/");
                                 }, 1500);
                                 
                             }else if(userRolef !== undefined && userRolef === "Rider"){
@@ -280,7 +284,8 @@ export const LoginScreen: React.FC = function LoginScreen() {
                                 setTimeout(() => {
                                     setSuccess('');
                                     //console.log("about to go to dashboard");
-                                    history.push("/DeliveryOrders")
+                                    //history.push("/DeliveryOrders");
+                                    history.push("/");
                                 }, 1500);
                                 
                             }else{
@@ -289,7 +294,8 @@ export const LoginScreen: React.FC = function LoginScreen() {
                                 setTimeout(() => {
                                     setSuccess('');
                                     //console.log("about to go to dashboard");
-                                    history.push(history.location.state.from);
+                                    //history.push(history.location.state.from);
+                                    history.push("/");
                                 }, 1500);
                             }
                         }else{
@@ -322,7 +328,8 @@ export const LoginScreen: React.FC = function LoginScreen() {
                         setTimeout(() => {
                             setSuccess('');
                             //console.log("about to go to dashboard");
-                            history.push("/AdminOrders")
+                            //history.push("/AdminOrders")
+                            history.push("/");
                         }, 1500);
                         
                     }
@@ -332,7 +339,8 @@ export const LoginScreen: React.FC = function LoginScreen() {
                         setTimeout(() => {
                             setSuccess('');
                             //console.log("about to go to dashboard");
-                            history.push("/DeliveryOrders")
+                            //history.push("/DeliveryOrders")
+                            history.push("/");
                         }, 1500);
                         
                     }else{
@@ -341,7 +349,8 @@ export const LoginScreen: React.FC = function LoginScreen() {
                         setTimeout(() => {
                             setSuccess('');
                             //console.log("about to go to dashboard");
-                            history.push(history.location.state.from);
+                            //history.push(history.location.state.from);
+                            history.push("/");
                         }, 1500);
                     }
                 }else{
@@ -486,7 +495,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
                 <Container maxWidth="xl" style={{padding: 0, backgroundColor: "#FFF", overflowX: "hidden", overflowY: "hidden"}}>
                     <Button variant="outlined"
                      className={clsx(classes.signUpBtnMobile, mobClasses.root)} onClick={handleClickSignUp}  >
-                            Sign In
+                            Sign Up
                     </Button>
                     <img className={classes.logoMobile} src="Images/urged logo.svg" alt="Urged Logo"></img>
                     <div className={classes.formSectionMobile}>
