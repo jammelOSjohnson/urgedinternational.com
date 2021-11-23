@@ -114,6 +114,13 @@ const resolvers = {
         getOrders: async () => {
             return await Order.find().populate("Rider");
         },
+
+        updateOrders: async (_, {newOrder}) => {
+            let { _id } = newOrder
+            const order = await Order.findOne({_id});
+            Object.assign(order, newOrder);
+            return order.save();
+        },
         
         //Reastaurants
         getRestaurants: async () => {

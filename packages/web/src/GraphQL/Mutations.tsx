@@ -259,3 +259,41 @@ export const GET_ORDERS = gql`
         }
     }
 `
+
+export const UPDATE_ORDER = gql`
+    #scalar GraphQLDateTime
+
+    
+
+    mutation updateOrder($newOrder: JSONObject) {
+            createOrder(newOrder: $newOrder){
+                    _id
+                    Id
+                    OrderItems 
+                    OrderStatus
+                    OrderTotal
+                    OrderDate
+                    Rider{
+                        _id
+                        Id 
+                        FirstName 
+                        LastName 
+                        Email
+                        AddressLine1
+                        AddressLine2
+                        City 
+                        ContactNumber
+                        ImageName
+                        isAvailable
+                        disabled
+                    }
+                    DeliveryAddress 
+                    PaymentMethod
+                    AdditionalInfo
+                    DeliveryFee
+                    GCT
+                    ServiceCharge
+                    CartTotal
+                }
+    }
+`

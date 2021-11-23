@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import {useContext, useReducer, createContext} from 'react';
 //import fetchAddressApi from '../Apis/fetchAddressApi';
 import  { auth, socialAuth, googleAuthProvider } from '../firebase';
-import { GET_RIDERS ,CREATE_ORDER, GET_ORDERS_BY_USERID, GET_ORDERS, GET_RESTAURANTS, CREATE_USER_MUTATION, GET_USER_MUTATION, GET_USER_IN_ROLE, GET_ROLE, CREATE_ROLE, GET_MENU_CATEGORIES } from '../GraphQL/Mutations';
+import { UPDATE_ORDER ,GET_RIDERS ,CREATE_ORDER, GET_ORDERS_BY_USERID, GET_ORDERS, GET_RESTAURANTS, CREATE_USER_MUTATION, GET_USER_MUTATION, GET_USER_IN_ROLE, GET_ROLE, CREATE_ROLE, GET_MENU_CATEGORIES } from '../GraphQL/Mutations';
 import { useMutation } from '@apollo/client';
 import sendEmail from "../email.js";
 import moment from 'moment-timezone';
@@ -143,6 +143,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const [getOrders] = useMutation(GET_ORDERS);
     const [getOrdersByUserId] = useMutation(GET_ORDERS_BY_USERID);
     const [createOrder] = useMutation(CREATE_ORDER);
+    const [updateOrder] = useMutation(UPDATE_ORDER);
 
     var currentUser = undefined;
     var selectedRestaurant = undefined;
@@ -773,6 +774,22 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       }
     }
 
+    var UpdateOrder  = async function UpdateOrder(payload, order){
+      if(order !== null && order !== undefined){
+          let newOrder = order;
+          await updateOrder({variables: newOrder}).then(async function(response) {
+            //console.log("create orer result");
+            if (response.data.updateOrder !== null) {
+              await fetchOrders(payload);
+              return true;
+            }
+          });
+      }else{
+        return false
+      }
+      return false
+    }
+
     var fetchOrdersByUser  = async function fetchOrdersByUser(payload){
       if(payload.currentUser !== undefined){
         if(payload.currentUser.uid !== undefined){
@@ -1009,6 +1026,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         AddGeneralLocation,
         sendOrderCompletedEmail,
         changeOrderStatus,
+        UpdateOrder,
         fetchRiders
     });
     

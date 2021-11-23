@@ -231,6 +231,8 @@ const typeDefs = gql`
         ): [Order]
 
         getOrders: [Order]
+        
+        updateOrders(newOrder: Order): [Order]
 
         fetchRestaurantsByCategory(
             categoryID: String

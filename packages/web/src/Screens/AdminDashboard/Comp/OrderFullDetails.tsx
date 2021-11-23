@@ -98,10 +98,12 @@ export const OrderFullDetails: React.FC = () => {
     const classes = useStyles();
     var history = useHistory();
     var { value }  = useAppData();
-    var { orders, riders, fetchRiders } = value;
+    var { orders, riders, fetchRiders, UpdateOrder } = value;
     const orderIndex = parseInt(history.location.state.from);
     const [rider, setRider] = useState(orders[orderIndex].Rider.FirstName);
-    const [selectedRider, setSelectedRider] = useState()
+    const [selectedRider, setSelectedRider] = useState();
+    var [error, setError] = useState('');
+    var [success, setSuccess] = useState('');
     
 
     const handleChange = (event) => {
@@ -112,6 +114,18 @@ export const OrderFullDetails: React.FC = () => {
             setRider(riders[event.target.value].FirstName);
         }
     };
+
+    const handleSubmit = async() => {
+        try{
+            await UpdateOrder(value, orders[orderIndex]).then((res) => {
+                if(res){
+                    setSuccess('Order Updated Successfully.')
+                }
+            })
+        }catch(err){
+            setError('Unable to update order at this time.');
+        }
+    }
 
     useEffect(() => {
         try{
@@ -168,7 +182,7 @@ export const OrderFullDetails: React.FC = () => {
                                                 ))}
                                                 <Grid item xs={12}>
                                                     <form>
-                                                    <Button type="button" className={clsx(classes.Button, "update-order")}>
+                                                    <Button type="button" className={clsx(classes.Button, "update-order")} onClick={handleSubmit}>
                                                         <Typography className={`${classes.btnfonts}`}>
                                                             Update Order
                                                         </Typography>
