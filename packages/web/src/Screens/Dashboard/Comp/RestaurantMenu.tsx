@@ -24,6 +24,7 @@ interface State {
     itemCategory: string;
     ifnotAvailable: string;
     itemDescription: string;
+    quantity: number;
 }
 
 interface Props {
@@ -202,7 +203,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
         deliveredBy: "No one",
         itemCategory: "",
         ifnotAvailable: "Contact me",
-        itemDescription: ""
+        itemDescription: "",
+        quantity: 1
       });
 
     const [open, setOpen] = React.useState(false);
@@ -256,7 +258,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                     deliveredBy: "No one",
                     itemCategory: "",
                     ifnotAvailable: "Contact me",
-                    itemDescription: ""
+                    itemDescription: "",
+                    quantity: 1
                 }
             );
             setOpen(false);

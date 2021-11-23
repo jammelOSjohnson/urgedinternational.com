@@ -282,7 +282,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
         //Calc cart total
         let cartTotal = 0.00;
         cartItems.map((item, index)=>(
-            cartTotal = cartTotal + item.itemCost
+            cartTotal = cartTotal + (item.itemCost * item.quantity)
         ));
 
         let newcartTotal:Fee = {
@@ -328,7 +328,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
             }
             setTotal(newTotal);
         }
-    },[deliveryFee.Cost, generalLocation, values.Town])
+    },[deliveryFee.Cost, generalLocation, values.Town, cartItems, value])
       
     return (
         <>

@@ -462,77 +462,89 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           //console.log("what is inside payload for fetch user info");
           //console.log(payloadf);
 
-        var user = response.data.getUser;
-        console.log("firstname is:");
-        console.log(user.FirstName);
-        if (user !== null) {
-          payloadf.userInfo.contactNumber = user.ContactNumber !== null && user.ContactNumber !== undefined ? user.ContactNumber : "";
-          payloadf.userInfo.email = user.Email !== null && user.Email !== undefined ? user.Email : "";
-          payloadf.userInfo.fullName = user.FirstName !== null && user.FirstName !== undefined? user.FirstName : "";
-          // + " " 
-          //                            + user.LastName !== null && user.LastName !== undefined? user.LastName : "" + user.LastName !== null && user.LastName !== undefined? user.LastName : "":"";
-          payloadf.loggedIn = true;
-          payloadf.userInfo.addressLine1 = user.AddressLine1 !== null && user.AddressLine1 !== undefined ? user.AddressLine1 : "";
-          payloadf.userInfo.addressLine2 = user.AddressLine2 !== null && user.AddressLine2 !== undefined ? user.AddressLine2 : "";
-          payloadf.userInfo.city = user.City !== null && user.City !== undefined ? user.City : "";
-        }
-    
-          return payloadf;
-        } else {
-          //console.log("No such user!")
-          //console.log(response);
-          // //console.log("creating new user");
-          var user2 = {
-            Id: uid,
-            FirstName: payloadf.userInfo.fullName !== null ? payloadf.userInfo.fullName.toLowerCase() : "",
-            LastName: payloadf.userInfo.fullName !== null ? payloadf.userInfo.fullName.toLowerCase() : "",
-            Email: payloadf.currentUser.email !== null ? payloadf.currentUser.email : "",
-            AddressLine1: "",
-            AddressLine2: "",
-            City: "",
-            ContactNumber: ""
-          };
-           createUser({variables: {...user2}}).then(async function (response2) {
-            if(response2.data.getUser !== null){
-              //console.log("User info  successfully written!");
-              //console.log(response2.data);
-              payloadf.userInfo.contactNumber = user2.ContactNumber;
-              payloadf.userInfo.email = user2.Email;
-              payloadf.userInfo.fullName = user2.FirstName;
-              payloadf.loggedIn = true;
-              payloadf.userInfo.addressLine1 = user2.AddressLine1 !== null && user2.AddressLine1 !== undefined ? user2.AddressLine1 : "";
-              payloadf.userInfo.addressLine2 = user2.AddressLine2 !== null && user2.AddressLine2 !== undefined ? user2.AddressLine2 : "";
-              payloadf.userInfo.city = user2.City !== null && user2.City !== undefined ? user2.City : "";  
-              
-              var userRoleResf = undefined;
-              await userHasRole(uid, payloadf).then(function (userRoleRes) {
-                //console.log("Final user ref is: ");
-                //console.log(userRoleRes);
-                userRoleResf = userRoleRes;
+          var user = response.data.getUser;
+          console.log("firstname is:");
+          console.log(user.FirstName);
+          if (user !== null) {
+            payloadf.userInfo.contactNumber = user.ContactNumber !== null && user.ContactNumber !== undefined ? user.ContactNumber : "";
+            payloadf.userInfo.email = user.Email !== null && user.Email !== undefined ? user.Email : "";
+            payloadf.userInfo.fullName = user.FirstName !== null && user.FirstName !== undefined? user.FirstName : "";
+            // + " " 
+            //                            + user.LastName !== null && user.LastName !== undefined? user.LastName : "" + user.LastName !== null && user.LastName !== undefined? user.LastName : "":"";
+            payloadf.loggedIn = true;
+            payloadf.userInfo.addressLine1 = user.AddressLine1 !== null && user.AddressLine1 !== undefined ? user.AddressLine1 : "";
+            payloadf.userInfo.addressLine2 = user.AddressLine2 !== null && user.AddressLine2 !== undefined ? user.AddressLine2 : "";
+            payloadf.userInfo.city = user.City !== null && user.City !== undefined ? user.City : "";
 
-                var RequestParams = {
-                  from_name: payloadf.userInfo.fullName,
-                  user_email: payloadf.userInfo.email,
-                }
-  
-                sendEmail(emailServiceId, emailNewCustomerTemplate, RequestParams, emailUserId).then(function (res) {
-                  dispatch({
-                    type: "fetch_userinfo",
-                    payload: userRoleResf
-                  });
-                })
-                return userRoleRes;
+            var userRoleResf = undefined;
+            await userHasRole(uid, payloadf).then(function (userRoleRes) {
+              //console.log("Final user ref is: ");
+              //console.log(userRoleRes);
+              userRoleResf = userRoleRes;
+              
+              dispatch({
+                  type: "fetch_userinfo",
+                  payload: userRoleResf
               });
+              return userRoleRes;
+            });
 
-              
-              return true;
-            }
-          }).catch(function (error) {
-            console.error("Error writing user info: ", error);
-            return false;
-          });
+          } else {
+            //console.log("No such user!")
+            //console.log(response);
+            // //console.log("creating new user");
+            var user2 = {
+              Id: uid,
+              FirstName: payloadf.userInfo.fullName !== null ? payloadf.userInfo.fullName.toLowerCase() : "",
+              LastName: payloadf.userInfo.fullName !== null ? payloadf.userInfo.fullName.toLowerCase() : "",
+              Email: payloadf.currentUser.email !== null ? payloadf.currentUser.email : "",
+              AddressLine1: "",
+              AddressLine2: "",
+              City: "",
+              ContactNumber: ""
+            };
+            createUser({variables: {...user2}}).then(async function (response2) {
+              if(response2.data.getUser !== null){
+                //console.log("User info  successfully written!");
+                //console.log(response2.data);
+                payloadf.userInfo.contactNumber = user2.ContactNumber;
+                payloadf.userInfo.email = user2.Email;
+                payloadf.userInfo.fullName = user2.FirstName;
+                payloadf.loggedIn = true;
+                payloadf.userInfo.addressLine1 = user2.AddressLine1 !== null && user2.AddressLine1 !== undefined ? user2.AddressLine1 : "";
+                payloadf.userInfo.addressLine2 = user2.AddressLine2 !== null && user2.AddressLine2 !== undefined ? user2.AddressLine2 : "";
+                payloadf.userInfo.city = user2.City !== null && user2.City !== undefined ? user2.City : "";  
+                
+                var userRoleResf = undefined;
+                await userHasRole(uid, payloadf).then(function (userRoleRes) {
+                  //console.log("Final user ref is: ");
+                  //console.log(userRoleRes);
+                  userRoleResf = userRoleRes;
+
+                  var RequestParams = {
+                    from_name: payloadf.userInfo.fullName,
+                    user_email: payloadf.userInfo.email,
+                  }
     
-          return payloadf;
+                  sendEmail(emailServiceId, emailNewCustomerTemplate, RequestParams, emailUserId).then(function (res) {
+                    dispatch({
+                      type: "fetch_userinfo",
+                      payload: userRoleResf
+                    });
+                  })
+                  return userRoleRes;
+                });
+
+                
+                return true;
+              }
+            }).catch(function (error) {
+              console.error("Error writing user info: ", error);
+              return false;
+            });
+      
+            return payloadf;
+          }
         }
       }).catch(function(err){
         //console.log(err);
@@ -658,8 +670,14 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       
     }
 
-    var addItemToCart = async function addItemToCart(payload, item){
-      if(item.length !== 0){
+    var addItemToCart = async function addItemToCart(payload, item, index){
+      if(index !== null && index !== undefined){
+        payload.cartItems[index].quantity = item.quantity;
+        dispatch({
+          type: "add_cart_item",
+          payload: payload
+        });
+      }else if(item.length !== 0){
           payload.cartItems.push(item);
           dispatch({
             type: "add_cart_item",
@@ -695,7 +713,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             otherIntructions: item.otherIntructions,
             itemCost: item.itemCost,
             imageName: item.imageName,
-            ifnotAvailable: item.ifnotAvailable
+            ifnotAvailable: item.ifnotAvailable,
+            quantity: item.quantity
           } as object;
           orderItems.push(body);
           return null;

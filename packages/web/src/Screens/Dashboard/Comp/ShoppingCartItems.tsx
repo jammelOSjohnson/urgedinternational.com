@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
             flexDirection: 'row'
         },
         removeButton: {
-          backgroundColor: "#F6F6F6",
+          backgroundColor: "#F6F6F6 !important",
           width: '5px',
           height: '5px'
 
@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const ShoppingCartItems: React.FC = function ShoppingCartItems() {
   const classes = useStyles();
   var { value }  = useAppData();
-  var { cartItems, checkoutOrder, removeCartItem } = value;
+  var { cartItems, checkoutOrder, removeCartItem, addItemToCart } = value;
 
   const ColorlibConnector = withStyles({
       alternativeLabel: {
@@ -201,12 +201,37 @@ function ColorlibStepIcon(props: StepIconProps) {
     
     const[quantity, setQuantity] = React.useState(1);
     
-    const increment = () => {
-       return (quantity >= 1 ? setQuantity(quantity + 1): quantity);
+    const increment = async (index) => {
+      try{
+        console.log(cartItems[index].quantity);
+        if(cartItems[index].quantity >= 1){
+          var item = cartItems[index];
+          item.quantity = item.quantity + 1;
+          var payload = value;
+          await addItemToCart(payload, item, index ).then(() => {
+            
+          })
+        }
+      }catch(err){
+        console.log(err);
+      }
     }
     
-    const decrement = () => {
-      return(quantity > 1 ? setQuantity(quantity - 1): quantity);
+    const decrement = async (index) => {
+      try{
+        if(cartItems[index].quantity > 1){ 
+          var item = cartItems[index];
+          item.quantity = item.quantity - 1;
+         
+          var payload = value;
+          await addItemToCart(payload, item, index ).then(() => {
+            
+          })
+        }
+      }catch(err){
+        console.log(err);
+      }
+      
     }
 
     return (
@@ -238,12 +263,12 @@ function ColorlibStepIcon(props: StepIconProps) {
                                   }
                                   action={
                                     <>
-                                      <IconButton className={classes.removeButton} onClick={() => decrement()}>
+                                      {/* <IconButton className={classes.removeButton} onClick={() => decrement(index)}>
                                         <RemoveIcon />
                                       </IconButton>
-                                      <IconButton className={classes.addButton} onClick={() => increment()}>
+                                      <IconButton className={classes.addButton} onClick={() => increment(index)}>
                                           <AddIcon />
-                                      </IconButton>
+                                      </IconButton> */}
                                       <IconButton aria-label="settings" onClick={() => handleRemove(index)}>
                                         <Avatar aria-label="recipe" className={classes.close}>
                                           <CloseRounded />
@@ -251,7 +276,17 @@ function ColorlibStepIcon(props: StepIconProps) {
                                       </IconButton>
                                     </>
                                   }
-                                  title={`Quantity:${quantity}`}
+                                  title={
+                                    <>
+                                      <IconButton className={classes.removeButton} onClick={() => decrement(index)}>
+                                        <RemoveIcon />
+                                      </IconButton>
+                                      &nbsp;{cartItems[index].quantity}&nbsp;
+                                      <IconButton className={classes.addButton} onClick={() => increment(index)}>
+                                          <AddIcon />
+                                      </IconButton>
+                                    </>
+                                  }
                                   className={classes.cardHeader}
                                 />
                                 </div>
@@ -287,12 +322,12 @@ function ColorlibStepIcon(props: StepIconProps) {
                                   }
                                   action={
                                     <>
-                                      <IconButton className={classes.removeButton} onClick={() => decrement()}>
+                                      {/* <IconButton className={classes.removeButton} onClick={() => decrement(index)}>
                                         <RemoveIcon />
                                       </IconButton>
-                                      <IconButton className={classes.addButton} onClick={() => increment()}>
+                                      <IconButton className={classes.addButton} onClick={() => increment(index)}>
                                           <AddIcon />
-                                      </IconButton>
+                                      </IconButton> */}
                                       <IconButton aria-label="settings" onClick={() => handleRemove(index)}>
                                         <Avatar aria-label="recipe" className={classes.close}>
                                           <CloseRounded />
@@ -300,7 +335,17 @@ function ColorlibStepIcon(props: StepIconProps) {
                                       </IconButton>
                                     </>
                                   }
-                                  title={`Quantity:${quantity}`}
+                                  title={
+                                    <>
+                                      <IconButton className={classes.removeButton} onClick={() => decrement(index)}>
+                                        <RemoveIcon />
+                                      </IconButton>
+                                      &nbsp;{cartItems[index].quantity}&nbsp;
+                                      <IconButton className={classes.addButton} onClick={() => increment(index)}>
+                                          <AddIcon />
+                                      </IconButton>
+                                    </>
+                                  }
                                   className={classes.cardHeader}
                                 />
                                 </div>
@@ -335,6 +380,15 @@ function ColorlibStepIcon(props: StepIconProps) {
                     </>
                 }
             </Grid>
+            <style>
+              {
+                `
+                  button:focus:not(:focus-visible) {
+                    background-color: #FF5E14;
+                  }
+                `
+              }
+            </style>
         </>
     )
 }

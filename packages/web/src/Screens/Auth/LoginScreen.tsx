@@ -274,8 +274,8 @@ export const LoginScreen: React.FC = function LoginScreen() {
                                 setTimeout(() => {
                                     setSuccess('');
                                     //console.log("about to go to dashboard");
-                                    //history.push("/AdminOrders");
-                                    history.push("/");
+                                    history.push("/AdminOrders");
+                                    //history.push("/");
                                 }, 1500);
                                 
                             }else if(userRolef !== undefined && userRolef === "Rider"){

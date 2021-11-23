@@ -1608,7 +1608,7 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
                                                     }}
                                                 >
                                                     <p style={{ fontSize: 14, lineHeight: "140%" }}>
-                                                    <strong>1</strong>
+                                                    <strong>{item.quantity}</strong>
                                                     </p>
                                                 </div>
                                                 </td>
