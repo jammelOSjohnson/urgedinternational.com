@@ -69,7 +69,7 @@ export const DashboardFooter: React.FC = function DashboardFooter() {
       
     return (
         <>
-            <BottomNavigation value={value} onChange={handleChange} className={clsx(classes.root, "showOnMobile")}>
+            {/* <BottomNavigation value={value} onChange={handleChange} className={clsx(classes.root, "showOnMobile")}>
                 <BottomNavigationAction label="Dashboard" value="dashboard" icon={
                     referralPath === "/Dashboard" ?
                         <img src="Images/Dashboard-mobile.png" />
@@ -84,7 +84,7 @@ export const DashboardFooter: React.FC = function DashboardFooter() {
                 } onClick={() => history.push("/FoodDelivery")} />
                 <BottomNavigationAction label="Package Delivery" value="package delivery" icon={<img src="Images/PackageDelivery-mobile.png" />} />
                 <BottomNavigationAction label="Market Place" value="market place" icon={<img src="Images/MarketPlace-mobile.png" />} />
-            </BottomNavigation>
+            </BottomNavigation> */}
             {
                 referralPath !== "/Dashboard" ?
                     <Typography style={{textAlign: "center", marginTop: "3%", paddingBottom: "3%"}} className="hideOnMobile">
