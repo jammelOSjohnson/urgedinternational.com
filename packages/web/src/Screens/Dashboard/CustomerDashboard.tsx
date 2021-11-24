@@ -9,6 +9,7 @@ import { Categories } from './Comp/Categories';
 import { AdvertisementSlider } from './Comp/AdvertisementSlider';
 import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
+import { DashboardFooter } from './Comp/DashboardFooter';
 
 
 
@@ -58,6 +59,9 @@ export const CustomerDashboardScreen: React.FC = function CustomerDashboardScree
                         </Grid>
                         <Grid item xs={12} md={4}>
                             <Favourites />
+                        </Grid>
+                        <Grid item xs={12} >
+                            <DashboardFooter />
                         </Grid>
                     </Grid>
                 </Grid>

@@ -191,7 +191,7 @@ const useMobileStyles = makeStyles((theme: Theme) =>
             margin: '0% 0% 0% 0%',
             position: "absolute",
             right: "46%",
-            top: "-34%",
+            top: "-37%",
             left: "0%",
             width: "82%"
         },
@@ -210,11 +210,23 @@ const useMobileStyles = makeStyles((theme: Theme) =>
             marginTop: "0%",
             textAlign: "left",
             position: 'absolute',
-            bottom: 0
+            bottom: "-18%"
         },
         slider: {
             borderRadius: '30px'
         },
+        sliderSlogan: {
+            color: '#F9F9FB',
+            fontSize: 'clamp(16px, 3vw, 51.31px)',
+            fontWeight: 700,
+            lineHeight: '120%',
+            width: "36%",
+            textAlign: "left",
+            //padding: '0% 0% 2% 0%',
+            position: "relative",
+            left: "59%",
+            // top: "-760%"
+        }
     })
 );
     
@@ -315,7 +327,7 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
             }
             {isMatch?
                 <div style={{position: "relative"}} id="FoodSlide">
-                    <img className={classesMobile.image} src="Images/KfcAdvertisement.png" alt="KFC Bucket"/>
+                    <img className="image" src="Images/KfcAdvertisement.png" alt="KFC Bucket"/>
                     <Carousel nextIcon={false} prevIcon={false}>
                         <Carousel.Item >  
                             <img
@@ -323,10 +335,10 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                             src="Images/SliderFrame2.png"
                             alt="First slide"
                             width="100%"
-                            style={{minHeight: "300px"}}
+                            style={{minHeight: "193px"}}
                             />
                             <Carousel.Caption style={{top: "5%"}}>
-                                <Typography className={`${classes.fonts} ${classes.sliderSlogan}`}>
+                                <Typography className={`${classes.fonts} ${classesMobile.sliderSlogan}`}>
                                     Delicious Healthy Food
                                 </Typography>
                                 <form onSubmit={handleSubmit} className={classesMobile.form} noValidate autoComplete="off">
@@ -375,6 +387,41 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                             </Carousel.Caption>
                         </Carousel.Item>
                     </Carousel>
+                    <style>
+                        {
+                            `
+                                .image {
+                                    z-index: 1;
+                                    margin: 0% 0% 0% 0%;
+                                    position: absolute;
+                                    right: 46%;
+                                    top: -37%;
+                                    left: 0%;
+                                    width: 82%;
+                                }
+
+                                @media only screen and (min-width: 768px){
+                                    .image {
+                                        z-index: 1;
+                                        margin: 0% 0% 0% 0%;
+                                        position: absolute;
+                                        right: 46%;
+                                        top: -37%;
+                                        left: 0%;
+                                        width: 82%;
+                                    }
+                                }
+
+                                @media only screen and (max-width: 768px){
+                                    .carousel-caption {
+                                        right: 5%;
+                                        left: 5%;
+                                    }
+                                }
+                                
+                            `
+                        }
+                    </style>
                 </div>
                 :
                 <></>

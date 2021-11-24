@@ -22,9 +22,20 @@ export const Notification: React.FC = function Notification() {
       
     return (
         <>
-            <Badge badgeContent={noties.length} color="primary">
+            <Badge badgeContent={noties.length} color="primary" className="hideOnMobile">
                 <NotificationImportantRounded className={classes.noti} />
             </Badge>
+            <style>
+                {
+                    `
+                        @media only screen and (max-width: 768px){
+                            .hideOnMobile{
+                                display: none;
+                            }
+                        }
+                    `
+                }
+            </style>
         </>
     )
 }

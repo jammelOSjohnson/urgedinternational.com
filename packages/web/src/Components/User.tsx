@@ -22,7 +22,7 @@ export const User: React.FC = function User() {
       
     return (
         <>
-            <Grid container direction="row" xs={12} spacing={1}>
+            <Grid container direction="row" xs={12} spacing={1} className="hideOnMobile">
                 <Grid item xs={6} spacing={1}>
                     
                 </Grid>
@@ -44,6 +44,17 @@ export const User: React.FC = function User() {
                     </Grid>
                 </Grid> */}
             </Grid>
+            <style>
+                {
+                    `
+                        @media only screen and (max-width: 768px){
+                            .hideOnMobile{
+                                display: none;
+                            }
+                        }
+                    `
+                }
+            </style>
         </>
     )
 }
