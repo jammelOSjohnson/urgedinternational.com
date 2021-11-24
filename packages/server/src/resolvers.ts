@@ -115,8 +115,24 @@ const resolvers = {
             return await Order.find().populate("Rider");
         },
 
-        updateOrders: async (_, {newOrder}) => {
-            let { _id } = newOrder
+        updateOrder: async (_, {_id,Id,OrderItems,OrderStatus,OrderTotal,OrderDate,Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal}) => {
+            let newOrder = {
+                _id,
+                Id,
+                OrderItems,
+                OrderStatus,
+                OrderTotal,
+                OrderDate,
+                Rider,
+                DeliveryAddress,
+                PaymentMethod, 
+                AdditionalInfo, 
+                DeliveryFee, 
+                GCT, 
+                ServiceCharge, 
+                CartTotal
+            }
+            //console.log(newOrder);
             const order = await Order.findOne({_id});
             Object.assign(order, newOrder);
             return order.save();

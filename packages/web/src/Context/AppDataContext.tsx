@@ -777,13 +777,18 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var UpdateOrder  = async function UpdateOrder(payload, order){
       if(order !== null && order !== undefined){
           let newOrder = order;
-          await updateOrder({variables: newOrder}).then(async function(response) {
+          console.log(newOrder);
+          var updateRes = await updateOrder({variables: newOrder}).then(async function(response) {
             //console.log("create orer result");
             if (response.data.updateOrder !== null) {
               await fetchOrders(payload);
               return true;
             }
           });
+
+          if(updateRes !== undefined){
+            return updateRes;
+          }
       }else{
         return false
       }

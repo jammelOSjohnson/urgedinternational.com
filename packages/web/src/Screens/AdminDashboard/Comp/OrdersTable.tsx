@@ -147,8 +147,9 @@ import { Backdrop, CircularProgress, createStyles, makeStyles, Theme } from '@ma
     }
 
     const options = {
-      filterType: 'checkbox',
-      search: true
+      filterType: 'dropdown',
+      search: true,
+      selectableRows: false
     };
     
     if(userRolef !== undefined && orders.length !== 0){

@@ -75,6 +75,21 @@ const typeDefs = gql`
         disabled: Boolean
     }
 
+    input Rider2 {
+        _id: ID,
+        Id: String 
+        FirstName: String 
+        LastName: String 
+        Email: String 
+        AddressLine1: String 
+        AddressLine2: String 
+        City: String 
+        ContactNumber: String
+        ImageName: String
+        isAvailable: Boolean
+        disabled: Boolean
+    }
+
     type User {
         _id: ID,
         Id: String! 
@@ -232,7 +247,21 @@ const typeDefs = gql`
 
         getOrders: [Order]
         
-        updateOrders(newOrder: Order): [Order]
+        updateOrder(
+            _id: ID
+            Id: String,
+            OrderItems: JSONObject ,
+            OrderStatus:  String,
+            OrderTotal: Float,
+            OrderDate: String,
+            Rider: String,
+            DeliveryAddress: String,
+            PaymentMethod: String,
+            AdditionalInfo: String,
+            DeliveryFee: Float,
+            GCT: Float,
+            ServiceCharge: Float,
+            CartTotal: Float): Order
 
         fetchRestaurantsByCategory(
             categoryID: String

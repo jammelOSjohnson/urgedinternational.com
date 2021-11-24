@@ -236,7 +236,7 @@ export const GET_ORDERS = gql`
         getOrders{
             _id
             Id
-            OrderItems
+            OrderItems 
             OrderStatus
             OrderTotal
             OrderDate
@@ -254,8 +254,13 @@ export const GET_ORDERS = gql`
                 isAvailable
                 disabled
             }
-            DeliveryAddress
+            DeliveryAddress 
+            PaymentMethod
             AdditionalInfo
+            DeliveryFee
+            GCT
+            ServiceCharge
+            CartTotal
         }
     }
 `
@@ -263,37 +268,65 @@ export const GET_ORDERS = gql`
 export const UPDATE_ORDER = gql`
     #scalar GraphQLDateTime
 
-    
-
-    mutation updateOrder($newOrder: JSONObject) {
-            createOrder(newOrder: $newOrder){
-                    _id
-                    Id
-                    OrderItems 
-                    OrderStatus
-                    OrderTotal
-                    OrderDate
-                    Rider{
-                        _id
-                        Id 
-                        FirstName 
-                        LastName 
-                        Email
-                        AddressLine1
-                        AddressLine2
-                        City 
-                        ContactNumber
-                        ImageName
-                        isAvailable
-                        disabled
-                    }
-                    DeliveryAddress 
-                    PaymentMethod
-                    AdditionalInfo
-                    DeliveryFee
-                    GCT
-                    ServiceCharge
-                    CartTotal
-                }
+    mutation updateOrder(
+        $_id: ID!
+        $Id: String!, 
+        $OrderItems: JSONObject,
+        $OrderStatus: String,
+        $OrderTotal: Float,
+        $OrderDate: String,
+        $Rider: String ,
+        $DeliveryAddress: String, 
+        $PaymentMethod: String, 
+        $AdditionalInfo: String,
+        $DeliveryFee: Float,
+        $GCT: Float,
+        $ServiceCharge: Float,
+        $CartTotal: Float
+    ) {
+        updateOrder(
+            _id: $_id,
+            Id: $Id, 
+            OrderItems: $OrderItems, 
+            OrderStatus: $OrderStatus,
+            OrderTotal: $OrderTotal,
+            OrderDate: $OrderDate,
+            Rider: $Rider,
+            DeliveryAddress: $DeliveryAddress, 
+            PaymentMethod: $PaymentMethod, 
+            AdditionalInfo: $AdditionalInfo,
+            DeliveryFee: $DeliveryFee,
+            GCT: $GCT,
+            ServiceCharge: $ServiceCharge,
+            CartTotal: $CartTotal
+        ){
+            _id
+            Id
+            OrderItems 
+            OrderStatus
+            OrderTotal
+            OrderDate
+            Rider{
+                _id
+                Id 
+                FirstName 
+                LastName 
+                Email
+                AddressLine1
+                AddressLine2
+                City 
+                ContactNumber
+                ImageName
+                isAvailable
+                disabled
+            }
+            DeliveryAddress 
+            PaymentMethod
+            AdditionalInfo
+            DeliveryFee
+            GCT
+            ServiceCharge
+            CartTotal
+        }
     }
 `

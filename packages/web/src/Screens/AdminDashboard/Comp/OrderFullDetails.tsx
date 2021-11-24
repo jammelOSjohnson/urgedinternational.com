@@ -1,16 +1,19 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { Button, Container, Grid, makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+import { Button, Container, Grid, makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent, FormControl, InputLabel, Select, MenuItem, Snackbar } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import moment from 'moment';
+import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 //Import Components
 
 interface Props {
     
 }
 
-
+function Alert(props: AlertProps) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -104,6 +107,8 @@ export const OrderFullDetails: React.FC = () => {
     const [selectedRider, setSelectedRider] = useState();
     var [error, setError] = useState('');
     var [success, setSuccess] = useState('');
+    const [open, setOpen] = React.useState(false);
+    const [open2, setOpen2] = React.useState(false);
     
 
     const handleChange = (event) => {
@@ -114,16 +119,38 @@ export const OrderFullDetails: React.FC = () => {
             setRider(riders[event.target.value].FirstName);
         }
     };
+    
+    const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+      if (reason === 'clickaway') {
+        return;
+      }
 
-    const handleSubmit = async() => {
+      setOpen(false);
+    };
+
+    const handleClose2 = (event?: React.SyntheticEvent, reason?: string) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+  
+        setOpen2(false);
+      };
+
+    const handleSubmit = async(finalselectedRider) => {
         try{
+            setOpen(false);
+            setOpen2(false);
+            orders[orderIndex].Rider = riders[finalselectedRider]._id;
             await UpdateOrder(value, orders[orderIndex]).then((res) => {
                 if(res){
-                    setSuccess('Order Updated Successfully.')
+                    setOpen(true);
+                    setTimeout(()=> {
+                        history.push("/AdminOrders");
+                    }, 5000)
                 }
             })
         }catch(err){
-            setError('Unable to update order at this time.');
+            setOpen2(true);
         }
     }
 
@@ -148,7 +175,7 @@ export const OrderFullDetails: React.FC = () => {
         var contactnum = '';
         var fullname = '';
 
-        console.log(personalInfo);
+        //console.log(personalInfo);
         if(personalInfo !== undefined && personalInfo !== null){
             if(personalInfo.length === 4){
                 fullname = personalInfo[2] + " " + personalInfo[3];
@@ -182,7 +209,7 @@ export const OrderFullDetails: React.FC = () => {
                                                 ))}
                                                 <Grid item xs={12}>
                                                     <form>
-                                                    <Button type="button" className={clsx(classes.Button, "update-order")} onClick={handleSubmit}>
+                                                    <Button type="button" className={clsx(classes.Button, "update-order")} onClick={(e) => handleSubmit(selectedRider)}>
                                                         <Typography className={`${classes.btnfonts}`}>
                                                             Update Order
                                                         </Typography>
@@ -303,6 +330,16 @@ export const OrderFullDetails: React.FC = () => {
                             </Grid>
                         </Grid>
                     </Container>
+                    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                        <Alert onClose={handleClose} severity="success">
+                            Order Updated Successfully.
+                        </Alert>
+                    </Snackbar>
+                    <Snackbar open={open2} autoHideDuration={6000} onClose={handleClose2}>
+                        <Alert onClose={handleClose2} severity="error">
+                            Unable to update order at this time.
+                        </Alert>
+                    </Snackbar>
                     <style>
                         {`
                             .main-image{
