@@ -42,6 +42,13 @@ const useStyles = makeStyles((theme: Theme) =>
             borderRadius: "5px",
             padding: "8px",
             width: "69px"
+        },
+        Closed: {
+            backgroundColor: "red",
+            color: "#FFF",
+            borderRadius: "5px",
+            padding: "8px",
+            width: "69px"
         }
     }),
 );
@@ -62,6 +69,14 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                               today === 2 ? OpeningHrs.Tuesday : today === 3 ? OpeningHrs.Wednesday :
                               today === 4 ? OpeningHrs.Thursday : today === 5 ? OpeningHrs.Friday :
                               today === 6 ? OpeningHrs.Saurday : "";
+        
+        const nowT = new Date();
+        let jaTime = moment.tz(now, "America/Jamaica").format("h:mm a");
+        let openTime = TodayOpeningHrs.slice(0, TodayOpeningHrs.indexOf("a"))
+        let closeTime = TodayOpeningHrs.slice(TodayOpeningHrs.indexOf("-") +1, TodayOpeningHrs.indexOf("p"))
+        let isAm: boolean = jaTime.includes('a');
+        let isPm: boolean = jaTime.includes('p'); 
+        let isOpen: boolean = isPm && (closeTime > jaTime) || isAm && (jaTime > openTime);
 
         return (
             <>
@@ -81,7 +96,12 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                                                 <Typography variant={'h4'}>{restaurant.FirstName}</Typography>
                                             </Grid>
                                             <Grid item xs={12} sm={6} >
-                                                <Typography variant={'h6'} className={classes.Open}>Open</Typography>
+                                                {
+                                                    isOpen ? 
+                                                        <Typography variant={'h6'} className={classes.Open}>Open</Typography>
+                                                    :
+                                                        <Typography variant={'h6'} className={classes.Closed}>Closed</Typography>
+                                                }
                                             </Grid>
                                         </Grid>
                                     </Grid>
