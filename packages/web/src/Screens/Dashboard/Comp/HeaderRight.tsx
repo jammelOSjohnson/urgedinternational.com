@@ -35,7 +35,7 @@ export const HeaderRight: React.FC = function HeaderRight() {
                         <User />
                     </Grid>
                     <Grid container direction="row" xs={6} spacing={1}>
-                        <Grid item xs={12} spacing={0}>
+                        <Grid item xs={12} spacing={0} style={{marginTop: "10%"}}>
                             <Notification /> <span style={{marginRight: "10%"}}></span>
                             <Cart />
                         </Grid>

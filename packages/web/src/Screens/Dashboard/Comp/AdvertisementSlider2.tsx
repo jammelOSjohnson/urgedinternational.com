@@ -139,6 +139,7 @@ const useStyles = makeStyles((theme: Theme) =>
             minWidth: "247px",
             marginTop: theme.spacing(1),
             marginBottom: theme.spacing(1),
+            zIndex: 2
         },
         root: {
             "& .MuiFormLabel-root": {
@@ -337,7 +338,7 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                             width="100%"
                             style={{minHeight: "193px"}}
                             />
-                            <Carousel.Caption style={{top: "5%"}}>
+                            <Carousel.Caption style={{top: "5%", zIndex: 2}}>
                                 <Typography className={`${classes.fonts} ${classesMobile.sliderSlogan}`}>
                                     Delicious Healthy Food
                                 </Typography>
@@ -358,7 +359,7 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                             className={clsx(classes.firstTextField, classes.root)}
                                             placeholder="Search restaurants or dishes."
                                             startAdornment={
-                                                <InputAdornment position="start">
+                                                <InputAdornment style={{marginLeft: "8px"}} position="start">
                                                     <img src="Images/searchicongrey.png" style={{width: "100%"}} alt="icon"/>
                                                 </InputAdornment>
                                             }

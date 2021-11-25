@@ -51,7 +51,7 @@ export const RestaurantsScreen: React.FC = function RestaurantsScreen() {
                             <HeaderRight />
                         </Grid>
                         <Grid item xs={12}>
-                            <Typography variant="h3">Restaurants</Typography>
+                            <Typography style={{fontWeight: "bold", fontSize: "1.5em", fontFamily: "PT Sans"}} variant="h3">Restaurants</Typography>
                         </Grid>
                         <Grid item xs={12}>
                             <RestaurantCategories />

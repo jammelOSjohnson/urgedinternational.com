@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
             left: "-11% !important",
             minWidth: "290px",
             maxWidth: "310px",
-            zIndex: 1
+            zIndex: 3
         },
         img: {
             width: "48px",
@@ -72,7 +72,8 @@ export const Cart: React.FC = function Cart() {
 
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef<HTMLButtonElement>(null);
-    const handleToggle = () => {
+    const handleToggle = (e) => {
+        e.preventDefault();
         setOpen((prevOpen) => !prevOpen);
       };
     
