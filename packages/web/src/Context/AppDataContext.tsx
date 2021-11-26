@@ -27,8 +27,8 @@ export function useAppData () {
 function appDataReducer(state, action){
     switch(action.type){
         case "fetch_userinfo":
-         //console.log("dispatching fetch user info action");
-         //console.log(action);
+         console.log("dispatching fetch user info action");
+         console.log(action);
          return {
            ...state,
            userInfo: action.payload.userInfo,
@@ -57,7 +57,8 @@ function appDataReducer(state, action){
               ...state,
               currentUser: action.payload.currentUser,
               loggedIn: action.payload.loggedIn,
-              userInfo: action.payload.userInfo
+              userInfo: action.payload.userInfo,
+              userRolef: action.payload.userRolef
             }
         case "fetch_restaurants": 
           return {
@@ -176,7 +177,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     //sign up user
     var signup = function signup(currentstate, payload) {
         //retuns a promise
-        var result = auth.createUserWithEmailAndPassword(currentstate.email, currentstate.password).then(async function (result) {
+        var result = auth.createUserWithEmailAndPassword(currentstate.email.trim(), currentstate.password.trim()).then(async function (result) {
           // This gives you a Google Access Token. You can use it to access the Google API.
           //var token = result.credential.accessToken;
           // The signed-in user info.
@@ -285,6 +286,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           addressLine2: "",
           city: ""
         };
+
+        payload.userRolef = undefined;
         dispatch({
           type: "logout_user",
           payload: payload
@@ -479,17 +482,17 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
 
             var userRoleResf = undefined;
             await userHasRole(uid, payloadf).then(function (userRoleRes) {
-              //console.log("Final user ref is: ");
-              //console.log(userRoleRes);
+              console.log("Final user ref is: ");
+              console.log(userRoleRes);
               userRoleResf = userRoleRes;
-              
+              payloadf = userRoleRes;
               dispatch({
                   type: "fetch_userinfo",
                   payload: userRoleResf
               });
-              return userRoleRes;
+              
             });
-
+            return userRoleResf;
           } else {
             //console.log("No such user!")
             //console.log(response);

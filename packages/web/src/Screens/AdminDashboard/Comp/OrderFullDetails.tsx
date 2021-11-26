@@ -136,20 +136,39 @@ export const OrderFullDetails: React.FC = () => {
         setOpen2(false);
       };
 
-    const handleSubmit = async(finalselectedRider) => {
+    const handleSubmit = async(finalselectedRider, orderIndex) => {
         try{
             setOpen(false);
             setOpen2(false);
-            orders[orderIndex].Rider = riders[finalselectedRider]._id;
-            await UpdateOrder(value, orders[orderIndex]).then((res) => {
-                if(res){
-                    setOpen(true);
-                    setTimeout(()=> {
-                        history.push("/AdminOrders");
-                    }, 5000)
-                }
-            })
+            console.log("trying to see id");
+            console.log(finalselectedRider);
+            console.log(riders[finalselectedRider]);
+            if(finalselectedRider != undefined){
+                orders[orderIndex].Rider = riders[finalselectedRider]._id;
+                await UpdateOrder(value, orders[orderIndex]).then((res) => {
+                    if(res){
+                        setOpen(true);
+                        setTimeout(()=> {
+                            setSelectedRider(undefined);
+                            history.push("/AdminOrders");
+                        }, 5000)
+                    }
+                })
+            }else if(orderIndex != undefined){
+                orders[orderIndex].Rider = orders[orderIndex].Rider._id;
+                await UpdateOrder(value, orders[orderIndex]).then((res) => {
+                    if(res){
+                        setOpen(true);
+                        setTimeout(()=> {
+                            history.push("/AdminOrders");
+                        }, 5000)
+                    }
+                })
+            }
+            
+            
         }catch(err){
+            console.log(err);
             setOpen2(true);
         }
     }
@@ -209,7 +228,12 @@ export const OrderFullDetails: React.FC = () => {
                                                 ))}
                                                 <Grid item xs={12}>
                                                     <form>
-                                                    <Button type="button" className={clsx(classes.Button, "update-order")} onClick={(e) => handleSubmit(selectedRider)}>
+                                                    <Button type="button" className={clsx(classes.Button, "update-order")} onClick={(e) => {
+                                                        selectedRider !== undefined?
+                                                            handleSubmit(selectedRider, orderIndex)
+                                                        :
+                                                            handleSubmit(selectedRider,orderIndex)
+                                                        }}>
                                                         <Typography className={`${classes.btnfonts}`}>
                                                             Update Order
                                                         </Typography>

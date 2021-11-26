@@ -2,7 +2,7 @@ import { useAppData } from '../../Context/AppDataContext';
 import { Container, Grid, makeStyles, createStyles, Typography, Theme, Button, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, useTheme, useMediaQuery } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import { LockRounded, EmailOutlined, PlayArrowRounded } from "@material-ui/icons/";
@@ -242,8 +242,8 @@ export const LoginScreen: React.FC = function LoginScreen() {
     };
 
     const handleClickSkip = () => {
-      //history.push("/Dashboard")
-      history.push("/");
+      history.push("/Dashboard")
+      //history.push("/");
     }
 
     const handleClickSignUp = () => {
@@ -257,7 +257,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
         try{
             setError('');
             setLoading(true);
-            await login(values.email, values.password, value).then(async function(res1){
+            await login(values.email.trim(), values.password.trim(), value).then(async function(res1){
                 if(res1 != null){
                     await fetchUserDetails(res1).then(function(res){
                         if(res){
@@ -284,8 +284,8 @@ export const LoginScreen: React.FC = function LoginScreen() {
                                 setTimeout(() => {
                                     setSuccess('');
                                     //console.log("about to go to dashboard");
-                                    //history.push("/DeliveryOrders");
-                                    history.push("/");
+                                    history.push("/DeliveryOrders");
+                                    //history.push("/");
                                 }, 1500);
                                 
                             }else{
@@ -294,8 +294,11 @@ export const LoginScreen: React.FC = function LoginScreen() {
                                 setTimeout(() => {
                                     setSuccess('');
                                     //console.log("about to go to dashboard");
-                                    //history.push(history.location.state.from);
-                                    history.push("/");
+                                    if(history.location.state !== undefined){
+                                        history.push(history.location.state.from);
+                                    }
+                                    
+                                    //history.push("/");
                                 }, 1500);
                             }
                         }else{
@@ -308,8 +311,8 @@ export const LoginScreen: React.FC = function LoginScreen() {
                     setError('Unable to login at this time.'); 
                 }
             });
-        }catch {
-
+        }catch(err) {
+            console.log(err);
         }
     }
 
@@ -328,8 +331,8 @@ export const LoginScreen: React.FC = function LoginScreen() {
                         setTimeout(() => {
                             setSuccess('');
                             //console.log("about to go to dashboard");
-                            //history.push("/AdminOrders")
-                            history.push("/");
+                            history.push("/AdminOrders");
+                            //history.push("/");
                         }, 1500);
                         
                     }
@@ -339,8 +342,8 @@ export const LoginScreen: React.FC = function LoginScreen() {
                         setTimeout(() => {
                             setSuccess('');
                             //console.log("about to go to dashboard");
-                            //history.push("/DeliveryOrders")
-                            history.push("/");
+                            history.push("/DeliveryOrders");
+                            //history.push("/");
                         }, 1500);
                         
                     }else{
@@ -349,8 +352,8 @@ export const LoginScreen: React.FC = function LoginScreen() {
                         setTimeout(() => {
                             setSuccess('');
                             //console.log("about to go to dashboard");
-                            //history.push(history.location.state.from);
-                            history.push("/");
+                            history.push(history.location.state.from);
+                            //history.push("/");
                         }, 1500);
                     }
                 }else{
@@ -370,12 +373,48 @@ export const LoginScreen: React.FC = function LoginScreen() {
         if(payload.currentUser !== null && payload.currentUser !== undefined){
             if(payload.currentUser.uid !== null && payload.currentUser.uid !== undefined){
                 //console.log("Fetching user info");
-                await fetchUserInfo(payload.currentUser.uid, payload);
+                 await fetchUserInfo(payload.currentUser.uid, payload);
                 return true;
             }
         }
         return false;
     }
+
+    useEffect(() => {
+        if(userRolef !== undefined && userRolef === "Admin" && userRolef !== ""){
+            setLoading(false);
+            setSuccess('Sign In Successful.');
+            setTimeout(() => {
+                setSuccess('');
+                //console.log("about to go to dashboard");
+                history.push("/AdminOrders");
+                //history.push("/");
+            }, 1500);
+            
+        }else if(userRolef !== undefined && userRolef === "Rider" && userRolef !== ""){
+            setLoading(false);
+            setSuccess('Sign In Successful.');
+            setTimeout(() => {
+                setSuccess('');
+                //console.log("about to go to dashboard");
+                history.push("/DeliveryOrders");
+                //history.push("/");
+            }, 1500);
+            
+        }else if(userRolef !== undefined && userRolef !== ""){
+            setLoading(false);
+            setSuccess('Sign In Successful.');
+            setTimeout(() => {
+                setSuccess('');
+                //console.log("about to go to dashboard");
+                if(history.location.state !== undefined){
+                    history.push(history.location.state.from);
+                }
+                
+                //history.push("/");
+            }, 1500);
+        }
+    }, [userRolef])
     
     return (
         <>

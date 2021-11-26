@@ -167,7 +167,7 @@ export const Header: React.FC = function Header() {
 
       auth.onAuthStateChanged(function (user){
         console.log("auth");
-        if(referralPath !== "/Register"){
+        if(referralPath !== "/Register" && referralPath !== "/Login"){
           //update the state for current user to the user logged in
           //console.log("about to set current user");
           //console.log(user);
@@ -263,7 +263,7 @@ export const Header: React.FC = function Header() {
                     aria-describedby="transition-modal-description"
                     className={classes.modal}
                     open={referralPath !== "/Register" && referralPath !== "/Login" && referralPath !== "/404" 
-                          && referralPath !== "/AdminOrders" ? open : false}
+                          && referralPath !== "/AdminOrders" && referralPath !== "/AdminOrderSDetails" ? open : false}
                     onClose={handleClose}
                     closeAfterTransition
                     BackdropComponent={Backdrop}

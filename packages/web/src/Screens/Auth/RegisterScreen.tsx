@@ -274,13 +274,13 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
     };
 
     const handleClickSkip = () => {
-    //   history.push("/Dashboard")
-        history.push("/");
+       history.push("/Dashboard")
+        //history.push("/");
     }
 
     const handleClickSignIn = () => {
-      //history.push("/Login")
-      history.push("/");
+      history.push("/Login")
+      //history.push("/");
     }
 
     var handleSubmit = async function handleSubmit(event) {
@@ -308,8 +308,8 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                                 setTimeout(() => {
                                     setSuccess('');
                                     console.log("about to go to dashboard");
-                                    //history.push('/Dashboard')
-                                    history.push("/");
+                                    history.push('/Dashboard')
+                                    //history.push("/");
                                 }, 1500);
                             }else{
                                 setError('Unable to Sign Up at this time'); 
@@ -347,8 +347,8 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                             setTimeout(() => {
                                 setSuccess('');
                                 console.log("about to go to dashboard");
-                                //history.push('/Dashboard')
-                                history.push("/");
+                                history.push('/Dashboard')
+                                //history.push("/");
                             }, 1500);
                         }else{
                             setError('Unable to login at this time'); 

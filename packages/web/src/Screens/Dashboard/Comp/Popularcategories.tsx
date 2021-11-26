@@ -121,7 +121,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                     <Grid container xs={12} direction="column">
                         <Grid container direction="row" spacing={1}>
                             <Grid item className={classes.gridSpacing}>
-                                <Link to="/FoodDelivery/Breakfast" title="Breakfast" className={classes.inactiveItemLink}>
+                                <Link to="/Restaurants" title="Breakfast" className={classes.inactiveItemLink}>
                                     <Card className={clsx(classes.card, "cardSizeCategories")}>
                                         <CardMedia className={classes.cardImage}>
                                             <img src="Images/FoodDeliveryBreakfast.png"alt="img1"></img>
@@ -135,7 +135,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                 </Link>
                             </Grid>
                             <Grid item className={classes.gridSpacing}>
-                                <Link to="/FoodDelivery/Lunch" title="Lunch" className={classes.inactiveItemLink}>
+                                <Link to="/Restaurants" title="Lunch" className={classes.inactiveItemLink}>
                                     <Card className={clsx(classes.card, "cardSizeCategories")}>
                                         <CardMedia className={classes.cardImage}>
                                             <img src="Images/FoodDeliveryLunch.png"alt="img2"></img>
@@ -149,7 +149,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                 </Link>
                             </Grid>
                             <Grid item className={classes.gridSpacing}>
-                                <Link to="/FoodDelivery/Dinner" title="Dinner" className={classes.inactiveItemLink}>
+                                <Link to="/Restaurants" title="Dinner" className={classes.inactiveItemLink}>
                                     <Card className={clsx(classes.card, "cardSizeCategories")}>
                                         <CardMedia className={classes.cardImage}>
                                             <img src="Images/FoodDeliveryDinner.png"alt="img3"></img>
@@ -163,7 +163,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                 </Link>
                             </Grid>
                             <Grid item className={classes.gridSpacing}>
-                                <Link to="/FoodDelivery/Dessert" title="Dessert" className={classes.inactiveItemLink}>
+                                <Link to="/Restaurants" title="Dessert" className={classes.inactiveItemLink}>
                                     <Card className={clsx(classes.card, "cardSizeCategories")}>
                                         <CardMedia className={classes.cardImage}>
                                             <img src="Images/FoodDeliveryDessert.png"alt="img4"></img>
@@ -177,7 +177,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                 </Link>
                             </Grid>
                             <Grid item className={classes.gridSpacing}>
-                                <Link to="/FoodDelivery/FastFood" title="Fast Food" className={classes.inactiveItemLink}>
+                                <Link to="/Restaurants" title="Fast Food" className={classes.inactiveItemLink}>
                                     <Card className={clsx(classes.card, "cardSizeCategories")}>
                                         <CardMedia className={classes.cardImage}>
                                             <img src="Images/FoodDeliveryFastFood.png"alt="img5"></img>
@@ -191,7 +191,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                 </Link>
                             </Grid>
                             <Grid item className={classes.gridSpacing}>
-                                <Link to="/FoodDelivery/Pastry" title="Pastry" className={classes.inactiveItemLink}>
+                                {/* <Link to="/FoodDelivery/Pastry" title="Pastry" className={classes.inactiveItemLink}> */}
                                     <Card className={clsx(classes.card, "cardSizeCategories")}>
                                         <CardMedia className={classes.cardImage}>
                                             <img src="Images/FoodDeliveryPastry.png"alt="img6"></img>
@@ -202,10 +202,10 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                                 </Typography>
                                         </CardContent>
                                     </Card>
-                                </Link>
+                                {/* </Link> */}
                             </Grid>
                             <Grid item className={classes.gridSpacing}>
-                                <Link to="/FoodDelivery/Chinese" title="Chinese" className={classes.inactiveItemLink}>
+                                {/* <Link to="/FoodDelivery/Chinese" title="Chinese" className={classes.inactiveItemLink}> */}
                                     <Card className={clsx(classes.card, "cardSizeCategories")}>
                                         <CardMedia className={classes.cardImage}>
                                             <img src="Images/FoodDeliveryChinese.png"alt="img7"></img>
@@ -216,10 +216,10 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                                 </Typography>
                                         </CardContent>
                                     </Card>
-                                </Link>
+                                {/* </Link> */}
                             </Grid>
                             <Grid item className={classes.gridSpacing}>
-                                <Link to="/FoodDelivery/Salads" title="Salads" className={classes.inactiveItemLink}>
+                                {/* <Link to="/FoodDelivery/Salads" title="Salads" className={classes.inactiveItemLink}> */}
                                     <Card className={clsx(classes.card, "cardSizeCategories")}>
                                         <CardMedia className={classes.cardImage} style={{paddingTop: "14px"}}>
                                             <img src="Images/FoodDeliverySalads.png"alt="img8"></img>
@@ -230,7 +230,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                                 </Typography>
                                         </CardContent>
                                     </Card>
-                                </Link>
+                                {/* </Link> */}
                             </Grid>
                         </Grid>
                     </Grid>
@@ -253,7 +253,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                         <TableBody>
                             <TableRow key={0}>
                                 <TableCell align="center">
-                                    <Link to="/FoodDelivery/Breakfast" title="Breakfast" className={classes.inactiveItemLink}>
+                                    <Link to="/Restaurants" title="Breakfast" className={classes.inactiveItemLink}>
                                        <Card className={classes.cardMobile}>
                                            <CardMedia className={classes.cardImage}>
                                                <img src="Images/FoodDeliveryBreakfast.png"alt="img9"></img>
@@ -267,7 +267,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                    </Link>
                                 </TableCell>
                                 <TableCell align="center">
-                                    <Link to="/FoodDelivery/Lunch" title="Lunch" className={classes.inactiveItemLink}>
+                                    <Link to="/Restaurants" title="Lunch" className={classes.inactiveItemLink}>
                                        <Card className={classes.cardMobile}>
                                            <CardMedia className={classes.cardImage}>
                                                <img src="Images/FoodDeliveryLunch.png"alt="img10"></img>
@@ -281,7 +281,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                    </Link>
                                 </TableCell>
                                 <TableCell align="center">
-                                    <Link to="/FoodDelivery/Dessert" title="Dessert" className={classes.inactiveItemLink}>
+                                    <Link to="/Restaurants" title="Dessert" className={classes.inactiveItemLink}>
                                        <Card className={classes.cardMobile}>
                                            <CardMedia className={classes.cardImage}>
                                                <img src="Images/FoodDeliveryDessert.png"alt="img11"></img>
@@ -295,7 +295,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                    </Link>
                                 </TableCell>
                                 <TableCell align="center">
-                                    <Link to="/FoodDelivery/Chinese" title="Chinese" className={classes.inactiveItemLink}>
+                                    {/* <Link to="/FoodDelivery/Chinese" title="Chinese" className={classes.inactiveItemLink}> */}
                                        <Card className={classes.cardMobile}>
                                            <CardMedia className={classes.cardImage}>
                                                <img src="Images/FoodDeliveryChinese.png"alt="img12"></img>
@@ -306,12 +306,12 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                                    </Typography>
                                            </CardContent>
                                        </Card>
-                                 </Link>
+                                 {/* </Link> */}
                                 </TableCell>
                             </TableRow>
                             <TableRow key={1}>
                                 <TableCell align="center">
-                                    <Link to="/FoodDelivery/FastFood" title="Fast Food" className={classes.inactiveItemLink}>
+                                    <Link to="/Restaurants" title="Fast Food" className={classes.inactiveItemLink}>
                                        <Card className={classes.cardMobile}>
                                            <CardMedia className={classes.cardImage}>
                                                <img src="Images/FoodDeliveryFastFood.png"alt="img13"></img>
@@ -325,7 +325,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                    </Link>
                                 </TableCell>
                                 <TableCell align="center">
-                                    <Link to="/FoodDelivery/Dinner" title="Dinner" className={classes.inactiveItemLink}>
+                                    <Link to="/Restaurants" title="Dinner" className={classes.inactiveItemLink}>
                                      <Card className={classes.cardMobile}>
                                          <CardMedia className={classes.cardImage}>
                                              <img src="Images/FoodDeliveryDinner.png"alt="img14"></img>
@@ -339,7 +339,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                  </Link>
                                 </TableCell>
                                 <TableCell align="center">
-                                    <Link to="/FoodDelivery/Pastry" title="Pastry" className={classes.inactiveItemLink}>
+                                    {/* <Link to="/FoodDelivery/Pastry" title="Pastry" className={classes.inactiveItemLink}> */}
                                        <Card className={classes.cardMobile}>
                                            <CardMedia className={classes.cardImage}>
                                                <img src="Images/FoodDeliveryPastry.png"alt="img15"></img>
@@ -350,10 +350,10 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                                    </Typography>
                                            </CardContent>
                                        </Card>
-                                   </Link>
+                                   {/* </Link> */}
                                 </TableCell>
                                 <TableCell align="center">
-                                    <Link to="/FoodDelivery/Salads" title="Salads" className={classes.inactiveItemLink}>
+                                    {/* <Link to="/FoodDelivery/Salads" title="Salads" className={classes.inactiveItemLink}> */}
                                        <Card className={classes.cardMobile}>
                                            <CardMedia className={classes.cardImage} style={{paddingTop: "14px"}}>
                                                <img src="Images/FoodDeliverySalads.png"alt="img16"></img>
@@ -364,7 +364,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                                    </Typography>
                                            </CardContent>
                                        </Card>
-                                   </Link>   
+                                   {/* </Link>    */}
                                 </TableCell>
                             </TableRow>
                         </TableBody>
