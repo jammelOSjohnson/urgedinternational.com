@@ -17,9 +17,10 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
         flexGrow: 1,
         "& .MuiInputBase-root": {
-          color: "#9B9B9B ",
-          borderColor: "#888888",
-          border: "0.1px dotted"
+          color: "#9B9B9B",
+          borderColor: "#EEE",
+          border: "0.1px solid",
+          borderRadius: "25px"
         },
         "& .MuiSelect-select:$focus": {
             backgroundColor: "inherit",
@@ -273,7 +274,7 @@ export const Header: React.FC = function Header() {
                 >
                     <Fade in={open}>
                     <div className={classes.paper}>
-                        <h2 id="transition-modal-title">Welcome</h2>
+                        <h2 id="transition-modal-title" style={{fontFamily: 'PT Sans'}}>Welcome</h2>
                         <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                             <Grid item xs={10} sm={6} md={4} lg={4} xl={4}>
                                 

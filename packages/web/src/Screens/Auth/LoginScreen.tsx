@@ -27,7 +27,13 @@ const useStyles = makeStyles((theme: Theme) =>
             "& .MuiFormLabel-root": {
               color: "#eee"
             },
-            color: "#eee"
+            color: "#eee",
+            "& .MuiIconButton-root": {
+                fontFamily: "PT Sans"
+            },
+            "& .MuiButtonBase-root": {
+                fontFamily: "PT Sans"
+            },
         },
         gridRoot: {
             padding: "0px"
@@ -39,6 +45,7 @@ const useStyles = makeStyles((theme: Theme) =>
             width: "100%",
             borderColor: "#FFF",
             borderRadius: "25px",
+            fontFamily: "PT Sans"
             // border: "2px solid #ffffff"
         },
         section1H1: {
@@ -68,41 +75,50 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "#F7B614",
             width: "100%",
             height: "55px",
+            fontFamily: "PT Sans"
         },
         googleBtn: {
             height: "55px",
+            fontFamily: "PT Sans"
         },
         signUpBtn: {
             position: "absolute",
             right: "3%",
             top: "6%",
             borderRadius: "25px",
-            height: "35px"
+            height: "35px",
+            fontFamily: "PT Sans"
         },
         orText: {
             textAlign: "center",
             marginTop: "6%",
-            marginBottom: "6%"
+            marginBottom: "6%",
+            fontFamily: "PT Sans"
         },
         forgotPassText: {
             marginTop: "1%",
-            marginBottom: "7%"
+            marginBottom: "7%",
+            fontFamily: "PT Sans"
         },
         helloStyle: {
-            paddingTop: "50%"
+            paddingTop: "50%",
+            fontFamily: "PT Sans"
         },
         welcomeStyle: {
-            marginBottom: "6%"
+            marginBottom: "6%",
+            fontFamily: "PT Sans"
         },
         firstTextField: {
             marginBottom: "3%",
             width: "100%",
-            borderRadius: "25px"
+            borderRadius: "25px",
+            fontFamily: "PT Sans"
         },
         skipBtn: {
             position: "absolute",
             right: "3%",
-            bottom: "6%"
+            bottom: "6%",
+            fontFamily: "PT Sans"
         },
         logoMobile: {
             height: "38px",
@@ -119,7 +135,8 @@ const useStyles = makeStyles((theme: Theme) =>
             borderRadius: "25px",
             height: "35px",
             border: "1px solid #FEC109",
-            color: "#FEC109 !important"
+            color: "#FEC109 !important",
+            fontFamily: "PT Sans"
         },
         formSectionMobile: {
             margin: "0px",
@@ -128,31 +145,36 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         helloStyleMobile: {
             paddingTop: "55%",
-            fontWeight: "bold"
+            fontWeight: "bold",
+            fontFamily: "PT Sans"
         },
         firstTextFieldMobile: {
             marginBottom: "3%",
             width: "100%",
             borderRadius: "25px",
             border: "1px solid #EEEEEE",
+            fontFamily: "PT Sans"
         },
         textBoxMobile: {
             width: "100%",
             borderColor: "#EEEEEE",
             border: "1px solid #EEEEEE",
             borderRadius: "25px",
+            fontFamily: "PT Sans"
         },
         forgotPassTextMobile: {
             color: "#FEC109",
             marginTop: "1%",
             marginBottom: "7%",
-            textAlign: "center"
+            textAlign: "center",
+            fontFamily: "PT Sans"
         },
         orTextMobile: {
             color:"#C2C2C2",
             textAlign: "center",
             marginTop: "6%",
-            marginBottom: "6%"
+            marginBottom: "6%",
+            fontFamily: "PT Sans"
         },
         loginButtonMobile: {
             //backgroundColor: "#FFF",
@@ -161,18 +183,21 @@ const useStyles = makeStyles((theme: Theme) =>
             height: "57px",
             borderColor: "FEC109 !important",
             borderRadius: "25px",
+            fontFamily: "PT Sans"
         },
         googleBtnMobile: {
             height: "57px",
             color: "#FEC109",
             borderColor: "#FEC109",
             borderRadius: "25px",
+            fontFamily: "PT Sans"
         },
         skipBtnMobile: {
             //position: "absolute",
             //left: "3%",
             //bottom: "6%",
-            color: "#FEC109"
+            color: "#FEC109",
+            fontFamily: "PT Sans"
         },
         alert: {
             marginBottom: "5%"
@@ -197,7 +222,8 @@ const mobileStyles = makeStyles((theme: Theme) =>
                 color: "#000000 !important"
             },
             "& .MuiIconButton-root": {
-                color: "#EEEEEE"
+                color: "#EEEEEE",
+                fontFamily: "PT Sans"
             },
             color: "#000"
         },
@@ -505,14 +531,14 @@ export const LoginScreen: React.FC = function LoginScreen() {
                                         {error && <Alert severity="error" className={classes.alert}>{error}</Alert>}
                                         {success && <Alert severity="success" className={classes.alert}>{success}</Alert>}
                                         <Button variant="contained" 
-                                            style={{backgroundColor: "#FFF"}}
+                                            style={{backgroundColor: "#FFF", fontFamily: "PT Sans"}}
                                             color="secondary" className={classes.loginButton} type="submit">
                                             Sign In
                                         </Button>
                                         <Typography variant="subtitle2" className={classes.orText}>Or</Typography>
                                         <Button variant="outlined" fullWidth={true}
                                             className={classes.googleBtn} 
-                                            startIcon={ <img src="Images/googleIcon.png" style={{width: "100%"}} alt="google icon"/>}  
+                                            startIcon={ <img src="Images/googleIcon.png" style={{width: "100%", fontFamily: "PT Sans"}} alt="google icon"/>}  
                                             type="button" onClick={handleGoogleSubmit}>
                                             Continue With Google
                                         </Button>
@@ -606,7 +632,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
                         </form>
                         <Typography display="inline" className={classes.skipBtnMobile}>
                             <IconButton style={{paddingTop: "6px", color: "#FEC109"}} onClick={handleClickSkip}>
-                                <Typography display="inline" variant="h6" style={{color: "#FEC109"}}>SKIP</Typography>
+                                <Typography display="inline" variant="h6" style={{color: "#FEC109", fontFamily: "PT Sans"}}>SKIP</Typography>
                                 <PlayArrowRounded />
                             </IconButton>
                         </Typography>

@@ -3,6 +3,7 @@ import { Grid, makeStyles, createStyles, Typography, Theme, Button, Card, CardMe
 import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
+import clsx from 'clsx';
 
 
 
@@ -189,14 +190,14 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
                                                 {
                                                     item.MenuItems.filter((item, index) => index < 6).map((item, index)=> {
                                                         return(
-                                                            <Grid item xs={4} key={index}>
-                                                                    <img className={classes.menuImages} src={item.ImageName} height="81px" width="81px" alt="img3"></img>
+                                                            <Grid item xs={4} key={index} className="mobileGrid">
+                                                                    <img className={clsx(classes.menuImages, "menuImages")} src={item.ImageName} width="60%" height="81px" alt="img3"></img>
                                                             </Grid>
                                                         )
                                                     })
                                                 }
                                                 <Button variant="contained" fullWidth={true}
-                                                    className={classes.Btn} 
+                                                    className={clsx(classes.Btn, "mobile-btn")} 
                                                     type="button">
                                                     Place an Order
                                                 </Button>
@@ -207,6 +208,42 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
                         </Grid>
                     ))}
                 </Grid>
+                <style>
+                    {
+                        `
+
+                        .mobile-btn{
+                            font-family: 'PT Sans'
+                        }
+
+                        .mobile-btn:hover{
+                            background-color: #FEC109;
+                        }
+
+                        @media only screen and (max-width: 950px){
+                            .mobileGrid {
+                                text-align: center;
+                            }
+
+                            .mobile-btn{
+                                padding-top: 5px;
+                            }
+                        }
+
+                        @media only screen and (min-width: 960px){
+                            .mobileGrid {
+                                text-align: center;
+                            }
+
+                            .menuImages{
+                                width: 100% !important;
+                            }
+                        }
+
+                        
+                        `
+                    }
+                </style>
 
             </>
         )

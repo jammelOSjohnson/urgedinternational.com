@@ -103,7 +103,10 @@ const useStyles = makeStyles((theme: Theme) =>
             borderRadius: "50px",
             width: "90%",
             marginLeft: "auto",
-            marginRight: "auto"
+            marginRight: "auto",
+            '&:hover': {
+              background: "#FF5E14",
+           },
           },
           activeIcon2: {
             color: "#FFFFFF"
@@ -213,7 +216,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                     <List style={{marginTop: "20%"}}>
                     {['Overview', 'Food Delivery', 'Package Delivery', 'Market Place', 'Orders'].map((text, index) => (
                         referralPath === "/Dashboard" && text === "Overview" ?
-                          <ListItem button key={text} className={classes.activeItem}>
+                          <ListItem button key={text} className={clsx(classes.activeItem, "activeLinkHover")}>
                             <ListItemIcon>
                               {
                                 index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
@@ -223,7 +226,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                               }
                             </ListItemIcon>
-                            <ListItemText primary={text} />
+                            <ListItemText className="link-font" primary={text} />
                           </ListItem>
                         :
                         (referralPath === "/FoodDelivery" || referralPath === "/Restaurants" || referralPath === "/Menu") && text === "Food Delivery" ?
@@ -237,7 +240,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                               }
                             </ListItemIcon>
-                            <ListItemText primary={text} />
+                            <ListItemText className="link-font" primary={text} />
                           </ListItem>
                         :
                         referralPath === "/PackageDelivery" && text === "Package Delivery" ?
@@ -251,7 +254,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                               }
                             </ListItemIcon>
-                            <ListItemText primary={text} />
+                            <ListItemText className="link-font" primary={text} />
                           </ListItem>
                         :
                         referralPath === "/MarketPlace" && text === "Market Place" ?
@@ -265,11 +268,11 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                               }
                             </ListItemIcon>
-                            <ListItemText primary={text} />
+                            <ListItemText className="link-font" primary={text} />
                           </ListItem>
                         :
                         referralPath === "/Orders" && text === "Orders" ?
-                          <Link to="/OrdersHistory" className={classes.activeItem}>
+                          <Link to="/OrdersHistory" className={clsx(classes.activeItem, "inactiveLinkHover")}>
                             <ListItem button key={text}>
                               <ListItemIcon>
                                 {
@@ -280,28 +283,28 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                   index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  />: <MailIcon />
                                 }
                               </ListItemIcon>
-                              <ListItemText primary={text} />
+                              <ListItemText className="link-fontH" primary={text} />
                             </ListItem>
                           </Link>
                         :
                         text === "Overview" ?
-                          <Link to="/Dashboard" className={classes.inactiveItemLink}>
+                          <Link to="/Dashboard" style={{color: "#5D6467"}} className={classes.inactiveItemLink}>
                             <ListItem button key={text}>
                                 <ListItemIcon>
                                   {
-                                    index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                    index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
                                     index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
                                     index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
                                     index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
                                     index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                   }
                                 </ListItemIcon>
-                                <ListItemText primary={text} />
+                                <ListItemText className="link-font" primary={text} />
                             </ListItem>
                           </Link>
                         :
                         text === "Food Delivery" ?
-                          <Link to="/FoodDelivery" className={classes.inactiveItemLink}>
+                          <Link to="/FoodDelivery" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
                             <ListItem button key={text}>
                                 <ListItemIcon>
                                   {
@@ -312,25 +315,28 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                     index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                   }
                                 </ListItemIcon>
-                                <ListItemText primary={text} />
+                                <ListItemText className="link-fontH" primary={text} />
                             </ListItem>
                           </Link>
                         :
                         text === "Orders" ?
-                          <Link to="/OrderHistory" className={classes.inactiveItemLink}>
-                            <ListItem button key={text}>
-                                <ListItemIcon>
-                                  {
-                                    index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
-                                    index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                    index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
-                                    index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                    index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
-                                  }
-                                </ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                          </Link>
+                          userInfo.email !== null && userInfo.email !== "" && userInfo.email !== undefined?
+                            <Link to="/OrderHistory" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
+                              <ListItem button key={text}>
+                                  <ListItemIcon>
+                                    {
+                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                      index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                      index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                      index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                      index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                    }
+                                  </ListItemIcon>
+                                  <ListItemText className="link-fontH" primary={text} />
+                              </ListItem>
+                            </Link>
+                            :
+                            <></>
                         :
                         <ListItem button key={text} style={{paddingLeft: "12px"}}>
                             <ListItemIcon>
@@ -342,7 +348,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                               }
                             </ListItemIcon>
-                            <ListItemText primary={text} />
+                            <ListItemText className="link-font" primary={text} />
                         </ListItem>
                     ))}
                     </List>
@@ -351,7 +357,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                         {userInfo.fullName !== null && userInfo.fullName !== "" && userInfo.fullName !== undefined?
                         ['Settings', 'Logout'].map((text, index) => (
                             text === 'Logout'?
-                            <a href="/" onClick={handleLogout} className={classes.inactiveItemLink}>
+                            <a href="/" onClick={handleLogout} className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
                               <ListItem button key={text} >
                                 <ListItemIcon>
                                   {
@@ -359,7 +365,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                     index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
                                   }
                                 </ListItemIcon>
-                                <ListItemText primary={text} />
+                                <ListItemText className="link-fontH" primary={text} />
                               </ListItem>
                             </a>
                             :
@@ -370,12 +376,12 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
                               }
                             </ListItemIcon>
-                            <ListItemText primary={text} />
+                            <ListItemText className="link-font" primary={text} />
                             </ListItem>
                         )) :
                         ['Settings', 'Login'].map((text, index) => (
                           text === 'Login'?
-                          <a href="/Login" onClick={handleLogin} className={classes.inactiveItemLink}>
+                          <a href="/Login" onClick={handleLogin} className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
                             <ListItem button key={text}>
                               <ListItemIcon>
                                 {
@@ -383,7 +389,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                   index === 1 ? <img src="Images/Logout.png" className={classes.loginIconStyle} alt="BlackMarket icon"/> : <MailIcon />
                                 }
                               </ListItemIcon>
-                              <ListItemText primary={text} />
+                              <ListItemText className="link-fontH" primary={text} />
                               </ListItem>
                           </a>
                           :
@@ -394,7 +400,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                               index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
                             }
                           </ListItemIcon>
-                          <ListItemText primary={text} />
+                          <ListItemText className="link-font" primary={text} />
                           </ListItem>
                       ))
                       }
@@ -425,6 +431,32 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                 <main className={classes.content} style={{padding: "0px"}}>
                   {children}
                 </main>
+                <style>
+                  {
+                    `
+                      .link-font{
+                        font-family: 'PT Sans'
+                      }
+
+                      .link-fontH  {
+                        font-family: 'PT Sans';
+                        color: #5D6467;
+                      }
+
+                      .MuiTypography-body1 {
+                        font-family: PT Sans;
+                      }
+
+                      .activeLinkHover:hover{
+                        background-color: #F25A29;
+                      }
+
+                      .inactiveLinkHover:hover{
+                        background-color: #5D6467;
+                      }
+                    `
+                  }
+                </style>
             </div>
           ) : <></>}
 
@@ -455,7 +487,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                     <List>
                     {['Overview', 'Food Delivery', 'Package Delivery', 'Market Place', 'Orders'].map((text, index) => (
                         referralPath === "/Dashboard" && text === "Overview" ?
-                          <ListItem button key={text} className={classes.activeItem}>
+                          <ListItem button key={text} className={clsx(classes.activeItem, "activeLinkHover")}>
                             <ListItemIcon>
                               {
                                 index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
@@ -465,7 +497,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                               }
                             </ListItemIcon>
-                            <ListItemText primary={text} />
+                            <ListItemText className="link-font" primary={text} />
                           </ListItem>
                         :
                         (referralPath === "/FoodDelivery" || referralPath === "/Restaurants" || referralPath === "/Menu")  && text === "Food Delivery" ?
@@ -479,7 +511,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                               }
                             </ListItemIcon>
-                            <ListItemText primary={text} />
+                            <ListItemText className="link-font" primary={text} />
                           </ListItem>
                         :
                         referralPath === "/PackageDelivery" && text === "Package Delivery" ?
@@ -493,7 +525,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                               }
                             </ListItemIcon>
-                            <ListItemText primary={text} />
+                            <ListItemText className="link-font" primary={text} />
                           </ListItem>
                         :
                         referralPath === "/MarketPlace" && text === "Market Place" ?
@@ -507,7 +539,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                               }
                             </ListItemIcon>
-                            <ListItemText primary={text} />
+                            <ListItemText className="link-font" primary={text} />
                           </ListItem>
                         :
                         referralPath === "/OrderHistory" && text === "Orders" ?
@@ -522,12 +554,12 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                   index === 4 ? <HistoryRounded style={{width: "36px", height: "38px", color: "#FFF"}}  /> : <MailIcon />
                                 }
                               </ListItemIcon>
-                              <ListItemText primary={text} />
+                              <ListItemText className="link-fontH" primary={text} />
                             </ListItem>
                           </Link>
                         :
                         text === "Overview" ?
-                          <Link to="/Dashboard" className={classes.inactiveItemLink}>
+                          <Link to="/Dashboard" style={{color: "#5D6467"}} className={classes.inactiveItemLink}>
                             <ListItem button key={text}>
                                 <ListItemIcon>
                                   {
@@ -538,28 +570,31 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                     index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                   }
                                 </ListItemIcon>
-                                <ListItemText primary={text} />
+                                <ListItemText className="link-font" primary={text} />
                             </ListItem>
                           </Link>
                         :
                         text === "Orders" ?
-                          <Link to="/OrderHistory" className={classes.inactiveItemLink}>
-                            <ListItem button key={text} style={{paddingLeft: "12px"}}>
-                                <ListItemIcon>
-                                  {
-                                    index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
-                                    index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                    index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
-                                    index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                    index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
-                                  }
-                                </ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                          </Link>
+                          userInfo.email !== null && userInfo.email !== "" && userInfo.email !== undefined?
+                            <Link to="/OrderHistory" className={classes.inactiveItemLink}>
+                              <ListItem button key={text} style={{paddingLeft: "12px"}}>
+                                  <ListItemIcon>
+                                    {
+                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                      index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                      index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                      index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                      index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                    }
+                                  </ListItemIcon>
+                                  <ListItemText className="link-font" primary={text} />
+                              </ListItem>
+                            </Link>
+                            :
+                            <></>
                         :
                         text === "Food Delivery" ?
-                          <Link to="/FoodDelivery" className={classes.inactiveItemLink}>
+                          <Link to="/FoodDelivery" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
                             <ListItem button key={text}>
                                 <ListItemIcon>
                                   {
@@ -570,7 +605,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                     index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                   }
                                 </ListItemIcon>
-                                <ListItemText primary={text} />
+                                <ListItemText className="link-font" primary={text} />
                             </ListItem>
                           </Link>
                         :
@@ -585,7 +620,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                   index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                 }
                               </ListItemIcon>
-                              <ListItemText primary={text} />
+                              <ListItemText className="link-font" primary={text} />
                           </ListItem>
                       :
                         <ListItem button key={text} style={{paddingLeft: "12px"}}>
@@ -598,7 +633,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                               index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                             }
                           </ListItemIcon>
-                          <ListItemText primary={text} />
+                          <ListItemText className="link-font" primary={text} />
                         </ListItem>
                     ))}
                     </List>
@@ -607,7 +642,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                         {userInfo.fullName !== null && userInfo.fullName !== "" && userInfo.fullName !== undefined?
                             ['Settings', 'Logout'].map((text, index) => (
                                 text === 'Logout'?
-                                <a href="/" onClick={handleLogout} className={classes.inactiveItemLink}>
+                                <a href="/" onClick={handleLogout} className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
                                   <ListItem button key={text} >
                                     <ListItemIcon>
                                       {
@@ -615,7 +650,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                         index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
                                       }
                                     </ListItemIcon>
-                                    <ListItemText primary={text} />
+                                    <ListItemText className="link-fontH" primary={text} />
                                   </ListItem>
                                 </a>
                                 :
@@ -626,12 +661,12 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                     index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
                                   }
                                 </ListItemIcon>
-                                <ListItemText primary={text} />
+                                <ListItemText className="link-font" primary={text} />
                                 </ListItem>
                             )) :
                             ['Settings', 'Login'].map((text, index) => (
                               text === 'Login'?
-                              <a href="/Login" onClick={handleLogin} className={classes.inactiveItemLink}>
+                              <a href="/Login" onClick={handleLogin} className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
                                 <ListItem button key={text}>
                                   <ListItemIcon>
                                     {
@@ -639,7 +674,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                       index === 1 ? <img src="Images/Logout.png" className={classes.loginIconStyle} alt="BlackMarket icon"/> : <MailIcon />
                                     }
                                   </ListItemIcon>
-                                  <ListItemText primary={text} />
+                                  <ListItemText className="link-fontH" primary={text} />
                                   </ListItem>
                               </a>
                               :
@@ -650,7 +685,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                   index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
                                 }
                               </ListItemIcon>
-                              <ListItemText primary={text} />
+                              <ListItemText className="link-font" primary={text} />
                               </ListItem>
                           ))
                         }
@@ -681,6 +716,32 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                 <main className={classes.content} style={{padding: "0px"}}>
                   {children}
                 </main>
+                <style>
+                  {
+                    `
+                      .link-font{
+                        font-family: 'PT Sans'
+                      }
+
+                      .link-fontH  {
+                        font-family: 'PT Sans';
+                        color: #5D6467;
+                      }
+
+                      .MuiTypography-body1 {
+                        font-family: PT Sans;
+                      }
+
+                      .activeLinkHover:hover{
+                        background-color: #F25A29;
+                      }
+
+                      .inactiveLinkHover:hover{
+                        background-color: #5D6467;
+                      }
+                    `
+                  }
+                </style>
             </div>
           ) : <></>}
 

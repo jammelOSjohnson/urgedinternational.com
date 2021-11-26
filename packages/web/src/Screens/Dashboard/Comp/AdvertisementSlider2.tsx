@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme: Theme) =>
             lineHeight: '100%',
             //margin: '-10% -17% 8% 0%',
             position: "relative",
-            left: "45%",
+            left: "46%",
             // top: "-467%",
             width: "63%",
             textAlign: "left",
@@ -87,7 +87,7 @@ const useStyles = makeStyles((theme: Theme) =>
         btnLayout: {
             textAlign: "left",
             width: "100%",
-            left: "45%",
+            left: "46%",
             // top: "-108%",
             position: "relative",
             paddingTop: "3%",
@@ -286,7 +286,7 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                 <Typography className={`${classes.fonts} ${classes.sliderSlogan}`}>
                                     Delicious Healthy Food
                                 </Typography>
-                                <form onSubmit={handleSubmit} className={classes.form} noValidate autoComplete="off">
+                                <form id="form-style" onSubmit={handleSubmit} className={classes.form} noValidate autoComplete="off">
                                     <FormControl variant="outlined" className={classes.firstFormControl}>
                                         <TextField 
                                             id="filled-basic"  
@@ -312,8 +312,8 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                 </Typography>
                                 <Typography className={classes.btnLayout}>
                                     <Link to="/Restaurants" title="Restaurants" className={classes.inactiveItemLink}>
-                                        <Button className={classes.Button}>
-                                            <Typography className={`${classes.btnfonts}`}>
+                                        <Button className={clsx(classes.Button, "restaurants-btn")}>
+                                            <Typography className={clsx(classes.btnfonts, "restaurants-font")}>
                                                 Restaurants
                                             </Typography>
                                         </Button>
@@ -322,6 +322,24 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                             </Carousel.Caption>
                         </Carousel.Item>
                     </Carousel>
+                    <style>
+                        {
+                            `
+                                #form-style {
+                                    display: none;
+                                }
+
+                                .restaurants-btn:hover {
+                                    background-color: #FEC109;
+                                    color: #fff;
+                                }
+
+                                .restaurants-font:hover{
+                                    color: #fff
+                                }
+                            `
+                        }
+                    </style>
                 </div>
                :
                <></>
@@ -342,7 +360,7 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                 <Typography className={`${classes.fonts} ${classesMobile.sliderSlogan}`}>
                                     Delicious Healthy Food
                                 </Typography>
-                                <form onSubmit={handleSubmit} className={classesMobile.form} noValidate autoComplete="off">
+                                <form id="form-style" onSubmit={handleSubmit} className={classesMobile.form} noValidate autoComplete="off">
                                     <FormControl variant="outlined" className={classesMobile.firstFormControl}>
                                         {/* <TextField 
                                             id="filled-basic"  
@@ -401,6 +419,27 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                     width: 82%;
                                 }
 
+                                #form-style {
+                                    display: none;
+                                }
+
+                                @media only screen and (min-width: 400px){
+                                    .image {
+                                        z-index: 1;
+                                        margin: 0% 0% 0% 0%;
+                                        position: absolute;
+                                        right: 46%;
+                                        top: -37%;
+                                        left: 0%;
+                                        width: 50%;
+                                    }
+
+                                    #form-style {
+                                        bottom: -8% !important;
+                                        display: none;
+                                    }
+                                }
+
                                 @media only screen and (min-width: 768px){
                                     .image {
                                         z-index: 1;
@@ -409,7 +448,24 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                         right: 46%;
                                         top: -37%;
                                         left: 0%;
-                                        width: 82%;
+                                        width: 50%;
+                                    }
+                                }
+
+                                @media only screen and (min-width: 800px){
+                                    .image {
+                                        z-index: 1;
+                                        margin: 0% 0% 0% 0%;
+                                        position: absolute;
+                                        right: 46%;
+                                        top: -37%;
+                                        left: 0%;
+                                        width: 51%;
+                                    }
+
+                                    #form-style {
+                                        bottom: -8% !important;
+                                        display: none;
                                     }
                                 }
 

@@ -7,3 +7,12 @@
         display: none;
     }
 }
+
+.MuiButtonBase-root:hover {
+    background-color: #FF5E14;
+}
+
+.MuiListItem-button:hover {
+    text-decoration: none;
+    background-color: #FF5E14;
+}

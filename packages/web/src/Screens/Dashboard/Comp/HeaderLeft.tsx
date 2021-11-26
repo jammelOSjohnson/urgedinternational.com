@@ -380,7 +380,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                     <div style={{marginTop: "5%"}}>
                         {(['left'] as Anchor[]).map((anchor) => (
                             <React.Fragment key={anchor}>
-                            <Button style={{zIndex: 1000}} onClick={toggleDrawer(anchor, true)}>
+                            <Button style={{zIndex: 1000}} onClick={toggleDrawer(anchor, true)} className="mobileMenuToggle">
                                 <img src="Images/MobileMenuIcon.png" alt="MobileMenuIcon"></img>
                             </Button>
                             <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
@@ -389,6 +389,17 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                             </React.Fragment>
                         ))}
                     </div>
+                    <style>
+                      {
+                        `
+                          @media only screen and (min-width: 769px){
+                            .mobileMenuToggle{
+                              display: none;
+                            }
+                          }
+                        `
+                      }
+                    </style>
                 </>
             ):<></>}
         </>
