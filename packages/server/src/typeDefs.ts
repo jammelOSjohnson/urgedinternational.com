@@ -245,6 +245,10 @@ const typeDefs = gql`
             Id: String
         ): [Order]
 
+        getOrdersByRiderId(
+            Rider: ID
+        ): [Order]
+
         getOrders: [Order]
         
         updateOrder(

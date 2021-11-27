@@ -108,13 +108,13 @@ import { Backdrop, CircularProgress, createStyles, makeStyles, Theme } from '@ma
   export const OrdersTable: React.FC = function OrdersTable () {
     const classes = useStyles();
     var { value }  = useAppData();
-    var { orders, fetchOrders, currentUser, userRolef } = value;
+    var { orders, fetchOrdersForRider, currentUser, userRolef } = value;
     var history = useHistory();
 
     const rows = [] as Object[];
     useEffect(() => {
       try{
-        fetchOrders(value).then(()=>{
+        fetchOrdersForRider(value).then(()=>{
           
         });
   
@@ -137,8 +137,8 @@ import { Backdrop, CircularProgress, createStyles, makeStyles, Theme } from '@ma
           OrderDate: estTime,
           OrderStatus: item.OrderStatus, 
           OrderTotal: `$ ${item.OrderTotal}`, 
-          Rider: item.Rider,
-          Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); history.push('/AdminOrderSDetails', { from: index});}}><EditRounded color="primary" /></a></>
+          Rider: item.Rider.FirstName,
+          Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); history.push('/DeliveryOrdersDetails', { from: index});}}><EditRounded color="primary" /></a></>
         };
   
         rows.push(row)
@@ -147,12 +147,15 @@ import { Backdrop, CircularProgress, createStyles, makeStyles, Theme } from '@ma
     }
 
     const options = {
-      filterType: 'checkbox',
-      search: true
+      filterType: 'dropdown',
+      search: true,
+      selectableRows: false,
+      download: false,
+      print: false
     };
     
     if(userRolef !== undefined && orders.length !== 0){
-       if(userRolef === "Admin"){
+       if(userRolef === "Rider"){
         return(
           <div style={{ height: 400, width: '100%' }}>
             {/* <DataGrid

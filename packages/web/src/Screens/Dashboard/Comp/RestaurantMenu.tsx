@@ -405,7 +405,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                     {
                         filteredMenuItems.length !== 0?
                             filteredMenuItems.map((item, index) => (
-                                <Grid item xs={10} md={6} lg={4} xl={4} className={classes.gridSpacing}>
+                                <Grid item xs={12} sm={6} md={6} lg={4} xl={4} className={classes.gridSpacing}>
                                     <Card className={classes.root} style={{minHeight: "446.99px"}}>
                                         <CardActionArea>
                                         <CardMedia
@@ -436,17 +436,16 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         <CardActions>
                                             {
                                                 userInfo.email === ""?
-                                                    <a href="/Login" style={{textDecoration: "none"}} onClick={handleLogin}>
-                                                        <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button">
-                                                            LOGIN 
-                                                        </Button>
-                                                    </a> :
+                                                    <Button size="small" onClick={handleLogin}  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button">
+                                                        LOGIN 
+                                                    </Button>
+                                                    :
                                                     <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
                                                         Add To Cart 
                                                     </Button> 
                                             }
                                             
-                                            <Typography variant="body2"  component="p" className={classes.priceText} style={{marginLeft: "55%", width: "70px"}}>
+                                            <Typography variant="body2"  component="p" className={classes.priceText} style={{textAlign: "right", width: "100%"}}>
                                                 {`$ ${ parseFloat(item.ItemCost).toFixed(2)}`}
                                             </Typography>
                                         </CardActions>
@@ -455,7 +454,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                             ))
                         :
                         restaurant.MenuItems.map((item, index) => (
-                            <Grid item xs={10} md={6} lg={4} xl={4} className={classes.gridSpacing}>
+                            <Grid item xs={12} sm={6} md={6} lg={4} xl={4} className={classes.gridSpacing}>
                                 <Card className={classes.root} style={{minHeight: "446.99px"}}>
                                     <CardActionArea>
                                     <CardMedia
@@ -486,17 +485,15 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                     <CardActions>
                                         {
                                             userInfo.email === ""?
-                                                <a href="/Login" style={{textDecoration: "none"}} onClick={handleLogin}>
-                                                    <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button">
-                                                        LOGIN 
-                                                    </Button>
-                                                </a> :
+                                                <Button size="small" onClick={handleLogin} fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button">
+                                                    LOGIN 
+                                                </Button>:
                                                 <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
                                                     Add To Cart 
                                                 </Button> 
                                         }
                                         
-                                        <Typography variant="body2"  component="p" className={classes.priceText} style={{marginLeft: "55%", width: "70px"}}>
+                                        <Typography variant="body2"  component="p" className={classes.priceText} style={{textAlign: "right", width: "100%"}}>
                                             {`$ ${ parseFloat(item.ItemCost).toFixed(2)}`}
                                         </Typography>
                                     </CardActions>

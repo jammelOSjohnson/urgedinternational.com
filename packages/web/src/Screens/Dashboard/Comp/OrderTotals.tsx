@@ -1,6 +1,6 @@
 import { useAppData } from '../../../Context/AppDataContext';
 import { makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -50,11 +50,22 @@ export const OrderTotals: React.FC = function OrderTotals() {
     const classes = useStyles();
 
       var { value }  = useAppData();
-      var { orders } = value;
+      var { orders, fetchOrdersByUser, currentUser } = value;
 
       var TotalOrders = orders.length;
       var OrdersInProcess = 0;
 
+      useEffect(() => {
+        try{
+          fetchOrdersByUser(value).then(()=>{
+            
+          });
+    
+        }catch(e){
+          console.log(e)
+        }
+        // eslint-disable-next-line
+      }, [currentUser]);
     
       
     return (

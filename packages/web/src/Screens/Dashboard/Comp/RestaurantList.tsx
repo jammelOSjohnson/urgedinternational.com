@@ -127,8 +127,8 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
 
     var handleSelectedRestaurant = async function(index){
         if(index !== undefined || index !== null){
-            //console.log("Index is");
-            //console.log(index);
+            console.log("Index is");
+            console.log(index);
             var payload = value;
             payload.selectedRestaurant = index;
             await viewMenuItems(payload).then(() => {
@@ -147,8 +147,8 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                         //console.log("restaurant is");
                         //console.log(restaurant);
                         return(
-                            <Grid item xs={10} md={6} lg={3} xl={3} className={classes.gridSpacing} key={index}>
-                                <Link onClick={() =>handleSelectedRestaurant(index)} className={classes.link}>
+                            <Grid item xs={12} sm={6} md={6} lg={3} xl={3} className={classes.gridSpacing} key={index}>
+                                <Link onClick={(e) => { e.preventDefault(); handleSelectedRestaurant(index);}} className={classes.link}>
                                 <Card className={classes.root}>
                                     <CardHeader
                                         avatar={
@@ -182,7 +182,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                                                 restaurant.MenuItems.filter((item, index) => index < 3).map((item, index)=> {
                                                     return(
                                                         <Grid item xs={4} key={index}>
-                                                                <img className={classes.menuImages} src={item.ImageName} height="81px" width="81px" alt="img3"></img>
+                                                                <img className={classes.menuImages} src={item.ImageName} height="81px" width="100%" alt="img3"></img>
                                                         </Grid>
                                                     )
                                                 })

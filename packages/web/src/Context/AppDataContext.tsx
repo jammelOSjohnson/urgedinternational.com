@@ -2,7 +2,7 @@ import type { ReactNode } from 'react'
 import {useContext, useReducer, createContext} from 'react';
 //import fetchAddressApi from '../Apis/fetchAddressApi';
 import  { auth, socialAuth, googleAuthProvider } from '../firebase';
-import { UPDATE_ORDER ,GET_RIDERS ,CREATE_ORDER, GET_ORDERS_BY_USERID, GET_ORDERS, GET_RESTAURANTS, CREATE_USER_MUTATION, GET_USER_MUTATION, GET_USER_IN_ROLE, GET_ROLE, CREATE_ROLE, GET_MENU_CATEGORIES } from '../GraphQL/Mutations';
+import { GET_ORDERS_BY_RIDERID , UPDATE_ORDER ,GET_RIDERS ,CREATE_ORDER, GET_ORDERS_BY_USERID, GET_ORDERS, GET_RESTAURANTS, CREATE_USER_MUTATION, GET_USER_MUTATION, GET_USER_IN_ROLE, GET_ROLE, CREATE_ROLE, GET_MENU_CATEGORIES } from '../GraphQL/Mutations';
 import { useMutation } from '@apollo/client';
 import sendEmail from "../email.js";
 import moment from 'moment-timezone';
@@ -145,6 +145,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const [getOrdersByUserId] = useMutation(GET_ORDERS_BY_USERID);
     const [createOrder] = useMutation(CREATE_ORDER);
     const [updateOrder] = useMutation(UPDATE_ORDER);
+    const [getOrdersByRiderId] = useMutation(GET_ORDERS_BY_RIDERID);
 
     var currentUser = undefined;
     var selectedRestaurant = undefined;
@@ -164,6 +165,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var receiptDetails = undefined;
 
     var userInfo = {
+      _id: "",
       contactNumber: "",
       email: "",
       fullName: "",
@@ -473,6 +475,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             payloadf.userInfo.contactNumber = user.ContactNumber !== null && user.ContactNumber !== undefined ? user.ContactNumber : "";
             payloadf.userInfo.email = user.Email !== null && user.Email !== undefined ? user.Email : "";
             payloadf.userInfo.fullName = user.FirstName !== null && user.FirstName !== undefined? user.FirstName : "";
+            payloadf.userInfo._id = user._id !== null && user._id !== undefined && user._id !== ""? user._id : "";
             // + " " 
             //                            + user.LastName !== null && user.LastName !== undefined? user.LastName : "" + user.LastName !== null && user.LastName !== undefined? user.LastName : "":"";
             payloadf.loggedIn = true;
@@ -511,6 +514,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
               if(response2.data.getUser !== null){
                 //console.log("User info  successfully written!");
                 //console.log(response2.data);
+                var getUserResult = response2.data.getUser;
                 payloadf.userInfo.contactNumber = user2.ContactNumber;
                 payloadf.userInfo.email = user2.Email;
                 payloadf.userInfo.fullName = user2.FirstName;
@@ -518,7 +522,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
                 payloadf.userInfo.addressLine1 = user2.AddressLine1 !== null && user2.AddressLine1 !== undefined ? user2.AddressLine1 : "";
                 payloadf.userInfo.addressLine2 = user2.AddressLine2 !== null && user2.AddressLine2 !== undefined ? user2.AddressLine2 : "";
                 payloadf.userInfo.city = user2.City !== null && user2.City !== undefined ? user2.City : "";  
-                
+                payloadf.userInfo._id = getUserResult._id !== null && getUserResult._id !== undefined && getUserResult._id !== ""? getUserResult._id : "";
                 var userRoleResf = undefined;
                 await userHasRole(uid, payloadf).then(function (userRoleRes) {
                   //console.log("Final user ref is: ");
@@ -604,6 +608,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     }
 
     var viewMenuItems = async function viewMenuItems(payload){
+      console.log("about to dispatch");
+      console.log(payload.selectedRestaurant);
       if(payload.selectedRestaurant !== undefined){
           dispatch({
             type: "view_menu_items",
@@ -829,6 +835,24 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       }
     }
 
+    var fetchOrdersForRider  = async function fetchOrdersForRider(payload){
+      if(payload.currentUser !== undefined){
+        console.log("Rider Id is:");
+        console.log(payload.userInfo._id);
+        if(payload.userInfo._id !== undefined){
+          await getOrdersByRiderId({variables: {Rider: payload.userInfo._id}}).then(async function(response) {
+            if (response.data.getOrdersByRiderId !== null) {
+              payload.orders = response.data.getOrdersByRiderId;
+              dispatch({
+                type: "checkout",
+                payload: payload
+              })
+            }
+          });
+        }
+      }
+    }
+
     var sendNewApplicationEmail = async function sendNewApplicationEmail(formVals) {
       // var data1 = {event: 'staff add package send new package email',
       //                 value:{"Wtf is in formVals: " : "Wtf is in formVals:", formVals: formVals}
@@ -1031,6 +1055,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         checkoutOrder,
         fetchOrdersByUser,
         fetchOrders,
+        fetchOrdersForRider, 
         AddGeneralLocation,
         sendOrderCompletedEmail,
         changeOrderStatus,

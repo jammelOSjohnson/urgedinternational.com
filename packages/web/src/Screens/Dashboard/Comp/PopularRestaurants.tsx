@@ -156,7 +156,7 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
                 </Grid>
                 <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
                     {restaurants.map((item, index) => (
-                        <Grid item xs={10} md={6} lg={3} xl={3} className={classes.gridSpacing} key={index}>
+                        <Grid item xs={12} sm={6} md={6} lg={3} xl={3} className={classes.gridSpacing} key={index}>
                             <Link onClick={() =>handleSelectedRestaurant(index)} className={classes.link}>
                                 <Card className={classes.root}>
                                     <CardHeader
@@ -191,7 +191,7 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
                                                     item.MenuItems.filter((item, index) => index < 6).map((item, index)=> {
                                                         return(
                                                             <Grid item xs={4} key={index} className="mobileGrid">
-                                                                    <img className={clsx(classes.menuImages, "menuImages")} src={item.ImageName} width="60%" height="81px" alt="img3"></img>
+                                                                    <img className={clsx(classes.menuImages, "menuImages")} src={item.ImageName} width="100%" height="81px" alt="img3"></img>
                                                             </Grid>
                                                         )
                                                     })

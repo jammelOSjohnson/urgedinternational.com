@@ -320,8 +320,12 @@ export const LoginScreen: React.FC = function LoginScreen() {
                                 setTimeout(() => {
                                     setSuccess('');
                                     //console.log("about to go to dashboard");
+                                    console.log(history.location.state)
                                     if(history.location.state !== undefined){
                                         history.push(history.location.state.from);
+                                    }else{
+                                        console.log(history.location.state)
+                                        history.push("/FoodDelivery");
                                     }
                                     
                                     //history.push("/");
@@ -377,8 +381,13 @@ export const LoginScreen: React.FC = function LoginScreen() {
                         setSuccess('Sign In Successful.');
                         setTimeout(() => {
                             setSuccess('');
-                            //console.log("about to go to dashboard");
-                            history.push(history.location.state.from);
+                            console.log(history.location.state)
+                            if(history.location.state !== undefined){
+                                history.push(history.location.state.from);
+                            }else{
+                                console.log(history.location.state)
+                                history.push("/FoodDelivery");
+                            }
                             //history.push("/");
                         }, 1500);
                     }

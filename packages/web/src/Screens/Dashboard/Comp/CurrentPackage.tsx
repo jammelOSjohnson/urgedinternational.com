@@ -137,7 +137,7 @@ function ColorlibStepIcon(props: StepIconProps) {
                 <Grid item xs={12} md={6} lg={3} container spacing={1}>
                     <Grid item xs={10} md={10}>
                         <Typography variant="subtitle1" className={classes.category}>
-                            Current Packages
+                            Current Delivery
                         </Typography>
                     </Grid>
                 </Grid>
@@ -151,7 +151,7 @@ function ColorlibStepIcon(props: StepIconProps) {
                         </CardMedia>
                         <CardContent style={{flexGrow: 1}}>
                             <Typography className={classes.cardHeading}>
-                                Document Delivery
+                                Delivery Status
                             </Typography>
                             <Typography>
                                 Two new files were added for Service Page.

@@ -111,6 +111,11 @@ const resolvers = {
             return await Order.find().where("Id").equals(Id);    
         },
 
+        getOrdersByRiderId: async (_,{Rider}) => {
+            return await Order.find().populate("Rider").where("Rider").equals(Rider)
+            .where("OrderStatus").ne("Delivered"); 
+        },
+
         getOrders: async () => {
             return await Order.find().populate("Rider");
         },

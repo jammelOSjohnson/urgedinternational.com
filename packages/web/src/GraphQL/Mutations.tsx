@@ -26,6 +26,7 @@ export const CREATE_USER_MUTATION = gql`
 export const GET_USER_MUTATION = gql`
     mutation getUser($Id: String!) {
         getUser(Id: $Id){
+            _id
             Id
             FirstName
             LastName
@@ -200,6 +201,40 @@ export const CREATE_ORDER = gql`
 export const GET_ORDERS_BY_USERID = gql`
     mutation getOrdersByUserId($Id: String!) {
         getOrdersByUserId(Id: $Id){
+            _id
+            Id
+            OrderItems 
+            OrderStatus
+            OrderTotal
+            OrderDate
+            Rider{
+                _id
+                Id 
+                FirstName 
+                LastName 
+                Email
+                AddressLine1
+                AddressLine2
+                City 
+                ContactNumber
+                ImageName
+                isAvailable
+                disabled
+            }
+            DeliveryAddress 
+            PaymentMethod
+            AdditionalInfo
+            DeliveryFee
+            GCT
+            ServiceCharge
+            CartTotal
+        }
+    }
+`
+
+export const GET_ORDERS_BY_RIDERID = gql`
+    mutation getOrdersByRiderId($Rider: ID!) {
+        getOrdersByRiderId(Rider: $Rider){
             _id
             Id
             OrderItems 

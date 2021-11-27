@@ -1,19 +1,18 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { Button, Container, Grid, makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
-import React, { useState } from 'react';
+import { Button, Container, Grid, makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent, FormControl, InputLabel, Select, MenuItem, Snackbar } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import moment from 'moment';
+import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 //Import Components
 
 interface Props {
     
 }
 
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
+function Alert(props: AlertProps) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -102,32 +101,124 @@ export const OrderFullDetails: React.FC = () => {
     const classes = useStyles();
     var history = useHistory();
     var { value }  = useAppData();
-    var { orders } = value;
+    var { orders, riders, fetchRiders, UpdateOrder } = value;
     const orderIndex = parseInt(history.location.state.from);
-    const [rider, setRider] = useState(orders[orderIndex].Rider)
+    const [rider, setRider] = useState(orders[orderIndex].Rider.FirstName);
+    const [selectedRider, setSelectedRider] = useState();
+    var [error, setError] = useState('');
+    var [success, setSuccess] = useState('');
+    const [open, setOpen] = React.useState(false);
+    const [open2, setOpen2] = React.useState(false);
     
 
     const handleChange = (event) => {
         // console.log(event.target.name);
         // console.log(event.target.value);
-        setRider(event.target.value);
+        if(event.target.value !== "Assigned To"){
+            setSelectedRider(event.target.value);
+            setRider(riders[event.target.value].FirstName);
+        }
     };
+    
+    const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+
+      setOpen(false);
+    };
+
+    const handleClose2 = (event?: React.SyntheticEvent, reason?: string) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+  
+        setOpen2(false);
+      };
+
+    const handleSubmit = async(finalselectedRider, orderIndex) => {
+        try{
+            setOpen(false);
+            setOpen2(false);
+            console.log("trying to see id");
+            console.log(finalselectedRider);
+            console.log(riders[finalselectedRider]);
+            if(finalselectedRider != undefined){
+                orders[orderIndex].Rider = riders[finalselectedRider]._id;
+                await UpdateOrder(value, orders[orderIndex]).then((res) => {
+                    if(res){
+                        setOpen(true);
+                        setTimeout(()=> {
+                            setSelectedRider(undefined);
+                            history.push("/DeliveryOrders");
+                        }, 5000)
+                    }
+                })
+            }else if(orderIndex != undefined){
+                orders[orderIndex].Rider = orders[orderIndex].Rider._id;
+                await UpdateOrder(value, orders[orderIndex]).then((res) => {
+                    if(res){
+                        setOpen(true);
+                        setTimeout(()=> {
+                            history.push("/DeliveryOrders");
+                        }, 5000)
+                    }
+                })
+            }
+            
+            
+        }catch(err){
+            console.log(err);
+            setOpen2(true);
+        }
+    }
+
+    useEffect(() => {
+        try{
+            if(riders.length === 0){
+                fetchRiders(value);
+            }
+        }catch(err){
+
+        }
+        
+    }, [riders])
     
     //console.log();
     if(orders.length !== 0 && orderIndex !== undefined){
         const now = new Date(parseInt(orders[orderIndex].OrderDate, 10));
         const estTime = moment.tz(now, "America/Jamaica").format("YYYY-MM-DD h:mm a");
         var region = orders[orderIndex].DeliveryAddress.split(',');
+        var personalInfo = orders[orderIndex].AdditionalInfo.split(' ');
+        var email = '';
+        var contactnum = '';
+        var fullname = '';
+
+        //console.log(personalInfo);
+        if(personalInfo !== undefined && personalInfo !== null){
+            if(personalInfo.length === 4){
+                fullname = personalInfo[2]; 
+                //+ " " + personalInfo[3];
+                email = personalInfo[1];
+                contactnum = personalInfo[0];
+            }else if(personalInfo.length === 3){
+                fullname = personalInfo[1];
+                //+ " " + personalInfo[2];
+                email = personalInfo[0];
+            }else{
+                email = personalInfo[0];
+            }
+        }
         return (
             <>
                     <Container maxWidth="xl"  className={classes.main}>
                         <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
                             <Grid container direction="row" spacing={1}>
-                                <Grid item xs={8}>
-                                    <Card style={{marginBottom: "12px"}} className={classes.card}>
+                                <Grid item xs={12} md={8}>
+                                    <Card style={{marginBottom: "12px"}} className={clsx(classes.card, "mobile-display")}>
                                         <CardMedia >
                                             {/* eslint-disable-next-line */}
-                                            <img style={{maxWidth: "244.26px"}} src={orders[orderIndex].OrderItems[0].imageName} alt="ordered"></img>
+                                            <img className={"main-image"} src={orders[orderIndex].OrderItems[0].imageName} alt="ordered"></img>
                                             <Grid container direction="row" spacing={1} style={{paddingTop: "7px"}}>
                                                 {orders[orderIndex].OrderItems.map((item, index) => (
                                                     index !== 0?
@@ -139,7 +230,12 @@ export const OrderFullDetails: React.FC = () => {
                                                 ))}
                                                 <Grid item xs={12}>
                                                     <form>
-                                                    <Button type="button" className={classes.Button}>
+                                                    <Button type="button" className={clsx(classes.Button, "update-order")} onClick={(e) => {
+                                                        selectedRider !== undefined?
+                                                            handleSubmit(selectedRider, orderIndex)
+                                                        :
+                                                            handleSubmit(selectedRider,orderIndex)
+                                                        }}>
                                                         <Typography className={`${classes.btnfonts}`}>
                                                             Update Order
                                                         </Typography>
@@ -168,20 +264,20 @@ export const OrderFullDetails: React.FC = () => {
                                             </Grid>
                                             </Typography><br/>
                                             <Grid container direction="row" spacing={1}>
-                                                <Grid item xs={4}>
+                                                <Grid item xs={12} md={4}>
                                                     Order Id
                                                     <Typography>
                                                         {orders[orderIndex]._id}
                                                     </Typography>
                                                 </Grid>
-                                                <Grid item xs={4}>
+                                                <Grid item xs={12} md={4}>
                                                     Order Date
                                                     <Typography>
                                                     <img src={"Images/order-details-calendar.png"} alt="calendar" /> 
                                                     &nbsp;<span style={{verticalAlign: "middle"}}>{estTime}</span>
                                                     </Typography>
                                                 </Grid>
-                                                <Grid item xs={4}>
+                                                <Grid item xs={12} md={4}>
                                                     Status
                                                     <Typography>
                                                     {orders[orderIndex].OrderStatus}
@@ -190,19 +286,19 @@ export const OrderFullDetails: React.FC = () => {
                                             </Grid>
                                             <br />
                                             <Grid container direction="row" spacing={1}>
-                                                <Grid item xs={4}>
+                                                <Grid item xs={12} md={4}>
                                                     Location
                                                     <Typography>
                                                         {orders[orderIndex].DeliveryAddress}
                                                     </Typography>
                                                 </Grid>
-                                                <Grid item xs={4}>
+                                                <Grid item xs={12} md={4}>
                                                     Cost
                                                     <Typography>
                                                     {`$${ parseFloat(orders[orderIndex].OrderTotal).toFixed(2)}`}
                                                     </Typography>
                                                 </Grid>
-                                                <Grid item xs={4}>
+                                                <Grid item xs={12} md={4}>
                                                     <FormControl variant="outlined" className={clsx(classes.formControl, classes.root)} fullWidth>
                                                         {/* <InputLabel id="demo-simple-select-outlined-label">Town</InputLabel> */}
                                                         <Select
@@ -211,11 +307,16 @@ export const OrderFullDetails: React.FC = () => {
                                                             value="Assigned To"
                                                             onChange={handleChange}
                                                             // label="Town"
-                                                            name="Town"
+                                                            name="rider"
                                                             className={classes.root}
+                                                            disabled={true}
                                                         >
                                                             <MenuItem value={"Assigned To"}>Assigned To</MenuItem>
-                                                            {/* <MenuItem value={"May Pen Hospital"}>May Pen Hospital</MenuItem> */}
+                                                            {
+                                                                riders.map((item, index) => (
+                                                                    <MenuItem key={index} value={index}>{item.FirstName}</MenuItem>
+                                                                ))
+                                                            }
                                                         </Select>
                                                     </FormControl>
                                                     Assigned To
@@ -227,8 +328,8 @@ export const OrderFullDetails: React.FC = () => {
                                         </CardContent>
                                     </Card>
                                 </Grid>
-                                <Grid item xs={4}>
-                                    <Card style={{marginBottom: "12px", display: "block", textAlign: "center"}} className={classes.card}>
+                                <Grid item xs={12} md={4}>
+                                    <Card style={{marginBottom: "12px", display: "block", textAlign: "center"}} className={clsx(classes.card, "user-info")}>
                                         <CardMedia >
                                             {/* eslint-disable-next-line */}
                                             <img src="Images/rider_placeholder.png" alt="ordered"></img>
@@ -236,15 +337,15 @@ export const OrderFullDetails: React.FC = () => {
                                         <CardContent className={classes.cardContent}>
                                             <br />
                                             <Typography className={classes.cardHeading}>
-                                                Jane Cooper
+                                                {fullname}
                                             </Typography>
+                                            {/* <br />
+                                            <Typography>
+                                                {email}
+                                            </Typography> */}
                                             <br />
                                             <Typography>
-                                            Jane@example.com
-                                            </Typography>
-                                            <br />
-                                            <Typography>
-                                            + {orders[orderIndex].AdditionalInfo}
+                                            + {contactnum}
                                             </Typography>
                                             <br />
                                             <Typography>
@@ -256,9 +357,47 @@ export const OrderFullDetails: React.FC = () => {
                             </Grid>
                         </Grid>
                     </Container>
+                    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                        <Alert onClose={handleClose} severity="success">
+                            Order Updated Successfully.
+                        </Alert>
+                    </Snackbar>
+                    <Snackbar open={open2} autoHideDuration={6000} onClose={handleClose2}>
+                        <Alert onClose={handleClose2} severity="error">
+                            Unable to update order at this time.
+                        </Alert>
+                    </Snackbar>
+                    <style>
+                        {`
+                            .main-image{
+                                max-width: 244.26px
+                            }
+
+                            @media only screen and (max-width: 480px) {
+                                .main-image{
+                                    max-width: 100%;
+                                }
+
+                                .update-order {
+                                    width: 100%;
+                                    margin-bottom: 5px;
+                                }
+
+                                .mobile-display{
+                                    display: block;
+                                    padding-left: 5px;
+                                    padding-right: 5px;
+                                }
+
+                                .user-info{
+                                    padding-left: 0px;
+                                }
+                            }
+                        `}
+                    </style>
             </>
         );
     }else{
-        return history.push("/AdminOrders")
+        return history.push("/DeliveryOrders")
     }
 }
