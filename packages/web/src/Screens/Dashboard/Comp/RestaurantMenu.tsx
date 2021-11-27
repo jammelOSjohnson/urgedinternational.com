@@ -179,9 +179,9 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
     var { value }  = useAppData();
     var { restaurants, selectedRestaurant, addItemToCart, userInfo, filteredMenuItems } = value;
     var restaurant = restaurants[selectedRestaurant];
-    //console.log("Menu Screen Menu");
-    //console.log(selectedRestaurant);
-    //console.log(restaurants[selectedRestaurant]);
+    console.log("Menu Screen Menu");
+    console.log(selectedRestaurant);
+    console.log(restaurants[selectedRestaurant]);
 
     const [selectedItem, setItem] = React.useState({
         ItemCost: 0.00,
@@ -267,7 +267,9 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
     }
 
     if(restaurant === undefined){
-        return history.push("/Restaurants")
+        console.log("restaurant is undefined");
+        return <></>
+        //history.push("/Restaurants")
     }else{
 
         return (
