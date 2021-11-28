@@ -54,6 +54,15 @@ export const OrderTotals: React.FC = function OrderTotals() {
 
       var TotalOrders = orders.length;
       var OrdersInProcess = 0;
+      if(orders.length !== 0) {
+          orders.map((item, index) => (
+            OrdersInProcess =  item.OrderStatus !== "Delivered" ?
+                               OrdersInProcess + 1
+                               :
+                               OrdersInProcess
+
+          ))
+      }
 
       useEffect(() => {
         try{

@@ -292,45 +292,45 @@ export const LoginScreen: React.FC = function LoginScreen() {
                             //setLoggedIn(true);
                             //console.log("About to navigate to dashboard.");
                             //history.push("/Dashboard");
-                            console.log("role is:")
-                            console.log(userRolef);
-                            if(userRolef !== undefined && userRolef === "Admin"){
-                                setLoading(false);
-                                setSuccess('Sign In Successful.');
-                                setTimeout(() => {
-                                    setSuccess('');
-                                    //console.log("about to go to dashboard");
-                                    history.push("/AdminOrders");
-                                    //history.push("/");
-                                }, 1500);
+                            // console.log("role is:")
+                            // console.log(userRolef);
+                            // if(userRolef !== undefined && userRolef === "Admin"){
+                            //     setLoading(false);
+                            //     setSuccess('Sign In Successful.');
+                            //     setTimeout(() => {
+                            //         setSuccess('');
+                            //         //console.log("about to go to dashboard");
+                            //         history.push("/AdminOrders");
+                            //         //history.push("/");
+                            //     }, 1500);
                                 
-                            }else if(userRolef !== undefined && userRolef === "Rider"){
-                                setLoading(false);
-                                setSuccess('Sign In Successful.');
-                                setTimeout(() => {
-                                    setSuccess('');
-                                    //console.log("about to go to dashboard");
-                                    history.push("/DeliveryOrders");
-                                    //history.push("/");
-                                }, 1500);
+                            // }else if(userRolef !== undefined && userRolef === "Rider"){
+                            //     setLoading(false);
+                            //     setSuccess('Sign In Successful.');
+                            //     setTimeout(() => {
+                            //         setSuccess('');
+                            //         console.log("about to go to rider dashboard");
+                            //         history.push("/DeliveryOrders");
+                            //         //history.push("/");
+                            //     }, 1500);
                                 
-                            }else{
-                                setLoading(false);
-                                setSuccess('Sign In Successful.');
-                                setTimeout(() => {
-                                    setSuccess('');
-                                    //console.log("about to go to dashboard");
-                                    console.log(history.location.state)
-                                    if(history.location.state !== undefined){
-                                        history.push(history.location.state.from);
-                                    }else{
-                                        console.log(history.location.state)
-                                        history.push("/FoodDelivery");
-                                    }
+                            // }else{
+                            //     setLoading(false);
+                            //     setSuccess('Sign In Successful.');
+                            //     setTimeout(() => {
+                            //         setSuccess('');
+                            //         console.log("about to go to dashboard");
+                            //         console.log(history.location.state)
+                            //         if(history.location.state !== undefined){
+                            //             history.push(history.location.state.from);
+                            //         }else{
+                            //             console.log(history.location.state)
+                            //             history.push("/FoodDelivery");
+                            //         }
                                     
-                                    //history.push("/");
-                                }, 1500);
-                            }
+                            //         //history.push("/");
+                            //     }, 1500);
+                            // }
                         }else{
                             setError('Unable to login at this time'); 
                         }
@@ -355,42 +355,42 @@ export const LoginScreen: React.FC = function LoginScreen() {
             setLoading(true);
             await gLogin(value).then(async function(res1){
                 if(res1 != null){
-                    if(userRolef !== undefined && userRolef === "Admin"){
-                        setLoading(false);
-                        setSuccess('Sign In Successful.');
-                        setTimeout(() => {
-                            setSuccess('');
-                            //console.log("about to go to dashboard");
-                            history.push("/AdminOrders");
-                            //history.push("/");
-                        }, 1500);
+                    // if(userRolef !== undefined && userRolef === "Admin"){
+                    //     setLoading(false);
+                    //     setSuccess('Sign In Successful.');
+                    //     setTimeout(() => {
+                    //         setSuccess('');
+                    //         //console.log("about to go to dashboard");
+                    //         history.push("/AdminOrders");
+                    //         //history.push("/");
+                    //     }, 1500);
                         
-                    }
-                    else if(userRolef !== undefined && userRolef === "Rider"){
-                        setLoading(false);
-                        setSuccess('Sign In Successful.');
-                        setTimeout(() => {
-                            setSuccess('');
-                            //console.log("about to go to dashboard");
-                            history.push("/DeliveryOrders");
-                            //history.push("/");
-                        }, 1500);
+                    // }
+                    // else if(userRolef !== undefined && userRolef === "Rider"){
+                    //     setLoading(false);
+                    //     setSuccess('Sign In Successful.');
+                    //     setTimeout(() => {
+                    //         setSuccess('');
+                    //         //console.log("about to go to dashboard");
+                    //         history.push("/DeliveryOrders");
+                    //         //history.push("/");
+                    //     }, 1500);
                         
-                    }else{
-                        setLoading(false);
-                        setSuccess('Sign In Successful.');
-                        setTimeout(() => {
-                            setSuccess('');
-                            console.log(history.location.state)
-                            if(history.location.state !== undefined){
-                                history.push(history.location.state.from);
-                            }else{
-                                console.log(history.location.state)
-                                history.push("/FoodDelivery");
-                            }
-                            //history.push("/");
-                        }, 1500);
-                    }
+                    // }else{
+                    //     setLoading(false);
+                    //     setSuccess('Sign In Successful.');
+                    //     setTimeout(() => {
+                    //         setSuccess('');
+                    //         console.log(history.location.state)
+                    //         if(history.location.state !== undefined){
+                    //             history.push(history.location.state.from);
+                    //         }else{
+                    //             console.log(history.location.state)
+                    //             history.push("/FoodDelivery");
+                    //         }
+                    //         //history.push("/");
+                    //     }, 1500);
+                    // }
                 }else{
                     setLoading(false);
                     setError('Unable to login at this time.'); 

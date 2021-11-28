@@ -52,7 +52,8 @@ const useStyles = makeStyles((theme: Theme) =>
         textBox: {
             width: "100%",
             borderRadius: "25px",
-            border: "0.1px solid grey"
+            border: "0.1px solid grey",
+            borderColor: "#EEEEEE",
         },
         section1H1: {
             fontSize: "44.6667px",
@@ -123,7 +124,8 @@ const useStyles = makeStyles((theme: Theme) =>
             marginBottom: "8%",
             width: "100%",
             borderRadius: "25px",
-            border: "0.1px solid grey"
+            border: "0.1px solid grey",
+            borderColor: "#EEEEEE"
         },
         skipBtn: {
             position: "absolute",
@@ -432,6 +434,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                                                     </InputAdornment>}
                                                 labelWidth={103}
                                                 required={true}
+                                                notched={true}
                                         />
                                         </FormControl><br />
                                         <FormControl fullWidth variant="outlined" >
@@ -450,6 +453,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                                                     </InputAdornment>}
                                                 labelWidth={103}
                                                 required={true}
+                                                notched={true}
                                             />
                                         </FormControl><br />
                                         <FormControl fullWidth variant="outlined">
@@ -480,6 +484,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                                                 }
                                                 labelWidth={70}
                                                 required={true}
+                                                notched={true}
                                             />
                                         </FormControl>
                                         <Typography variant="subtitle2" className={classes.forgotPassText}>Forgot Password?</Typography>
@@ -523,9 +528,9 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                         <Typography variant="subtitle1" className={classes.welcomeStyle}>Welcome Back</Typography>
                         <form onSubmit={handleSubmit} className={classes.form} noValidate autoComplete="off">
                             <FormControl fullWidth variant="outlined" >
-                                <InputLabel htmlFor="fullname" className={mobClasses.root}>Full Name</InputLabel>
+                                <InputLabel shrink htmlFor="fullname" className={mobClasses.root}>Full Name</InputLabel>
                                 <OutlinedInput 
-                                    className={clsx(classes.firstTextFieldMobile, mobClasses.root)}
+                                    className={clsx(classes.firstTextFieldMobile, mobClasses.root, "MuiOutlinedInput-notchedOutline")}
                                     id="fullname"
                                     type="text"
                                     value={values.fullname}
@@ -536,8 +541,10 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                                                 <PersonRounded />
                                             </IconButton>
                                         </InputAdornment>}
-                                    labelWidth={103}
+                                    //labelWidth={70}
                                     required={true}
+                                    notched={true}
+                                    label="Full Name"
                                 />
                             </FormControl><br />
                             <FormControl fullWidth variant="outlined">
@@ -556,6 +563,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                                         </InputAdornment>}
                                     labelWidth={103}
                                     required={true}
+                                    notched={true}
                                 />
                             </FormControl><br />
                             <FormControl fullWidth variant="outlined" color="secondary">
@@ -585,6 +593,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                                     }
                                     labelWidth={70}
                                     required={true}
+                                    notched={true}
                                 />
                             </FormControl>
                             <Typography variant="subtitle2" className={classes.forgotPassTextMobile}>Forgot Password?</Typography>

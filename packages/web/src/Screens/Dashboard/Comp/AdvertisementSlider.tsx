@@ -3,6 +3,7 @@ import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../CSS/slider.css";
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -140,16 +141,37 @@ export const AdvertisementSlider: React.FC = function AdvertisementSlider() {
                                     Here at Urged, Quality and Time is our main priority. You can trust us to be on-time with your packages and food.
                                 </Typography>
                                 <Typography className={classes.btnLayout}>
-                                    <Button className={classes.Button}>
-                                        <Typography className={`${classes.fonts}`}>
-                                            Categories
-                                        </Typography>
-                                    </Button>
+                                    <a href="#categories" title="categories" className={clsx("inactiveItemLink")}>
+                                        <Button className={clsx(classes.Button, "catBtn")}>
+                                            <Typography className={`${classes.fonts}`}>
+                                                Categories
+                                            </Typography>
+                                        </Button>
+                                    </a>
                                 </Typography>
                                 
                             </Carousel.Caption>
                         </Carousel.Item>
                     </Carousel>
+                    <style>
+                        {
+                            `
+                                .inactiveItemLink{
+                                    text-decoration: none;
+                                }
+
+                                inactiveItemLink:hover{
+                                    text-decoration: none;
+                                    background-color: none;
+                                }
+
+                                .catBtn:hover{
+                                    color: #5D6467;
+                                    background-color: #FF5E14;
+                                }
+                            `
+                        }
+                    </style>
                 </div>
                 :
                 <></>
@@ -174,16 +196,37 @@ export const AdvertisementSlider: React.FC = function AdvertisementSlider() {
                                     Here at Urged, Quality and Time is our main priority. You can trust us to be on-time with your packages and food.
                                 </Typography>
                                 <Typography className={classes.btnLayout}>
-                                    <Button className={classes.Button}>
+                                <a href="#categories" title="categories" className={clsx("inactiveItemLink")}>
+                                    <Button className={clsx(classes.Button, "catBtn")}>
                                         <Typography className={`${classes.fonts}`}>
                                             Categories
                                         </Typography>
                                     </Button>
+                                </a>
                                 </Typography>
                                 
                             </Carousel.Caption>
                         </Carousel.Item>
                     </Carousel>
+                    <style>
+                        {
+                            `
+                                .inactiveItemLink{
+                                    text-decoration: none;
+                                }
+
+                                inactiveItemLink:hover{
+                                    text-decoration: none;
+                                    background-color: none;
+                                }
+
+                                .catBtn:hover{
+                                    color: #FFF;
+                                    background-color: #FF5E14;
+                                }
+                            `
+                        }
+                    </style>
                 </div>
                 :
                 <></>

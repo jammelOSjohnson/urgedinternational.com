@@ -78,7 +78,7 @@ export const Categories: React.FC = function Categories() {
             </Grid>
             <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                 <Grid item xs={12} md={3}>
-                    <Link to="/FoodDelivery" className={classes.links}>
+                    <Link to="/FoodDelivery" className={classes.links} id="categories">
                         <Card className={classes.card}>
                             <CardMedia className={classes.cardImage}>
                                 <img src="Images/FoodDeliveryServiceSM.png" alt="FoodDeliveryServiceSM"></img>

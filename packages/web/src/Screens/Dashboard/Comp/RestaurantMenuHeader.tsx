@@ -3,6 +3,7 @@ import { Container, Grid, makeStyles, createStyles, Typography, Theme, Avatar } 
 import React from 'react';
 import { LocationOnRounded, ScheduleRounded } from "@material-ui/icons/";
 import moment from 'moment-timezone';
+import { useHistory } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -59,7 +60,9 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
     var { restaurants, selectedRestaurant } = value;
     var restaurant = restaurants[selectedRestaurant];
 
-    
+    //console.log(restaurants)
+    var history = useHistory();
+
     if(restaurants.length !== 0){
         const now = new Date();
         let jaday = moment.tz(now, "America/Jamaica").format();
@@ -145,7 +148,7 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
         return (
             <>
                 <Typography variant="body1" style={{paddingTop: "3%", paddingBottom: "3%"}}>
-                            Loading...
+                            Loading...{history.push("/FoodDelivery")}
                 </Typography>
             </>
         )

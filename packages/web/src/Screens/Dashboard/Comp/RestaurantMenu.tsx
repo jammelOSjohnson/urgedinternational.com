@@ -9,6 +9,7 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { Link } from "react-router-dom";
+import clsx from 'clsx';
 
 
 interface State {
@@ -407,11 +408,11 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                     {
                         filteredMenuItems.length !== 0?
                             filteredMenuItems.map((item, index) => (
-                                <Grid item xs={12} sm={6} md={6} lg={4} xl={4} className={classes.gridSpacing}>
-                                    <Card className={classes.root} style={{minHeight: "446.99px"}}>
+                                <Grid item xs={12} sm={6} md={6} lg={4} xl={4} className={clsx(classes.gridSpacing, "cardMobile")}>
+                                    <Card className={clsx(classes.root, "cardMobile")} style={{minHeight: "446.99px"}}>
                                         <CardActionArea>
                                         <CardMedia
-                                            className={classes.media}
+                                            className={clsx(classes.media, "mobileMedia")}
                                             image={item.ImageName}
                                             title="Contemplative Reptile"
                                         />
@@ -452,15 +453,30 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                             </Typography>
                                         </CardActions>
                                     </Card>
+                                    <style>
+                                        {
+                                            `
+                                                @media only screen and (max-width: 600px) {
+                                                    .mobileMedia{
+                                                        max-height: 146px;
+                                                    }
+
+                                                    .cardMobile{
+                                                        min-height: 330.99px !important;
+                                                    }
+                                                  }
+                                            `
+                                        }
+                                    </style>
                                 </Grid>
                             ))
                         :
                         restaurant.MenuItems.map((item, index) => (
-                            <Grid item xs={12} sm={6} md={6} lg={4} xl={4} className={classes.gridSpacing}>
-                                <Card className={classes.root} style={{minHeight: "446.99px"}}>
+                            <Grid item xs={12} sm={6} md={6} lg={4} xl={4} className={clsx(classes.gridSpacing, "cardMobile")}>
+                                <Card className={clsx(classes.root, "cardMobile")} style={{minHeight: "446.99px"}}>
                                     <CardActionArea>
                                     <CardMedia
-                                        className={classes.media}
+                                        className={clsx(classes.media, "mobileMedia")}
                                         image={item.ImageName}
                                         title="Contemplative Reptile"
                                     />
@@ -500,6 +516,22 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         </Typography>
                                     </CardActions>
                                 </Card>
+                                <style>
+                                        {
+                                            `
+                                                @media only screen and (max-width: 600px) {
+                                                    .mobileMedia{
+                                                        max-height: 146px;
+                                                    }
+
+                                                    .cardMobile{
+                                                        min-height: 330.99px !important;
+                                                    }
+
+                                                  }
+                                            `
+                                        }
+                                </style>
                             </Grid>
                         ))
                     }

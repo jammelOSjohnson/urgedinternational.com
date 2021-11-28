@@ -263,9 +263,7 @@ export const Header: React.FC = function Header() {
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
                     className={classes.modal}
-                    open={referralPath !== "/Register" && referralPath !== "/Login" && referralPath !== "/404" 
-                          && referralPath !== "/AdminOrders" && referralPath !== "/AdminOrderSDetails" 
-                          && referralPath !== "/DeliveryOrders" && referralPath !== "/DeliveryOrdersDetails" ? open : false}
+                    open={referralPath === "/Menu"? open : false}
                     onClose={handleClose}
                     closeAfterTransition
                     BackdropComponent={Backdrop}
