@@ -2,18 +2,18 @@ import { useAppData } from '../../../Context/AppDataContext';
 import { Container, Grid, makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
+//import clsx from 'clsx';
 //Import Components
 
-interface Props {
+// interface Props {
     
-}
+// }
 
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
+// interface State {
+//     email: string;
+//     password: string;
+//     showPassword: boolean;
+// }
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({

@@ -1,18 +1,18 @@
-import { Grid, makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent } from '@material-ui/core';
+import { Grid, makeStyles, createStyles, Typography, Theme, Card, CardContent } from '@material-ui/core';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
+//import { useHistory } from 'react-router-dom';
+//import clsx from 'clsx';
 import { Link } from "react-router-dom";
 
-interface Props {
+// interface Props {
     
-}
+// }
 
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
+// interface State {
+//     email: string;
+//     password: string;
+//     showPassword: boolean;
+// }
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -72,13 +72,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const OrdersCounters: React.FC = function OrdersCounters() {
     const classes = useStyles();
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-      });
+    // const [values, setValues] = React.useState<State>({
+    //     email: '',
+    //     password: '',
+    //     showPassword: false,
+    //   });
     
-      var history = useHistory();
+    //   var history = useHistory();
 
     
       

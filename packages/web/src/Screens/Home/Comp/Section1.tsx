@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
             fontSize: '6vh',
             fontWeight: 700,
             paddingTop: "18%",
+            fontFamily: "PT Sans",
         },
         heroText2: {
             fontSize: '16px',
@@ -45,7 +46,8 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: "#FFFFFF",
             color: "#F7B614",
             width: "204px",
-            marginTop: "3%"
+            marginTop: "3%",
+            fontFamily: "PT Sans",
         },
         cardTitle1: {
             fontSize: "20px",
@@ -136,7 +138,7 @@ export const Section1: React.FC = function Section1() {
         <>
             <Container maxWidth="xl" className={classes.heroBackground}>
                 <Grid container spacing={0} alignContent="center" alignItems="center">
-                    <Grid xs={11} sm={6} md={5} lg={4} xl={3} className={classes.heroTextMargin}>
+                    <Grid item xs={11} sm={6} md={5} lg={4} xl={3} className={classes.heroTextMargin}>
                         <Typography className={classes.heroText1} align="center">
                             Enjoy Hassle Free 
                             <span className={classes.heroSubText}> Urged</span>  Services
@@ -160,7 +162,7 @@ export const Section1: React.FC = function Section1() {
                     {isMatch?
                         <> 
                         <Grid item xs={12} sm={6}>
-                            {/* <a className={classes.links} href="javascipt();" onClick={handleFood} title="Food Delivery"> */}
+                            {/* <a className={classes.links} href="javascipt();" onClick={handleFood} title="Food Delivery"> </a>*/}
                             <a className={classes.links} href="/FoodDelivery" title="Food Delivery">
                                 <Grid container justifyContent="center" spacing={2}>
                                     <Grid key={0} item>
@@ -188,11 +190,9 @@ export const Section1: React.FC = function Section1() {
                                                 <img src="Images/whitetruckIconImage.png" alt="whitetruckIconImage"></img>
                                             </CardMedia>
                                             <CardContent className={classes.cardContent}>
-                                                <Link className={classes.links} to="#" title="Food Delivery">
                                                     <Typography gutterBottom className={classes.cardTitleMiddle}>
                                                         Package Delivery Services
                                                     </Typography>
-                                                </Link>
                                             </CardContent>
                                         </Card>
                                     </Grid>
@@ -208,11 +208,9 @@ export const Section1: React.FC = function Section1() {
                                                 <img src="Images/YellowMarketPlaceService.png" alt="YellowMarketPlaceService"></img>
                                             </CardMedia>
                                             <CardContent className={classes.cardContent}>
-                                                <Link className={classes.links} to="#" title="Food Delivery">
                                                     <Typography style={{width: "150px"}} className={classes.cardTitle1}>
                                                         Market Place Services
                                                     </Typography>
-                                                </Link>
                                             </CardContent>
                                         </Card>
                                     </Grid>
@@ -226,7 +224,7 @@ export const Section1: React.FC = function Section1() {
                     {isMatchMedium?
                         <> 
                         <Grid item style={{marginLeft: "auto"}}>
-                            {/* <a className={classes.links} href="javascipt();" onClick={handleFood} title="Food Delivery"> */}
+                            {/* <a className={classes.links} href="javascipt();" onClick={handleFood} title="Food Delivery"> </a>*/}
                             <a className={classes.links} href="/FoodDelivery" title="Food Delivery">
                                 <Grid container justifyContent="center" spacing={2}>
                                     <Grid key={0} item>
@@ -254,11 +252,9 @@ export const Section1: React.FC = function Section1() {
                                                 <img src="Images/whitetruckIconImage.png" alt="whitetruckIconImage"></img>
                                             </CardMedia>
                                             <CardContent className={classes.cardContent}>
-                                                <Link className={classes.links} to="#" title="Food Delivery">
                                                     <Typography gutterBottom className={classes.cardTitleMiddle}>
                                                         Package Delivery Services
                                                     </Typography>
-                                                </Link>
                                             </CardContent>
                                         </Card>
                                     </Grid>
@@ -274,11 +270,9 @@ export const Section1: React.FC = function Section1() {
                                                 <img src="Images/YellowMarketPlaceService.png" alt="YellowMarketPlaceService"></img>
                                             </CardMedia>
                                             <CardContent className={classes.cardContent}>
-                                                <Link className={classes.links} to="#" title="Food Delivery">
                                                     <Typography style={{width: "150px"}} className={classes.cardTitle1}>
                                                         Market Place Services
                                                     </Typography>
-                                                </Link>
                                             </CardContent>
                                         </Card>
                                     </Grid>

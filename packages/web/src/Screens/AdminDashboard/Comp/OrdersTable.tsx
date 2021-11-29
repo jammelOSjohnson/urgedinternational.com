@@ -124,9 +124,9 @@ import { Backdrop, CircularProgress, createStyles, makeStyles, Theme } from '@ma
       // eslint-disable-next-line
     }, [currentUser]);
     
-    const handleEdit = (event) => {
-      event.preventDefault();
-    }
+    // const handleEdit = (event) => {
+    //   event.preventDefault();
+    // }
 
     if(orders.length !== 0){
       orders.map((item, index) => {

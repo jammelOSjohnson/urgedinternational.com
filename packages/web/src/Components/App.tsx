@@ -23,7 +23,7 @@ import { OrganisationsScreen } from '../Screens/AdminDashboard/OrganisationsScre
 //Rider
 import { RiderOrderDetailsScreen } from '../Screens/RiderDashboard/RiderOrderDetailsScreen';
 import { RiderOrdersScreen } from '../Screens/RiderDashboard/RiderOrdersScreen';
-import { RiderDashboard } from '../Screens/RiderDashboard/RiderDashboard';
+//import { RiderDashboard } from '../Screens/RiderDashboard/RiderDashboard';
 //import { Sidebar } from '../Screens/Dashboard/Comp/Sidebar';
 import { CheckoutScreen } from '../Screens/Checkout/CheckoutScreen';
 import { OrderCompleted } from '../Screens/Checkout/OrderCompleted'

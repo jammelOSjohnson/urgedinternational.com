@@ -61,6 +61,9 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         link: {
             textDecoration: "none"
+        },
+        btn: {
+            fontFamily: "PT Sans",
         }
     }),
 );
@@ -77,17 +80,17 @@ export const ExternalApp: React.FC = function ExternalApp() {
         <>
             <Container maxWidth="lg">
                 <div style={{textAlign: "center"}}>
-                    <Typography variant="h5" style={{color: "#1D2635", paddingTop: "5%"}}>
-                        Become a Member <span style={{color: "#F7B614"}}>Today</span>
+                    <Typography variant="h5" style={{color: "#1D2635", paddingTop: "5%", fontFamily: "PT Sans",}}>
+                        Become a Member <span style={{color: "#F7B614", fontFamily: "PT Sans",}}>Today</span>
                     </Typography>
                 </div>
                 <Grid container alignItems="center" style={{textAlign: "center"}} spacing={2}>
                     <Grid item xs={12} sm={12} md={12} lg={6}>
                         <div className={classes.root}>
-                                <Typography align="left" variant="h6" style={{display: "inline-flex"}}>
+                                <Typography align="left" variant="h6" style={{display: "inline-flex", fontFamily: "PT Sans",}}>
                                     Riders Needed !!!
                                     &nbsp;&nbsp;<a href="https://4b3pfykc7ix.typeform.com/to/bvlER1PD" target="_blank"  rel="noreferrer" title="Rider Form" className={classes.link}>
-                                        <Button variant="contained" color="primary">
+                                        <Button variant="contained" color="primary" className={classes.btn}>
                                             Apply Here
                                         </Button>
                                     </a>

@@ -20,12 +20,14 @@ const useStyles = makeStyles((theme: Theme) =>
             letterSpacing: '0em',
             paddingBottom: "24px",
             width: "65%",
+            fontFamily: "PT Sans",
         },
         secDescription:{
             fontSize: "16px",
             fontWeight: 300,
             lineHeight: "29px",
             letterSpacing: "0em",
+            fontFamily: "PT Sans",
         },
         imageOne:{
             paddingRight: "60px",
@@ -45,6 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
             height: "50px",
             color: "#F7B614",
             border: "1px solid #F7B614",
+            fontFamily: "PT Sans",
         }
     }),
 );

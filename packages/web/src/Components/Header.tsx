@@ -343,7 +343,7 @@ export const Header: React.FC = function Header() {
 
     return (
        <>
-            <Modal
+            {/* <Modal
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
                     className={classes.modal}
@@ -417,7 +417,7 @@ export const Header: React.FC = function Header() {
                         </Grid>
                     </div>
                     </Fade>
-                </Modal>
+                </Modal> */}
             <AppBar elevation={0} position="relative" className={classes.appbar}>
                 <Toolbar>
                 <Container maxWidth="xl">

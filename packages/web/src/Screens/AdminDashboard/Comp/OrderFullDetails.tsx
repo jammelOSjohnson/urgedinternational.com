@@ -1,5 +1,5 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { Button, Container, Grid, makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent, FormControl, InputLabel, Select, MenuItem, Snackbar } from '@material-ui/core';
+import { Button, Container, Grid, makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent, FormControl, Select, MenuItem, Snackbar } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
@@ -7,9 +7,9 @@ import moment from 'moment';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 //Import Components
 
-interface Props {
+// interface Props {
     
-}
+// }
 
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -105,8 +105,8 @@ export const OrderFullDetails: React.FC = () => {
     const orderIndex = parseInt(history.location.state.from);
     const [rider, setRider] = useState(orders[orderIndex].Rider.FirstName);
     const [selectedRider, setSelectedRider] = useState();
-    var [error, setError] = useState('');
-    var [success, setSuccess] = useState('');
+    // var [error, setError] = useState('');
+    // var [success, setSuccess] = useState('');
     const [open, setOpen] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
     
@@ -143,7 +143,7 @@ export const OrderFullDetails: React.FC = () => {
             console.log("trying to see id");
             console.log(finalselectedRider);
             console.log(riders[finalselectedRider]);
-            if(finalselectedRider != undefined){
+            if(finalselectedRider !== undefined){
                 orders[orderIndex].Rider = riders[finalselectedRider]._id;
                 await UpdateOrder(value, orders[orderIndex]).then((res) => {
                     if(res){
@@ -154,7 +154,7 @@ export const OrderFullDetails: React.FC = () => {
                         }, 5000)
                     }
                 })
-            }else if(orderIndex != undefined){
+            }else if(orderIndex !== undefined){
                 orders[orderIndex].Rider = orders[orderIndex].Rider._id;
                 await UpdateOrder(value, orders[orderIndex]).then((res) => {
                     if(res){

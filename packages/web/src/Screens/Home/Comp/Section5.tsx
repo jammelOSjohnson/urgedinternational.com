@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
             fontSize: "30px",
             fontWeight: 700,
             color: "#FFFFFF",
-            fontFamily: "Roboto",
+            fontFamily: "PT Sans",
         },
         cardBody: {
             fontSize: "16px",
@@ -74,7 +74,8 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingLeft: "3%",
         },
         btn: {
-            borderRadius: "50px"
+            borderRadius: "50px",
+            fontFamily: "PT Sans",
         }
     }),
 );
@@ -97,7 +98,7 @@ export const Section5: React.FC = function Section5() {
                                     1.
                                 </Typography>
                                
-                                <Typography className={classes.cardBody}>
+                                <Typography variant="h2" className={classes.cardBody}>
                                     <Typography gutterBottom className={classes.cardTitle}>
                                         You Order
                                     </Typography>
@@ -112,7 +113,7 @@ export const Section5: React.FC = function Section5() {
                                 <Typography className={classes.cardNumber}>
                                     2.
                                 </Typography>
-                                <Typography className={classes.cardBody}>
+                                <Typography variant="h2" className={classes.cardBody}>
                                     <Typography gutterBottom className={classes.cardTitle}>
                                         We Pickup
                                     </Typography>
@@ -127,7 +128,7 @@ export const Section5: React.FC = function Section5() {
                                 <Typography className={classes.cardNumber}>
                                     3.
                                 </Typography>
-                                <Typography className={classes.cardBody}>
+                                <Typography variant="h2" className={classes.cardBody}>
                                     <Typography gutterBottom className={classes.cardTitle}>
                                         We Deliver
                                     </Typography>

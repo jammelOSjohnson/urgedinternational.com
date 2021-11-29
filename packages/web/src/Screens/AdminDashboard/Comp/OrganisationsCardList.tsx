@@ -1,24 +1,24 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardHeader, Avatar, CardMedia, CardContent } from '@material-ui/core';
+import { Grid, makeStyles, createStyles, Typography, Theme, Card, CardHeader, Avatar, CardMedia, CardContent } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
+//import clsx from 'clsx';
 //Import Components
-import { ItemRating } from '../../../Components/ItemRating';
+//import { ItemRating } from '../../../Components/ItemRating';
 import { Link } from "react-router-dom";
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import PhoneEnabledIcon from '@material-ui/icons/PhoneEnabled';
 
 
 
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
+// interface State {
+//     email: string;
+//     password: string;
+//     showPassword: boolean;
+// }
 
 // Phone Number to test
-const phoneNumber = " (876)-888-8888"
+//const phoneNumber = " (876)-888-8888"
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -143,11 +143,11 @@ export const OrganisationsCardList: React.FC = function OrganisationsCardList(pr
         }
     }, [restaurants])
 
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-      });
+    // const [values, setValues] = React.useState<State>({
+    //     email: '',
+    //     password: '',
+    //     showPassword: false,
+    //   });
     
     var history = useHistory();
 

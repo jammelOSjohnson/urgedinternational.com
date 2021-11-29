@@ -6,18 +6,21 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         Text1: {
             fontWeight: 700,
-            paddingTop: "10%"
+            paddingTop: "10%",
+            fontFamily: "PT Sans",
         },
         Text2: {
             paddingTop: "3%",
             color: "#F7B614",
             fontWeight: "bold",
+            fontFamily: "PT Sans",
         },
         Text3: {
             paddingTop: "3%",
             fontWeight: "bold",
             maxWidth: "620px",
             paddingBottom: "3%",
+            fontFamily: "Open Sans",
         },
         heroBackground: {
             backgroundImage: "url(Images/happy-african.png)",
@@ -31,7 +34,8 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingLeft: "6%", 
         },
         btn: {
-            borderRadius: "50px"
+            borderRadius: "50px",
+            fontFamily: "PT Sans",
         }
     }),
 );

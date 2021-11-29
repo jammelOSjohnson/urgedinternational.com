@@ -1,8 +1,8 @@
 import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+//import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import { Grid, Typography, Toolbar, AppBar, TextField,createStyles, makeStyles, Theme, Paper, InputBase } from '@material-ui/core';
+import { Grid, Typography, Toolbar, AppBar,createStyles, makeStyles, Theme, Paper, InputBase } from '@material-ui/core';
 import { FilterButtonGroup } from './FilterButtonGroup'
 
 const useStyles = makeStyles((theme: Theme) =>
