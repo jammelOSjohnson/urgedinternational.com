@@ -117,6 +117,16 @@ function appDataReducer(state, action){
             ...state,
             riders: action.payload.riders
           }
+        case "SW_INIT":
+          return{
+            ...state,
+            serviceWorkerInitialized: true
+          }
+        case "SW_UPDATE":
+          return{
+            ...state,
+            serviceWorkerRegistration: action.payload.serviceWorkerRegistration
+          }
         default:
             return state;
     }
@@ -175,6 +185,25 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     };
 
     var userRolef= "";
+
+    //PWA STUFF
+    const serviceWorkerInitialized= false;
+    const serviceWorkerUpdated= false;
+    const serviceWorkerRegistration= null;
+
+    var serviceWorkerInit = function serviceWorkerInit() {
+      dispatch({
+        type: "SW_INIT"
+      });
+    }
+
+    var serviceWorkerUpdate = function serviceWorkerUpdate(reg, payload) {
+      payload.serviceWorkerRegistration = reg;
+      dispatch({
+        type: "SW_UPDATE",
+        payload: payload
+      });
+    }
 
     //sign up user
     var signup = function signup(currentstate, payload) {
@@ -1038,6 +1067,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         generalLocation,
         receiptDetails,
         riders,
+        serviceWorkerInitialized,
+        serviceWorkerUpdated,
+        serviceWorkerRegistration,
         JoinUs,
         signup,
         login,
@@ -1060,7 +1092,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         sendOrderCompletedEmail,
         changeOrderStatus,
         UpdateOrder,
-        fetchRiders
+        fetchRiders,
+        serviceWorkerInit,
+        serviceWorkerUpdate
     });
     
      

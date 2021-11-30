@@ -17,6 +17,12 @@ const isLocalhost = Boolean(
       // 127.0.0.0/8 are considered localhost for IPv4.
       window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
   );
+
+  declare global {
+    interface Window {
+      skipWaiting:any;
+    }
+}
   
   type Config = {
     onSuccess?: (registration: ServiceWorkerRegistration) => void;
@@ -54,6 +60,37 @@ const isLocalhost = Boolean(
           registerValidSW(swUrl, config);
         }
       });
+
+      window.addEventListener('message', (event) => {
+        console.log(event.data);
+        if (event.data && event.data.type === 'SKIP_WAITING') {
+          window.skipWaiting();
+        }
+
+        if (event.data && event.data.type === 'install') {
+          console.log("service worker installed.")
+        }
+
+        if (event.data && event.data.type === 'activate') {
+          console.log("service worker activated.");
+        }
+
+        if (event.data && event.data.type === 'fetch') {
+          console.log("fetch event.");
+        }
+      });
+
+      // window.addEventListener('install', (event) => {
+      //   console.log("service worker installed.")
+      // });
+
+      // window.addEventListener('activate', (event) => {
+      //   console.log("service worker activated.")
+      // });
+
+      // window.addEventListener('fetch', (event) => {
+      //   console.log("fetch event.")
+      // });
     }
   }
   
@@ -76,6 +113,9 @@ const isLocalhost = Boolean(
                   'New content is available and will be used when all ' +
                     'tabs for this page are closed. See https://cra.link/PWA.'
                 );
+                
+                console.log("about to skip waiting");
+                window.skipWaiting();
   
                 // Execute callback
                 if (config && config.onUpdate) {

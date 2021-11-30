@@ -1,5 +1,5 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { Select, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, InputLabel, FormControl, Card, CardActionArea, CardMedia, CardContent, CardActions, MenuItem } from '@material-ui/core';
+import { Select, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, InputLabel, FormControl, Card, CardActionArea, CardMedia, CardContent, CardActions, MenuItem, useMediaQuery, useTheme } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 //Import Components
@@ -132,6 +132,13 @@ const useStyles = makeStyles((theme: Theme) =>
             width: "113px",
             borderRadius: 36,
         },
+        ButtonMobile: {
+            backgroundColor: theme.palette.primary.light,
+            border: "1.21951px solid #FFFFFF",
+            height: "41px",
+            width: "100%",
+            borderRadius: 4,
+        },
         btnfonts: {
             fontFamily: "PT Sans",
             fontSize: "13px",
@@ -143,6 +150,7 @@ const useStyles = makeStyles((theme: Theme) =>
         priceText: {
             color: theme.palette.primary.light,
             fontWeight: "bolder",
+            fontFamily: "Inter"
         },
         media: {
             height: 274,
@@ -191,6 +199,11 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
         MenuCategory: "",
         ImageName: ""
     });
+
+    const theme = useTheme();
+    
+    const isMatch = useMediaQuery(theme.breakpoints.down('lg'));
+    const isMaatchMedium = useMediaQuery(theme.breakpoints.up('lg'));
 
     const [values, setValues] = React.useState<State>({
         chickenFlavour1: 'Select Flavour',
@@ -275,267 +288,721 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
 
         return (
             <>
-                <Modal
-                    aria-labelledby="transition-modal-title"
-                    aria-describedby="transition-modal-description"
-                    className={classes.modal}
-                    open={open}
-                    onClose={handleClose}
-                    closeAfterTransition
-                    BackdropComponent={Backdrop}
-                    BackdropProps={{
-                    timeout: 500,
-                    }}
-                >
-                    <Fade in={open}>
-                    <div className={classes.paper}>
-                        <h2 id="transition-modal-title">Order Request Details</h2>
-                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                            <Grid item xs={10} sm={6} md={4} lg={4} xl={4}>
-                                <img style={{borderRadius: "5px"}} src={selectedItem.ImageName} height="81.25px" width="125px" alt="cart item" />
-                            </Grid>
-                            <Grid item xs={10} sm={6} md={8} lg={8} xl={8}>
-                                <Typography>{selectedItem.ItemName}</Typography>
-                                {/* <Typography>Item rating</Typography> */}
-                                <Typography className={classes.priceText}><span>$</span>{parseFloat(selectedItem.ItemCost.toString()).toFixed(2)}</Typography>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <Typography>{selectedItem.ItemDescription}</Typography>
-                            </Grid>
-                            <Grid item xs={12}>
-                                {restaurant.FirstName === "Kentucky Fried Chicken"?
-                                    <form>
-                                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                            <FastFoodChickenFlavor props={values} handleChange={handleChange} />
-                                            <Grid item xs={10} sm={12} >
-                                                <TextField
-                                                    id="outlined-multiline-static"
-                                                    label="Special Intructions"
-                                                    multiline
-                                                    rows={4}
-                                                    defaultValue={values.otherIntructions}
-                                                    onChange={handleChange2('otherIntructions')}
-                                                    variant="outlined"
-                                                    placeholder="Enter Instructions Here"
-                                                    fullWidth
-                                                />
-                                            </Grid>
-                                            <Grid item xs={12} >
-                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                    <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
-                                                    <Select
-                                                        labelId="demo-simple-select-outlined-label"
-                                                        id="demo-simple-select-outlined"
-                                                        value={values.ifnotAvailable}
-                                                        onChange={handleChange}
-                                                        label="ifnotAvailable"
-                                                        name="ifnotAvailable"
-                                                        className={classes.root}
-                                                        fullWidth
-                                                    >
-                                                        <MenuItem value={"Contact me"}>Contact me</MenuItem>
-                                                        <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
-                                                        <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                        <MenuItem value={"Cancel my order"}>Cancel my order</MenuItem>
-                                                    </Select>
-                                                </FormControl>
-                                            </Grid>
-                                            <Grid item xs={10} sm={12} >
-                                                <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => AddToCart(values)} type="button">
-                                                    Add To Cart 
-                                                </Button>
-                                            </Grid>
-                                        </Grid>
-                                    </form>
-                                :restaurant.FirstName === "Elle B Catering And Events"?
-                                <form>
-                                    <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                        <Grid item xs={10} sm={12} >
-                                            <TextField
-                                                id="outlined-multiline-static"
-                                                label="Special Intructions"
-                                                multiline
-                                                rows={4}
-                                                defaultValue={values.otherIntructions}
-                                                onChange={handleChange2('otherIntructions')}
-                                                variant="outlined"
-                                                placeholder="Enter Instructions Here"
-                                                fullWidth
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12} >
-                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                    <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
-                                                    <Select
-                                                        labelId="demo-simple-select-outlined-label"
-                                                        id="demo-simple-select-outlined"
-                                                        value={values.ifnotAvailable}
-                                                        onChange={handleChange}
-                                                        label="ifnotAvailable"
-                                                        name="ifnotAvailable"
-                                                        className={classes.root}
-                                                        fullWidth
-                                                    >
-                                                        <MenuItem value={"Contact me"}>Contact me</MenuItem>
-                                                        <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
-                                                        <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                        <MenuItem value={"Cancel my order"}>Cancel my order</MenuItem>
-                                                    </Select>
-                                                </FormControl>
-                                        </Grid>
-                                        <Grid item xs={10} sm={12} >
-                                            <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => AddToCart(values)} type="button">
-                                                Add To Cart 
-                                            </Button>
-                                        </Grid>
+            
+                {isMaatchMedium?
+                    <>
+                        <Modal
+                            aria-labelledby="transition-modal-title"
+                            aria-describedby="transition-modal-description"
+                            className={classes.modal}
+                            open={open}
+                            onClose={handleClose}
+                            closeAfterTransition
+                            BackdropComponent={Backdrop}
+                            BackdropProps={{
+                            timeout: 500,
+                            }}
+                        >
+                            <Fade in={open}>
+                            <div className={classes.paper}>
+                                <h2 id="transition-modal-title">Order Request Details</h2>
+                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                    <Grid item xs={10} sm={6} md={4} lg={4} xl={4}>
+                                        <img style={{borderRadius: "5px"}} src={selectedItem.ImageName} height="81.25px" width="125px" alt="cart item" />
                                     </Grid>
-                                </form>
+                                    <Grid item xs={10} sm={6} md={8} lg={8} xl={8}>
+                                        <Typography>{selectedItem.ItemName}</Typography>
+                                        {/* <Typography>Item rating</Typography> */}
+                                        <Typography className={classes.priceText}><span>$</span>{parseFloat(selectedItem.ItemCost.toString()).toFixed(2)}</Typography>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Typography>{selectedItem.ItemDescription}</Typography>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        {restaurant.FirstName === "Kentucky Fried Chicken"?
+                                            <form>
+                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} />
+                                                    <Grid item xs={10} sm={12} >
+                                                        <TextField
+                                                            id="outlined-multiline-static"
+                                                            label="Special Intructions"
+                                                            multiline
+                                                            rows={4}
+                                                            defaultValue={values.otherIntructions}
+                                                            onChange={handleChange2('otherIntructions')}
+                                                            variant="outlined"
+                                                            placeholder="Enter Instructions Here"
+                                                            fullWidth
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} >
+                                                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                            <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                            <Select
+                                                                labelId="demo-simple-select-outlined-label"
+                                                                id="demo-simple-select-outlined"
+                                                                value={values.ifnotAvailable}
+                                                                onChange={handleChange}
+                                                                label="ifnotAvailable"
+                                                                name="ifnotAvailable"
+                                                                className={classes.root}
+                                                                fullWidth
+                                                            >
+                                                                <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                <MenuItem value={"Cancel my order"}>Cancel my order</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                    </Grid>
+                                                    <Grid item xs={10} sm={12} >
+                                                        <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => AddToCart(values)} type="button">
+                                                            Add To Cart 
+                                                        </Button>
+                                                    </Grid>
+                                                </Grid>
+                                            </form>
+                                        :restaurant.FirstName === "Elle B Catering And Events"?
+                                        <form>
+                                            <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                <Grid item xs={10} sm={12} >
+                                                    <TextField
+                                                        id="outlined-multiline-static"
+                                                        label="Special Intructions"
+                                                        multiline
+                                                        rows={4}
+                                                        defaultValue={values.otherIntructions}
+                                                        onChange={handleChange2('otherIntructions')}
+                                                        variant="outlined"
+                                                        placeholder="Enter Instructions Here"
+                                                        fullWidth
+                                                    />
+                                                </Grid>
+                                                <Grid item xs={12} >
+                                                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                            <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                            <Select
+                                                                labelId="demo-simple-select-outlined-label"
+                                                                id="demo-simple-select-outlined"
+                                                                value={values.ifnotAvailable}
+                                                                onChange={handleChange}
+                                                                label="ifnotAvailable"
+                                                                name="ifnotAvailable"
+                                                                className={classes.root}
+                                                                fullWidth
+                                                            >
+                                                                <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                <MenuItem value={"Cancel my order"}>Cancel my order</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                </Grid>
+                                                <Grid item xs={10} sm={12} >
+                                                    <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => AddToCart(values)} type="button">
+                                                        Add To Cart 
+                                                    </Button>
+                                                </Grid>
+                                            </Grid>
+                                        </form>
+                                        :
+                                        <></>
+                                        }
+                                    </Grid>
+                                </Grid>
+                            </div>
+                            </Fade>
+                        </Modal>
+                        <Typography variant="body1" style={{paddingTop: "3%", paddingBottom: "1%", fontWeight: "bold"}}>
+                            Results 
+                        </Typography>
+                        <Typography variant="body1" style={{ paddingBottom: "3%"}}>
+                            Please select item from the list of meals listed below. 
+                        </Typography>
+                        <Grid container direction="row" spacing={2} className={classes.root} alignItems="center">
+                            {
+                                filteredMenuItems.length !== 0?
+                                    filteredMenuItems.map((item, index) => (
+                                        <Grid item xs={6} sm={6} md={6} lg={4} xl={4} className={clsx(classes.gridSpacing, "cardMobile")}>
+                                            <Card className={clsx(classes.root, "cardMobile")} style={{minHeight: "446.99px"}}>
+                                                <CardActionArea>
+                                                <CardMedia
+                                                    className={clsx(classes.media, "mobileMedia")}
+                                                    image={item.ImageName}
+                                                    title="Contemplative Reptile"
+                                                />
+                                                </CardActionArea>
+                                                <CardContent>
+                                                        <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                            <Grid item xs={6}>
+                                                                    <Typography variant="h6" component="p" style={{height: "64px"}}>
+                                                                        {item.ItemName}
+                                                                    </Typography>
+                                                            </Grid>
+                                                            <Grid item xs={6}>
+                                                                    <Typography variant="body2"  component="p" style={{height: "64px"}}>
+                                                                        <ItemRating rating={3.5}/>
+                                                                    </Typography>
+                                                            </Grid>
+                                                            <Grid item xs={12} >
+                                                                    <Typography variant="body2"  component="p" >
+                                                                        {item.ItemDescription}
+                                                                    </Typography>
+                                                            </Grid>
+                                                        </Grid>
+                                                </CardContent>
+                                                <CardActions>
+                                                    {
+                                                        userInfo.email === ""?
+                                                            <Button size="small" onClick={handleLogin}  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button">
+                                                                Add To Cart
+                                                            </Button>
+                                                            :
+                                                            <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
+                                                                Add To Cart 
+                                                            </Button> 
+                                                    }
+                                                    
+                                                    <Typography variant="body2"  component="p" className={classes.priceText} style={{textAlign: "right", width: "100%"}}>
+                                                        {`$ ${ parseFloat(item.ItemCost).toFixed(2)}`}
+                                                    </Typography>
+                                                </CardActions>
+                                            </Card>
+                                            <style>
+                                                {
+                                                    `
+                                                        @media only screen and (max-width: 600px) {
+                                                            .mobileMedia{
+                                                                max-height: 146px;
+                                                            }
+
+                                                            .cardMobile{
+                                                                min-height: 330.99px !important;
+                                                            }
+                                                        }
+                                                    `
+                                                }
+                                            </style>
+                                        </Grid>
+                                    ))
                                 :
-                                <></>
-                                }
-                            </Grid>
+                                restaurant.MenuItems.map((item, index) => (
+                                    <Grid item xs={6} sm={6} md={6} lg={4} xl={4} className={clsx(classes.gridSpacing, "cardMobile")}>
+                                        <Card className={clsx(classes.root, "cardMobile")} style={{minHeight: "446.99px"}}>
+                                            <CardActionArea>
+                                            <CardMedia
+                                                className={clsx(classes.media, "mobileMedia")}
+                                                image={item.ImageName}
+                                                title="Contemplative Reptile"
+                                            />
+                                            </CardActionArea>
+                                            <CardContent>
+                                                    <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                        <Grid item xs={6}>
+                                                                <Typography variant="h6"  component="p" style={{height: "64px"}}>
+                                                                    {item.ItemName}
+                                                                </Typography>
+                                                        </Grid>
+                                                        <Grid item xs={6}>
+                                                                <Typography variant="body2"  component="p" style={{height: "64px"}}>
+                                                                    <ItemRating rating={3.5}/>
+                                                                </Typography>
+                                                        </Grid>
+                                                        <Grid item xs={12} >
+                                                                <Typography variant="body2"  component="p" >
+                                                                    {item.ItemDescription}
+                                                                </Typography>
+                                                        </Grid>
+                                                    </Grid>
+                                            </CardContent>
+                                            <CardActions>
+                                                {
+                                                    userInfo.email === ""?
+                                                        <Button size="small" onClick={handleLogin}  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button">
+                                                            Add To Cart 
+                                                        </Button>
+                                                        :
+                                                        <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
+                                                            Add To Cart 
+                                                        </Button> 
+                                                }
+                                                    
+                                                <Typography variant="body2"  component="p" className={classes.priceText} style={{textAlign: "right", width: "100%"}}>
+                                                    {`$ ${ parseFloat(item.ItemCost).toFixed(2)}`}
+                                                </Typography>
+                                            </CardActions>
+                                        </Card>
+                                        <style>
+                                                {
+                                                    `
+                                                        @media only screen and (max-width: 600px) {
+                                                            .mobileMedia{
+                                                                max-height: 146px;
+                                                            }
+
+                                                            .cardMobile{
+                                                                min-height: 300px !important;
+                                                            }
+
+                                                        }
+                                                    `
+                                                }
+                                        </style>
+                                    </Grid>
+                                ))
+                            }
                         </Grid>
-                    </div>
-                    </Fade>
-                </Modal>
-                <Typography variant="body1" style={{paddingTop: "3%", paddingBottom: "1%", fontWeight: "bold"}}>
-                    Results 
-                </Typography>
-                <Typography variant="body1" style={{ paddingBottom: "3%"}}>
-                    Please select item from the list of meals listed below. 
-                </Typography>
-                <Grid container direction="row" spacing={2} className={classes.root} alignItems="center">
-                    {
-                        filteredMenuItems.length !== 0?
-                            filteredMenuItems.map((item, index) => (
-                                <Grid item xs={12} sm={6} md={6} lg={4} xl={4} className={clsx(classes.gridSpacing, "cardMobile")}>
-                                    <Card className={clsx(classes.root, "cardMobile")} style={{minHeight: "446.99px"}}>
-                                        <CardActionArea>
-                                        <CardMedia
-                                            className={clsx(classes.media, "mobileMedia")}
-                                            image={item.ImageName}
-                                            title="Contemplative Reptile"
-                                        />
-                                        </CardActionArea>
-                                        <CardContent>
-                                                <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
+                    </>
+                    :
+                    <></>
+                }
+
+                {
+                    isMatch?
+                    <>
+                        <Modal
+                            aria-labelledby="transition-modal-title"
+                            aria-describedby="transition-modal-description"
+                            className={classes.modal}
+                            open={open}
+                            onClose={handleClose}
+                            closeAfterTransition
+                            BackdropComponent={Backdrop}
+                            BackdropProps={{
+                            timeout: 500,
+                            }}
+                        >
+                            <Fade in={open}>
+                            <div className={classes.paper}>
+                                <h2 id="transition-modal-title">Order Request Details</h2>
+                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                    <Grid item xs={10} sm={6} md={4} lg={4} xl={4}>
+                                        <img style={{borderRadius: "5px"}} src={selectedItem.ImageName} height="81.25px" width="125px" alt="cart item" />
+                                    </Grid>
+                                    <Grid item xs={10} sm={6} md={8} lg={8} xl={8}>
+                                        <Typography>{selectedItem.ItemName}</Typography>
+                                        {/* <Typography>Item rating</Typography> */}
+                                        <Typography className={classes.priceText}><span>$</span>{parseFloat(selectedItem.ItemCost.toString()).toFixed(2)}</Typography>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Typography>{selectedItem.ItemDescription}</Typography>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        {restaurant.FirstName === "Kentucky Fried Chicken"?
+                                            <form>
+                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} />
+                                                    <Grid item xs={10} sm={12} >
+                                                        <TextField
+                                                            id="outlined-multiline-static"
+                                                            label="Special Intructions"
+                                                            multiline
+                                                            rows={4}
+                                                            defaultValue={values.otherIntructions}
+                                                            onChange={handleChange2('otherIntructions')}
+                                                            variant="outlined"
+                                                            placeholder="Enter Instructions Here"
+                                                            fullWidth
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} >
+                                                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                            <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                            <Select
+                                                                labelId="demo-simple-select-outlined-label"
+                                                                id="demo-simple-select-outlined"
+                                                                value={values.ifnotAvailable}
+                                                                onChange={handleChange}
+                                                                label="ifnotAvailable"
+                                                                name="ifnotAvailable"
+                                                                className={classes.root}
+                                                                fullWidth
+                                                            >
+                                                                <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                <MenuItem value={"Cancel my order"}>Cancel my order</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                    </Grid>
+                                                    <Grid item xs={10} sm={12} >
+                                                        <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => AddToCart(values)} type="button">
+                                                            Add To Cart 
+                                                        </Button>
+                                                    </Grid>
+                                                </Grid>
+                                            </form>
+                                        :restaurant.FirstName === "Elle B Catering And Events"?
+                                        <form>
+                                            <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                <Grid item xs={10} sm={12} >
+                                                    <TextField
+                                                        id="outlined-multiline-static"
+                                                        label="Special Intructions"
+                                                        multiline
+                                                        rows={4}
+                                                        defaultValue={values.otherIntructions}
+                                                        onChange={handleChange2('otherIntructions')}
+                                                        variant="outlined"
+                                                        placeholder="Enter Instructions Here"
+                                                        fullWidth
+                                                    />
+                                                </Grid>
+                                                <Grid item xs={12} >
+                                                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                            <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                            <Select
+                                                                labelId="demo-simple-select-outlined-label"
+                                                                id="demo-simple-select-outlined"
+                                                                value={values.ifnotAvailable}
+                                                                onChange={handleChange}
+                                                                label="ifnotAvailable"
+                                                                name="ifnotAvailable"
+                                                                className={classes.root}
+                                                                fullWidth
+                                                            >
+                                                                <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                <MenuItem value={"Cancel my order"}>Cancel my order</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                </Grid>
+                                                <Grid item xs={10} sm={12} >
+                                                    <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => AddToCart(values)} type="button">
+                                                        Add To Cart 
+                                                    </Button>
+                                                </Grid>
+                                            </Grid>
+                                        </form>
+                                        :
+                                        <></>
+                                        }
+                                    </Grid>
+                                </Grid>
+                            </div>
+                            </Fade>
+                        </Modal>
+                        <Typography variant="body1" style={{paddingTop: "3%", paddingBottom: "1%", fontWeight: "bold"}}>
+                            Results 
+                        </Typography>
+                        <Typography variant="body1" style={{ paddingBottom: "3%"}}>
+                            Please select item from the list of meals listed below. 
+                        </Typography>
+                        <Grid container direction="row" spacing={2} className={classes.root} alignItems="center">
+                            {
+                                filteredMenuItems.length !== 0?
+                                    filteredMenuItems.map((item, index) => (
+                                        <Grid item xs={6} sm={6} md={6} lg={4} xl={4} className={clsx(classes.gridSpacing, "cardMobile")}>
+                                            <Card className={clsx(classes.root, "cardMobile")} style={{minHeight: "300px"}}>
+                                                <CardActionArea>
+                                                <CardMedia
+                                                    className={clsx(classes.media, "mobileMedia")}
+                                                    image={item.ImageName}
+                                                    title="Contemplative Reptile"
+                                                />
+                                                </CardActionArea>
+                                                <CardContent>
+                                                        <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                            <Grid item xs={12}>
+                                                                    <Typography variant="h6" className="itemNameMobile" component="p" style={{height: "64px"}}>
+                                                                        {item.ItemName}
+                                                                    </Typography>
+                                                            </Grid>
+                                                            <Grid item xs={12} className="itemDescMobile">
+                                                                    <Typography variant="body2"  component="p">
+                                                                        {item.ItemDescription}
+                                                                    </Typography>
+                                                            </Grid>
+                                                        </Grid>
+                                                </CardContent>
+                                                <CardActions>
+                                                    <Grid container xs={12} direction="row" spacing={0} className={classes.root} alignItems="center">
+                                                        <Grid item xs={6}>
+                                                            <Typography variant="body2"  component="p" className={classes.priceText} style={{textAlign: "right", width: "100%"}}>
+                                                                {`$ ${ parseFloat(item.ItemCost).toFixed(2)}`}
+                                                            </Typography>
+                                                        </Grid>
+                                                        <Grid item xs={6}>
+                                                                <Typography variant="body2"  component="p" style={{height: "30px", textAlign: "right"}}>
+                                                                    <ItemRating rating={3.5}/>
+                                                                </Typography>
+                                                        </Grid>
+                                                        <Grid item xs={12}>
+                                                            {
+                                                                userInfo.email === ""?
+                                                                    <Button size="small" onClick={handleLogin}  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="button">
+                                                                        Add To Cart 
+                                                                    </Button>
+                                                                    :
+                                                                    <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
+                                                                        Add To Cart 
+                                                                    </Button> 
+                                                            }
+                                                        </Grid>
+                                                    </Grid>
+                                                </CardActions>
+                                            </Card>
+                                            <style>
+                                                {
+                                                    `   
+                                                        @media only screen and (max-width: 1280px) {
+
+                                                            .cardMobile{
+                                                                min-height: 300px !important;
+                                                                border-radius: 0;
+                                                            }
+
+                                                            .itemDescMobile{
+                                                                height: 74.594px;
+                                                            }
+
+                                                            .MuiCardActions-root{
+                                                                padding: 10px;
+                                                            }
+
+                                                            .MuiCardContent-root {
+                                                                padding-bottom: 0px;
+                                                            }
+                                                        }
+
+                                                        @media only screen and (max-width: 600px) {
+                                                            .mobileMedia{
+                                                                max-height: 111.48px;
+                                                            }
+
+                                                            .cardMobile{
+                                                                min-height: 300px !important;
+                                                                border-radius: 0;
+                                                            }
+
+                                                            .itemDescMobile{
+                                                                height: 74.594px;
+                                                            }
+
+                                                        }
+
+                                                        @media only screen and (max-width: 560px) {
+                                                            .itemDescMobile{
+                                                                height: 51.594px;
+                                                            }
+
+                                                        }
+
+                                                        @media only screen and (max-width: 471px) {
+                                                            .itemNameMobile {
+                                                                font-size: 0.9rem;
+                                                            }
+
+                                                            .MuiRating-root{
+                                                                font-size: 1rem;
+                                                            }
+
+                                                            .MuiCardActions-root {
+                                                                padding: 1px;
+                                                            }
+
+                                                        }
+
+                                                        @media only screen and (max-width: 460px) {
+                                                            .itemDescMobile{
+                                                                height: 66.594px;
+                                                            }
+
+                                                        }
+
+                                                        @media only screen and (max-width: 411px) {
+                                                            .itemDescMobile{
+                                                                height: 60.594px;
+                                                            }
+
+                                                            .MuiCardContent-root {
+                                                                padding: 2px;
+                                                            }
+
+                                                        }
+
+                                                        @media only screen and (max-width: 375px) {
+                                                            .itemDescMobile{
+                                                                height: 78.594px;
+                                                            }
+
+                                                            .MuiRating-root {
+                                                                font-size: 0.8rem;
+                                                            }
+                                                        }
+
+                                                        @media only screen and (max-width: 340px) {
+                                                            .itemDescMobile{
+                                                                height: 81.594px;
+                                                            }
+
+                                                        }
+                                                    `
+                                                }
+                                            </style>
+                                        </Grid>
+                                    ))
+                                :
+                                restaurant.MenuItems.map((item, index) => (
+                                    <Grid item xs={6} sm={6} md={6} lg={4} xl={4} className={clsx(classes.gridSpacing, "cardMobile")}>
+                                        <Card className={clsx(classes.root, "cardMobile")} style={{minHeight: "300px"}}>
+                                            <CardActionArea>
+                                            <CardMedia
+                                                className={clsx(classes.media, "mobileMedia")}
+                                                image={item.ImageName}
+                                                title="Contemplative Reptile"
+                                            />
+                                            </CardActionArea>
+                                            <CardContent>
+                                                    <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                        <Grid item xs={12}>
+                                                                <Typography variant="h6" className="itemNameMobile" component="p" style={{height: "30px"}}>
+                                                                    {item.ItemName}
+                                                                </Typography>
+                                                        </Grid>
+                                                        <Grid item xs={12} className="itemDescMobile">
+                                                                <Typography variant="body2"  component="p" >
+                                                                    {item.ItemDescription}
+                                                                </Typography>
+                                                        </Grid>
+                                                    </Grid>
+                                            </CardContent>
+                                            <CardActions>
+                                                <Grid container xs={12} direction="row" spacing={0} className={classes.root} alignItems="center">
                                                     <Grid item xs={6}>
-                                                            <Typography variant="h6"  component="p" style={{height: "64px"}}>
-                                                                {item.ItemName}
+                                                            <Typography variant="body2"  component="p" className={classes.priceText} style={{width: "100%"}}>
+                                                                {`$ ${ parseFloat(item.ItemCost).toFixed(2)}`}
                                                             </Typography>
                                                     </Grid>
                                                     <Grid item xs={6}>
-                                                            <Typography variant="body2"  component="p" style={{height: "64px"}}>
+                                                            <Typography variant="body2"  component="p" style={{textAlign: "right"}}>
                                                                 <ItemRating rating={3.5}/>
                                                             </Typography>
                                                     </Grid>
-                                                    <Grid item xs={12} >
-                                                            <Typography variant="body2"  component="p" >
-                                                                {item.ItemDescription}
-                                                            </Typography>
+                                                    <Grid item xs={12}>
+                                                        {
+                                                            userInfo.email === ""?
+                                                                <Button size="small" onClick={handleLogin}  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="button">
+                                                                    Add To Cart 
+                                                                </Button>
+                                                                :
+                                                                <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
+                                                                    Add To Cart 
+                                                                </Button> 
+                                                        }
                                                     </Grid>
                                                 </Grid>
-                                        </CardContent>
-                                        <CardActions>
-                                            {
-                                                userInfo.email === ""?
-                                                    <Button size="small" onClick={handleLogin}  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button">
-                                                        LOGIN 
-                                                    </Button>
-                                                    :
-                                                    <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
-                                                        Add To Cart 
-                                                    </Button> 
-                                            }
-                                            
-                                            <Typography variant="body2"  component="p" className={classes.priceText} style={{textAlign: "right", width: "100%"}}>
-                                                {`$ ${ parseFloat(item.ItemCost).toFixed(2)}`}
-                                            </Typography>
-                                        </CardActions>
-                                    </Card>
-                                    <style>
-                                        {
-                                            `
-                                                @media only screen and (max-width: 600px) {
-                                                    .mobileMedia{
-                                                        max-height: 146px;
-                                                    }
+                                            </CardActions>
+                                        </Card>
+                                        <style>
+                                                {
+                                                    `   
+                                                        @media only screen and (max-width: 1280px) {
 
-                                                    .cardMobile{
-                                                        min-height: 330.99px !important;
-                                                    }
-                                                  }
-                                            `
-                                        }
-                                    </style>
-                                </Grid>
-                            ))
-                        :
-                        restaurant.MenuItems.map((item, index) => (
-                            <Grid item xs={12} sm={6} md={6} lg={4} xl={4} className={clsx(classes.gridSpacing, "cardMobile")}>
-                                <Card className={clsx(classes.root, "cardMobile")} style={{minHeight: "446.99px"}}>
-                                    <CardActionArea>
-                                    <CardMedia
-                                        className={clsx(classes.media, "mobileMedia")}
-                                        image={item.ImageName}
-                                        title="Contemplative Reptile"
-                                    />
-                                    </CardActionArea>
-                                    <CardContent>
-                                            <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                <Grid item xs={6}>
-                                                        <Typography variant="h6"  component="p" style={{height: "64px"}}>
-                                                            {item.ItemName}
-                                                        </Typography>
-                                                </Grid>
-                                                <Grid item xs={6}>
-                                                        <Typography variant="body2"  component="p" style={{height: "64px"}}>
-                                                            <ItemRating rating={3.5}/>
-                                                        </Typography>
-                                                </Grid>
-                                                <Grid item xs={12} >
-                                                        <Typography variant="body2"  component="p" >
-                                                            {item.ItemDescription}
-                                                        </Typography>
-                                                </Grid>
-                                            </Grid>
-                                    </CardContent>
-                                    <CardActions>
-                                        {
-                                            userInfo.email === ""?
-                                                <Button size="small" onClick={handleLogin} fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button">
-                                                    LOGIN 
-                                                </Button>:
-                                                <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
-                                                    Add To Cart 
-                                                </Button> 
-                                        }
-                                        
-                                        <Typography variant="body2"  component="p" className={classes.priceText} style={{textAlign: "right", width: "100%"}}>
-                                            {`$ ${ parseFloat(item.ItemCost).toFixed(2)}`}
-                                        </Typography>
-                                    </CardActions>
-                                </Card>
-                                <style>
-                                        {
-                                            `
-                                                @media only screen and (max-width: 600px) {
-                                                    .mobileMedia{
-                                                        max-height: 146px;
-                                                    }
+                                                            .cardMobile{
+                                                                min-height: 300px !important;
+                                                                border-radius: 0;
+                                                            }
 
-                                                    .cardMobile{
-                                                        min-height: 330.99px !important;
-                                                    }
+                                                            .itemDescMobile{
+                                                                height: 74.594px;
+                                                            }
 
-                                                  }
-                                            `
-                                        }
-                                </style>
-                            </Grid>
-                        ))
-                    }
-                </Grid>
+                                                            .MuiCardActions-root{
+                                                                padding: 10px;
+                                                            }
+
+                                                            .MuiCardContent-root {
+                                                                padding-bottom: 0px;
+                                                            }
+                                                        }
+
+                                                        @media only screen and (max-width: 600px) {
+                                                            .mobileMedia{
+                                                                max-height: 111.48px;
+                                                            }
+
+                                                            .cardMobile{
+                                                                min-height: 300px !important;
+                                                                border-radius: 0;
+                                                            }
+
+                                                            .itemDescMobile{
+                                                                height: 74.594px;
+                                                            }
+
+                                                        }
+
+                                                        @media only screen and (max-width: 560px) {
+                                                            .itemDescMobile{
+                                                                height: 51.594px;
+                                                            }
+
+                                                        }
+
+                                                        @media only screen and (max-width: 460px) {
+                                                            .itemDescMobile{
+                                                                height: 66.594px;
+                                                            }
+
+                                                        }
+
+                                                        @media only screen and (max-width: 471px) {
+                                                            .itemNameMobile {
+                                                                font-size: 0.9rem;
+                                                            }
+
+                                                            .MuiRating-root{
+                                                                font-size: 1rem;
+                                                            }
+
+                                                            .MuiCardActions-root {
+                                                                padding: 1px;
+                                                            }
+
+                                                        }
+
+                                                        @media only screen and (max-width: 411px) {
+                                                            .itemDescMobile{
+                                                                height: 60.594px;
+                                                            }
+
+                                                            .MuiCardContent-root {
+                                                                padding: 2px;
+                                                            }
+
+                                                        }
+
+                                                        @media only screen and (max-width: 375px) {
+                                                            .itemDescMobile{
+                                                                height: 78.594px;
+                                                            }
+
+                                                            .MuiRating-root {
+                                                                font-size: 0.8rem;
+                                                            }
+                                                        }
+
+                                                        @media only screen and (max-width: 340px) {
+                                                            .itemDescMobile{
+                                                                height: 81.594px;
+                                                            }
+
+                                                        }
+                                                    `
+                                                }
+                                        </style>
+                                    </Grid>
+                                ))
+                            }
+                        </Grid>
+                    </>
+                    :
+                    <></>
+                }
+                
             </>
         )
     }

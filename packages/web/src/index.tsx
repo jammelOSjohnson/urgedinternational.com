@@ -1,8 +1,10 @@
 import {StrictMode} from 'react';
 import ReactDOM from 'react-dom';
 import App from './Components/App';
-import * as serviceWorkerRegistration from './serviceWorkerRegistration';
-
+//import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+//import { useAppData } from './Context/AppDataContext';
+//var { value }  = useAppData();
+//var { serviceWorkerUpdate, serviceWorkerInit } = value;
 
 ReactDOM.render(
   <StrictMode>
@@ -15,7 +17,7 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://cra.link/PWA
 //serviceWorkerRegistration.unregister();
-serviceWorkerRegistration.register();
+
 
 // if('serviceWorker' in navigator){
 //   navigator.serviceWorker.register('/sw.js')

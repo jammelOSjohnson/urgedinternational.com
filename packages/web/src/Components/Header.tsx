@@ -1,11 +1,12 @@
 import { useAppData } from '../Context/AppDataContext';
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom';
-import { useMediaQuery , useTheme,Typography, AppBar, Toolbar, makeStyles, Theme, createStyles, Grid, Modal, Fade, FormControl, InputLabel, Select, MenuItem, Backdrop } from '@material-ui/core'
+import { useMediaQuery , useTheme,Typography, AppBar, Toolbar, makeStyles, Theme, createStyles, Grid, Modal, Fade, FormControl, InputLabel, Select, MenuItem, Backdrop, Button } from '@material-ui/core'
 import SvgIcon, { SvgIconProps } from '@material-ui/core/SvgIcon';
 import { Container } from '@material-ui/core';
 // eslint-disable-next-line
 import  { auth, socialAuth } from '../firebase';
+import { Alert } from '@material-ui/lab';
 
 
 interface State {
@@ -140,7 +141,7 @@ export const Header: React.FC = function Header() {
     var location = history.location;
     var referralPath = location.pathname;
     var { value }  = useAppData();
-    var { fetchUserInfo, generalLocation, AddGeneralLocation } = value;
+    var { fetchUserInfo, generalLocation, AddGeneralLocation, serviceWorkerUpdated, serviceWorkerRegistration } = value;
     //console.log("pathname is:" + location.pathname);
 
     
@@ -158,6 +159,8 @@ export const Header: React.FC = function Header() {
     const [values, setValues] = React.useState<State>({
       genralLocation: 'Select Location',
     });
+
+    const isServiceWorkerUpdated  = serviceWorkerUpdated;
 
     useEffect(function(){
       if(generalLocation === undefined){
@@ -248,6 +251,18 @@ export const Header: React.FC = function Header() {
       }
     };
 
+    const updateServiceWorker = () => {
+      const registrationWaiting = serviceWorkerRegistration.waiting;
+      if (registrationWaiting) {
+        registrationWaiting.postMessage({ type: 'SKIP_WAITING' });
+        registrationWaiting.addEventListener('statechange', e => {
+          if (e.target.state === 'activated') {
+            window.location.reload();
+          }
+        });
+      }
+    }
+
     const handleOpen = (item) => {
       setOpen(true);
     };
@@ -335,6 +350,16 @@ export const Header: React.FC = function Header() {
                     </div>
                     </Fade>
           </Modal>
+          {isServiceWorkerUpdated && (
+            <Alert
+              severity="info"
+            >
+              There is a new version available.
+              <Button type="button" onClick={updateServiceWorker}>
+                Update
+              </Button>
+            </Alert>
+          )}
         </>
       )
     }
@@ -479,6 +504,16 @@ export const Header: React.FC = function Header() {
                 </Container>
                 </Toolbar>
             </AppBar>
+            {isServiceWorkerUpdated && (
+              <Alert
+                severity="info"
+              >
+                There is a new version available.
+                <Button type="button" onClick={updateServiceWorker}>
+                  Update
+                </Button>
+              </Alert>
+            )}
         </>
     )
 }

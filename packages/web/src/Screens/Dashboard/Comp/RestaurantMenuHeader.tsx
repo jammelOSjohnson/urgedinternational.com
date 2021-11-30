@@ -65,6 +65,8 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
 
     if(restaurants.length !== 0){
         const now = new Date();
+        console.log("server time is:");
+        console.log(now);
         let jaday = moment.tz(now, "America/Jamaica").format();
         let today = new Date(jaday).getDay();
         //console.log("today is :");

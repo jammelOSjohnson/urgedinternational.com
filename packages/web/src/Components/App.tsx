@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
+import * as serviceWorkerRegistration from '../serviceWorkerRegistration';
 import { Header } from '../Components/Header';
 import { Footer } from '../Components/Footer';
 import { HomeScreen } from '../Screens/Home/HomeScreen';
@@ -30,6 +31,7 @@ import { OrderCompleted } from '../Screens/Checkout/OrderCompleted'
 
 //Import provider
 import AppDataProvider from '../Context/AppDataContext';
+import { useAppData } from '../Context/AppDataContext';
 import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, from } from '@apollo/client';
 import {onError} from '@apollo/client/link/error';
 
@@ -134,6 +136,14 @@ const client = new ApolloClient({
 
 
 const App: React.FC = function App() {
+  var { value }  = useAppData();
+  var { serviceWorkerUpdate, serviceWorkerInit } = value;
+
+  serviceWorkerRegistration.register({
+    onSuccess: () => serviceWorkerInit(),
+    onUpdate: reg => serviceWorkerUpdate(reg, value),
+  });
+  
   useEffect(() =>{
     document.body.style.backgroundColor = "#fff"
   })
