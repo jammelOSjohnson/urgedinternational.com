@@ -4,6 +4,7 @@ import React from 'react';
 import { LocationOnRounded, ScheduleRounded } from "@material-ui/icons/";
 import moment from 'moment-timezone';
 import { useHistory } from 'react-router-dom';
+import fetchCurrentTime from '../../../Apis/timePI';
 
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -60,44 +61,59 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
     var { restaurants, selectedRestaurant } = value;
     var restaurant = restaurants[selectedRestaurant];
 
-    //console.log(restaurants)
+    ////console.log(restaurants)
     var history = useHistory();
 
     if(restaurants.length !== 0){
         const now = new Date();
-        console.log("server time is:");
-        console.log(now);
+        ////console.log("server time is:");
+        ////console.log(now);
         let jaday = moment.tz(now, "America/Jamaica").format();
         let today = new Date(jaday).getDay();
-        //console.log("today is :");
-        //console.log(today);
+        //Fetch the correct date time
+        fetchCurrentTime.get('/api/timezone/America/Jamaica').then((res) => {
+            if(res.data !== null && res.data !== undefined){
+                ////console.log(res.data);
+                jaday = res.data.datetime;
+                today = res.data.day_of_week;
+                ////console.log(jaday)
+            }
+        }).catch((err) => {
+            //console.log(err);
+        })
+        
+        // //console.log("ja date is?")
+        // //console.log(jaday);
+        
+        // //console.log("today is :");
+        // //console.log(today);
         let OpeningHrs = restaurant.OpeningHrs;
         let TodayOpeningHrs = today === 0 ? OpeningHrs.Sunday : today === 1 ? OpeningHrs.Monday :
                               today === 2 ? OpeningHrs.Tuesday : today === 3 ? OpeningHrs.Wednesday :
                               today === 4 ? OpeningHrs.Thursday : today === 5 ? OpeningHrs.Friday :
                               today === 6 ? OpeningHrs.Saturday : "";
         
-        //console.log("TodayOpeningHrs is:");
-        //console.log(TodayOpeningHrs);
-        const nowT = new Date();
+        ////console.log("TodayOpeningHrs is:");
+        ////console.log(TodayOpeningHrs);
+        //const nowT = new Date();
         let jaTime = moment.tz(now, "America/Jamaica").format("h:mm a");
         let jaTimeFinal = jaTime.split(' ');
         let openTime = TodayOpeningHrs.slice(0, TodayOpeningHrs.indexOf("a"))
         let openTimeFinal = openTime + ':00'
-        // console.log("jaTimeFinal is:");
-        // console.log(jaTimeFinal);
-        // console.log("openTime is:");
-        // console.log(openTime);
-        // console.log(openTimeFinal);
+        // //console.log("jaTimeFinal is:");
+        // //console.log(jaTimeFinal);
+        // //console.log("openTime is:");
+        // //console.log(openTime);
+        // //console.log(openTimeFinal);
         let closeTime = TodayOpeningHrs.slice(TodayOpeningHrs.indexOf("-") +1, TodayOpeningHrs.indexOf("p"))
         let closeTimeFinal = closeTime.trim() + ':00';
-        //console.log(closeTimeFinal);
+        ////console.log(closeTimeFinal);
         let isAm: boolean = jaTime.includes('a');
         let isPm: boolean = jaTime.includes('p'); 
         let isOpen: boolean = isPm && (closeTimeFinal > jaTimeFinal[0]) || isAm && (jaTimeFinal[0] > openTimeFinal);
-        // console.log(isAm);
-        // console.log(isPm);
-        // console.log(isOpen);
+        // //console.log(isAm);
+        // //console.log(isPm);
+        // //console.log(isOpen);
         return (
             <>
                 <Container maxWidth="xl" className={classes.main} style={{background: "transparent"}}>

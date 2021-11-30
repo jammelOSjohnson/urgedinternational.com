@@ -278,8 +278,8 @@ export const LoginScreen: React.FC = function LoginScreen() {
 
     var handleSubmit = async function handleSubmit(event) {
         event.preventDefault();
-        console.log(values?.email)
-        console.log(values?.password);
+        //console.log(values?.email)
+        //console.log(values?.password);
         try{
             setError('');
             setLoading(true);
@@ -287,19 +287,19 @@ export const LoginScreen: React.FC = function LoginScreen() {
                 if(res1 != null){
                     await fetchUserDetails(res1).then(function(res){
                         if(res){
-                            //console.log("About to close login modal.");
+                            ////console.log("About to close login modal.");
                             //closeModal();
                             //setLoggedIn(true);
-                            //console.log("About to navigate to dashboard.");
+                            ////console.log("About to navigate to dashboard.");
                             //history.push("/Dashboard");
-                            // console.log("role is:")
-                            // console.log(userRolef);
+                            // //console.log("role is:")
+                            // //console.log(userRolef);
                             // if(userRolef !== undefined && userRolef === "Admin"){
                             //     setLoading(false);
                             //     setSuccess('Sign In Successful.');
                             //     setTimeout(() => {
                             //         setSuccess('');
-                            //         //console.log("about to go to dashboard");
+                            //         ////console.log("about to go to dashboard");
                             //         history.push("/AdminOrders");
                             //         //history.push("/");
                             //     }, 1500);
@@ -309,7 +309,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
                             //     setSuccess('Sign In Successful.');
                             //     setTimeout(() => {
                             //         setSuccess('');
-                            //         console.log("about to go to rider dashboard");
+                            //         //console.log("about to go to rider dashboard");
                             //         history.push("/DeliveryOrders");
                             //         //history.push("/");
                             //     }, 1500);
@@ -319,12 +319,12 @@ export const LoginScreen: React.FC = function LoginScreen() {
                             //     setSuccess('Sign In Successful.');
                             //     setTimeout(() => {
                             //         setSuccess('');
-                            //         console.log("about to go to dashboard");
-                            //         console.log(history.location.state)
+                            //         //console.log("about to go to dashboard");
+                            //         //console.log(history.location.state)
                             //         if(history.location.state !== undefined){
                             //             history.push(history.location.state.from);
                             //         }else{
-                            //             console.log(history.location.state)
+                            //             //console.log(history.location.state)
                             //             history.push("/FoodDelivery");
                             //         }
                                     
@@ -342,14 +342,14 @@ export const LoginScreen: React.FC = function LoginScreen() {
                 }
             });
         }catch(err) {
-            console.log(err);
+            //console.log(err);
         }
     }
 
     var handleGoogleSubmit = async function handleGoogleSubmit(event) {
         event.preventDefault();
         //prevents default form refresh
-        //console.log("I am inside Google Submit fuction");
+        ////console.log("I am inside Google Submit fuction");
         try{
             setError('');
             setLoading(true);
@@ -360,7 +360,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
                     //     setSuccess('Sign In Successful.');
                     //     setTimeout(() => {
                     //         setSuccess('');
-                    //         //console.log("about to go to dashboard");
+                    //         ////console.log("about to go to dashboard");
                     //         history.push("/AdminOrders");
                     //         //history.push("/");
                     //     }, 1500);
@@ -371,7 +371,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
                     //     setSuccess('Sign In Successful.');
                     //     setTimeout(() => {
                     //         setSuccess('');
-                    //         //console.log("about to go to dashboard");
+                    //         ////console.log("about to go to dashboard");
                     //         history.push("/DeliveryOrders");
                     //         //history.push("/");
                     //     }, 1500);
@@ -381,11 +381,11 @@ export const LoginScreen: React.FC = function LoginScreen() {
                     //     setSuccess('Sign In Successful.');
                     //     setTimeout(() => {
                     //         setSuccess('');
-                    //         console.log(history.location.state)
+                    //         //console.log(history.location.state)
                     //         if(history.location.state !== undefined){
                     //             history.push(history.location.state.from);
                     //         }else{
-                    //             console.log(history.location.state)
+                    //             //console.log(history.location.state)
                     //             history.push("/FoodDelivery");
                     //         }
                     //         //history.push("/");
@@ -403,11 +403,11 @@ export const LoginScreen: React.FC = function LoginScreen() {
     }
 
     var fetchUserDetails = async function fetchUserDetails(payload) {
-        //console.log("Is current user null");
-        //console.log(payload);
+        ////console.log("Is current user null");
+        ////console.log(payload);
         if(payload.currentUser !== null && payload.currentUser !== undefined){
             if(payload.currentUser.uid !== null && payload.currentUser.uid !== undefined){
-                //console.log("Fetching user info");
+                ////console.log("Fetching user info");
                  await fetchUserInfo(payload.currentUser.uid, payload);
                 return true;
             }
@@ -421,7 +421,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
             setSuccess('Sign In Successful.');
             setTimeout(() => {
                 setSuccess('');
-                //console.log("about to go to dashboard");
+                ////console.log("about to go to dashboard");
                 history.push("/AdminOrders");
                 //history.push("/");
             }, 1500);
@@ -431,7 +431,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
             setSuccess('Sign In Successful.');
             setTimeout(() => {
                 setSuccess('');
-                //console.log("about to go to dashboard");
+                ////console.log("about to go to dashboard");
                 history.push("/DeliveryOrders");
                 //history.push("/");
             }, 1500);
@@ -441,7 +441,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
             setSuccess('Sign In Successful.');
             setTimeout(() => {
                 setSuccess('');
-                //console.log("about to go to dashboard");
+                ////console.log("about to go to dashboard");
                 if(history.location.state !== undefined){
                     history.push(history.location.state.from);
                 }

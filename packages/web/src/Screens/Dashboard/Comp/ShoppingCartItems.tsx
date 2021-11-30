@@ -195,7 +195,7 @@ function ColorlibStepIcon(props: StepIconProps) {
       try{
         await removeCartItem(index, value, cartItems);
       }catch(err){
-        console.log(err)
+        //console.log(err)
       }
     }
     
@@ -203,7 +203,7 @@ function ColorlibStepIcon(props: StepIconProps) {
     
     const increment = async (index) => {
       try{
-        console.log(cartItems[index].quantity);
+        //console.log(cartItems[index].quantity);
         if(cartItems[index].quantity >= 1){
           var item = cartItems[index];
           item.quantity = item.quantity + 1;
@@ -213,7 +213,7 @@ function ColorlibStepIcon(props: StepIconProps) {
           })
         }
       }catch(err){
-        console.log(err);
+        //console.log(err);
       }
     }
     
@@ -229,7 +229,7 @@ function ColorlibStepIcon(props: StepIconProps) {
           })
         }
       }catch(err){
-        console.log(err);
+        //console.log(err);
       }
       
     }

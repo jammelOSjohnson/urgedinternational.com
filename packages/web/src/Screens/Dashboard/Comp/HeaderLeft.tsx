@@ -342,7 +342,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
         event.preventDefault();
         logout(value);
       }catch{
-        //////console.log('Failed to logout.');
+        ////////console.log('Failed to logout.');
       }
     }
   
@@ -351,7 +351,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
         event.preventDefault();
         history.push('/Login', { from: history.location.pathname});
       }catch{
-        //////console.log('Failed to logout.');
+        ////////console.log('Failed to logout.');
       }
     }
 

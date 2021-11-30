@@ -153,7 +153,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                 history.push("/OrderCompleted");
             });
         }catch(e: any) { 
-            console.log(e.message)
+            //console.log(e.message)
             let path = e.message
             let result = path.split("Path")
             setError(result[1]);
@@ -161,14 +161,14 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
     }
 
     const handleChange = (event) => {
-        console.log(event.target.name);
-        console.log(event.target.value);
+        //console.log(event.target.name);
+        //console.log(event.target.value);
         setValues({...values,[event.target.name]:event.target.value});
     };
 
     const handleChange2 = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(prop);
-        console.log(event.target.value);
+        //console.log(prop);
+        //console.log(event.target.value);
         setValues({ ...values, [prop]: event.target.value });
     };
 
@@ -386,7 +386,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                                         <Typography >Please enter delivery address below.</Typography>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <TextField id="street" label="Street" variant="outlined" value={values.Street} onChange={handleChange2('Street')} fullWidth/>
+                                        <TextField placeholder="eg. 1 maypen ave" id="street" label="Street" variant="outlined" value={values.Street} onChange={handleChange2('Street')} fullWidth/>
                                     </Grid>
                                     <Grid item xs={12} sm={12}>
                                         <FormControl variant="outlined" className={classes.formControl} fullWidth>
@@ -443,7 +443,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                                     <Grid item xs={12}>
                                         <Typography><b>Cart Items:</b> {`$ ${ parseFloat(cartItemsSum.Cost).toFixed(2)}`}</Typography>
                                         <Typography><b>Delivery Fee:</b> {`$ ${ parseFloat(deliveryFee.Cost).toFixed(2)}`}</Typography>
-                                        <Typography><b>Service Fee:</b> {`$ ${ parseFloat(serviceFee.Cost).toFixed(2)}`}</Typography>
+                                        <Typography><b>Processing Fee:</b> {`$ ${ parseFloat(serviceFee.Cost).toFixed(2)}`}</Typography>
                                         <Typography><b>GCT:</b> {`$ ${ parseFloat(GCT.Cost).toFixed(2)}`}</Typography>
                                         <Typography><b>Total:</b> {`$ ${ parseFloat(Total.Cost).toFixed(2)}`}</Typography>
                                     </Grid>

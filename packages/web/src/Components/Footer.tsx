@@ -46,7 +46,7 @@ export const Footer: React.FC = function Footer() {
     var history = useHistory();
     var location = history.location;
     var referralPath = location.pathname;
-    //console.log("pathname is:" + location.pathname);
+    ////console.log("pathname is:" + location.pathname);
     const classes = useStyles();
     if(referralPath !== '/'){
         return(

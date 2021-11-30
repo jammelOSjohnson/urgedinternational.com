@@ -288,7 +288,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
     var handleSubmit = async function handleSubmit(event) {
         event.preventDefault();
         //prevents default form refresh
-        //console.log("I am inside fuction");
+        ////console.log("I am inside fuction");
         try{
             setSuccess('');
             setError('');
@@ -304,12 +304,12 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                     if(res1 !== "The email address is already in use by another account."){
                         await fetchUserDetailsSignUp(res1).then(function(res){
                             if(res){
-                                //console.log("About to navigate to dashboard.");
-                                //console.log(userRolef);
+                                ////console.log("About to navigate to dashboard.");
+                                ////console.log(userRolef);
                                 setSuccess('Sign Up Successful.');
                                 setTimeout(() => {
                                     setSuccess('');
-                                    console.log("about to go to dashboard");
+                                    //console.log("about to go to dashboard");
                                     history.push('/Dashboard')
                                     //history.push("/");
                                 }, 1500);
@@ -334,7 +334,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
     var handleGoogleSubmit = async function handleGoogleSubmit(event) {
         event.preventDefault();
         //prevents default form refresh
-        //console.log("I am inside Google Submit fuction");
+        ////console.log("I am inside Google Submit fuction");
         try{
             setSuccess('');
             setError('');
@@ -343,12 +343,12 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                 if(res1 != null){
                     await fetchUserDetails(res1).then(function (res){
                         if(res){
-                            //console.log("About to navigate to dashboard.");
+                            ////console.log("About to navigate to dashboard.");
                             setLoading(false);
                             setSuccess('Sign Up Successful.');
                             setTimeout(() => {
                                 setSuccess('');
-                                console.log("about to go to dashboard");
+                                //console.log("about to go to dashboard");
                                 history.push('/Dashboard')
                                 //history.push("/");
                             }, 1500);
@@ -368,12 +368,12 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
     }
 
     var fetchUserDetailsSignUp = async function fetchUserDetailsSignUp(payload) {
-        //console.log("Is current user null");
-        //console.log(value);
+        ////console.log("Is current user null");
+        ////console.log(value);
         if(payload.currentUser !== null && payload.currentUser !== undefined){
             if(payload.currentUser.uid !== null && payload.currentUser.uid !== undefined){
-                //console.log("Fetching user info");
-                //console.log(state);
+                ////console.log("Fetching user info");
+                ////console.log(state);
                 fetchUserInfoForSignUp(payload.currentUser.uid, payload, value);
                 return true;
             }
@@ -382,12 +382,12 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
     }
 
     var fetchUserDetails = async function fetchUserDetails(payload) {
-        //console.log("Is current user null");
-        //console.log(value);
+        ////console.log("Is current user null");
+        ////console.log(value);
         if(payload.currentUser !== null && payload.currentUser !== undefined){
             if(payload.currentUser.uid !== null && payload.currentUser.uid !== undefined){
-                //console.log("Fetching user info");
-                //console.log(state);
+                ////console.log("Fetching user info");
+                ////console.log(state);
                 await fetchUserInfo(payload.currentUser.uid, payload);
                 return true;
             }

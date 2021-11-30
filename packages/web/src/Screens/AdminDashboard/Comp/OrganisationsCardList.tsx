@@ -136,8 +136,8 @@ export const OrganisationsCardList: React.FC = function OrganisationsCardList(pr
     var { fetchRestaurants, restaurants, viewMenuItems } = value;
     
     useEffect(() => {
-        console.log("inside use effect");
-        console.log(restaurants);
+        //console.log("inside use effect");
+        //console.log(restaurants);
         if(restaurants.length === 0){
             fetchRestaurants(value);
         }
@@ -153,8 +153,8 @@ export const OrganisationsCardList: React.FC = function OrganisationsCardList(pr
 
     var handleSelectedRestaurant = async function(index){
         if(index !== undefined || index !== null){
-            console.log("Index is");
-            console.log(index);
+            //console.log("Index is");
+            //console.log(index);
             var payload = value;
             payload.selectedRestaurant = index;
             await viewMenuItems(payload).then(() => {
@@ -170,8 +170,8 @@ export const OrganisationsCardList: React.FC = function OrganisationsCardList(pr
                 </Typography>
                 <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
                     {restaurants.map((restaurant, index) => {
-                        console.log("restaurant is");
-                        console.log(restaurant);
+                        //console.log("restaurant is");
+                        //console.log(restaurant);
                         return(
                             
                             <Grid item xs={12} md={4} lg={4} xl={4} className={classes.gridSpacing} key={index}>

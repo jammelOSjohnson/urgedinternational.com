@@ -122,8 +122,8 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
     var history = useHistory();
 
     useEffect(() => {
-        //console.log("inside use effect");
-        //console.log(restaurants);
+        ////console.log("inside use effect");
+        ////console.log(restaurants);
         if(restaurants.length === 0){
             fetchRestaurants(value);
         }
@@ -132,8 +132,8 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
 
     var handleSelectedRestaurant = async function(index){
         if(index !== undefined || index !== null){
-            //console.log("Index is");
-            //console.log(index);
+            ////console.log("Index is");
+            ////console.log(index);
             var payload = value;
             payload.selectedRestaurant = index;
             await viewMenuItems(payload).then(() => {

@@ -142,7 +142,7 @@ export const Header: React.FC = function Header() {
     var referralPath = location.pathname;
     var { value }  = useAppData();
     var { fetchUserInfo, generalLocation, AddGeneralLocation, serviceWorkerUpdated, serviceWorkerRegistration } = value;
-    //console.log("pathname is:" + location.pathname);
+    ////console.log("pathname is:" + location.pathname);
 
     
     const classes = useStyles();
@@ -170,11 +170,11 @@ export const Header: React.FC = function Header() {
       }
 
       auth.onAuthStateChanged(function (user){
-        console.log("auth");
+        ////console.log("auth");
         if(referralPath !== "/Register" && referralPath !== "/Login"){
           //update the state for current user to the user logged in
-          //console.log("about to set current user");
-          //console.log(user);
+          ////console.log("about to set current user");
+          ////console.log(user);
           //var userInfo = fetchUserInfo();
           //const payload = {currentUser : user, loading: false, userInfo: userInfo}
           var signonStatus = false;
@@ -187,7 +187,7 @@ export const Header: React.FC = function Header() {
                   fetchUserDetails(payload);
                   //  .then(function(res){
                   //     if(!res){
-                  //         //console.log('Unable to fetch user data at this time'); 
+                  //         ////console.log('Unable to fetch user data at this time'); 
                   //     }
                   // });
               }
@@ -197,11 +197,11 @@ export const Header: React.FC = function Header() {
       });
 
       // socialAuth.onAuthStateChanged( function (user) {
-      //   console.log("Soical auth");
+      //   //console.log("Soical auth");
       //   if(referralPath !== "/Register"){
       //     //update the state for current user to the user logged in
-      //     //console.log("about to set current user google");
-      //     //console.log(user);
+      //     ////console.log("about to set current user google");
+      //     ////console.log(user);
       //     //var userInfo = fetchUserInfo();
       //     //var payload = {currentUser : user, loading: false, userInfo: userInfo}
       //     var signonStatus = false;
@@ -212,7 +212,7 @@ export const Header: React.FC = function Header() {
       //             fetchUserDetails(payload)
       //             // .then(function(res){
       //             //     if(!res){
-      //             //         //console.log('Unable to fetch user data at this time'); 
+      //             //         ////console.log('Unable to fetch user data at this time'); 
       //             //     }
       //             // });
       //         }
@@ -225,11 +225,11 @@ export const Header: React.FC = function Header() {
     },[value.userRolef ,generalLocation])
 
     var fetchUserDetails = function  fetchUserDetails (payload) {
-      //console.log("Is current user null");
-      //console.log(payload);
+      ////console.log("Is current user null");
+      ////console.log(payload);
       if(payload.currentUser !== null && payload.currentUser !== undefined){
           if(payload.currentUser.uid !== null && payload.currentUser.uid !== undefined){
-              //console.log("Fetching user info");
+              ////console.log("Fetching user info");
               fetchUserInfo(payload.currentUser.uid, payload);
               return true;
           }
@@ -247,7 +247,7 @@ export const Header: React.FC = function Header() {
           setError('Please Select Location');
         }
       }catch(err){
-        console.log(err);
+        //console.log(err);
       }
     };
 
@@ -350,7 +350,7 @@ export const Header: React.FC = function Header() {
                     </div>
                     </Fade>
           </Modal>
-          {isServiceWorkerUpdated && (
+          {/* {isServiceWorkerUpdated && (
             <Alert
               severity="info"
             >
@@ -359,7 +359,7 @@ export const Header: React.FC = function Header() {
                 Update
               </Button>
             </Alert>
-          )}
+          )} */}
         </>
       )
     }
@@ -504,7 +504,7 @@ export const Header: React.FC = function Header() {
                 </Container>
                 </Toolbar>
             </AppBar>
-            {isServiceWorkerUpdated && (
+            {/* {isServiceWorkerUpdated && (
               <Alert
                 severity="info"
               >
@@ -513,7 +513,7 @@ export const Header: React.FC = function Header() {
                   Update
                 </Button>
               </Alert>
-            )}
+            )} */}
         </>
     )
 }

@@ -46,14 +46,14 @@ const isLocalhost = Boolean(
         if (isLocalhost) {
           // This is running on localhost. Let's check if a service worker still exists or not.
           checkValidServiceWorker(swUrl, config);
-  
+          
           // Add some additional logging to localhost, pointing developers to the
           // service worker/PWA documentation.
           navigator.serviceWorker.ready.then(() => {
-            console.log(
+            /*console.log(
               'This web app is being served cache-first by a service ' +
                 'worker. To learn more, visit https://cra.link/PWA'
-            );
+            );*/
           });
         } else {
           // Is not localhost. Just register service worker
@@ -62,34 +62,34 @@ const isLocalhost = Boolean(
       });
 
       window.addEventListener('message', (event) => {
-        console.log(event.data);
+        //console.log(event.data.type);
         if (event.data && event.data.type === 'SKIP_WAITING') {
           window.skipWaiting();
         }
 
         if (event.data && event.data.type === 'install') {
-          console.log("service worker installed.")
+          //console.log("service worker installed.")
         }
 
         if (event.data && event.data.type === 'activate') {
-          console.log("service worker activated.");
+          //console.log("service worker activated.");
         }
 
         if (event.data && event.data.type === 'fetch') {
-          console.log("fetch event.");
+          //console.log("fetch event.");
         }
       });
 
       // window.addEventListener('install', (event) => {
-      //   console.log("service worker installed.")
+      //   //console.log("service worker installed.")
       // });
 
       // window.addEventListener('activate', (event) => {
-      //   console.log("service worker activated.")
+      //   //console.log("service worker activated.")
       // });
 
       // window.addEventListener('fetch', (event) => {
-      //   console.log("fetch event.")
+      //   //console.log("fetch event.")
       // });
     }
   }
@@ -109,13 +109,12 @@ const isLocalhost = Boolean(
                 // At this point, the updated precached content has been fetched,
                 // but the previous service worker will still serve the older
                 // content until all client tabs are closed.
-                console.log(
+                //console.log("about to update");
+                forceSWupdate();
+                /*console.log(
                   'New content is available and will be used when all ' +
                     'tabs for this page are closed. See https://cra.link/PWA.'
-                );
-                
-                console.log("about to skip waiting");
-                window.skipWaiting();
+                );*/
   
                 // Execute callback
                 if (config && config.onUpdate) {
@@ -125,7 +124,7 @@ const isLocalhost = Boolean(
                 // At this point, everything has been precached.
                 // It's the perfect time to display a
                 // "Content is cached for offline use." message.
-                console.log('Content is cached for offline use.');
+                //console.log('Content is cached for offline use.');
   
                 // Execute callback
                 if (config && config.onSuccess) {
@@ -165,7 +164,7 @@ const isLocalhost = Boolean(
         }
       })
       .catch(() => {
-        console.log('No internet connection found. App is running in offline mode.');
+        //console.log('No internet connection found. App is running in offline mode.');
       });
   }
   
@@ -178,6 +177,16 @@ const isLocalhost = Boolean(
         .catch((error) => {
           console.error(error.message);
         });
+    }
+  }
+
+  function forceSWupdate () {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function (registrations) {
+        for (let registration of registrations) {
+          registration.update()
+        }
+      })
     }
   }
   

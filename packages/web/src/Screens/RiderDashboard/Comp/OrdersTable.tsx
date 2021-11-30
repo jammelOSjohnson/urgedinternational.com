@@ -78,7 +78,7 @@ import { Backdrop, CircularProgress, createStyles, makeStyles, Theme } from '@ma
     },
     {
       name: 'Rider',
-      label: 'Delivered By',
+      label: 'Delivery Partner',
       options: {
         filter: true,
         sort: true,
@@ -119,31 +119,13 @@ import { Backdrop, CircularProgress, createStyles, makeStyles, Theme } from '@ma
         });
   
       }catch(e){
-        console.log(e)
+        //console.log(e)
       }
       // eslint-disable-next-line
     }, [currentUser]);
     
     const handleEdit = (event) => {
       event.preventDefault();
-    }
-
-    if(orders.length !== 0){
-      orders.map((item, index) => {
-        const now = new Date(parseInt(item.OrderDate, 10));
-        const estTime = moment.tz(now, "America/Jamaica").format();
-        let row = {
-          _id: item._id, 
-          OrderDate: estTime,
-          OrderStatus: item.OrderStatus, 
-          OrderTotal: `$ ${item.OrderTotal}`, 
-          Rider: item.Rider.FirstName,
-          Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); history.push('/DeliveryOrdersDetails', { from: index});}}><EditRounded color="primary" /></a></>
-        };
-  
-        rows.push(row)
-        return true;
-      })
     }
 
     const options = {
@@ -156,34 +138,45 @@ import { Backdrop, CircularProgress, createStyles, makeStyles, Theme } from '@ma
     
     if(userRolef !== undefined && orders.length !== 0){
        if(userRolef === "Rider"){
-        return(
-          <div style={{ height: 400, width: '100%' }}>
-            {/* <DataGrid
-              rows={rows}
-              columns={columns}
-              pageSize={5}
-              checkboxSelection={false}
-              disableSelectionOnClick
-            /> */}
-            <MUIDataTable
-              title={"Orders"}
-              data={rows}
-              columns={columns}
-              options={options}
-            />
-          </div>
-        )
+        orders.map((item, index) => {
+          const now = new Date(parseInt(item.OrderDate, 10));
+          const estTime = moment.tz(now, "America/Jamaica").format();
+          let row = {
+            _id: item._id, 
+            OrderDate: estTime,
+            OrderStatus: item.OrderStatus, 
+            OrderTotal: `$ ${item.OrderTotal}`, 
+            Rider: item.Rider.FirstName,
+            Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); history.push('/DeliveryOrdersDetails', { from: index});}}><EditRounded color="primary" /></a></>
+          };
+    
+          rows.push(row)
+          return true;
+        })
+        
        }else{
         return history.push("/Dashboard");
        }
 
-    }else{
-      return(
-        <Backdrop className={classes.backdrop} open={true}>
-          <CircularProgress color="inherit" />
-        </Backdrop>
-      )
     }
+
+    return(
+      <div style={{ height: 400, width: '100%' }}>
+        {/* <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={5}
+          checkboxSelection={false}
+          disableSelectionOnClick
+        /> */}
+        <MUIDataTable
+          title={"Orders"}
+          data={rows}
+          columns={columns}
+          options={options}
+        />
+      </div>
+    )
     
   }
   

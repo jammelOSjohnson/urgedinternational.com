@@ -188,9 +188,9 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
     var { value }  = useAppData();
     var { restaurants, selectedRestaurant, addItemToCart, userInfo, filteredMenuItems } = value;
     var restaurant = restaurants[selectedRestaurant];
-    console.log("Menu Screen Menu");
-    console.log(selectedRestaurant);
-    console.log(restaurants[selectedRestaurant]);
+    // //console.log("Menu Screen Menu");
+    // //console.log(selectedRestaurant);
+    // //console.log(restaurants[selectedRestaurant]);
 
     const [selectedItem, setItem] = React.useState({
         ItemCost: 0.00,
@@ -249,16 +249,16 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
           event.preventDefault();
           history.push('/Login', { from: history.location.pathname});
         }catch{
-          //////console.log('Failed to logout.');
+          ////////console.log('Failed to logout.');
         }
       }
 
     var AddToCart = async function(item){
-        //console.log("item selected");
-        //console.log(item);
+        ////console.log("item selected");
+        ////console.log(item);
         var payload = value;
         await addItemToCart(payload, item).then(() => {
-            //console.log("item should be successfully added");
+            ////console.log("item should be successfully added");
             setValues(
                 {
                     chickenFlavour1: 'Select Flavour',
@@ -281,7 +281,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
     }
 
     if(restaurant === undefined){
-        console.log("restaurant is undefined");
+        ////console.log("restaurant is undefined");
         return <></>
         //history.push("/Restaurants")
     }else{
@@ -352,7 +352,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                 <MenuItem value={"Contact me"}>Contact me</MenuItem>
                                                                 <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
                                                                 <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                                <MenuItem value={"Cancel my order"}>Cancel my order</MenuItem>
+                                                                <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
                                                             </Select>
                                                         </FormControl>
                                                     </Grid>
@@ -395,7 +395,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                 <MenuItem value={"Contact me"}>Contact me</MenuItem>
                                                                 <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
                                                                 <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                                <MenuItem value={"Cancel my order"}>Cancel my order</MenuItem>
+                                                                <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
                                                             </Select>
                                                         </FormControl>
                                                 </Grid>
@@ -622,7 +622,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                 <MenuItem value={"Contact me"}>Contact me</MenuItem>
                                                                 <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
                                                                 <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                                <MenuItem value={"Cancel my order"}>Cancel my order</MenuItem>
+                                                                <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
                                                             </Select>
                                                         </FormControl>
                                                     </Grid>
@@ -665,7 +665,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                 <MenuItem value={"Contact me"}>Contact me</MenuItem>
                                                                 <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
                                                                 <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                                <MenuItem value={"Cancel my order"}>Cancel my order</MenuItem>
+                                                                <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
                                                             </Select>
                                                         </FormControl>
                                                 </Grid>

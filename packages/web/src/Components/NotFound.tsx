@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const NotFound: React.FC = function NotFound() {
-    //console.log("pathname is:" + location.pathname);
+    ////console.log("pathname is:" + location.pathname);
     var classes = useStyles();
     return (
         <>

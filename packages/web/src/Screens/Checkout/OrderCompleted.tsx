@@ -60,11 +60,11 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
             doc.setDisplayMode("fullwidth");
             doc.html(getReciept,{
                 callback: async function(pdf){
-                    //console.log(pdf)
+                    ////console.log(pdf)
                     //pdf.save("mypdf.pdf")
                     //var filename = `${userInfo.fullName} order#${receiptDetails._id}`;
                     var file = pdf.output("datauri");
-                    //console.log(file);
+                    ////console.log(file);
                     await sendOrderCompletedEmail("application/pdf", file, userInfo, receiptDetails._id).then((res) => {
                         setTimeout(()=> {
                             history.push("/OrderHistory");
@@ -80,7 +80,7 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
         try{
             generatePDF();
         }catch(err){
-            console.log(err);
+            //console.log(err);
         }
     }, [])
     return (
@@ -1996,7 +1996,7 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
                                                     lineHeight: "22.4px"
                                                     }}
                                                 >
-                                                    <strong>Serviice Fee</strong>
+                                                    <strong>Processing Fee</strong>
                                                 </span>
                                                 </p>
                                             </div>

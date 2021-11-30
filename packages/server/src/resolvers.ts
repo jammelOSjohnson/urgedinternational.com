@@ -108,7 +108,7 @@ const resolvers = {
         },
 
         getOrdersByUserId: async (_,{Id}) => {
-            return await Order.find().where("Id").equals(Id);    
+            return await Order.find().populate("Rider").where("Id").equals(Id);    
         },
 
         getOrdersByRiderId: async (_,{Rider}) => {

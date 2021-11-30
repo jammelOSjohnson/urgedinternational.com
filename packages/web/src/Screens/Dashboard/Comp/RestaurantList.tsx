@@ -114,8 +114,8 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
     var { fetchRestaurants, restaurants, viewMenuItems } = value;
     
     useEffect(() => {
-        //console.log("inside use effect");
-        //console.log(restaurants);
+        ////console.log("inside use effect");
+        ////console.log(restaurants);
         if(restaurants.length === 0){
             fetchRestaurants(value);
         }
@@ -127,8 +127,8 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
 
     var handleSelectedRestaurant = async function(index){
         if(index !== undefined || index !== null){
-            console.log("Index is");
-            console.log(index);
+            // //console.log("Index is");
+            // //console.log(index);
             var payload = value;
             payload.selectedRestaurant = index;
             await viewMenuItems(payload).then(() => {
@@ -144,8 +144,8 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                 </Typography>
                 <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
                     {restaurants.map((restaurant, index) => {
-                        //console.log("restaurant is");
-                        //console.log(restaurant);
+                        ////console.log("restaurant is");
+                        ////console.log(restaurant);
                         return(
                             <Grid item xs={12} sm={6} md={6} lg={3} xl={3} className={classes.gridSpacing} key={index}>
                                 <Link onClick={(e) => { e.preventDefault(); handleSelectedRestaurant(index);}} className={classes.link}>

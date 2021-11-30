@@ -106,7 +106,7 @@ export const CheckoutScreen: React.FC = function CheckoutScreen() {
                 history.push("/OrderCompleted");
             });
         }catch(e: any) { 
-            //console.log(e.message)
+            ////console.log(e.message)
             let path = e.message
             let result = path.split("Path")
             setError(result[1]);

@@ -116,7 +116,9 @@ const theme = createTheme({
 const errorLink = onError(({ graphQLErrors, networkError}) => {
   if(graphQLErrors){
     graphQLErrors.map(({message, locations, path}) => {
-      if(process.env.NODE_ENV === 'development'){console.log(`Graphql error ${message}`)};
+      if(process.env.NODE_ENV === 'development'){
+        //console.log(`Graphql error ${message}`)
+      };
       return message;
     })
   }

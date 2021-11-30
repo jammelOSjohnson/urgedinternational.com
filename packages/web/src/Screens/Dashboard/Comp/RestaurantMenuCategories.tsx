@@ -133,12 +133,12 @@ export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategor
     const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
     
     useEffect(function(){
-        //console.log("fetching menu cats");
-        //console.log(restaurant);
+        ////console.log("fetching menu cats");
+        ////console.log(restaurant);
         try{
             getMenuCats(value, restaurant.Id);
         }catch(err){
-            console.log(err);
+            //console.log(err);
         }
         // eslint-disable-next-line
     }, [])
@@ -150,7 +150,7 @@ export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategor
                 //setSate
             })
         }catch(err){
-            console.log(err)
+            //console.log(err)
         }
         
     }
@@ -312,7 +312,7 @@ export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategor
                                                                     <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt=" FoodDeliveryFastFood 3"></img>
                                                                 </CardMedia><br/>
                                                                 <CardContent className={classes.cardContent}>
-                                                                        <Typography gutterBottom className={classes.cardTitle}>
+                                                                        <Typography gutterBottom className={clsx(classes.cardTitle, "selected")}>
                                                                             {item}
                                                                         </Typography>
                                                                 </CardContent>
@@ -327,7 +327,7 @@ export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategor
                                                                     <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt=" FoodDeliveryFastFood 3"></img>
                                                                 </CardMedia><br/>
                                                                 <CardContent className={classes.cardContent}>
-                                                                        <Typography gutterBottom className={classes.cardTitle}>
+                                                                        <Typography gutterBottom className={clsx(classes.cardTitle, "selected")}>
                                                                             {item}
                                                                         </Typography>
                                                                 </CardContent>
@@ -345,7 +345,7 @@ export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategor
                                                                     <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt=" FoodDeliveryFastFood 3"></img>
                                                                 </CardMedia><br/>
                                                                 <CardContent className={classes.cardContent}>
-                                                                        <Typography gutterBottom className={classes.cardTitle}>
+                                                                        <Typography gutterBottom className={clsx(classes.cardTitle, "selected")}>
                                                                             {item}
                                                                         </Typography>
                                                                 </CardContent>

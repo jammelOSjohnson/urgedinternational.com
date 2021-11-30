@@ -258,7 +258,7 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
     var handleSubmit = async function handleSubmit(event) {
         event.preventDefault();
         //prevents default form refresh
-        //console.log("I am inside fuction");
+        ////console.log("I am inside fuction");
         try{
             
             

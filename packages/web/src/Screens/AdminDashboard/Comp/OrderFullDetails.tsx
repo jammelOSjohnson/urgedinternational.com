@@ -112,8 +112,8 @@ export const OrderFullDetails: React.FC = () => {
     
 
     const handleChange = (event) => {
-        // console.log(event.target.name);
-        // console.log(event.target.value);
+        // //console.log(event.target.name);
+        // //console.log(event.target.value);
         if(event.target.value !== "Assigned To"){
             setSelectedRider(event.target.value);
             setRider(riders[event.target.value].FirstName);
@@ -140,9 +140,9 @@ export const OrderFullDetails: React.FC = () => {
         try{
             setOpen(false);
             setOpen2(false);
-            console.log("trying to see id");
-            console.log(finalselectedRider);
-            console.log(riders[finalselectedRider]);
+            //console.log("trying to see id");
+            //console.log(finalselectedRider);
+            //console.log(riders[finalselectedRider]);
             if(finalselectedRider !== undefined){
                 orders[orderIndex].Rider = riders[finalselectedRider]._id;
                 await UpdateOrder(value, orders[orderIndex]).then((res) => {
@@ -168,7 +168,7 @@ export const OrderFullDetails: React.FC = () => {
             
             
         }catch(err){
-            console.log(err);
+            //console.log(err);
             setOpen2(true);
         }
     }
@@ -184,7 +184,7 @@ export const OrderFullDetails: React.FC = () => {
         
     }, [riders])
     
-    //console.log();
+    ////console.log();
     if(orders.length !== 0 && orderIndex !== undefined){
         const now = new Date(parseInt(orders[orderIndex].OrderDate, 10));
         const estTime = moment.tz(now, "America/Jamaica").format("YYYY-MM-DD h:mm a");
@@ -194,7 +194,7 @@ export const OrderFullDetails: React.FC = () => {
         var contactnum = '';
         var fullname = '';
 
-        //console.log(personalInfo);
+        ////console.log(personalInfo);
         if(personalInfo !== undefined && personalInfo !== null){
             if(personalInfo.length === 4){
                 fullname = personalInfo[2] + " " + personalInfo[3];

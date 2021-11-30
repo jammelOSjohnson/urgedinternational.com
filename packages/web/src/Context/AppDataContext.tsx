@@ -27,8 +27,8 @@ export function useAppData () {
 function appDataReducer(state, action){
     switch(action.type){
         case "fetch_userinfo":
-         console.log("dispatching fetch user info action");
-         console.log(action);
+         //console.log("dispatching fetch user info action");
+         //console.log(action);
          return {
            ...state,
            userInfo: action.payload.userInfo,
@@ -37,15 +37,15 @@ function appDataReducer(state, action){
            currentUser: action.payload.currentUser
         };
         case "get_address":
-            //console.log("dispatching address:");
-            //console.log(action.payload.Address);
+            ////console.log("dispatching address:");
+            ////console.log(action.payload.Address);
             return{
                 ...state,
                 Address: action.payload.Address
             };
         case "auth_change":
-            ////console.log("Auth listener dispatch results.");
-            ////console.log(action.payload);
+            //////console.log("Auth listener dispatch results.");
+            //////console.log(action.payload);
             return {
             ...state,
             currentUser: action.payload.currentUser,
@@ -222,15 +222,15 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         }).catch(function (error) {
           // Handle Errors here.
           //var errorCode = error.code;
-          ////console.log(error.code);
+          //////console.log(error.code);
           //var errorMessage = error.message;
-          ////console.log(error.message);
+          //////console.log(error.message);
           // The email of the user's account used.
           //var email = error.email;
-          ////console.log(error.email);
+          //////console.log(error.email);
           // The firebase.auth.AuthCredential type that was used.
           //var credential = error.credential;
-          ////console.log(error.credential);
+          //////console.log(error.credential);
           // ...
           return error.message;
         });
@@ -239,7 +239,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
 
     var login = function login(email, password, payload) {
         //retuns a promise
-        ////console.log("about to log the user in.")
+        //////console.log("about to log the user in.")
         var result = auth.signInWithEmailAndPassword(email, password).then(async function (result) {
           // This gives you a Google Access Token. You can use it to access the Google API.
           //var token = result.credential.accessToken;
@@ -253,15 +253,15 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         }).catch(function (error) {
           // Handle Errors here.
           //var errorCode = error.code;
-          //console.log(error.code);
+          ////console.log(error.code);
           //var errorMessage = error.message;
-          //console.log(error.message);
+          ////console.log(error.message);
           // The email of the user's account used.
           //var email = error.email;
-          //console.log(error.email);
+          ////console.log(error.email);
           //The firebase.auth.AuthCredential type that was used.
           //var credential = error.credential;
-          //console.log(error.credential);
+          ////console.log(error.credential);
           // ...
           return null;
         });
@@ -270,12 +270,12 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
 
     var gLogin = async function gLogin(payload) {
         //retuns a promise
-        ////console.log("about to log the user in using google.")
+        //////console.log("about to log the user in using google.")
         var result = socialAuth.signInWithPopup(googleAuthProvider).then(async function (result) {
           // This gives you a Google Access Token. You can use it to access the Google API.
           //var token = result.credential.accessToken;
           // The signed-in user info.
-          //console.log(result.user);
+          ////console.log(result.user);
           var user = result.user;
           var payloadf = { ...payload,
             currentUser: user,
@@ -289,15 +289,15 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         }).catch(function (error) {
           // Handle Errors here.
           //var errorCode = error.code;
-          ////console.log(error.code);
+          //////console.log(error.code);
           //var errorMessage = error.message;
-          ////console.log(error.message);
+          //////console.log(error.message);
           // The email of the user's account used.
           //var email = error.email;
-          ////console.log(error.email);
+          //////console.log(error.email);
           // The firebase.auth.AuthCredential type that was used.
           //var credential = error.credential;
-          ////console.log(error.credential);
+          //////console.log(error.credential);
           // ...
           return null;
         });
@@ -308,7 +308,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       //retuns a promise
       payload.loggedIn = false;
       auth.signOut().then(function () {
-        payload.currentUser = null;
+        payload.currentUser = undefined;
         payload.userInfo = {
           contactNumber: "",
           email: "",
@@ -327,26 +327,26 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     };
     
     var userHasRole = async function userHasRole(uid, payload) {
-      console.log("User id is: ");
-      console.log(uid);
-      console.log("fetching user role");
+      //console.log("User id is: ");
+      //console.log(uid);
+      //console.log("fetching user role");
       var userRef = await getUserInRole({variables: {UserID: uid}}).then(async function(response) {
-        console.log("Checking user result");
+        //console.log("Checking user result");
         if (response.data.getUserInRole !== null) {
-          console.log("user role exist");
-          console.log(response);
-          console.log("what is inside payload");
-          console.log(payload);
+          //console.log("user role exist");
+          //console.log(response);
+          //console.log("what is inside payload");
+          //console.log(payload);
           // Convert to City object
            var userRoleID = response.data.getUserInRole.RoleID;
-          console.log("user in role res:");
-          console.log(userRoleID);
+          //console.log("user in role res:");
+          //console.log(userRoleID);
           if (userRoleID !== null) {
             payload.userRolef = await getRole({variables: {_id:userRoleID}}).then(async function (response2) {
               if (response2.data.getRole !== null) {
                 var res = response2.data.getRole;
-                console.log("Role Exists is?");
-                console.log(res);
+                //console.log("Role Exists is?");
+                //console.log(res);
                 return res.description;
               }
             });
@@ -354,15 +354,15 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     
           return payload;
         } else {
-          console.log("No such user role!")
-          console.log("creating new userinrole");
+          //console.log("No such user role!")
+          //console.log("creating new userinrole");
           var userInRole = {
             UserID: uid,
             RoleID: process.env.REACT_APP_CUSTOMER_ROLE_ID
           };
           var storeRes = addUserToRole({variables: {UserID: userInRole.UserID, RoleID: userInRole.RoleID}}).then(function (response3) {
             if (response3.data.addUserToRole !== null) {
-              console.log("User successfully added to role!");  
+              //console.log("User successfully added to role!");  
               return true;
             }else{
               return false;
@@ -375,8 +375,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           if (await storeRes) {
             payload.userRolef = "Customer";
           } 
-          //console.log("What is in payload after creating role: ");
-          //console.log(payload);
+          ////console.log("What is in payload after creating role: ");
+          ////console.log(payload);
     
           
           return payload;
@@ -386,21 +386,21 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     };
 
     var fetchUserInfoForSignUp = async function fetchUserInfoForSignUp(uid, payload, currentState) {
-      //console.log("User id is: ");
-      //console.log(uid);
-      //console.log("the currentState is: ");
-      //console.log(currentState);
-      //console.log("fetching user");
+      ////console.log("User id is: ");
+      ////console.log(uid);
+      ////console.log("the currentState is: ");
+      ////console.log(currentState);
+      ////console.log("fetching user");
       
 
       
        await getUser({variables: { Id: uid}}).then(function(response) {
-        //console.log("Checking user result");
+        ////console.log("Checking user result");
         if (response.data.getUser !== null) {
-          //console.log("user exist");
-          //console.log(response);
-          //console.log("what is inside payload");
-          //console.log(payload);
+          ////console.log("user exist");
+          ////console.log(response);
+          ////console.log("what is inside payload");
+          ////console.log(payload);
           // Convert to City object
           var user = response.data.getUser;
     
@@ -416,9 +416,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     
           return payload;
         } else {
-          //console.log("No such user!")
-          //console.log("creating new user");
-          ////console.log("contact number is: " + currentState.contact);
+          ////console.log("No such user!")
+          ////console.log("creating new user");
+          //////console.log("contact number is: " + currentState.contact);
           var user2 = {
             Id: uid,
             FirstName: payload.userInfo.fullName !== null ? payload.userInfo.fullName.toLowerCase() : "",
@@ -436,8 +436,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           
             createUser({variables: {...user2}}).then(async function (response2) {
               if(response2.data.getUser !== null){
-                //console.log("User info  successfully written!");
-                //console.log(response2.data);  
+                ////console.log("User info  successfully written!");
+                ////console.log(response2.data);  
                 payload.userInfo.contactNumber = user2.ContactNumber;
                 payload.userInfo.email = user2.Email;
                 payload.userInfo.fullName = user2.FirstName;
@@ -448,8 +448,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
                 
                 var userRoleResf = undefined;
                 await userHasRole(uid, payload).then(function (userRoleRes) {
-                  //console.log("Final user ref after fetch role is: ");
-                  //console.log(userRoleRes);
+                  ////console.log("Final user ref after fetch role is: ");
+                  ////console.log(userRoleRes);
                   userRoleResf = userRoleRes;
                   //Send Welcome Email
                   var RequestParams = {
@@ -477,29 +477,29 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           return payload;
         }
       }).catch(function(err){
-        //console.log(err);
+        ////console.log(err);
       }); 
-      //console.log("user ref b4 fetch role is: ");
-      //console.log(userRef);
+      ////console.log("user ref b4 fetch role is: ");
+      ////console.log(userRef);
       
     };
 
     var fetchUserInfo = async function fetchUserInfo(uid, payloadf) {
-      //console.log("User id is: ");
-      //console.log(uid);
-      //console.log("fetching user");
+      ////console.log("User id is: ");
+      ////console.log(uid);
+      ////console.log("fetching user");
 
       await getUser({variables: { Id: uid}}).then(async function(response) {
-        //console.log("Checking user result for fetch user info");
+        ////console.log("Checking user result for fetch user info");
         if (response.data.getUser !== null) {
-           //console.log("user exist");
-           //console.log(response);
-          //console.log("what is inside payload for fetch user info");
-          //console.log(payloadf);
+           ////console.log("user exist");
+           ////console.log(response);
+          ////console.log("what is inside payload for fetch user info");
+          ////console.log(payloadf);
 
           var user = response.data.getUser;
-          console.log("firstname is:");
-          console.log(user.FirstName);
+          //console.log("firstname is:");
+          //console.log(user.FirstName);
           if (user !== null) {
             payloadf.userInfo.contactNumber = user.ContactNumber !== null && user.ContactNumber !== undefined ? user.ContactNumber : "";
             payloadf.userInfo.email = user.Email !== null && user.Email !== undefined ? user.Email : "";
@@ -514,8 +514,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
 
             var userRoleResf = undefined;
             await userHasRole(uid, payloadf).then(function (userRoleRes) {
-              console.log("Final user ref is: ");
-              console.log(userRoleRes);
+              //console.log("Final user ref is: ");
+              //console.log(userRoleRes);
               userRoleResf = userRoleRes;
               payloadf = userRoleRes;
               dispatch({
@@ -526,9 +526,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             });
             return userRoleResf;
           } else {
-            //console.log("No such user!")
-            //console.log(response);
-            // //console.log("creating new user");
+            ////console.log("No such user!")
+            ////console.log(response);
+            // ////console.log("creating new user");
             var user2 = {
               Id: uid,
               FirstName: payloadf.userInfo.fullName !== null ? payloadf.userInfo.fullName.toLowerCase() : "",
@@ -541,8 +541,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             };
             createUser({variables: {...user2}}).then(async function (response2) {
               if(response2.data.getUser !== null){
-                //console.log("User info  successfully written!");
-                //console.log(response2.data);
+                ////console.log("User info  successfully written!");
+                ////console.log(response2.data);
                 var getUserResult = response2.data.getUser;
                 payloadf.userInfo.contactNumber = user2.ContactNumber;
                 payloadf.userInfo.email = user2.Email;
@@ -554,8 +554,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
                 payloadf.userInfo._id = getUserResult._id !== null && getUserResult._id !== undefined && getUserResult._id !== ""? getUserResult._id : "";
                 var userRoleResf = undefined;
                 await userHasRole(uid, payloadf).then(function (userRoleRes) {
-                  //console.log("Final user ref is: ");
-                  //console.log(userRoleRes);
+                  ////console.log("Final user ref is: ");
+                  ////console.log(userRoleRes);
                   userRoleResf = userRoleRes;
 
                   var RequestParams = {
@@ -584,7 +584,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           }
         }
       }).catch(function(err){
-        //console.log(err);
+        ////console.log(err);
       });
     };
 
@@ -613,11 +613,11 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     };
 
     var fetchRestaurants = async function fetchRestaurants(payload){
-      //console.log("about to fetch restaurants");
+      ////console.log("about to fetch restaurants");
         await getRestaurants().then(async function(response) {
           if (response.data.getRestaurants !== null) {
-            //console.log("got list of restaurants");
-            //console.log(response);
+            ////console.log("got list of restaurants");
+            ////console.log(response);
 
             var restList = response.data.getRestaurants;
 
@@ -627,7 +627,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             }
           }
         }).catch(function(err){
-          //console.log(err);
+          ////console.log(err);
         });
 
         dispatch({
@@ -637,8 +637,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     }
 
     var viewMenuItems = async function viewMenuItems(payload){
-      console.log("about to dispatch");
-      console.log(payload.selectedRestaurant);
+      // //console.log("about to dispatch");
+      // //console.log(payload.selectedRestaurant);
       if(payload.selectedRestaurant !== undefined){
           dispatch({
             type: "view_menu_items",
@@ -650,10 +650,10 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var getMenuCats = async function getMenuCats(payload, Id){
       if(Id !== null && Id !== undefined){
          await getMenucategories({variables: {Id: Id}}).then(async function(response) {
-          ////console.log("menu categories result");
+          //////console.log("menu categories result");
           if (response.data.getMenucategories.MenuItems !== null) {
-            ////console.log("menu categories exist");
-            ////console.log(response.data.getMenucategories.MenuItems);
+            //////console.log("menu categories exist");
+            //////console.log(response.data.getMenucategories.MenuItems);
 
             // eslint-disable-next-line
             var distinct = (value, index, self) => {
@@ -663,7 +663,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             var menuRes = response.data.getMenucategories.MenuItems;
             const menuResF = [] as any;
             menuRes.forEach(element => {
-              ////console.log(element);
+              //////console.log(element);
               if(menuResF.indexOf(element.MenuCategory) === -1){
                 menuResF.push(element.MenuCategory)
               }
@@ -741,8 +741,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         var orderItems : object[] = [];
         const now = new Date();
         const estTime = moment.tz(now, "America/Jamaica").format();
-        //console.log("Jamaican Time is:");
-        //console.log(estTime);
+        ////console.log("Jamaican Time is:");
+        ////console.log(estTime);
         cartItems.map((item, index) => {
           var body = {
             itemName: item.itemName,
@@ -762,10 +762,10 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           //Generate rand number
           const min = 0;
           const max = res.length;
-          console.log(max);
+          //console.log(max);
           const rand = min + Math.random() * (max + 1);
           const randRider = parseInt(rand.toString());
-          console.log(randRider);
+          //console.log(randRider);
           var orderBody = {
             Id: payload.currentUser.uid,
             OrderItems: orderItems,
@@ -783,10 +783,10 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           }
   
           await createOrder({variables: orderBody}).then(async function(response) {
-            //console.log("create orer result");
+            ////console.log("create orer result");
             if (response.data.createOrder !== null) {
-              //console.log("Order Exist");
-              //console.log(response.data.createOrder);
+              ////console.log("Order Exist");
+              ////console.log(response.data.createOrder);
               payload.cartItems = [];
               payload.selectedRestaurant = undefined;
               payload.receiptDetails = response.data.createOrder;
@@ -815,9 +815,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var UpdateOrder  = async function UpdateOrder(payload, order){
       if(order !== null && order !== undefined){
           let newOrder = order;
-          console.log(newOrder);
+          //console.log(newOrder);
           var updateRes = await updateOrder({variables: newOrder}).then(async function(response) {
-            //console.log("create orer result");
+            ////console.log("create orer result");
             if (response.data.updateOrder !== null) {
               await fetchOrders(payload);
               return true;
@@ -834,7 +834,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     }
 
     var fetchOrdersByUser  = async function fetchOrdersByUser(payload){
-      if(payload.currentUser !== undefined){
+      if(payload.currentUser !== undefined && payload.currentUser !== null){
         if(payload.currentUser.uid !== undefined){
           await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
             if (response.data.getOrdersByUserId !== null) {
@@ -866,8 +866,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
 
     var fetchOrdersForRider  = async function fetchOrdersForRider(payload){
       if(payload.currentUser !== undefined){
-        console.log("Rider Id is:");
-        console.log(payload.userInfo._id);
+        //console.log("Rider Id is:");
+        //console.log(payload.userInfo._id);
         if(payload.userInfo._id !== undefined){
           await getOrdersByRiderId({variables: {Rider: payload.userInfo._id}}).then(async function(response) {
             if (response.data.getOrdersByRiderId !== null) {
@@ -888,8 +888,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       // };
       // var entry1 = log.entry(METADATA, data1);
       // log.write(entry1);
-      // //console.log("Wtf is in formVals");
-      // //console.log(formVals);
+      // ////console.log("Wtf is in formVals");
+      // ////console.log(formVals);
       var RequestParams = {
         from_name: formVals.user_name,
         user_email: formVals.user_email,
@@ -902,8 +902,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       // };
       // var entry2 = log.entry(METADATA, data2);
       // log.write(entry2);
-      // //console.log("What is in this package b4 emails sent");
-      // //console.log(RequestParams);
+      // ////console.log("What is in this package b4 emails sent");
+      // ////console.log(RequestParams);
     
       var fianlRes = await sendEmail(emailServiceId, emailNewJobAppTemplate, RequestParams, emailUserId).then(function (res) {
         if (res) {
@@ -915,8 +915,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         // };
         // var entry3 = log.entry(METADATA, data3);
         // log.write(entry3);
-        // //console.log("Send email error");
-        // //console.log(err);
+        // ////console.log("Send email error");
+        // ////console.log(err);
         return false;
       });
       return fianlRes;
@@ -933,18 +933,18 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
 
       if (UserInfo !== null && UserInfo !== undefined && UserInfo.email !== "") {
         RequestParams.user_email = UserInfo.email;
-        RequestParams.user_name = UserInfo.fullName; //console.log("Params going to sendNewPackageMethod");
-        //console.log(RequestParams)
+        RequestParams.user_name = UserInfo.fullName; ////console.log("Params going to sendNewPackageMethod");
+        ////console.log(RequestParams)
         var emailRes = await uploadInvoiceEmail(RequestParams, fileType).then(function (emailSentRes) {
           if (emailSentRes) {
             return true;
           } else {
-            //console.log("Unable to send add package email at this time.")
+            ////console.log("Unable to send add package email at this time.")
             return true;
           }
         }).catch(function (err) {
-          //console.log("Unable to send add package email at this time.")
-          //console.log(err);
+          ////console.log("Unable to send add package email at this time.")
+          ////console.log(err);
           return true;
         });
         return emailRes;
@@ -954,8 +954,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     };
 
     var uploadInvoiceEmail = async function uploadInvoiceEmail(formVals, filetype) {
-      //console.log("Wtf is in formVals");
-      //console.log(formVals);
+      ////console.log("Wtf is in formVals");
+      ////console.log(formVals);
       var RequestParams = {
         to_name: formVals.user_name,
         user_email: formVals.user_email,
@@ -975,8 +975,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         RequestParams.content_svg = formVals.content;
       } else if (filetype.toLowerCase() === "image/jpeg") {
         RequestParams.content_jpeg = formVals.content;
-      } //console.log("What is in this package b4 emails sent");
-      //console.log(RequestParams);
+      } ////console.log("What is in this package b4 emails sent");
+      ////console.log(RequestParams);
     
     
       var fianlRes = await sendEmail(emailServiceId, emailNewInvoiceUploadTemplate, RequestParams, emailUserId).then(function (res) {
@@ -984,8 +984,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           return true;
         }
       }).catch(function (err) {
-        //console.log("Send email error");
-        //console.log(err);
+        ////console.log("Send email error");
+        ////console.log(err);
         return false;
       });
       return fianlRes;
@@ -999,11 +999,11 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     }
 
     var fetchRiders = async function fetchRiders(payload){
-      //console.log("about to fetch restaurants");
+      ////console.log("about to fetch restaurants");
         await getRiders().then(async function(response) {
           if (response.data.getRiders !== null) {
-            //console.log("got list of restaurants");
-            //console.log(response);
+            ////console.log("got list of restaurants");
+            ////console.log(response);
 
             var restList = response.data.getRiders;
 
@@ -1013,7 +1013,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             }
           }
         }).catch(function(err){
-          //console.log(err);
+          ////console.log(err);
         });
 
         dispatch({
@@ -1023,11 +1023,11 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     }
 
     var fetchRidersForOrder = async function fetchRidersForOrder(){
-      //console.log("about to fetch restaurants");
+      ////console.log("about to fetch restaurants");
         return await getRiders().then(async function(response) {
           if (response.data.getRiders !== null) {
-            //console.log("got list of restaurants");
-            //console.log(response);
+            ////console.log("got list of restaurants");
+            ////console.log(response);
 
             var restList = response.data.getRiders;
 
@@ -1036,7 +1036,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             }
           }
         }).catch(function(err){
-          //console.log(err);
+          ////console.log(err);
         });
     }
 

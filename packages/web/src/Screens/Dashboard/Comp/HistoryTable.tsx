@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import { useAppData } from '../../../Context/AppDataContext';
 import { DataGrid, GridColDef } from '@material-ui/data-grid';
 import moment from 'moment';
+import { useHistory } from 'react-router-dom';
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'Transaction', width: 414 },
@@ -25,7 +26,7 @@ const columns: GridColDef[] = [
   },
   {
     field: 'Rider',
-    headerName: 'Delivered By',
+    headerName: 'Delivery Partner',
     description: 'This column has a value getter and is not sortable.',
     sortable: false,
     width: 160
@@ -39,7 +40,8 @@ const columns: GridColDef[] = [
 export const HistoryTable: React.FC = function HistoryTable () {
  
   var { value }  = useAppData();
-  var { orders, fetchOrdersByUser, currentUser } = value;
+  var history = useHistory();
+  var { orders, fetchOrdersByUser, currentUser, userRolef } = value;
 
   const rows = [] as Object[];
   useEffect(() => {
@@ -49,26 +51,31 @@ export const HistoryTable: React.FC = function HistoryTable () {
       });
 
     }catch(e){
-      console.log(e)
+      //console.log(e)
     }
     // eslint-disable-next-line
   }, [currentUser]);
 
-  if(orders.length !== 0){
-    orders.map((item, index) => {
-      const now = new Date(parseInt(item.OrderDate, 10));
-      const estTime = moment.tz(now, "America/Jamaica").format();
-      let row = {
-        id: item._id, 
-        OrderDate: estTime, 
-        OrderStatus: item.OrderStatus, 
-        OrderTotal: `$ ${item.OrderTotal}`, 
-        Rider: item.Rider
-      };
+  if(userRolef !== undefined && orders.length !== 0){
+    if(userRolef === "Admin" || userRolef === "Rider" || userRolef === "Customer" ){
+      orders.map((item, index) => {
+        const now = new Date(parseInt(item.OrderDate, 10));
+        const estTime = moment.tz(now, "America/Jamaica").format();
+        //console.log(item);
+        let row = {
+          id: item._id, 
+          OrderDate: estTime, 
+          OrderStatus: item.OrderStatus, 
+          OrderTotal: `$ ${item.OrderTotal}`, 
+          Rider: item.Rider.FirstName
+        };
 
-      rows.push(row)
-      return true;
-    })
+        rows.push(row)
+        return true;
+      })
+    }else{
+      return history.push("/Dashboard");
+     }
   }
 
   return (

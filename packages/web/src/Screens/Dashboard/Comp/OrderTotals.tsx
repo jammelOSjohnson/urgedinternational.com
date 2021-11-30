@@ -71,7 +71,7 @@ export const OrderTotals: React.FC = function OrderTotals() {
           });
     
         }catch(e){
-          console.log(e)
+          //console.log(e)
         }
         // eslint-disable-next-line
       }, [currentUser]);

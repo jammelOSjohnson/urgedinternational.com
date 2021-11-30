@@ -30,6 +30,10 @@
         color: #FFFF !important;
     }
 
+    .cardSizeCategoriesRestarants2  .selected{
+        color: #FFFF !important;
+    }
+
     .cardSizeCategoriesRestarants3{
         min-width: 58px;
         text-align: center;
