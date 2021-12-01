@@ -160,7 +160,7 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any}> =
         <>
             {props.itemCategory !== "Hot Wings" && props.itemCategory !== "Popcorn Chicken" && props.itemCategory !== "Zingers" &&  props.itemCategory !== "Famous Bowl" && props.itemCategory !=="Buckets" && props.itemCategory !=="Sides"  ?
                 <>
-                    <Grid item xs={10} sm={6} md={6} lg={6}>
+                    <Grid item xs={12} sm={6} md={6} lg={6}>
                         <FormControl variant="outlined" className={classes.formControl} fullWidth>
                             <InputLabel id="demo-simple-select-outlined-label">1st choice</InputLabel>
                             <Select
@@ -179,7 +179,7 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any}> =
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={10} sm={6} md={6} lg={6}>
+                    <Grid item xs={12} sm={6} md={6} lg={6}>
                         <FormControl variant="outlined" className={classes.formControl} fullWidth>
                             <InputLabel id="demo-simple-select-outlined-label">2nd choice</InputLabel>
                             <Select
@@ -198,7 +198,7 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any}> =
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={10} sm={12} >
+                    <Grid item xs={12} sm={12} >
                         <FormControl variant="outlined" className={classes.formControl} fullWidth>
                             <InputLabel id="demo-simple-select-outlined-label">Drink</InputLabel>
                             <Select
@@ -243,7 +243,7 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any}> =
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={10} sm={12} >
+                    <Grid item xs={12} sm={12} >
                         <FormControl variant="outlined" className={classes.formControl} fullWidth>
                             <InputLabel id="demo-simple-select-outlined-label">Drink</InputLabel>
                             <Select
@@ -269,7 +269,7 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any}> =
                 </>
                 :props.itemCategory === "Zingers"?
                 <>
-                    <Grid item xs={10} sm={12} >
+                    <Grid item xs={12} sm={12} >
                         <FormControl variant="outlined" className={classes.formControl} fullWidth>
                             <InputLabel id="demo-simple-select-outlined-label">Drink</InputLabel>
                             <Select
@@ -314,7 +314,7 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any}> =
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={10} sm={12} >
+                    <Grid item xs={12} sm={12} >
                         <FormControl variant="outlined" className={classes.formControl} fullWidth>
                             <InputLabel id="demo-simple-select-outlined-label">Drink</InputLabel>
                             <Select
@@ -360,7 +360,7 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any}> =
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={10} sm={12} >
+                    <Grid item xs={12} sm={12} >
                         <FormControl variant="outlined" className={classes.formControl} fullWidth>
                             <InputLabel id="demo-simple-select-outlined-label">Drink</InputLabel>
                             <Select
@@ -382,7 +382,7 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any}> =
                     </Grid>
                     </>
                 :props.itemCategory === "Popcorn Chicken" ?
-                <Grid item xs={10} sm={12} >
+                <Grid item xs={12} sm={12} >
                     <FormControl variant="outlined" className={classes.formControl} fullWidth>
                         <InputLabel id="demo-simple-select-outlined-label">Drink</InputLabel>
                         <Select

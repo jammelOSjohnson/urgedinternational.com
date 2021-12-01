@@ -202,7 +202,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
 
     const theme = useTheme();
     
-    const isMatch = useMediaQuery(theme.breakpoints.down('lg'));
+    const isMatch = useMediaQuery(theme.breakpoints.down('md'));
     const isMaatchMedium = useMediaQuery(theme.breakpoints.up('lg'));
 
     const [values, setValues] = React.useState<State>({
@@ -323,7 +323,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                             <form>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                     <FastFoodChickenFlavor props={values} handleChange={handleChange} />
-                                                    <Grid item xs={10} sm={12} >
+                                                    <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
                                                             label="Special Intructions"
@@ -366,7 +366,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         :restaurant.FirstName === "Elle B Catering And Events"?
                                         <form>
                                             <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                <Grid item xs={10} sm={12} >
+                                                <Grid item xs={12} sm={12} >
                                                     <TextField
                                                         id="outlined-multiline-static"
                                                         label="Special Intructions"
@@ -564,7 +564,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                         <Modal
                             aria-labelledby="transition-modal-title"
                             aria-describedby="transition-modal-description"
-                            className={classes.modal}
+                            className={clsx(classes.modal)}
                             open={open}
                             onClose={handleClose}
                             closeAfterTransition
@@ -574,7 +574,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                             }}
                         >
                             <Fade in={open}>
-                            <div className={classes.paper}>
+                            <div className={clsx(classes.paper, "modalMobile")}>
                                 <h2 id="transition-modal-title">Order Request Details</h2>
                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                     <Grid item xs={10} sm={6} md={4} lg={4} xl={4}>
@@ -593,7 +593,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                             <form>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                     <FastFoodChickenFlavor props={values} handleChange={handleChange} />
-                                                    <Grid item xs={10} sm={12} >
+                                                    <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
                                                             label="Special Intructions"
@@ -626,8 +626,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             </Select>
                                                         </FormControl>
                                                     </Grid>
-                                                    <Grid item xs={10} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => AddToCart(values)} type="button">
+                                                    <Grid item xs={12} sm={12} >
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} onClick={() => AddToCart(values)} type="button">
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -636,7 +636,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         :restaurant.FirstName === "Elle B Catering And Events"?
                                         <form>
                                             <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                <Grid item xs={10} sm={12} >
+                                                <Grid item xs={12} sm={12} >
                                                     <TextField
                                                         id="outlined-multiline-static"
                                                         label="Special Intructions"
@@ -670,7 +670,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         </FormControl>
                                                 </Grid>
                                                 <Grid item xs={10} sm={12} >
-                                                    <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => AddToCart(values)} type="button">
+                                                    <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} onClick={() => AddToCart(values)} type="button">
                                                         Add To Cart 
                                                     </Button>
                                                 </Grid>
@@ -766,6 +766,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                 padding-bottom: 0px;
                                                             }
                                                         }
+                                                       
 
                                                         @media only screen and (max-width: 600px) {
                                                             .mobileMedia{
@@ -888,7 +889,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                     Add To Cart 
                                                                 </Button>
                                                                 :
-                                                                <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
+                                                                <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
                                                                     Add To Cart 
                                                                 </Button> 
                                                         }
@@ -916,6 +917,14 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
 
                                                             .MuiCardContent-root {
                                                                 padding-bottom: 0px;
+                                                            }
+                                                        }
+
+                                                        @media only screen and (max-width: 679px) {
+                                                            .modalMobile{
+                                                                max-height: 500px;
+                                                                overflow-x: hidden;
+                                                                overflow-y: auto;
                                                             }
                                                         }
 
