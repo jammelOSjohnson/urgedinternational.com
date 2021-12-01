@@ -57,7 +57,7 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
         var doc = new jsPDF("p", "pt", "a2");
         var getReciept: HTMLElement|null = document.querySelector("#receipt");
         if(getReciept !== null){
-            doc.setDisplayMode("fullwidth");
+            doc.setDisplayMode("fullpage");
             doc.html(getReciept,{
                 callback: async function(pdf){
                     ////console.log(pdf)
