@@ -125,13 +125,15 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
     
     var history = useHistory();
 
-    var handleSelectedRestaurant = async function(index){
+    var handleSelectedRestaurant = async function(index, restaurantName){
         if(index !== undefined || index !== null){
             // //console.log("Index is");
             // //console.log(index);
             var payload = value;
             payload.selectedRestaurant = index;
+            payload.selectedRestaurantName = restaurantName
             await viewMenuItems(payload).then(() => {
+                console.log("about to leave page")
                 history.push("/Menu")
             })
         } 
@@ -148,7 +150,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                         ////console.log(restaurant);
                         return(
                             <Grid item xs={12} sm={6} md={6} lg={3} xl={3} className={classes.gridSpacing} key={index}>
-                                <Link onClick={(e) => { e.preventDefault(); handleSelectedRestaurant(index);}} className={classes.link}>
+                                <Link onClick={(e) => { e.preventDefault(); handleSelectedRestaurant(index, restaurant.FirstName);}} className={classes.link}>
                                 <Card className={classes.root}>
                                     <CardHeader
                                         avatar={

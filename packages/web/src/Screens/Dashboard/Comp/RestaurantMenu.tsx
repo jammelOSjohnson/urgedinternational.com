@@ -26,6 +26,7 @@ interface State {
     ifnotAvailable: string;
     itemDescription: string;
     quantity: number;
+    restaurantName: string;
 }
 
 interface Props {
@@ -186,7 +187,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
     const classes = useStyles();
     
     var { value }  = useAppData();
-    var { restaurants, selectedRestaurant, addItemToCart, userInfo, filteredMenuItems } = value;
+    var { cartItems ,restaurants, selectedRestaurantName, selectedRestaurant, addItemToCart, userInfo, filteredMenuItems, clearCartItems } = value;
     var restaurant = restaurants[selectedRestaurant];
     // //console.log("Menu Screen Menu");
     // //console.log(selectedRestaurant);
@@ -201,7 +202,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
     });
 
     const theme = useTheme();
-    
+    var history = useHistory();
     const isMatch = useMediaQuery(theme.breakpoints.down('md'));
     const isMaatchMedium = useMediaQuery(theme.breakpoints.up('lg'));
 
@@ -218,23 +219,56 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
         itemCategory: "",
         ifnotAvailable: "Contact me",
         itemDescription: "",
-        quantity: 1
+        quantity: 1,
+        restaurantName: ""
       });
 
     const [open, setOpen] = React.useState(false);
+    const [open2, setOpen2] = React.useState(false);
     
 
     const handleOpen = (item) => {
-        setItem(item);
-        setValues({...values, itemName: item.ItemName ,itemCost: item.ItemCost ,imageName: item.ImageName, itemCategory: item.MenuCategory});
-        setOpen(true);
+        if(cartItems.length > 0){
+            if(cartItems[0].restaurantName === restaurant.FirstName){
+                setItem(item);
+                setValues({...values, itemName: item.ItemName ,itemCost: item.ItemCost ,imageName: item.ImageName, itemCategory: item.MenuCategory, restaurantName: item.FirstName});
+                setOpen(true);
+            }else{
+                setItem(item);
+                setValues({...values, itemName: item.ItemName ,itemCost: item.ItemCost ,imageName: item.ImageName, itemCategory: item.MenuCategory, restaurantName: item.FirstName});
+                console.log("about to ask customer if they want to create a new order");
+                setOpen2(true);
+            }
+        }else{
+            setItem(item);
+            setValues({...values, itemName: item.ItemName ,itemCost: item.ItemCost ,imageName: item.ImageName, itemCategory: item.MenuCategory, restaurantName: item.FirstName});
+            setOpen(true);
+        }
+        
+    };
+
+    const handleOpen2 = () => {
+        try{
+            console.log("about to clear cart for new order.");
+            clearCartItems(value).then((res) => {
+                setOpen2(false);
+                setOpen(true);
+            })
+        }catch(err){
+
+        }
+        
     };
 
     const handleClose = () => {
         setOpen(false);
     };
+
+    const handleClose2 = () => {
+        setOpen2(false);
+    };
     
-    var history = useHistory();
+    
 
     const handleChange = (event) => {
         setValues({...values,[event.target.name]:event.target.value, itemName: selectedItem.ItemName, itemCost: selectedItem.ItemCost, itemDescription: selectedItem.ItemDescription});
@@ -257,6 +291,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
         ////console.log("item selected");
         ////console.log(item);
         var payload = value;
+        item.restaurantName = selectedRestaurantName;
         await addItemToCart(payload, item).then(() => {
             ////console.log("item should be successfully added");
             setValues(
@@ -273,7 +308,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                     itemCategory: "",
                     ifnotAvailable: "Contact me",
                     itemDescription: "",
-                    quantity: 1
+                    quantity: 1,
+                    restaurantName: ""
                 }
             );
             setOpen(false);
@@ -282,8 +318,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
 
     if(restaurant === undefined){
         ////console.log("restaurant is undefined");
-        return <></>
-        //history.push("/Restaurants")
+        return <>{history.push("/Restaurants")}</> 
     }else{
 
         return (
@@ -409,6 +444,38 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         :
                                         <></>
                                         }
+                                    </Grid>
+                                </Grid>
+                            </div>
+                            </Fade>
+                        </Modal>
+                        <Modal
+                            aria-labelledby="transition-modal-title"
+                            aria-describedby="transition-modal-description"
+                            className={classes.modal}
+                            open={open2}
+                            onClose={handleClose2}
+                            closeAfterTransition
+                            BackdropComponent={Backdrop}
+                            BackdropProps={{
+                            timeout: 500,
+                            }}
+                        >
+                            <Fade in={open2}>
+                            <div className={classes.paper}>
+                                <h2 id="transition-modal-title">Create new order?</h2>
+                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                    <Grid item xs={12}>
+                                        <Grid item xs={12}>
+                                            <Typography>
+                                                Your order contains items from {cartItems.length > 0 ? cartItems[0].restaurantName : ''}. Create a new order to add items from {restaurant.FirstName} Restaurant.
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={10} sm={12} >
+                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} onClick={() => handleOpen2()} type="button">
+                                                Add New Order 
+                                            </Button>
+                                        </Grid>
                                     </Grid>
                                 </Grid>
                             </div>
@@ -684,6 +751,36 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                             </div>
                             </Fade>
                         </Modal>
+                        <Modal
+                            aria-labelledby="transition-modal-title"
+                            aria-describedby="transition-modal-description"
+                            className={clsx(classes.modal)}
+                            open={open2}
+                            onClose={handleClose2}
+                            closeAfterTransition
+                            BackdropComponent={Backdrop}
+                            BackdropProps={{
+                            timeout: 500,
+                            }}
+                        >
+                            <Fade in={open}>
+                            <div className={clsx(classes.paper, "modalMobile")}>
+                                <h2 id="transition-modal-title">Create new order?</h2>
+                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                    <Grid item xs={12}>
+                                        <Typography>
+                                            Your order contains items from {cartItems.length > 0 ? cartItems[0].restaurantName : ''}. Create a new order to add items from {restaurant.FirstName} Restaurant.
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item xs={10} sm={12} >
+                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} onClick={() => handleOpen2()} type="button">
+                                            Add New Order 
+                                        </Button>
+                                    </Grid>
+                                </Grid>
+                            </div>
+                            </Fade>
+                        </Modal>
                         <Typography variant="body1" style={{paddingTop: "3%", paddingBottom: "1%", fontWeight: "bold"}}>
                             Results 
                         </Typography>
@@ -736,7 +833,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                         Add To Cart 
                                                                     </Button>
                                                                     :
-                                                                    <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
+                                                                    <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
                                                                         Add To Cart 
                                                                     </Button> 
                                                             }
@@ -766,7 +863,14 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                 padding-bottom: 0px;
                                                             }
                                                         }
-                                                       
+
+                                                        @media only screen and (max-width: 679px) {
+                                                            .modalMobile{
+                                                                max-height: 500px;
+                                                                overflow-x: hidden;
+                                                                overflow-y: auto;
+                                                            }
+                                                        }
 
                                                         @media only screen and (max-width: 600px) {
                                                             .mobileMedia{
@@ -791,6 +895,13 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
 
                                                         }
 
+                                                        @media only screen and (max-width: 460px) {
+                                                            .itemDescMobile{
+                                                                height: 66.594px;
+                                                            }
+
+                                                        }
+
                                                         @media only screen and (max-width: 471px) {
                                                             .itemNameMobile {
                                                                 font-size: 0.9rem;
@@ -802,13 +913,6 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
 
                                                             .MuiCardActions-root {
                                                                 padding: 1px;
-                                                            }
-
-                                                        }
-
-                                                        @media only screen and (max-width: 460px) {
-                                                            .itemDescMobile{
-                                                                height: 66.594px;
                                                             }
 
                                                         }
@@ -842,7 +946,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         }
                                                     `
                                                 }
-                                            </style>
+                                        </style>
                                         </Grid>
                                     ))
                                 :

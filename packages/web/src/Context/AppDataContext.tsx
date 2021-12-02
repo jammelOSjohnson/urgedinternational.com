@@ -66,9 +66,13 @@ function appDataReducer(state, action){
             restaurants: action.payload.restaurants
           };
         case "view_menu_items":
+          console.log("about to dispatch");
+          console.log(action.payload.selectedRestaurant);
+          console.log(action.payload.selectedRestaurantName);
           return {
             ...state,
             selectedRestaurant: action.payload.selectedRestaurant,
+            selectedRestaurantName: action.payload.selectedRestaurantName,
             prevSelectedrestaurant: action.payload.prevSelectedrestaurant
           }
         case "menu_categories":
@@ -90,6 +94,11 @@ function appDataReducer(state, action){
             cartItems: action.payload.cartItems
           }
         case "remove_cart_item":
+          return {
+            ...state,
+            cartItems: action.payload.cartItems
+          }
+        case "clear_cart_item":
           return {
             ...state,
             cartItems: action.payload.cartItems
@@ -159,6 +168,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
 
     var currentUser = undefined;
     var selectedRestaurant = undefined;
+    var selectedRestaurantName = undefined;
     var selectedMenuCategory = undefined;
     var filteredMenuItems = [];
     var filterCategory = undefined;
@@ -639,7 +649,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var viewMenuItems = async function viewMenuItems(payload){
       // //console.log("about to dispatch");
       // //console.log(payload.selectedRestaurant);
-      if(payload.selectedRestaurant !== undefined){
+      if(payload.selectedRestaurant !== undefined && payload.selectedRestaurantName !== undefined){
           dispatch({
             type: "view_menu_items",
             payload: payload
@@ -731,6 +741,16 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         payload.cartItems = cartItems;
         dispatch({
           type: "remove_cart_item",
+          payload: payload
+        });
+      }
+    }
+
+    var clearCartItems = async function clearCartItems(payload){
+      if(cartItems.length > 0){
+        payload.cartItems = [];
+        dispatch({
+          type: "clear_cart_item",
           payload: payload
         });
       }
@@ -1059,6 +1079,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         orders,
         restaurants,
         selectedRestaurant,
+        selectedRestaurantName,
         selectedMenuCategory,
         prevSelectedrestaurant,
         menuCategories,
@@ -1083,6 +1104,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         getMenuBycategory,
         addItemToCart,
         removeCartItem,
+        clearCartItems,
         getMenuCats,
         checkoutOrder,
         fetchOrdersByUser,

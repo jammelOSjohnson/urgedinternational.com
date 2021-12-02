@@ -130,12 +130,13 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
         // eslint-disable-next-line
     }, [restaurants])
 
-    var handleSelectedRestaurant = async function(index){
+    var handleSelectedRestaurant = async function(index, restaurantName){
         if(index !== undefined || index !== null){
             ////console.log("Index is");
             ////console.log(index);
             var payload = value;
             payload.selectedRestaurant = index;
+            payload.selectedRestaurantName = restaurantName;
             await viewMenuItems(payload).then(() => {
                 history.push("/Menu")
             })
@@ -157,7 +158,7 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
                 <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
                     {restaurants.map((item, index) => (
                         <Grid item xs={12} sm={6} md={6} lg={3} xl={3} className={classes.gridSpacing} key={index}>
-                            <Link onClick={() =>handleSelectedRestaurant(index)} className={classes.link}>
+                            <Link onClick={() =>handleSelectedRestaurant(index, restaurants.FirstName)} className={classes.link}>
                                 <Card className={classes.root}>
                                     <CardHeader
                                         avatar={
