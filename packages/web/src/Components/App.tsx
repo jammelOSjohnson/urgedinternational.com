@@ -138,14 +138,15 @@ const client = new ApolloClient({
 
 
 const App: React.FC = function App() {
-  var { value }  = useAppData();
-  var { serviceWorkerUpdate, serviceWorkerInit } = value;
+  //var { value }  = useAppData();
+  //var { serviceWorkerUpdate, serviceWorkerInit } = value;
 
-  serviceWorkerRegistration.register({
-    onSuccess: () => serviceWorkerInit(),
-    onUpdate: reg => serviceWorkerUpdate(reg, value),
-  });
-  
+  serviceWorkerRegistration.register();
+  // {
+  //   onSuccess: () => serviceWorkerInit(),
+  //   onUpdate: reg => serviceWorkerUpdate(reg, value),
+  // }
+
   useEffect(() =>{
     document.body.style.backgroundColor = "#fff"
   })

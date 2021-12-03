@@ -903,7 +903,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                 <CardActions>
                                                     <Grid container xs={12} direction="row" spacing={0} className={classes.root} alignItems="center">
                                                         <Grid item xs={6}>
-                                                            <Typography variant="body2"  component="p" className={classes.priceText} style={{textAlign: "right", width: "100%"}}>
+                                                            <Typography variant="body2"  component="p" className={classes.priceText} style={{textAlign: "left", width: "100%"}}>
                                                                 {`$ ${ parseFloat(item.ItemCost).toFixed(2)}`}
                                                             </Typography>
                                                         </Grid>
