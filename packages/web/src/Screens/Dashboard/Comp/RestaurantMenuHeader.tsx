@@ -81,23 +81,40 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                         setjaday(res.data.datetime);
                         settoday(res.data.day_of_week);
                         //console.log(jaday)
+                        let innerDay = res.data.day_of_week;
 
                         let OpeningHrs = restaurant.OpeningHrs;
-                        setTodayOpeningHrs (today === 0 ? OpeningHrs.Sunday : today === 1 ? OpeningHrs.Monday :
-                                            today === 2 ? OpeningHrs.Tuesday : today === 3 ? OpeningHrs.Wednesday :
-                                            today === 4 ? OpeningHrs.Thursday : today === 5 ? OpeningHrs.Friday :
-                                            today === 6 ? OpeningHrs.Saturday : "");
-                                
+                        setTodayOpeningHrs (innerDay === 0 ? OpeningHrs.Sunday : innerDay === 1 ? OpeningHrs.Monday :
+                                            innerDay === 2 ? OpeningHrs.Tuesday : innerDay === 3 ? OpeningHrs.Wednesday :
+                                            innerDay === 4 ? OpeningHrs.Thursday : innerDay === 5 ? OpeningHrs.Friday :
+                                            innerDay === 6 ? OpeningHrs.Saturday : "");
                         
-                        let jaTime = moment.tz(jaday, "America/Jamaica").format("h:mm a");
-                        let jaTimeFinal = jaTime.split(' ');
-                        let openTime = TodayOpeningHrs.slice(0, TodayOpeningHrs.indexOf("a"))
-                        let openTimeFinal = openTime + ':00'
-                        let closeTime = TodayOpeningHrs.slice(TodayOpeningHrs.indexOf("-") +1, TodayOpeningHrs.indexOf("p"))
-                        let closeTimeFinal = closeTime.trim() + ':00';
+                        let innerOpeningHrs =  innerDay === 0 ? OpeningHrs.Sunday : innerDay === 1 ? OpeningHrs.Monday :
+                        innerDay === 2 ? OpeningHrs.Tuesday : innerDay === 3 ? OpeningHrs.Wednesday :
+                        innerDay === 4 ? OpeningHrs.Thursday : innerDay === 5 ? OpeningHrs.Friday :
+                        innerDay === 6 ? OpeningHrs.Saturday : "";
+
+                        //console.log(res.data.datetime);
+                        let initTime = new Date(res.data.datetime);
+                        //console.log(initTime);
+                        let jaTime = moment.tz(initTime, "America/Jamaica").format("h:mm a");
+                        //console.log(jaTime);
+                        let jaTimeFinal = jaTime.split(':');
+                        let openTime = innerOpeningHrs.slice(0, innerOpeningHrs.indexOf("a"))
+                        let openTimeFinal = openTime.trim()
+                        let closeTime = innerOpeningHrs.slice(innerOpeningHrs.indexOf("-") +1, innerOpeningHrs.indexOf("p"))
+                        //console.log(innerOpeningHrs)
+                        //console.log(closeTime);
+                        let closeTimeFinal = closeTime.trim();
                         let isAm: boolean = jaTime.includes('a');
                         let isPm: boolean = jaTime.includes('p'); 
-                        setisOpen(isPm && (closeTimeFinal > jaTimeFinal[0]) || isAm && (jaTimeFinal[0] > openTimeFinal));
+                        //console.log(isAm);
+                        //console.log(isPm);
+                        //console.log(closeTimeFinal);
+                        //console.log(jaTimeFinal[0]);
+                        let decision = (isPm && (parseInt(closeTimeFinal) > parseInt(jaTimeFinal[0]))) || (isAm && (parseInt(jaTimeFinal[0]) > parseInt(openTimeFinal))) 
+                        //console.log(decision)
+                        setisOpen(decision);
                         //console.log(jaday)
                     }
                 }).catch((err) => {
@@ -105,20 +122,29 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                     setjaday(moment.tz(now, "America/Jamaica").format());
                     settoday(new Date(jaday).getDay());
 
+                    let innerDay = new Date(jaday).getDay();
                     let OpeningHrs = restaurant.OpeningHrs;
-                    setTodayOpeningHrs (today === 0 ? OpeningHrs.Sunday : today === 1 ? OpeningHrs.Monday :
-                        today === 2 ? OpeningHrs.Tuesday : today === 3 ? OpeningHrs.Wednesday :
-                        today === 4 ? OpeningHrs.Thursday : today === 5 ? OpeningHrs.Friday :
-                        today === 6 ? OpeningHrs.Saturday : "");
+                    setTodayOpeningHrs (innerDay === 0 ? OpeningHrs.Sunday : innerDay === 1 ? OpeningHrs.Monday :
+                        innerDay === 2 ? OpeningHrs.Tuesday : innerDay === 3 ? OpeningHrs.Wednesday :
+                        innerDay === 4 ? OpeningHrs.Thursday : innerDay === 5 ? OpeningHrs.Friday :
+                        innerDay === 6 ? OpeningHrs.Saturday : "");
+                    
+                    let innerOpeningHrs =  innerDay === 0 ? OpeningHrs.Sunday : innerDay === 1 ? OpeningHrs.Monday :
+                    innerDay === 2 ? OpeningHrs.Tuesday : innerDay === 3 ? OpeningHrs.Wednesday :
+                    innerDay === 4 ? OpeningHrs.Thursday : innerDay === 5 ? OpeningHrs.Friday :
+                    innerDay === 6 ? OpeningHrs.Saturday : "";
+
                     let jaTime = moment.tz(jaday, "America/Jamaica").format("h:mm a");
                     let jaTimeFinal = jaTime.split(' ');
-                    let openTime = TodayOpeningHrs.slice(0, TodayOpeningHrs.indexOf("a"))
-                    let openTimeFinal = openTime + ':00'
-                    let closeTime = TodayOpeningHrs.slice(TodayOpeningHrs.indexOf("-") +1, TodayOpeningHrs.indexOf("p"))
-                    let closeTimeFinal = closeTime.trim() + ':00';
+                    let openTime = innerOpeningHrs.slice(0, innerOpeningHrs.indexOf("a"))
+                    let openTimeFinal = openTime.trim();
+                    let closeTime = innerOpeningHrs.slice(innerOpeningHrs.indexOf("-") +1, innerOpeningHrs.indexOf("p"))
+                    let closeTimeFinal = closeTime.trim();
                     let isAm: boolean = jaTime.includes('a');
                     let isPm: boolean = jaTime.includes('p'); 
-                    setisOpen(isPm && (closeTimeFinal > jaTimeFinal[0]) || isAm && (jaTimeFinal[0] > openTimeFinal));
+                    let decision = (isPm && (parseInt(closeTimeFinal) > parseInt(jaTimeFinal[0]))) || (isAm && (parseInt(jaTimeFinal[0]) > parseInt(openTimeFinal))) 
+                    //console.log(decision)
+                    setisOpen(decision);
                     
                     //console.log(jaday)
                 })
