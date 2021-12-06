@@ -51,6 +51,13 @@ import { Backdrop, CircularProgress, createStyles, makeStyles, Theme } from '@ma
         filter: true,
         sort: true,
        }
+    },{
+      name: 'Description',
+      label: 'Order Details',
+      options: {
+        filter: true,
+        sort: true,
+       }
     },
     {
       name: 'OrderDate',
@@ -71,6 +78,14 @@ import { Backdrop, CircularProgress, createStyles, makeStyles, Theme } from '@ma
     {
       name: 'OrderTotal',
       label: 'Order Total',
+      options: {
+        filter: true,
+        sort: true,
+       }
+    },
+    {
+      name: 'PaymentMethod',
+      label: 'Payment Method',
       options: {
         filter: true,
         sort: true,
@@ -140,12 +155,25 @@ import { Backdrop, CircularProgress, createStyles, makeStyles, Theme } from '@ma
        if(userRolef === "Rider"){
         orders.map((item, index) => {
           const now = new Date(parseInt(item.OrderDate, 10));
-          const estTime = moment.tz(now, "America/Jamaica").format();
+          const estTime = moment.tz(now, "America/Jamaica").format("YYYY-MM-DD h:mm a");
+
+          var orderItems = "";
+          orderItems = orderItems + item.OrderItems.map((item,index) => {
+            return(
+              item.chickenFlavour1 !== "" && item.chickenFlavour1 !== "Select Flavour" && item.chickenFlavour1 !== null && item.chickenFlavour1 !== undefined?
+            `${item.itemName + ": "}\n${item.chickenFlavour1 + " | "}\n${item.chickenFlavour2 + " | "}
+            \n${item.drink !== "Select Drink"? item.drink + " | ": "" + " | "}\n${item.otherIntructions + " | "}\n${'Not Available? ' + item.ifnotAvailable}` :
+            `${item.itemName + ": "}\n${item.drink !== "Select Drink"? item.drink + " | ": "" + " | "}\n${item.otherIntructions + " | "}\n${'Not Available? ' + item.ifnotAvailable}`
+            )
+          })
+
           let row = {
-            _id: item._id, 
+            _id: item._id,
+            Description: orderItems, 
             OrderDate: estTime,
             OrderStatus: item.OrderStatus, 
             OrderTotal: `$ ${item.OrderTotal}`, 
+            PaymentMethod: item.PaymentMethod,
             Rider: item.Rider.FirstName,
             Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); history.push('/DeliveryOrdersDetails', { from: index});}}><EditRounded color="primary" /></a></>
           };

@@ -279,11 +279,11 @@ function ColorlibStepIcon(props: StepIconProps) {
                                   title={
                                     <>
                                       <IconButton className={classes.removeButton} onClick={() => decrement(index)}>
-                                        <RemoveIcon />
+                                        <RemoveIcon style={{color: "#C4C4C4"}} />
                                       </IconButton>
                                       &nbsp;{cartItems[index].quantity}&nbsp;
                                       <IconButton className={classes.addButton} onClick={() => increment(index)}>
-                                          <AddIcon />
+                                          <AddIcon style={{color: "#FFFFFF"}} />
                                       </IconButton>
                                     </>
                                   }
@@ -338,11 +338,11 @@ function ColorlibStepIcon(props: StepIconProps) {
                                   title={
                                     <>
                                       <IconButton className={classes.removeButton} onClick={() => decrement(index)}>
-                                        <RemoveIcon />
+                                        <RemoveIcon style={{color: "#C4C4C4"}}/>
                                       </IconButton>
                                       &nbsp;{cartItems[index].quantity}&nbsp;
                                       <IconButton className={classes.addButton} onClick={() => increment(index)}>
-                                          <AddIcon />
+                                          <AddIcon style={{color: "#FFFFFF"}} />
                                       </IconButton>
                                     </>
                                   }

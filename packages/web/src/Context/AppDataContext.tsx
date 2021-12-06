@@ -66,9 +66,9 @@ function appDataReducer(state, action){
             restaurants: action.payload.restaurants
           };
         case "view_menu_items":
-          console.log("about to dispatch");
-          console.log(action.payload.selectedRestaurant);
-          console.log(action.payload.selectedRestaurantName);
+          // console.log("about to dispatch");
+          // console.log(action.payload.selectedRestaurant);
+          // console.log(action.payload.selectedRestaurantName);
           return {
             ...state,
             selectedRestaurant: action.payload.selectedRestaurant,

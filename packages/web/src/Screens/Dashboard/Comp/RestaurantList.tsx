@@ -133,7 +133,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
             payload.selectedRestaurant = index;
             payload.selectedRestaurantName = restaurantName
             await viewMenuItems(payload).then(() => {
-                console.log("about to leave page")
+                //console.log("about to leave page")
                 history.push("/Menu")
             })
         } 

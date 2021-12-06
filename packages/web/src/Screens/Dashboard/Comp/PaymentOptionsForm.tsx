@@ -39,11 +39,22 @@ const useStyles = makeStyles((theme: Theme) =>
             }
         },
         formHeading: {
-            fontSize: "25px",
-            fontWeight: 400,
+            fontSize: "1.5rem",
+            fontWeight: "normal",
             lineHeight: "21px",
-            color: "#1D2635",
-            fontFamily: "Roboto",
+            color: "#4A4A4A",
+            fontFamily: "PT Sans",
+            paddingTop: "2%",
+            paddingBottom: "2%"
+        },
+        formSubheading: {
+            fontSize: "14px",
+            fontFamily: "Open Sans",
+            fontStyle: "normal",
+            color: "#4A4A4A",
+            paddingTop: "5%",
+            paddingBottom: "5%",
+            fontWeight: "normal"
         },
         paper: {
             borderRadius: "33px"
@@ -109,6 +120,13 @@ const useStyles = makeStyles((theme: Theme) =>
             minWidth: 120,
             marginLeft: "0px"
         },
+        fees: {
+            fontSize: "14px",
+            fontFamily: "PT Sans",
+            fontStyle: "normal",
+            color: "#4A4A4A",
+            fontWeight: 600
+        }
     }),
 );
 
@@ -339,12 +357,12 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                             <form className={classes.form}>
                             <Grid container direction="row" alignItems="center">
                                 <Grid item xs={12}>
-                                    <Typography variant="h6">Payment Options</Typography>
+                                    <Typography className={classes.formHeading}>Payment Options</Typography>
                                     <Divider variant="middle" className={classes.divider}/>
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <FormControl component="fieldset">
-                                        <FormLabel component="legend">Please select payment method from the list below.</FormLabel>
+                                    <FormControl component="fieldset" style={{width: "100%"}}>
+                                        <FormLabel component="legend"><Typography className={classes.formSubheading}>Please select payment method from the list below.</Typography></FormLabel>
                                         <RadioGroup row aria-label="position" name="position" defaultValue="top">
                                             <FormControlLabel
                                             value="Visa"
@@ -381,9 +399,9 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                                 </Grid>
                                 <Grid container>
                                     <Grid item xs={12}>
-                                        <Typography variant="h6">Delivery Address</Typography>
+                                        <Typography className={classes.formHeading}>Delivery Address</Typography>
                                         <Divider variant="middle" className={classes.divider}/>
-                                        <Typography >Please enter delivery address below.</Typography>
+                                        <Typography className={classes.formSubheading}>Please enter delivery address below.</Typography>
                                     </Grid>
                                     <Grid item xs={12}>
                                         <TextField placeholder="eg. 1 maypen ave" id="street" label="Street" variant="outlined" value={values.Street} onChange={handleChange2('Street')} fullWidth/>
@@ -441,11 +459,38 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                                         <TextField id="contact" label="Contact #" variant="outlined" onChange={handleChange2('ContactNum')} fullWidth/>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <Typography><b>Cart Items:</b> {`$ ${ parseFloat(cartItemsSum.Cost).toFixed(2)}`}</Typography>
-                                        <Typography><b>Delivery Fee:</b> {`$ ${ parseFloat(deliveryFee.Cost).toFixed(2)}`}</Typography>
-                                        <Typography><b>Processing Fee:</b> {`$ ${ parseFloat(serviceFee.Cost).toFixed(2)}`}</Typography>
-                                        <Typography><b>GCT:</b> {`$ ${ parseFloat(GCT.Cost).toFixed(2)}`}</Typography>
-                                        <Typography><b>Total:</b> {`$ ${ parseFloat(Total.Cost).toFixed(2)}`}</Typography>
+                                        <Grid container>
+                                            <Grid item xs={9}>
+                                                <Typography style={{fontFamily: "Inter", fontSize: "14px"}}><span className={classes.fees}>Cart Items:</span> </Typography>
+                                            </Grid>
+                                            <Grid item xs={3}>
+                                                <Typography><span>{`$ ${ parseFloat(cartItemsSum.Cost).toFixed(2)}`}</span></Typography>
+                                            </Grid>
+                                            <Grid item xs={9}>
+                                                <Typography style={{fontFamily: "Inter", fontSize: "14px"}}><span className={classes.fees}>Delivery Fee:</span> </Typography>
+                                            </Grid>
+                                            <Grid item xs={3}>
+                                                <Typography><span>{`$ ${ parseFloat(deliveryFee.Cost).toFixed(2)}`}</span></Typography>
+                                            </Grid>
+                                            <Grid item xs={9}>
+                                                <Typography style={{fontFamily: "Inter", fontSize: "14px"}}><span className={classes.fees}>Processing Fee:</span> </Typography>
+                                            </Grid>
+                                            <Grid item xs={3}>
+                                                <Typography><span>{`$ ${ parseFloat(serviceFee.Cost).toFixed(2)}`}</span></Typography>
+                                            </Grid>
+                                            <Grid item xs={9}>
+                                                <Typography style={{fontFamily: "Inter", fontSize: "14px"}}><span className={classes.fees}>GCT:</span> </Typography>
+                                            </Grid>
+                                            <Grid item xs={3}>
+                                                <Typography><span>{`$ ${ parseFloat(GCT.Cost).toFixed(2)}`}</span></Typography>
+                                            </Grid>
+                                            <Grid item xs={9}>
+                                                <Typography style={{fontFamily: "Inter", fontSize: "14px"}}><span className={classes.fees}>Total:</span> </Typography>
+                                            </Grid>
+                                            <Grid item xs={3}>
+                                                <Typography><span style={{color: "#FF5E14", fontWeight: 600}}>{`$ ${ parseFloat(Total.Cost).toFixed(2)}`}</span></Typography>
+                                            </Grid>      
+                                        </Grid>
                                     </Grid>
                                     <Grid item xs={12}>
                                         {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}

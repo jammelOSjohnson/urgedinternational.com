@@ -3,37 +3,56 @@ import { useAppData } from '../../../Context/AppDataContext';
 import { DataGrid, GridColDef } from '@material-ui/data-grid';
 import moment from 'moment';
 import { useHistory } from 'react-router-dom';
+import MUIDataTable from "mui-datatables";
 
-const columns: GridColDef[] = [
-  { field: 'id', headerName: 'Transaction', width: 414 },
-  {
-    field: 'OrderDate',
-    headerName: 'Date',
-    width: 195,
-    editable: false,
+const columns = [
+  { 
+    name: 'id', 
+    label: 'Transaction', 
+    options: {
+      filter: true,
+      sort: true,
+     }
+  },{
+    name: 'Description',
+    label: 'Order Details',
+    options: {
+      filter: true,
+      sort: true,
+     }
+  },{
+    name: 'OrderDate',
+    label: 'Date',
+    options: {
+      filter: true,
+      sort: true,
+     }
   },
   {
-    field: 'OrderStatus',
-    headerName: 'Status',
-    width: 195,
-    editable: false,
+    name: 'OrderStatus',
+    label: 'Status',
+    options: {
+      filter: true,
+      sort: true,
+     }
   },
   {
-    field: 'OrderTotal',
-    headerName: 'Order Total',
-    width: 195,
-    editable: false,
+    name: 'OrderTotal',
+    label: 'Order Total',
+    options: {
+      filter: true,
+      sort: true,
+     }
   },
   {
-    field: 'Rider',
-    headerName: 'Delivery Partner',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 160
+    name: 'Rider',
+    label: 'Delivery Partner',
+    options: {
+      filter: true,
+      sort: true,
+     }
   },
-];
-
-
+]
 
 
 
@@ -56,14 +75,33 @@ export const HistoryTable: React.FC = function HistoryTable () {
     // eslint-disable-next-line
   }, [currentUser]);
 
+  const options = {
+    filterType: 'dropdown',
+    search: true,
+    selectableRows: false,
+    download: false,
+    print: false
+  };
+
   if(userRolef !== undefined && orders.length !== 0){
     if(userRolef === "Admin" || userRolef === "Rider" || userRolef === "Customer" ){
       orders.map((item, index) => {
         const now = new Date(parseInt(item.OrderDate, 10));
-        const estTime = moment.tz(now, "America/Jamaica").format();
+        const estTime = moment.tz(now, "America/Jamaica").format("YYYY-MM-DD h:mm a");
         //console.log(item);
+        var orderItems = "";
+        orderItems = orderItems + item.OrderItems.map((item,index) => {
+          return(
+            item.chickenFlavour1 !== "" && item.chickenFlavour1 !== "Select Flavour" && item.chickenFlavour1 !== null && item.chickenFlavour1 !== undefined?
+          `${item.itemName + ": "}\n${item.chickenFlavour1 + " | "}\n${item.chickenFlavour2 + " | "}
+          \n${item.drink !== "Select Drink"? item.drink + " | ": "" + " | "}\n${item.otherIntructions + " | "}\n${'Not Available? ' + item.ifnotAvailable}` :
+          `${item.itemName + ": "}\n${item.drink !== "Select Drink"? item.drink + " | ": "" + " | "}\n${item.otherIntructions + " | "}\n${'Not Available? ' + item.ifnotAvailable}`
+          )
+        })
+
         let row = {
-          id: item._id, 
+          id: item._id,
+          Description: orderItems,
           OrderDate: estTime, 
           OrderStatus: item.OrderStatus, 
           OrderTotal: `$ ${item.OrderTotal}`, 
@@ -80,13 +118,12 @@ export const HistoryTable: React.FC = function HistoryTable () {
 
   return (
     <div style={{ height: 400, width: '100%' }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={5}
-        checkboxSelection={false}
-        disableSelectionOnClick
-      />
+      <MUIDataTable
+          title={""}
+          data={rows}
+          columns={columns}
+          options={options}
+        />
     </div>
   );
 }

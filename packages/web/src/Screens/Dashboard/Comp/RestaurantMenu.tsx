@@ -484,6 +484,93 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid>
                                                 </Grid>
                                             </form>
+                                        :restaurant.FirstName === "Popeyes"?
+                                            <form>
+                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} />
+                                                    <Grid item xs={12} sm={12} >
+                                                        <TextField
+                                                            id="outlined-multiline-static"
+                                                            label="Special Intructions"
+                                                            multiline
+                                                            rows={4}
+                                                            defaultValue={values.otherIntructions}
+                                                            onChange={handleChange2('otherIntructions')}
+                                                            variant="outlined"
+                                                            placeholder="Enter Instructions Here"
+                                                            fullWidth
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} >
+                                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                                <Select
+                                                                    labelId="demo-simple-select-outlined-label"
+                                                                    id="demo-simple-select-outlined"
+                                                                    value={values.ifnotAvailable}
+                                                                    onChange={handleChange}
+                                                                    label="ifnotAvailable"
+                                                                    name="ifnotAvailable"
+                                                                    className={classes.root}
+                                                                    fullWidth
+                                                                >
+                                                                    <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                    <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                    <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                    <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                    </Grid>
+                                                    <Grid item xs={10} sm={12} >
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} onClick={() => AddToCart(values)} type="button">
+                                                            Add To Cart 
+                                                        </Button>
+                                                    </Grid>
+                                                </Grid>
+                                            </form>
+                                        :restaurant.FirstName === "Homar's ROTI & Grill"?
+                                            <form>
+                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                    <Grid item xs={12} sm={12} >
+                                                        <TextField
+                                                            id="outlined-multiline-static"
+                                                            label="Special Intructions"
+                                                            multiline
+                                                            rows={4}
+                                                            defaultValue={values.otherIntructions}
+                                                            onChange={handleChange2('otherIntructions')}
+                                                            variant="outlined"
+                                                            placeholder="Enter Instructions Here"
+                                                            fullWidth
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} >
+                                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                                <Select
+                                                                    labelId="demo-simple-select-outlined-label"
+                                                                    id="demo-simple-select-outlined"
+                                                                    value={values.ifnotAvailable}
+                                                                    onChange={handleChange}
+                                                                    label="ifnotAvailable"
+                                                                    name="ifnotAvailable"
+                                                                    className={classes.root}
+                                                                    fullWidth
+                                                                >
+                                                                    <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                    <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                    <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                    <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                    </Grid>
+                                                    <Grid item xs={10} sm={12} >
+                                                        <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => AddToCart(values)} type="button">
+                                                            Add To Cart 
+                                                        </Button>
+                                                    </Grid>
+                                                </Grid>
+                                            </form>
                                         :
                                         <></>
                                         }
@@ -779,7 +866,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                 </Select>
                                                             </FormControl>
                                                     </Grid>
-                                                    <Grid item xs={10} sm={12} >
+                                                    <Grid item xs={12} sm={12} >
                                                         <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} onClick={() => AddToCart(values)} type="button">
                                                             Add To Cart 
                                                         </Button>
@@ -822,7 +909,94 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                 </Select>
                                                             </FormControl>
                                                     </Grid>
-                                                    <Grid item xs={10} sm={12} >
+                                                    <Grid item xs={12} sm={12} >
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} onClick={() => AddToCart(values)} type="button">
+                                                            Add To Cart 
+                                                        </Button>
+                                                    </Grid>
+                                                </Grid>
+                                            </form>
+                                        :restaurant.FirstName === "Popeyes"?
+                                            <form>
+                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} />
+                                                    <Grid item xs={12} sm={12} >
+                                                        <TextField
+                                                            id="outlined-multiline-static"
+                                                            label="Special Intructions"
+                                                            multiline
+                                                            rows={4}
+                                                            defaultValue={values.otherIntructions}
+                                                            onChange={handleChange2('otherIntructions')}
+                                                            variant="outlined"
+                                                            placeholder="Enter Instructions Here"
+                                                            fullWidth
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} >
+                                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                                <Select
+                                                                    labelId="demo-simple-select-outlined-label"
+                                                                    id="demo-simple-select-outlined"
+                                                                    value={values.ifnotAvailable}
+                                                                    onChange={handleChange}
+                                                                    label="ifnotAvailable"
+                                                                    name="ifnotAvailable"
+                                                                    className={classes.root}
+                                                                    fullWidth
+                                                                >
+                                                                    <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                    <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                    <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                    <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                    </Grid>
+                                                    <Grid item xs={12} sm={12} >
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} onClick={() => AddToCart(values)} type="button">
+                                                            Add To Cart 
+                                                        </Button>
+                                                    </Grid>
+                                                </Grid>
+                                            </form>
+                                        :restaurant.FirstName === "Homar's ROTI & Grill"?
+                                            <form>
+                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                    <Grid item xs={12} sm={12} >
+                                                        <TextField
+                                                            id="outlined-multiline-static"
+                                                            label="Special Intructions"
+                                                            multiline
+                                                            rows={4}
+                                                            defaultValue={values.otherIntructions}
+                                                            onChange={handleChange2('otherIntructions')}
+                                                            variant="outlined"
+                                                            placeholder="Enter Instructions Here"
+                                                            fullWidth
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} >
+                                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                                <Select
+                                                                    labelId="demo-simple-select-outlined-label"
+                                                                    id="demo-simple-select-outlined"
+                                                                    value={values.ifnotAvailable}
+                                                                    onChange={handleChange}
+                                                                    label="ifnotAvailable"
+                                                                    name="ifnotAvailable"
+                                                                    className={classes.root}
+                                                                    fullWidth
+                                                                >
+                                                                    <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                    <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                    <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                    <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                    </Grid>
+                                                    <Grid item xs={12} sm={12} >
                                                         <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} onClick={() => AddToCart(values)} type="button">
                                                             Add To Cart 
                                                         </Button>
@@ -849,7 +1023,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                             timeout: 500,
                             }}
                         >
-                            <Fade in={open}>
+                            <Fade in={open2}>
                             <div className={clsx(classes.paper, "modalMobile")}>
                                 <h2 id="transition-modal-title">Create new order?</h2>
                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
@@ -858,7 +1032,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                             Your order contains items from {cartItems.length > 0 ? cartItems[0].restaurantName : ''}. Create a new order to add items from {restaurant.FirstName} Restaurant.
                                         </Typography>
                                     </Grid>
-                                    <Grid item xs={10} sm={12} >
+                                    <Grid item xs={12} sm={12} >
                                         <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} onClick={() => handleOpen2()} type="button">
                                             Add New Order 
                                         </Button>
@@ -889,7 +1063,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                 <CardContent>
                                                         <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
                                                             <Grid item xs={12}>
-                                                                    <Typography variant="h6" className="itemNameMobile" component="p" style={{height: "64px"}}>
+                                                                    <Typography variant="h6" className="itemNameMobile" component="p" style={{height: "30px"}}>
                                                                         {item.ItemName}
                                                                     </Typography>
                                                             </Grid>
@@ -903,7 +1077,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                 <CardActions>
                                                     <Grid container xs={12} direction="row" spacing={0} className={classes.root} alignItems="center">
                                                         <Grid item xs={6}>
-                                                            <Typography variant="body2"  component="p" className={classes.priceText} style={{textAlign: "left", width: "100%"}}>
+                                                            <Typography variant="body2"  component="p" className={classes.priceText} style={{height: "30px", textAlign: "left", width: "100%"}}>
                                                                 {`$ ${ parseFloat(item.ItemCost).toFixed(2)}`}
                                                             </Typography>
                                                         </Grid>
@@ -950,12 +1124,35 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             }
                                                         }
 
-                                                        @media only screen and (max-width: 679px) {
+                                                        @media only screen and (max-height: 679px) {
+                                                            .modalMobile{
+                                                                max-height: 590px;
+                                                                overflow-x: hidden;
+                                                                overflow-y: auto;
+                                                            }
+                                                        }
+
+                                                        @media only screen and (max-height: 600px) {
                                                             .modalMobile{
                                                                 max-height: 500px;
                                                                 overflow-x: hidden;
                                                                 overflow-y: auto;
                                                             }
+                                                        }
+
+                                                        @media only screen and (max-height: 560px) {
+                                                            .modalMobile{
+                                                                max-height: 490px;
+                                                                overflow-x: hidden;
+                                                                overflow-y: auto;
+                                                            }
+                                                        }
+
+                                                        @media only screen and (max-width: 460px) {
+                                                            .itemDescMobile{
+                                                                height: 66.594px;
+                                                            }
+
                                                         }
 
                                                         @media only screen and (max-width: 600px) {
@@ -981,12 +1178,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
 
                                                         }
 
-                                                        @media only screen and (max-width: 460px) {
-                                                            .itemDescMobile{
-                                                                height: 66.594px;
-                                                            }
-
-                                                        }
+                                                       
 
                                                         @media only screen and (max-width: 471px) {
                                                             .itemNameMobile {
@@ -1063,12 +1255,12 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                             <CardActions>
                                                 <Grid container xs={12} direction="row" spacing={0} className={classes.root} alignItems="center">
                                                     <Grid item xs={6}>
-                                                            <Typography variant="body2"  component="p" className={classes.priceText} style={{width: "100%"}}>
+                                                            <Typography variant="body2"  component="p" className={classes.priceText} style={{height: "30px", width: "100%"}}>
                                                                 {`$ ${ parseFloat(item.ItemCost).toFixed(2)}`}
                                                             </Typography>
                                                     </Grid>
                                                     <Grid item xs={6}>
-                                                            <Typography variant="body2"  component="p" style={{textAlign: "right"}}>
+                                                            <Typography variant="body2"  component="p" style={{height: "30px", textAlign: "right"}}>
                                                                 <ItemRating rating={3.5}/>
                                                             </Typography>
                                                     </Grid>
@@ -1110,12 +1302,35 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             }
                                                         }
 
-                                                        @media only screen and (max-width: 679px) {
+                                                        @media only screen and (max-height: 679px) {
+                                                            .modalMobile{
+                                                                max-height: 590px;
+                                                                overflow-x: hidden;
+                                                                overflow-y: auto;
+                                                            }
+                                                        }
+
+                                                        @media only screen and (max-height: 600px) {
                                                             .modalMobile{
                                                                 max-height: 500px;
                                                                 overflow-x: hidden;
                                                                 overflow-y: auto;
                                                             }
+                                                        }
+
+                                                        @media only screen and (max-height: 560px) {
+                                                            .modalMobile{
+                                                                max-height: 490px;
+                                                                overflow-x: hidden;
+                                                                overflow-y: auto;
+                                                            }
+                                                        }
+
+                                                        @media only screen and (max-width: 460px) {
+                                                            .itemDescMobile{
+                                                                height: 66.594px;
+                                                            }
+
                                                         }
 
                                                         @media only screen and (max-width: 600px) {

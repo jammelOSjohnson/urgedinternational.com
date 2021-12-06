@@ -108,17 +108,17 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                         let closeTimeFinal = closeTime.trim();
                         let isAm: boolean = jaTime.includes('a');
                         let isPm: boolean = jaTime.includes('p'); 
-                        //console.log(isAm);
-                        //console.log(isPm);
-                        //console.log(closeTimeFinal);
-                        //console.log(jaTimeFinal[0]);
+                        // console.log(isAm);
+                        // console.log(isPm);
+                        // console.log(closeTimeFinal);
+                        // console.log(jaTimeFinal[0]);
                         let decision = (isPm && (parseInt(closeTimeFinal) > parseInt(jaTimeFinal[0]))) || (isAm && (parseInt(jaTimeFinal[0]) > parseInt(openTimeFinal))) 
                         //console.log(decision)
                         setisOpen(decision);
                         //console.log(jaday)
                     }
                 }).catch((err) => {
-                    //console.log(err);
+                    console.log(err);
                     setjaday(moment.tz(now, "America/Jamaica").format());
                     settoday(new Date(jaday).getDay());
 
@@ -142,6 +142,9 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                     let closeTimeFinal = closeTime.trim();
                     let isAm: boolean = jaTime.includes('a');
                     let isPm: boolean = jaTime.includes('p'); 
+                    // console.log(isPm);
+                    // console.log(closeTimeFinal);
+                    // console.log(jaTimeFinal[0]);
                     let decision = (isPm && (parseInt(closeTimeFinal) > parseInt(jaTimeFinal[0]))) || (isAm && (parseInt(jaTimeFinal[0]) > parseInt(openTimeFinal))) 
                     //console.log(decision)
                     setisOpen(decision);
@@ -150,7 +153,7 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                 })
             }
 
-            console.log(jaday)
+            //console.log(jaday)
         }
     }, [restaurants])
 
@@ -189,13 +192,18 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Typography variant={'h6'}><ScheduleRounded color="primary" />
-                                            Hours: Open <span style={{fontWeight: "bolder"}}>
-                                            {
-                                              TodayOpeningHrs
+                                            Hours: 
+                                            {isOpen ? 
+                                                <>
+                                                <span>Open</span>
+                                                <span style={{fontWeight: "bolder"}}>
+                                                    {TodayOpeningHrs}
+                                                </span> 
+                                                Today
+                                                </>
+                                            : 
+                                                <span>Closed For Today</span>
                                             }
-                                            
-                                            </span> Today 
-                                            
                                         </Typography>
                                     </Grid>
                                 </Grid>

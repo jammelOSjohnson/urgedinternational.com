@@ -1472,10 +1472,10 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
                                                     }}
                                                 >
                                                     <p style={{ fontSize: 14, lineHeight: "140%" }}>
-                                                    {item.chickenFlavour1 != "" ?
-                                                        `${item.chickenFlavour1}\n${item.chickenFlavour2}
-                                                        \n${item.drink}\n${item.otherIntructions}\n${item.ifnotAvailable}` :
-                                                        `${item.drink}\n${item.otherIntructions}\n${item.ifnotAvailable}`
+                                                    { item.chickenFlavour1 !== "" && item.chickenFlavour1 !== "Select Flavour" && item.chickenFlavour1 !== null && item.chickenFlavour1 !== undefined?
+                                                    `${item.itemName + ": "}\n${item.chickenFlavour1 + " | "}\n${item.chickenFlavour2 + " | "}
+                                                    \n${item.drink !== "Select Drink"? item.drink + " | ": "" + " | "}\n${item.otherIntructions + " | "}\n${'Not Available? ' + item.ifnotAvailable}` :
+                                                    `${item.itemName + ": "}\n${item.drink !== "Select Drink"? item.drink + " | ": "" + " | "}\n${item.otherIntructions + " | "}\n${'Not Available? ' + item.ifnotAvailable}`
                                                     }
                                                     </p>
                                                 </div>

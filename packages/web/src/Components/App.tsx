@@ -141,7 +141,7 @@ const App: React.FC = function App() {
   //var { value }  = useAppData();
   //var { serviceWorkerUpdate, serviceWorkerInit } = value;
 
-  serviceWorkerRegistration.register();
+  //serviceWorkerRegistration.register();
   // {
   //   onSuccess: () => serviceWorkerInit(),
   //   onUpdate: reg => serviceWorkerUpdate(reg, value),
