@@ -9,6 +9,7 @@ interface State {
     Town: string;
     ContactNum: string;
     PaymentMethod: string;
+    Parish: string;
 }
 
 interface Fee {
@@ -135,9 +136,10 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
 
     const [values, setValues] = React.useState<State>({
         Street: '',
-        Town: 'Select Town',
+        Town: '',
         ContactNum: '',
-        PaymentMethod: "Cash on Delivery"
+        PaymentMethod: "Cash on Delivery",
+        Parish: 'Clarendon'
     });
 
     var { value }  = useAppData();
@@ -166,7 +168,8 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                     Street: '',
                     Town: 'Select Town',
                     ContactNum: '',
-                    PaymentMethod: "Cash on Delivery"
+                    PaymentMethod: "Cash on Delivery",
+                    Parish: 'Clarendon'
                 });
                 history.push("/OrderCompleted");
             });
@@ -191,103 +194,104 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
     };
 
     useEffect(() =>{
-        if(generalLocation !== "" && generalLocation !== undefined){
-            if(generalLocation !== values.Town && values.Town === 'Select Town'){
-                setValues({...values, Town: generalLocation});
-            }
-        }
+        // if(generalLocation !== "" && generalLocation !== undefined){
+        //     if(generalLocation !== values.Town && values.Town === 'Select Town'){
+        //         setValues({...values, Town: generalLocation});
+        //     }
+        // }
 
-        let delFee = values.Town === "May Pen Hospital" ?
-            process.env.REACT_APP_FEE_MayPenHospital?.toString()
-        :
-        values.Town === "May Pen" ?
-            process.env.REACT_APP_FEE_MayPen?.toString()
-        :
-        values.Town === "Bushy park" ?
-            process.env.REACT_APP_FEE_Bushypark?.toString()
-        :
-        values.Town === "Bucknor" ?
-            process.env.REACT_APP_FEE_Bucknor?.toString()
-        :
-        values.Town === "Clarendon park" ?
-            process.env.REACT_APP_FEE_Clarendonpark?.toString()
-        :
-        values.Town === "Curatoe Hil" ?
-            process.env.REACT_APP_FEE_CuratoeHil?.toString()
-        :
-        values.Town === "Denbigh" ?
-            process.env.REACT_APP_FEE_Denbigh?.toString()
-        :
-        values.Town === "Four paths" ?
-            process.env.REACT_APP_FEE_Fourpaths?.toString()
-        :
-        values.Town === "Foga Road" ?
-            process.env.REACT_APP_FEE_FogaRoad?.toString()
-        :
-        values.Town === "Glenmuir" ?
-            process.env.REACT_APP_FEE_Glenmuir?.toString()
-        :
-        values.Town === "Halse Hall" ?
-            process.env.REACT_APP_FEE_HalseHall?.toString()
-        :
-        values.Town === "Hartwell Gardens" ?
-            process.env.REACT_APP_FEE_HartwellGardens?.toString()
-        :
-        values.Town === "Hayes corn piece" ?
-            process.env.REACT_APP_FEE_Hayescornpiece?.toString()
-        :
-        values.Town === "Hazard" ?
-            process.env.REACT_APP_FEE_Hazard?.toString()
-        :
-        values.Town === "Inglewood" ?
-            process.env.REACT_APP_FEE_Inglewood?.toString()
-        :
-        values.Town === "Juno Crescent" ?
-            process.env.REACT_APP_FEE_JunoCrescent?.toString()
-        :  
-        values.Town === "Midland Glades" ?
-            process.env.REACT_APP_FEE_MidlandGlades?.toString()
-        :
-        values.Town === "Muirhead Avenue" ?
-            process.env.REACT_APP_FEE_MuirheadAvenue?.toString()
-        :
-        values.Town === "Mineral Heights" ?
-            process.env.REACT_APP_FEE_MineralHeights?.toString()
-        :
-        values.Town === "Osborne Store" ?
-            process.env.REACT_APP_FEE_OsborneStore?.toString()
-        :
-        values.Town === "Paisley" ?
-            process.env.REACT_APP_FEE_Paisley?.toString()
-        :
-        values.Town === "Palmers Cross" ?
-            process.env.REACT_APP_FEE_PalmersCross?.toString()
-        :
-        values.Town === "Race Track" ?
-            process.env.REACT_APP_FEE_RaceTrack?.toString()
-        :
-        values.Town === "Sandy Bay" ?
-            process.env.REACT_APP_FEE_SandyBay?.toString()
-        :
-        values.Town === "Swansea" ?
-            process.env.REACT_APP_FEE_Swansea?.toString()
-        :
-        values.Town === "Toll gate" ?
-            process.env.REACT_APP_FEE_Tollgate?.toString()
-        :
-        values.Town === "Trenton Road" ?
-            process.env.REACT_APP_FEE_TrentonRoad?.toString()
-        :
-        values.Town === "Treadlight" ?
-            process.env.REACT_APP_FEE_Treadlight?.toString()
-        :
-        values.Town === "Twin Palm Estate" ?
-            process.env.REACT_APP_FEE_TwinPalmEstate?.toString()
-        :
-        values.Town === "Vere" ?
-            process.env.REACT_APP_FEE_Vere?.toString()
-        :
-        "0.00";
+        let delFee = "500";
+        //values.Town === "May Pen Hospital" ?
+        //     process.env.REACT_APP_FEE_MayPenHospital?.toString()
+        // :
+        // values.Town === "May Pen" ?
+        //     process.env.REACT_APP_FEE_MayPen?.toString()
+        // :
+        // values.Town === "Bushy park" ?
+        //     process.env.REACT_APP_FEE_Bushypark?.toString()
+        // :
+        // values.Town === "Bucknor" ?
+        //     process.env.REACT_APP_FEE_Bucknor?.toString()
+        // :
+        // values.Town === "Clarendon park" ?
+        //     process.env.REACT_APP_FEE_Clarendonpark?.toString()
+        // :
+        // values.Town === "Curatoe Hil" ?
+        //     process.env.REACT_APP_FEE_CuratoeHil?.toString()
+        // :
+        // values.Town === "Denbigh" ?
+        //     process.env.REACT_APP_FEE_Denbigh?.toString()
+        // :
+        // values.Town === "Four paths" ?
+        //     process.env.REACT_APP_FEE_Fourpaths?.toString()
+        // :
+        // values.Town === "Foga Road" ?
+        //     process.env.REACT_APP_FEE_FogaRoad?.toString()
+        // :
+        // values.Town === "Glenmuir" ?
+        //     process.env.REACT_APP_FEE_Glenmuir?.toString()
+        // :
+        // values.Town === "Halse Hall" ?
+        //     process.env.REACT_APP_FEE_HalseHall?.toString()
+        // :
+        // values.Town === "Hartwell Gardens" ?
+        //     process.env.REACT_APP_FEE_HartwellGardens?.toString()
+        // :
+        // values.Town === "Hayes corn piece" ?
+        //     process.env.REACT_APP_FEE_Hayescornpiece?.toString()
+        // :
+        // values.Town === "Hazard" ?
+        //     process.env.REACT_APP_FEE_Hazard?.toString()
+        // :
+        // values.Town === "Inglewood" ?
+        //     process.env.REACT_APP_FEE_Inglewood?.toString()
+        // :
+        // values.Town === "Juno Crescent" ?
+        //     process.env.REACT_APP_FEE_JunoCrescent?.toString()
+        // :  
+        // values.Town === "Midland Glades" ?
+        //     process.env.REACT_APP_FEE_MidlandGlades?.toString()
+        // :
+        // values.Town === "Muirhead Avenue" ?
+        //     process.env.REACT_APP_FEE_MuirheadAvenue?.toString()
+        // :
+        // values.Town === "Mineral Heights" ?
+        //     process.env.REACT_APP_FEE_MineralHeights?.toString()
+        // :
+        // values.Town === "Osborne Store" ?
+        //     process.env.REACT_APP_FEE_OsborneStore?.toString()
+        // :
+        // values.Town === "Paisley" ?
+        //     process.env.REACT_APP_FEE_Paisley?.toString()
+        // :
+        // values.Town === "Palmers Cross" ?
+        //     process.env.REACT_APP_FEE_PalmersCross?.toString()
+        // :
+        // values.Town === "Race Track" ?
+        //     process.env.REACT_APP_FEE_RaceTrack?.toString()
+        // :
+        // values.Town === "Sandy Bay" ?
+        //     process.env.REACT_APP_FEE_SandyBay?.toString()
+        // :
+        // values.Town === "Swansea" ?
+        //     process.env.REACT_APP_FEE_Swansea?.toString()
+        // :
+        // values.Town === "Toll gate" ?
+        //     process.env.REACT_APP_FEE_Tollgate?.toString()
+        // :
+        // values.Town === "Trenton Road" ?
+        //     process.env.REACT_APP_FEE_TrentonRoad?.toString()
+        // :
+        // values.Town === "Treadlight" ?
+        //     process.env.REACT_APP_FEE_Treadlight?.toString()
+        // :
+        // values.Town === "Twin Palm Estate" ?
+        //     process.env.REACT_APP_FEE_TwinPalmEstate?.toString()
+        // :
+        // values.Town === "Vere" ?
+        //     process.env.REACT_APP_FEE_Vere?.toString()
+        // :
+        // "0.00";
 
         //Calc Delivery Fee
         if(delFee !== deliveryFee.Cost && delFee !== "0.00" && delFee !== undefined){
@@ -346,7 +350,8 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
             }
             setTotal(newTotal);
         }
-    },[deliveryFee.Cost, generalLocation, values.Town, cartItems, value])
+    },[deliveryFee.Cost,  cartItems, value])
+    // generalLocation, values.Town
       
     return (
         <>
@@ -404,9 +409,12 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                                         <Typography className={classes.formSubheading}>Please enter delivery address below.</Typography>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <TextField placeholder="eg. 1 maypen ave" id="street" label="Street" variant="outlined" value={values.Street} onChange={handleChange2('Street')} fullWidth/>
+                                        <TextField placeholder="eg. 123 Silver Close" id="street" label="Enter Street" variant="outlined" value={values.Street} onChange={handleChange2('Street')} fullWidth/>
                                     </Grid>
-                                    <Grid item xs={12} sm={12}>
+                                    <Grid item xs={12}>
+                                        <TextField placeholder="Mineral Heights" id="town" label="Enter Town" variant="outlined" value={values.Town} onChange={handleChange2('Town')} fullWidth/>
+                                    </Grid>
+                                    {/* <Grid item xs={12} sm={12}>
                                         <FormControl variant="outlined" className={classes.formControl} fullWidth>
                                             <InputLabel id="demo-simple-select-outlined-label">Town</InputLabel>
                                             <Select
@@ -451,12 +459,16 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                                                 <MenuItem value={"Vere"}>Vere</MenuItem>
                                             </Select>
                                         </FormControl>
-                                    </Grid>
+                                    </Grid> */}
                                     {/* <Grid item xs={12}>
                                         <TextField id="parish" label="Parish" variant="outlined" fullWidth/>
                                     </Grid> */}
                                     <Grid item xs={12}>
-                                        <TextField id="contact" label="Contact #" variant="outlined" onChange={handleChange2('ContactNum')} fullWidth/>
+                                        {/* <TextField id="parish" style={{border: "none", borderColor: "none"}} label="Parish" variant="outlined" value={values.Parish} disabled  fullWidth/> */}
+                                        <input type="text" id="parish" style={{border: "0.1px dotted", borderColor: "#888888", borderRadius: "12px", padding: "18.5px 14px", width: "100%", marginBottom: "3%"}} value={values.Parish} disabled />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <TextField id="contact" label="Enter Contact #" variant="outlined" value={values.ContactNum} onChange={handleChange2('ContactNum')} fullWidth/>
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Grid container>

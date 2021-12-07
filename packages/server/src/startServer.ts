@@ -5,20 +5,21 @@ import typeDefs from './typeDefs';
 import resolvers from './resolvers';
 import mongoose from 'mongoose';
 
-
+//backendsocket 
+//const io = require("socket.io");
 
 
 export async function startServer() {
     const app = express();
     const apolloServer = process.env.NODE_ENV == "development" ? 
-    
         new ApolloServer({
             typeDefs: typeDefs,
             resolvers: resolvers,
             plugins: [
                 ApolloServerPluginLandingPageGraphQLPlayground(),
             ],
-        }) : 
+        }) 
+        : 
         new ApolloServer({
             typeDefs: typeDefs,
             resolvers: resolvers,
@@ -32,6 +33,15 @@ export async function startServer() {
         res.send("hmm, what do you think you are doing?");
     })
     try{
+        //Socket Init
+        // io.of("/api/socket").on("connection", (socket) => {
+        //     console.log("socket.io: User connected: ", socket.id);
+    
+        //     socket.on("disconnect", () => {
+        //         console.log("socket.io: User disconnected: ", socket.id);
+        //     });
+        // });
+
         let conn_string = "";
         //'mongodb://localhost:27017/urgeddb'
         if(process.env.NODE_ENV == "development"){
@@ -48,6 +58,39 @@ export async function startServer() {
             useNewUrlParser: true,
             useCreateIndex: true
         });
+
+        // const connection = mongoose.connection;
+        // connection.once("open", () => {
+        //     console.log("MongoDB database connected");
+
+        //     console.log("setting change streams");
+        //     const orderChangeStreams = connection.collection("orders").watch();
+
+        //     orderChangeStreams.on("change", (change) => {
+        //         switch (change.operationType) {
+        //             case "insert":
+        //                 const order = {
+        //                     _id: change.fullDocument._id,
+        //                     Id: change.fullDocument.Id,
+        //                     OrderItems: change.fullDocument.OrderItems, 
+        //                     OrderStatus: change.fullDocument.OrderStatus,
+        //                     OrderTotal: change.fullDocument.OrderTotal,
+        //                     OrderDate: change.fullDocument.OrderDate,
+        //                     Rider: change.fullDocument.Rider,
+        //                     DeliveryAddress: change.fullDocument.DeliveryAddress,
+        //                     PaymentMethod: change.fullDocument.PaymentMethod,
+        //                     AdditionalInfo: change.fullDocument.AdditionalInfo,
+        //                     DeliveryFee: change.fullDocument.DeliveryFee,
+        //                     GCT: change.fullDocument.GCT,
+        //                     ServiceCharge: change.fullDocument.ServiceCharge,
+        //                     CartTotal: change.fullDocument.CartTotal
+        //                 };
+
+        //                 io.of("/api/socket").emit("newOrder", order);
+        //                 break;
+        //         }
+        //     })
+        // })
     }catch(err){
         console.log(err);
     }

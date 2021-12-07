@@ -40,6 +40,9 @@ import { createTheme, ThemeProvider } from '@material-ui/core';
 import { useEffect } from 'react';
 import "jspdf/dist/polyfills.es.js";
 
+//Client Socket
+//import io from "socket.io-client";
+
 //not found page
 import {NotFound} from './NotFound';
 
@@ -138,9 +141,9 @@ const client = new ApolloClient({
 
 
 const App: React.FC = function App() {
-  //var { value }  = useAppData();
+  var { value }  = useAppData();
   //var { serviceWorkerUpdate, serviceWorkerInit } = value;
-
+  //var { fetchOrders } = value;
   //serviceWorkerRegistration.register();
   // {
   //   onSuccess: () => serviceWorkerInit(),
@@ -148,7 +151,17 @@ const App: React.FC = function App() {
   // }
 
   useEffect(() =>{
-    document.body.style.backgroundColor = "#fff"
+    document.body.style.backgroundColor = "#fff";
+    // try{
+    //   const socket = io(`${process.env.REACT_APP_SocketURL}/socket`);
+    //   socket.on("newOrder", (Order) => {
+    //     fetchOrders(value).then(()=>{
+          
+    //     });
+    //   })
+    // }catch{
+
+    // }
   })
 
   return (

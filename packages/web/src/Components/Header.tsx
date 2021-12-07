@@ -160,14 +160,14 @@ export const Header: React.FC = function Header() {
       genralLocation: 'Select Location',
     });
 
-    const isServiceWorkerUpdated  = serviceWorkerUpdated;
+    //const isServiceWorkerUpdated  = serviceWorkerUpdated;
 
     useEffect(function(){
-      if(generalLocation === undefined){
-        setOpen(true);
-      }else{
-        setOpen(false);
-      }
+      // if(generalLocation === undefined){
+      //   setOpen(true);
+      // }else{
+      //   setOpen(false);
+      // }
 
       auth.onAuthStateChanged(function (user){
         ////console.log("auth");
@@ -251,17 +251,17 @@ export const Header: React.FC = function Header() {
       }
     };
 
-    const updateServiceWorker = () => {
-      const registrationWaiting = serviceWorkerRegistration.waiting;
-      if (registrationWaiting) {
-        registrationWaiting.postMessage({ type: 'SKIP_WAITING' });
-        registrationWaiting.addEventListener('statechange', e => {
-          if (e.target.state === 'activated') {
-            window.location.reload();
-          }
-        });
-      }
-    }
+    // const updateServiceWorker = () => {
+    //   const registrationWaiting = serviceWorkerRegistration.waiting;
+    //   if (registrationWaiting) {
+    //     registrationWaiting.postMessage({ type: 'SKIP_WAITING' });
+    //     registrationWaiting.addEventListener('statechange', e => {
+    //       if (e.target.state === 'activated') {
+    //         window.location.reload();
+    //       }
+    //     });
+    //   }
+    // }
 
     const handleOpen = (item) => {
       setOpen(true);
@@ -274,7 +274,7 @@ export const Header: React.FC = function Header() {
     if(referralPath !== '/'){
       return(
         <>
-          <Modal
+          {/* <Modal
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
                     className={classes.modal}
@@ -349,7 +349,7 @@ export const Header: React.FC = function Header() {
                         </Grid>
                     </div>
                     </Fade>
-          </Modal>
+          </Modal> */}
           {/* {isServiceWorkerUpdated && (
             <Alert
               severity="info"
