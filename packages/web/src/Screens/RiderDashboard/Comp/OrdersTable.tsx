@@ -6,6 +6,8 @@ import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { EditRounded } from "@material-ui/icons/";
 import { Backdrop, CircularProgress, createStyles, makeStyles, Theme } from '@material-ui/core';
+import { useQuery } from '@apollo/client';
+import { GET_ORDERS_BY_RIDERID } from '../../../GraphQL/Queries';
   
   // const columns: GridColDef[] = [
   //   { field: 'id', headerName: 'Transaction', width: 200 },
@@ -123,21 +125,29 @@ import { Backdrop, CircularProgress, createStyles, makeStyles, Theme } from '@ma
   export const OrdersTable: React.FC = function OrdersTable () {
     const classes = useStyles();
     var { value }  = useAppData();
-    var { orders, fetchOrdersForRider, currentUser, userRolef } = value;
+    var { orders, refreshingOrderTables, currentUser, userRolef } = value;
     var history = useHistory();
 
+    const {data} = useQuery(GET_ORDERS_BY_RIDERID,{
+      variables: {Rider: value.userInfo._id},
+      pollInterval: 500,
+    });
+    
     const rows = [] as Object[];
     useEffect(() => {
       try{
-        fetchOrdersForRider(value).then(()=>{
+        if(data.getOrdersByRiderId !== null){
+          var Orders = data.getOrdersByRiderId;
+          refreshingOrderTables(value, Orders).then(()=>{
           
-        });
+          });
+        }
   
       }catch(e){
         //console.log(e)
       }
       // eslint-disable-next-line
-    }, [currentUser]);
+    }, [currentUser, data]);
     
     const handleEdit = (event) => {
       event.preventDefault();

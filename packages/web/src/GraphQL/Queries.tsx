@@ -20,31 +20,70 @@ export const GET_CATEGORIES = gql`
     }
 `
 
-// export const GET_RESTAURANTS = gql`
-//     query getRestaurants{
-//         getRestaurants{
-//             Id
-//             FirstName
-//             LastName
-//             Email
-//             AddressLine1
-//             AddressLine2
-//             City
-//             ContactNumber
-//             OpeningHrs{
-//             Sunday
-//             Monday
-//             Tuesday
-//             Wednesday
-//             Thursday
-//             Friday
-//             Saturday
-//             }
-//             category{
-//                 _id
-//                 Name
-//                 Id
-//             }
-//         }
-//     }
-// `
+export const GET_ORDERS = gql`
+    query  getOrders {
+        getOrders{
+            _id
+            Id
+            OrderItems 
+            OrderStatus
+            OrderTotal
+            OrderDate
+            Rider{
+                _id
+                Id 
+                FirstName 
+                LastName 
+                Email
+                AddressLine1
+                AddressLine2
+                City 
+                ContactNumber
+                ImageName
+                isAvailable
+                disabled
+            }
+            DeliveryAddress 
+            PaymentMethod
+            AdditionalInfo
+            DeliveryFee
+            GCT
+            ServiceCharge
+            CartTotal
+        }
+    }
+`
+
+export const GET_ORDERS_BY_RIDERID = gql`
+    query getOrdersByRiderId($Rider: ID!) {
+        getOrdersByRiderId(Rider: $Rider){
+            _id
+            Id
+            OrderItems 
+            OrderStatus
+            OrderTotal
+            OrderDate
+            Rider{
+                _id
+                Id 
+                FirstName 
+                LastName 
+                Email
+                AddressLine1
+                AddressLine2
+                City 
+                ContactNumber
+                ImageName
+                isAvailable
+                disabled
+            }
+            DeliveryAddress 
+            PaymentMethod
+            AdditionalInfo
+            DeliveryFee
+            GCT
+            ServiceCharge
+            CartTotal
+        }
+    }
+`

@@ -6,43 +6,10 @@ import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { EditRounded } from "@material-ui/icons/";
 import { Backdrop, CircularProgress, createStyles, makeStyles, Theme } from '@material-ui/core';
+import { useQuery } from '@apollo/client';
+import { GET_ORDERS } from '../../../GraphQL/Queries';
   
-  // const columns: GridColDef[] = [
-  //   { field: 'id', headerName: 'Transaction', width: 200 },
-  //   {
-  //     field: 'OrderDate',
-  //     headerName: 'Date',
-  //     width: 195,
-  //     editable: false,
-  //   },
-  //   {
-  //     field: 'OrderStatus',
-  //     headerName: 'Status',
-  //     width: 195,
-  //     editable: false,
-  //   },
-  //   {
-  //     field: 'OrderTotal',
-  //     headerName: 'Order Total',
-  //     width: 195,
-  //     editable: false,
-  //   },
-  //   {
-  //     field: 'Rider',
-  //     headerName: 'Delivered By',
-  //     description: 'This column has a value getter and is not sortable.',
-  //     sortable: false,
-  //     width: 160
-  //   },
-  //   {
-  //     field: 'Actions',
-  //     headerName: 'Action',
-  //     description: 'This column has a value getter and is not sortable.',
-  //     sortable: false,
-  //     width: 100
-  //   },
-  // ];
-  
+
   const columns = [
     { 
       name: '_id', 
@@ -123,21 +90,30 @@ import { Backdrop, CircularProgress, createStyles, makeStyles, Theme } from '@ma
   export const OrdersTable: React.FC = function OrdersTable () {
     const classes = useStyles();
     var { value }  = useAppData();
-    var { orders, fetchOrders, currentUser, userRolef } = value;
+    var { orders, fetchOrders, currentUser, userRolef, refreshingOrderTables } = value;
     var history = useHistory();
+    const {data} = useQuery(GET_ORDERS,{
+      pollInterval: 500,
+    });
 
     const rows = [] as Object[];
     useEffect(() => {
       try{
-        fetchOrders(value).then(()=>{
+        if(data.getOrders !== null){
+          var Orders = data.getOrders;
+          refreshingOrderTables(value, Orders).then(()=>{
           
-        });
+          });
+        }
+        // fetchOrders(value).then(()=>{
+          
+        // });
   
       }catch(e){
         //console.log(e)
       }
       // eslint-disable-next-line
-    }, [currentUser]);
+    }, [currentUser, data]);
     
     // const handleEdit = (event) => {
     //   event.preventDefault();

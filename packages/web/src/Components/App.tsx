@@ -41,7 +41,7 @@ import { useEffect } from 'react';
 import "jspdf/dist/polyfills.es.js";
 
 //Client Socket
-//import io from "socket.io-client";
+import io from "socket.io-client";
 
 //not found page
 import {NotFound} from './NotFound';
@@ -141,9 +141,9 @@ const client = new ApolloClient({
 
 
 const App: React.FC = function App() {
-  var { value }  = useAppData();
+  var { value, userRolef }  = useAppData();
   //var { serviceWorkerUpdate, serviceWorkerInit } = value;
-  //var { fetchOrders } = value;
+  var { refreshingOrderTables } = value;
   //serviceWorkerRegistration.register();
   // {
   //   onSuccess: () => serviceWorkerInit(),
@@ -153,14 +153,21 @@ const App: React.FC = function App() {
   useEffect(() =>{
     document.body.style.backgroundColor = "#fff";
     // try{
-    //   const socket = io(`${process.env.REACT_APP_SocketURL}/socket`);
+    //   var db_server_socket = process.env.NODE_ENV === 'development'? process.env.REACT_APP_SocketURL : process.env.REACT_APP_SocketProd_URL;
+    //   const socket = io(`${db_server_socket}/socket`);
     //   socket.on("newOrder", (Order) => {
-    //     fetchOrders(value).then(()=>{
+    //     console.log("new order deteted");
+    //     if(userRolef !== undefined){
+    //       if(userRolef === "Admin" || userRolef === "Rider"){
+    //         refreshingOrderTables(value, Order).then(()=>{
           
-    //     });
+    //         });
+    //       }
+    //     }
+        
     //   })
-    // }catch{
-
+    // }catch(err){
+    //   console.log(err)
     // }
   })
 

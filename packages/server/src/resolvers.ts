@@ -47,6 +47,15 @@ const resolvers = {
         getCategories: async () => {
             return await Category.find();
         },
+
+        getOrders: async () => {
+            return await Order.find().populate("Rider");
+        },
+
+        getOrdersByRiderId: async (_,{Rider}) => {
+            return await Order.find().populate("Rider").where("Rider").equals(Rider)
+            .where("OrderStatus").ne("Delivered"); 
+        },
         
     },
 

@@ -3,7 +3,7 @@ import {useContext, useReducer, createContext} from 'react';
 //import fetchAddressApi from '../Apis/fetchAddressApi';
 import  { auth, socialAuth, googleAuthProvider } from '../firebase';
 import { GET_ORDERS_BY_RIDERID , UPDATE_ORDER ,GET_RIDERS ,CREATE_ORDER, GET_ORDERS_BY_USERID, GET_ORDERS, GET_RESTAURANTS, CREATE_USER_MUTATION, GET_USER_MUTATION, GET_USER_IN_ROLE, GET_ROLE, CREATE_ROLE, GET_MENU_CATEGORIES } from '../GraphQL/Mutations';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import sendEmail from "../email.js";
 import moment from 'moment-timezone';
 
@@ -111,6 +111,11 @@ function appDataReducer(state, action){
             selectedRestaurant: action.payload.selectedRestaurant,
             receiptDetails: action.payload.receiptDetails
           }
+          case "refreshOrderTable": 
+          return {
+            ...state,
+            orders: action.payload.orders
+          }
         case "set_general_location":
           return {
             ...state,
@@ -160,6 +165,10 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const [getRiders] = useMutation(GET_RIDERS);
     const [getMenucategories] = useMutation(GET_MENU_CATEGORIES);
     // eslint-disable-next-line
+    // const {data} = useQuery(GET_ORDERS,{
+    //   pollInterval: 500,
+    // });
+
     const [getOrders] = useMutation(GET_ORDERS);
     const [getOrdersByUserId] = useMutation(GET_ORDERS_BY_USERID);
     const [createOrder] = useMutation(CREATE_ORDER);
@@ -884,6 +893,19 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       }
     }
 
+    var refreshingOrderTables  = async function refreshingOrderTables(payload, Orders){
+      if(payload.currentUser !== undefined){
+        if(payload.orders !== undefined && Orders !== undefined){
+          payload.orders = Orders;
+          dispatch({
+            type: "refreshOrderTable",
+            payload: payload
+          })
+        }
+      }
+    }
+    
+
     var fetchOrdersForRider  = async function fetchOrdersForRider(payload){
       if(payload.currentUser !== undefined){
         //console.log("Rider Id is:");
@@ -1109,6 +1131,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         checkoutOrder,
         fetchOrdersByUser,
         fetchOrders,
+        refreshingOrderTables,
         fetchOrdersForRider, 
         AddGeneralLocation,
         sendOrderCompletedEmail,

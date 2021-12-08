@@ -180,6 +180,12 @@ const typeDefs = gql`
 
         getCategories: [Category!]!
 
+        getOrders: [Order]
+
+        getOrdersByRiderId(
+            Rider: ID
+        ): [Order]
+
     }
     
 
