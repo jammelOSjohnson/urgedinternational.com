@@ -3,6 +3,7 @@ import { makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardConte
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
+import addressPI from '../../../Apis/addressPI';
 
 interface State {
     Street: string;
@@ -10,6 +11,8 @@ interface State {
     ContactNum: string;
     PaymentMethod: string;
     Parish: string;
+    lat: any;
+    long: any;
 }
 
 interface Fee {
@@ -139,11 +142,15 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
         Town: '',
         ContactNum: '',
         PaymentMethod: "Cash on Delivery",
-        Parish: 'Clarendon'
+        Parish: 'Clarendon',
+        lat: null,
+        long: null
     });
 
+    //const [isgeoAllowed, setIsGeoAllowed] = useState(false);
+
     var { value }  = useAppData();
-    var { cartItems, checkoutOrder, generalLocation } = value;
+    var { cartItems, checkoutOrder, generalLocation, latitude, longitude } = value;
     var history = useHistory();
     var [error, setError] = useState('');
     var [success, setSuccess] = useState('');
@@ -169,7 +176,9 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                     Town: 'Select Town',
                     ContactNum: '',
                     PaymentMethod: "Cash on Delivery",
-                    Parish: 'Clarendon'
+                    Parish: 'Clarendon',
+                    lat: null,
+                    long: null
                 });
                 history.push("/OrderCompleted");
             });
@@ -193,105 +202,79 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
         setValues({ ...values, [prop]: event.target.value });
     };
 
+    const getLocation = () => {
+        try{
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(getCoordinates, handleLocationError);
+              } else {
+                //alert("Geolocation is not supported by this browser.");
+            }
+            var location = "";
+
+            // AddGeneralLocation(value, )
+        }catch(err){
+
+        }
+    }
+
+    const getCoordinates = (position) => {
+        // console.log(position);
+        setValues({...values, lat: position.coords.latitude, long: position.coords.longitude});
+    }
+
+    const reverseGeoCodeCoordinates = () => {
+        try{
+            addressPI.get(`/json?latlng=${values.lat},${values.long}&key=${process.env.REACT_APP_GEO_API2}`).then((response) => {
+                if(response.data !== null){
+                    if(response.data.results !== undefined){
+                        let resArr = response.data.results;
+                        let addressArr = "";
+                        resArr.map((item,index) => {
+                            if(item.types[0] === "route"){
+                                addressArr = item.formatted_address.split(',')
+                            }
+                        })
+                        // resArr[0].formatted_address.split(',');
+                        setValues({...values, Street: addressArr[0], Town: addressArr[1]});
+                    }
+                }
+            }).catch((err) => {
+    
+            });
+        }catch(err){
+
+        }
+        
+    }
+
+    const handleLocationError = (error) => {
+        switch(error.code) {
+            case error.PERMISSION_DENIED:
+              console.log("User denied the request for Geolocation.");
+              break;
+            case error.POSITION_UNAVAILABLE:
+              console.log("Location information is unavailable.");
+              break;
+            case error.TIMEOUT:
+              console.log("The request to get user location timed out.");
+              break;
+            case error.UNKNOWN_ERROR:
+              console.log("An unknown error occurred.");
+              break;
+            default:
+                break;    
+        }
+    }
+
     useEffect(() =>{
-        // if(generalLocation !== "" && generalLocation !== undefined){
-        //     if(generalLocation !== values.Town && values.Town === 'Select Town'){
-        //         setValues({...values, Town: generalLocation});
-        //     }
-        // }
+
+        if(values.lat === null && values.long === null){
+            getLocation();
+        }else{
+            reverseGeoCodeCoordinates();
+        }
 
         let delFee = "500";
-        //values.Town === "May Pen Hospital" ?
-        //     process.env.REACT_APP_FEE_MayPenHospital?.toString()
-        // :
-        // values.Town === "May Pen" ?
-        //     process.env.REACT_APP_FEE_MayPen?.toString()
-        // :
-        // values.Town === "Bushy park" ?
-        //     process.env.REACT_APP_FEE_Bushypark?.toString()
-        // :
-        // values.Town === "Bucknor" ?
-        //     process.env.REACT_APP_FEE_Bucknor?.toString()
-        // :
-        // values.Town === "Clarendon park" ?
-        //     process.env.REACT_APP_FEE_Clarendonpark?.toString()
-        // :
-        // values.Town === "Curatoe Hil" ?
-        //     process.env.REACT_APP_FEE_CuratoeHil?.toString()
-        // :
-        // values.Town === "Denbigh" ?
-        //     process.env.REACT_APP_FEE_Denbigh?.toString()
-        // :
-        // values.Town === "Four paths" ?
-        //     process.env.REACT_APP_FEE_Fourpaths?.toString()
-        // :
-        // values.Town === "Foga Road" ?
-        //     process.env.REACT_APP_FEE_FogaRoad?.toString()
-        // :
-        // values.Town === "Glenmuir" ?
-        //     process.env.REACT_APP_FEE_Glenmuir?.toString()
-        // :
-        // values.Town === "Halse Hall" ?
-        //     process.env.REACT_APP_FEE_HalseHall?.toString()
-        // :
-        // values.Town === "Hartwell Gardens" ?
-        //     process.env.REACT_APP_FEE_HartwellGardens?.toString()
-        // :
-        // values.Town === "Hayes corn piece" ?
-        //     process.env.REACT_APP_FEE_Hayescornpiece?.toString()
-        // :
-        // values.Town === "Hazard" ?
-        //     process.env.REACT_APP_FEE_Hazard?.toString()
-        // :
-        // values.Town === "Inglewood" ?
-        //     process.env.REACT_APP_FEE_Inglewood?.toString()
-        // :
-        // values.Town === "Juno Crescent" ?
-        //     process.env.REACT_APP_FEE_JunoCrescent?.toString()
-        // :  
-        // values.Town === "Midland Glades" ?
-        //     process.env.REACT_APP_FEE_MidlandGlades?.toString()
-        // :
-        // values.Town === "Muirhead Avenue" ?
-        //     process.env.REACT_APP_FEE_MuirheadAvenue?.toString()
-        // :
-        // values.Town === "Mineral Heights" ?
-        //     process.env.REACT_APP_FEE_MineralHeights?.toString()
-        // :
-        // values.Town === "Osborne Store" ?
-        //     process.env.REACT_APP_FEE_OsborneStore?.toString()
-        // :
-        // values.Town === "Paisley" ?
-        //     process.env.REACT_APP_FEE_Paisley?.toString()
-        // :
-        // values.Town === "Palmers Cross" ?
-        //     process.env.REACT_APP_FEE_PalmersCross?.toString()
-        // :
-        // values.Town === "Race Track" ?
-        //     process.env.REACT_APP_FEE_RaceTrack?.toString()
-        // :
-        // values.Town === "Sandy Bay" ?
-        //     process.env.REACT_APP_FEE_SandyBay?.toString()
-        // :
-        // values.Town === "Swansea" ?
-        //     process.env.REACT_APP_FEE_Swansea?.toString()
-        // :
-        // values.Town === "Toll gate" ?
-        //     process.env.REACT_APP_FEE_Tollgate?.toString()
-        // :
-        // values.Town === "Trenton Road" ?
-        //     process.env.REACT_APP_FEE_TrentonRoad?.toString()
-        // :
-        // values.Town === "Treadlight" ?
-        //     process.env.REACT_APP_FEE_Treadlight?.toString()
-        // :
-        // values.Town === "Twin Palm Estate" ?
-        //     process.env.REACT_APP_FEE_TwinPalmEstate?.toString()
-        // :
-        // values.Town === "Vere" ?
-        //     process.env.REACT_APP_FEE_Vere?.toString()
-        // :
-        // "0.00";
 
         //Calc Delivery Fee
         if(delFee !== deliveryFee.Cost && delFee !== "0.00" && delFee !== undefined){
@@ -350,7 +333,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
             }
             setTotal(newTotal);
         }
-    },[deliveryFee.Cost,  cartItems, value])
+    },[deliveryFee.Cost,  cartItems, value, values.lat, values.long])
     // generalLocation, values.Town
       
     return (
@@ -369,36 +352,41 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                                     <FormControl component="fieldset" style={{width: "100%"}}>
                                         <FormLabel component="legend"><Typography className={classes.formSubheading}>Please select payment method from the list below.</Typography></FormLabel>
                                         <RadioGroup row aria-label="position" name="position" defaultValue="top">
-                                            <FormControlLabel
-                                            value="Visa"
-                                            control={<Radio color="primary" />}
-                                            label=""
-                                            labelPlacement="start"
-                                            style={{marginLeft: 0}}
-                                            disabled
-                                            />
-                                            
-                                            <img src="Images/visa-logo.png" width="79.14px" height="26px" style={{marginTop: "1%", marginLeft: "2%"}} alt="visa" />
-                                            
-                                            <FormControlLabel
-                                            value="MasterCard"
-                                            control={<Radio color="primary" />}
-                                            label=""
-                                            labelPlacement="start"
-                                            disabled
-                                            />
-
-                                            <img src="Images/mastercard-logo.png" width="42px" height="32.86px" style={{marginTop: "1%", marginLeft: "2%"}} alt="visa" />
-                                            
-                                            <FormControlLabel
-                                            value="Cash on Delivery"
-                                            control={<Radio color="primary" />}
-                                            label=""
-                                            labelPlacement="start"
-                                            checked
-                                            />
-
-                                            <img src="Images/cashOnDelivery-logo.png" width="66px" height="33px" style={{marginTop: "1%", marginLeft: "2%"}} alt="visa" />
+                                            <Grid container direction="row">
+                                                <Grid item xs={12} lg={4}>
+                                                    <FormControlLabel
+                                                    value="Visa"
+                                                    control={<Radio color="primary" />}
+                                                    label=""
+                                                    labelPlacement="start"
+                                                    style={{marginLeft: 0}}
+                                                    disabled
+                                                    />
+                                                    <img src="Images/visa-logo.png" width="79.14px" height="26px" style={{marginTop: "1%", marginLeft: "2%"}} alt="visa" />
+                                                </Grid>
+                                                <Grid item xs={12} lg={4}>
+                                                    <FormControlLabel
+                                                    value="MasterCard"
+                                                    control={<Radio color="primary" />}
+                                                    label=""
+                                                    labelPlacement="start"
+                                                    disabled
+                                                    className="nomarginMobile"
+                                                    />
+                                                    <img src="Images/mastercard-logo.png" width="42px" height="32.86px" style={{marginTop: "1%", marginLeft: "2%"}} alt="visa" />
+                                                </Grid>
+                                                <Grid item xs={12} lg={4}>
+                                                    <FormControlLabel
+                                                    value="Cash on Delivery"
+                                                    control={<Radio color="primary" />}
+                                                    label=""
+                                                    labelPlacement="start"
+                                                    checked
+                                                    className="nomarginMobile"
+                                                    />
+                                                    <img src="Images/cashOnDelivery-logo.png" width="66px" height="33px" style={{marginTop: "1%", marginLeft: "2%"}} alt="visa" />
+                                                </Grid>
+                                            </Grid>
                                         </RadioGroup>
                                     </FormControl>
                                 </Grid>
@@ -406,6 +394,15 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                                     <Grid item xs={12}>
                                         <Typography className={classes.formHeading}>Delivery Address</Typography>
                                         <Divider variant="middle" className={classes.divider}/>
+                                        
+                                    </Grid>
+                                    {
+                                        values.lat && values.long ?
+                                        <img src={`https://maps.googleapis.com/maps/api/staticmap?center=${values.lat},${values.long}&zoom=14&size=600x300&sensor=false&markers=color:orange%7C${values.lat},${values.long}&key=${process.env.REACT_APP_GEO_API}`} style={{width: "100%"}} alt='' />
+                                        :
+                                        <></>
+                                    }
+                                    <Grid item xs={12}>
                                         <Typography className={classes.formSubheading}>Please enter delivery address below.</Typography>
                                     </Grid>
                                     <Grid item xs={12}>
@@ -414,55 +411,6 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                                     <Grid item xs={12}>
                                         <TextField placeholder="Mineral Heights" id="town" label="Enter Town" variant="outlined" value={values.Town} onChange={handleChange2('Town')} fullWidth/>
                                     </Grid>
-                                    {/* <Grid item xs={12} sm={12}>
-                                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                            <InputLabel id="demo-simple-select-outlined-label">Town</InputLabel>
-                                            <Select
-                                                labelId="demo-simple-select-outlined-label"
-                                                id="demo-simple-select-outlined"
-                                                value={values.Town}
-                                                onChange={handleChange}
-                                                label="Town"
-                                                name="Town"
-                                                className={classes.root}
-                                            >
-                                                <MenuItem value={"Select Town"}>Select Town</MenuItem>
-                                                <MenuItem value={"May Pen Hospital"}>May Pen Hospital</MenuItem>
-                                                <MenuItem value={"May Pen"}>May Pen</MenuItem>
-                                                <MenuItem value={"Bushy park"}>Bushy park</MenuItem>
-                                                <MenuItem value={"Bucknor"}>Bucknor</MenuItem>
-                                                <MenuItem value={"Clarendon park"}>Clarendon park</MenuItem>
-                                                <MenuItem value={"Curatoe Hil"}>Curatoe Hil</MenuItem>
-                                                <MenuItem value={"Denbigh"}>Denbigh</MenuItem>
-                                                <MenuItem value={"Four paths"}>Four paths</MenuItem>
-                                                <MenuItem value={"Foga Road"}>Foga Road</MenuItem>
-                                                <MenuItem value={"Glenmuir"}>Glenmuir</MenuItem>
-                                                <MenuItem value={"Halse Hall"}>Halse Hall</MenuItem>
-                                                <MenuItem value={"Hartwell Gardens"}>Hartwell Gardens</MenuItem>
-                                                <MenuItem value={"Hayes corn piece"}>Hayes corn piece</MenuItem>
-                                                <MenuItem value={"Hazard"}>Hazard</MenuItem>
-                                                <MenuItem value={"Inglewood"}>Inglewood</MenuItem>
-                                                <MenuItem value={"Juno Crescent"}>Juno Crescent</MenuItem>
-                                                <MenuItem value={"Midland Glades"}>Midland Glades</MenuItem>
-                                                <MenuItem value={"Muirhead Avenue"}>Muirhead Avenue</MenuItem>
-                                                <MenuItem value={"Mineral Heights"}>Mineral Heights</MenuItem>
-                                                <MenuItem value={"Osborne Store"}>Osborne Store</MenuItem>
-                                                <MenuItem value={"Paisley"}>Paisley</MenuItem>
-                                                <MenuItem value={"Palmers Cross"}>Palmers Cross</MenuItem>
-                                                <MenuItem value={"Race Track"}>Race Track</MenuItem>
-                                                <MenuItem value={"Sandy Bay"}>Sandy Bay</MenuItem>
-                                                <MenuItem value={"Swansea"}>Swansea</MenuItem>
-                                                <MenuItem value={"Toll gate"}>Toll gate</MenuItem>
-                                                <MenuItem value={"Trenton Road"}>Trenton Road</MenuItem>
-                                                <MenuItem value={"Treadlight"}>Treadlight</MenuItem>
-                                                <MenuItem value={"Twin Palm Estate"}>Twin Palm Estate</MenuItem>
-                                                <MenuItem value={"Vere"}>Vere</MenuItem>
-                                            </Select>
-                                        </FormControl>
-                                    </Grid> */}
-                                    {/* <Grid item xs={12}>
-                                        <TextField id="parish" label="Parish" variant="outlined" fullWidth/>
-                                    </Grid> */}
                                     <Grid item xs={12}>
                                         {/* <TextField id="parish" style={{border: "none", borderColor: "none"}} label="Parish" variant="outlined" value={values.Parish} disabled  fullWidth/> */}
                                         <input type="text" id="parish" style={{border: "0.1px dotted", borderColor: "#888888", borderRadius: "12px", padding: "18.5px 14px", width: "100%", marginBottom: "3%"}} value={values.Parish} disabled />
@@ -517,7 +465,18 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                         </Grid>     
                     </Grid>
                 </Paper>
-            </div>      
+            </div>
+            <style>
+                {
+                    `
+                    @media only screen and (max-width: 1279px) {
+                        .nomarginMobile {
+                            margin-left: 0px;
+                        }
+                    }
+                    `
+                }
+            </style>      
         </>
     )
 }

@@ -192,6 +192,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var menuCategories = [];
     var riders = [];
     var receiptDetails = undefined;
+    var longitude = undefined;
+    var latitude = undefined;
 
     var userInfo = {
       _id: "",
@@ -1108,6 +1110,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         filteredMenuItems,
         filterCategory,
         generalLocation,
+        longitude,
+        latitude,
         receiptDetails,
         riders,
         serviceWorkerInitialized,

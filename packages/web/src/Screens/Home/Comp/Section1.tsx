@@ -150,12 +150,14 @@ export const Section1: React.FC = function Section1() {
                 </Typography> */}
                 <div style={{textAlign: "center", marginBottom: "10%"}}>
                     {/* <Link to="/Dashboard" className={classes.links}> */}
+                    <a className={classes.links} href="/Restaurants" title="Food Delivery">
                         <Button variant="contained" fullWidth={true}
                             className={classes.placeOrderBtn} 
                             startIcon={ <img src="Images/yellowtruckIconImage.svg" style={{width: "50%"}} alt="google icon"/>}  
                             type="button">
                             Place an Order
                         </Button>
+                    </a>
                     {/* </Link> */}
                 </div>
                 <Grid container direction="row" className={classes.root} spacing={2}>
@@ -163,7 +165,8 @@ export const Section1: React.FC = function Section1() {
                         <> 
                         <Grid item xs={12} sm={6}>
                             {/* <a className={classes.links} href="javascipt();" onClick={handleFood} title="Food Delivery"> </a>*/}
-                            <a className={classes.links} href="/FoodDelivery" title="Food Delivery">
+                            {/* <a className={classes.links} href="/FoodDelivery" title="Food Delivery"> */}
+                            <a className={classes.links} href="/Restaurants" title="Food Delivery">
                                 <Grid container justifyContent="center" spacing={2}>
                                     <Grid key={0} item>
                                         <Card className={classes.card} style={{paddingBottom: "0px"}}>
@@ -225,7 +228,8 @@ export const Section1: React.FC = function Section1() {
                         <> 
                         <Grid item style={{marginLeft: "auto"}}>
                             {/* <a className={classes.links} href="javascipt();" onClick={handleFood} title="Food Delivery"> </a>*/}
-                            <a className={classes.links} href="/FoodDelivery" title="Food Delivery">
+                            {/* <a className={classes.links} href="/FoodDelivery" title="Food Delivery"> */}
+                            <a className={classes.links} href="/Restaurants" title="Food Delivery">
                                 <Grid container justifyContent="center" spacing={2}>
                                     <Grid key={0} item>
                                         <Card className={classes.card} style={{paddingBottom: "0px"}}>

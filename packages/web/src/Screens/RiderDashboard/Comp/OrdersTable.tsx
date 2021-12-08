@@ -9,42 +9,7 @@ import { Backdrop, CircularProgress, createStyles, makeStyles, Theme } from '@ma
 import { useQuery } from '@apollo/client';
 import { GET_ORDERS_BY_RIDERID } from '../../../GraphQL/Queries';
   
-  // const columns: GridColDef[] = [
-  //   { field: 'id', headerName: 'Transaction', width: 200 },
-  //   {
-  //     field: 'OrderDate',
-  //     headerName: 'Date',
-  //     width: 195,
-  //     editable: false,
-  //   },
-  //   {
-  //     field: 'OrderStatus',
-  //     headerName: 'Status',
-  //     width: 195,
-  //     editable: false,
-  //   },
-  //   {
-  //     field: 'OrderTotal',
-  //     headerName: 'Order Total',
-  //     width: 195,
-  //     editable: false,
-  //   },
-  //   {
-  //     field: 'Rider',
-  //     headerName: 'Delivered By',
-  //     description: 'This column has a value getter and is not sortable.',
-  //     sortable: false,
-  //     width: 160
-  //   },
-  //   {
-  //     field: 'Actions',
-  //     headerName: 'Action',
-  //     description: 'This column has a value getter and is not sortable.',
-  //     sortable: false,
-  //     width: 100
-  //   },
-  // ];
-  
+ 
   const columns = [
     { 
       name: '_id', 

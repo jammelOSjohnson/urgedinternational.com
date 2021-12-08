@@ -13,12 +13,12 @@ import { DashboardFooter } from './Comp/DashboardFooter';
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
         gridRoot: {
-            padding: "0px",
-            height: "100vh"
+            padding: "0px"
         },
         main: {
             padding: 0,
-            backgroundImage: "url(Images/FoodPortalBackground.png)"
+            backgroundImage: "url(Images/FoodPortalBackground.png)",
+            height: "100vh"
         }
     }),
 );
