@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 
 import * as serviceWorkerRegistration from '../serviceWorkerRegistration';
 import { Header } from '../Components/Header';
+import { Header2 } from '../Components/Header2';
 import { Footer } from '../Components/Footer';
 import { HomeScreen } from '../Screens/Home/HomeScreen';
 import { AboutScreen } from '../Screens/About/AboutScreen';
@@ -178,7 +179,7 @@ const App: React.FC = function App() {
           <main>
             <div>
               <Router>
-              <Header/>
+              <Header2/>
                 <Switch>
                   {/* <Sidebar/> */}
                     {/* <Route path="/" exact component={AboutScreen} /> */}
