@@ -127,7 +127,7 @@ export const HeaderLogo: React.FC = function HeaderLogo() {
        <>
             {isMaatchMedium? (
               <>
-                  <Grid item xs={12} sm={12} md={7} style={{textAlign: "center", marginTop: "10%"}}>
+                  <Grid item xs={12} sm={12} md={12} style={{textAlign: "center", marginTop: "2.5%", marginBottom: "2.5%"}}>
                     <Typography className={classes.logoArea} style={{textAlign: "center"}}>
                         <img className={classes.logo} src="Images/urged logo.svg" alt="Urged Logo"></img>
                     </Typography>
@@ -135,11 +135,9 @@ export const HeaderLogo: React.FC = function HeaderLogo() {
               </>
             ): (
               <>
-                  <Grid item xs={12} sm={12} md={7} style={{textAlign: "center"}}>
                     <Typography className={classes.logoArea} style={{textAlign: "left"}}>
                         <img className={classes.logo} src="Images/urged logo.svg" alt="Urged Logo"></img>
                     </Typography>
-                  </Grid>
               </>
             )}
         </>

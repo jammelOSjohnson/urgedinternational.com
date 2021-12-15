@@ -2,12 +2,12 @@ import { useAppData } from '../Context/AppDataContext';
 import { HeaderLogo } from './HeaderLogo';
 import React, { useEffect } from 'react'
 import { useHistory, Link as RouterLink } from 'react-router-dom';
-import { useMediaQuery , useTheme,Typography, AppBar, Toolbar, makeStyles, Theme, createStyles, Grid, Modal, Fade, FormControl, InputLabel, Select, MenuItem, Backdrop, Button } from '@material-ui/core'
-import SvgIcon, { SvgIconProps } from '@material-ui/core/SvgIcon';
-import { Container } from '@material-ui/core';
+import { useMediaQuery , useTheme,Typography, AppBar, Toolbar, makeStyles, Theme, createStyles, Grid, Modal, Fade, FormControl, InputLabel, Select, MenuItem, Backdrop, Button, Drawer, List, ListItem, ListItemIcon, Divider, ListItemText } from '@material-ui/core';
 // eslint-disable-next-line
 import  { auth, socialAuth } from '../firebase';
-import { Alert } from '@material-ui/lab';
+import clsx from 'clsx';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
 
 
 interface State {
@@ -46,6 +46,21 @@ const useStyles = makeStyles((theme: Theme) =>
     logo: {
         height: 50.49015808105469,
         width: 147,        
+    },
+    btn: {
+        borderRadius: "50px",
+        fontFamily: "PT Sans",
+        marginRight:"15px"
+    },
+    btn2: {
+        borderRadius: "50px",
+        fontFamily: "PT Sans",
+    },
+    list: {
+      width: 250,
+    },
+    fullList: {
+      width: 'auto',
     },
     Typo1: {
         fontFamily: "Open Sans",
@@ -106,28 +121,18 @@ const useStyles = makeStyles((theme: Theme) =>
         color: "#444444",
         fontFamily: "Inter",
         fontStyle: "normal",
-        fontWeight: 500,
+        fontWeight: 600,
         fontSize: "16px",
         lineHeight: "19px",
+        marginRight: "15px"
+    },
+    linkBtn: {
+      textDecoration: "none",
     }
   }),
 );
 
-function PhoneIcon(props: SvgIconProps) {
-    return (
-      <SvgIcon {...props}>
-        <path d="M28.6015 4.74029L24.7241 0.866505C24.4506 0.591785 24.1255 0.373813 23.7675 0.225111C23.4095 0.0764088 23.0257 -9.29112e-05 22.638 8.46827e-08C21.848 8.46827e-08 21.1053 0.309466 20.5482 0.866505L16.376 5.03884C16.1013 5.31235 15.8833 5.63745 15.7346 5.99546C15.5859 6.35347 15.5094 6.73734 15.5095 7.125C15.5095 7.91505 15.8189 8.65777 16.376 9.21481L19.4269 12.2658C18.7127 13.8399 17.7198 15.2719 16.4961 16.4927C15.2755 17.7194 13.8436 18.716 12.2692 19.4345L9.21831 16.3835C8.9448 16.1088 8.6197 15.8908 8.2617 15.7421C7.90369 15.5934 7.51983 15.5169 7.13218 15.517C6.34214 15.517 5.59943 15.8265 5.0424 16.3835L0.866494 20.5522C0.591441 20.8262 0.373285 21.1519 0.224578 21.5106C0.0758711 21.8692 -0.000451154 22.2537 2.00617e-06 22.642C2.00617e-06 23.432 0.309464 24.1748 0.866494 24.7318L4.73658 28.6019C5.62492 29.4939 6.85184 30 8.11153 30C8.3773 30 8.63215 29.9782 8.88336 29.9345C13.7911 29.1262 18.6587 26.5158 22.587 22.591C26.5117 18.6699 29.1185 13.8058 29.9377 8.8835C30.1852 7.37985 29.6865 5.83252 28.6015 4.74029Z"/>
-      </SvgIcon>
-    );
-}
-
-function ClockIcon(props: SvgIconProps) {
-  return (
-    <SvgIcon {...props}>
-      <path d="M12.744 0C19.7915 0 25.488 5.59869 25.488 12.4971C25.488 19.408 19.7915 24.9941 12.744 24.9941C5.70932 24.9941 0 19.408 0 12.4971C0 5.59869 5.70932 0 12.744 0ZM12.298 6.16106C11.7755 6.16106 11.3422 6.57346 11.3422 7.09834V13.4094C11.3422 13.7343 11.5206 14.0342 11.8137 14.2092L16.8094 17.1335C16.9623 17.221 17.128 17.271 17.3064 17.271C17.625 17.271 17.9436 17.1085 18.122 16.8086C18.3896 16.3712 18.2494 15.7963 17.7907 15.5214L13.2538 12.872V7.09834C13.2538 6.57346 12.8205 6.16106 12.298 6.16106Z"/>
-    </SvgIcon>
-  );
-}
+type Anchor = 'top' | 'bottom' | 'right';
 
 const headersData = [
     {
@@ -150,10 +155,6 @@ const headersData = [
       label: "Contact us",
       href: "/",
     },
-    {
-      label: "Place an Order",
-      href: "/",
-    },
   ];
 
 export const Header2: React.FC = function Header2() {
@@ -170,10 +171,18 @@ export const Header2: React.FC = function Header2() {
     //Breakpoints
     const theme = useTheme();
 
-    
+    //State
     const [open, setOpen] = React.useState(false);
     var [error, setError] = React.useState('');
-    const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
+    const [state, setState] = React.useState({
+      top: false,
+      left: false,
+      bottom: false,
+      right: false,
+    });
+
+    //Media Query
+    const isMatch = useMediaQuery(theme.breakpoints.down('md'));
     const isMaatchMedium = useMediaQuery(theme.breakpoints.down('md'));
 
     const [values, setValues] = React.useState<State>({
@@ -298,55 +307,107 @@ export const Header2: React.FC = function Header2() {
       )
     }
 
-    
+    const toggleDrawer = (anchor: Anchor, open: boolean) => (
+      event: React.KeyboardEvent | React.MouseEvent,
+    ) => {
+      if (
+        event.type === 'keydown' &&
+        ((event as React.KeyboardEvent).key === 'Tab' ||
+          (event as React.KeyboardEvent).key === 'Shift')
+      ) {
+        return;
+      }
+  
+      setState({ ...state, [anchor]: open });
+    };
+
+    const list = (anchor: Anchor) => (
+      <div
+        className={clsx(classes.list, {
+          [classes.fullList]: anchor === 'top' || anchor === 'bottom',
+        })}
+        role="presentation"
+        onClick={toggleDrawer(anchor, false)}
+        onKeyDown={toggleDrawer(anchor, false)}
+      >
+        <List>
+          {headersData.map(({label}, index) => (
+            <ListItem button key={label}>
+              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemText primary={label} />
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <List>
+          <ListItem button key="Place Order">
+            <a href="/Restaurants" title="Place Order" className={classes.linkBtn}>
+              <Button className={classes.btn} variant="contained" color="primary">
+                Place an Order
+              </Button>
+            </a>
+          </ListItem>
+          <ListItem button key="sign in">
+            <a href="/Login" title="Login"  className={classes.linkBtn}>
+              <Button className={classes.btn2} variant="outlined" color="primary">
+                Sign In
+              </Button>
+            </a>
+          </ListItem>
+        </List>
+      </div>
+    );
 
     return (
        <>
             <AppBar elevation={0} position="relative" className={classes.appbar}>
                 <Toolbar>
-                    <Container maxWidth="xl">
-                        <Grid container spacing={0} alignContent="center" alignItems="center">
-                            <HeaderLogo />
-                            {isMatch? (
-                            <>
-                                <Grid item xs={12} sm={12} md={7} className={classes.mobileGridContainer} style={{marginBottom: "10%"}}>
-                                    <Grid item xs={12} sm={12} md={3} className={classes.mobileGrid}>
-                                    <Typography  className={classes.Typo1}>
-                                        <PhoneIcon viewBox={"0 0 30 30"} className={classes.icons} />
-                                        876-773-5015 
-                                    </Typography>
-                                    </Grid>
-                                    <Grid item xs={12} sm={12} md={9} className={classes.mobileGrid}>
-                                    <Typography className={classes.Typo1}>
-                                        <ClockIcon viewBox={"0 0 26 25"} className={classes.icons} />
-                                        Monday - Saturday 9:00 am - 5:00pm
-                                    </Typography>
-                                    </Grid>
-                                </Grid>
-                            </>
-                            ): (
-                            <>
-                                {/* <Grid item xs={12} sm={12} md={5} className={classes.desktopGridContainer}>
-
-                                </Grid> */}
-                                {headersData.map(({ label, href }) => {
-                                    return (
-                                        <Button
-                                            {...{
-                                                key: label,
-                                                className: classes.menuItem,
-                                                to: href,
-                                                component: RouterLink,
-                                            }}
-                                        >
-                                            {label}
-                                        </Button>
-                                    );
-                                })}
-                            </>
-                            )}
-                        </Grid>
-                    </Container>
+                  <HeaderLogo />
+                  {isMatch? (
+                  <>
+                      <div style={{position: "absolute", right: 10}}>
+                        {(['right'] as Anchor[]).map((anchor) => (
+                          <React.Fragment key={anchor}>
+                            <Button onClick={toggleDrawer(anchor, true)}>
+                              <img src="Images/MobileMenuIcon.png" alt="MobileMenuIcon" />
+                            </Button>
+                            <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
+                              {list(anchor)}
+                            </Drawer>
+                          </React.Fragment>
+                        ))}
+                      </div>
+                  </>
+                  ): (
+                  <>
+                    <Typography style={{textAlign: "right", width: "100%"}}>
+                      {headersData.map(({ label, href }) => {
+                          return (
+                              <Button
+                                  {...{
+                                      key: label,
+                                      className: classes.menuItem,
+                                      to: href,
+                                      component: RouterLink,
+                                  }}
+                              >
+                                  {label}
+                              </Button>
+                          );
+                      })}
+                      <a href="/Restaurants" title="Place Order" className={classes.linkBtn}>
+                        <Button className={classes.btn} variant="contained" color="primary">
+                          Place an Order
+                        </Button>
+                      </a>
+                      <a href="/Login" title="Login"  className={classes.linkBtn}>
+                        <Button className={classes.btn2} variant="outlined" color="primary">
+                          Sign In
+                        </Button>
+                      </a>
+                    </Typography>
+                  </>
+                  )}
                 </Toolbar>
             </AppBar>
             {/* {isServiceWorkerUpdated && (
