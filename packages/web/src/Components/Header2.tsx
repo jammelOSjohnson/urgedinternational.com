@@ -126,6 +126,21 @@ const useStyles = makeStyles((theme: Theme) =>
         lineHeight: "19px",
         marginRight: "15px"
     },
+    menuItemPrimary: {
+      color: "#F7B614",
+      fontFamily: "Inter",
+      fontStyle: "normal",
+      fontWeight: 600,
+      fontSize: "16px",
+      lineHeight: "19px",
+      marginRight: "15px"
+    },
+    menuPrimaryCircle: {
+      position: "absolute",
+      width: "10px",
+      height: "10px",
+      backgroundColor: "F7B614",
+    },
     linkBtn: {
       textDecoration: "none",
     }
@@ -382,18 +397,29 @@ export const Header2: React.FC = function Header2() {
                   <>
                     <Typography style={{textAlign: "right", width: "100%"}}>
                       {headersData.map(({ label, href }) => {
-                          return (
+                          return referralPath === "/" && href === "/"?
                               <Button
                                   {...{
                                       key: label,
-                                      className: classes.menuItem,
+                                      className: classes.menuItemPrimary,
                                       to: href,
                                       component: RouterLink,
                                   }}
                               >
                                   {label}
+                                  <div className={classes.menuPrimaryCircle}></div>
                               </Button>
-                          );
+                          :
+                                <Button
+                                    {...{
+                                        key: label,
+                                        className: classes.menuItem,
+                                        to: href,
+                                        component: RouterLink,
+                                    }}
+                                >
+                                    {label}
+                                </Button>
                       })}
                       <a href="/Restaurants" title="Place Order" className={classes.linkBtn}>
                         <Button className={classes.btn} variant="contained" color="primary">
