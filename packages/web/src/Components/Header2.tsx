@@ -139,7 +139,9 @@ const useStyles = makeStyles((theme: Theme) =>
       position: "absolute",
       width: "10px",
       height: "10px",
-      backgroundColor: "F7B614",
+      backgroundColor: "#F7B614",
+      bottom: "-7px",
+      borderRadius: "25px"
     },
     linkBtn: {
       textDecoration: "none",
@@ -160,7 +162,7 @@ const headersData = [
     },
     {
       label: "FAQ'S",
-      href: "/",
+      href: "/#",
     },
     {
       label: "How it works",
@@ -168,7 +170,7 @@ const headersData = [
     },
     {
       label: "Contact us",
-      href: "/",
+      href: "/#",
     },
   ];
 
@@ -346,12 +348,18 @@ export const Header2: React.FC = function Header2() {
         onKeyDown={toggleDrawer(anchor, false)}
       >
         <List>
-          {headersData.map(({label}, index) => (
+          {headersData.map(({label, href}, index) => {
+            return referralPath === "/" && href === "/"?
+              <ListItem button key={label}>
+                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                <ListItemText style={{color: "#F7B614"}} primary={label} />
+              </ListItem>
+            :
             <ListItem button key={label}>
               <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
               <ListItemText primary={label} />
             </ListItem>
-          ))}
+          })}
         </List>
         <Divider />
         <List>
