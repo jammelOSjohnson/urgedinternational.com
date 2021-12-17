@@ -127,6 +127,16 @@ const useStyles = makeStyles((theme: Theme) =>
             paddingTop: "10px",
             
         },
+        cardMiddle2: {
+            background: "#FF5E14",
+            border: "1.14582px solid #F3F3F3",
+            boxSizing: "border-box",
+            boxShadow: "0px 4.58327px 17.1873px rgba(0, 0, 0, 0.11)",
+            paddingLeft: "20px",
+            paddingRight: "20px",
+            paddingTop: "10px",
+            
+        },
         links: {
             textDecoration: "none",
         },
@@ -164,7 +174,6 @@ export const Section1: React.FC = function Section1() {
     return (
         <>
             <div style={{position: "relative"}} id="FoodSlide">
-                    <img src="Images/FoodDHomeSlide.png" className={classes.image} alt="KFC Bucket"/>
                     <Carousel nextIcon={false} prevIcon={false} >
                         <Carousel.Item >  
                             <img
@@ -173,7 +182,9 @@ export const Section1: React.FC = function Section1() {
                             alt="First slide"
                             width="100%"
                             style={{minHeight: "30%"}}
+                            id="slideimage"
                             />
+                            <img src="Images/FoodDHomeSlide.png" className={classes.image} alt="KFC Bucket"/>
                             <Carousel.Caption style={{top: "5%"}}>
                                 <Grid container spacing={0} alignContent="flex-start"  alignItems="flex-start">
                                     <Grid item xs={11} sm={6} md={5} lg={6} xl={3} className={classes.heroTextMargin}>
@@ -186,7 +197,7 @@ export const Section1: React.FC = function Section1() {
                                         </Typography>
                                     </Grid>
                                 </Grid>
-                                <div style={{textAlign: "left", marginLeft: "10%", marginBottom: "10%"}}>
+                                <div style={{textAlign: "left", marginLeft: "10%", marginBottom: "3%"}}>
                                     {/* <Link to="/Dashboard" className={classes.links}> */}
                                     <a className={classes.links} href="/Restaurants" title="Food Delivery">
                                         <Button variant="contained" fullWidth={true}
@@ -198,7 +209,7 @@ export const Section1: React.FC = function Section1() {
                                     </a>
                                     {/* </Link> */}
                                 </div>
-                                <Container maxWidth="xl">
+                                <Container maxWidth="xl" id="cardsArea">
                                     <Grid container direction="row" className={classes.root} spacing={2}>
                                         {isMatch?
                                             <> 
@@ -337,8 +348,10 @@ export const Section1: React.FC = function Section1() {
                             alt="Second slide"
                             width="100%"
                             style={{minHeight: "30%"}}
+                            id="slideimage"
                             />
-                            <Carousel.Caption style={{top: "5%"}}>
+                            <img src="Images/package delivery.png" className={classes.image} alt="KFC Bucket"/>
+                            <Carousel.Caption style={{top: "5%"}} >
                                 <Grid container spacing={0} alignContent="flex-start"  alignItems="flex-start">
                                     <Grid item xs={11} sm={6} md={5} lg={6} xl={3} className={classes.heroTextMargin}>
                                         <Typography className={classes.heroText1Slide2} align="left">
@@ -350,19 +363,9 @@ export const Section1: React.FC = function Section1() {
                                         </Typography>
                                     </Grid>
                                 </Grid>
-                                <div style={{textAlign: "left", marginLeft: "10%", marginBottom: "10%"}}>
-                                    {/* <Link to="/Dashboard" className={classes.links}> */}
-                                    <a className={classes.links} href="/Restaurants" title="Food Delivery">
-                                        <Button variant="contained" fullWidth={true}
-                                            className={classes.placeOrderBtn} 
-                                            endIcon={ <img src="Images/GetStartedIcon.png" style={{width: "50%"}} alt="google icon"/>}  
-                                            type="button">
-                                            Get Started
-                                        </Button>
-                                    </a>
-                                    {/* </Link> */}
+                                <div style={{textAlign: "left", marginLeft: "10%", marginBottom: "3%"}}>
                                 </div>
-                                <Container maxWidth="xl">
+                                <Container maxWidth="xl" id="cardsArea">
                                     <Grid container direction="row" className={classes.root} spacing={2}>
                                         {isMatch?
                                             <> 
@@ -391,7 +394,7 @@ export const Section1: React.FC = function Section1() {
                                                 <Link className={classes.links} to="#" title="Food Delivery">
                                                     <Grid container justifyContent="center" spacing={2}>
                                                         <Grid key={1} item>
-                                                            <Card className={classes.cardMiddle}>
+                                                            <Card className={classes.cardMiddle2}>
                                                                 <CardMedia className={classes.cardImage}>
                                                                     <img src="Images/whitetruckIconImage.png" alt="whitetruckIconImage"></img>
                                                                 </CardMedia>
@@ -454,7 +457,7 @@ export const Section1: React.FC = function Section1() {
                                                 <Link className={classes.links} to="#" title="Food Delivery">
                                                     <Grid container justifyContent="center" spacing={2}>
                                                         <Grid key={1} item>
-                                                            <Card className={classes.cardMiddle}>
+                                                            <Card className={classes.cardMiddle2}>
                                                                 <CardMedia className={classes.cardImage}>
                                                                     <img src="Images/whitetruckIconImage.png" alt="whitetruckIconImage"></img>
                                                                 </CardMedia>
@@ -501,6 +504,7 @@ export const Section1: React.FC = function Section1() {
                             alt="First slide"
                             width="100%"
                             style={{minHeight: "30%"}}
+                            id="slideimage"
                             />
                             <Carousel.Caption style={{top: "5%"}}>
                                 <Grid container spacing={0} alignContent="flex-start"  alignItems="flex-start">
@@ -514,7 +518,7 @@ export const Section1: React.FC = function Section1() {
                                         </Typography>
                                     </Grid>
                                 </Grid>
-                                <div style={{textAlign: "left", marginLeft: "10%", marginBottom: "10%"}}>
+                                <div style={{textAlign: "left", marginLeft: "10%", marginBottom: "3%"}}>
                                     {/* <Link to="/Dashboard" className={classes.links}> */}
                                     <a className={classes.links} href="/Restaurants" title="Food Delivery">
                                         <Button variant="contained" fullWidth={true}
@@ -526,7 +530,7 @@ export const Section1: React.FC = function Section1() {
                                     </a>
                                     {/* </Link> */}
                                 </div>
-                                <Container maxWidth="xl">
+                                <Container maxWidth="xl" id="cardsArea">
                                     <Grid container direction="row" className={classes.root} spacing={2}>
                                         {isMatch?
                                             <> 
@@ -673,6 +677,20 @@ export const Section1: React.FC = function Section1() {
 
                                 .restaurants-font:hover{
                                     color: #fff
+                                }
+
+                                @media only screen and (max-width: 1269px) {
+                                    #cardsArea {
+                                      display: none;
+                                    }
+
+                                    .carousel-item {
+                                        height: 100vh;
+                                    }
+
+                                    #slideimage {
+                                        min-height: 91% !important;
+                                    }
                                 }
                             `
                         }
