@@ -20,13 +20,13 @@ export const HomeScreen: React.FC = function HomeScreen() {
         <>
             <Container maxWidth="xl" style={{padding: 0, overflowX: "hidden"}}>
                 <Section1 />
-                <ExternalApp />
+                {/* <ExternalApp /> */}
+                <Section2 />
                 <Section3 />
                 <Section4 />
                 <Section5 />
                 <Section6 />
                 <Section7 />
-                <Section2 />
             </Container>
         </>
     )

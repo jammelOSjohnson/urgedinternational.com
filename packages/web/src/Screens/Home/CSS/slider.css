@@ -1,0 +1,26 @@
+.carousel-indicators [data-bs-target] {
+    border-radius: 50px !important;
+    height: 8px !important;
+    width: 8px !important;
+    box-sizing: unset !important; 
+    flex: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+}     
+
+/* .carousel-caption {
+    right: 15%;
+    bottom: 1.25rem;
+    left: 15%;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    color: #fff;
+    text-align: center;
+    top: 5%
+} */
+
+#HomeSlide .carousel-indicators {
+    top: 10%;
+    left: -127%;
+    transform: rotate(90deg);
+}

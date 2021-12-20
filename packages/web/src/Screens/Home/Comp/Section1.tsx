@@ -4,6 +4,8 @@ import { Container, Grid, Typography, makeStyles, createStyles, Theme, Button, C
 import { Link } from "react-router-dom";
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import "../CSS/slider.css";
+import clsx from 'clsx';
 
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -173,7 +175,7 @@ export const Section1: React.FC = function Section1() {
     
     return (
         <>
-            <div style={{position: "relative"}} id="FoodSlide">
+            <div style={{position: "relative"}} id="HomeSlide">
                     <Carousel nextIcon={false} prevIcon={false} >
                         <Carousel.Item >  
                             <img
@@ -184,15 +186,15 @@ export const Section1: React.FC = function Section1() {
                             style={{minHeight: "30%"}}
                             id="slideimage"
                             />
-                            <img src="Images/FoodDHomeSlide.png" className={classes.image} alt="KFC Bucket"/>
+                            <img src="Images/FoodDHomeSlide.png" className={clsx(classes.image, "mobileCaroselImage")} alt="KFC Bucket"/>
                             <Carousel.Caption style={{top: "5%"}}>
                                 <Grid container spacing={0} alignContent="flex-start"  alignItems="flex-start">
                                     <Grid item xs={11} sm={6} md={5} lg={6} xl={3} className={classes.heroTextMargin}>
-                                        <Typography className={classes.heroText1} align="left">
+                                        <Typography className={clsx(classes.heroText1, "mobileheroText1")} align="left">
                                             Enjoy Hassle Free 
                                             <span className={classes.heroSubText}> Food</span>  Delivery.
                                         </Typography>
-                                        <Typography className={classes.heroText2} align="left">
+                                        <Typography className={clsx(classes.heroText2, "mobileheroText2")} align="left">
                                             Select your favorite food from a wide range of restaraunts. We deliver right to your door.
                                         </Typography>
                                     </Grid>
@@ -350,15 +352,15 @@ export const Section1: React.FC = function Section1() {
                             style={{minHeight: "30%"}}
                             id="slideimage"
                             />
-                            <img src="Images/package delivery.png" className={classes.image} alt="KFC Bucket"/>
+                            <img src="Images/package delivery.png" className={clsx(classes.image, "mobileCaroselImage")} alt="KFC Bucket"/>
                             <Carousel.Caption style={{top: "5%"}} >
                                 <Grid container spacing={0} alignContent="flex-start"  alignItems="flex-start">
                                     <Grid item xs={11} sm={6} md={5} lg={6} xl={3} className={classes.heroTextMargin}>
-                                        <Typography className={classes.heroText1Slide2} align="left">
+                                        <Typography className={clsx(classes.heroText1Slide2, "mobileheroSlideText2")} align="left">
                                             Enjoy Super Fast 
                                             <span className={classes.heroSubText2}> Package</span>  Delivery.
                                         </Typography>
-                                        <Typography className={classes.heroText2} align="left">
+                                        <Typography className={clsx(classes.heroText2, "mobileheroText2")} align="left">
                                             We delviver Pacakges of all shapes and sizes. Schedule a pick-up and we will drop them off whereever you like.
                                         </Typography>
                                     </Grid>
@@ -509,11 +511,11 @@ export const Section1: React.FC = function Section1() {
                             <Carousel.Caption style={{top: "5%"}}>
                                 <Grid container spacing={0} alignContent="flex-start"  alignItems="flex-start">
                                     <Grid item xs={11} sm={6} md={5} lg={6} xl={3} className={classes.heroTextMargin}>
-                                        <Typography className={classes.heroText1} align="left">
+                                        <Typography className={clsx(classes.heroText1, "mobileheroText1")} align="left">
                                             Enjoy Hassle Free 
                                             <span className={classes.heroSubText}> Food</span>  Delivery.
                                         </Typography>
-                                        <Typography className={classes.heroText2} align="left">
+                                        <Typography className={clsx(classes.heroText2, "mobileheroText2")} align="left">
                                             Select your favorite food from a wide range of restaraunts. We deliver right to your door.
                                         </Typography>
                                     </Grid>
@@ -690,6 +692,101 @@ export const Section1: React.FC = function Section1() {
 
                                     #slideimage {
                                         min-height: 91% !important;
+                                    }
+
+                                    #HomeSlide .carousel-indicators {
+                                        top: 0%;
+                                        left: -152%;
+                                        transform: rotate(90deg);
+                                    }
+                                }
+
+                                @media only screen and (max-width: 968px) {
+                                    #HomeSlide .carousel-indicators {
+                                        top: 0%;
+                                        left: -170%;
+                                        transform: rotate(90deg);
+                                    }
+                                }
+
+
+                                @media only screen and (max-width: 768px) {
+                                    #HomeSlide .carousel-indicators {
+                                        top: 0%;
+                                        left: -191%;
+                                        transform: rotate(90deg);
+                                    }
+
+                                    #slideimage {
+                                        min-height: 91% !important;
+                                        object-fit: cover;
+                                    }
+
+                                    .mobileCaroselImage{
+                                        width: 47% !important;
+                                    }
+                                }
+
+                                @media only screen and (max-width: 691px) {
+                                    .mobileCaroselImage{
+                                        width: 52% !important;
+                                        right: 0;
+                                    }
+                                }
+
+                                @media only screen and (max-width: 668px) {
+                                    #HomeSlide .carousel-indicators {
+                                        top: auto;
+                                        bottom: 11%;
+                                        left: 0;
+                                        right: 0;
+                                        transform: rotate(0deg);
+                                    }
+                                }
+
+                                @media only screen and (max-width: 593px) {
+                                    .mobileCaroselImage{
+                                        width: 80% !important;
+                                        right: -40%
+                                    }
+
+                                    .mobileheroText1 {
+                                        width: 66% !important;
+                                    }
+
+                                    .mobileheroText2 {
+                                        width: 68% !important;
+                                    }
+
+                                    .mobileheroSlideText2{
+                                        width: 66% !important;
+                                    }
+                                }
+
+                                @media only screen and (max-width: 470px) {
+                                    .mobileCaroselImage{
+                                        width: 80% !important;
+                                        right: -40%
+                                    }
+
+                                    .mobileheroText1 {
+                                        width: 73% !important;
+                                    }
+
+                                    .mobileheroText2 {
+                                        width: 71% !important;
+                                    }
+
+                                    .mobileheroSlideText2{
+                                        width: 100% !important;
+                                    }
+                                }
+
+                                @media only screen and (max-width: 470px) {
+                                    .mobileCaroselImage{
+                                        width: 80% !important;
+                                        right: -40%;
+                                        top: 20%;
                                     }
                                 }
                             `
