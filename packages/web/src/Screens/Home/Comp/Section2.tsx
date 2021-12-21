@@ -1,6 +1,7 @@
 import React from 'react';
 //import CSS
 import { Container, Grid, Typography, makeStyles, createStyles, Theme, Card, CardMedia, CardContent, Button, useMediaQuery, useTheme} from '@material-ui/core';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -112,6 +113,12 @@ const useStyles = makeStyles((theme: Theme) =>
             background: "transparent",
             boxShadow: "none"
         },
+        servicesBtn: {
+            backgroundColor: "#F7B614",color: "#FFFFFF",borderRadius: "56px"
+        },
+        links: {
+            textDecoration: "none"
+        }
     }),
 );
 
@@ -143,9 +150,9 @@ export const Section2: React.FC = function Section2() {
                                 </Typography>
                             </Typography>
                             <Typography style={{textAlign: "center"}}>
-                                <Button 
-                                    variant="contained" color="primary"
-                                    style={{borderRadius: "56px"}}
+                                <Button
+                                    className={classes.servicesBtn} 
+                                    variant="contained"
                                     endIcon={ <img src="Images/GetStartedIcon.png" style={{width: "50%"}} alt="google icon"/>}  
                                 >
                                     Our Services
@@ -157,36 +164,43 @@ export const Section2: React.FC = function Section2() {
                             </Typography>
                         </Grid>
                         <Grid item xs={12} md={3}>
-                            <Button 
-                                variant="outlined" color="default"
-                                startIcon={ <img src="Images/YellowRectangle.png" style={{width: "50%"}} alt="google icon"/>}
-                                className={classes.btn}
-                                style={{marginTop: "10%"}}
-                            >
-                                Food Delivery
-                            </Button>
-                            <Button 
-                                variant="outlined" color="default"
-                                startIcon={ <img src="Images/YellowRectangle.png" style={{width: "50%"}} alt="google icon"/>}
-                                className={classes.btn}
-                            >
-                                Package pick-up &amp; Drop-off
-                            </Button>
-                            <Button 
-                                variant="outlined" color="default"
-                                startIcon={ <img src="Images/YellowRectangle.png" style={{width: "50%"}} alt="google icon"/>}
-                                className={classes.btn}
-                            >
-                                Errand solution
-                            </Button>
-                            <Button 
-                                variant="outlined" color="default"
-                                startIcon={ <img src="Images/YellowRectangle.png" style={{width: "50%"}} alt="google icon"/>}
-                                className={classes.btn}
-                            >
-                                Online Grocery Shopping
-                            </Button>
-                            
+                            <a className={classes.links} href="/Restaurants" title="Food Delivery">
+                                <Button 
+                                    variant="outlined" color="default"
+                                    startIcon={ <img src="Images/YellowRectangle.png" style={{width: "50%"}} alt="google icon"/>}
+                                    className={classes.btn}
+                                    style={{marginTop: "10%"}}
+                                >
+                                    Food Delivery
+                                </Button>
+                            </a>
+                            <a className={classes.links} href="/" title="Comming Soon">
+                                <Button 
+                                    variant="outlined" color="default"
+                                    startIcon={ <img src="Images/YellowRectangle.png" style={{width: "50%"}} alt="google icon"/>}
+                                    className={classes.btn}
+                                >
+                                    Package pick-up &amp; Drop-off
+                                </Button>
+                            </a>
+                            <a className={classes.links} href="/" title="Comming Soon">
+                                <Button 
+                                    variant="outlined" color="default"
+                                    startIcon={ <img src="Images/YellowRectangle.png" style={{width: "50%"}} alt="google icon"/>}
+                                    className={classes.btn}
+                                >
+                                    Errand solution
+                                </Button>
+                            </a>
+                            <a className={classes.links} href="/" title="Comming Soon">
+                                <Button 
+                                    variant="outlined" color="default"
+                                    startIcon={ <img src="Images/YellowRectangle.png" style={{width: "50%"}} alt="google icon"/>}
+                                    className={classes.btn}
+                                >
+                                    Online Grocery Shopping
+                                </Button>
+                            </a>
                         </Grid>
                     </Grid>
                 </Container>
@@ -207,49 +221,60 @@ export const Section2: React.FC = function Section2() {
                             </Typography>
                             <br />
                             <Typography style={{textAlign:"center"}}>
-                                <Button 
-                                    variant="outlined" color="default"
-                                    startIcon={ <img src="Images/YellowRectangle.png" style={{width: "50%"}} alt="google icon"/>}
-                                    className={classes.btnMobile}
-                                >
-                                    Food Delivery
-                                </Button>
+                                <a className={classes.links} href="/Restaurants" title="Food Delivery">
+                                    <Button 
+                                        variant="outlined" color="default"
+                                        startIcon={ <img src="Images/YellowRectangle.png" style={{width: "50%"}} alt="google icon"/>}
+                                        className={classes.btnMobile}
+                                    >
+                                        Food Delivery
+                                    </Button>
+                                </a>
                             </Typography>
                             <Typography style={{textAlign:"center"}}>
-                                <Button 
-                                    variant="outlined" color="default"
-                                    startIcon={ <img src="Images/YellowRectangle.png" style={{width: "50%"}} alt="google icon"/>}
-                                    className={classes.btnMobile}
-                                >
-                                    Package pick-up &amp; Drop-off
-                                </Button>
+                                <a className={classes.links} href="/" title="Comming Soon">
+                                    <Button 
+                                        variant="outlined" color="default"
+                                        startIcon={ <img src="Images/YellowRectangle.png" style={{width: "50%"}} alt="google icon"/>}
+                                        className={classes.btnMobile}
+                                    >
+                                        Package pick-up &amp; Drop-off
+                                    </Button>
+                                </a>
                             </Typography>
                             <Typography style={{textAlign:"center"}}>
-                                <Button 
-                                    variant="outlined" color="default"
-                                    startIcon={ <img src="Images/YellowRectangle.png" style={{width: "50%"}} alt="google icon"/>}
-                                    className={classes.btnMobile}
-                                >
-                                    Errand solution
-                                </Button>
+                                <a className={classes.links} href="/" title="Comming Soon">
+                                    <Button 
+                                        variant="outlined" color="default"
+                                        startIcon={ <img src="Images/YellowRectangle.png" style={{width: "50%"}} alt="google icon"/>}
+                                        className={classes.btnMobile}
+                                    >
+                                        Errand solution
+                                    </Button>
+                                </a>
                             </Typography>
                             <Typography style={{textAlign:"center"}}>
-                                <Button 
-                                    variant="outlined" color="default"
-                                    startIcon={ <img src="Images/YellowRectangle.png" style={{width: "50%"}} alt="google icon"/>}
-                                    className={classes.btnMobile}
-                                >
-                                    Online Grocery Shopping
-                                </Button>
+                                <a className={classes.links} href="/" title="Comming Soon">
+                                    <Button 
+                                        variant="outlined" color="default"
+                                        startIcon={ <img src="Images/YellowRectangle.png" style={{width: "50%"}} alt="google icon"/>}
+                                        className={classes.btnMobile}
+                                    >
+                                        Online Grocery Shopping
+                                    </Button>
+                                </a>
                             </Typography>
                             <Typography style={{textAlign:"center"}}>
-                                <Button 
-                                    variant="contained" color="primary"
-                                    style={{borderRadius: "56px"}}
-                                    endIcon={ <img src="Images/GetStartedIcon.png" style={{width: "50%"}} alt="google icon"/>}  
-                                >
-                                    Our Services
-                                </Button>
+                                <Link className={classes.links} to="/" title="Our Services">
+                                    <Button
+                                        className={classes.servicesBtn}  
+                                        variant="contained"
+                                        endIcon={ <img src="Images/GetStartedIcon.png" style={{width: "50%"}} alt="google icon"/>}  
+                                        type="button"
+                                    >
+                                        Our Services
+                                    </Button>
+                                </Link>
                             </Typography>
                             <Typography style={{textAlign:"center"}}>
                                 <Typography className={classes.Typo2Mobile}>

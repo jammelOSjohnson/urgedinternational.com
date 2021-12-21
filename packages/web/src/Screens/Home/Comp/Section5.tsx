@@ -1,81 +1,71 @@
 import React from 'react';
 //import CSS
-import { Container, Button, Grid, Typography, makeStyles, createStyles, Theme, Card, CardContent} from '@material-ui/core';
+import { Container, Button, Grid, Typography, makeStyles, createStyles, Theme, Card, CardContent, CardMedia} from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
-        Background1: {
-            backgroundColor: "#000",
-            padding: 0,
-        },
         Background2: {
-            backgroundImage: "url(Images/bridge2.jpg)",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
-            padding: 0,
-            color: "#FFFFFF",
-            borderTop: "5px solid #F7B614"
+            background: "#F9FAFB",
+            padding: "5% 0 5% 0",
         },
         sectionTitle: {
-            fontSize: "40px",
+            fontSize: "2.5rem",
             fontWeight: 700,
-            fontFamily: "PT Sans",
+            fontFamily: "Inter",
             textAlign: "center",
-            paddingTop: "5%",
+            paddingBottom: "2%",
+        },
+        sectionTitle2: {
+            fontSize: "20px",
+            fontWeight: 300,
+            fontFamily: "Inter",
+            textAlign: "center",
+            paddingBottom: "2%",
+        },
+        root: {
+            padding: 0
         },
         card: {
             height: "100%",
             display: "flex",
             flexDirection: "column",
-            background: "transparent",
-            boxShadow: "none",
         },
         cardGrid: {
-            padding: "5% 0",
+            paddingTop: "5%",
             color: "#1D2635"
         },
-        cardGrid2: {
-            padding: "5% 0 10% 0",
-            color: "#1D2635",
-        },
-        cardGrid3: {
-            padding: "5% 0 0 0",
-            color: "#1D2635",
+        cardImage: {
+            backgroundSize: "auto",
+            backgroundPosition: "left",
+            marginLeft: "auto",
+            marginRight: "auto",
+            width: "53.29px",
+            height: "100px",
         },
         cardTitle: {
-            fontSize: "30px",
+            fontSize: "20px",
             fontWeight: 700,
-            color: "#FFFFFF",
+            color: "#1D2635",
             fontFamily: "PT Sans",
+            textAlign: "center"
         },
         cardBody: {
             fontSize: "16px",
             fontWeight: 300,
-            color: "#FFFFFF",
+            color: "#1D2635",
             fontFamily: "Open Sans",
+            textAlign: "center"
         },
         cardContent: {
             flexGrow: 1,
-            paddingLeft: 0,
-            paddingRight: 0,
-            position: "relative",
-            width: "66%",
-            marginLeft: "24%",
-            marginRight: "auto",
-        },
-        cardNumber: {
-            color: "#F7B614",
-            fontWeight: 700,
-            fontSize: "50px",
-            left: "-25%",
-            position: "absolute",
-        },
-        gridContainer: {
-            paddingLeft: "3%",
+            paddingLeft: "35px",
+            paddingRight: "35px",
         },
         btn: {
-            borderRadius: "50px",
-            fontFamily: "PT Sans",
+            color: "#FFFFFF",
+            backgroundColor: "#F7B614",
+            textAlign: "center",
+            borderRadius: "32px"
         }
     }),
 );
@@ -84,70 +74,101 @@ export const Section5: React.FC = function Section5() {
     const classes = useStyles();
     return (
         <>
-            <Container maxWidth="xl" className={classes.Background1} >
             <Container maxWidth="xl" className={classes.Background2} >
-                <Typography className={classes.sectionTitle}>
-                    How It Works
+                <Typography>
+                    <Typography className={classes.sectionTitle}>
+                        Stay Home,<br/> 
+                        We Got You Covered
+                    </Typography>
                 </Typography>
-                <Container maxWidth="md">
-                    <Grid container spacing={0} alignContent="center" alignItems="center">
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Card className={`${classes.card}`}>
-                            <CardContent className={classes.cardContent}>
-                                <Typography className={classes.cardNumber}>
-                                    1.
-                                </Typography>
-                               
-                                <Typography variant="h2" className={classes.cardBody}>
+                <Typography>
+                    <Typography className={classes.sectionTitle2}>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vitae cursus et<br/>
+                        euismod tempor. Adipiscing elementum vestibulum in eget enim donec sed tincidunt.
+                    </Typography>
+                </Typography>
+                <Container>
+                    <Grid container spacing={2} className={classes.root} alignContent="center" alignItems="center" style={{justifyContent: "center"}}>
+                        <Grid item xs={10} sm={6} md={3}>
+                            <Card className={`${classes.card}`}>
+                                <CardMedia
+                                    className={classes.cardImage}
+                                    image="/Images/Reliability.svg"
+                                    title="lightbluetruck"
+                                />
+                                <CardContent className={classes.cardContent}>
                                     <Typography gutterBottom className={classes.cardTitle}>
-                                        You Order
+                                        Reliability
                                     </Typography>
-                                    Place your orders by calling us, or contacting us on Whatsapp.
-                                </Typography>
-                            </CardContent>
-                        </Card> 
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Card className={`${classes.card}`}>
-                            <CardContent className={classes.cardContent}>
-                                <Typography className={classes.cardNumber}>
-                                    2.
-                                </Typography>
-                                <Typography variant="h2" className={classes.cardBody}>
+                                    <Typography className={classes.cardBody}>
+                                        We are reliable, so you can always count on us.
+                                    </Typography>
+                                </CardContent>
+                            </Card> 
+                        </Grid>
+                        <Grid item xs={10} sm={6} md={3}>
+                            <Card className={`${classes.card}`}>
+                                <CardMedia
+                                    className={classes.cardImage}
+                                    image="/Images/Fast DeliveryGreen.svg"
+                                    title="lightbluetruck"
+                                />
+                                <CardContent className={classes.cardContent}>
                                     <Typography gutterBottom className={classes.cardTitle}>
-                                        We Pickup
+                                        Fast Delivery
                                     </Typography>
-                                    We will arrage or pick-up packages or food from selected merchants.
-                                </Typography>
-                            </CardContent>
-                        </Card>  
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
-                        <Card className={`${classes.card}`}>
-                            <CardContent className={classes.cardContent}>
-                                <Typography className={classes.cardNumber}>
-                                    3.
-                                </Typography>
-                                <Typography variant="h2" className={classes.cardBody}>
+                                    <Typography className={classes.cardBody}>
+                                        Where ever you are, we got you covered. Speed is our priority
+                                    </Typography>
+                                </CardContent>
+                            </Card>  
+                        </Grid>
+                        <Grid item xs={10} sm={6} md={3}>
+                            <Card className={`${classes.card}`}>
+                                <CardMedia
+                                    className={classes.cardImage}
+                                    image="/Images/DiversifiedYellow.svg"
+                                    title="lightbluetruck"
+                                />
+                                <CardContent className={classes.cardContent}>
                                     <Typography gutterBottom className={classes.cardTitle}>
-                                        We Deliver
+                                        Diversified
                                     </Typography>
-                                    We deliver them where ever you request in a timely manner.
-                                </Typography>
-                            </CardContent>
-                        </Card>  
+                                    <Typography className={classes.cardBody}>
+                                        We will take care of all your delivery and errand needs for you.
+                                    </Typography>
+                                </CardContent>
+                            </Card>  
+                        </Grid>
+                        <Grid item xs={10} sm={6} md={3}>
+                            <Card className={`${classes.card}`}>
+                                <CardMedia
+                                    className={classes.cardImage}
+                                    image="/Images/QualityOrange.svg"
+                                    title="lightbluetruck"
+                                />
+                                <CardContent className={classes.cardContent}>
+                                    <Typography gutterBottom className={classes.cardTitle}>
+                                        Quality
+                                    </Typography>
+                                    <Typography className={classes.cardBody}>
+                                        We provide quality services, and will never let you down.
+                                    </Typography>
+                                </CardContent>
+                            </Card>  
+                        </Grid>
                     </Grid>
-                </Grid>
-                <div style={{textAlign: "center", paddingBottom: "5%"}}>
-                    <Button className={classes.btn} variant="outlined" color="primary" type="submit">
-                        Order Food
-                    </Button>&nbsp;&nbsp;
-                    <Button className={classes.btn} variant="outlined" color="primary" type="button">
-                        Package Delivery
-                    </Button>
-                </div>
                 </Container>
-            </Container>
+                <Typography>
+                    <Typography style={{textAlign: "center", paddingTop: "5%"}}>
+                        <Button
+                            type="button"
+                            className={classes.btn}
+                        >
+                            Get Started
+                        </Button>
+                    </Typography>
+                </Typography>
             </Container>
         </>
     )

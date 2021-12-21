@@ -1,30 +1,31 @@
 import React from 'react';
 //import CSS
-import { Container, Typography, makeStyles, createStyles, Theme} from '@material-ui/core';
-
+import { Container, Typography, makeStyles, createStyles, Theme, Accordion, AccordionSummary, AccordionDetails} from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
         heroText1: {
-            fontSize: '6vh',
+            fontSize: '2.5rem',
             fontWeight: 700,
-            paddingTop: "15%",
+            paddingTop: "5%",
+            textAlign: "center",
+            fontFamily: "Inter"
         },
         heroText2: {
-            fontSize: '16px',
-            fontWeight: 600,
-            paddingTop: "5%",
+            fontSize: '20px',
+            fontWeight: 400,
+            paddingTop: "2%",
+            textAlign: "center",
+            fontFamily: "Inter"
         },
         heroSubText: {
             fontSize: '6vh',
             color: "#F7B614",
         },
         heroBackground: {
-            backgroundImage: "url(Images/HomeSection7.png)",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "cover",
+            background: "#F9FAFB",
             padding: 0,
-            color: "#FFFFFF",
         },
         heroTruckIcon: {
             paddingTop: "2.5%"
@@ -45,15 +46,13 @@ export const Section7: React.FC = function Section7() {
     return (
         <>
             <Container maxWidth="xl" className={classes.heroBackground}>
-                <div style={{textAlign: "center"}}>
-                    <img src="Images/Testimonypic.png" style={{width: "90px", height: "90px", marginTop: "5%", marginBottom: "5%"}} alt="google icon"/>
-                    <Typography variant="body1" style={{width: "30%", marginLeft: "auto", marginRight: "auto", marginBottom: "3%"}}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Volutpat vulputate amet blandit sed vitae ipsum. Est feugiat arcu dui est purus amet quis. Neque imperdiet vitae sed laoreet diam.
-                    </Typography>
-                    <Typography variant="body1" style={{width: "30%", marginLeft: "auto", marginRight: "auto", paddingBottom: "5%", color: "#F7B614"}}>
-                        John Doe
-                    </Typography>
-                </div>
+                <Typography className={classes.heroText1}>
+                    Frequently asked questions
+                </Typography>
+                <Typography className={classes.heroText2}>
+                    Everything you need to know about the product and billing.
+                </Typography>
+                
             </Container>
         </>
     )
