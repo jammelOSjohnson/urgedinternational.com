@@ -5,6 +5,7 @@ import { Header } from '../Components/Header';
 import { Header2 } from '../Components/Header2';
 import { Footer } from '../Components/Footer';
 import { HomeScreen } from '../Screens/Home/HomeScreen';
+import { ServicesScreen } from '../Screens/Services/ServicesScreen';
 import { AboutScreen } from '../Screens/About/AboutScreen';
 import { LoginScreen } from '../Screens/Auth/LoginScreen';
 import { RegisterScreen } from '../Screens/Auth/RegisterScreen';
@@ -185,7 +186,7 @@ const App: React.FC = function App() {
                     {/* <Route path="/" exact component={AboutScreen} /> */}
                     <Route path="/" exact component={HomeScreen} />
                     {/* Customer Screens */}
-                    <Route path="/About" exact component={AboutScreen} />
+                    <Route path="/Services" exact component={ServicesScreen} />
                     <Route path="/Login">
                       <LoginScreen />
                     </Route>

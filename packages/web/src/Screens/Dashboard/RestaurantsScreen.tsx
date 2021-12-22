@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         main: {
             padding: 0,
-            backgroundImage: "url(Images/FoodPortalBackground.png)"
+            backgroundImage: "url(Images/FoodPortalBackground.png)",
+            height: "100vh"
         },
         content: {
             flexGrow: 1,
