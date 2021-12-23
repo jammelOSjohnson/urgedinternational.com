@@ -196,9 +196,9 @@ export const Section2: React.FC = function Section2() {
                             variant="fullWidth"
                             aria-label="full width tabs example"
                             >
-                            <Tab label="Item One" {...a11yProps(0)} />
-                            <Tab label="Item Two" {...a11yProps(1)} />
-                            <Tab label="Item Three" {...a11yProps(2)} />
+                            <Tab label="Customers" {...a11yProps(0)} />
+                            <Tab label="Drivers" {...a11yProps(1)} />
+                            <Tab label="Merchants" {...a11yProps(2)} />
                             </Tabs>
                         </AppBar>
                         <SwipeableViews

@@ -71,8 +71,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         accord: {
             width: "70%", 
-            marginLeft: "auto", 
-            marginRight: "auto",
+            marginLeft: "auto !important", 
+            marginRight: "auto !important",
             borderLeft: 0,
             borderRight: 0,
             background: "#F9FAFB"
