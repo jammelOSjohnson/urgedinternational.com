@@ -241,33 +241,6 @@ export const Header2: React.FC = function Header2() {
           // eslint-disable-next-line
         }
       });
-
-      // socialAuth.onAuthStateChanged( function (user) {
-      //   //console.log("Soical auth");
-      //   if(referralPath !== "/Register"){
-      //     //update the state for current user to the user logged in
-      //     ////console.log("about to set current user google");
-      //     ////console.log(user);
-      //     //var userInfo = fetchUserInfo();
-      //     //var payload = {currentUser : user, loading: false, userInfo: userInfo}
-      //     var signonStatus = false;
-      //     if(user !== null){
-      //         signonStatus = user.uid !== null && user.uid !== undefined? true : false;
-      //         var payload = {...value,currentUser : user, loading: false, loggedIn: signonStatus}
-      //         if(value.userInfo.email === "" ){
-      //             fetchUserDetails(payload)
-      //             // .then(function(res){
-      //             //     if(!res){
-      //             //         ////console.log('Unable to fetch user data at this time'); 
-      //             //     }
-      //             // });
-      //         }
-      //     }
-      //   }
-      // });
-
-      
-      
     },[value.userRolef ,generalLocation])
 
     var fetchUserDetails = function  fetchUserDetails (payload) {
@@ -317,7 +290,7 @@ export const Header2: React.FC = function Header2() {
         setOpen(false);
     };
 
-    if(referralPath !== '/'){
+    if(referralPath !== '/' && referralPath !== '/Services'){
       return(
         <>
         </>
@@ -349,7 +322,13 @@ export const Header2: React.FC = function Header2() {
       >
         <List>
           {headersData.map(({label, href}, index) => {
+            console.log("rerendering");
             return referralPath === "/" && href === "/"?
+              <ListItem button key={label}>
+                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                <ListItemText style={{color: "#F7B614"}} primary={label} />
+              </ListItem>
+            :referralPath === "/Services" && href === "/Services"?
               <ListItem button key={label}>
                 <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                 <ListItemText style={{color: "#F7B614"}} primary={label} />
@@ -387,60 +366,72 @@ export const Header2: React.FC = function Header2() {
                 <Toolbar>
                   <HeaderLogo />
                   {isMatch? (
-                  <>
-                      <div style={{position: "absolute", right: 10}}>
-                        {(['right'] as Anchor[]).map((anchor) => (
-                          <React.Fragment key={anchor}>
-                            <Button onClick={toggleDrawer(anchor, true)}>
-                              <img src="Images/MobileMenuIcon.png" alt="MobileMenuIcon" />
-                            </Button>
-                            <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
-                              {list(anchor)}
-                            </Drawer>
-                          </React.Fragment>
-                        ))}
-                      </div>
-                  </>
-                  ): (
-                  <>
-                    <Typography style={{textAlign: "right", width: "100%"}}>
-                      {headersData.map(({ label, href }) => {
-                          return referralPath === "/" && href === "/"?
-                              <Button
-                                  {...{
-                                      key: label,
-                                      className: classes.menuItemPrimary,
-                                      to: href,
-                                      component: RouterLink,
-                                  }}
-                              >
-                                  {label}
-                                  <div className={classes.menuPrimaryCircle}></div>
+                    <>
+                        <div style={{position: "absolute", right: 10}}>
+                          {(['right'] as Anchor[]).map((anchor) => (
+                            <React.Fragment key={anchor}>
+                              <Button onClick={toggleDrawer(anchor, true)}>
+                                <img src="Images/MobileMenuIcon.png" alt="MobileMenuIcon" />
                               </Button>
-                          :
+                              <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
+                                {list(anchor)}
+                              </Drawer>
+                            </React.Fragment>
+                          ))}
+                        </div>
+                    </>
+                  ): (
+                    <>
+                      <Typography style={{textAlign: "right", width: "100%"}}>
+                        {headersData.map(({ label, href }) => {
+                          return referralPath === "/" && href === "/"?
                                 <Button
                                     {...{
                                         key: label,
-                                        className: classes.menuItem,
+                                        className: classes.menuItemPrimary,
                                         to: href,
                                         component: RouterLink,
                                     }}
                                 >
                                     {label}
+                                    <div className={classes.menuPrimaryCircle}></div>
                                 </Button>
-                      })}
-                      <a href="/Restaurants" title="Place Order" className={classes.linkBtn}>
-                        <Button className={classes.btn} variant="contained" color="primary">
-                          Place an Order
-                        </Button>
-                      </a>
-                      <a href="/Login" title="Login"  className={classes.linkBtn}>
-                        <Button className={classes.btn2} variant="outlined" color="primary">
-                          Sign In
-                        </Button>
-                      </a>
-                    </Typography>
-                  </>
+                            :referralPath === "/Services" && href === "/Services"?
+                            <Button
+                                {...{
+                                    key: label,
+                                    className: classes.menuItemPrimary,
+                                    to: href,
+                                    component: RouterLink,
+                                }}
+                            >
+                                {label}
+                                <div className={classes.menuPrimaryCircle}></div>
+                            </Button>
+                        :
+                          <Button
+                              {...{
+                                  key: label,
+                                  className: classes.menuItem,
+                                  to: href,
+                                  component: RouterLink,
+                              }}
+                          >
+                              {label}
+                          </Button>
+                        })}
+                        <a href="/Restaurants" title="Place Order" className={classes.linkBtn}>
+                          <Button className={classes.btn} variant="contained" color="primary">
+                            Place an Order
+                          </Button>
+                        </a>
+                        <a href="/Login" title="Login"  className={classes.linkBtn}>
+                          <Button className={classes.btn2} variant="outlined" color="primary">
+                            Sign In
+                          </Button>
+                        </a>
+                      </Typography>
+                    </>
                   )}
                 </Toolbar>
             </AppBar>

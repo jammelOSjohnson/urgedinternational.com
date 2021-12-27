@@ -119,6 +119,56 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         links: {
             textDecoration: "none"
+        },
+        sectionHeaderText: {
+            fontSize: "2.5rem",
+            fontWeight: 700,
+            color: "#1D2635",
+            fontFamily: "Open Sans",
+            marginBottom: "5%"
+        },
+        line: {
+            height: "3px !important",
+            backgroundColor: "#000",
+            border: "none",
+            marginTop: 0,
+            opacity: 1,
+            width: "15%"
+        },
+        foodDevSubheading: {
+            fontSize: "1.5rem",
+            fontFamily: "PT Sans",
+            fontWeight: 700,
+            marginTop: "2%"
+        },
+        foodDevSubheadingMobile: {
+            fontSize: "1.5rem",
+            fontFamily: "PT Sans",
+            fontWeight: 700,
+            marginTop: "5%",
+            marginBottom: "5%"
+        },
+        pOrderBtn: {
+            border: "1.21951px solid #B6B6B6",
+            color: "#1D2635",
+            marginTop: "2%"
+        },
+        driverGetStarted: {
+            color: "#FFF",
+            borderRadius: "97.561px",
+            background: "#F7B614"
+        },
+        paragraph: {
+            fontStyle: "16px",
+            fontWeight: 300,
+            color: "#1D2635",
+            paddingBottom: "5%",
+            fontFamily: "Open Sans"
+        },
+        paragraphHeader: {
+            fontFamily: "PT Sans",
+            fontSize: "1.5rem",
+            color: "#1D2635"
         }
     }),
 );
@@ -207,13 +257,221 @@ export const Section2: React.FC = function Section2() {
                             onChangeIndex={handleChangeIndex}
                         >
                             <TabPanel value={value} index={0} dir={theme.direction}>
-                            Item One
+                                <Container maxWidth="xl" className={classes.mainContainer}>
+                                    <Grid container direction="row" spacing={0} className={classes.root} alignItems="center" justifyContent="center">
+                                        <Grid item xs={12}>
+                                            <Typography className={classes.sectionHeaderText}>
+                                                Our Services
+                                                <hr className={classes.line}/>
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <img src="Images/ServicesP1.png" alt="ServicesP1" />
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography>
+                                                <img src="Images/FoodDeliveryServiceAlt.png" alt="FoodDeliveryServiceAlt" />
+                                                &nbsp;&nbsp;&nbsp;
+                                                Food Delivery
+                                            </Typography>
+                                            <Typography className={classes.foodDevSubheading}>
+                                                Get your favourite meal<br />wherever you are.
+                                            </Typography>
+                                            <Typography>
+                                                We deliver from your favorite local restaurant to your<br/>door.
+                                            </Typography>
+                                            <Button
+                                                className={classes.pOrderBtn}
+                                                variant="outlined"
+                                                endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn2" />}
+                                            >
+                                                Place Order 
+                                            </Button>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography>
+                                                <img src="Images/GroceryDeliveryServiceAlt.png" alt="GroceryDeliveryServiceAlt" />
+                                                &nbsp;&nbsp;&nbsp;
+                                                Online Grocery
+                                            </Typography>
+                                            <Typography className={classes.foodDevSubheading}>
+                                                Benefit from amazing deals<br />
+                                                and offers when you shop<br />
+                                                grocery with us.
+                                            </Typography>
+                                            <Typography>
+                                                You stay home and let the grocery come to you.<br />
+                                                We got you covered.
+                                            </Typography>
+                                            <Button
+                                                className={classes.pOrderBtn}
+                                                variant="outlined"
+                                                endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn3" />}
+                                            >
+                                                Shop Sallyspantry 
+                                            </Button>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <img src="Images/ServicesP2.png" alt="ServicesP2" />
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <img src="Images/ServicesP3.png" alt="ServicesP3" />
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography>
+                                                <img src="Images/PackageDeliveryServiceAlt.png" alt="PackageDeliveryServiceAlt" />
+                                                &nbsp;&nbsp;&nbsp;
+                                                Urged Express
+                                            </Typography>
+                                            <Typography className={classes.foodDevSubheading}>
+                                                We deliver packages of all<br />
+                                                types.
+                                            </Typography>
+                                            <Typography>
+                                                On-demand delivery solution that helps you to<br />
+                                                send various packages to your family, business<br />
+                                                partners and friends. 
+                                            </Typography>
+                                            <Button
+                                                className={classes.pOrderBtn}
+                                                variant="outlined"
+                                                endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn4" />}
+                                            >
+                                                Comming Soon 
+                                            </Button>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography>
+                                                <img src="Images/PackageDeliveryServiceAlt.png" alt="PackageDeliveryServiceAlt" />
+                                                &nbsp;&nbsp;&nbsp;
+                                                Errand Solution
+                                            </Typography>
+                                            <Typography className={classes.foodDevSubheading}>
+                                                Ditch the hastle of joining<br />
+                                                long lines to complete your<br />
+                                                transactions.
+                                            </Typography>
+                                            <Typography>
+                                                Let us Pay Bills, Complete Banking &amp; Tax office
+                                                <br />Transactions on your behalf. 
+                                            </Typography>
+                                            <Button
+                                                className={classes.pOrderBtn}
+                                                variant="outlined"
+                                                endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn5" />}
+                                            >
+                                                Comming Soon 
+                                            </Button>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography>
+                                                <img src="Images/MarketPlaceServiceAlt.png" alt="MarketPlaceServiceAlt" />
+                                                &nbsp;&nbsp;&nbsp;
+                                                Urged Market Place
+                                            </Typography>
+                                            <Typography className={classes.foodDevSubheading}>
+                                                Get your favourite meal<br />
+                                                where ever you are.
+                                            </Typography>
+                                            <Typography>
+                                                We deliver from your favorite local restaurant to<br />
+                                                your door. 
+                                            </Typography>
+                                            <Button
+                                                className={classes.pOrderBtn}
+                                                variant="outlined"
+                                                endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn6" />}
+                                            >
+                                                Comming Soon 
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                </Container>
                             </TabPanel>
                             <TabPanel value={value} index={1} dir={theme.direction}>
-                            Item Two
+                                <Container maxWidth="xl" className={classes.mainContainer}>
+                                    <Grid container direction="row" spacing={0} className={classes.root} alignItems="center" justifyContent="center">
+                                        <Grid item xs={6}>
+                                            <Typography
+                                                style={{width: "100%", paddingTop: "1%", position: "absolute", top: 0, marginBottom: 0}}
+                                                className={classes.sectionHeaderText}>
+                                                Deliver &amp; Earn With Urged
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography className={classes.paragraphHeader}>The Process</Typography>
+                                            <Typography className={classes.paragraph}>
+                                                We are always looking for Drivers/Riders to join our team, to deliver various packages for our diverse delivery system.
+                                            </Typography>
+                                            <Typography className={classes.paragraph}>
+                                                We are looking for a reliable delivery driver/riders who is concerned
+                                                 with customer satisfaction and transporting items in a safe, timely manner. 
+                                                 The delivery driver will pick up and drop off items while adhering to customer 
+                                                 directions and time schedules. You should be willing to work as part of the delivery
+                                                  team in order to ensure that the items are complete, packed correctly, and safely delivered 
+                                                  to the correct client.
+                                            </Typography>
+                                            <Typography className={classes.paragraph}>
+                                                To succeed as a delivery driver, you should be polite and prompt with a commitment
+                                                 to providing our clients with an excellent experience. You should be thorough in
+                                                  ensuring orders are properly fulfilled, committed to work safety, and passionate
+                                                   about satisfying clients.
+                                            </Typography>
+                                            <Typography className={classes.paragraph}>
+                                                Work when you can, and be the boss of your own time.
+                                            </Typography>
+                                            <Button
+                                                className={classes.driverGetStarted}
+                                                variant="contained"
+
+                                            >
+                                                Get Started
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                </Container>
                             </TabPanel>
                             <TabPanel value={value} index={2} dir={theme.direction}>
-                            Item Three
+                                <Container maxWidth="xl" className={classes.mainContainer}>
+                                    <Grid container direction="row" spacing={0} className={classes.root} alignItems="center" justifyContent="center">
+                                        <Grid item xs={6}>
+                                            <Typography
+                                                style={{width: "100%", paddingTop: "1%", position: "absolute", top: 0, marginBottom: 0}}
+                                                className={classes.sectionHeaderText}>
+                                                Partner With Urged
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Typography className={classes.paragraphHeader}>Grow With Us!</Typography>
+                                            <Typography className={classes.paragraph}>
+                                                Let us help you reach more people and provide hastle free engagements with your customers and business partners.
+                                            </Typography>
+                                            <Typography className={classes.paragraph}>
+                                                Lorem ipsum dolor sit amet, consectetur
+                                                 adipiscing elit. Posuere ut leo at parturient 
+                                                 arcu faucibus tincidunt. Varius blandit egestas mauris hac dui. 
+                                                 Pellentesque euismod malesuada elementum nulla eget nunc tortor 
+                                                 dolor. Arcu quisque sed sed sit. Id gravida pulvinar lacus porta ut in. 
+                                                 Nunc nunc ut lectus mus vel fusce.
+                                            </Typography>
+                                            <Typography className={classes.paragraph}>
+                                                Lectus donec suscipit pellentesque diam convallis. Lorem justo, lacinia
+                                                 amet ac tincidunt quam diam. Dui tortor augue dolor ornare fermentum.
+                                                  Id tellus massa et ac commodo. Quisque et in dignissim hac justo dolor iaculis.
+                                                   Integer pellentesque auctor diam ullamcorper eu porta mauris. Pulvinar 
+                                                   in integer eu fames felis, elit. Amet proin iaculis nec egestas elit 
+                                                   suspendisse morbi mi, dolor. Ipsum purus sit pulvinar non augue amet. 
+                                            </Typography>
+                                            <Button
+                                                className={classes.driverGetStarted}
+                                                variant="contained"
+
+                                            >
+                                                Get Started
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                </Container>
                             </TabPanel>
                         </SwipeableViews>
                     </Container>
@@ -225,85 +483,319 @@ export const Section2: React.FC = function Section2() {
 
             {isMatch?
                 <Container maxWidth="xl" className={classes.mainContainer}>
-                    <Grid container direction="row" spacing={0} className={classes.root} alignItems="center" justifyContent="center">
-                        <Grid item xs={12} md={9}>
-                            <Typography style={{textAlign:"center"}}>
-                                <Typography variant="h2" className={classes.s2HeadingMobile}>
-                                    No more long line
-                                    <br/> waiting headaches
-                                </Typography>
-                            </Typography>
-                            <br />
-                            <Typography style={{textAlign:"center"}}>
-                                <a className={classes.links} href="/Restaurants" title="Food Delivery">
-                                    <Button 
-                                        variant="outlined" color="default"
-                                        startIcon={ <img src="Images/YellowRectangle.png" style={{width: "50%"}} alt="google icon"/>}
-                                        className={classes.btnMobile}
-                                    >
-                                        Food Delivery
-                                    </Button>
-                                </a>
-                            </Typography>
-                            <Typography style={{textAlign:"center"}}>
-                                <a className={classes.links} href="/" title="Comming Soon">
-                                    <Button 
-                                        variant="outlined" color="default"
-                                        startIcon={ <img src="Images/YellowRectangle.png" style={{width: "50%"}} alt="google icon"/>}
-                                        className={classes.btnMobile}
-                                    >
-                                        Package pick-up &amp; Drop-off
-                                    </Button>
-                                </a>
-                            </Typography>
-                            <Typography style={{textAlign:"center"}}>
-                                <a className={classes.links} href="/" title="Comming Soon">
-                                    <Button 
-                                        variant="outlined" color="default"
-                                        startIcon={ <img src="Images/YellowRectangle.png" style={{width: "50%"}} alt="google icon"/>}
-                                        className={classes.btnMobile}
-                                    >
-                                        Errand solution
-                                    </Button>
-                                </a>
-                            </Typography>
-                            <Typography style={{textAlign:"center"}}>
-                                <a className={classes.links} href="/" title="Comming Soon">
-                                    <Button 
-                                        variant="outlined" color="default"
-                                        startIcon={ <img src="Images/YellowRectangle.png" style={{width: "50%"}} alt="google icon"/>}
-                                        className={classes.btnMobile}
-                                    >
-                                        Online Grocery Shopping
-                                    </Button>
-                                </a>
-                            </Typography>
-                            <Typography style={{textAlign:"center"}}>
-                                <Link className={classes.links} to="/" title="Our Services">
-                                    <Button
-                                        className={classes.servicesBtn}  
-                                        variant="contained"
-                                        endIcon={ <img src="Images/GetStartedIcon.png" style={{width: "50%"}} alt="google icon"/>}  
-                                        type="button"
-                                    >
-                                        Our Services
-                                    </Button>
-                                </Link>
-                            </Typography>
-                            <Typography style={{textAlign:"center"}}>
-                                <Typography className={classes.Typo2Mobile}>
-                                    Ease your everyday life, by allowing
-                                    <br />us to take care of all your errands and delivery services for you.
-                                </Typography>
-                            </Typography>
-                        </Grid>
-                    </Grid>
+                    <Container maxWidth="lg">
+                        <Typography variant="h2" className={classes.s2Heading}>
+                            From essential services to earning<br />
+                            opportunities. We're an all-in-one<br />
+                            platform.
+                        </Typography>
+                        <AppBar position="static" color="default">
+                            <Tabs
+                                value={value}
+                                onChange={handleChange}
+                                indicatorColor="primary"
+                                textColor="primary"
+                                variant="fullWidth"
+                                aria-label="full width tabs example"
+                            >
+                            <Tab label="Customers" {...a11yProps(0)} />
+                            <Tab label="Drivers" {...a11yProps(1)} />
+                            <Tab label="Merchants" {...a11yProps(2)} />
+                            </Tabs>
+                        </AppBar>
+                        <SwipeableViews
+                            axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+                            index={value}
+                            onChangeIndex={handleChangeIndex}
+                        >
+                            <TabPanel value={value} index={0} dir={theme.direction}>
+                                <Container maxWidth="xl" className={classes.mainContainer}>
+                                    <Grid container direction="row" spacing={0} className={classes.root} alignItems="center" justifyContent="center">
+                                        <Grid item xs={12}>
+                                            <Typography>
+                                                <img src="Images/FoodDeliveryServiceAlt.png" alt="FoodDeliveryServiceAlt" />
+                                                &nbsp;&nbsp;&nbsp;
+                                                Food Delivery
+                                            </Typography>
+                                            <Typography className={classes.foodDevSubheadingMobile}>
+                                                Get your favourite meal<br />wherever you are.
+                                            </Typography>
+                                            <Typography>
+                                                We deliver from your favorite local restaurant to your door.
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <img width="100%" src="Images/ServicesP1.png" alt="ServicesP1" />
+                                            <Button
+                                                style={{
+                                                    borderRadius: "47px",
+                                                    width: "100%",
+                                                    height: "50px",
+                                                    marginTop: "15%",
+                                                    marginBottom: "15%"
+                                                }}
+                                                className={classes.pOrderBtn}
+                                                variant="outlined"
+                                                endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn2" />}
+                                            >
+                                                Place Order 
+                                            </Button>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Typography>
+                                                <img src="Images/GroceryDeliveryServiceAlt.png" alt="GroceryDeliveryServiceAlt" />
+                                                &nbsp;&nbsp;&nbsp;
+                                                Online Grocery
+                                            </Typography>
+                                            <Typography className={classes.foodDevSubheadingMobile}>
+                                                Benefit from amazing deals<br />
+                                                and offers when you shop<br />
+                                                grocery with us.
+                                            </Typography>
+                                            <Typography>
+                                                You stay home and let the grocery come to you. 
+                                                We got you covered.
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <img width="100%" src="Images/ServicesP2.png" alt="ServicesP2" />
+                                            <Button
+                                                style={{
+                                                    borderRadius: "47px",
+                                                    width: "100%",
+                                                    height: "50px",
+                                                    marginTop: "15%",
+                                                    marginBottom: "15%"
+                                                }}
+                                                className={classes.pOrderBtn}
+                                                variant="outlined"
+                                                endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn3" />}
+                                            >
+                                                Shop Sallyspantry 
+                                            </Button>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Typography>
+                                                <img src="Images/PackageDeliveryServiceAlt.png" alt="PackageDeliveryServiceAlt" />
+                                                &nbsp;&nbsp;&nbsp;
+                                                Urged Express
+                                            </Typography>
+                                            <Typography className={classes.foodDevSubheadingMobile}>
+                                                We deliver packages of all<br />
+                                                types.
+                                            </Typography>
+                                            <Typography>
+                                                On-demand delivery solution that helps you to 
+                                                send various packages to your family, business 
+                                                partners and friends. 
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <img width="100%" src="Images/ServicesP3.png" alt="ServicesP3" />
+                                            <Button
+                                                style={{
+                                                    borderRadius: "47px",
+                                                    width: "100%",
+                                                    height: "50px",
+                                                    marginTop: "15%",
+                                                    marginBottom: "15%"
+                                                }}
+                                                className={classes.pOrderBtn}
+                                                variant="outlined"
+                                                endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn4" />}
+                                            >
+                                                Comming Soon 
+                                            </Button>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Typography>
+                                                <img src="Images/PackageDeliveryServiceAlt.png" alt="PackageDeliveryServiceAlt" />
+                                                &nbsp;&nbsp;&nbsp;
+                                                Errand Solution
+                                            </Typography>
+                                            <Typography className={classes.foodDevSubheadingMobile}>
+                                                Ditch the hastle of joining<br />
+                                                long lines to complete your<br />
+                                                transactions.
+                                            </Typography>
+                                            <Typography>
+                                                Let us Pay Bills, Complete Banking &amp; Tax office 
+                                                Transactions on your behalf. 
+                                            </Typography>
+                                            <Button
+                                                style={{
+                                                    borderRadius: "47px",
+                                                    width: "100%",
+                                                    height: "50px",
+                                                    marginTop: "15%",
+                                                    marginBottom: "15%"
+                                                }}
+                                                className={classes.pOrderBtn}
+                                                variant="outlined"
+                                                endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn5" />}
+                                            >
+                                                Comming Soon 
+                                            </Button>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Typography>
+                                                <img src="Images/MarketPlaceServiceAlt.png" alt="MarketPlaceServiceAlt" />
+                                                &nbsp;&nbsp;&nbsp;
+                                                Urged Market Place
+                                            </Typography>
+                                            <Typography className={classes.foodDevSubheadingMobile}>
+                                                Get your favourite meal<br />
+                                                where ever you are.
+                                            </Typography>
+                                            <Typography>
+                                                We deliver from your favorite local restaurant to 
+                                                your door. 
+                                            </Typography>
+                                            <Button
+                                                style={{
+                                                    borderRadius: "47px",
+                                                    width: "100%",
+                                                    height: "50px",
+                                                    marginTop: "15%",
+                                                    marginBottom: "15%"
+                                                }}
+                                                className={classes.pOrderBtn}
+                                                variant="outlined"
+                                                endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn6" />}
+                                            >
+                                                Comming Soon 
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                </Container>
+                            </TabPanel>
+                            <TabPanel value={value} index={1} dir={theme.direction}>
+                                <Container maxWidth="xl" className={classes.mainContainer}>
+                                    <Grid container direction="row" spacing={0} className={classes.root} alignItems="center" justifyContent="center">
+                                        <Grid item xs={12}>
+                                            <Typography
+                                                style={{
+                                                    paddingTop: "1%",marginBottom: 1,
+                                                    textAlign: "center"
+                                                }}
+                                                className={classes.sectionHeaderText}>
+                                                Deliver &amp; Earn With Urged
+                                            </Typography>
+                                            <img src="Images/RiderPic.png" width="100%" alt="" />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Typography className={classes.paragraphHeader}>The Process</Typography>
+                                            <Typography className={classes.paragraph}>
+                                                We are always looking for Drivers/Riders to join our team, to deliver various packages for our diverse delivery system.
+                                            </Typography>
+                                            <Typography className={classes.paragraph}>
+                                                We are looking for a reliable delivery driver/riders who is concerned
+                                                 with customer satisfaction and transporting items in a safe, timely manner. 
+                                                 The delivery driver will pick up and drop off items while adhering to customer 
+                                                 directions and time schedules. You should be willing to work as part of the delivery
+                                                  team in order to ensure that the items are complete, packed correctly, and safely delivered 
+                                                  to the correct client.
+                                            </Typography>
+                                            <Typography className={classes.paragraph}>
+                                                To succeed as a delivery driver, you should be polite and prompt with a commitment
+                                                 to providing our clients with an excellent experience. You should be thorough in
+                                                  ensuring orders are properly fulfilled, committed to work safety, and passionate
+                                                   about satisfying clients.
+                                            </Typography>
+                                            <Typography className={classes.paragraph}>
+                                                Work when you can, and be the boss of your own time.
+                                            </Typography>
+                                            <Button
+                                                className={classes.driverGetStarted}
+                                                variant="contained"
+                                                style={{width: "100%"}}
+                                            >
+                                                Get Started
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                </Container>
+                            </TabPanel>
+                            <TabPanel value={value} index={2} dir={theme.direction}>
+                                <Container maxWidth="xl" className={classes.mainContainer}>
+                                    <Grid container direction="row" spacing={0} className={classes.root} alignItems="center" justifyContent="center">
+                                        <Grid item xs={12}>
+                                            <Typography
+                                                style={{ paddingTop: "1%", marginBottom: 0}}
+                                                className={classes.sectionHeaderText}>
+                                                Partner With Urged
+                                            </Typography>
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Typography className={classes.paragraphHeader}>Grow With Us!</Typography>
+                                            <Typography className={classes.paragraph}>
+                                                Let us help you reach more people and provide hastle free engagements with your customers and business partners.
+                                            </Typography>
+                                            <Typography className={classes.paragraph}>
+                                                Lorem ipsum dolor sit amet, consectetur
+                                                 adipiscing elit. Posuere ut leo at parturient 
+                                                 arcu faucibus tincidunt. Varius blandit egestas mauris hac dui. 
+                                                 Pellentesque euismod malesuada elementum nulla eget nunc tortor 
+                                                 dolor. Arcu quisque sed sed sit. Id gravida pulvinar lacus porta ut in. 
+                                                 Nunc nunc ut lectus mus vel fusce.
+                                            </Typography>
+                                            <Typography className={classes.paragraph}>
+                                                Lectus donec suscipit pellentesque diam convallis. Lorem justo, lacinia
+                                                 amet ac tincidunt quam diam. Dui tortor augue dolor ornare fermentum.
+                                                  Id tellus massa et ac commodo. Quisque et in dignissim hac justo dolor iaculis.
+                                                   Integer pellentesque auctor diam ullamcorper eu porta mauris. Pulvinar 
+                                                   in integer eu fames felis, elit. Amet proin iaculis nec egestas elit 
+                                                   suspendisse morbi mi, dolor. Ipsum purus sit pulvinar non augue amet. 
+                                            </Typography>
+                                            <Button
+                                                className={classes.driverGetStarted}
+                                                variant="contained"
+                                                style={{width: "100%"}}
+
+                                            >
+                                                Get Started
+                                            </Button>
+                                        </Grid>
+                                    </Grid>
+                                </Container>
+                            </TabPanel>
+                        </SwipeableViews>
+                    </Container>
                 </Container>
             :
                 <></>
 
             }
-            
+            <style>
+                {`
+                    .MuiButtonBase-root:hover {
+                        background-color: #F7B614;
+                    }
+
+                    .MuiTab-textColorPrimary.Mui-selected {
+                        background-color: #F7B614;
+                        color: #FFF;
+                        border-radius: 50px;
+}
+                    }
+
+                    .MuiPaper-elevation4 {
+                        box-shadow: none;
+                    }
+
+                    .MuiTabs-flexContainer {
+                        height: 70px;
+                    }
+
+                    .MuiTabs-indicator{
+                        background-color: transparent;
+                    }
+
+                    .MuiTabs-scroller{
+                        background-color: #FFF;
+                    }
+                `}
+            </style>
         </>
     )
 }
