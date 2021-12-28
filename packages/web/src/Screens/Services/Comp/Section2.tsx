@@ -776,15 +776,14 @@ export const Section2: React.FC = function Section2() {
                         background-color: #F7B614;
                         color: #FFF;
                         border-radius: 50px;
-}
                     }
 
                     .MuiPaper-elevation4 {
-                        box-shadow: none;
+                        box-shadow: none !important;
                     }
 
                     .MuiTabs-flexContainer {
-                        height: 70px;
+                        height: 50px;
                     }
 
                     .MuiTabs-indicator{

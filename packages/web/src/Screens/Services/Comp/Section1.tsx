@@ -770,7 +770,8 @@ export const Section1: React.FC = function Section1() {
                                     }
 
                                     .mobileheroText1 {
-                                        width: 73% !important;
+                                        width: 86% !important;
+                                        padding-top: 0%;
                                     }
 
                                     .mobileheroText2 {
