@@ -2,7 +2,6 @@ import React from 'react';
 //import CSS
 import { Container, Grid, Typography, makeStyles, createStyles, Theme, Card, CardMedia, CardContent, Button, useMediaQuery, useTheme, AppBar, Tabs, Box, Tab} from '@material-ui/core';
 import { Link } from "react-router-dom";
-import SwipeableViews from 'react-swipeable-views';
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -17,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "#1D2635",
             fontSize: "1.7rem",
             fontWeight: 600,
-            marginTop: "10%",
+            marginTop: "1%",
         },
         s2HeadingMobile: {
             color: "#1D2635",
@@ -105,6 +104,13 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         cardContent: {
             flexGrow: 1,
+            textAlign: "center"
+        },
+        cardBody: {
+            fontSize: "16px",
+            fontWeight: 300,
+            color: "#1D2635",
+            fontFamily: "Open Sans",
             textAlign: "center"
         },
         cardImage: {
@@ -232,15 +238,76 @@ export const Section2: React.FC = function Section2() {
             {isMatchMedium?
                 <Container maxWidth="xl" className={classes.mainContainer}>
                     <Container maxWidth="lg">
-                        <Typography>
-                            Contact us
+                        <Typography style={{textAlign: "center"}}>
+                            <Typography style={{marginTop: "5%"}}>
+                                Contact us
+                            </Typography>
+                            <Typography variant="h2" className={classes.s2Heading}>
+                                We’d love to hear from you
+                            </Typography>
+                            <Typography>
+                                Our friendly team is always here to chat.
+                            </Typography>
                         </Typography>
-                        <Typography variant="h2" className={classes.s2Heading}>
-                            We’d love to hear from you
-                        </Typography>
-                        <Typography>
-                            Our friendly team is always here to chat.
-                        </Typography>
+                        <Grid container spacing={2} className={classes.root} alignContent="center" alignItems="center" style={{justifyContent: "center"}}>
+                            <Grid item xs={10} sm={6} md={4}>
+                                <Card className={`${classes.card}`}>
+                                    <CardMedia
+                                        className={classes.cardImage}
+                                        image="/Images/ContactEmail.png"
+                                        title="lightbluetruck"
+                                    />
+                                    <CardContent className={classes.cardContent}>
+                                        <Typography gutterBottom className={classes.cardTitle}>
+                                            Email
+                                        </Typography>
+                                        <Typography className={classes.cardBody}>
+                                            Our friendly team is here to help.
+                                        </Typography>
+                                        <Typography >
+                                            urgedinternational@gmail.com
+                                        </Typography>
+                                    </CardContent>
+                                </Card>  
+                            </Grid>
+                            <Grid item xs={10} sm={6} md={4}>
+                                <Card className={`${classes.card}`}>
+                                    <CardMedia
+                                        className={classes.cardImage}
+                                        image="/Images/ContactOffice.png"
+                                        title="lightbluetruck"
+                                    />
+                                    <CardContent className={classes.cardContent}>
+                                        <Typography gutterBottom className={classes.cardTitle}>
+                                            Office
+                                        </Typography>
+                                        <Typography className={classes.cardBody}>
+                                            Come say hello at our office HQ.
+                                        </Typography>
+                                        <Typography >
+                                            77 Manchester Ave, May Pen
+                                        </Typography>
+                                    </CardContent>
+                                </Card> 
+                            </Grid>
+                            <Grid item xs={10} sm={12} md={4}>
+                                <Card className={`${classes.card}`}>
+                                    <CardMedia
+                                        className={classes.cardImage}
+                                        image="/Images/ContactPhone.png"
+                                        title="lightbluetruck"
+                                    />
+                                    <CardContent className={classes.cardContent}>
+                                        <Typography gutterBottom className={classes.cardTitle}>
+                                            Phone
+                                        </Typography>
+                                        <Typography className={classes.cardBody}>
+                                            Mon-Fri from 8am to 5pm.
+                                        </Typography>
+                                    </CardContent>
+                                </Card>  
+                            </Grid>
+                        </Grid>
                     </Container>
                 </Container>
             :
@@ -251,12 +318,17 @@ export const Section2: React.FC = function Section2() {
             {isMatch?
                 <Container maxWidth="xl" className={classes.mainContainer}>
                     <Container maxWidth="lg">
-                        <Typography variant="h2" className={classes.s2Heading}>
-                            From essential services to earning<br />
-                            opportunities. We're an all-in-one<br />
-                            platform.
+                        <Typography style={{textAlign: "center"}}>
+                            <Typography>
+                                Contact us
+                            </Typography>
+                            <Typography variant="h2" className={classes.s2Heading}>
+                                We’d love to hear from you
+                            </Typography>
+                            <Typography>
+                                Our friendly team is always here to chat.
+                            </Typography>
                         </Typography>
-                       
                     </Container>
                 </Container>
             :
