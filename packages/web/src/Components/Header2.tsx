@@ -145,6 +145,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     linkBtn: {
       textDecoration: "none",
+      color: "#1D2635"
     }
   }),
 );
@@ -322,7 +323,6 @@ export const Header2: React.FC = function Header2() {
       >
         <List>
           {headersData.map(({label, href}, index) => {
-            console.log("rerendering");
             return referralPath === "/" && href === "/"?
               <ListItem button key={label}>
                 <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
@@ -333,11 +333,25 @@ export const Header2: React.FC = function Header2() {
                 <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                 <ListItemText style={{color: "#F7B614"}} primary={label} />
               </ListItem>
+            :label === "Home"?
+              <a href={href} title="Place Order" className={classes.linkBtn}>
+                <ListItem button key={label}>
+                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                    <ListItemText primary={label} />
+                </ListItem>
+              </a>
+            :label === "Services"?
+              <a href={href} title="Place Order" className={classes.linkBtn}>
+                <ListItem button key={label}>
+                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                    <ListItemText primary={label} />
+                </ListItem>
+              </a>
             :
-            <ListItem button key={label}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={label} />
-            </ListItem>
+              <ListItem button key={label}>
+                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                <ListItemText primary={label} />
+              </ListItem>
           })}
         </List>
         <Divider />

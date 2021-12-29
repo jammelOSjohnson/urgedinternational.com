@@ -70,7 +70,7 @@ export const Section4: React.FC = function Section4() {
                         </Grid>
                     :
                         <Grid item xs={12} md={6}>
-                            <img src="Images/Logos.png" alt="restaurants" />
+                            <img src="Images/Logos.png" width="100%" alt="restaurants" />
                         </Grid>
                     }
                     
