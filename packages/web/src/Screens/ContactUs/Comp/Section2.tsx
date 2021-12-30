@@ -1,6 +1,6 @@
 import React from 'react';
 //import CSS
-import { Container, Grid, Typography, makeStyles, createStyles, Theme, Card, CardMedia, CardContent, Button, useMediaQuery, useTheme, AppBar, Tabs, Box, Tab} from '@material-ui/core';
+import { Container, Grid, Typography, makeStyles, createStyles, Theme, Card, CardMedia, CardContent, Button, useMediaQuery, useTheme} from '@material-ui/core';
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -114,7 +114,11 @@ const useStyles = makeStyles((theme: Theme) =>
             textAlign: "center"
         },
         cardImage: {
-            textAlign: "center"
+            textAlign: "center",
+            height: "50px",
+            width: "50px",
+            marginLeft: "auto",
+            marginRight: "auto",
         },
         card: {
             background: "transparent",
@@ -178,84 +182,36 @@ const useStyles = makeStyles((theme: Theme) =>
         }
     }),
 );
-
-interface TabPanelProps {
-    children?: React.ReactNode;
-    dir?: string;
-    index: any;
-    value: any;
-}
-
-function TabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
-    
-    
-    return (
-      <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`full-width-tabpanel-${index}`}
-        aria-labelledby={`full-width-tab-${index}`}
-        {...other}
-      >
-        {value === index && (
-          <Box p={3}>
-            <Typography>{children}</Typography>
-          </Box>
-        )}
-      </div>
-    );
-  }
-  
-  function a11yProps(index: any) {
-    return {
-      id: `full-width-tab-${index}`,
-      'aria-controls': `full-width-tabpanel-${index}`,
-    };
-  }
   
   
 
 export const Section2: React.FC = function Section2() {
     const classes = useStyles();
     const theme = useTheme();
-
-    const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
-    const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
-
-    const [value, setValue] = React.useState(0);
-
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
-      setValue(newValue);
-    };
-  
-    const handleChangeIndex = (index: number) => {
-      setValue(index);
-    };
     
     return (
         <>
-            {isMatchMedium?
-                <Container maxWidth="xl" className={classes.mainContainer}>
-                    <Container maxWidth="lg">
-                        <Typography style={{textAlign: "center"}}>
-                            <Typography style={{marginTop: "5%"}}>
-                                Contact us
-                            </Typography>
-                            <Typography variant="h2" className={classes.s2Heading}>
-                                We’d love to hear from you
-                            </Typography>
-                            <Typography>
-                                Our friendly team is always here to chat.
-                            </Typography>
+            <Container maxWidth="xl" className={classes.mainContainer}>
+                <Container maxWidth="lg">
+                    <Typography style={{textAlign: "center"}}>
+                        <Typography style={{marginTop: "5%"}}>
+                            Contact us
                         </Typography>
+                        <Typography variant="h2" className={classes.s2Heading}>
+                            We’d love to hear from you
+                        </Typography>
+                        <Typography style={{marginBottom: "3%"}}>
+                            Our friendly team is always here to chat.
+                        </Typography>
+                    </Typography>
+                    <Container>
                         <Grid container spacing={2} className={classes.root} alignContent="center" alignItems="center" style={{justifyContent: "center"}}>
                             <Grid item xs={10} sm={6} md={4}>
                                 <Card className={`${classes.card}`}>
                                     <CardMedia
                                         className={classes.cardImage}
                                         image="/Images/ContactEmail.png"
-                                        title="lightbluetruck"
+                                        title="ContactEmail"
                                     />
                                     <CardContent className={classes.cardContent}>
                                         <Typography gutterBottom className={classes.cardTitle}>
@@ -275,7 +231,7 @@ export const Section2: React.FC = function Section2() {
                                     <CardMedia
                                         className={classes.cardImage}
                                         image="/Images/ContactOffice.png"
-                                        title="lightbluetruck"
+                                        title="ContactOffice"
                                     />
                                     <CardContent className={classes.cardContent}>
                                         <Typography gutterBottom className={classes.cardTitle}>
@@ -295,7 +251,7 @@ export const Section2: React.FC = function Section2() {
                                     <CardMedia
                                         className={classes.cardImage}
                                         image="/Images/ContactPhone.png"
-                                        title="lightbluetruck"
+                                        title="ContactPhone"
                                     />
                                     <CardContent className={classes.cardContent}>
                                         <Typography gutterBottom className={classes.cardTitle}>
@@ -310,36 +266,7 @@ export const Section2: React.FC = function Section2() {
                         </Grid>
                     </Container>
                 </Container>
-            :
-                <></>
-
-            }
-
-            {isMatch?
-                <Container maxWidth="xl" className={classes.mainContainer}>
-                    <Container maxWidth="lg">
-                        <Typography style={{textAlign: "center"}}>
-                            <Typography>
-                                Contact us
-                            </Typography>
-                            <Typography variant="h2" className={classes.s2Heading}>
-                                We’d love to hear from you
-                            </Typography>
-                            <Typography>
-                                Our friendly team is always here to chat.
-                            </Typography>
-                        </Typography>
-                    </Container>
-                </Container>
-            :
-                <></>
-
-            }
-            <style>
-                {`
-                    
-                `}
-            </style>
+            </Container>
         </>
     )
 }

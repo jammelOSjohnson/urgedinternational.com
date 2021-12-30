@@ -21,11 +21,11 @@ export const ContactUsScreen: React.FC = function ContactUsScreen() {
                 {/* <Section1 /> */}
                 {/* <ExternalApp /> */}
                 <Section2 />
-                {/* <Section3 /> */}
+                <Section3 />
                 {/* <Section4 /> */}
                 {/* <Section5 /> */}
-                <Section6 />
-                <Section7 />
+                {/* <Section6 /> */}
+                {/* <Section7 /> */}
             </Container>
         </>
     )
