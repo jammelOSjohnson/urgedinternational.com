@@ -81,6 +81,9 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "#FFFFFF",
             backgroundColor: "#F7B614",
             borderRadius: "46px"
+        },
+        links: {
+            textDecoration: "none"
         }
     }),
 );
@@ -197,12 +200,23 @@ export const Section7: React.FC = function Section7() {
                         Can’t find the answer you’re looking for? Please chat to our friendly team.
                     </Typography>
                     <Typography style={{textAlign: "center"}}>
-                        <Button className={classes.btn}>
-                            Get In Touch
-                        </Button>
+                        <a href="/ContactUs" title="Contact Us" className={classes.links}>
+                            <Button className={classes.btn}>
+                                Get In Touch
+                            </Button>
+                        </a>
                     </Typography>
                 </Container>
             </Container>
+            <style>
+                {
+                    `
+                        .MuiButtonBase-root:hover {
+                            background-color: #F7B614;
+                        }
+                    `
+                }
+            </style>
         </>
     )
 }

@@ -66,6 +66,9 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: "#F7B614",
             textAlign: "center",
             borderRadius: "32px"
+        },
+        links: {
+            textDecoration: "none"
         }
     }),
 );
@@ -161,15 +164,27 @@ export const Section5: React.FC = function Section5() {
                 </Container>
                 <Typography>
                     <Typography style={{textAlign: "center", paddingTop: "5%"}}>
-                        <Button
-                            type="button"
-                            className={classes.btn}
-                        >
-                            Get Started
-                        </Button>
+                        <a href="/Restaurants" title="Food Delivery" className={classes.links}>
+                            <Button
+                                type="button"
+                                className={classes.btn}
+                            >
+                                Get Started
+                            </Button>
+                        </a>
                     </Typography>
                 </Typography>
             </Container>
+            <style>
+                {
+                    `
+                        .MuiButton-contained:hover {
+                            box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);
+                            background-color: #F7B614;
+                        }
+                    `
+                }
+            </style>
         </>
     )
 }

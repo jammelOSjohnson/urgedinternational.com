@@ -150,13 +150,15 @@ export const Section2: React.FC = function Section2() {
                                 </Typography>
                             </Typography>
                             <Typography style={{textAlign: "center"}}>
-                                <Button
-                                    className={classes.servicesBtn} 
-                                    variant="contained"
-                                    endIcon={ <img src="Images/GetStartedIcon.png" style={{width: "50%"}} alt="google icon"/>}  
-                                >
-                                    Our Services
-                                </Button>
+                                <a href="/Services" className={classes.links} title="Our Services">
+                                    <Button
+                                        className={classes.servicesBtn} 
+                                        variant="contained"
+                                        endIcon={ <img src="Images/GetStartedIcon.png" style={{width: "50%"}} alt="google icon"/>}  
+                                    >
+                                        Our Services
+                                    </Button>
+                                </a>
                                 <br />
                                 <br />
                                 <br />
@@ -265,7 +267,7 @@ export const Section2: React.FC = function Section2() {
                                 </a>
                             </Typography>
                             <Typography style={{textAlign:"center"}}>
-                                <Link className={classes.links} to="/" title="Our Services">
+                                <a href="/Services" className={classes.links} title="Our Services">
                                     <Button
                                         className={classes.servicesBtn}  
                                         variant="contained"
@@ -274,7 +276,7 @@ export const Section2: React.FC = function Section2() {
                                     >
                                         Our Services
                                     </Button>
-                                </Link>
+                                </a>
                             </Typography>
                             <Typography style={{textAlign:"center"}}>
                                 <Typography className={classes.Typo2Mobile}>
@@ -289,6 +291,17 @@ export const Section2: React.FC = function Section2() {
                 <></>
 
             }
+
+            <style>
+                {
+                    `
+                        .MuiButton-contained:hover {
+                            box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);
+                            background-color: #F7B614;
+                        }
+                    `
+                }
+            </style>
             
         </>
     )
