@@ -48,7 +48,7 @@ export const Footer: React.FC = function Footer() {
     var referralPath = location.pathname;
     ////console.log("pathname is:" + location.pathname);
     const classes = useStyles();
-    if(referralPath !== '/' && referralPath !== '/Services'){
+    if(referralPath !== '/' && referralPath.toLowerCase() !== '/services' && referralPath.toLowerCase() !== '/contactus'){
         return(
           <>
   

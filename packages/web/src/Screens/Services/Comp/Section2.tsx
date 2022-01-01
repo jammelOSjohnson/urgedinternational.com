@@ -232,7 +232,7 @@ export const Section2: React.FC = function Section2() {
             {isMatchMedium?
                 <Container maxWidth="xl" className={classes.mainContainer}>
                     <Container maxWidth="lg">
-                        <Typography variant="h2" className={classes.s2Heading}>
+                        <Typography variant="h2" className={classes.s2Heading} style={{marginBottom: "3%"}}>
                             From essential services to earning<br />
                             opportunities. We're an all-in-one<br />
                             platform.

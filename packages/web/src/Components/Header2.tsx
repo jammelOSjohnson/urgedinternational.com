@@ -170,8 +170,8 @@ const headersData = [
       href: "/HIW",
     },
     {
-      label: "Contact us",
-      href: "/#",
+      label: "Contact Us",
+      href: "/ContactUs",
     },
   ];
 
@@ -291,7 +291,7 @@ export const Header2: React.FC = function Header2() {
         setOpen(false);
     };
 
-    if(referralPath !== '/' && referralPath !== '/Services'){
+    if(referralPath !== '/' && referralPath.toLowerCase() !== '/services' && referralPath.toLowerCase() !== '/contactus'){
       return(
         <>
         </>
@@ -333,6 +333,11 @@ export const Header2: React.FC = function Header2() {
                 <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                 <ListItemText style={{color: "#F7B614"}} primary={label} />
               </ListItem>
+            :referralPath === "/ContactUs" && href === "/ContactUs"?
+              <ListItem button key={label}>
+                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                <ListItemText style={{color: "#F7B614"}} primary={label} />
+              </ListItem>
             :label === "Home"?
               <a href={href} title="Place Order" className={classes.linkBtn}>
                 <ListItem button key={label}>
@@ -341,6 +346,13 @@ export const Header2: React.FC = function Header2() {
                 </ListItem>
               </a>
             :label === "Services"?
+              <a href={href} title="Place Order" className={classes.linkBtn}>
+                <ListItem button key={label}>
+                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                    <ListItemText primary={label} />
+                </ListItem>
+              </a>
+            :label === "Contact Us"?
               <a href={href} title="Place Order" className={classes.linkBtn}>
                 <ListItem button key={label}>
                     <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
@@ -410,7 +422,19 @@ export const Header2: React.FC = function Header2() {
                                     {label}
                                     <div className={classes.menuPrimaryCircle}></div>
                                 </Button>
-                            :referralPath === "/Services" && href === "/Services"?
+                          :referralPath === "/Services" && href === "/Services"?
+                              <Button
+                                  {...{
+                                      key: label,
+                                      className: classes.menuItemPrimary,
+                                      to: href,
+                                      component: RouterLink,
+                                  }}
+                              >
+                                  {label}
+                                  <div className={classes.menuPrimaryCircle}></div>
+                              </Button>
+                          :referralPath === "/ContactUs" && href === "/ContactUs"?
                             <Button
                                 {...{
                                     key: label,
@@ -422,17 +446,17 @@ export const Header2: React.FC = function Header2() {
                                 {label}
                                 <div className={classes.menuPrimaryCircle}></div>
                             </Button>
-                        :
-                          <Button
-                              {...{
-                                  key: label,
-                                  className: classes.menuItem,
-                                  to: href,
-                                  component: RouterLink,
-                              }}
-                          >
-                              {label}
-                          </Button>
+                          :
+                            <Button
+                                {...{
+                                    key: label,
+                                    className: classes.menuItem,
+                                    to: href,
+                                    component: RouterLink,
+                                }}
+                            >
+                                {label}
+                            </Button>
                         })}
                         <a href="/Restaurants" title="Place Order" className={classes.linkBtn}>
                           <Button className={classes.btn} variant="contained" color="primary">
