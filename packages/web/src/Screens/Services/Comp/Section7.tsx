@@ -80,6 +80,9 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "#FFFFFF",
             backgroundColor: "#F7B614",
             borderRadius: "46px"
+        },
+        links: {
+            textDecoration: "none"
         }
     }),
 );
@@ -96,11 +99,13 @@ export const Section7: React.FC = function Section7() {
                     <Typography className={classes.heroText4}>
                         Join us today and get your first package delivered <span style={{color: "#F7B614"}}>FREE!</span>
                     </Typography>
-                    <Typography style={{textAlign: "center"}}>
-                        <Button className={classes.btn}>
-                            Get Started
-                        </Button>
-                    </Typography>
+                    <a href="/Register" title="Register" className={classes.links}>
+                        <Typography style={{textAlign: "center"}}>
+                            <Button className={classes.btn}>
+                                Get Started
+                            </Button>
+                        </Typography>
+                    </a>
                 </Container>
             </Container>
         </>
