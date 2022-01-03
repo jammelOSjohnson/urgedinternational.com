@@ -4,6 +4,7 @@ import { Container, Grid, Typography, makeStyles, createStyles, Theme, Card, Car
 import { Link } from "react-router-dom";
 import SwipeableViews from 'react-swipeable-views';
 import clsx from 'clsx';
+import { useAppData } from '../../../Context/AppDataContext';
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -253,6 +254,9 @@ export const Section2: React.FC = function Section2() {
     const classes = useStyles();
     const theme = useTheme();
 
+    var { value }  = useAppData();
+    var { sendMerchantFormEmail } = value;
+
     const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
     const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -263,7 +267,10 @@ export const Section2: React.FC = function Section2() {
         contact: '',
     });
 
-    const [value, setValue] = React.useState(0);
+    var [error, setError] = useState('');
+    var [success, setSuccess] = useState('');
+
+    const [value2, setValue] = React.useState(0);
     const [step1, setStep1] = useState(true);
     const [step2, setStep2] = useState(false);
     const [step3, setStep3] = useState(false);
@@ -296,6 +303,46 @@ export const Section2: React.FC = function Section2() {
         setValues({ ...values, [prop]: event.target.value });
     };
 
+    var handleSubmit = async function handleSubmit(event) {
+        event.preventDefault();
+        //prevents default form refresh
+        ////console.log("I am inside fuction");
+        try{
+            setSuccess('');
+            setError('');
+            values.fullname === ''?
+                setError('Please enter your Full Name')
+            :values.businessname === ''?
+                setError('Please enter your Business Name')
+            :values.businessemail === '' || !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.businessemail))?
+                setError('Please enter a valid Email')
+            :values.contact === ''?
+                setError('Please enter a valid Subject')
+            :await sendMerchantFormEmail(values.fullname, values.businessemail, values.businessname, values.contact).then(async function(res1){
+                if(res1 != null){
+                    ////console.log("About to navigate to dashboard.");
+                    ////console.log(userRolef);
+                    setSuccess('Thank you, we will respond shortly.');
+                    setValues({
+                        ...values,
+                        fullname: '',
+                        businessname: '',
+                        businessemail: '',
+                        contact: '',
+                    });
+                    setTimeout(() => {
+                        setSuccess('');
+                    }, 6000);
+                }else{
+                    setError('Unable to leave a message at this time. Please try again later.'); 
+                }
+            });
+            
+        }catch{
+            setError('Unable to leave a message at this time. Please try again later.');
+        }
+    }
+
     
     return (
         <>
@@ -309,7 +356,7 @@ export const Section2: React.FC = function Section2() {
                         </Typography>
                         <AppBar position="static" color="default">
                             <Tabs
-                            value={value}
+                            value={value2}
                             onChange={handleChange}
                             indicatorColor="primary"
                             textColor="primary"
@@ -323,10 +370,10 @@ export const Section2: React.FC = function Section2() {
                         </AppBar>
                         <SwipeableViews
                             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                            index={value}
+                            index={value2}
                             onChangeIndex={handleChangeIndex}
                         >
-                            <TabPanel value={value} index={0} dir={theme.direction}>
+                            <TabPanel value={value2} index={0} dir={theme.direction}>
                                 <Container maxWidth="xl" className={classes.mainContainer}>
                                     <Grid container direction="row" spacing={0} className={classes.root} alignItems="center" justifyContent="center">
                                         <Grid item xs={12}>
@@ -462,7 +509,7 @@ export const Section2: React.FC = function Section2() {
                                     </Grid>
                                 </Container>
                             </TabPanel>
-                            <TabPanel value={value} index={1} dir={theme.direction}>
+                            <TabPanel value={value2} index={1} dir={theme.direction}>
                                 <Container maxWidth="xl" className={classes.mainContainer}>
                                     <Grid container direction="row" spacing={0} className={classes.root} alignItems="center" justifyContent="center">
                                         <Grid item xs={6}>
@@ -508,7 +555,7 @@ export const Section2: React.FC = function Section2() {
                                     </Grid>
                                 </Container>
                             </TabPanel>
-                            <TabPanel value={value} index={2} dir={theme.direction}>
+                            <TabPanel value={value2} index={2} dir={theme.direction}>
                                 <Container maxWidth="xl" className={classes.mainContainer}>
                                     <Grid container direction="row" spacing={0} className={classes.root} alignItems="center" justifyContent="center">
                                         <Grid item xs={6}>
@@ -551,8 +598,8 @@ export const Section2: React.FC = function Section2() {
                                         }
                                         {step2 &&
                                             <Grid item xs={6}>
-                                                <Typography style={{fontSize: "1rem", fontWeight: 400}}>Get Started</Typography>
-                                                <Typography>
+                                                <Typography style={{fontSize: "1.5rem", fontFamily: "PT Sans"}}>Get Started</Typography>
+                                                <Typography style={{marginTop: "3%", fontSize: "16px", marginBottom: "3%"}}>
                                                     Let us help you reach more people 
                                                     and provide hastle free engagements with 
                                                     your customers and business partners.
@@ -614,7 +661,13 @@ export const Section2: React.FC = function Section2() {
                                                             fullWidth
                                                         />
                                                     </FormControl>
-                                                    <Button fullWidth variant="outlined" className={classes.doneBtn}>Done</Button>
+                                                    <Button 
+                                                        type="button"
+                                                        onClick={handleSubmit} 
+                                                        fullWidth variant="outlined" 
+                                                        className={classes.doneBtn}>
+                                                            Done
+                                                    </Button>
                                                 </form>
                                             </Grid>
                                         }
@@ -639,7 +692,7 @@ export const Section2: React.FC = function Section2() {
                         </Typography>
                         <AppBar position="static" color="default">
                             <Tabs
-                                value={value}
+                                value={value2}
                                 onChange={handleChange}
                                 indicatorColor="primary"
                                 textColor="primary"
@@ -653,10 +706,10 @@ export const Section2: React.FC = function Section2() {
                         </AppBar>
                         <SwipeableViews
                             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                            index={value}
+                            index={value2}
                             onChangeIndex={handleChangeIndex}
                         >
-                            <TabPanel value={value} index={0} dir={theme.direction}>
+                            <TabPanel value={value2} index={0} dir={theme.direction}>
                                 <Container maxWidth="xl" className={classes.mainContainer}>
                                     <Grid container direction="row" spacing={0} className={classes.root} alignItems="center" justifyContent="center">
                                         <Grid item xs={12}>
@@ -821,7 +874,7 @@ export const Section2: React.FC = function Section2() {
                                     </Grid>
                                 </Container>
                             </TabPanel>
-                            <TabPanel value={value} index={1} dir={theme.direction}>
+                            <TabPanel value={value2} index={1} dir={theme.direction}>
                                 <Container maxWidth="xl" className={classes.mainContainer}>
                                     <Grid container direction="row" spacing={0} className={classes.root} alignItems="center" justifyContent="center">
                                         <Grid item xs={12}>
@@ -870,7 +923,7 @@ export const Section2: React.FC = function Section2() {
                                     </Grid>
                                 </Container>
                             </TabPanel>
-                            <TabPanel value={value} index={2} dir={theme.direction}>
+                            <TabPanel value={value2} index={2} dir={theme.direction}>
                                 <Container maxWidth="xl" className={classes.mainContainer}>
                                     <Grid container direction="row" spacing={0} className={classes.root} alignItems="center" justifyContent="center">
                                         <Grid item xs={12}>
