@@ -1,13 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 //import CSS
-import { Container, Grid, Typography, makeStyles, createStyles, Theme, Card, CardMedia, CardContent, Button, useMediaQuery, useTheme, AppBar, Tabs, Box, Tab} from '@material-ui/core';
+import { Container, Grid, Typography, makeStyles, createStyles, Theme, Card, CardMedia, CardContent, Button, useMediaQuery, useTheme, AppBar, Tabs, Box, Tab, FormControl, InputLabel, OutlinedInput} from '@material-ui/core';
 import { Link } from "react-router-dom";
 import SwipeableViews from 'react-swipeable-views';
+import clsx from 'clsx';
+import { useAppData } from '../../../Context/AppDataContext';
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
         root: {
-            padding: "0%"
+            padding: "0%",
+            "& .MuiFormLabel-root": {
+                color: "#000"
+            },
+            "&.MuiFormLabel-root.Mui-focused": {
+                  color: "#000"
+            },
+            "& .MuiInputBase-root": {
+                color: "#000"
+            },
+            "& .MuiOutlinedInput-root": {
+                border: "0.1px solid #EEE",
+                color: "#000000 !important"
+            },
+            "& .MuiIconButton-root": {
+                color: "#EEEEEE"
+            },
+            color: "#000"
         },
         s2Background: {
             background: "#FFFFFF",
@@ -169,6 +188,21 @@ const useStyles = makeStyles((theme: Theme) =>
             fontFamily: "PT Sans",
             fontSize: "1.5rem",
             color: "#1D2635"
+        },
+        firstTextField: {
+            marginBottom: "3%",
+            width: "100%",
+            borderRadius: "30px",
+            border: "0.1px solid #EEE",
+            borderColor: "#EEEEEE",
+            height: "57px"
+        },
+        doneBtn: {
+            marginTop: "3%",
+            backgroundColor: "#F7B614",
+            borderRadius: "30px",
+            color: "#FFF",
+            height: "50px"
         }
     }),
 );
@@ -180,9 +214,15 @@ interface TabPanelProps {
     value: any;
 }
 
+interface State {
+    fullname: string;
+    businessname: string;
+    businessemail: string;
+    contact: string;
+}
+
 function TabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
-    
     
     return (
       <div
@@ -214,10 +254,26 @@ export const Section2: React.FC = function Section2() {
     const classes = useStyles();
     const theme = useTheme();
 
+    var { value }  = useAppData();
+    var { sendMerchantFormEmail } = value;
+
     const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
     const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
 
-    const [value, setValue] = React.useState(0);
+    const [values, setValues] = React.useState<State>({
+        fullname: '',
+        businessname: '',
+        businessemail: '',
+        contact: '',
+    });
+
+    var [error, setError] = useState('');
+    var [success, setSuccess] = useState('');
+
+    const [value2, setValue] = React.useState(0);
+    const [step1, setStep1] = useState(true);
+    const [step2, setStep2] = useState(false);
+    const [step3, setStep3] = useState(false);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
       setValue(newValue);
@@ -226,6 +282,67 @@ export const Section2: React.FC = function Section2() {
     const handleChangeIndex = (index: number) => {
       setValue(index);
     };
+
+    const handleMerchantChange = (currentStep: string) => {
+        if(currentStep === 'step1'){
+            setStep1(false);
+            setStep3(false);
+            setStep2(true);
+            return;
+        }else if(currentStep === 'step2'){
+            setStep1(false);
+            setStep2(false);
+            setStep3(true);
+            return;
+        }else{
+            return;
+        }
+    }
+
+    const handleChange2 = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+        setValues({ ...values, [prop]: event.target.value });
+    };
+
+    var handleSubmit = async function handleSubmit(event) {
+        event.preventDefault();
+        //prevents default form refresh
+        ////console.log("I am inside fuction");
+        try{
+            setSuccess('');
+            setError('');
+            values.fullname === ''?
+                setError('Please enter your Full Name')
+            :values.businessname === ''?
+                setError('Please enter your Business Name')
+            :values.businessemail === '' || !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.businessemail))?
+                setError('Please enter a valid Email')
+            :values.contact === ''?
+                setError('Please enter a valid Subject')
+            :await sendMerchantFormEmail(values.fullname, values.businessemail, values.businessname, values.contact).then(async function(res1){
+                if(res1 != null){
+                    ////console.log("About to navigate to dashboard.");
+                    ////console.log(userRolef);
+                    setSuccess('Thank you, we will respond shortly.');
+                    setValues({
+                        ...values,
+                        fullname: '',
+                        businessname: '',
+                        businessemail: '',
+                        contact: '',
+                    });
+                    setTimeout(() => {
+                        setSuccess('');
+                    }, 6000);
+                }else{
+                    setError('Unable to leave a message at this time. Please try again later.'); 
+                }
+            });
+            
+        }catch{
+            setError('Unable to leave a message at this time. Please try again later.');
+        }
+    }
+
     
     return (
         <>
@@ -239,7 +356,7 @@ export const Section2: React.FC = function Section2() {
                         </Typography>
                         <AppBar position="static" color="default">
                             <Tabs
-                            value={value}
+                            value={value2}
                             onChange={handleChange}
                             indicatorColor="primary"
                             textColor="primary"
@@ -253,10 +370,10 @@ export const Section2: React.FC = function Section2() {
                         </AppBar>
                         <SwipeableViews
                             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                            index={value}
+                            index={value2}
                             onChangeIndex={handleChangeIndex}
                         >
-                            <TabPanel value={value} index={0} dir={theme.direction}>
+                            <TabPanel value={value2} index={0} dir={theme.direction}>
                                 <Container maxWidth="xl" className={classes.mainContainer}>
                                     <Grid container direction="row" spacing={0} className={classes.root} alignItems="center" justifyContent="center">
                                         <Grid item xs={12}>
@@ -280,13 +397,15 @@ export const Section2: React.FC = function Section2() {
                                             <Typography>
                                                 We deliver from your favorite local restaurant to your<br/>door.
                                             </Typography>
-                                            <Button
-                                                className={classes.pOrderBtn}
-                                                variant="outlined"
-                                                endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn2" />}
-                                            >
-                                                Place Order 
-                                            </Button>
+                                            <a className={classes.links} href="/Restaurants" title="Restaurants">
+                                                <Button
+                                                    className={classes.pOrderBtn}
+                                                    variant="outlined"
+                                                    endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn2" />}
+                                                >
+                                                    Place Order 
+                                                </Button>
+                                            </a>
                                         </Grid>
                                         <Grid item xs={6}>
                                             <Typography>
@@ -303,13 +422,15 @@ export const Section2: React.FC = function Section2() {
                                                 You stay home and let the grocery come to you.<br />
                                                 We got you covered.
                                             </Typography>
-                                            <Button
-                                                className={classes.pOrderBtn}
-                                                variant="outlined"
-                                                endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn3" />}
-                                            >
-                                                Shop Sallyspantry 
-                                            </Button>
+                                            <a className={classes.links} href="https://sallyspantry.com/" target="_blank" rel="noreferrer" title="Sally's Pantry">
+                                                <Button
+                                                    className={classes.pOrderBtn}
+                                                    variant="outlined"
+                                                    endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn3" />}
+                                                >
+                                                    Shop Sallyspantry 
+                                                </Button>
+                                            </a>
                                         </Grid>
                                         <Grid item xs={6}>
                                             <img src="Images/ServicesP2.png" alt="ServicesP2" />
@@ -388,7 +509,7 @@ export const Section2: React.FC = function Section2() {
                                     </Grid>
                                 </Container>
                             </TabPanel>
-                            <TabPanel value={value} index={1} dir={theme.direction}>
+                            <TabPanel value={value2} index={1} dir={theme.direction}>
                                 <Container maxWidth="xl" className={classes.mainContainer}>
                                     <Grid container direction="row" spacing={0} className={classes.root} alignItems="center" justifyContent="center">
                                         <Grid item xs={6}>
@@ -397,6 +518,7 @@ export const Section2: React.FC = function Section2() {
                                                 className={classes.sectionHeaderText}>
                                                 Deliver &amp; Earn With Urged
                                             </Typography>
+                                            <img src="Images/RiderPic.png" alt="rider" />
                                         </Grid>
                                         <Grid item xs={6}>
                                             <Typography className={classes.paragraphHeader}>The Process</Typography>
@@ -420,18 +542,20 @@ export const Section2: React.FC = function Section2() {
                                             <Typography className={classes.paragraph}>
                                                 Work when you can, and be the boss of your own time.
                                             </Typography>
-                                            <Button
-                                                className={classes.driverGetStarted}
-                                                variant="contained"
+                                            <a href="https://4b3pfykc7ix.typeform.com/to/bvlER1PD" target="_blank"  rel="noreferrer" title="Rider Form" className={classes.links}>
+                                                <Button
+                                                    className={classes.driverGetStarted}
+                                                    variant="contained"
 
-                                            >
-                                                Get Started
-                                            </Button>
+                                                >
+                                                    Get Started
+                                                </Button>
+                                            </a>
                                         </Grid>
                                     </Grid>
                                 </Container>
                             </TabPanel>
-                            <TabPanel value={value} index={2} dir={theme.direction}>
+                            <TabPanel value={value2} index={2} dir={theme.direction}>
                                 <Container maxWidth="xl" className={classes.mainContainer}>
                                     <Grid container direction="row" spacing={0} className={classes.root} alignItems="center" justifyContent="center">
                                         <Grid item xs={6}>
@@ -440,8 +564,9 @@ export const Section2: React.FC = function Section2() {
                                                 className={classes.sectionHeaderText}>
                                                 Partner With Urged
                                             </Typography>
+                                            <img src="Images/ServicesMechant.png" alt="Merchant" />
                                         </Grid>
-                                        <Grid item xs={6}>
+                                        {step1 && <Grid item xs={6}>
                                             <Typography className={classes.paragraphHeader}>Grow With Us!</Typography>
                                             <Typography className={classes.paragraph}>
                                                 Let us help you reach more people and provide hastle free engagements with your customers and business partners.
@@ -465,11 +590,87 @@ export const Section2: React.FC = function Section2() {
                                             <Button
                                                 className={classes.driverGetStarted}
                                                 variant="contained"
-
+                                                onClick={(e) =>handleMerchantChange('step1')}
                                             >
                                                 Get Started
                                             </Button>
                                         </Grid>
+                                        }
+                                        {step2 &&
+                                            <Grid item xs={6}>
+                                                <Typography style={{fontSize: "1.5rem", fontFamily: "PT Sans"}}>Get Started</Typography>
+                                                <Typography style={{marginTop: "3%", fontSize: "16px", marginBottom: "3%"}}>
+                                                    Let us help you reach more people 
+                                                    and provide hastle free engagements with 
+                                                    your customers and business partners.
+                                                </Typography> 
+                                                <form>
+                                                    <FormControl variant="outlined" fullWidth>
+                                                        <InputLabel htmlFor="fullname" className={classes.root}>Full Name</InputLabel>
+                                                        <OutlinedInput 
+                                                            className={clsx(classes.firstTextField, classes.root)}
+                                                            id="fullname"
+                                                            type="text"
+                                                            value={values.fullname}
+                                                            onChange={handleChange2('fullname')}
+                                                            labelWidth={103}
+                                                            required={true}
+                                                            notched={true}
+                                                            fullWidth
+                                                        />
+                                                    </FormControl>
+                                                    <FormControl variant="outlined" fullWidth>
+                                                        <InputLabel htmlFor="businessname" className={classes.root}>Business Name</InputLabel>
+                                                        <OutlinedInput 
+                                                            className={clsx(classes.firstTextField, classes.root)}
+                                                            id="businessname"
+                                                            type="text"
+                                                            value={values.businessname}
+                                                            onChange={handleChange2('businessname')}
+                                                            labelWidth={103}
+                                                            required={true}
+                                                            notched={true}
+                                                            fullWidth
+                                                        />
+                                                    </FormControl>
+                                                    <FormControl variant="outlined" fullWidth>
+                                                        <InputLabel htmlFor="businessemail" className={classes.root}>Business Email</InputLabel>
+                                                        <OutlinedInput 
+                                                            className={clsx(classes.firstTextField, classes.root)}
+                                                            id="businessemail"
+                                                            type="text"
+                                                            value={values.businessemail}
+                                                            onChange={handleChange2('businessemail')}
+                                                            labelWidth={103}
+                                                            required={true}
+                                                            notched={true}
+                                                            fullWidth
+                                                        />
+                                                    </FormControl>
+                                                    <FormControl variant="outlined" fullWidth>
+                                                        <InputLabel htmlFor="contact" className={classes.root}>Contact Details</InputLabel>
+                                                        <OutlinedInput 
+                                                            className={clsx(classes.firstTextField, classes.root)}
+                                                            id="contact"
+                                                            type="text"
+                                                            value={values.contact}
+                                                            onChange={handleChange2('contact')}
+                                                            labelWidth={103}
+                                                            required={true}
+                                                            notched={true}
+                                                            fullWidth
+                                                        />
+                                                    </FormControl>
+                                                    <Button 
+                                                        type="button"
+                                                        onClick={handleSubmit} 
+                                                        fullWidth variant="outlined" 
+                                                        className={classes.doneBtn}>
+                                                            Done
+                                                    </Button>
+                                                </form>
+                                            </Grid>
+                                        }
                                     </Grid>
                                 </Container>
                             </TabPanel>
@@ -491,7 +692,7 @@ export const Section2: React.FC = function Section2() {
                         </Typography>
                         <AppBar position="static" color="default">
                             <Tabs
-                                value={value}
+                                value={value2}
                                 onChange={handleChange}
                                 indicatorColor="primary"
                                 textColor="primary"
@@ -505,10 +706,10 @@ export const Section2: React.FC = function Section2() {
                         </AppBar>
                         <SwipeableViews
                             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-                            index={value}
+                            index={value2}
                             onChangeIndex={handleChangeIndex}
                         >
-                            <TabPanel value={value} index={0} dir={theme.direction}>
+                            <TabPanel value={value2} index={0} dir={theme.direction}>
                                 <Container maxWidth="xl" className={classes.mainContainer}>
                                     <Grid container direction="row" spacing={0} className={classes.root} alignItems="center" justifyContent="center">
                                         <Grid item xs={12}>
@@ -526,20 +727,22 @@ export const Section2: React.FC = function Section2() {
                                         </Grid>
                                         <Grid item xs={12}>
                                             <img width="100%" src="Images/ServicesP1.png" alt="ServicesP1" />
-                                            <Button
-                                                style={{
-                                                    borderRadius: "47px",
-                                                    width: "100%",
-                                                    height: "50px",
-                                                    marginTop: "15%",
-                                                    marginBottom: "15%"
-                                                }}
-                                                className={classes.pOrderBtn}
-                                                variant="outlined"
-                                                endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn2" />}
-                                            >
-                                                Place Order 
-                                            </Button>
+                                            <a className={classes.links} href="/Restaurants" title="Restaurants">
+                                                <Button
+                                                    style={{
+                                                        borderRadius: "47px",
+                                                        width: "100%",
+                                                        height: "50px",
+                                                        marginTop: "15%",
+                                                        marginBottom: "15%"
+                                                    }}
+                                                    className={classes.pOrderBtn}
+                                                    variant="outlined"
+                                                    endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn2" />}
+                                                >
+                                                    Place Order 
+                                                </Button>
+                                            </a>
                                         </Grid>
                                         <Grid item xs={12}>
                                             <Typography>
@@ -559,20 +762,22 @@ export const Section2: React.FC = function Section2() {
                                         </Grid>
                                         <Grid item xs={12}>
                                             <img width="100%" src="Images/ServicesP2.png" alt="ServicesP2" />
-                                            <Button
-                                                style={{
-                                                    borderRadius: "47px",
-                                                    width: "100%",
-                                                    height: "50px",
-                                                    marginTop: "15%",
-                                                    marginBottom: "15%"
-                                                }}
-                                                className={classes.pOrderBtn}
-                                                variant="outlined"
-                                                endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn3" />}
-                                            >
-                                                Shop Sallyspantry 
-                                            </Button>
+                                            <a className={classes.links} href="https://sallyspantry.com/" target="_blank" rel="noreferrer" title="Sally's Pantry">
+                                                <Button
+                                                    style={{
+                                                        borderRadius: "47px",
+                                                        width: "100%",
+                                                        height: "50px",
+                                                        marginTop: "15%",
+                                                        marginBottom: "15%"
+                                                    }}
+                                                    className={classes.pOrderBtn}
+                                                    variant="outlined"
+                                                    endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn3" />}
+                                                >
+                                                    Shop Sallyspantry 
+                                                </Button>
+                                            </a>
                                         </Grid>
                                         <Grid item xs={12}>
                                             <Typography>
@@ -669,7 +874,7 @@ export const Section2: React.FC = function Section2() {
                                     </Grid>
                                 </Container>
                             </TabPanel>
-                            <TabPanel value={value} index={1} dir={theme.direction}>
+                            <TabPanel value={value2} index={1} dir={theme.direction}>
                                 <Container maxWidth="xl" className={classes.mainContainer}>
                                     <Grid container direction="row" spacing={0} className={classes.root} alignItems="center" justifyContent="center">
                                         <Grid item xs={12}>
@@ -681,7 +886,7 @@ export const Section2: React.FC = function Section2() {
                                                 className={classes.sectionHeaderText}>
                                                 Deliver &amp; Earn With Urged
                                             </Typography>
-                                            <img src="Images/RiderPic.png" width="100%" alt="" />
+                                            <img src="Images/RiderPic.png" width="100%" alt="rider" />
                                         </Grid>
                                         <Grid item xs={12}>
                                             <Typography className={classes.paragraphHeader}>The Process</Typography>
@@ -705,18 +910,20 @@ export const Section2: React.FC = function Section2() {
                                             <Typography className={classes.paragraph}>
                                                 Work when you can, and be the boss of your own time.
                                             </Typography>
-                                            <Button
-                                                className={classes.driverGetStarted}
-                                                variant="contained"
-                                                style={{width: "100%"}}
-                                            >
-                                                Get Started
-                                            </Button>
+                                            <a href="https://4b3pfykc7ix.typeform.com/to/bvlER1PD" target="_blank"  rel="noreferrer" title="Rider Form" className={classes.links}>
+                                                <Button
+                                                    className={classes.driverGetStarted}
+                                                    variant="contained"
+                                                    style={{width: "100%"}}
+                                                >
+                                                    Get Started
+                                                </Button>
+                                            </a>
                                         </Grid>
                                     </Grid>
                                 </Container>
                             </TabPanel>
-                            <TabPanel value={value} index={2} dir={theme.direction}>
+                            <TabPanel value={value2} index={2} dir={theme.direction}>
                                 <Container maxWidth="xl" className={classes.mainContainer}>
                                     <Grid container direction="row" spacing={0} className={classes.root} alignItems="center" justifyContent="center">
                                         <Grid item xs={12}>
@@ -725,6 +932,7 @@ export const Section2: React.FC = function Section2() {
                                                 className={classes.sectionHeaderText}>
                                                 Partner With Urged
                                             </Typography>
+                                            <img src="Images/ServicesMechant.png" width="100%" alt="Merchant" />
                                         </Grid>
                                         <Grid item xs={12}>
                                             <Typography className={classes.paragraphHeader}>Grow With Us!</Typography>
@@ -793,8 +1001,14 @@ export const Section2: React.FC = function Section2() {
                     .MuiTabs-scroller{
                         background-color: #FFF;
                     }
+
+                    .MuiTab-root{
+                        font-size: 1.125rem;
+                    }
                 `}
             </style>
         </>
     )
 }
+
+
