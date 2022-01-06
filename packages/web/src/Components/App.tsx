@@ -35,8 +35,10 @@ import { OrderCompleted } from '../Screens/Checkout/OrderCompleted'
 //Import provider
 import AppDataProvider from '../Context/AppDataContext';
 import { useAppData } from '../Context/AppDataContext';
-import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, from } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, from, split } from '@apollo/client';
 import {onError} from '@apollo/client/link/error';
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { getMainDefinition } from '@apollo/client/utilities';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createTheme, ThemeProvider } from '@material-ui/core';
@@ -131,11 +133,31 @@ const errorLink = onError(({ graphQLErrors, networkError}) => {
 }); 
 
 var db_server = process.env.NODE_ENV === 'development'? process.env.REACT_APP_DEV_DB_URL : process.env.REACT_APP_PROD_DB_URL;
+var ws_db_server = process.env.NODE_ENV === 'development'? process.env.REACT_APP_DEV_WS_DB_URL : process.env.REACT_APP_PROD_WS_DB_URL;
 
-const link = from([
+const wsLink = new WebSocketLink({
+  uri: ws_db_server !== undefined ? ws_db_server: '',
+  options: {
+    reconnect: true,
+  },
+});
+
+const httpLink = from([
   errorLink,
   new HttpLink({uri: db_server})
 ])
+
+const link = split(
+  ({query}) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === 'OperationDefinition' &&
+      definition.operation === 'subscription'
+    );
+  },
+  wsLink,
+  httpLink
+);
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),

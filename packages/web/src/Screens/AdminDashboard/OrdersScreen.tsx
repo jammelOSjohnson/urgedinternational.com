@@ -1,5 +1,5 @@
 import { Container, Grid, makeStyles, createStyles, Typography, Theme } from '@material-ui/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 //Import Components
@@ -7,7 +7,10 @@ import { Sidebar } from './Comp/Sidebar';
 import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
 import { FilterBar } from './Comp/FilterBar'
-import { OrdersTable} from './Comp/OrdersTable'
+import { OrdersTable} from './Comp/OrdersTable';
+import { ORDERS_SUBSCRIPTION } from '../../GraphQL/Subscriptions';
+import { useSubscription } from '@apollo/client';
+import { useAppData } from '../../Context/AppDataContext';
 
 interface Props {
     
@@ -41,6 +44,20 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const OrdersScreen: React.FC = function OrdersScreen () {
     const classes = useStyles();
+    var { value }  = useAppData();
+    var { refreshingOrderTables } = value;
+    const {data, loading} = useSubscription(
+        ORDERS_SUBSCRIPTION
+    )
+
+    useEffect(() => {
+        if(data.orderCreated !== null){
+            var Orders = data.orderCreated;
+            refreshingOrderTables(value, Orders).then(()=>{
+            
+            });
+        }
+    },[data])
 
     return (
         <>

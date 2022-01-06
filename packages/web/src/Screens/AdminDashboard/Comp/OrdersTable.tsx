@@ -6,8 +6,9 @@ import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { EditRounded } from "@material-ui/icons/";
 import { Backdrop, CircularProgress, createStyles, makeStyles, Theme } from '@material-ui/core';
-import { useQuery } from '@apollo/client';
+import { useQuery, useSubscription } from '@apollo/client';
 import { GET_ORDERS } from '../../../GraphQL/Queries';
+import { ORDERS_SUBSCRIPTION } from '../../../GraphQL/Subscriptions';
   
 
   const columns = [
@@ -92,9 +93,9 @@ import { GET_ORDERS } from '../../../GraphQL/Queries';
     var { value }  = useAppData();
     var { orders, fetchOrders, currentUser, userRolef, refreshingOrderTables } = value;
     var history = useHistory();
-    const {data} = useQuery(GET_ORDERS,{
-      pollInterval: 500,
-    });
+    const {data} = useQuery(GET_ORDERS);
+
+    
 
     const rows = [] as Object[];
     useEffect(() => {
@@ -105,6 +106,8 @@ import { GET_ORDERS } from '../../../GraphQL/Queries';
           
           });
         }
+
+        
         // fetchOrders(value).then(()=>{
           
         // });
@@ -113,7 +116,7 @@ import { GET_ORDERS } from '../../../GraphQL/Queries';
         //console.log(e)
       }
       // eslint-disable-next-line
-    }, [currentUser, data]);
+    }, [currentUser]);
     
     // const handleEdit = (event) => {
     //   event.preventDefault();
