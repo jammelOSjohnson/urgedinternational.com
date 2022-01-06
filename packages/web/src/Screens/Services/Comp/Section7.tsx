@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         heading: {
             fontSize: theme.typography.pxToRem(15),
-            fontWeight: theme.typography.fontWeightRegular,
+            fontWeight: 500,
         },
         accord: {
             width: "70%", 
