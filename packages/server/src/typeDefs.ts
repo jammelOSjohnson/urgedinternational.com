@@ -1,8 +1,8 @@
-import { gql } from 'apollo-server-express';
+import { GraphQLServer } from "graphql-yoga";
 import { json } from 'express';
 
 
-const typeDefs = gql`
+const typeDefs = /* GraphQL */`
     scalar GraphQLDateTime
     scalar JSONObject  
     scalar Json
@@ -186,6 +186,10 @@ const typeDefs = gql`
             Rider: ID
         ): [Order]
 
+    }
+
+    type Subscription {
+        orderCreated: Order
     }
     
 

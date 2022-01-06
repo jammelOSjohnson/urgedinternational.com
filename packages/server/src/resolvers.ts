@@ -7,6 +7,12 @@ import MenuCategory from './models/MenuCategory.model';
 import Order from './models/Order.model';
 import { json } from 'express';
 const { GraphQLScalarType, Kind } = require('graphql');
+//subscriptions test 
+import { PubSub } from 'graphql-subscriptions';
+import { GooglePubSub } from '@axelspringer/graphql-google-pubsub';// For Production
+const pubsub = new PubSub();
+const pubsubProd = new GooglePubSub();
+//subscriptions test 
 
 const dateScalar = new GraphQLScalarType({
   name: 'Date',
@@ -35,7 +41,20 @@ const jsonScalar = new GraphQLScalarType({
       return json(value); // Convert incoming integer to Date
     },
   });
+
+const ORDER_CREATED = 'ORDER_CREATED';
+
 const resolvers = {
+    Subscription: {
+        orderCreated: {
+          // More on pubsub below
+          subscribe: () => process.env.NODE_ENV === "development" ?
+            pubsub.asyncIterator(['ORDER_CREATED'])
+          :
+            pubsubProd.asyncIterator(ORDER_CREATED)
+            ,
+        },
+    },
     Json: jsonScalar, 
     Query: {
         hello: () => {
@@ -111,9 +130,17 @@ const resolvers = {
         },
 
         //Orders
-        createOrder: (_,{Id,OrderItems,OrderStatus,OrderTotal,OrderDate,Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal}) => {
+        createOrder: (_,{Id,OrderItems,OrderStatus,OrderTotal,OrderDate,Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal},{pubsub,pubsubProd}) => {
             const orderItem = new Order({Id, OrderItems, OrderStatus, OrderTotal, OrderDate, Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal});
-            return orderItem.save();
+            const newOrder = orderItem.save();
+            process.env.NODE_ENV === "development" ?
+                pubsub.publish('ORDER_CREATED',{
+                    orderCreated: newOrder
+                })
+            :
+                pubsubProd.publish(ORDER_CREATED)
+            
+            return newOrder;
         },
 
         getOrdersByUserId: async (_,{Id}) => {
