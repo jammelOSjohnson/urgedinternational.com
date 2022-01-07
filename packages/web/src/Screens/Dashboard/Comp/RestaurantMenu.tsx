@@ -1046,7 +1046,51 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid>
                                                 </Grid>
                                             </form>
+                                        :restaurant.FirstName === "H & T Restaurant"?
+                                            <form>
+                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                    <Grid item xs={12} sm={12} >
+                                                        <TextField
+                                                            id="outlined-multiline-static"
+                                                            label="Special Intructions"
+                                                            multiline
+                                                            rows={4}
+                                                            defaultValue={values.otherIntructions}
+                                                            onChange={handleChange2('otherIntructions')}
+                                                            variant="outlined"
+                                                            placeholder="Enter Instructions Here"
+                                                            fullWidth
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} >
+                                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                                <Select
+                                                                    labelId="demo-simple-select-outlined-label"
+                                                                    id="demo-simple-select-outlined"
+                                                                    value={values.ifnotAvailable}
+                                                                    onChange={handleChange}
+                                                                    label="ifnotAvailable"
+                                                                    name="ifnotAvailable"
+                                                                    className={classes.root}
+                                                                    fullWidth
+                                                                >
+                                                                    <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                    <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                    <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                    <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                    </Grid>
+                                                    <Grid item xs={12} sm={12} >
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} onClick={() => AddToCart(values)} type="button">
+                                                            Add To Cart 
+                                                        </Button>
+                                                    </Grid>
+                                                </Grid>
+                                            </form>
                                         :
+
                                         <></>
                                         }
                                     </Grid>

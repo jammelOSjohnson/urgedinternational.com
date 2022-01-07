@@ -1,5 +1,5 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { IconButton, makeStyles, createStyles, Typography, Theme, useMediaQuery, useTheme } from '@material-ui/core';
+import { IconButton, makeStyles, createStyles, Typography, Theme, useMediaQuery, useTheme, Modal, Backdrop, Fade, Grid } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { HistoryRounded, PlayArrowRounded } from "@material-ui/icons/";
@@ -65,6 +65,44 @@ const useStyles = makeStyles((theme: Theme) =>
         closeBtn: {
             position: "absolute",
             right: 5
+        }, modal: {
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+         
+        },
+        paper: {
+           backgroundColor: theme.palette.background.paper,
+           border: '2px solid #000',
+           boxShadow: theme.shadows[5],
+           padding: theme.spacing(2, 4, 3),
+           minWidth: "34%",
+           maxWidth: "400px",
+           borderRadius: "20px",
+           borderColor: theme.palette.primary.light
+          
+        },
+        ButtonMobile: {
+            backgroundColor: theme.palette.primary.light,
+            border: "1.21951px solid #FFFFFF",
+            height: "41px",
+            width: "100%",
+            borderRadius: 4,
+        },
+        btnfonts: {
+            fontFamily: "PT Sans",
+            fontSize: "13px",
+            lineHeight: "16.82px",
+            fontWeight: "bolder",
+            color: "#FAFAFA",
+            textTransform: "none"
+        },root: {
+          display: 'flex',
+        },
+        cartIcon: {
+            position: "absolute",
+            top: 18,
+            right: 10
         }
     }),
 );
@@ -90,6 +128,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
         bottom: false,
         right: false,
     });
+    const [open2, setOpen2] = React.useState(false);
     
     const toggleDrawer = (anchor: Anchor, open: boolean) => (
       event: React.KeyboardEvent | React.MouseEvent,
@@ -229,6 +268,20 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                             </ListItem>
                           </Link>
                         :
+                        text === "Package Delivery" ?
+                          <ListItem button key={text} onClick={handleOpen2}>
+                              <ListItemIcon>
+                                {
+                                  index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                  index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                  index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                  index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                  index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                }
+                              </ListItemIcon>
+                              <ListItemText className="link-fontH" primary={text} />
+                          </ListItem>
+                        :
                         text === "Orders" ?
                           <Link to="/OrderHistory" className={classes.inactiveItemLink}>
                             <ListItem button key={text}>
@@ -355,6 +408,20 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
       }
     }
 
+    const handleClose2 = () => {
+      setOpen2(false);
+    };
+
+    const handleOpen2 = () => {
+      try
+      {
+        setOpen2(true);
+      }catch(err){
+
+      }
+      
+    };
+
     return (
         <>
             {isMatchMedium? (
@@ -376,7 +443,42 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
 
             {isMatch? (
                 <>
-                    
+                    <Modal
+                        aria-labelledby="transition-modal-title"
+                        aria-describedby="transition-modal-description"
+                        className={clsx(classes.modal)}
+                        open={open2}
+                        onClose={handleClose2}
+                        closeAfterTransition
+                        BackdropComponent={Backdrop}
+                        BackdropProps={{
+                        timeout: 500,
+                        }}
+                    >
+                        <Fade in={open2}>
+                        <div className={clsx(classes.paper, "modalMobile")}>
+                            <h2 id="transition-modal-title" style={{textAlign: "center"}}>Whatsapp Delivery</h2>
+                            <Link to={`${referralPath}`} className={classes.cartIcon} onClick={handleClose2}>
+                              <img src="Images/CartCloseIcon.png" alt="closemodal" />
+                            </Link>
+                            <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                <Grid item xs={12}>
+                                <Typography style={{textAlign: "center"}}>
+                                  We provide both errand sercices and package delivery.<br />
+                                  Click continue to contact us on whatsapp.
+                                </Typography>
+                                </Grid><br />
+                                <Grid item xs={12} sm={12} >
+                                  <a href="http://wa.me/18767735015" target="_blank" rel="nofollow noreferrer" style={{textDecoration: "none"}}>  
+                                    <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} onClick={() => handleOpen2()} type="button">
+                                      Continue 
+                                    </Button>
+                                  </a>
+                                </Grid>
+                            </Grid>
+                        </div>
+                        </Fade>
+                    </Modal>
                     <div style={{marginTop: "5%"}}>
                         {(['left'] as Anchor[]).map((anchor) => (
                             <React.Fragment key={anchor}>
@@ -396,6 +498,34 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                             .mobileMenuToggle{
                               display: none;
                             }
+                          }
+
+                          .modalMobile{
+                            position: relative;
+                          }
+
+                          @media only screen and (max-height: 679px) {
+                            .modalMobile{
+                                max-height: 590px;
+                                overflow-x: hidden;
+                                overflow-y: auto;
+                            }
+                          }
+
+                          @media only screen and (max-height: 600px) {
+                              .modalMobile{
+                                  max-height: 500px;
+                                  overflow-x: hidden;
+                                  overflow-y: auto;
+                              }
+                          }
+
+                          @media only screen and (max-height: 560px) {
+                              .modalMobile{
+                                  max-height: 490px;
+                                  overflow-x: hidden;
+                                  overflow-y: auto;
+                              }
                           }
                         `
                       }
