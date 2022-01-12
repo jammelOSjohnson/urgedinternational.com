@@ -5,9 +5,10 @@ import MUIDataTable from "mui-datatables";
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { EditRounded } from "@material-ui/icons/";
-import { Backdrop, CircularProgress, createStyles, makeStyles, Theme } from '@material-ui/core';
+import { Backdrop, CircularProgress, createStyles, FormControl, makeStyles, MenuItem, Select, Snackbar, Theme } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
 import { GET_ORDERS_BY_RIDERID } from '../../../GraphQL/Queries';
+import { Alert } from '@material-ui/lab';
   
  
   const columns = [
@@ -78,9 +79,35 @@ import { GET_ORDERS_BY_RIDERID } from '../../../GraphQL/Queries';
 
   const useStyles = makeStyles((theme: Theme) =>
     createStyles({
-      backdrop: {
-        zIndex: theme.zIndex.drawer + 1,
-        color: '#fff',
+      root: {
+        padding: "0% 0px 0% 0px",
+        borderRadius: "22px",
+        "& .MuiInputBase-root": {
+            color: "#9B9B9B ",
+            borderColor: "#888888",
+            border: "3px solid black"
+        },
+        "& .MuiSelect-select:$focus": {
+            backgroundColor: "inherit",
+            color: "black"
+        },
+        "& .MuiSelect-select": {
+            border: "2px dotted black"
+        },
+        "& .MuiFormLabel-root": {
+            fontWeight: 700,
+            fontSize: "1.2rem"
+        },
+        "& .MuiInputLabel-root.Mui-focused":{
+            color: "#9B9B9B"
+        }
+      },backdrop: {
+          zIndex: theme.zIndex.drawer + 1,
+          color: '#fff',
+      },formControl: {
+          margin: theme.spacing(1),
+          minWidth: 120,
+          marginLeft: "0px"
       },
     }),
   );
@@ -90,8 +117,12 @@ import { GET_ORDERS_BY_RIDERID } from '../../../GraphQL/Queries';
   export const OrdersTable: React.FC = function OrdersTable () {
     const classes = useStyles();
     var { value }  = useAppData();
-    var { orders, refreshingOrderTables, currentUser, userRolef } = value;
+    var { orders, UpdateOrder, refreshingOrderTables, currentUser, userRolef } = value;
+
     var history = useHistory();
+
+    const [open, setOpen] = React.useState(false);
+    const [open2, setOpen2] = React.useState(false);
 
     const {data} = useQuery(GET_ORDERS_BY_RIDERID,{
       variables: {Rider: value.userInfo._id},
@@ -125,6 +156,52 @@ import { GET_ORDERS_BY_RIDERID } from '../../../GraphQL/Queries';
       download: false,
       print: false
     };
+
+    const handleSubmit = async(status, orderIndex) => {
+      try{
+          setOpen(false);
+          setOpen2(false);
+          console.log(status);
+          console.log(orders[orderIndex].OrderStatus);
+          let order = {...orders[orderIndex], OrderStatus: status, Rider: orders[orderIndex].Rider._id };
+          console.log(order);
+          await UpdateOrder(value, order).then((res) => {
+              if(res){
+                  setOpen(true);
+              }
+          }) 
+      }catch(err){
+          console.log(err);
+          setOpen2(true);
+      }
+    }
+
+    const handleChange = (event, index) => {
+      // setValues({...values,[event.target.name]:event.target.value, itemName: selectedItem.ItemName, itemCost: selectedItem.ItemCost, itemDescription: selectedItem.ItemDescription});
+      try{
+        let status = event.target.value;
+        handleSubmit(status,index);
+      }catch(err){
+        console.log(err);
+        setOpen2(true);
+      }
+    };
+
+    const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+
+      setOpen(false);
+    };
+
+    const handleClose2 = (event?: React.SyntheticEvent, reason?: string) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+
+      setOpen2(false);
+    };
     
     if(userRolef !== undefined && orders.length !== 0){
        if(userRolef === "Rider"){
@@ -146,7 +223,27 @@ import { GET_ORDERS_BY_RIDERID } from '../../../GraphQL/Queries';
             _id: item._id,
             Description: orderItems, 
             OrderDate: estTime,
-            OrderStatus: item.OrderStatus, 
+            OrderStatus: <>
+            <FormControl variant="outlined" className={classes.formControl} fullWidth required>
+              {/* <InputLabel id="demo-simple-select-outlined-label">Status</InputLabel> */}
+              <Select
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  value={item.OrderStatus}
+                  onChange={(e) => handleChange(e,index)}
+                  label="Status"
+                  name="Status"
+                  className={classes.root}
+                  style={{color: 'black'}}
+                  required
+              >
+                  <MenuItem value={"Ordered"}>Ordered</MenuItem>
+                  <MenuItem value={"Picked Up"}>Picked Up</MenuItem>
+                  <MenuItem value={"In Transit"}>In Transit</MenuItem>
+                  <MenuItem value={"Delivered"}>Delivered</MenuItem>
+              </Select>
+            </FormControl>
+          </>,  
             OrderTotal: `$ ${item.OrderTotal}`, 
             PaymentMethod: item.PaymentMethod,
             Rider: item.Rider.FirstName,
@@ -178,6 +275,27 @@ import { GET_ORDERS_BY_RIDERID } from '../../../GraphQL/Queries';
           columns={columns}
           options={options}
         />
+        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+          <Alert onClose={handleClose} severity="success">
+              Order Updated Successfully.
+          </Alert>
+        </Snackbar>
+        <Snackbar open={open2} autoHideDuration={6000} onClose={handleClose2}>
+            <Alert onClose={handleClose2} severity="error">
+                Unable to update order at this time.
+            </Alert>
+        </Snackbar>
+         <style>
+          {`
+            th{
+              background-color: #F7B614 !important;
+            }
+
+            th > span > button > span div > div{
+              color: #FFF !important;
+            }
+          `}
+        </style>
       </div>
     )
     

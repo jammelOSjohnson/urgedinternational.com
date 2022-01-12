@@ -161,7 +161,7 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any}> =
             {props.itemCategory !== "Hot Wings" && props.itemCategory !== "Popcorn Chicken" && props.itemCategory !== "Zingers" &&  props.itemCategory !== "Famous Bowl" && props.itemCategory !=="Buckets" && props.itemCategory !=="Sides" && props.itemCategory !== "CHCKN Combos" ?
                 <>
                     <Grid item xs={12} sm={6} md={6} lg={6}>
-                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                        <FormControl variant="outlined" className={classes.formControl} fullWidth required>
                             <InputLabel id="demo-simple-select-outlined-label">1st choice</InputLabel>
                             <Select
                                 labelId="demo-simple-select-outlined-label"
@@ -171,6 +171,7 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any}> =
                                 label="Flavour1"
                                 name="chickenFlavour1"
                                 className={classes.root}
+                                required
                             >
                                 <MenuItem value={"Select Flavour"}>Select Flavour</MenuItem>
                                 <MenuItem value={"Original"}>Original</MenuItem>

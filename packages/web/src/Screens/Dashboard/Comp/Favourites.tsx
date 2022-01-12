@@ -64,7 +64,7 @@ export const Favourites: React.FC = function Favourites() {
                                 </Typography>
                             </Grid>
                             <Grid item xs={4} >
-                                <Link to="#" title="View More">
+                                <Link to="/Restaurants" title="View More">
                                     <Typography variant="subtitle1" className={classes.viewMore}>
                                         View More
                                     </Typography>

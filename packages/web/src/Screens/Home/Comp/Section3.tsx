@@ -51,24 +51,24 @@ export const Section3: React.FC = function Section3() {
                 <div className={classes.innerContainer}>
                    <Typography>
                        <Typography className={classes.Text1}>
-                            Our services are entensible to over 100+ companies
+                            Our services are entensible to a wide range of companies
                        </Typography>
                    </Typography>
                    <Grid container  spacing={0}>
                         <Grid item style={{color: "black", marginLeft: "auto", marginRight: "auto"}}>
-                                Image1
+                                {/* Image1 */}
                         </Grid>
                         <Grid item style={{color: "black", marginLeft: "auto", marginRight: "auto"}}>
-                                Image2
+                                {/* Image2 */}
                         </Grid>
                         <Grid item style={{color: "black", marginLeft: "auto", marginRight: "auto"}}>
-                                Image3
+                                {/* Image3 */}
                         </Grid>
                         <Grid item style={{color: "black", marginLeft: "auto", marginRight: "auto"}}>
-                                Image4    
+                                {/* Image4     */}
                         </Grid>
                         <Grid item style={{color: "black", marginLeft: "auto", marginRight: "auto"}}>
-                                Image5  
+                                {/* Image5   */}
                         </Grid>
                    </Grid>
                 </div>

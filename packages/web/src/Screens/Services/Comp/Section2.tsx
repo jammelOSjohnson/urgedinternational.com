@@ -453,13 +453,15 @@ export const Section2: React.FC = function Section2() {
                                                 send various packages to your family, business<br />
                                                 partners and friends. 
                                             </Typography>
-                                            <Button
-                                                className={classes.pOrderBtn}
-                                                variant="outlined"
-                                                endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn4" />}
-                                            >
-                                                Comming Soon 
-                                            </Button>
+                                            <a href="http://wa.me/18767735015" target="_blank" rel="nofollow noreferrer" style={{textDecoration: "none"}}>
+                                                <Button
+                                                    className={classes.pOrderBtn}
+                                                    variant="outlined"
+                                                    endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn4" />}
+                                                >
+                                                    Start Today 
+                                                </Button>
+                                            </a>
                                         </Grid>
                                         <Grid item xs={6}>
                                             <Typography>
@@ -476,13 +478,15 @@ export const Section2: React.FC = function Section2() {
                                                 Let us Pay Bills, Complete Banking &amp; Tax office
                                                 <br />Transactions on your behalf. 
                                             </Typography>
-                                            <Button
-                                                className={classes.pOrderBtn}
-                                                variant="outlined"
-                                                endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn5" />}
-                                            >
-                                                Comming Soon 
-                                            </Button>
+                                            <a href="http://wa.me/18767735015" target="_blank" rel="nofollow noreferrer" style={{textDecoration: "none"}}>
+                                                <Button
+                                                    className={classes.pOrderBtn}
+                                                    variant="outlined"
+                                                    endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn5" />}
+                                                >
+                                                    Message Us 
+                                                </Button>
+                                            </a>
                                         </Grid>
                                         <Grid item xs={6}>
                                             <Typography>
@@ -797,20 +801,22 @@ export const Section2: React.FC = function Section2() {
                                         </Grid>
                                         <Grid item xs={12}>
                                             <img width="100%" src="Images/ServicesP3.png" alt="ServicesP3" />
-                                            <Button
-                                                style={{
-                                                    borderRadius: "47px",
-                                                    width: "100%",
-                                                    height: "50px",
-                                                    marginTop: "15%",
-                                                    marginBottom: "15%"
-                                                }}
-                                                className={classes.pOrderBtn}
-                                                variant="outlined"
-                                                endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn4" />}
-                                            >
-                                                Comming Soon 
-                                            </Button>
+                                            <a href="http://wa.me/18767735015" target="_blank" rel="nofollow noreferrer" style={{textDecoration: "none"}}>
+                                                <Button
+                                                    style={{
+                                                        borderRadius: "47px",
+                                                        width: "100%",
+                                                        height: "50px",
+                                                        marginTop: "15%",
+                                                        marginBottom: "15%"
+                                                    }}
+                                                    className={classes.pOrderBtn}
+                                                    variant="outlined"
+                                                    endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn4" />}
+                                                >
+                                                    Start Today 
+                                                </Button>
+                                            </a>
                                         </Grid>
                                         <Grid item xs={12}>
                                             <Typography>
@@ -827,20 +833,22 @@ export const Section2: React.FC = function Section2() {
                                                 Let us Pay Bills, Complete Banking &amp; Tax office 
                                                 Transactions on your behalf. 
                                             </Typography>
-                                            <Button
-                                                style={{
-                                                    borderRadius: "47px",
-                                                    width: "100%",
-                                                    height: "50px",
-                                                    marginTop: "15%",
-                                                    marginBottom: "15%"
-                                                }}
-                                                className={classes.pOrderBtn}
-                                                variant="outlined"
-                                                endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn5" />}
-                                            >
-                                                Comming Soon 
-                                            </Button>
+                                            <a href="http://wa.me/18767735015" target="_blank" rel="nofollow noreferrer" style={{textDecoration: "none"}}>
+                                                <Button
+                                                    style={{
+                                                        borderRadius: "47px",
+                                                        width: "100%",
+                                                        height: "50px",
+                                                        marginTop: "15%",
+                                                        marginBottom: "15%"
+                                                    }}
+                                                    className={classes.pOrderBtn}
+                                                    variant="outlined"
+                                                    endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn5" />}
+                                                >
+                                                    Message Us 
+                                                </Button>
+                                            </a>
                                         </Grid>
                                         <Grid item xs={12}>
                                             <Typography>

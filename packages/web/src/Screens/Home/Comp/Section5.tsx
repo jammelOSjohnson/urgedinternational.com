@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
             height: "100%",
             display: "flex",
             flexDirection: "column",
+            minHeight: "273px"
         },
         cardGrid: {
             paddingTop: "5%",
@@ -65,7 +66,9 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "#FFFFFF",
             backgroundColor: "#F7B614",
             textAlign: "center",
-            borderRadius: "32px"
+            borderRadius: "32px",
+            width: "234px",
+            height: "50px"
         },
         links: {
             textDecoration: "none"
@@ -86,8 +89,8 @@ export const Section5: React.FC = function Section5() {
                 </Typography>
                 <Typography>
                     <Typography className={classes.sectionTitle2}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vitae cursus et<br/>
-                        euismod tempor. Adipiscing elementum vestibulum in eget enim donec sed tincidunt.
+                        {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vitae cursus et<br/>
+                        euismod tempor. Adipiscing elementum vestibulum in eget enim donec sed tincidunt. */}
                     </Typography>
                 </Typography>
                 <Container>

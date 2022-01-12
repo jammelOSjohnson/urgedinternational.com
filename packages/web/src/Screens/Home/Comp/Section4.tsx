@@ -46,9 +46,9 @@ export const Section4: React.FC = function Section4() {
                 </Typography>
                 <Typography>
                     <Typography className={classes.text2}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                        {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
                         Vitae cursus et<br /> euismod tempor. Adipiscing elementum vestibulum in eget
-                         enim donec<br /> sed tincidunt.
+                         enim donec<br /> sed tincidunt. */}
                     </Typography>
                 </Typography>
                 <Grid container spacing={0}>

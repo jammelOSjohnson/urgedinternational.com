@@ -81,8 +81,8 @@ export const Section6: React.FC = function Section6() {
                     How It Works
                 </Typography>
                 <Typography paragraph={true} className={`${classes.secDescription}`}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vitae cursus et euismod<br />
-                    tempor. Adipiscing elementum vestibulum in eget enim donec sed tincidunt.
+                    {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vitae cursus et euismod<br />
+                    tempor. Adipiscing elementum vestibulum in eget enim donec sed tincidunt. */}
                 </Typography>
                 
                     {isMatchMedium?
@@ -94,8 +94,8 @@ export const Section6: React.FC = function Section6() {
                                             You Order
                                         </Typography>
                                         <Typography className={classes.text2}>
-                                            Lorem ipsum dolor sit amet,<br />
-                                            consectetur adipiscing elit. 
+                                            {/* Lorem ipsum dolor sit amet,<br />
+                                            consectetur adipiscing elit.  */}
                                         </Typography>
                                     </Grid>
                                     <Grid md={12}>
@@ -103,8 +103,8 @@ export const Section6: React.FC = function Section6() {
                                             We Pickup
                                         </Typography>
                                         <Typography className={classes.text2}>
-                                            Lorem ipsum dolor sit amet,<br />
-                                            consectetur adipiscing elit. 
+                                            {/* Lorem ipsum dolor sit amet,<br />
+                                            consectetur adipiscing elit.  */}
                                         </Typography>
                                     </Grid>
                                     <Grid md={12}>
@@ -112,8 +112,8 @@ export const Section6: React.FC = function Section6() {
                                             We Deliver
                                         </Typography>
                                         <Typography className={classes.text2}>
-                                            Lorem ipsum dolor sit amet,<br />
-                                            consectetur adipiscing elit. 
+                                            {/* Lorem ipsum dolor sit amet,<br />
+                                            consectetur adipiscing elit.  */}
                                         </Typography>
                                     </Grid>
                                 </Grid>

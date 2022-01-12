@@ -50,7 +50,7 @@ export const OrdersHistory: React.FC = function OrdersHistory () {
                                 <HeaderRight />
                             </Grid>
                             <Grid item xs={12}>
-                                <HistoryHeaderBar />
+                                {/* <HistoryHeaderBar /> */}
                                 <HistoryTable />
                             </Grid>
                         </Grid>

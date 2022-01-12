@@ -124,6 +124,17 @@ export const HistoryTable: React.FC = function HistoryTable () {
           columns={columns}
           options={options}
         />
+      <style>
+        {`
+          th{
+            background-color: #F7B614 !important;
+          }
+
+          th > span > button > span div > div{
+            color: #FFF !important;
+          }
+        `}
+      </style>
     </div>
   );
 }
