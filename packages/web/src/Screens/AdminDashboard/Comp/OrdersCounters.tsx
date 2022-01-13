@@ -102,7 +102,7 @@ export const OrdersCounters: React.FC = function OrdersCounters() {
         variables: {StartDate: startDate, EndDate: endDate },
         pollInterval: 10000,
     });
-
+    //ksd
     useEffect(()=> {
         try{
             if(orders.length > 0) {
