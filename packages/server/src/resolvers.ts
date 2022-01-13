@@ -56,6 +56,11 @@ const resolvers = {
             return await Order.find().populate("Rider").where("Rider").equals(Rider)
             .where("OrderStatus").ne("Delivered"); 
         },
+
+        getOrdersByDateAndTime: async (_,{StartDate, EndDate}) => {
+            return await Order.find().where("OrderDate").gte(new Date(StartDate).toISOString())
+            .lte(new Date(EndDate).toISOString());
+        }
         
     },
 
@@ -111,8 +116,8 @@ const resolvers = {
         },
 
         //Orders
-        createOrder: (_,{Id,OrderItems,OrderStatus,OrderTotal,OrderDate,Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal}) => {
-            const orderItem = new Order({Id, OrderItems, OrderStatus, OrderTotal, OrderDate, Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal});
+        createOrder: (_,{Id,OrderItems,OrderStatus,OrderTotal,OrderDate,Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal, OrderType}) => {
+            const orderItem = new Order({Id, OrderItems, OrderStatus, OrderTotal, OrderDate, Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal, OrderType});
             return orderItem.save();
         },
 
@@ -129,7 +134,7 @@ const resolvers = {
             return await Order.find().populate("Rider");
         },
 
-        updateOrder: async (_, {_id,Id,OrderItems,OrderStatus,OrderTotal,OrderDate,Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal}) => {
+        updateOrder: async (_, {_id,Id,OrderItems,OrderStatus,OrderTotal,OrderDate,Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal, OrderType}) => {
             let newOrder = {
                 _id,
                 Id,
@@ -144,7 +149,8 @@ const resolvers = {
                 DeliveryFee, 
                 GCT, 
                 ServiceCharge, 
-                CartTotal
+                CartTotal,
+                OrderType
             }
             //console.log(newOrder);
             const order = await Order.findOne({_id});

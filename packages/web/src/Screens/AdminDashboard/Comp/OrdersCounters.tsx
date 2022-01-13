@@ -1,8 +1,12 @@
+import { useQuery } from '@apollo/client';
 import { Grid, makeStyles, createStyles, Typography, Theme, Card, CardContent } from '@material-ui/core';
-import React from 'react';
+import moment from 'moment';
+import React, { useEffect, useState } from 'react';
 //import { useHistory } from 'react-router-dom';
 //import clsx from 'clsx';
 import { Link } from "react-router-dom";
+import { useAppData } from '../../../Context/AppDataContext';
+import { GET_ORDERS, GET_ORDERS_BY_DATE_AND_TYPE } from '../../../GraphQL/Queries';
 
 // interface Props {
     
@@ -18,6 +22,11 @@ const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             padding: "0% 0px 1% 0px"
+        },cardTitle0: {
+            fontSize: "20px",
+            fontWeight: 300,
+            fontFamily: "PT Sans",
+            color: "#11263C"
         },
         cardTitle1: {
             fontSize: "20px",
@@ -79,21 +88,56 @@ export const OrdersCounters: React.FC = function OrdersCounters() {
     //   });
     
     //   var history = useHistory();
+    var { value }  = useAppData();
+    var { orders, refreshingOrderTables } = value;
+    const [Food, setFood] = useState(0);
+    const [Errand, setErrand] = useState(0);
+    const [Express, setExpress] = useState(0);
+    const [Total, setTotal] = useState(0);
+    const [startDate, setStartDate] = useState(moment().startOf('month').format('YYYY-MM-DD hh:mm'));
+    const [endDate, setEndDate] = useState(moment().endOf('month').format('YYYY-MM-DD hh:mm'));
+    console.log(startDate);
+    console.log(endDate);
+    const {data} = useQuery(GET_ORDERS_BY_DATE_AND_TYPE,{
+        variables: {StartDate: startDate, EndDate: endDate },
+        pollInterval: 10000,
+    });
 
-    
+    useEffect(()=> {
+        try{
+            if(orders.length > 0) {
+                setFood(orders.length)
+            }
+
+            if(data.getOrders !== null){
+              var Orders = data.getOrders;
+              refreshingOrderTables(value, Orders).then(()=>{
+                setTotal(Food + Errand + Express);
+              });
+            }
+            // fetchOrders(value).then(()=>{
+              
+            // });
+      
+          }catch(e){
+            //console.log(e)
+          }
+          // eslint-disable-next-line
+    },[orders, data])
       
     return (
         <>
             <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                 <Grid item xs={10} md={3}>
                     <Card className={classes.card}>
-                        <Typography gutterBottom className={classes.cardTitle1}>
+                        <Typography gutterBottom className={classes.cardTitle0}>
                             Total Food Orders
                          </Typography>
                         <CardContent className={classes.cardContent}>
                             <Link className={classes.links} to="#" title="Food Delivery">
                                 <Typography gutterBottom className={classes.cardTitle1}>
-                                    8,565
+                                    {Food}
+                                    <hr style={{height: "6px", opacity: 1, width: "83px"}}/>
                                 </Typography>
                             </Link>
                         </CardContent>
@@ -101,13 +145,14 @@ export const OrdersCounters: React.FC = function OrdersCounters() {
                 </Grid>
                 <Grid item xs={10} md={3}>
                     <Card className={classes.card}>
-                        <Typography gutterBottom className={classes.cardTitle1}>
+                        <Typography gutterBottom className={classes.cardTitle0}>
                             Total Errand Orders
                         </Typography>
                         <CardContent className={classes.cardContent}>
                             <Link className={classes.links} to="#" title="Food Delivery">
                                 <Typography gutterBottom className={classes.cardTitle2}>
-                                    18,565
+                                    {Errand}
+                                    <hr style={{height: "6px", opacity: 1, width: "83px"}}/>
                                 </Typography>
                             </Link>
                         </CardContent>
@@ -115,13 +160,14 @@ export const OrdersCounters: React.FC = function OrdersCounters() {
                 </Grid>
                 <Grid item xs={10} md={3}>
                     <Card className={classes.card}>
-                        <Typography gutterBottom className={classes.cardTitle1}>
+                        <Typography gutterBottom className={classes.cardTitle0}>
                             Total Express Order
                         </Typography>
                         <CardContent className={classes.cardContent}>
                             <Link className={classes.links} to="#" title="Food Delivery">
                                 <Typography gutterBottom className={classes.cardTitle3}>
-                                    25,350
+                                    {Express}
+                                    <hr style={{height: "6px", opacity: 1, width: "83px"}}/>
                                 </Typography>
                             </Link>
                         </CardContent>
@@ -129,13 +175,14 @@ export const OrdersCounters: React.FC = function OrdersCounters() {
                 </Grid>
                 <Grid item xs={10} md={3}>
                     <Card className={classes.card}>
-                        <Typography gutterBottom className={classes.cardTitle1}>
+                        <Typography gutterBottom className={classes.cardTitle0}>
                             Total Orders
                         </Typography>
                         <CardContent className={classes.cardContent}>
                             <Link className={classes.links} to="#" title="Food Delivery">
                                 <Typography gutterBottom className={classes.cardTitle4}>
-                                    45,000
+                                    {Total}
+                                    <hr style={{height: "6px", opacity: 1, width: "83px"}}/>
                                 </Typography>
                             </Link>
                         </CardContent>

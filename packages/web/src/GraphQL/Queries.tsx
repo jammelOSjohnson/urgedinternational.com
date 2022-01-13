@@ -84,6 +84,42 @@ export const GET_ORDERS_BY_RIDERID = gql`
             GCT
             ServiceCharge
             CartTotal
+            OrderType
+        }
+    }
+`
+
+export const GET_ORDERS_BY_DATE_AND_TYPE = gql`
+    query getOrdersByDateAndTime($StartDate: String!, $EndDate: String!) {
+        getOrdersByDateAndTime(StartDate: $StartDate, EndDate: $EndDate){
+            _id
+            Id
+            OrderItems 
+            OrderStatus
+            OrderTotal
+            OrderDate
+            Rider{
+                _id
+                Id 
+                FirstName 
+                LastName 
+                Email
+                AddressLine1
+                AddressLine2
+                City 
+                ContactNumber
+                ImageName
+                isAvailable
+                disabled
+            }
+            DeliveryAddress 
+            PaymentMethod
+            AdditionalInfo
+            DeliveryFee
+            GCT
+            ServiceCharge
+            CartTotal
+            OrderType
         }
     }
 `

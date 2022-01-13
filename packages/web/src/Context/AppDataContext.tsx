@@ -811,7 +811,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             DeliveryFee: Number(deliveryFee.Cost),
             GCT: Number(GCT.Cost),
             ServiceCharge: Number(serviceFee.Cost),
-            CartTotal: Number(cartItemsSum.Cost)
+            CartTotal: Number(cartItemsSum.Cost),
+            OrderType: "Food"
           }
   
           await createOrder({variables: orderBody}).then(async function(response) {

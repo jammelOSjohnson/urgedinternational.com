@@ -56,6 +56,10 @@ const OrderSchema = new Schema({
     CartTotal: {
         type: Number,
         required: true
+    },
+    OrderType: {
+        type: String,
+        required: false
     }
 });
 

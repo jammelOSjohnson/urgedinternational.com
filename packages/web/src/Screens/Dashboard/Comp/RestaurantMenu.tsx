@@ -436,7 +436,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                     </Grid>
                                     <Grid item xs={12}>
                                         {restaurant.FirstName === "Kentucky Fried Chicken"?
-                                            <form onSubmit={(e) => AddToCart(e, values)}>
+                                            <form onSubmit={(e) => AddToCart2(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                     <FastFoodChickenFlavor props={values} handleChange={handleChange} />
                                                     <Grid item xs={12} sm={12} >

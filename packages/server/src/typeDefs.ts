@@ -170,7 +170,8 @@ const typeDefs = gql`
         DeliveryFee: Float,
         GCT: Float,
         ServiceCharge: Float,
-        CartTotal: Float
+        CartTotal: Float,
+        OrderType: String
     }
 
     type Query {
@@ -185,6 +186,11 @@ const typeDefs = gql`
         getOrdersByRiderId(
             Rider: ID
         ): [Order]
+
+        getOrdersByDateAndTime(
+            StartDate: String,
+            EndDate: String,
+        ): Order
 
     }
     
@@ -244,7 +250,8 @@ const typeDefs = gql`
             DeliveryFee: Float,
             GCT: Float,
             ServiceCharge: Float,
-            CartTotal: Float
+            CartTotal: Float,
+            OrderType: String
         ): Order
 
         getOrdersByUserId(

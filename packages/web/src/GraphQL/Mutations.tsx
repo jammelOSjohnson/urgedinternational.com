@@ -150,7 +150,8 @@ export const CREATE_ORDER = gql`
         $DeliveryFee: Float,
         $GCT: Float,
         $ServiceCharge: Float,
-        $CartTotal: Float
+        $CartTotal: Float,
+        $OrderType: String
         ) {
             createOrder(
                 Id: $Id, 
@@ -165,7 +166,8 @@ export const CREATE_ORDER = gql`
                 DeliveryFee: $DeliveryFee,
                 GCT: $GCT,
                 ServiceCharge: $ServiceCharge,
-                CartTotal: $CartTotal
+                CartTotal: $CartTotal,
+                OrderType: $OrderType
                 ){
                     _id
                     Id
@@ -194,6 +196,7 @@ export const CREATE_ORDER = gql`
                     GCT
                     ServiceCharge
                     CartTotal
+                    OrderType
                 }
     }
 `
@@ -228,6 +231,7 @@ export const GET_ORDERS_BY_USERID = gql`
             GCT
             ServiceCharge
             CartTotal
+            OrderType
         }
     }
 `
@@ -262,6 +266,7 @@ export const GET_ORDERS_BY_RIDERID = gql`
             GCT
             ServiceCharge
             CartTotal
+            OrderType
         }
     }
 `
@@ -296,6 +301,7 @@ export const GET_ORDERS = gql`
             GCT
             ServiceCharge
             CartTotal
+            OrderType
         }
     }
 `
@@ -317,7 +323,8 @@ export const UPDATE_ORDER = gql`
         $DeliveryFee: Float,
         $GCT: Float,
         $ServiceCharge: Float,
-        $CartTotal: Float
+        $CartTotal: Float,
+        $OrderType: String
     ) {
         updateOrder(
             _id: $_id,
@@ -333,7 +340,8 @@ export const UPDATE_ORDER = gql`
             DeliveryFee: $DeliveryFee,
             GCT: $GCT,
             ServiceCharge: $ServiceCharge,
-            CartTotal: $CartTotal
+            CartTotal: $CartTotal,
+            OrderType: $OrderType
         ){
             _id
             Id
@@ -362,6 +370,7 @@ export const UPDATE_ORDER = gql`
             GCT
             ServiceCharge
             CartTotal
+            OrderType
         }
     }
 `
