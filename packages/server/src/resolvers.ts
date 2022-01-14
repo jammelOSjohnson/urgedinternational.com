@@ -58,8 +58,15 @@ const resolvers = {
         },
 
         getOrdersByDateAndTime: async (_,{StartDate, EndDate}) => {
-            return await Order.find().where("OrderDate").gte(new Date(StartDate).toISOString())
-            .lte(new Date(EndDate).toISOString());
+            console.log(StartDate);
+            console.log(EndDate);
+            let startConverted = new Date(StartDate);
+            let endConverted = new Date(EndDate);
+            console.log(startConverted.toISOString());
+            console.log(endConverted.toISOString());
+            let res = await Order.find({"OrderDate": {"$gte": startConverted}});
+            console.log(res);
+            return res;
         }
         
     },

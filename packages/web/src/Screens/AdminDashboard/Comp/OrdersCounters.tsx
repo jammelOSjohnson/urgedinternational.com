@@ -7,7 +7,27 @@ import React, { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { useAppData } from '../../../Context/AppDataContext';
 import { GET_ORDERS, GET_ORDERS_BY_DATE_AND_TYPE } from '../../../GraphQL/Queries';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend,
+  } from 'chart.js';
+  import { Line } from 'react-chartjs-2';
 
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+  );
 // interface Props {
     
 // }
@@ -94,37 +114,74 @@ export const OrdersCounters: React.FC = function OrdersCounters() {
     const [Errand, setErrand] = useState(0);
     const [Express, setExpress] = useState(0);
     const [Total, setTotal] = useState(0);
-    const [startDate, setStartDate] = useState(moment().startOf('month').format('YYYY-MM-DD hh:mm'));
-    const [endDate, setEndDate] = useState(moment().endOf('month').format('YYYY-MM-DD hh:mm'));
-    console.log(startDate);
-    console.log(endDate);
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+    const [labels, setLabels] = useState<string[]>([]);
+    const [labelVals, setLabelVals] = useState<number[]>([]);
+    // console.log(startDate);
+    // console.log(endDate);
     const {data} = useQuery(GET_ORDERS_BY_DATE_AND_TYPE,{
         variables: {StartDate: startDate, EndDate: endDate },
-        pollInterval: 10000,
+        pollInterval: 20000,
     });
     //ksd
     useEffect(()=> {
         try{
+            let start = moment().startOf('month').format('YYYY-MM-DD[T00:00:00.000Z]');
+            let end =  moment().endOf('month').format('YYYY-MM-DD[T00:00:00.000Z]');
+            setStartDate(start);
+            setEndDate(end);
+            console.log(orders.length)
             if(orders.length > 0) {
-                setFood(orders.length)
+                setFood(orders.length);
+                orders.map((item, index) => {
+                    const now = new Date(parseInt(item.OrderDate, 10));
+                    const estTime = moment.tz(now, "America/Jamaica").format("DD-MM-YYYY");
+                    if(!labels.includes(estTime)){
+                        labels.push(estTime);
+                    }
+                })
+
+                for(var i = 0; i < labels.length;){
+                    for(var j = 0; i < orders.length;){
+                        const now = new Date(parseInt(orders[j].OrderDate, 10));
+                        const estTime = moment.tz(now, "America/Jamaica").format("DD-MM-YYYY");
+                        if(labels[i] === estTime){
+                            if(labelVals[i] === undefined){
+                                labelVals[i] = 1;
+                            }else{
+                                labelVals[i] = labelVals[i] + 1;
+                            }
+                            
+                        }
+                        j= j+1;
+                    }
+                    i= i+1;
+                }
+
+                console.log(labelVals)
             }
 
-            if(data.getOrders !== null){
-              var Orders = data.getOrders;
-              refreshingOrderTables(value, Orders).then(()=>{
-                setTotal(Food + Errand + Express);
-              });
+            if(data.getOrdersByDateAndTime !== null){
+              if(data.getOrdersByDateAndTime[0]._id !== null) {
+                var Orders = data.getOrdersByDateAndTime;
+                refreshingOrderTables(value, Orders).then(()=>{
+                    setTotal(Food + Errand + Express);
+                });
+              }
+              
             }
             // fetchOrders(value).then(()=>{
               
             // });
       
           }catch(e){
-            //console.log(e)
+            console.log(e)
           }
           // eslint-disable-next-line
     },[orders, data])
-      
+    
+
     return (
         <>
             <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
@@ -188,6 +245,27 @@ export const OrdersCounters: React.FC = function OrdersCounters() {
                         </CardContent>
                     </Card>
                 </Grid>
+            </Grid>
+            <Grid item xs={12}>
+                <Line 
+                    height={400}
+                    width="100%"
+                    data= {{
+                        labels: labels.map((item, index) => {return item}),
+                        datasets: [{
+                            label: '# of Orders',
+                            data: labelVals.map((item, index) => {return item}),
+                            borderWidth: 1,
+                            borderColor: 'rgb(255, 99, 132)',
+                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                            yAxisID: 'y',
+                        }]
+                    }}
+                    options= {{
+                        maintainAspectRatio: false,
+                    }}
+
+                />
             </Grid>
         </>
     )

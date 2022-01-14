@@ -190,7 +190,7 @@ const typeDefs = gql`
         getOrdersByDateAndTime(
             StartDate: String,
             EndDate: String,
-        ): Order
+        ): [Order]
 
     }
     
