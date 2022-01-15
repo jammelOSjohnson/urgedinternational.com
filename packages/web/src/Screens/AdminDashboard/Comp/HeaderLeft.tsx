@@ -42,11 +42,14 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
         <>
             {isMatchMedium? (
                 <Typography variant="h6" style={{fontWeight: "bold", background: "transparent"}}>
-                    Dashboard
-                    {referralPath === "/adminordersdetails" || referralPath === "/AdminOrderSDetails" ?
-                    <span><PlayArrowRounded /> <Link to="/AdminOrders" className={classes.links}>Orders</Link> <PlayArrowRounded /> Order Details</span> :
-                    referralPath === "/Restaurants" || referralPath === "/restaurants" ?
-                    <span><PlayArrowRounded /> FOOD DELIVERY <PlayArrowRounded /> RESTAURANTS</span> : ""}
+                    {referralPath === "/Organisations" || referralPath === "/organisations" ?
+                    <span><Link to="/Organisations" className={classes.links}>Organisations</Link></span> :
+                    referralPath === "/AdminDashboard" || referralPath === "/admindashboard" ?
+                    <span><Link to="/AdminDashboard" className={classes.links}>Dashboard</Link></span> :
+                    referralPath === "/Employees" || referralPath === "/employees" ?
+                    <span><Link to="/Employees" className={classes.links}>Employees</Link></span> :
+                    referralPath === "/AdminOrderSDetails" || referralPath === "/adminordersdetails" ?
+                    <span><Link to="/AdminOrderSDetails" className={classes.links}>Order Details</Link></span> : ""}
                     
                 </Typography>
             ):<></>}
