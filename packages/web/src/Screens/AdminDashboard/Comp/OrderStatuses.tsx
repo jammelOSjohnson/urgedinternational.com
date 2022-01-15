@@ -106,7 +106,10 @@ export const OrderStatuses: React.FC = () => {
     var { value }  = useAppData();
     var { orders, changeOrderStatus } = value;
     const orderIndex = parseInt(history.location.state.from);
-    const [status, setStatus] = useState(orders[orderIndex].OrderStatus);
+    if(orders.lengh === 0 ){
+        history.push("/AdminOrders");
+    }
+    const [status, setStatus] = useState(orders.lengh > 0 ?orders[orderIndex].OrderStatus: "");
 
     const handleStatus = async (status) => {
         // setStatus(status);
@@ -116,9 +119,11 @@ export const OrderStatuses: React.FC = () => {
         await changeOrderStatus(payload);
     }
 
+    
+
     useEffect(() => {
         setStatus(orders[orderIndex].OrderStatus);
-    }, [orders[orderIndex].OrderStatus])
+    }, [orders.length > 0 ? orders[orderIndex].OrderStatus: null])
 
     if(orders.length !== 0 && orderIndex !== undefined){
         return status === "Ordered" && status !== "Picked Up"

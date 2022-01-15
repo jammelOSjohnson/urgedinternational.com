@@ -103,7 +103,7 @@ export const OrderFullDetails: React.FC = () => {
     var { value }  = useAppData();
     var { orders, riders, fetchRiders, UpdateOrder } = value;
     const orderIndex = parseInt(history.location.state.from);
-    const [rider, setRider] = useState(orders[orderIndex].Rider.FirstName);
+    const [rider, setRider] = useState(orders.lengh > 0 ?orders[orderIndex].Rider.FirstName: "");
     const [selectedRider, setSelectedRider] = useState();
     // var [error, setError] = useState('');
     // var [success, setSuccess] = useState('');
