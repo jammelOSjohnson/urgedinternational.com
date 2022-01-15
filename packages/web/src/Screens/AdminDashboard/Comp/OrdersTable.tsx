@@ -248,7 +248,7 @@ import { Alert } from '@material-ui/lab';
               OrderTotal: `$ ${item.OrderTotal}`,
               PaymentMethod: item.PaymentMethod, 
               Rider: item.Rider.FirstName,
-              Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); history.push('/AdminOrderSDetails', { from: index});}}><EditRounded color="primary" /></a></>
+              Actions: <><a href="/AdminOrderSDetails" title="edit" onClick={(e) => {e.preventDefault(); history.push('/AdminOrderSDetails', { from: index});}}><EditRounded color="primary" /></a></>
             };
     
             rows.push(row)
