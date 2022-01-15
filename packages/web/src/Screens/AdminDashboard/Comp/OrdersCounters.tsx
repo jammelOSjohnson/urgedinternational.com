@@ -127,50 +127,60 @@ export const OrdersCounters: React.FC = function OrdersCounters() {
     //ksd
     useEffect(()=> {
         try{
+            console.log("useEffect start")
             let start = moment().startOf('month').format('YYYY-MM-DD[T00:00:00.000Z]');
             let end =  moment().endOf('month').format('YYYY-MM-DD[T00:00:00.000Z]');
             setStartDate(start);
             setEndDate(end);
-            console.log(orders.length)
-            if(orders.length > 0) {
-                setFood(orders.length);
-                orders.map((item, index) => {
-                    const now = new Date(parseInt(item.OrderDate, 10));
-                    const estTime = moment.tz(now, "America/Jamaica").format("DD-MM-YYYY");
-                    if(!labels.includes(estTime)){
-                        labels.push(estTime);
-                    }
-                })
-
-                for(var i = 0; i < labels.length;){
-                    for(var j = 0; i < orders.length;){
-                        const now = new Date(parseInt(orders[j].OrderDate, 10));
+            console.log(orders.length);
+            console.log(data);
+            if(data !== undefined){
+                if(data.getOrdersByDateAndTime.length > 0) {
+                    console.log("orders avalable");
+                    data.getOrdersByDateAndTime.map((item, index) => {
+                        const now = new Date(parseInt(item.OrderDate, 10));
                         const estTime = moment.tz(now, "America/Jamaica").format("DD-MM-YYYY");
-                        if(labels[i] === estTime){
-                            if(labelVals[i] === undefined){
-                                labelVals[i] = 1;
-                            }else{
-                                labelVals[i] = labelVals[i] + 1;
-                            }
-                            
+                        if(!labels.includes(estTime)){
+                            labels.push(estTime);
                         }
-                        j= j+1;
+                    })
+                    console.log(labels);
+                    for(var i = 0; i < labels.length;){
+                        for(var j = 0; j < data.getOrdersByDateAndTime.length;){
+                            console.log(data.getOrdersByDateAndTime[j]);
+                            const now = new Date(parseInt(data.getOrdersByDateAndTime[j].OrderDate, 10));
+                            const estTime = moment.tz(now, "America/Jamaica").format("DD-MM-YYYY");
+                            if(labels[i] === estTime){
+                                if(labelVals[i] === undefined){
+                                    labelVals[i] = 1;
+                                }else{
+                                    labelVals[i] = labelVals[i] + 1;
+                                }
+                                
+                            }
+                            j= j+1;
+                        }
+                        i= i+1;
                     }
-                    i= i+1;
+    
+                    console.log(labelVals)
+                    setFood(data.getOrdersByDateAndTime.length);
+                }else{
+                    console.log("no orders yet");
                 }
 
-                console.log(labelVals)
+                if(data.getOrdersByDateAndTime !== null){
+                    console.log("Id is" + data.getOrdersByDateAndTime[0]._id);
+                    if(data.getOrdersByDateAndTime[0]._id !== null) {
+                      var Orders = data.getOrdersByDateAndTime;
+                      refreshOrders(Orders);
+                    }
+                    
+                  }
+            }else{
+                console.log("data is undefined");
             }
-
-            if(data.getOrdersByDateAndTime !== null){
-              if(data.getOrdersByDateAndTime[0]._id !== null) {
-                var Orders = data.getOrdersByDateAndTime;
-                refreshingOrderTables(value, Orders).then(()=>{
-                    setTotal(Food + Errand + Express);
-                });
-              }
-              
-            }
+            
             // fetchOrders(value).then(()=>{
               
             // });
@@ -181,6 +191,12 @@ export const OrdersCounters: React.FC = function OrdersCounters() {
           // eslint-disable-next-line
     },[orders, data])
     
+    const refreshOrders = async (Orders) => {
+        await refreshingOrderTables(value, Orders).then(()=>{
+            console.log("completed updating orders")
+            setTotal(Food + Errand + Express);
+        });
+    }
 
     return (
         <>

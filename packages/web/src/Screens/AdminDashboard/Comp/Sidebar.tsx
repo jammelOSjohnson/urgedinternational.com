@@ -255,7 +255,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                           </ListItem>
                         :
                         text === "Overview" ?
-                          // <Link to="/AdminDashboard" className={classes.inactiveItemLink}>
+                          <Link to="/AdminDashboard" className={classes.inactiveItemLink}>
                             <ListItem button key={text}>
                                 <ListItemIcon>
                                   {
@@ -266,7 +266,21 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 </ListItemIcon>
                                 <ListItemText primary={text} />
                             </ListItem>
-                          // </Link>
+                          </Link>
+                        :
+                        text === "Admin Orders" ?
+                          <Link to="/AdminOrders" className={classes.inactiveItemLink}>
+                            <ListItem button key={text}>
+                                <ListItemIcon>
+                                  {
+                                    index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                    index === 1 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                    index === 2 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> : <MailIcon />
+                                  }
+                                </ListItemIcon>
+                                <ListItemText primary={text} />
+                            </ListItem>
+                          </Link>
                         :
                         <ListItem button key={text}>
                             <ListItemIcon>
@@ -413,7 +427,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                           </ListItem>
                         :
                         text === "Overview" ?
-                          // <Link to="/AdminDashboard" className={classes.inactiveItemLink}>
+                          <Link to="/AdminDashboard" className={classes.inactiveItemLink}>
                             <ListItem button key={text}>
                                 <ListItemIcon>
                                   {
@@ -424,7 +438,21 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 </ListItemIcon>
                                 <ListItemText primary={text} />
                             </ListItem>
-                          // </Link>
+                          </Link>
+                        :
+                        text === "Admin Orders" ?
+                          <Link to="/AdminOrders" className={classes.inactiveItemLink}>
+                            <ListItem button key={text}>
+                                <ListItemIcon>
+                                  {
+                                    index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                    index === 1 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                    index === 2 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> : <MailIcon />
+                                  }
+                                </ListItemIcon>
+                                <ListItemText primary={text} />
+                            </ListItem>
+                          </Link>
                         :
                         text !== "Overview"?
                           <ListItem button key={text} style={{marginTop: "5%"}}>

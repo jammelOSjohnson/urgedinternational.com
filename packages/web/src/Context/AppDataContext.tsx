@@ -112,6 +112,8 @@ function appDataReducer(state, action){
             receiptDetails: action.payload.receiptDetails
           }
           case "refreshOrderTable": 
+          console.log("dispatching orders");
+          console.log(action.payload.orders);
           return {
             ...state,
             orders: action.payload.orders
@@ -901,7 +903,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       if(payload.currentUser !== undefined){
         if(payload.orders !== undefined && Orders !== undefined){
           payload.orders = Orders;
-          dispatch({
+          await dispatch({
             type: "refreshOrderTable",
             payload: payload
           })
