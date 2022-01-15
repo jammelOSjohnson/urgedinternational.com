@@ -56,7 +56,7 @@ export const OrganisationsScreen: React.FC = () => {
                                 <HeaderRight />
                             </Grid>
                             <Grid item xs={12}>
-                                <FilterBar />
+                                {/* <FilterBar /> */}
                                 <OrganisationsCardList />
                             </Grid>
                         </Grid>
