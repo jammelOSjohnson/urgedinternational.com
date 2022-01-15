@@ -117,6 +117,7 @@ export  const GET_RIDERS = gql`
             ContactNumber
             isAvailable
             disabled
+            ImageName
         }
     }
 `

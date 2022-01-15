@@ -121,6 +121,14 @@ const useStyles = makeStyles((theme: Theme) =>
                 /*backgroundColor: "#F86363", In-Active*/
                 borderRadius: "50%",
                 display: "inline-block"
+        },
+        statusDotI: {
+            height: "10px",
+            width: "10px",
+            backgroundColor: "red" /*Active*/ ,
+            /*backgroundColor: "#F86363", In-Active*/
+            borderRadius: "50%",
+            display: "inline-block"
         }
     }),
 );
@@ -129,15 +137,15 @@ export const EmployeeCardList: React.FC = function EmployeeCardList(props) {
     const classes = useStyles();
     
     var { value }  = useAppData();
-    var { fetchRestaurants, restaurants, viewMenuItems } = value;
+    var { fetchRiders, riders, viewMenuItems } = value;
     
     useEffect(() => {
         //console.log("inside use effect");
         //console.log(restaurants);
-        if(restaurants.length === 0){
-            fetchRestaurants(value);
+        if(riders.length === 0){
+            fetchRiders(value);
         }
-    }, [restaurants])
+    }, [riders])
 
     const [values, setValues] = React.useState<State>({
         email: '',
@@ -158,16 +166,13 @@ export const EmployeeCardList: React.FC = function EmployeeCardList(props) {
             })
         } 
     }
-    if (restaurants.length !== 0){  
+    if (riders.length !== 0){  
         return (
             <>
-                <Typography variant="body1" style={{paddingTop: "3%", paddingBottom: "3%"}}>
-                    Please select from the list of reataurants listed below to see their menu.
-                </Typography>
                 <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
-                    {restaurants.map((restaurant, index) => {
-                        //console.log("restaurant is");
-                        //console.log(restaurant);
+                    {riders.map((rider, index) => {
+                        //console.log("rider is");
+                        //console.log(rider);
                         return(
                             
                             <Grid item xs={10} md={6} lg={3} xl={3} className={classes.gridSpacing} key={index}>
@@ -183,31 +188,26 @@ export const EmployeeCardList: React.FC = function EmployeeCardList(props) {
                                     <CardContent>
                                         <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
                                             <Grid item xs={12}>
-                                                <Avatar variant="circle" aria-label="restaurant" className={classes.avatar}>
+                                                <Avatar variant="circle" aria-label="rider" className={classes.avatar}>
                                                     <CardMedia className={classes.cardImage}>
-                                                        <img className={classes.kfcImage} src={restaurant.ImageName}></img>
+                                                        <img className={classes.kfcImage} src={rider.ImageName}></img>
                                                     </CardMedia>
                                                 </Avatar>
                                             </Grid>
                                             <Grid item xs={12}>
                                                 <Typography variant="h5"  component="p" align="center">
-                                                    {restaurant.FirstName}
+                                                    {rider.FirstName}
                                                 </Typography>
                                             </Grid>
                                             <Grid item xs={12}>
                                                 <Typography variant="h6"  component="p" align="center">
-                                                    {restaurant.City}
+                                                    {rider.City}
                                                 </Typography>
                                             </Grid>
                                             <br />
                                             <Grid item xs={12}>
                                                 <Typography variant="body2"  component="p" align="center">
-                                                Jacob Jones
-                                                </Typography>
-                                            </Grid>
-                                            <Grid item xs={12}>
-                                                <Typography variant="body2"  component="p" align="center">
-                                                jacob.jones@example.com
+                                                    {rider.Email}
                                                 </Typography>
                                             </Grid>
                                             <Grid item xs={12}>
@@ -217,7 +217,11 @@ export const EmployeeCardList: React.FC = function EmployeeCardList(props) {
                                             </Grid>
                                             <Grid item xs={12}>
                                                 <Typography variant="body2"  component="p" align="center">
-                                                <span className={classes.statusDot}></span> Active
+                                                {rider.isAvailable?
+                                                    <span><span className={classes.statusDot}></span> Active</span>
+                                                    :
+                                                    <span><span className={classes.statusDotI}></span> In-active</span>
+                                                }
                                                 </Typography>
                                             </Grid>
                                         </Grid>

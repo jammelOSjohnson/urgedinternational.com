@@ -56,7 +56,7 @@ export const EmployeesScreen: React.FC = () => {
                                 <HeaderRight />
                             </Grid>
                             <Grid item xs={12}>
-                                <FilterBar />
+                                {/* <FilterBar /> */}
                                 <EmployeeCardList />
                             </Grid>
                         </Grid>
