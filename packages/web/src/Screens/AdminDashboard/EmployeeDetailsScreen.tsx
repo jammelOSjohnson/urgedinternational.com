@@ -7,6 +7,7 @@ import { Sidebar } from './Comp/Sidebar';
 import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
 import { EmployeeOrdersCounters } from './Comp/EmployeeOrdersCounters';
+import { EmployeeDetailsRight } from './Comp/EmployeeDetailsRight';
 
 
 interface Props {
@@ -60,7 +61,7 @@ export const EmployeeDetailsScreen: React.FC = () => {
                                     <EmployeeOrdersCounters />
                                 </Grid>
                                 <Grid item xs={3}>
-
+                                    <EmployeeDetailsRight />
                                 </Grid>
                             </Grid>
                         </Grid>
