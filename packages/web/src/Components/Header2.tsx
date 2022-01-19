@@ -8,7 +8,8 @@ import  { auth, socialAuth } from '../firebase';
 import clsx from 'clsx';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-
+import { useSubscription } from '@apollo/client';
+import { ORDERS_SUBSCRIPTION } from '../GraphQL/Subscriptions';
 
 interface State {
   genralLocation: string;
@@ -180,10 +181,10 @@ export const Header2: React.FC = function Header2() {
     var location = history.location;
     var referralPath = location.pathname;
     var { value }  = useAppData();
-    var { fetchUserInfo, generalLocation, AddGeneralLocation, serviceWorkerUpdated, serviceWorkerRegistration } = value;
-    ////console.log("pathname is:" + location.pathname);
+    var { orders, refreshingOrderTables , fetchUserInfo, generalLocation, AddGeneralLocation, serviceWorkerUpdated, serviceWorkerRegistration } = value;
 
-    
+    //Subscriptions
+    const {data, loading} = useSubscription(ORDERS_SUBSCRIPTION);
     const classes = useStyles();
 
     //Breakpoints
@@ -215,6 +216,23 @@ export const Header2: React.FC = function Header2() {
       // }else{
       //   setOpen(false);
       // }
+      try{
+        //Subscribe to order data
+        if(value.userRolef !== undefined){
+          if(value.userRolef === "Admin"){
+            if(data !== undefined){
+              console.log(data)
+              var OrdersNew = []  as Object[];
+              orders.map((item) => (
+                OrdersNew.push(item)
+              ));
+              OrdersNew.push(data.orderCreated);
+              refreshingOrderTables(value, OrdersNew).then(()=>{
+            
+              });
+              }
+          }
+        }
 
       auth.onAuthStateChanged(function (user){
         ////console.log("auth");
@@ -242,7 +260,10 @@ export const Header2: React.FC = function Header2() {
           // eslint-disable-next-line
         }
       });
-    },[value.userRolef ,generalLocation])
+    }catch(err){
+      console.log(err);
+    }
+  },[value.userRolef, data])
 
     var fetchUserDetails = function  fetchUserDetails (payload) {
       ////console.log("Is current user null");

@@ -124,19 +124,21 @@ import { Alert } from '@material-ui/lab';
     const [open, setOpen] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
 
-    const {data} = useQuery(GET_ORDERS,{
-      pollInterval: 500,
-    });
+    const {data} = useQuery(GET_ORDERS);
 
     const rows = [] as Object[];
     useEffect(() => {
       try{
         if(data.getOrders !== null){
           var Orders = data.getOrders;
-          refreshingOrderTables(value, Orders).then(()=>{
+          if(Orders.length > orders.length){
+            refreshingOrderTables(value, Orders).then(()=>{
           
-          });
+            });
+          }
         }
+
+        
         // fetchOrders(value).then(()=>{
           
         // });
@@ -145,7 +147,7 @@ import { Alert } from '@material-ui/lab';
         //console.log(e)
       }
       // eslint-disable-next-line
-    }, [currentUser, data]);
+    }, [currentUser, orders, data]);
     
     // const handleEdit = (event) => {
     //   event.preventDefault();

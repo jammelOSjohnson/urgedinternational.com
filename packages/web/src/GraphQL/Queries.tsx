@@ -50,6 +50,7 @@ export const GET_ORDERS = gql`
             GCT
             ServiceCharge
             CartTotal
+            OrderType
         }
     }
 `
