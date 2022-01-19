@@ -8,6 +8,13 @@ import Order from './models/Order.model';
 import { json } from 'express';
 const { GraphQLScalarType, Kind } = require('graphql');
 
+//subscriptions test 
+import { PubSub } from 'graphql-subscriptions';
+import { GooglePubSub } from '@axelspringer/graphql-google-pubsub';// For Production
+const pubsub = new PubSub();
+const pubsubProd = new GooglePubSub();
+//subscriptions test 
+
 const dateScalar = new GraphQLScalarType({
   name: 'Date',
   description: 'Date custom scalar type',
@@ -35,7 +42,20 @@ const jsonScalar = new GraphQLScalarType({
       return json(value); // Convert incoming integer to Date
     },
   });
+
+const ORDER_CREATED = 'ORDER_CREATED';
+
 const resolvers = {
+    Subscription: {
+        orderCreated: {
+          // More on pubsub below
+          subscribe: () => process.env.NODE_ENV === "development" ?
+            pubsub.asyncIterator([ORDER_CREATED])
+          :
+            pubsubProd.asyncIterator(ORDER_CREATED)
+            ,
+        },
+    },
     Json: jsonScalar, 
     Query: {
         hello: () => {
@@ -123,9 +143,23 @@ const resolvers = {
         },
 
         //Orders
-        createOrder: (_,{Id,OrderItems,OrderStatus,OrderTotal,OrderDate,Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal, OrderType}) => {
+        createOrder: async(_,{Id,OrderItems,OrderStatus,OrderTotal,OrderDate,Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal, OrderType}) => {
             const orderItem = new Order({Id, OrderItems, OrderStatus, OrderTotal, OrderDate, Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal, OrderType});
-            return orderItem.save();
+            const newOrder = await orderItem.save();
+            const orderId = newOrder._id;
+            // console.log(newOrder)
+            // console.log(orderId);
+            
+            const finalOrder = await Order.find().where("_id").equals(orderId).populate("Rider");
+            //console.log(finalOrder);
+            process.env.NODE_ENV === "development" ?
+                pubsub.publish('ORDER_CREATED',{
+                    orderCreated: finalOrder[0]
+                })
+            :
+                pubsubProd.publish(ORDER_CREATED, {orderCreated: finalOrder[0]});
+            
+            return finalOrder[0];
         },
 
         getOrdersByUserId: async (_,{Id}) => {

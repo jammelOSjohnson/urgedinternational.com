@@ -299,7 +299,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           // This gives you a Google Access Token. You can use it to access the Google API.
           //var token = result.credential.accessToken;
           // The signed-in user info.
-          ////console.log(result.user);
+          console.log(result.user);
           var user = result.user;
           var payloadf = { ...payload,
             currentUser: user,
@@ -509,9 +509,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     };
 
     var fetchUserInfo = async function fetchUserInfo(uid, payloadf) {
-      ////console.log("User id is: ");
-      ////console.log(uid);
-      ////console.log("fetching user");
+      //console.log("User id is: ");
+      //console.log(uid);
+      //console.log("fetching user");
 
       await getUser({variables: { Id: uid}}).then(async function(response) {
         ////console.log("Checking user result for fetch user info");

@@ -1,8 +1,8 @@
-import { gql } from 'apollo-server-express';
+import { ApolloServer } from 'apollo-server';
 import { json } from 'express';
 
 
-const typeDefs = gql`
+const typeDefs = /* GraphQL */`
     scalar GraphQLDateTime
     scalar JSONObject  
     scalar Json
@@ -193,6 +193,10 @@ const typeDefs = gql`
         ): [Order]
 
     }
+
+    type Subscription {
+        orderCreated: Order
+    }
     
 
     type Mutation {
@@ -278,7 +282,8 @@ const typeDefs = gql`
             DeliveryFee: Float,
             GCT: Float,
             ServiceCharge: Float,
-            CartTotal: Float): Order
+            CartTotal: Float,
+            OrderType: String): Order
 
         fetchRestaurantsByCategory(
             categoryID: String
