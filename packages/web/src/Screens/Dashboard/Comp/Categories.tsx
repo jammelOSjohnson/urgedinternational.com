@@ -157,7 +157,7 @@ export const Categories: React.FC = function Categories() {
                 }}
                 >
                     <Fade in={open2}>
-                    <div className={classes.paper}>
+                    <div className={clsx(classes.paper, 'modalMobile')}>
                         <h2 id="transition-modal-title" style={{textAlign: "center"}}>Whatsapp Delivery</h2>
                         <Link to={`${referralPath}`} className={classes.cartIcon} onClick={handleClose2}>
                                 <img src="Images/CartCloseIcon.png" alt="closemodal" />
@@ -333,11 +333,9 @@ export const Categories: React.FC = function Categories() {
                                 <img src="Images/FoodDeliveryServiceSM.png" alt="FoodDeliveryServiceSM"></img>
                             </CardMedia>
                             <CardContent className={classes.cardContent}>
-                                <Link className={classes.links} to="#" title="Food Delivery">
-                                    <Typography gutterBottom className={classes.cardTitle1}>
-                                        Food Delivery
-                                    </Typography>
-                                </Link>
+                                <Typography gutterBottom className={classes.cardTitle1}>
+                                    Food Delivery
+                                </Typography>
                             </CardContent>
                         </Card>
                     </Link>
@@ -349,11 +347,9 @@ export const Categories: React.FC = function Categories() {
                                 <img src="Images/lightbluetruckIconImageSM.png" alt="lightbluetruckIconImageSM"></img>
                             </CardMedia>
                             <CardContent className={classes.cardContent}>
-                                <Link className={classes.links} to="#" title="Food Delivery">
-                                    <Typography gutterBottom className={classes.cardTitle2}>
-                                        Errand Services
-                                    </Typography>
-                                </Link>
+                                <Typography gutterBottom className={classes.cardTitle2}>
+                                    Errand Services
+                                </Typography>
                             </CardContent>
                         </Card>
                     </Link>
@@ -365,11 +361,9 @@ export const Categories: React.FC = function Categories() {
                                 <img src="Images/yellowtruckIconImageSM.png" alt="yellowtruckIconImageSM"></img>
                             </CardMedia>
                             <CardContent className={classes.cardContent}>
-                                <Link className={classes.links} to="#" title="Food Delivery">
-                                    <Typography gutterBottom className={classes.cardTitle3}>
-                                        Urged Express
-                                    </Typography>
-                                </Link>
+                                <Typography gutterBottom className={classes.cardTitle3}>
+                                    Urged Express
+                                </Typography>
                             </CardContent>
                         </Card>
                     </Link>
@@ -381,11 +375,9 @@ export const Categories: React.FC = function Categories() {
                                 <img src="Images/GreenMarketPlace.png" alt="GreenMarketPlace"></img>
                             </CardMedia>
                             <CardContent className={classes.cardContent}>
-                                <Link className={classes.links} to="#" title="Food Delivery">
-                                    <Typography gutterBottom className={classes.cardTitle4}>
-                                        Market Place
-                                    </Typography>
-                                </Link>
+                                <Typography gutterBottom className={classes.cardTitle4}>
+                                    Market Place
+                                </Typography>
                             </CardContent>
                         </Card>
                     </Link>
