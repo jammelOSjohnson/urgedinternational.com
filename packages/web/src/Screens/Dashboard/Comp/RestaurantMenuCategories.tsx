@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme: Theme) =>
         cardTitle2: {
             fontSize: "20px",
             fontWeight: 700,
-            color: "#FFFFFF",
+            color: "#FF5E14 !important",
             fontFamily: "PT Sans",
         },
         links: {
@@ -189,7 +189,7 @@ export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategor
                                                     <Grid item>
                                                             <Card className={clsx(classes.card, "cardSizeCategoriesRestarants3")}>
                                                                 <CardContent className={classes.cardContent2}>
-                                                                        <Typography gutterBottom className={classes.cardTitle2} style={{color: "#000000"}}>
+                                                                        <Typography gutterBottom className={classes.cardTitle} style={{color: "#000000"}}>
                                                                             ALL
                                                                         </Typography>
                                                                 </CardContent>
@@ -208,7 +208,7 @@ export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategor
                                                                     <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt="FoodDeliveryFastFood"></img>
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
-                                                                        <Typography gutterBottom className={classes.cardTitle} style={{color: "#FFFFFF"}}>
+                                                                        <Typography gutterBottom className={classes.cardTitle2} style={{color: "#FFFFFF"}}>
                                                                             {item}
                                                                         </Typography>
                                                                 </CardContent>
@@ -280,7 +280,7 @@ export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategor
                                                             <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt="FoodDeliveryFastFood 2"></img>
                                                         </CardMedia><br/>
                                                         <CardContent className={classes.cardContent}>
-                                                                <Typography gutterBottom className={classes.cardTitle} style={{color: "#FFFFFF"}}>
+                                                                <Typography gutterBottom className={classes.cardTitle2} style={{color: "#FFFFFF"}}>
                                                                     All
                                                                 </Typography>
                                                         </CardContent>
@@ -312,7 +312,7 @@ export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategor
                                                                     <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt=" FoodDeliveryFastFood 3"></img>
                                                                 </CardMedia><br/>
                                                                 <CardContent className={classes.cardContent}>
-                                                                        <Typography gutterBottom className={clsx(classes.cardTitle, "selected")}>
+                                                                        <Typography gutterBottom className={clsx(classes.cardTitle2, "selected")}>
                                                                             {item}
                                                                         </Typography>
                                                                 </CardContent>
