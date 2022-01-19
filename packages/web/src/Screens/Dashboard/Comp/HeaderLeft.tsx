@@ -253,7 +253,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                           </Link>
                         :
                         text === "Food Delivery" ?
-                          <Link to="/FoodDelivery" className={classes.inactiveItemLink}>
+                          <Link to="/Restaurants" className={classes.inactiveItemLink}>
                             <ListItem button key={text}>
                                 <ListItemIcon>
                                   {

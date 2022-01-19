@@ -105,9 +105,9 @@ export const Section7: React.FC = function Section7() {
                     Need Help?
                 </Typography>
                 <Typography className={classes.heroText2}>
-                    Everything you need to know about the product and billing.
+                    {/* Everything you need to know about the product and billing. */}
                 </Typography>
-                <Accordion className={classes.accord}>
+                {/* <Accordion className={classes.accord}>
                     <AccordionSummary
                     expandIcon={<img src="Images/expandIcon.png" alt="expandIcon" />}
                     aria-controls="panel1a-content"
@@ -130,7 +130,7 @@ export const Section7: React.FC = function Section7() {
                             may not be eligible for a refund.
                         </Typography>
                     </AccordionDetails>
-                </Accordion>
+                </Accordion> */}
                 <Accordion className={classes.accord}>
                     <AccordionSummary
                     expandIcon={<img src="Images/expandIcon.png" alt="expandIcon" />}

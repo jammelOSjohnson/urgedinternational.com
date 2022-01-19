@@ -94,8 +94,8 @@ export const Section6: React.FC = function Section6() {
                                             You Order
                                         </Typography>
                                         <Typography className={classes.text2}>
-                                            Lorem ipsum dolor sit amet,<br />
-                                            consectetur adipiscing elit. 
+                                            {/* Lorem ipsum dolor sit amet,<br />
+                                            consectetur adipiscing elit.  */}
                                         </Typography>
                                     </Grid>
                                     <Grid md={12}>
@@ -103,8 +103,8 @@ export const Section6: React.FC = function Section6() {
                                             We Pickup
                                         </Typography>
                                         <Typography className={classes.text2}>
-                                            Lorem ipsum dolor sit amet,<br />
-                                            consectetur adipiscing elit. 
+                                            {/* Lorem ipsum dolor sit amet,<br />
+                                            consectetur adipiscing elit.  */}
                                         </Typography>
                                     </Grid>
                                     <Grid md={12}>
@@ -112,8 +112,8 @@ export const Section6: React.FC = function Section6() {
                                             We Deliver
                                         </Typography>
                                         <Typography className={classes.text2}>
-                                            Lorem ipsum dolor sit amet,<br />
-                                            consectetur adipiscing elit. 
+                                            {/* Lorem ipsum dolor sit amet,<br />
+                                            consectetur adipiscing elit.  */}
                                         </Typography>
                                     </Grid>
                                 </Grid>
@@ -138,8 +138,8 @@ export const Section6: React.FC = function Section6() {
                                             You Order
                                         </Typography>
                                         <Typography className={classes.text2}>
-                                            Lorem ipsum dolor sit amet,<br />
-                                            consectetur adipiscing elit. 
+                                            {/* Lorem ipsum dolor sit amet,<br />
+                                            consectetur adipiscing elit.  */}
                                         </Typography>
                                     </Grid>
                                     <Grid xs={12}>
@@ -147,8 +147,8 @@ export const Section6: React.FC = function Section6() {
                                             We Pickup
                                         </Typography>
                                         <Typography className={classes.text2}>
-                                            Lorem ipsum dolor sit amet,<br />
-                                            consectetur adipiscing elit. 
+                                            {/* Lorem ipsum dolor sit amet,<br />
+                                            consectetur adipiscing elit.  */}
                                         </Typography>
                                     </Grid>
                                     <Grid xs={12}>
@@ -156,8 +156,8 @@ export const Section6: React.FC = function Section6() {
                                             We Deliver
                                         </Typography>
                                         <Typography className={classes.text2}>
-                                            Lorem ipsum dolor sit amet,<br />
-                                            consectetur adipiscing elit. 
+                                            {/* Lorem ipsum dolor sit amet,<br />
+                                            consectetur adipiscing elit.  */}
                                         </Typography>
                                     </Grid>
                                 </Grid>
