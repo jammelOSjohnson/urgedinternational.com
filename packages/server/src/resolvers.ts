@@ -10,9 +10,22 @@ const { GraphQLScalarType, Kind } = require('graphql');
 
 //subscriptions test 
 import { PubSub } from 'graphql-subscriptions';
-import { GooglePubSub } from '@axelspringer/graphql-google-pubsub';// For Production
-const pubsub = new PubSub();
-const pubsubProd = new GooglePubSub();
+//import { GooglePubSub } from '@axelspringer/graphql-google-pubsub';// For Production
+import { RedisPubSub } from 'graphql-redis-subscriptions'; // For Production
+const pubsub = new RedisPubSub(
+                process.env.NODE_ENV === "production"
+                ? {
+                    connection: {
+                        host: process.env.REDIS_DOMAIN_NAME as any,
+                        port: process.env.PORT_NUMBER as any,
+                        retry_strategy: options => {
+                          // reconnect after
+                          return Math.max(options.attempt * 100, 3000);
+                        }
+                      }
+                }
+                : {});
+//const pubsubProd = new GooglePubSub();
 //subscriptions test 
 
 const dateScalar = new GraphQLScalarType({
@@ -49,11 +62,7 @@ const resolvers = {
     Subscription: {
         orderCreated: {
           // More on pubsub below
-          subscribe: () => process.env.NODE_ENV === "development" ?
-            pubsub.asyncIterator([ORDER_CREATED])
-          :
-            pubsubProd.asyncIterator(ORDER_CREATED)
-            ,
+          subscribe: () => pubsub.asyncIterator(ORDER_CREATED),
         },
     },
     Json: jsonScalar, 
@@ -152,12 +161,7 @@ const resolvers = {
             
             const finalOrder = await Order.find().where("_id").equals(orderId).populate("Rider");
             //console.log(finalOrder);
-            process.env.NODE_ENV === "development" ?
-                pubsub.publish('ORDER_CREATED',{
-                    orderCreated: finalOrder[0]
-                })
-            :
-                pubsubProd.publish(ORDER_CREATED, {orderCreated: finalOrder[0]});
+            pubsub.publish(ORDER_CREATED, {orderCreated: finalOrder[0]});
             
             return finalOrder[0];
         },

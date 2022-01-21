@@ -12,7 +12,9 @@
     "express": "^4.17.1",
     "firebase-admin": "^9.11.1",
     "graphql": "^15.5.1",
+    "graphql-redis-subscriptions": "1.5.0",
     "graphql-subscriptions": "2.0.0",
+    "ioredis": "^3.2.2",
     "mongoose": "^5.13.5",
     "mongoose-sequence": "^5.3.1",
     "ts-node": "^10.1.0"
@@ -23,6 +25,7 @@
     "@babel/node": "^7.14.9",
     "@babel/preset-env": "^7.15.0",
     "@babel/preset-typescript": "^7.15.0",
+    "@types/ioredis": "^3.2.2",
     "@types/node": "^16.6.0",
     "nodemon": "^2.0.12",
     "typescript": "^4.3.5"

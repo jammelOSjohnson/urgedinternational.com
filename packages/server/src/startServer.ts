@@ -14,7 +14,7 @@ import mongoose from 'mongoose';
 
 export async function startServer() {
     //const app = express();
-    const server  = process.env.NODE_ENV == "development" ? 
+    const server  = process.env.NODE_ENV === "development" ? 
         new ApolloServer({
             typeDefs: typeDefs,
             resolvers: resolvers,
