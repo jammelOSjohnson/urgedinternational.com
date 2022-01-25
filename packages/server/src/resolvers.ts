@@ -17,11 +17,7 @@ const pubsub = new RedisPubSub(
                 ? {
                     connection: {
                         host: process.env.REDIS_DOMAIN_NAME as any,
-                        port: process.env.PORT_NUMBER as any,
-                        retry_strategy: options => {
-                          // reconnect after
-                          return Math.max(options.attempt * 100, 3000);
-                        }
+                        port: process.env.PORT_NUMBER as any
                       }
                 }
                 : {});
