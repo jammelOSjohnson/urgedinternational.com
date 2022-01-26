@@ -56,19 +56,19 @@ export const Section3: React.FC = function Section3() {
                    </Typography>
                    <Grid container  spacing={0}>
                         <Grid item style={{color: "black", marginLeft: "auto", marginRight: "auto"}}>
-                                {/* Image1 */}
+                            <img src="Images/swiftdistri.png" alt="swiftdistri" />
                         </Grid>
                         <Grid item style={{color: "black", marginLeft: "auto", marginRight: "auto"}}>
-                                {/* Image2 */}
+                            <img src="Images/Lleia_Luxe_Events.png" alt="Lleia_Luxe_Events" />
                         </Grid>
                         <Grid item style={{color: "black", marginLeft: "auto", marginRight: "auto"}}>
-                                {/* Image3 */}
+                            <img src="Images/ElebFrontPage.png" alt="ElebFrontPage" />
                         </Grid>
                         <Grid item style={{color: "black", marginLeft: "auto", marginRight: "auto"}}>
-                                {/* Image4     */}
+                            <img src="Images/trunks.png" alt="trunks" />
                         </Grid>
                         <Grid item style={{color: "black", marginLeft: "auto", marginRight: "auto"}}>
-                                {/* Image5   */}
+                            <img src="Images/LBA.png" alt="LBA" />
                         </Grid>
                    </Grid>
                 </div>

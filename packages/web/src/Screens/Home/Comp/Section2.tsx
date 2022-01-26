@@ -136,15 +136,14 @@ export const Section2: React.FC = function Section2() {
                         <Grid item xs={12} md={9}>
                             <Typography style={{textAlign: "center"}}>
                                 <Typography variant="h2" className={classes.s2Heading}>
-                                    No more long line
-                                    <br />waiting headaches
+                                    No more long lines
                                 </Typography>
                             </Typography>
                             <Typography style={{textAlign: "center"}}>
                                 <Typography className={classes.Typo2}>
                                     Ease your everyday life, by allowing
                                     <br />us to take care of all your
-                                    <br />errands and delivery services for you.
+                                    <br />errands and delivery needs.
                                     <br />
                                     <br />
                                 </Typography>
@@ -217,8 +216,7 @@ export const Section2: React.FC = function Section2() {
                         <Grid item xs={12} md={9}>
                             <Typography style={{textAlign:"center"}}>
                                 <Typography variant="h2" className={classes.s2HeadingMobile}>
-                                    No more long line
-                                    <br/> waiting headaches
+                                    No more long lines
                                 </Typography>
                             </Typography>
                             <br />
@@ -281,7 +279,7 @@ export const Section2: React.FC = function Section2() {
                             <Typography style={{textAlign:"center"}}>
                                 <Typography className={classes.Typo2Mobile}>
                                     Ease your everyday life, by allowing
-                                    <br />us to take care of all your errands and delivery services for you.
+                                    <br />us to take care of all your errands and delivery needs.
                                 </Typography>
                             </Typography>
                         </Grid>
