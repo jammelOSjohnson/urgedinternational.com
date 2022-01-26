@@ -4,6 +4,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 // import Visibility from '@material-ui/icons/Visibility';
 // import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import React, { useEffect } from 'react';
+import { Calendar } from './Calendar';
 // import { useHistory } from 'react-router-dom';
 // import clsx from 'clsx';
 // import { NotificationImportantRounded, ShoppingCartRounded } from "@material-ui/icons/";
@@ -112,7 +113,7 @@ export const EmployeeDetailsRight: React.FC = function EmployeeDetailsRight() {
             <Container maxWidth="xl" className={classes.main} style={{background: "transparent"}}>
                 <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
                     <Grid item xs={12} spacing={1}>
-                        Calendar
+                        <Calendar />
                     </Grid>
                     <Grid item xs={12} spacing={1}>
                             <Card className={classes.gridRoot}>
