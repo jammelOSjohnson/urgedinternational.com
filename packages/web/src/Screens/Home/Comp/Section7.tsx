@@ -146,7 +146,7 @@ export const Section7: React.FC = function Section7() {
                         follow the on-screen prompts.
                         <br />
                         <br />
-                        You can also call us via <a target="_blank" href="tel:8769601004" title="Contact Us" className={classes.links} style={{color: "#F7B614"}}>876 960 1004</a> for help.
+                        You can also call us via <a target="_blank" href="tel:8769601004" title="Contact Us" className={classes.links} style={{color: "#F7B614"}}>876 773 5015</a> for help.
                     </Typography>
                     </AccordionDetails>
                 </Accordion>
@@ -166,7 +166,7 @@ export const Section7: React.FC = function Section7() {
                         items, and how much you were charged for each.
                         <br />
                         <br />
-                        To speak to someone immediately, please reach out to your local <a target="_blank" href="tel:8769601004" title="Contact Us" className={classes.links} style={{color: "#F7B614"}}>876 960 1004</a> for help.
+                        To speak to someone immediately, please reach out to your local <a target="_blank" href="tel:8769601004" title="Contact Us" className={classes.links} style={{color: "#F7B614"}}>876 773 5015</a> for help.
                     </Typography>
                     </AccordionDetails>
                 </Accordion>
