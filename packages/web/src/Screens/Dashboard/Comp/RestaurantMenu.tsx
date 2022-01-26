@@ -1652,29 +1652,6 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             }
                                                         }
 
-                                                        @media only screen and (max-height: 600px) {
-                                                            .modalMobile{
-                                                                max-height: 500px;
-                                                                overflow-x: hidden;
-                                                                overflow-y: auto;
-                                                            }
-                                                        }
-
-                                                        @media only screen and (max-height: 560px) {
-                                                            .modalMobile{
-                                                                max-height: 490px;
-                                                                overflow-x: hidden;
-                                                                overflow-y: auto;
-                                                            }
-                                                        }
-
-                                                        @media only screen and (max-width: 460px) {
-                                                            .itemDescMobile{
-                                                                height: 66.594px;
-                                                            }
-
-                                                        }
-
                                                         @media only screen and (max-width: 600px) {
                                                             .mobileMedia{
                                                                 max-height: 111.48px;
@@ -1689,16 +1666,25 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                 height: 74.594px;
                                                             }
 
-                                                        }
-
-                                                        @media only screen and (max-width: 560px) {
-                                                            .itemDescMobile{
-                                                                height: 51.594px;
+                                                            .modalMobile{
+                                                                max-height: 500px;
+                                                                overflow-x: hidden;
+                                                                overflow-y: auto;
                                                             }
 
                                                         }
 
-                                                       
+                                                        @media only screen and (max-height: 560px) {
+                                                            .modalMobile{
+                                                                max-height: 490px;
+                                                                overflow-x: hidden;
+                                                                overflow-y: auto;
+                                                            }
+
+                                                            .itemDescMobile{
+                                                                height: 51.594px;
+                                                            }
+                                                        }
 
                                                         @media only screen and (max-width: 471px) {
                                                             .itemNameMobile {
@@ -1711,6 +1697,13 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
 
                                                             .MuiCardActions-root {
                                                                 padding: 1px;
+                                                            }
+
+                                                        }
+
+                                                        @media only screen and (max-width: 460px) {
+                                                            .itemDescMobile{
+                                                                height: 66.594px;
                                                             }
 
                                                         }
@@ -1830,29 +1823,6 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             }
                                                         }
 
-                                                        @media only screen and (max-height: 600px) {
-                                                            .modalMobile{
-                                                                max-height: 500px;
-                                                                overflow-x: hidden;
-                                                                overflow-y: auto;
-                                                            }
-                                                        }
-
-                                                        @media only screen and (max-height: 560px) {
-                                                            .modalMobile{
-                                                                max-height: 490px;
-                                                                overflow-x: hidden;
-                                                                overflow-y: auto;
-                                                            }
-                                                        }
-
-                                                        @media only screen and (max-width: 460px) {
-                                                            .itemDescMobile{
-                                                                height: 66.594px;
-                                                            }
-
-                                                        }
-
                                                         @media only screen and (max-width: 600px) {
                                                             .mobileMedia{
                                                                 max-height: 111.48px;
@@ -1867,16 +1837,31 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                 height: 74.594px;
                                                             }
 
-                                                        }
-
-                                                        @media only screen and (max-width: 560px) {
-                                                            .itemDescMobile{
-                                                                height: 51.594px;
+                                                            .modalMobile{
+                                                                max-height: 500px;
+                                                                overflow-x: hidden;
+                                                                overflow-y: auto;
                                                             }
 
                                                         }
 
+                                                        @media only screen and (max-height: 560px) {
+                                                            .modalMobile{
+                                                                max-height: 490px;
+                                                                overflow-x: hidden;
+                                                                overflow-y: auto;
+                                                            }
+
+                                                            .itemDescMobile{
+                                                                height: 51.594px;
+                                                            }
+                                                        }
+
                                                         @media only screen and (max-width: 460px) {
+                                                            .itemDescMobile{
+                                                                height: 66.594px;
+                                                            }
+
                                                             .itemDescMobile{
                                                                 height: 66.594px;
                                                             }
