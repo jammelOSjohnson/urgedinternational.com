@@ -2,6 +2,7 @@ import { useQuery } from '@apollo/client';
 import { Grid, makeStyles, createStyles, Typography, Theme, Card, CardContent } from '@material-ui/core';
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
+import { EmployeeOrdersTable } from './EmployeeOrdersTable'
 //import { useHistory } from 'react-router-dom';
 //import clsx from 'clsx';
 import { Link } from "react-router-dom";
@@ -263,25 +264,7 @@ export const EmployeeOrdersCounters: React.FC = function EmployeeOrdersCounters(
                 </Grid> */}
             </Grid>
             <Grid item xs={12}>
-                <Line 
-                    height={400}
-                    width="100%"
-                    data= {{
-                        labels: labels.map((item, index) => {return item}),
-                        datasets: [{
-                            label: '# of Orders',
-                            data: labelVals.map((item, index) => {return item}),
-                            borderWidth: 1,
-                            borderColor: 'rgb(255, 99, 132)',
-                            backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                            yAxisID: 'y',
-                        }]
-                    }}
-                    options= {{
-                        maintainAspectRatio: false,
-                    }}
-
-                />
+                <EmployeeOrdersTable />
             </Grid>
         </>
     )
