@@ -111,7 +111,7 @@ export const EmployeeDetailsRight: React.FC = function EmployeeDetailsRight() {
     return (
         <>
             <Container maxWidth="xl" className={classes.main} style={{background: "transparent"}}>
-                <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
+                <Grid container direction="row" spacing={2} className={classes.gridRoot} alignItems="center">
                     <Grid item xs={12} spacing={1}>
                         <Calendar />
                     </Grid>
@@ -125,7 +125,7 @@ export const EmployeeDetailsRight: React.FC = function EmployeeDetailsRight() {
                                     }
                                 />
                                 <CardContent>
-                                    <Grid container xs={12} direction="row" spacing={1} className={classes.gridRoot} alignItems="center">
+                                    <Grid container xs={12} direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
                                         <Grid item xs={12}>
                                             <Avatar variant="circle" aria-label="rider" className={classes.avatar}>
                                                 <CardMedia className={classes.cardImage}>

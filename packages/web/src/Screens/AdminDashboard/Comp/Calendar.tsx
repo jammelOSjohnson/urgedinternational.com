@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import 'date-fns';
 import DateFnsUtils from '@date-io/date-fns';
-// import { Paper } from "@material-ui/core";
+import { Paper } from "@material-ui/core";
 import { MuiThemeProvider, createTheme } from "@material-ui/core/styles";
 import green from "@material-ui/core/colors/green";
 
@@ -25,13 +25,15 @@ export const Calendar: React.FC =  function Calendar ()  {
   return (
     <>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <KeyboardDatePicker
-        autoOk
-        variant="static"
-        openTo="year"
-        value={date}
-        onChange={handleDateChange}
-      />
+        <Paper style={{ overflow: "hidden" }}>
+        <KeyboardDatePicker
+          autoOk
+          variant="static"
+          openTo="year"
+          value={date}
+          onChange={handleDateChange}
+        />
+      </Paper>
     </MuiPickersUtilsProvider>
   </>
   );
