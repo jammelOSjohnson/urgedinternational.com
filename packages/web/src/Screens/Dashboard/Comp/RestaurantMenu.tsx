@@ -28,6 +28,7 @@ interface State {
     itemDescription: string;
     quantity: number;
     restaurantName: string;
+    side: string;
 }
 
 interface Props {
@@ -228,7 +229,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
         ifnotAvailable: "Contact me",
         itemDescription: "",
         quantity: 1,
-        restaurantName: ""
+        restaurantName: "",
+        side: "Select Side"
       });
 
     const [open, setOpen] = React.useState(false);
@@ -319,7 +321,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                     ifnotAvailable: "Contact me",
                     itemDescription: "",
                     quantity: 1,
-                    restaurantName: ""
+                    restaurantName: "",
+                    side: "Select Side"
                 }
             );
             setOpen(false);
@@ -357,7 +360,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                     ifnotAvailable: "Contact me",
                     itemDescription: "",
                     quantity: 1,
-                    restaurantName: ""
+                    restaurantName: "",
+                    side: "Select Side"
                 }
             );
             setOpen(false);
@@ -391,7 +395,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                     ifnotAvailable: "Contact me",
                     itemDescription: "",
                     quantity: 1,
-                    restaurantName: ""
+                    restaurantName: "",
+                    side: "Select Side"
                 }
             );
             setOpen(false);
@@ -427,7 +432,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                     ifnotAvailable: "Contact me",
                     itemDescription: "",
                     quantity: 1,
-                    restaurantName: ""
+                    restaurantName: "",
+                    side: "Select Side"
                 }
             );
             setOpen(false);
@@ -475,7 +481,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         {restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory !== "Zingers" && values.itemCategory !== "Famous Bowl" && values.itemCategory !== "Buckets" && values.itemCategory !== "Hot Wings" && values.itemCategory !== "Popcorn Chicken" && values.itemCategory !== "Sides"?
                                             <form onSubmit={(e) => AddToCart2(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} />
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
@@ -520,7 +526,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Zingers"?
                                             <form onSubmit={(e) => AddToCart3(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} />
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
@@ -565,7 +571,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Famous Bowl"?
                                             <form onSubmit={(e) => AddToCart4(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} />
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
@@ -610,7 +616,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Buckets"?
                                             <form onSubmit={(e) => AddToCart4(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} />
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
@@ -655,7 +661,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Hot Wings"?
                                             <form onSubmit={(e) => AddToCart4(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} />
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
@@ -700,7 +706,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Popcorn Chicken"?
                                             <form onSubmit={(e) => AddToCart3(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} />
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
@@ -918,7 +924,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         :restaurant.FirstName === "Popeyes"?
                                             <form onSubmit={(e) => AddToCart(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} />
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
@@ -1349,7 +1355,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                     {restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory !== "Zingers" && values.itemCategory !== "Famous Bowl" && values.itemCategory !== "Buckets"?
                                             <form onSubmit={(e) => AddToCart2(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} />
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
@@ -1394,7 +1400,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Zingers"?
                                             <form onSubmit={(e) => AddToCart3(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} />
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
@@ -1439,7 +1445,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Famous Bowl"?
                                             <form onSubmit={(e) => AddToCart4(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} />
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
@@ -1484,7 +1490,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Buckets"?
                                             <form onSubmit={(e) => AddToCart4(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} />
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
@@ -1520,6 +1526,140 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid><br />
                                                     {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
                                                     <Grid item xs={12} sm={12} >
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                            Add To Cart 
+                                                        </Button>
+                                                    </Grid>
+                                                </Grid>
+                                            </form>
+                                        :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Hot Wings"?
+                                            <form onSubmit={(e) => AddToCart4(e, values)}>
+                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
+                                                    <Grid item xs={12} sm={12} >
+                                                        <TextField
+                                                            id="outlined-multiline-static"
+                                                            label="Special Intructions"
+                                                            multiline
+                                                            rows={4}
+                                                            defaultValue={values.otherIntructions}
+                                                            onChange={handleChange2('otherIntructions')}
+                                                            variant="outlined"
+                                                            placeholder="Enter Instructions Here"
+                                                            fullWidth
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} >
+                                                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                            <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                            <Select
+                                                                labelId="demo-simple-select-outlined-label"
+                                                                id="demo-simple-select-outlined"
+                                                                value={values.ifnotAvailable}
+                                                                onChange={handleChange}
+                                                                label="ifnotAvailable"
+                                                                name="ifnotAvailable"
+                                                                className={classes.root}
+                                                                fullWidth
+                                                            >
+                                                                <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                    </Grid><br />
+                                                    {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
+                                                    <Grid item xs={10} sm={12} >
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                            Add To Cart 
+                                                        </Button>
+                                                    </Grid>
+                                                </Grid>
+                                            </form>
+                                        :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Popcorn Chicken"?
+                                            <form onSubmit={(e) => AddToCart3(e, values)}>
+                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
+                                                    <Grid item xs={12} sm={12} >
+                                                        <TextField
+                                                            id="outlined-multiline-static"
+                                                            label="Special Intructions"
+                                                            multiline
+                                                            rows={4}
+                                                            defaultValue={values.otherIntructions}
+                                                            onChange={handleChange2('otherIntructions')}
+                                                            variant="outlined"
+                                                            placeholder="Enter Instructions Here"
+                                                            fullWidth
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} >
+                                                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                            <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                            <Select
+                                                                labelId="demo-simple-select-outlined-label"
+                                                                id="demo-simple-select-outlined"
+                                                                value={values.ifnotAvailable}
+                                                                onChange={handleChange}
+                                                                label="ifnotAvailable"
+                                                                name="ifnotAvailable"
+                                                                className={classes.root}
+                                                                fullWidth
+                                                            >
+                                                                <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                    </Grid><br />
+                                                    {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
+                                                    <Grid item xs={10} sm={12} >
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                            Add To Cart 
+                                                        </Button>
+                                                    </Grid>
+                                                </Grid>
+                                            </form>
+                                        :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Sides"?
+                                            <form onSubmit={(e) => AddToCart(e, values)}>
+                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                    <Grid item xs={12} sm={12} >
+                                                        <TextField
+                                                            id="outlined-multiline-static"
+                                                            label="Special Intructions"
+                                                            multiline
+                                                            rows={4}
+                                                            defaultValue={values.otherIntructions}
+                                                            onChange={handleChange2('otherIntructions')}
+                                                            variant="outlined"
+                                                            placeholder="Enter Instructions Here"
+                                                            fullWidth
+                                                        />
+                                                    </Grid>
+                                                    <Grid item xs={12} >
+                                                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                            <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                            <Select
+                                                                labelId="demo-simple-select-outlined-label"
+                                                                id="demo-simple-select-outlined"
+                                                                value={values.ifnotAvailable}
+                                                                onChange={handleChange}
+                                                                label="ifnotAvailable"
+                                                                name="ifnotAvailable"
+                                                                className={classes.root}
+                                                                fullWidth
+                                                            >
+                                                                <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                            </Select>
+                                                        </FormControl>
+                                                    </Grid><br />
+                                                    {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
+                                                    <Grid item xs={10} sm={12} >
                                                         <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
                                                             Add To Cart 
                                                         </Button>
@@ -1658,7 +1798,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         :restaurant.FirstName === "Popeyes"?
                                             <form onSubmit={(e) => AddToCart(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} />
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"

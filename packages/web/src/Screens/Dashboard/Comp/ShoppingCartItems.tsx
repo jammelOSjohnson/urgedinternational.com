@@ -302,9 +302,12 @@ function ColorlibStepIcon(props: StepIconProps) {
                                     <Typography>
                                         {order.itemDescription}
                                     </Typography>
-                                    <Typography>
-                                        Selections
-                                    </Typography>
+                                    {
+                                        order.side !== "" && order.side !== "Select Side"?
+                                            <Typography>Side: {order.side}</Typography>
+                                        :
+                                            <></>
+                                    }
                                 </CardContent>
                                 </div>
                             </Card>
@@ -361,9 +364,12 @@ function ColorlibStepIcon(props: StepIconProps) {
                                     <Typography>
                                         {order.itemDescription}
                                     </Typography>
-                                    <Typography>
-                                        Selections
-                                    </Typography>
+                                    {
+                                        order.side !== "" && order.side !== "Select Side"?
+                                            <Typography>Side: {order.side}</Typography>
+                                        :
+                                            <></>
+                                    }
                                 </CardContent>
                                 </div>
                             </Card>

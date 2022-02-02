@@ -150,7 +150,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
     //const [isgeoAllowed, setIsGeoAllowed] = useState(false);
 
     var { value }  = useAppData();
-    var { cartItems, checkoutOrder, generalLocation, latitude, longitude } = value;
+    var { cartItems, checkoutOrder, restaurants, selectedRestaurant, generalLocation, latitude, longitude } = value;
     var history = useHistory();
     var [error, setError] = useState('');
     var [success, setSuccess] = useState('');
@@ -286,9 +286,22 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
 
         //Calc cart total
         let cartTotal = 0.00;
-        cartItems.map((item, index)=>(
-            cartTotal = cartTotal + (item.itemCost * item.quantity)
-        ));
+        let sidesTotal = 0;
+
+        cartItems.map((item1, index)=>{
+            cartTotal = cartTotal + (item1.itemCost * item1.quantity);
+            if(item1.side !== "Select Side" && item1.side !== "" && item1.restaurantName === "Kentucky Fried Chicken" && item1.itemCategory !== "Sides"){ //Add || for the other restaurants and add side to the receipt
+                let sidePrice = 0
+                restaurants[selectedRestaurant].MenuItems.map((item2, index) => {
+                    console.log("item name is : " + item2.ItemName + " and item side is " + item1.side);
+                    if(item2.ItemName === item1.side){
+                        sidePrice = sidePrice + item2.ItemCost
+                    }
+                })
+                sidesTotal =sidesTotal + (sidePrice * item1.quantity);
+            }
+            cartTotal = cartTotal + sidesTotal; 
+        });
 
         let newcartTotal:Fee = {
             Cost: cartTotal.toString()
