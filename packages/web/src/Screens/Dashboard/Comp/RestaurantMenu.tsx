@@ -837,6 +837,34 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                             </form>
                                         :restaurant.FirstName === "Juici Patties"?
                                             <form onSubmit={(e) => AddToCart(e, values)}>
+                                                {
+                                                        values.itemCategory !== "Pastries" && values.itemCategory !== "Beverages" && values.itemCategory !== "Sides" && values.itemCategory !== "Loaves" && values.itemCategory !== "Patties"?
+                                                            <Grid item xs={12} sm={12} >
+                                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                    <InputLabel id="demo-simple-select-outlined-label">Sides</InputLabel>
+                                                                    <Select
+                                                                        labelId="demo-simple-select-outlined-label"
+                                                                        id="demo-simple-select-outlined"
+                                                                        value={values.side }
+                                                                        onChange={handleChange}
+                                                                        label="side"
+                                                                        name="side"
+                                                                        className={classes.root}
+                                                                    >
+                                                                        <MenuItem value={"Select Side"}>Select Side</MenuItem>
+                                                                        {
+                                                                            restaurant.MenuItems.map((item2, index) => {
+                                                                                if(item2.MenuCategory === "Sides"){
+                                                                                return <MenuItem key={index} value={item2.ItemName}>{item2.ItemName}</MenuItem>
+                                                                                }
+                                                                            })
+                                                                        }
+                                                                    </Select>
+                                                                </FormControl>
+                                                            </Grid>
+                                                        :
+                                                            <></>
+                                                    }
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
@@ -881,6 +909,34 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         :restaurant.FirstName === "Burger King"?
                                             <form onSubmit={(e) => AddToCart(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                    {
+                                                        values.itemCategory !== "Add Ons" && values.itemCategory !== "Beverages" && values.itemCategory !== "Sides"?
+                                                            <Grid item xs={12} sm={12} >
+                                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                    <InputLabel id="demo-simple-select-outlined-label">Sides</InputLabel>
+                                                                    <Select
+                                                                        labelId="demo-simple-select-outlined-label"
+                                                                        id="demo-simple-select-outlined"
+                                                                        value={values.side }
+                                                                        onChange={handleChange}
+                                                                        label="side"
+                                                                        name="side"
+                                                                        className={classes.root}
+                                                                    >
+                                                                        <MenuItem value={"Select Side"}>Select Side</MenuItem>
+                                                                        {
+                                                                            restaurant.MenuItems.map((item2, index) => {
+                                                                                if(item2.MenuCategory === "Sides"){
+                                                                                return <MenuItem key={index} value={item2.ItemName}>{item2.ItemName}</MenuItem>
+                                                                                }
+                                                                            })
+                                                                        }
+                                                                    </Select>
+                                                                </FormControl>
+                                                            </Grid>
+                                                        :
+                                                            <></>
+                                                    }
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
@@ -968,6 +1024,34 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         :restaurant.FirstName === "McKenzie's Bamboo Jerk Centre"?
                                             <form onSubmit={(e) => AddToCart(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                {
+                                                        values.itemCategory !== "Sides"?
+                                                            <Grid item xs={12} sm={12} >
+                                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                    <InputLabel id="demo-simple-select-outlined-label">Sides</InputLabel>
+                                                                    <Select
+                                                                        labelId="demo-simple-select-outlined-label"
+                                                                        id="demo-simple-select-outlined"
+                                                                        value={values.side }
+                                                                        onChange={handleChange}
+                                                                        label="side"
+                                                                        name="side"
+                                                                        className={classes.root}
+                                                                    >
+                                                                        <MenuItem value={"Select Side"}>Select Side</MenuItem>
+                                                                        {
+                                                                            restaurant.MenuItems.map((item2, index) => {
+                                                                                if(item2.MenuCategory === "Sides"){
+                                                                                return <MenuItem key={index} value={item2.ItemName}>{item2.ItemName}</MenuItem>
+                                                                                }
+                                                                            })
+                                                                        }
+                                                                    </Select>
+                                                                </FormControl>
+                                                            </Grid>
+                                                        :
+                                                            <></>
+                                                    }
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
@@ -1093,7 +1177,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             </Button>
                                                         </Grid>
                                                     </Grid>
-                                                </form>
+                                            </form>
                                         :restaurant.FirstName === "Kick Out Sports Bar & Lounge"?
                                             <form onSubmit={(e) => AddToCart(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
@@ -1136,7 +1220,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             </Button>
                                                         </Grid>
                                                     </Grid>
-                                                </form>
+                                            </form>
                                             :
                                         <></>
                                         }
@@ -1712,6 +1796,34 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         :restaurant.FirstName === "Juici Patties"?
                                             <form onSubmit={(e) => AddToCart(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                {
+                                                        values.itemCategory !== "Pastries" && values.itemCategory !== "Beverages" && values.itemCategory !== "Sides" && values.itemCategory !== "Loaves" && values.itemCategory !== "Patties"?
+                                                            <Grid item xs={12} sm={12} >
+                                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                    <InputLabel id="demo-simple-select-outlined-label">Sides</InputLabel>
+                                                                    <Select
+                                                                        labelId="demo-simple-select-outlined-label"
+                                                                        id="demo-simple-select-outlined"
+                                                                        value={values.side }
+                                                                        onChange={handleChange}
+                                                                        label="side"
+                                                                        name="side"
+                                                                        className={classes.root}
+                                                                    >
+                                                                        <MenuItem value={"Select Side"}>Select Side</MenuItem>
+                                                                        {
+                                                                            restaurant.MenuItems.map((item2, index) => {
+                                                                                if(item2.MenuCategory === "Sides"){
+                                                                                return <MenuItem key={index} value={item2.ItemName}>{item2.ItemName}</MenuItem>
+                                                                                }
+                                                                            })
+                                                                        }
+                                                                    </Select>
+                                                                </FormControl>
+                                                            </Grid>
+                                                        :
+                                                            <></>
+                                                    }
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
@@ -1755,6 +1867,34 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         :restaurant.FirstName === "Burger King"?
                                             <form onSubmit={(e) => AddToCart(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                {
+                                                        values.itemCategory !== "Add Ons" && values.itemCategory !== "Beverages" && values.itemCategory !== "Sides"?
+                                                            <Grid item xs={12} sm={12} >
+                                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                    <InputLabel id="demo-simple-select-outlined-label">Sides</InputLabel>
+                                                                    <Select
+                                                                        labelId="demo-simple-select-outlined-label"
+                                                                        id="demo-simple-select-outlined"
+                                                                        value={values.side }
+                                                                        onChange={handleChange}
+                                                                        label="side"
+                                                                        name="side"
+                                                                        className={classes.root}
+                                                                    >
+                                                                        <MenuItem value={"Select Side"}>Select Side</MenuItem>
+                                                                        {
+                                                                            restaurant.MenuItems.map((item2, index) => {
+                                                                                if(item2.MenuCategory === "Sides"){
+                                                                                return <MenuItem key={index} value={item2.ItemName}>{item2.ItemName}</MenuItem>
+                                                                                }
+                                                                            })
+                                                                        }
+                                                                    </Select>
+                                                                </FormControl>
+                                                            </Grid>
+                                                        :
+                                                            <></>
+                                                    }
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
