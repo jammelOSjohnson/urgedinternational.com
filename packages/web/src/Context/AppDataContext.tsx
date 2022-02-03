@@ -788,7 +788,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             imageName: item.imageName,
             ifnotAvailable: item.ifnotAvailable,
             quantity: item.quantity,
-            side: item.side
+            side: item.side,
+            restaurantName: item.restaurantName
           } as object;
           orderItems.push(body);
           return null;
