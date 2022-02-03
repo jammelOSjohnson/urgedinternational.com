@@ -7,21 +7,21 @@ import moment from 'moment';
 import { EditRounded } from "@material-ui/icons/";
 import { Backdrop, CircularProgress, createStyles, FormControl, makeStyles, MenuItem, Select, Snackbar, Theme } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
-import { GET_ORDERS } from '../../../GraphQL/Queries';
+import { GET_ORDERS_BY_RIDERID } from '../../../GraphQL/Queries';
 import { Alert } from '@material-ui/lab';
   
 
   const columns = [
     { 
       name: '_id', 
-      label: 'Transaction', 
+      label: 'Order Id', 
       options: {
         filter: true,
         sort: true,
        }
     },{
       name: 'Description',
-      label: 'Order Details',
+      label: 'Transaction',
       options: {
         filter: true,
         sort: true,
@@ -29,7 +29,7 @@ import { Alert } from '@material-ui/lab';
     },
     {
       name: 'OrderDate',
-      label: 'Date',
+      label: 'Order Date',
       options: {
         filter: true,
         sort: true,
@@ -46,30 +46,6 @@ import { Alert } from '@material-ui/lab';
     {
       name: 'OrderTotal',
       label: 'Order Total',
-      options: {
-        filter: true,
-        sort: true,
-       }
-    },
-    {
-      name: 'PaymentMethod',
-      label: 'Payment Method',
-      options: {
-        filter: true,
-        sort: true,
-       }
-    },
-    {
-      name: 'Rider',
-      label: 'Delivery Partner',
-      options: {
-        filter: true,
-        sort: true,
-       }
-    },
-    {
-      name: 'Actions',
-      label: 'Action',
       options: {
         filter: true,
         sort: true,
@@ -124,10 +100,14 @@ import { Alert } from '@material-ui/lab';
     const [open, setOpen] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
 
-    const {data} = useQuery(GET_ORDERS,{
+    const {data} = useQuery(GET_ORDERS_BY_RIDERID,{
+      variables: {RiderId: "619910c7838cb74d828bc50d"},
       pollInterval: 500,
     });
 
+    console.log(data);
+    
+    
     const rows = [] as Object[];
     useEffect(() => {
       try{
@@ -246,9 +226,8 @@ import { Alert } from '@material-ui/lab';
                 </FormControl>
               </>, 
               OrderTotal: `$ ${item.OrderTotal}`,
-              PaymentMethod: item.PaymentMethod, 
-              Rider: item.Rider.FirstName,
-              Actions: <><a href="/AdminOrderSDetails" title="edit" onClick={(e) => {e.preventDefault(); history.push('/AdminOrderSDetails', { from: index});}}><EditRounded color="primary" /></a></>
+              // Rider: item.Rider.FirstName,
+              // Actions: <><a href="/AdminOrderSDetails" title="edit" onClick={(e) => {e.preventDefault(); history.push('/AdminOrderSDetails', { from: index});}}><EditRounded color="primary" /></a></>
             };
     
             rows.push(row)
