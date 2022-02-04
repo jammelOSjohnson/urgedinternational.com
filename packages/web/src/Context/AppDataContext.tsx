@@ -342,6 +342,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           city: ""
         };
 
+        payload.orders = [];
+
         payload.userRolef = undefined;
         dispatch({
           type: "logout_user",
