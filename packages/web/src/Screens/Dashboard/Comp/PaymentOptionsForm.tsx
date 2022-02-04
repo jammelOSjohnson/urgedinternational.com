@@ -290,10 +290,11 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
 
         cartItems.map((item1, index)=>{
             cartTotal = cartTotal + (item1.itemCost * item1.quantity);
-            if(item1.side !== "Select Side" && item1.side !== "" && item1.restaurantName === "Kentucky Fried Chicken" && item1.itemCategory !== "Sides"){ //Add || for the other restaurants and add side to the receipt
+            if(item1.side !== "Select Side" && item1.side !== "" && item1.restaurantName !== "Homar's ROTI & Grill" && item1.restaurantName !== "Popeyes" 
+            && item1.restaurantName !== "Elle B Catering And Events" && item1.restaurantName !== "H & T Restaurant" && item1.itemCategory !== "Sides"){ //Add || for the other restaurants and add side to the receipt
                 let sidePrice = 0
                 restaurants[selectedRestaurant].MenuItems.map((item2, index) => {
-                    console.log("item name is : " + item2.ItemName + " and item side is " + item1.side);
+                    //console.log("item name is : " + item2.ItemName + " and item side is " + item1.side);
                     if(item2.ItemName === item1.side){
                         sidePrice = sidePrice + item2.ItemCost
                     }
