@@ -3,6 +3,7 @@ import { Alert } from '@material-ui/lab';
 import clsx from 'clsx';
 import React from 'react';
 import { Link, useHistory } from "react-router-dom";
+import { useAppData } from '../../../Context/AppDataContext';
 
 
 
@@ -101,6 +102,9 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Categories: React.FC = function Categories() {
     const classes = useStyles();
     const theme = useTheme();
+    var { value }  = useAppData();
+    var { currentUser } = value;
+
 
     const [open2, setOpen2] = React.useState(false);
     const [open, setOpen] = React.useState(false);
@@ -369,14 +373,21 @@ export const Categories: React.FC = function Categories() {
                     </Link>
                 </Grid>
                 <Grid item xs={12} md={3}>
-                    <Link to={`${referralPath}`} className={classes.links} onClick={handleOpen} title="Market Place">
+                    <Link to={`${referralPath}`} className={classes.links} title="Market Place" onClick={(e) => {
+                        e.preventDefault(); 
+                        if(currentUser !== undefined){
+                             history.push("/CargoAndFreight");
+                        }else{
+                            history.push("/Login", { from: "/CargoAndFreight"})
+                        }
+                    }}>
                         <Card className={classes.card}>
                             <CardMedia className={classes.cardImage}>
                                 <img src="Images/GreenMarketPlace.png" alt="GreenMarketPlace"></img>
                             </CardMedia>
                             <CardContent className={classes.cardContent}>
                                 <Typography gutterBottom className={classes.cardTitle4}>
-                                    Market Place
+                                    Cargo &amp; Freight
                                 </Typography>
                             </CardContent>
                         </Card>

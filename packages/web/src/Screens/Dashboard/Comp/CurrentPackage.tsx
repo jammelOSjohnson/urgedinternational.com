@@ -22,7 +22,9 @@ const useStyles = makeStyles((theme: Theme) =>
           fontWeight: "bold",
       },
       image: {
-          borderRadius: '30px'
+          borderRadius: '30px',
+          width: "200px",
+          height: "140px"
       },
       card: {
         display: "block",
@@ -54,7 +56,7 @@ export const CurrentPackage: React.FC = function CurrentPackage() {
   const classes = useStyles();
   var { value }  = useAppData();
 
-  var { orders} = value;
+  var { orders } = value;
 
   var history = useHistory();
 
@@ -132,7 +134,7 @@ export const CurrentPackage: React.FC = function CurrentPackage() {
       }  
 
       // eslint-disable-next-line
-      const [activeStep, setActiveStep] = React.useState(1);
+      const [activeStep, setActiveStep] = React.useState(0);
       const steps = getSteps();
       
       // const handleNext = () => {
@@ -146,67 +148,111 @@ export const CurrentPackage: React.FC = function CurrentPackage() {
       // const handleReset = () => {
       //     setActiveStep(0);
       // };
+      
+      if(orders.length > 0){
+        let latestOrderLength = orders.length -1;
 
-      return (
-          <>
-              
-              <Grid container direction="row" spacing={1} className={classes.packageRoot} alignItems="center">
-                  <Grid item xs={12}>
-                      <Card className={classes.card}>
-                      <div style={{flex: "0 0 100%", flexFlow: "row"}}>
-                        <CardHeader
-                          title={
-                                  <>
-                                    <Grid container direction="row" spacing={3} className={classes.packageRoot} alignItems="center">
-                                        <Grid item xs={12} md={6} lg={6} container spacing={1}>
-                                            <Grid item xs={12} md={12}>
-                                                <Typography variant="subtitle1" className={classes.category}>
-                                                    Current Delivery Status
-                                                </Typography>
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-                                  </>
-                                }
-                        />
-                      </div>
-                      <div style={{display: "flex"}}>
-                        {
-                          orders.length > 0 ?
-                            <CardMedia >
-                                {/* eslint-disable-next-line */}
-                                    <img src="Images/Package Image.png" className={classes.image} alt="Package Image"></img>
-                            </CardMedia>
-                            :
-                            <></>
-                        }
-                            <CardContent className={classes.cardContent}>
-                              {
-                                orders.length > 0 ?
-                                  <>
-                                    <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
-                                      {steps.map((label) => (
-                                          <Step key={label}>
-                                              <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
-                                          </Step>
-                                      ))}
-                                    </Stepper>
-                                  </>
-                                :
-                                  <>
-                                    <Typography variant="subtitle2">
-                                        No orders currently.
-                                    </Typography>
-                                    <Button color="secondary" className={classes.orderBtn} onClick={(e) => {e.preventDefault(); history.push("/Restaurants")}}>
-                                      Place An Order
-                                    </Button>
-                                  </>
-                              }
-                            </CardContent>
+        let latestOrderImage = "";
+        let latestOrderStatus = "";
+
+        orders.map((item, index) => {
+          if(index === orders.length -1){
+            latestOrderImage = item.OrderItems[0].imageName;
+            latestOrderStatus = item.OrderStatus;
+          }
+        })
+
+        if(latestOrderStatus === "Ordered" && activeStep !== 0){
+          setActiveStep(-1);
+        }else if(latestOrderStatus === "Picked Up" && activeStep !== 1){
+          setActiveStep(1);
+        }else if(latestOrderStatus === "In Transit" && activeStep !== 2){
+          setActiveStep(2);
+        }else if(latestOrderStatus === "Delivered" && activeStep !== 3){
+          setActiveStep(2);
+        }
+      
+        return (
+            <>
+                
+                <Grid container direction="row" spacing={1} className={classes.packageRoot} alignItems="center">
+                    <Grid item xs={12}>
+                        <Card className={classes.card}>
+                        <div style={{flex: "0 0 100%", flexFlow: "row"}}>
+                          <CardHeader
+                            title={
+                                    <>
+                                      <Grid container direction="row" spacing={3} className={classes.packageRoot} alignItems="center">
+                                          <Grid item xs={12} md={6} lg={6} container spacing={1}>
+                                              <Grid item xs={12} md={12}>
+                                                  <Typography variant="subtitle1" className={classes.category}>
+                                                      Current Delivery Status
+                                                  </Typography>
+                                              </Grid>
+                                          </Grid>
+                                      </Grid>
+                                    </>
+                                  }
+                          />
                         </div>
-                      </Card>
-                  </Grid>
-              </Grid>
-          </>
-      )
+                        <div style={{display: "flex"}}>
+                              <CardMedia >
+                                  {/* eslint-disable-next-line */}
+                                      <img src={latestOrderImage} className={classes.image} alt="Package Image"></img>
+                              </CardMedia>
+                              <CardContent className={classes.cardContent}>
+                                      <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
+                                        {steps.map((label) => (
+                                            <Step key={label}>
+                                                <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+                                            </Step>
+                                        ))}
+                                      </Stepper>
+                              </CardContent>
+                          </div>
+                        </Card>
+                    </Grid>
+                </Grid>
+            </>
+        )
+      }else{
+        return (
+            <>
+                
+                <Grid container direction="row" spacing={1} className={classes.packageRoot} alignItems="center">
+                    <Grid item xs={12}>
+                        <Card className={classes.card}>
+                        <div style={{flex: "0 0 100%", flexFlow: "row"}}>
+                          <CardHeader
+                            title={
+                                    <>
+                                      <Grid container direction="row" spacing={3} className={classes.packageRoot} alignItems="center">
+                                          <Grid item xs={12} md={6} lg={6} container spacing={1}>
+                                              <Grid item xs={12} md={12}>
+                                                  <Typography variant="subtitle1" className={classes.category}>
+                                                      Current Delivery Status
+                                                  </Typography>
+                                              </Grid>
+                                          </Grid>
+                                      </Grid>
+                                    </>
+                                  }
+                          />
+                        </div>
+                        <div style={{display: "flex"}}>
+                              <CardContent className={classes.cardContent}>
+                                <Typography variant="subtitle2">
+                                    No orders currently.
+                                </Typography>
+                                <Button color="secondary" className={classes.orderBtn} onClick={(e) => {e.preventDefault(); history.push("/Restaurants")}}>
+                                  Place An Order
+                                </Button>
+                              </CardContent>
+                          </div>
+                        </Card>
+                    </Grid>
+                </Grid>
+            </>
+        )
+      }
 }

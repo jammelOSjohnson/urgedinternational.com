@@ -436,7 +436,9 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                     referralPath === "/Restaurants" || referralPath === "/restaurants" ?
                     <span><PlayArrowRounded /> <Link to="/FoodDelivery" className={classes.link}>FOOD DELIVERY</Link> <PlayArrowRounded /> <span style={{color: "#FF5E14"}}>RESTAURANTS</span></span> :
                     referralPath === "/Menu" || referralPath === "/menu" ?
-                    <span><PlayArrowRounded /> <Link to="/FoodDelivery" className={classes.link}>FOOD DELIVERY</Link> <PlayArrowRounded /> <Link to="/Restaurants" className={classes.link}>RESTAURANTS</Link> <PlayArrowRounded /> <span style={{color: "#FF5E14"}}>MENU</span></span> : ""}
+                    <span><PlayArrowRounded /> <Link to="/FoodDelivery" className={classes.link}>FOOD DELIVERY</Link> <PlayArrowRounded /> <Link to="/Restaurants" className={classes.link}>RESTAURANTS</Link> <PlayArrowRounded /> <span style={{color: "#FF5E14"}}>MENU</span></span> :
+                    referralPath === "/CargoAndFreight" || referralPath === "/cargoandfreight" ?
+                    <span><PlayArrowRounded /> <Link to="/CargoAndFreight" className={classes.link} style={{color: "#FF5E14"}}>CARGO &amp; FREIGHT</Link></span> : ""}
                     
                 </Typography>
             ):<></>}
