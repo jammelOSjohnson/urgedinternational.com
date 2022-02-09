@@ -159,26 +159,28 @@ export const AdminSettings: React.FC = function EmployeeCardList(props) {
             <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
                 <Grid item xs={10} md={12} lg={12} className={classes.gridSpacing} >
                     <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
-                        <Grid item xs={4}>
-                        <Card className={classes.root}>
-                        <CardHeader
-                                  //className={classes.avatar}
-                                  avatar={
-                                    <Avatar aria-label="driver pay" className={classes.avatar}>
-                                      <IconButton>
-                                        <img src="Images/blacktruckIconImage.png" alt="driver_pay" />
-                                      </IconButton>
-                                    </Avatar>
-                                  }
-                                  className={classes.cardHeader}
-                                />
-                                <CardContent>
-                                <Typography gutterBottom variant="h5" component="h2">
-                                    Driver pay settings
-                                </Typography>
-                                </CardContent>
-                            
-                        </Card>
+                        <Grid item xs={3}>
+                            <Link to="/PaySettings" className={classes.link}>
+                                <Card className={classes.root}>
+                                    <CardHeader
+                                        //className={classes.avatar}
+                                        avatar={
+                                            <Avatar aria-label="driver pay" className={classes.avatar}>
+                                            <IconButton>
+                                                <img src="Images/blacktruckIconImage.png" alt="driver_pay" />
+                                            </IconButton>
+                                            </Avatar>
+                                        }
+                                        className={classes.cardHeader}
+                                    />
+                                    <CardContent>
+                                    <Typography gutterBottom variant="h5" component="h2">
+                                        Driver pay settings
+                                    </Typography>
+                                    </CardContent>
+                                    
+                                </Card>
+                            </Link>
                         </Grid>
                     </Grid>
                 </Grid>       

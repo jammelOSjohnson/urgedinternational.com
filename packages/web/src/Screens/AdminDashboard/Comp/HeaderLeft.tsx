@@ -51,7 +51,9 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                     referralPath === "/AdminOrderSDetails" || referralPath === "/adminordersdetails" ?
                     <span><Link to="/AdminOrderSDetails" className={classes.links}>Order Details</Link></span> :
                     referralPath === "/AdminSettings" || referralPath === "/adminsettings" ?
-                    <span><Link to="/AdminSettings" className={classes.links}>Settings</Link></span> : ""}
+                    <span><Link to="/AdminSettings" className={classes.links}>Settings</Link></span> :
+                    referralPath === "/PaySettings" || referralPath === "/paysettings" ?
+                    <span><Link to="/PaySettings" className={classes.links}>Pay Settings</Link></span> : ""}
                     
                 </Typography>
             ):<></>}

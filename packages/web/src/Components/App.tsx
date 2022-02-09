@@ -26,6 +26,7 @@ import { EmployeesScreen } from '../Screens/AdminDashboard/EmployeesScreen';
 import { EmployeeDetailsScreen } from '../Screens/AdminDashboard/EmployeeDetailsScreen';
 import { OrganisationsScreen } from '../Screens/AdminDashboard/OrganisationsScreen';
 import { SettingsScreen } from '../Screens/AdminDashboard/SettingsScreen';
+import { PaySettingsScreen } from '../Screens/AdminDashboard/PaySettingsScreen';
 //Rider
 import { RiderOrderDetailsScreen } from '../Screens/RiderDashboard/RiderOrderDetailsScreen';
 import { RiderOrdersScreen } from '../Screens/RiderDashboard/RiderOrdersScreen';
@@ -231,6 +232,7 @@ const App: React.FC = function App() {
                     <Route path="/EmployeeDetails" exact component={EmployeeDetailsScreen} />
                     <Route path="/Organisations" exact component={OrganisationsScreen} />
                     <Route path="/AdminSettings" exact component={SettingsScreen} />
+                    <Route path="/PaySettings" exact component={PaySettingsScreen} />
                     {/* Rider Screens */}
                     <Route path="/DeliveryOrders" exact component={RiderOrdersScreen} />
                     <Route path="/DeliveryOrdersDetails" exact component={RiderOrderDetailsScreen} />
