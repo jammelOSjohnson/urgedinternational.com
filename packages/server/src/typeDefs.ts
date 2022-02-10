@@ -174,6 +174,13 @@ const typeDefs = /* GraphQL */`
         OrderType: String
     }
 
+    type PaySetting {
+        _id: ID,
+        perDeliveryEnabled: Boolean,
+        percentagePerOrderTotal: Boolean,
+        value: Float
+    }
+
     type Query {
         hello: String
 
@@ -192,12 +199,13 @@ const typeDefs = /* GraphQL */`
             EndDate: String,
         ): [Order]
 
+        getPaySettings: [PaySetting!]!
+
     }
 
     type Subscription {
         orderCreated: Order
     }
-    
 
     type Mutation {
         createRole(description: String): Role!

@@ -12,6 +12,7 @@ const { GraphQLScalarType, Kind } = require('graphql');
 import { PubSub } from 'graphql-subscriptions';
 //import { GooglePubSub } from '@axelspringer/graphql-google-pubsub';// For Production
 import { RedisPubSub } from 'graphql-redis-subscriptions'; // For Production
+import PaySetting from './models/PaySetting.model';
 const pubsub = new RedisPubSub(
                 process.env.NODE_ENV === "production"
                 ? {
@@ -96,7 +97,12 @@ const resolvers = {
             let res = await Order.find({"OrderDate": {"$gte": startConverted}});
             console.log(res);
             return res;
-        }
+        },
+
+        getPaySettings: async () => {
+            return await PaySetting.find();
+        },
+
         
     },
 

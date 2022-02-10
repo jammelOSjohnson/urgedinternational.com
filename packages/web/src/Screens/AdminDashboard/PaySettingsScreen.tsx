@@ -1,5 +1,6 @@
+import { useAppData } from '../../Context/AppDataContext';
 import { Container, Grid, makeStyles, createStyles, Typography, Theme, FormGroup, TextField, Card } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 //Import Components
@@ -8,6 +9,8 @@ import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
 import { FormControlLabel } from '@material-ui/core'
 import Switch from '@material-ui/core/Switch';
+import { GET_PAY_SETTINGS } from '../../GraphQL/Queries';
+import { useQuery } from '@apollo/client';
 
 
 interface Props {
@@ -15,9 +18,9 @@ interface Props {
 }
 
 interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
+    checkedA: boolean;
+    checkedB: boolean;
+    value: string;
 }
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -54,22 +57,58 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: theme.spacing(3),
           },
         card :{
-            padding: "0 5%"
+            padding: "2% 0 0 2%"
         }
     }),
 );
 
 export const PaySettingsScreen: React.FC = () => {
+    //Styles
     const classes = useStyles();
+    //Data Store
+    const { value } = useAppData();
+    const { paySettings , fetchPaySettings } = value;
+    const {data} = useQuery(GET_PAY_SETTINGS);
+    //Local State
     const [perDelivery, setPerDelivery] = useState(0);
-    const [state, setState] = React.useState({
+    const [state, setState] = React.useState<State>({
         checkedA: true,
-        checkedB: true,
+        checkedB: false,
+        value: "0"
       });
 
 
-      const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if(event.target.name === "checkedA" && event.target.checked){
+            setState({ ...state, [event.target.name]: event.target.checked, checkedB: false });
+        }
         setState({ ...state, [event.target.name]: event.target.checked });
+    };
+
+    useEffect(() => {
+        try{
+          if (data.getPaySettings !== null) {
+            ////console.log("got list of restaurants");
+            ////console.log(response);
+
+            var paySet = data.getPaySettings;
+
+            if (paySet !== null) {
+                setState({
+                    checkedA: paySettings.perDeliveryEnabled,
+                    checkedB: paySettings.percentagePerOrderTotal,
+                    value: paySettings.value.toString()
+                });
+            }
+          }
+        }catch(err){
+          ////console.log(err);
+        };
+    }, [data])
+    
+
+    const handleChange2 = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+        setState({ ...state, [prop]: event.target.value });
       };
 
     return (
@@ -94,27 +133,46 @@ export const PaySettingsScreen: React.FC = () => {
                                             <FormControlLabel
                                                 control={
                                                 <Switch
-                                                    checked={state.checkedB}
+                                                    checked={state.checkedA}
                                                     onChange={handleChange}
-                                                    name="checkedB"
+                                                    name="checkedA"
                                                     color="primary"
                                                 />
                                                 }
                                                 label="per delivery"
                                             />
                                         </FormGroup><br />
+                                        <FormGroup row>
+                                            <FormControlLabel
+                                                control={
+                                                <Switch
+                                                    checked={state.checkedB}
+                                                    onChange={handleChange}
+                                                    name="checkedB"
+                                                    color="primary"
+                                                />
+                                                }
+                                                label="% order total"
+                                            />
+                                        </FormGroup><br />
                                         <TextField
                                             id="outlined-helperText"
                                             label=""
-                                            value={perDelivery}
+                                            value={state.value}
                                             helperText="/Order"
                                             variant="outlined"
-                                            type='number'
+                                            onChange={handleChange2('value')}
                                         />
                                     </form><br />
-                                    <Typography variant="subtitle1">
-                                        Total pay = {`$${perDelivery}/order`}
-                                    </Typography><br />
+                                    {state.checkedA && <>
+                                        <Typography variant="subtitle1">
+                                            Total pay = {`$${state.value}/order`}
+                                        </Typography><br />
+                                    </>}
+                                    {state.checkedB && <><Typography variant="subtitle1">
+                                            Total pay = {`${state.value}% of order`}
+                                        </Typography><br />
+                                    </>}
                                 </Card>
                             </Grid>
                             {/* <Grid item xs={12}>

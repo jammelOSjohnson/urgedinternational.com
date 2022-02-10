@@ -124,3 +124,14 @@ export const GET_ORDERS_BY_DATE_AND_TYPE = gql`
         }
     }
 `
+
+export const GET_PAY_SETTINGS = gql`
+    query  getPaySettings {
+        getPaySettings{
+            _id
+            perDeliveryEnabled
+            percentagePerOrderTotal
+            value
+        }
+    }
+`

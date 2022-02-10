@@ -6,6 +6,7 @@ import { GET_ORDERS_BY_RIDERID , UPDATE_ORDER ,GET_RIDERS ,CREATE_ORDER, GET_ORD
 import { useMutation, useQuery } from '@apollo/client';
 import sendEmail from "../email.js";
 import moment from 'moment-timezone';
+import { GET_PAY_SETTINGS } from '../GraphQL/Queries';
 
 //import serverPI from '../Apis/serverPI';
 
@@ -133,6 +134,11 @@ function appDataReducer(state, action){
             ...state,
             riders: action.payload.riders
           }
+        case "fetch_pay_settings":
+          return {
+            ...state,
+            riders: action.payload.paySettings
+          }
         case "SW_INIT":
           return{
             ...state,
@@ -166,6 +172,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const [addUserToRole] = useMutation(CREATE_ROLE);
     const [getRestaurants] = useMutation(GET_RESTAURANTS);
     const [getRiders] = useMutation(GET_RIDERS);
+    const {data} = useQuery(GET_PAY_SETTINGS);
     const [getMenucategories] = useMutation(GET_MENU_CATEGORIES);
     // eslint-disable-next-line
     // const {data} = useQuery(GET_ORDERS,{
@@ -207,6 +214,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       addressLine2: "",
       city: ""
     };
+
+    let paySettings = undefined;
 
     var userRolef= "";
 
@@ -1139,6 +1148,30 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         })
     }
 
+    var fetchPaySettings = async function fetchPaySettings(payload){
+      console.log("about to fetch pay settings");
+        try{
+          if (data.getPaySettings !== null) {
+            ////console.log("got list of restaurants");
+            ////console.log(response);
+
+            var paySet = data.getPaySettings;
+
+            if (paySet !== null) {
+              payload.paySettings = paySet !== undefined ? paySet[0] : undefined;
+              return payload;
+            }
+          }
+        }catch(err){
+          ////console.log(err);
+        };
+
+        dispatch({
+          type: "fetch_pay_settings",
+          payload: payload
+        });
+    }
+
     const [value, dispatch] = useReducer(appDataReducer, {
         currentUser,
         loading,
@@ -1164,6 +1197,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         serviceWorkerInitialized,
         serviceWorkerUpdated,
         serviceWorkerRegistration,
+        paySettings,
         JoinUs,
         signup,
         login,
@@ -1191,7 +1225,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         fetchRiders,
         serviceWorkerInit,
         serviceWorkerUpdate,
-        sendContactUsEmail
+        sendContactUsEmail,
+        fetchPaySettings
     });
     
      
