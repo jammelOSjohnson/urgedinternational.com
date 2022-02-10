@@ -375,3 +375,25 @@ export const UPDATE_ORDER = gql`
         }
     }
 `
+
+export const UPDATE_PAY_SETTING = gql`
+    #scalar GraphQLDateTime
+    mutation updatePaySetting(
+        $_id: ID!
+        $perDeliveryEnabled: Boolean!, 
+        $percentagePerOrderTotal: Boolean!,
+        $value: Float!,
+    ) {
+        updatePaySetting(
+            _id: $_id,
+            perDeliveryEnabled: $perDeliveryEnabled, 
+            percentagePerOrderTotal: $percentagePerOrderTotal, 
+            value: $value,
+        ){
+            _id
+            perDeliveryEnabled
+            percentagePerOrderTotal 
+            value
+        }
+    }
+`

@@ -88,14 +88,14 @@ const resolvers = {
         },
 
         getOrdersByDateAndTime: async (_,{StartDate, EndDate}) => {
-            console.log(StartDate);
-            console.log(EndDate);
+            // console.log(StartDate);
+            // console.log(EndDate);
             let startConverted = new Date(StartDate);
             let endConverted = new Date(EndDate);
-            console.log(startConverted.toISOString());
-            console.log(endConverted.toISOString());
+            // console.log(startConverted.toISOString());
+            // console.log(endConverted.toISOString());
             let res = await Order.find({"OrderDate": {"$gte": startConverted}});
-            console.log(res);
+            //console.log(res);
             return res;
         },
 
@@ -207,6 +207,19 @@ const resolvers = {
             const order = await Order.findOne({_id});
             Object.assign(order, newOrder);
             return order.save();
+        },
+
+        updatePaySetting: async(_, {_id, perDeliveryEnabled, percentagePerOrderTotal, value}) => {
+            let newPaySetting = {
+                _id,
+                perDeliveryEnabled,
+                percentagePerOrderTotal,
+                value
+            }
+            //console.log(newPaySetting);
+            const paySetting = await PaySetting.findOne({_id});
+            Object.assign(paySetting, newPaySetting);
+            return paySetting.save(); 
         },
         
         //Reastaurants

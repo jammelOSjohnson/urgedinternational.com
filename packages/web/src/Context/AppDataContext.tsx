@@ -2,7 +2,19 @@ import type { ReactNode } from 'react'
 import {useContext, useReducer, createContext} from 'react';
 //import fetchAddressApi from '../Apis/fetchAddressApi';
 import  { auth, socialAuth, googleAuthProvider } from '../firebase';
-import { GET_ORDERS_BY_RIDERID , UPDATE_ORDER ,GET_RIDERS ,CREATE_ORDER, GET_ORDERS_BY_USERID, GET_ORDERS, GET_RESTAURANTS, CREATE_USER_MUTATION, GET_USER_MUTATION, GET_USER_IN_ROLE, GET_ROLE, CREATE_ROLE, GET_MENU_CATEGORIES } from '../GraphQL/Mutations';
+import { 
+        GET_ORDERS_BY_RIDERID , 
+        UPDATE_ORDER ,GET_RIDERS ,
+        CREATE_ORDER, GET_ORDERS_BY_USERID, 
+        GET_ORDERS, GET_RESTAURANTS, 
+        CREATE_USER_MUTATION, 
+        GET_USER_MUTATION, 
+        GET_USER_IN_ROLE, 
+        GET_ROLE, 
+        CREATE_ROLE, 
+        GET_MENU_CATEGORIES, 
+        UPDATE_PAY_SETTING 
+      } from '../GraphQL/Mutations';
 import { useMutation, useQuery } from '@apollo/client';
 import sendEmail from "../email.js";
 import moment from 'moment-timezone';
@@ -183,6 +195,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const [getOrdersByUserId] = useMutation(GET_ORDERS_BY_USERID);
     const [createOrder] = useMutation(CREATE_ORDER);
     const [updateOrder] = useMutation(UPDATE_ORDER);
+    const [updatePaySetting] = useMutation(UPDATE_PAY_SETTING);
     const [getOrdersByRiderId] = useMutation(GET_ORDERS_BY_RIDERID);
 
     var currentUser = undefined;
@@ -1172,6 +1185,27 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         });
     }
 
+    var UpdatePaySettings  = async function UpdatePaySettings(payload, paysetting){
+      if(paysetting !== null && paysetting !== undefined){
+          let newPaySetting = paysetting;
+          console.log(newPaySetting);
+          var updateRes = await updatePaySetting({variables: newPaySetting}).then(async function(response) {
+            ////console.log("create orer result");
+            if (response.data.updatePaySetting !== null) {
+              await fetchPaySettings(payload);
+              return true;
+            }
+          });
+
+          if(updateRes !== undefined){
+            return updateRes;
+          }
+      }else{
+        return false
+      }
+      return false
+    }
+
     const [value, dispatch] = useReducer(appDataReducer, {
         currentUser,
         loading,
@@ -1226,7 +1260,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         serviceWorkerInit,
         serviceWorkerUpdate,
         sendContactUsEmail,
-        fetchPaySettings
+        fetchPaySettings,
+        UpdatePaySettings
     });
     
      

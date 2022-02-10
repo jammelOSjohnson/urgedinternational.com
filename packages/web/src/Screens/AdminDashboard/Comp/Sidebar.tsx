@@ -385,7 +385,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                               </ListItem>
                             </a>
                             :
-                            <a href="/AdminSettings" className={classes.inactiveItemLink}>
+                            <Link to="/AdminSettings" className={classes.inactiveItemLink}>
                               <ListItem button key={text}>
                                 <ListItemIcon>
                                   {
@@ -395,7 +395,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 </ListItemIcon>
                                 <ListItemText primary={text} />
                               </ListItem>
-                            </a>
+                            </Link>
                         )) :
                         ['Settings', 'Login'].map((text, index) => (
                           text === 'Login'?
@@ -411,7 +411,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                               </ListItem>
                           </a>
                           :
-                          <a href="/AdminSettings" className={classes.inactiveItemLink}>
+                          <Link to="/AdminSettings" className={classes.inactiveItemLink}>
                             <ListItem button key={text}>
                               <ListItemIcon>
                                 {
@@ -421,7 +421,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                               </ListItemIcon>
                               <ListItemText primary={text} />
                             </ListItem>
-                          </a>
+                          </Link>
                       ))
                       }
                         <IconButton
@@ -648,7 +648,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                               </ListItem>
                             </a>
                             :
-                            <a href="/AdminSettings" className={classes.inactiveItemLink}>
+                            <Link to="/AdminSettings" className={classes.inactiveItemLink}>
                               <ListItem button key={text}>
                                 <ListItemIcon>
                                   {
@@ -658,7 +658,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 </ListItemIcon>
                                 <ListItemText primary={text} />
                               </ListItem>
-                            </a>
+                            </Link>
                         )) :
                         ['Settings', 'Login'].map((text, index) => (
                           text === 'Login'?
@@ -674,7 +674,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                               </ListItem>
                           </a>
                           :
-                          <a href="/AdminSettings" className={classes.inactiveItemLink}>
+                          <Link href="/AdminSettings" className={classes.inactiveItemLink}>
                             <ListItem button key={text}>
                               <ListItemIcon>
                                 {
@@ -684,7 +684,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                               </ListItemIcon>
                               <ListItemText primary={text} />
                             </ListItem>
-                          </a>
+                          </Link>
                       ))
                       }
                         <IconButton

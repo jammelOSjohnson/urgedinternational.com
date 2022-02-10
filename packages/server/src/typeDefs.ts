@@ -293,6 +293,12 @@ const typeDefs = /* GraphQL */`
             CartTotal: Float,
             OrderType: String): Order
 
+        updatePaySetting(
+            _id: ID
+            perDeliveryEnabled: Boolean,
+            percentagePerOrderTotal: Boolean,
+            value: Float): PaySetting
+
         fetchRestaurantsByCategory(
             categoryID: String
         ): RestaurantsByCategories 
