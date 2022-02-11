@@ -7,7 +7,6 @@ import moment from 'moment';
 import { EditRounded } from "@material-ui/icons/";
 import { Backdrop, CircularProgress, createStyles, FormControl, makeStyles, MenuItem, Select, Snackbar, Theme } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
-import { GET_ORDERS_BY_RIDERID } from '../../../GraphQL/Queries';
 import { Alert } from '@material-ui/lab';
   
 
@@ -94,26 +93,25 @@ import { Alert } from '@material-ui/lab';
   export const EmployeeOrdersTable: React.FC = function EmployeeOrdersTable () {
     const classes = useStyles();
     var { value }  = useAppData();
-    var { orders, fetchOrders, UpdateOrder, currentUser, userRolef, refreshingOrderTables } = value;
+    var { orders, fetchOrdersForRider2, UpdateOrder, currentUser, userRolef, refreshingOrderTables } = value;
     var history = useHistory();
 
     const [open, setOpen] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
 
-    const {data} = useQuery(GET_ORDERS_BY_RIDERID,{
-      variables: {RiderId: "619910c7838cb74d828bc50d"},
-      pollInterval: 500,
-    });
+    // const {data} = useQuery(GET_ORDERS_BY_RIDERID,{
+    //   variables: {RiderId: "619910c7838cb74d828bc50d"},
+    //   pollInterval: 500,
+    // });
 
-    console.log(data);
+    // console.log(data);
     
     
     const rows = [] as Object[];
     useEffect(() => {
       try{
-        if(data.getOrders !== null){
-          var Orders = data.getOrders;
-          refreshingOrderTables(value, Orders).then(()=>{
+        if(orders.length == 0){
+          fetchOrdersForRider2(value, ).then(()=>{
           
           });
         }
@@ -125,7 +123,7 @@ import { Alert } from '@material-ui/lab';
         //console.log(e)
       }
       // eslint-disable-next-line
-    }, [currentUser, data]);
+    }, [currentUser, orders]);
     
     // const handleEdit = (event) => {
     //   event.preventDefault();

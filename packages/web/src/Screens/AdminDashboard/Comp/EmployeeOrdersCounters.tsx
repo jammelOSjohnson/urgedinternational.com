@@ -7,7 +7,6 @@ import { EmployeeOrdersTable } from './EmployeeOrdersTable'
 //import clsx from 'clsx';
 import { Link } from "react-router-dom";
 import { useAppData } from '../../../Context/AppDataContext';
-import { GET_ORDERS, GET_ORDERS_BY_DATE_AND_TYPE } from '../../../GraphQL/Queries';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -119,12 +118,15 @@ export const EmployeeOrdersCounters: React.FC = function EmployeeOrdersCounters(
     const [endDate, setEndDate] = useState("");
     const [labels, setLabels] = useState<string[]>([]);
     const [labelVals, setLabelVals] = useState<number[]>([]);
+    const [rider, setRider] = useState<string[]>([]);
     // console.log(startDate);
     // console.log(endDate);
     const {data} = useQuery(GET_ORDERS_BY_DATE_AND_TYPE,{
         variables: {StartDate: startDate, EndDate: endDate },
         pollInterval: 20000,
     });
+
+
     //ksd
     useEffect(()=> {
         try{
