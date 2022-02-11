@@ -133,6 +133,11 @@ function appDataReducer(state, action){
             ...state,
             riders: action.payload.riders
           }
+          case "get_rider_id":
+            return {
+              ...state,
+              rider: action.payload.riders
+            }
         case "SW_INIT":
           return{
             ...state,
@@ -182,6 +187,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var selectedRestaurant = undefined;
     var selectedRestaurantName = undefined;
     var selectedMenuCategory = undefined;
+    var selectedRider = undefined;
     var filteredMenuItems = [];
     var filterCategory = undefined;
     var generalLocation = undefined;
@@ -930,6 +936,24 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       }
     }
 
+    var fetchOrdersForRider2  = async function fetchOrdersForRider2(payload, RiderId){
+      if(payload.currentUser !== undefined){
+        //console.log("Rider Id is:");
+        //console.log(payload.userInfo._id);
+        if(RiderId !== undefined){
+          await getOrdersByRiderId({variables: {Rider: RiderId}}).then(async function(response) {
+            if (response.data.getOrdersByRiderId !== null) {
+              payload.orders = response.data.getOrdersByRiderId;
+              dispatch({
+                type: "checkout",
+                payload: payload
+              })
+            }
+          });
+        }
+      }
+    }
+
     var sendNewApplicationEmail = async function sendNewApplicationEmail(formVals) {
       // var data1 = {event: 'staff add package send new package email',
       //                 value:{"Wtf is in formVals: " : "Wtf is in formVals:", formVals: formVals}
@@ -1148,6 +1172,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         selectedRestaurant,
         selectedRestaurantName,
         selectedMenuCategory,
+        selectedRider,
         prevSelectedrestaurant,
         menuCategories,
         filteredMenuItems,
@@ -1179,7 +1204,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         fetchOrdersByUser,
         fetchOrders,
         refreshingOrderTables,
-        fetchOrdersForRider, 
+        fetchOrdersForRider,
+        fetchOrdersForRider2, 
         AddGeneralLocation,
         sendOrderCompletedEmail,
         changeOrderStatus,
