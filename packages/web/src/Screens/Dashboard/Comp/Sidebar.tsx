@@ -254,7 +254,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                   }}
               >
                   <Fade in={open2}>
-                  <div className={classes.paper}>
+                  <div className={clsx(classes.paper, 'modalMobile')}>
                       <h2 id="transition-modal-title" style={{textAlign: "center"}}>Whatsapp Delivery</h2>
                       <Link to={`${referralPath}`} className={classes.cartIcon} onClick={handleClose2}>
                               <img src="Images/CartCloseIcon.png" alt="closemodal" />
@@ -393,7 +393,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                             </Link>
                           :
                           text === "Food Delivery" ?
-                            <Link to="/FoodDelivery" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
+                            <Link to="/Restaurants" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
                               <ListItem button key={text}>
                                   <ListItemIcon>
                                     {
@@ -743,7 +743,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                               <></>
                           :
                           text === "Food Delivery" ?
-                            <Link to="/FoodDelivery" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
+                            <Link to="/Restaurants" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
                               <ListItem button key={text}>
                                   <ListItemIcon>
                                     {

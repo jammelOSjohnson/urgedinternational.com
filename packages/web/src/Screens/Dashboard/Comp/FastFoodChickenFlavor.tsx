@@ -12,7 +12,9 @@ interface State {
     orderStatus: string;
     deliveredBy: string;
     itemCategory: string;
+    side: string;
 }
+
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -154,323 +156,464 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any}> = function FastFoodChickenFlavor({props,handleChange}) {
+export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any, menuItems: any}> = function FastFoodChickenFlavor({props,handleChange, menuItems}) {
     const classes = useStyles();
     return (
         <>
-            {props.itemCategory !== "Hot Wings" && props.itemCategory !== "Popcorn Chicken" && props.itemCategory !== "Zingers" &&  props.itemCategory !== "Famous Bowl" && props.itemCategory !=="Buckets" && props.itemCategory !=="Sides" && props.itemCategory !== "CHCKN Combos" ?
-                <>
-                    <Grid item xs={12} sm={6} md={6} lg={6}>
-                        <FormControl variant="outlined" className={classes.formControl} fullWidth required>
-                            <InputLabel id="demo-simple-select-outlined-label">1st choice</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-outlined-label"
-                                id="demo-simple-select-outlined"
-                                value={props.chickenFlavour1}
-                                onChange={handleChange}
-                                label="Flavour1"
-                                name="chickenFlavour1"
-                                className={classes.root}
-                                required
-                            >
-                                <MenuItem value={"Select Flavour"}>Select Flavour</MenuItem>
-                                <MenuItem value={"Original"}>Original</MenuItem>
-                                <MenuItem value={"Barbeque"}>Barbeque</MenuItem>
-                                <MenuItem value={"Spicy"}>Spicy</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={6} lg={6}>
-                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                            <InputLabel id="demo-simple-select-outlined-label">2nd choice</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-outlined-label"
-                                id="demo-simple-select-outlined"
-                                value={props.chickenFlavour2 }
-                                onChange={handleChange}
-                                label="Flavour2"
-                                name="chickenFlavour2"
-                                className={classes.root}
-                            >
-                                <MenuItem value={"Select Flavour"}>Select Flavour</MenuItem>
-                                <MenuItem value={"Original"}>Original</MenuItem>
-                                <MenuItem value={"Barbeque"}>Barbeque</MenuItem>
-                                <MenuItem value={"Spicy"}>Spicy</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={12} sm={12} >
-                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                            <InputLabel id="demo-simple-select-outlined-label">Drink</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-outlined-label"
-                                id="demo-simple-select-outlined"
-                                value={props.drink }
-                                onChange={handleChange}
-                                label="drink"
-                                name="drink"
-                                className={classes.root}
-                            >
-                                <MenuItem value={"Select Drink"}>Select Drink</MenuItem>
-                                <MenuItem value={"Water"}>Water</MenuItem>
-                                <MenuItem value={"Pepsi"}>Pepsi</MenuItem>
-                                <MenuItem value={"Ginger Beer"}>Ginger Beer</MenuItem>
-                                <MenuItem value={"Flavour Splash"}>Flavour Splash</MenuItem>
-                                <MenuItem value={"Tropics Orangeade"}>Tropics Orangeade</MenuItem>
-                                <MenuItem value={"Topics Fruit Punch"}>Topics Fruit Punch</MenuItem>
-                                <MenuItem value={"Tropics Grape"}>Tropics Grape</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                </>
+            {
+                props.itemCategory !== "Hot Wings" && props.itemCategory !== "Popcorn Chicken" && props.itemCategory !== "Zingers" &&  props.itemCategory !== "Famous Bowl" && props.itemCategory !=="Buckets" && props.itemCategory !=="Sides" && props.itemCategory !== "CHCKN Combos" ?
+                    <>
+                        <Grid item xs={12} sm={6} md={6} lg={6}>
+                            <FormControl variant="outlined" className={classes.formControl} fullWidth required>
+                                <InputLabel id="demo-simple-select-outlined-label">1st choice</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={props.chickenFlavour1}
+                                    onChange={handleChange}
+                                    label="Flavour1"
+                                    name="chickenFlavour1"
+                                    className={classes.root}
+                                    required
+                                >
+                                    <MenuItem value={"Select Flavour"}>Select Flavour</MenuItem>
+                                    <MenuItem value={"Original"}>Original</MenuItem>
+                                    <MenuItem value={"Barbeque"}>Barbeque</MenuItem>
+                                    <MenuItem value={"Spicy"}>Spicy</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={6} lg={6}>
+                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                <InputLabel id="demo-simple-select-outlined-label">2nd choice</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={props.chickenFlavour2 }
+                                    onChange={handleChange}
+                                    label="Flavour2"
+                                    name="chickenFlavour2"
+                                    className={classes.root}
+                                >
+                                    <MenuItem value={"Select Flavour"}>Select Flavour</MenuItem>
+                                    <MenuItem value={"Original"}>Original</MenuItem>
+                                    <MenuItem value={"Barbeque"}>Barbeque</MenuItem>
+                                    <MenuItem value={"Spicy"}>Spicy</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={12} >
+                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                <InputLabel id="demo-simple-select-outlined-label">Drink</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={props.drink }
+                                    onChange={handleChange}
+                                    label="drink"
+                                    name="drink"
+                                    className={classes.root}
+                                >
+                                    <MenuItem value={"Select Drink"}>Select Drink</MenuItem>
+                                    <MenuItem value={"Water"}>Water</MenuItem>
+                                    <MenuItem value={"Pepsi"}>Pepsi</MenuItem>
+                                    <MenuItem value={"Ginger Beer"}>Ginger Beer</MenuItem>
+                                    <MenuItem value={"Flavour Splash"}>Flavour Splash</MenuItem>
+                                    <MenuItem value={"Tropics Orangeade"}>Tropics Orangeade</MenuItem>
+                                    <MenuItem value={"Topics Fruit Punch"}>Topics Fruit Punch</MenuItem>
+                                    <MenuItem value={"Tropics Grape"}>Tropics Grape</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={12} >
+                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                <InputLabel id="demo-simple-select-outlined-label">Sides</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={props.side }
+                                    onChange={handleChange}
+                                    label="side"
+                                    name="side"
+                                    className={classes.root}
+                                >
+                                    <MenuItem value={"Select Side"}>Select Side</MenuItem>
+                                    {
+                                        menuItems.map((item2, index) => {
+                                            if(item2.MenuCategory === "Sides"){
+                                               return <MenuItem key={index} value={item2.ItemName}>{item2.ItemName}</MenuItem>
+                                            }
+                                        })
+                                    }
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                    </>
                 :props.itemCategory === "Hot Wings"?
-                <>
-                    <Grid item xs={12} >
-                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                            <InputLabel id="demo-simple-select-outlined-label">choice</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-outlined-label"
-                                id="demo-simple-select-outlined"
-                                value={props.chickenFlavour1}
-                                onChange={handleChange}
-                                label="Flavour1"
-                                name="chickenFlavour1"
-                                className={classes.root}
-                                fullWidth
-                            >
-                                <MenuItem value={"Select Flavour"}>Select Flavour</MenuItem>
-                                <MenuItem value={"Barbeque"}>Barbeque</MenuItem>
-                                <MenuItem value={"Spicy"}>Spicy</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={12} sm={12} >
-                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                            <InputLabel id="demo-simple-select-outlined-label">Drink</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-outlined-label"
-                                id="demo-simple-select-outlined"
-                                value={props.drink }
-                                onChange={handleChange}
-                                label="drink"
-                                name="drink"
-                                className={classes.root}
-                            >
-                                <MenuItem value={"Select Drink"}>Select Drink</MenuItem>
-                                <MenuItem value={"Water"}>Water</MenuItem>
-                                <MenuItem value={"Pepsi"}>Pepsi</MenuItem>
-                                <MenuItem value={"Ginger Beer"}>Ginger Beer</MenuItem>
-                                <MenuItem value={"Flavour Splash"}>Flavour Splash</MenuItem>
-                                <MenuItem value={"Tropics Orangeade"}>Tropics Orangeade</MenuItem>
-                                <MenuItem value={"Topics Fruit Punch"}>Topics Fruit Punch</MenuItem>
-                                <MenuItem value={"Tropics Grape"}>Tropics Grape</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                </>
+                    <>
+                        <Grid item xs={12} >
+                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                <InputLabel id="demo-simple-select-outlined-label">choice</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={props.chickenFlavour1}
+                                    onChange={handleChange}
+                                    label="Flavour1"
+                                    name="chickenFlavour1"
+                                    className={classes.root}
+                                    fullWidth
+                                >
+                                    <MenuItem value={"Select Flavour"}>Select Flavour</MenuItem>
+                                    <MenuItem value={"Barbeque"}>Barbeque</MenuItem>
+                                    <MenuItem value={"Spicy"}>Spicy</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={12} >
+                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                <InputLabel id="demo-simple-select-outlined-label">Drink</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={props.drink }
+                                    onChange={handleChange}
+                                    label="drink"
+                                    name="drink"
+                                    className={classes.root}
+                                >
+                                    <MenuItem value={"Select Drink"}>Select Drink</MenuItem>
+                                    <MenuItem value={"Water"}>Water</MenuItem>
+                                    <MenuItem value={"Pepsi"}>Pepsi</MenuItem>
+                                    <MenuItem value={"Ginger Beer"}>Ginger Beer</MenuItem>
+                                    <MenuItem value={"Flavour Splash"}>Flavour Splash</MenuItem>
+                                    <MenuItem value={"Tropics Orangeade"}>Tropics Orangeade</MenuItem>
+                                    <MenuItem value={"Topics Fruit Punch"}>Topics Fruit Punch</MenuItem>
+                                    <MenuItem value={"Tropics Grape"}>Tropics Grape</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={12} >
+                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                <InputLabel id="demo-simple-select-outlined-label">Sides</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={props.side }
+                                    onChange={handleChange}
+                                    label="side"
+                                    name="side"
+                                    className={classes.root}
+                                >
+                                    <MenuItem value={"Select Side"}>Select Side</MenuItem>
+                                    {
+                                        menuItems.map((item2, index) => {
+                                            if(item2.MenuCategory === "Sides"){
+                                               return <MenuItem key={index} value={item2.ItemName}>{item2.ItemName}</MenuItem>
+                                            }
+                                        })
+                                    }
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                    </>
                 :props.itemCategory === "Zingers"?
-                <>
-                    <Grid item xs={12} sm={12} >
-                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                            <InputLabel id="demo-simple-select-outlined-label">Drink</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-outlined-label"
-                                id="demo-simple-select-outlined"
-                                value={props.drink }
-                                onChange={handleChange}
-                                label="drink"
-                                name="drink"
-                                className={classes.root}
-                            >
-                                <MenuItem value={"Select Drink"}>Select Drink</MenuItem>
-                                <MenuItem value={"Water"}>Water</MenuItem>
-                                <MenuItem value={"Pepsi"}>Pepsi</MenuItem>
-                                <MenuItem value={"Ginger Beer"}>Ginger Beer</MenuItem>
-                                <MenuItem value={"Flavour Splash"}>Flavour Splash</MenuItem>
-                                <MenuItem value={"Tropics Orangeade"}>Tropics Orangeade</MenuItem>
-                                <MenuItem value={"Topics Fruit Punch"}>Topics Fruit Punch</MenuItem>
-                                <MenuItem value={"Tropics Grape"}>Tropics Grape</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                </>
+                    <>
+                        <Grid item xs={12} sm={12} >
+                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                <InputLabel id="demo-simple-select-outlined-label">Drink</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={props.drink }
+                                    onChange={handleChange}
+                                    label="drink"
+                                    name="drink"
+                                    className={classes.root}
+                                >
+                                    <MenuItem value={"Select Drink"}>Select Drink</MenuItem>
+                                    <MenuItem value={"Water"}>Water</MenuItem>
+                                    <MenuItem value={"Pepsi"}>Pepsi</MenuItem>
+                                    <MenuItem value={"Ginger Beer"}>Ginger Beer</MenuItem>
+                                    <MenuItem value={"Flavour Splash"}>Flavour Splash</MenuItem>
+                                    <MenuItem value={"Tropics Orangeade"}>Tropics Orangeade</MenuItem>
+                                    <MenuItem value={"Topics Fruit Punch"}>Topics Fruit Punch</MenuItem>
+                                    <MenuItem value={"Tropics Grape"}>Tropics Grape</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={12} >
+                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                <InputLabel id="demo-simple-select-outlined-label">Sides</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={props.side }
+                                    onChange={handleChange}
+                                    label="side"
+                                    name="side"
+                                    className={classes.root}
+                                >
+                                    <MenuItem value={"Select Side"}>Select Side</MenuItem>
+                                    {
+                                        menuItems.map((item2, index) => {
+                                            if(item2.MenuCategory === "Sides"){
+                                               return <MenuItem key={index} value={item2.ItemName}>{item2.ItemName}</MenuItem>
+                                            }
+                                        })
+                                    }
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                    </>
                 :props.itemCategory === "Famous Bowl" ?
-                <>
-                    <Grid item xs={12} >
-                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                            <InputLabel id="demo-simple-select-outlined-label">choice</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-outlined-label"
-                                id="demo-simple-select-outlined"
-                                value={props.chickenFlavour1}
-                                onChange={handleChange}
-                                label="Flavour1"
-                                name="chickenFlavour1"
-                                className={classes.root}
-                                fullWidth
-                            >
-                                <MenuItem value={"Select Flavour"}>Select Flavour</MenuItem>
-                                <MenuItem value={"Barbeque"}>Barbeque</MenuItem>
-                                <MenuItem value={"Spicy"}>Original</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={12} sm={12} >
-                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                            <InputLabel id="demo-simple-select-outlined-label">Drink</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-outlined-label"
-                                id="demo-simple-select-outlined"
-                                value={props.drink }
-                                onChange={handleChange}
-                                label="drink"
-                                name="drink"
-                                className={classes.root}
-                            >
-                                <MenuItem value={"Select Drink"}>Select Drink</MenuItem>
-                                <MenuItem value={"Water"}>Water</MenuItem>
-                                <MenuItem value={"Pepsi"}>Pepsi</MenuItem>
-                                <MenuItem value={"Ginger Beer"}>Ginger Beer</MenuItem>
-                                <MenuItem value={"Flavour Splash"}>Flavour Splash</MenuItem>
-                                <MenuItem value={"Tropics Orangeade"}>Tropics Orangeade</MenuItem>
-                                <MenuItem value={"Topics Fruit Punch"}>Topics Fruit Punch</MenuItem>
-                                <MenuItem value={"Tropics Grape"}>Tropics Grape</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                </>
+                    <>
+                        <Grid item xs={12} >
+                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                <InputLabel id="demo-simple-select-outlined-label">choice</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={props.chickenFlavour1}
+                                    onChange={handleChange}
+                                    label="Flavour1"
+                                    name="chickenFlavour1"
+                                    className={classes.root}
+                                    fullWidth
+                                >
+                                    <MenuItem value={"Select Flavour"}>Select Flavour</MenuItem>
+                                    <MenuItem value={"Barbeque"}>Barbeque</MenuItem>
+                                    <MenuItem value={"Spicy"}>Original</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={12} >
+                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                <InputLabel id="demo-simple-select-outlined-label">Drink</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={props.drink }
+                                    onChange={handleChange}
+                                    label="drink"
+                                    name="drink"
+                                    className={classes.root}
+                                >
+                                    <MenuItem value={"Select Drink"}>Select Drink</MenuItem>
+                                    <MenuItem value={"Water"}>Water</MenuItem>
+                                    <MenuItem value={"Pepsi"}>Pepsi</MenuItem>
+                                    <MenuItem value={"Ginger Beer"}>Ginger Beer</MenuItem>
+                                    <MenuItem value={"Flavour Splash"}>Flavour Splash</MenuItem>
+                                    <MenuItem value={"Tropics Orangeade"}>Tropics Orangeade</MenuItem>
+                                    <MenuItem value={"Topics Fruit Punch"}>Topics Fruit Punch</MenuItem>
+                                    <MenuItem value={"Tropics Grape"}>Tropics Grape</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={12} >
+                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                <InputLabel id="demo-simple-select-outlined-label">Sides</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={props.side }
+                                    onChange={handleChange}
+                                    label="side"
+                                    name="side"
+                                    className={classes.root}
+                                >
+                                    <MenuItem value={"Select Side"}>Select Side</MenuItem>
+                                    {
+                                        menuItems.map((item2, index) => {
+                                            if(item2.MenuCategory === "Sides"){
+                                               return <MenuItem key={index} value={item2.ItemName}>{item2.ItemName}</MenuItem>
+                                            }
+                                        })
+                                    }
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                    </>
                 :props.itemCategory === "Buckets"? 
                     <>
-                    <Grid item xs={12}>
-                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                            <InputLabel id="demo-simple-select-outlined-label">choice</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-outlined-label"
-                                id="demo-simple-select-outlined"
-                                value={props.chickenFlavour1}
-                                onChange={handleChange}
-                                label="Flavour1"
-                                name="chickenFlavour1"
-                                className={classes.root}
-                            >
-                                <MenuItem value={"Select Flavour"}>Select Flavour</MenuItem>
-                                <MenuItem value={"Mixed"}>Mixed</MenuItem>
-                                <MenuItem value={"Original"}>Original</MenuItem>
-                                <MenuItem value={"Barbeque"}>Barbeque</MenuItem>
-                                <MenuItem value={"Spicy"}>Spicy</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={12} sm={12} >
-                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                            <InputLabel id="demo-simple-select-outlined-label">Drink</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-outlined-label"
-                                id="demo-simple-select-outlined"
-                                value={props.drink }
-                                onChange={handleChange}
-                                label="drink"
-                                name="drink"
-                                className={classes.root}
-                            >
-                                <MenuItem value={"Select Drink"}>Select Drink</MenuItem>
-                                <MenuItem value={"Pepsi"}>Pepsi</MenuItem>
-                                <MenuItem value={"Kola Champagne"}>Kola Champagne</MenuItem>
-                                <MenuItem value={"Ting"}>Ting</MenuItem>
-                                <MenuItem value={"Grape"}>Grape</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid>
+                        <Grid item xs={12}>
+                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                <InputLabel id="demo-simple-select-outlined-label">choice</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={props.chickenFlavour1}
+                                    onChange={handleChange}
+                                    label="Flavour1"
+                                    name="chickenFlavour1"
+                                    className={classes.root}
+                                >
+                                    <MenuItem value={"Select Flavour"}>Select Flavour</MenuItem>
+                                    <MenuItem value={"Mixed"}>Mixed</MenuItem>
+                                    <MenuItem value={"Original"}>Original</MenuItem>
+                                    <MenuItem value={"Barbeque"}>Barbeque</MenuItem>
+                                    <MenuItem value={"Spicy"}>Spicy</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={12} >
+                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                <InputLabel id="demo-simple-select-outlined-label">Drink</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={props.drink }
+                                    onChange={handleChange}
+                                    label="drink"
+                                    name="drink"
+                                    className={classes.root}
+                                >
+                                    <MenuItem value={"Select Drink"}>Select Drink</MenuItem>
+                                    <MenuItem value={"Pepsi"}>Pepsi</MenuItem>
+                                    <MenuItem value={"Kola Champagne"}>Kola Champagne</MenuItem>
+                                    <MenuItem value={"Ting"}>Ting</MenuItem>
+                                    <MenuItem value={"Grape"}>Grape</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={12} >
+                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                <InputLabel id="demo-simple-select-outlined-label">Sides</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={props.side }
+                                    onChange={handleChange}
+                                    label="side"
+                                    name="side"
+                                    className={classes.root}
+                                >
+                                    <MenuItem value={"Select Side"}>Select Side</MenuItem>
+                                    {
+                                        menuItems.map((item2, index) => {
+                                            if(item2.MenuCategory === "Sides"){
+                                               return <MenuItem key={index} value={item2.ItemName}>{item2.ItemName}</MenuItem>
+                                            }
+                                        })
+                                    }
+                                </Select>
+                            </FormControl>
+                        </Grid>
                     </>
                 :props.itemCategory === "Popcorn Chicken" ?
-                <Grid item xs={12} sm={12} >
-                    <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                        <InputLabel id="demo-simple-select-outlined-label">Drink</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-outlined-label"
-                            id="demo-simple-select-outlined"
-                            value={props.drink }
-                            onChange={handleChange}
-                            label="drink"
-                            name="drink"
-                            className={classes.root}
-                        >
-                            <MenuItem value={"Select Drink"}>Select Drink</MenuItem>
-                            <MenuItem value={"Water"}>Water</MenuItem>
-                            <MenuItem value={"Pepsi"}>Pepsi</MenuItem>
-                            <MenuItem value={"Ginger Beer"}>Ginger Beer</MenuItem>
-                            <MenuItem value={"Flavour Splash"}>Flavour Splash</MenuItem>
-                            <MenuItem value={"Tropics Orangeade"}>Tropics Orangeade</MenuItem>
-                            <MenuItem value={"Topics Fruit Punch"}>Topics Fruit Punch</MenuItem>
-                            <MenuItem value={"Tropics Grape"}>Tropics Grape</MenuItem>
-                        </Select>
-                    </FormControl>
-                </Grid>
+                    <>
+                        <Grid item xs={12} sm={12} >
+                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                <InputLabel id="demo-simple-select-outlined-label">Drink</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={props.drink }
+                                    onChange={handleChange}
+                                    label="drink"
+                                    name="drink"
+                                    className={classes.root}
+                                >
+                                    <MenuItem value={"Select Drink"}>Select Drink</MenuItem>
+                                    <MenuItem value={"Water"}>Water</MenuItem>
+                                    <MenuItem value={"Pepsi"}>Pepsi</MenuItem>
+                                    <MenuItem value={"Ginger Beer"}>Ginger Beer</MenuItem>
+                                    <MenuItem value={"Flavour Splash"}>Flavour Splash</MenuItem>
+                                    <MenuItem value={"Tropics Orangeade"}>Tropics Orangeade</MenuItem>
+                                    <MenuItem value={"Topics Fruit Punch"}>Topics Fruit Punch</MenuItem>
+                                    <MenuItem value={"Tropics Grape"}>Tropics Grape</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={12} >
+                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                <InputLabel id="demo-simple-select-outlined-label">Sides</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={props.side }
+                                    onChange={handleChange}
+                                    label="side"
+                                    name="side"
+                                    className={classes.root}
+                                >
+                                    <MenuItem value={"Select Side"}>Select Side</MenuItem>
+                                    {
+                                        menuItems.map((item2, index) => {
+                                            if(item2.MenuCategory === "Sides"){
+                                               return <MenuItem key={index} value={item2.ItemName}>{item2.ItemName}</MenuItem>
+                                            }
+                                        })
+                                    }
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                    </>
                 :props.itemCategory === "CHCKN Combos"?
-                <>
-                    <Grid item xs={12} sm={6} md={6} lg={6}>
-                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                            <InputLabel id="demo-simple-select-outlined-label">choice</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-outlined-label"
-                                id="demo-simple-select-outlined"
-                                value={props.chickenFlavour1}
-                                onChange={handleChange}
-                                label="Flavour1"
-                                name="chickenFlavour1"
-                                className={classes.root}
-                                fullWidth
-                            >
-                                <MenuItem value={"Select Flavour"}>Select Flavour</MenuItem>
-                                <MenuItem value={"Barbeque"}>Mild</MenuItem>
-                                <MenuItem value={"Spicy"}>Spicy</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={6} lg={6}>
-                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                            <InputLabel id="demo-simple-select-outlined-label">2nd choice</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-outlined-label"
-                                id="demo-simple-select-outlined"
-                                value={props.chickenFlavour2 }
-                                onChange={handleChange}
-                                label="Flavour2"
-                                name="chickenFlavour2"
-                                className={classes.root}
-                            >
-                                <MenuItem value={"Select Flavour"}>Select Flavour</MenuItem>
-                                <MenuItem value={"Original"}>Mild</MenuItem>
-                                <MenuItem value={"Spicy"}>Spicy</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                    <Grid item xs={12} sm={12} >
-                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                            <InputLabel id="demo-simple-select-outlined-label">Drink</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-outlined-label"
-                                id="demo-simple-select-outlined"
-                                value={props.drink }
-                                onChange={handleChange}
-                                label="drink"
-                                name="drink"
-                                className={classes.root}
-                            >
-                                <MenuItem value={"Select Drink"}>Select Drink</MenuItem>
-                                <MenuItem value={"Water"}>Water</MenuItem>
-                                <MenuItem value={"Pepsi"}>Pepsi</MenuItem>
-                                <MenuItem value={"Ginger Beer"}>Ginger Beer</MenuItem>
-                                <MenuItem value={"Flavour Splash"}>Flavour Splash</MenuItem>
-                                <MenuItem value={"Tropics Orangeade"}>Tropics Orangeade</MenuItem>
-                                <MenuItem value={"Topics Fruit Punch"}>Topics Fruit Punch</MenuItem>
-                                <MenuItem value={"Tropics Grape"}>Tropics Grape</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                </>
+                    <>
+                        <Grid item xs={12} sm={6} md={6} lg={6}>
+                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                <InputLabel id="demo-simple-select-outlined-label">choice</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={props.chickenFlavour1}
+                                    onChange={handleChange}
+                                    label="Flavour1"
+                                    name="chickenFlavour1"
+                                    className={classes.root}
+                                    fullWidth
+                                >
+                                    <MenuItem value={"Select Flavour"}>Select Flavour</MenuItem>
+                                    <MenuItem value={"Barbeque"}>Mild</MenuItem>
+                                    <MenuItem value={"Spicy"}>Spicy</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={6} md={6} lg={6}>
+                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                <InputLabel id="demo-simple-select-outlined-label">2nd choice</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={props.chickenFlavour2 }
+                                    onChange={handleChange}
+                                    label="Flavour2"
+                                    name="chickenFlavour2"
+                                    className={classes.root}
+                                >
+                                    <MenuItem value={"Select Flavour"}>Select Flavour</MenuItem>
+                                    <MenuItem value={"Original"}>Mild</MenuItem>
+                                    <MenuItem value={"Spicy"}>Spicy</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12} sm={12} >
+                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                <InputLabel id="demo-simple-select-outlined-label">Drink</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={props.drink }
+                                    onChange={handleChange}
+                                    label="drink"
+                                    name="drink"
+                                    className={classes.root}
+                                >
+                                    <MenuItem value={"Select Drink"}>Select Drink</MenuItem>
+                                    <MenuItem value={"Water"}>Water</MenuItem>
+                                    <MenuItem value={"Pepsi"}>Pepsi</MenuItem>
+                                    <MenuItem value={"Ginger Beer"}>Ginger Beer</MenuItem>
+                                    <MenuItem value={"Flavour Splash"}>Flavour Splash</MenuItem>
+                                    <MenuItem value={"Tropics Orangeade"}>Tropics Orangeade</MenuItem>
+                                    <MenuItem value={"Topics Fruit Punch"}>Topics Fruit Punch</MenuItem>
+                                    <MenuItem value={"Tropics Grape"}>Tropics Grape</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                    </>
                 :
-                <></>
+                    <></>
             }
         </>
     )

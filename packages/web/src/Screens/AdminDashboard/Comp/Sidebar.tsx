@@ -385,39 +385,43 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                               </ListItem>
                             </a>
                             :
-                            <ListItem button key={text}>
-                            <ListItemIcon>
-                              {
-                                index === 0 ? <img src="Images/SettingIActive.png" alt="BlackMarket icon"/> :
-                                index === 1 ? <img src="Images/LogoutIActive.png" alt="BlackMarket icon"/> : <MailIcon />
-                              }
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                            </ListItem>
+                            <Link to="/AdminSettings" className={classes.inactiveItemLink}>
+                              <ListItem button key={text}>
+                                <ListItemIcon>
+                                  {
+                                    index === 0 ? <img src="Images/SettingIActive.png" alt="BlackMarket icon"/> :
+                                    index === 1 ? <img src="Images/LogoutIActive.png" alt="BlackMarket icon"/> : <MailIcon />
+                                  }
+                                </ListItemIcon>
+                                <ListItemText primary={text} />
+                              </ListItem>
+                            </Link>
                         )) :
                         ['Settings', 'Login'].map((text, index) => (
                           text === 'Login'?
                           <a href="/Login" onClick={handleLogin} className={classes.inactiveItemLink}>
+                              <ListItem button key={text}>
+                                <ListItemIcon>
+                                  {
+                                    index === 0 ? <img src="Images/SettingIActive.png" alt="BlackMarket icon"/> :
+                                    index === 1 ? <img src="Images/LogoutIActive.png" className={classes.loginIconStyle} alt="BlackMarket icon"/> : <MailIcon />
+                                  }
+                                </ListItemIcon>
+                                <ListItemText primary={text} />
+                              </ListItem>
+                          </a>
+                          :
+                          <Link to="/AdminSettings" className={classes.inactiveItemLink}>
                             <ListItem button key={text}>
                               <ListItemIcon>
                                 {
                                   index === 0 ? <img src="Images/SettingIActive.png" alt="BlackMarket icon"/> :
-                                  index === 1 ? <img src="Images/LogoutIActive.png" className={classes.loginIconStyle} alt="BlackMarket icon"/> : <MailIcon />
+                                  index === 1 ? <img src="Images/LogoutIActive.png" alt="BlackMarket icon"/> : <MailIcon />
                                 }
                               </ListItemIcon>
                               <ListItemText primary={text} />
-                              </ListItem>
-                          </a>
-                          :
-                          <ListItem button key={text}>
-                          <ListItemIcon>
-                            {
-                              index === 0 ? <img src="Images/SettingIActive.png" alt="BlackMarket icon"/> :
-                              index === 1 ? <img src="Images/LogoutIActive.png" alt="BlackMarket icon"/> : <MailIcon />
-                            }
-                          </ListItemIcon>
-                          <ListItemText primary={text} />
-                          </ListItem>
+                            </ListItem>
+                          </Link>
                       ))
                       }
                         <IconButton
@@ -644,15 +648,17 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                               </ListItem>
                             </a>
                             :
-                            <ListItem button key={text}>
-                            <ListItemIcon>
-                              {
-                                index === 0 ? <img src="Images/SettingIActive.png" alt="BlackMarket icon"/> :
-                                index === 1 ? <img src="Images/LogoutIActive.png" alt="BlackMarket icon"/> : <MailIcon />
-                              }
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                            </ListItem>
+                            <Link to="/AdminSettings" className={classes.inactiveItemLink}>
+                              <ListItem button key={text}>
+                                <ListItemIcon>
+                                  {
+                                    index === 0 ? <img src="Images/SettingIActive.png" alt="BlackMarket icon"/> :
+                                    index === 1 ? <img src="Images/LogoutIActive.png" alt="BlackMarket icon"/> : <MailIcon />
+                                  }
+                                </ListItemIcon>
+                                <ListItemText primary={text} />
+                              </ListItem>
+                            </Link>
                         )) :
                         ['Settings', 'Login'].map((text, index) => (
                           text === 'Login'?
@@ -668,15 +674,17 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                               </ListItem>
                           </a>
                           :
-                          <ListItem button key={text}>
-                          <ListItemIcon>
-                            {
-                              index === 0 ? <img src="Images/SettingIActive.png" alt="BlackMarket icon"/> :
-                              index === 1 ? <img src="Images/LogoutIActive.png" alt="BlackMarket icon"/> : <MailIcon />
-                            }
-                          </ListItemIcon>
-                          <ListItemText primary={text} />
-                          </ListItem>
+                          <Link href="/AdminSettings" className={classes.inactiveItemLink}>
+                            <ListItem button key={text}>
+                              <ListItemIcon>
+                                {
+                                  index === 0 ? <img src="Images/SettingIActive.png" alt="BlackMarket icon"/> :
+                                  index === 1 ? <img src="Images/LogoutIActive.png" alt="BlackMarket icon"/> : <MailIcon />
+                                }
+                              </ListItemIcon>
+                              <ListItemText primary={text} />
+                            </ListItem>
+                          </Link>
                       ))
                       }
                         <IconButton

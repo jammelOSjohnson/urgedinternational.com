@@ -2,10 +2,23 @@ import type { ReactNode } from 'react'
 import {useContext, useReducer, createContext} from 'react';
 //import fetchAddressApi from '../Apis/fetchAddressApi';
 import  { auth, socialAuth, googleAuthProvider } from '../firebase';
-import { GET_ORDERS_BY_RIDERID , UPDATE_ORDER ,GET_RIDERS ,CREATE_ORDER, GET_ORDERS_BY_USERID, GET_ORDERS, GET_RESTAURANTS, CREATE_USER_MUTATION, GET_USER_MUTATION, GET_USER_IN_ROLE, GET_ROLE, CREATE_ROLE, GET_MENU_CATEGORIES } from '../GraphQL/Mutations';
+import { 
+        GET_ORDERS_BY_RIDERID , 
+        UPDATE_ORDER ,GET_RIDERS ,
+        CREATE_ORDER, GET_ORDERS_BY_USERID, 
+        GET_ORDERS, GET_RESTAURANTS, 
+        CREATE_USER_MUTATION, 
+        GET_USER_MUTATION, 
+        GET_USER_IN_ROLE, 
+        GET_ROLE, 
+        CREATE_ROLE, 
+        GET_MENU_CATEGORIES, 
+        UPDATE_PAY_SETTING 
+      } from '../GraphQL/Mutations';
 import { useMutation, useQuery } from '@apollo/client';
 import sendEmail from "../email.js";
 import moment from 'moment-timezone';
+import { GET_PAY_SETTINGS } from '../GraphQL/Queries';
 
 //import serverPI from '../Apis/serverPI';
 
@@ -133,11 +146,19 @@ function appDataReducer(state, action){
             ...state,
             riders: action.payload.riders
           }
+
           case "get_rider_id":
             return {
               ...state,
               rider: action.payload.riders
             }
+
+        case "fetch_pay_settings":
+          return {
+            ...state,
+            riders: action.payload.paySettings
+          }
+
         case "SW_INIT":
           return{
             ...state,
@@ -171,6 +192,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const [addUserToRole] = useMutation(CREATE_ROLE);
     const [getRestaurants] = useMutation(GET_RESTAURANTS);
     const [getRiders] = useMutation(GET_RIDERS);
+    const {data} = useQuery(GET_PAY_SETTINGS);
     const [getMenucategories] = useMutation(GET_MENU_CATEGORIES);
     // eslint-disable-next-line
     // const {data} = useQuery(GET_ORDERS,{
@@ -181,6 +203,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const [getOrdersByUserId] = useMutation(GET_ORDERS_BY_USERID);
     const [createOrder] = useMutation(CREATE_ORDER);
     const [updateOrder] = useMutation(UPDATE_ORDER);
+    const [updatePaySetting] = useMutation(UPDATE_PAY_SETTING);
     const [getOrdersByRiderId] = useMutation(GET_ORDERS_BY_RIDERID);
 
     var currentUser = undefined;
@@ -213,6 +236,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       addressLine2: "",
       city: ""
     };
+
+    let paySettings = undefined;
 
     var userRolef= "";
 
@@ -305,7 +330,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           // This gives you a Google Access Token. You can use it to access the Google API.
           //var token = result.credential.accessToken;
           // The signed-in user info.
-          ////console.log(result.user);
+          console.log(result.user);
           var user = result.user;
           var payloadf = { ...payload,
             currentUser: user,
@@ -347,6 +372,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           addressLine2: "",
           city: ""
         };
+
+        payload.orders = [];
 
         payload.userRolef = undefined;
         dispatch({
@@ -515,9 +542,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     };
 
     var fetchUserInfo = async function fetchUserInfo(uid, payloadf) {
-      ////console.log("User id is: ");
-      ////console.log(uid);
-      ////console.log("fetching user");
+      //console.log("User id is: ");
+      //console.log(uid);
+      //console.log("fetching user");
 
       await getUser({variables: { Id: uid}}).then(async function(response) {
         ////console.log("Checking user result for fetch user info");
@@ -793,7 +820,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             itemCost: item.itemCost,
             imageName: item.imageName,
             ifnotAvailable: item.ifnotAvailable,
-            quantity: item.quantity
+            quantity: item.quantity,
+            side: item.side,
+            restaurantName: item.restaurantName
           } as object;
           orderItems.push(body);
           return null;
@@ -1159,6 +1188,51 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         })
     }
 
+    var fetchPaySettings = async function fetchPaySettings(payload){
+      console.log("about to fetch pay settings");
+        try{
+          if (data.getPaySettings !== null) {
+            ////console.log("got list of restaurants");
+            ////console.log(response);
+
+            var paySet = data.getPaySettings;
+
+            if (paySet !== null) {
+              payload.paySettings = paySet !== undefined ? paySet[0] : undefined;
+              return payload;
+            }
+          }
+        }catch(err){
+          ////console.log(err);
+        };
+
+        dispatch({
+          type: "fetch_pay_settings",
+          payload: payload
+        });
+    }
+
+    var UpdatePaySettings  = async function UpdatePaySettings(payload, paysetting){
+      if(paysetting !== null && paysetting !== undefined){
+          let newPaySetting = paysetting;
+          console.log(newPaySetting);
+          var updateRes = await updatePaySetting({variables: newPaySetting}).then(async function(response) {
+            ////console.log("create orer result");
+            if (response.data.updatePaySetting !== null) {
+              await fetchPaySettings(payload);
+              return true;
+            }
+          });
+
+          if(updateRes !== undefined){
+            return updateRes;
+          }
+      }else{
+        return false
+      }
+      return false
+    }
+
     const [value, dispatch] = useReducer(appDataReducer, {
         currentUser,
         loading,
@@ -1185,6 +1259,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         serviceWorkerInitialized,
         serviceWorkerUpdated,
         serviceWorkerRegistration,
+        paySettings,
         JoinUs,
         signup,
         login,
@@ -1213,7 +1288,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         fetchRiders,
         serviceWorkerInit,
         serviceWorkerUpdate,
-        sendContactUsEmail
+        sendContactUsEmail,
+        fetchPaySettings,
+        UpdatePaySettings
     });
     
      

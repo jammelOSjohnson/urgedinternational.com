@@ -155,10 +155,17 @@ export const Cart: React.FC = function Cart() {
                                                         </Grid>
                                                         <Grid item xs={6}>
                                                             <Typography>{item.itemName}</Typography>
-                                                            <p style={{display: "flex"}}>
-                                                            <Typography>x1</Typography>&nbsp; &nbsp;&nbsp;
-                                                            <Typography><span>$</span>{ parseFloat(item.itemCost).toFixed(2)}</Typography>
+                                                            <p style={{display: "flex", marginBottom: 1}}>
+                                                                <Typography>x1</Typography>&nbsp; &nbsp;&nbsp;
+                                                                <Typography><span>$</span>{ parseFloat(item.itemCost).toFixed(2)}</Typography>
                                                             </p>
+                                                            {
+                                                                item.side !== "" && item.side !== "Select Side"?
+                                                                    <Typography>Side: {item.side}</Typography>
+                                                                :
+                                                                    <></>
+                                                            }
+                                                            
                                                         </Grid>
                                                     </Grid>
                                                 </Grid>

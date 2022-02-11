@@ -1,8 +1,8 @@
-import { gql } from 'apollo-server-express';
+import { ApolloServer } from 'apollo-server';
 import { json } from 'express';
 
 
-const typeDefs = gql`
+const typeDefs = /* GraphQL */`
     scalar GraphQLDateTime
     scalar JSONObject  
     scalar Json
@@ -174,6 +174,13 @@ const typeDefs = gql`
         OrderType: String
     }
 
+    type PaySetting {
+        _id: ID,
+        perDeliveryEnabled: Boolean,
+        percentagePerOrderTotal: Boolean,
+        value: Float
+    }
+
     type Query {
         hello: String
 
@@ -192,8 +199,13 @@ const typeDefs = gql`
             EndDate: String,
         ): [Order]
 
+        getPaySettings: [PaySetting!]!
+
     }
-    
+
+    type Subscription {
+        orderCreated: Order
+    }
 
     type Mutation {
         createRole(description: String): Role!
@@ -278,7 +290,14 @@ const typeDefs = gql`
             DeliveryFee: Float,
             GCT: Float,
             ServiceCharge: Float,
-            CartTotal: Float): Order
+            CartTotal: Float,
+            OrderType: String): Order
+
+        updatePaySetting(
+            _id: ID
+            perDeliveryEnabled: Boolean,
+            percentagePerOrderTotal: Boolean,
+            value: Float): PaySetting
 
         fetchRestaurantsByCategory(
             categoryID: String

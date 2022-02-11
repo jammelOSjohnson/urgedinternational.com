@@ -7,8 +7,10 @@ import { useMediaQuery , useTheme,Typography, AppBar, Toolbar, makeStyles, Theme
 import  { auth, socialAuth } from '../firebase';
 import clsx from 'clsx';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
+import {HomeRounded, InfoRounded, ContactMailRounded, HelpRounded, RoomServiceRounded} from '@material-ui/icons';
 import MailIcon from '@material-ui/icons/Mail';
-
+import { useSubscription } from '@apollo/client';
+import { ORDERS_SUBSCRIPTION } from '../GraphQL/Subscriptions';
 
 interface State {
   genralLocation: string;
@@ -180,10 +182,10 @@ export const Header2: React.FC = function Header2() {
     var location = history.location;
     var referralPath = location.pathname;
     var { value }  = useAppData();
-    var { fetchUserInfo, generalLocation, AddGeneralLocation, serviceWorkerUpdated, serviceWorkerRegistration } = value;
-    ////console.log("pathname is:" + location.pathname);
+    var { orders, refreshingOrderTables , fetchUserInfo, generalLocation, AddGeneralLocation, serviceWorkerUpdated, serviceWorkerRegistration } = value;
 
-    
+    //Subscriptions
+    const {data, loading} = useSubscription(ORDERS_SUBSCRIPTION);
     const classes = useStyles();
 
     //Breakpoints
@@ -215,6 +217,23 @@ export const Header2: React.FC = function Header2() {
       // }else{
       //   setOpen(false);
       // }
+      try{
+        //Subscribe to order data
+        if(value.userRolef !== undefined){
+          if(value.userRolef === "Admin"){
+            if(data !== undefined){
+              console.log(data)
+              var OrdersNew = []  as Object[];
+              orders.map((item) => (
+                OrdersNew.push(item)
+              ));
+              OrdersNew.push(data.orderCreated);
+              refreshingOrderTables(value, OrdersNew).then(()=>{
+            
+              });
+              }
+          }
+        }
 
       auth.onAuthStateChanged(function (user){
         ////console.log("auth");
@@ -242,7 +261,10 @@ export const Header2: React.FC = function Header2() {
           // eslint-disable-next-line
         }
       });
-    },[value.userRolef ,generalLocation])
+    }catch(err){
+      console.log(err);
+    }
+  },[value.userRolef, data])
 
     var fetchUserDetails = function  fetchUserDetails (payload) {
       ////console.log("Is current user null");
@@ -325,37 +347,61 @@ export const Header2: React.FC = function Header2() {
           {headersData.map(({label, href}, index) => {
             return referralPath === "/" && href === "/"?
               <ListItem button key={label}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                <ListItemIcon><HomeRounded color="primary" /></ListItemIcon>
                 <ListItemText style={{color: "#F7B614"}} primary={label} />
               </ListItem>
             :referralPath === "/Services" && href === "/Services"?
               <ListItem button key={label}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                <ListItemIcon><RoomServiceRounded color="primary" /></ListItemIcon>
+                <ListItemText style={{color: "#F7B614"}} primary={label} />
+              </ListItem>
+            :referralPath === "/HowItWorks" && href === "/HowItWorks"?
+              <ListItem button key={label}>
+                <ListItemIcon><HelpRounded color="primary" /></ListItemIcon>
+                <ListItemText style={{color: "#F7B614"}} primary={label} />
+              </ListItem>
+            :referralPath === "/HowItWorks" && href === "/HowItWorks"?
+              <ListItem button key={label}>
+                <ListItemIcon><InfoRounded color="primary" /></ListItemIcon>
                 <ListItemText style={{color: "#F7B614"}} primary={label} />
               </ListItem>
             :referralPath === "/ContactUs" && href === "/ContactUs"?
               <ListItem button key={label}>
-                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                <ListItemIcon><ContactMailRounded color="primary" /></ListItemIcon>
                 <ListItemText style={{color: "#F7B614"}} primary={label} />
               </ListItem>
             :label === "Home"?
               <a href={href} title="Place Order" className={classes.linkBtn}>
                 <ListItem button key={label}>
-                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                    <ListItemIcon><HomeRounded style={{color: "#5D6467;"}} /></ListItemIcon>
                     <ListItemText primary={label} />
                 </ListItem>
               </a>
             :label === "Services"?
               <a href={href} title="Place Order" className={classes.linkBtn}>
                 <ListItem button key={label}>
-                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                    <ListItemIcon><RoomServiceRounded /></ListItemIcon>
+                    <ListItemText primary={label} />
+                </ListItem>
+              </a>
+            :label === "FAQ'S"?
+              <a href={href} title="Place Order" className={classes.linkBtn}>
+                <ListItem button key={label}>
+                    <ListItemIcon><HelpRounded style={{color: "#5D6467;"}} /></ListItemIcon>
+                    <ListItemText primary={label} />
+                </ListItem>
+              </a>
+            :label === "How it works"?
+              <a href={href} title="Place Order" className={classes.linkBtn}>
+                <ListItem button key={label}>
+                    <ListItemIcon><InfoRounded style={{color: "#5D6467;"}} /></ListItemIcon>
                     <ListItemText primary={label} />
                 </ListItem>
               </a>
             :label === "Contact Us"?
               <a href={href} title="Place Order" className={classes.linkBtn}>
                 <ListItem button key={label}>
-                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                    <ListItemIcon><ContactMailRounded style={{color: "#5D6467;"}}/></ListItemIcon>
                     <ListItemText primary={label} />
                 </ListItem>
               </a>

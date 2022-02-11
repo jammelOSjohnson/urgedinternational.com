@@ -124,19 +124,21 @@ import { Alert } from '@material-ui/lab';
     const [open, setOpen] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
 
-    const {data} = useQuery(GET_ORDERS,{
-      pollInterval: 500,
-    });
+    const {data} = useQuery(GET_ORDERS);
 
     const rows = [] as Object[];
     useEffect(() => {
       try{
         if(data.getOrders !== null){
           var Orders = data.getOrders;
-          refreshingOrderTables(value, Orders).then(()=>{
+          if(Orders.length > orders.length){
+            refreshingOrderTables(value, Orders).then(()=>{
           
-          });
+            });
+          }
         }
+
+        
         // fetchOrders(value).then(()=>{
           
         // });
@@ -145,7 +147,7 @@ import { Alert } from '@material-ui/lab';
         //console.log(e)
       }
       // eslint-disable-next-line
-    }, [currentUser, data]);
+    }, [currentUser, orders, data]);
     
     // const handleEdit = (event) => {
     //   event.preventDefault();
@@ -217,7 +219,7 @@ import { Alert } from '@material-ui/lab';
                 item.chickenFlavour1 !== "" && item.chickenFlavour1 !== "Select Flavour" && item.chickenFlavour1 !== null && item.chickenFlavour1 !== undefined?
               `${item.itemName + ": "}\n${item.chickenFlavour1 + " | "}\n${item.chickenFlavour2 + " | "}
               \n${item.drink !== "Select Drink"? item.drink + " | ": "" + " | "}\n${item.otherIntructions + " | "}\n${'Not Available? ' + item.ifnotAvailable}` :
-              `${item.itemName + ": "}\n${item.drink !== "Select Drink"? item.drink + " | ": "" + " | "}\n${item.otherIntructions + " | "}\n${'Not Available? ' + item.ifnotAvailable}`
+              `${item.itemName + ": "}\n${item.drink !== "Select Drink"? item.drink + " | ": "" + " | "}\n${item.otherIntructions + " | "}\n${item.side!== undefined && item.side!== "Select Side"?'Side:' + item.side + " | ": ""}\n${'Not Available? ' + item.ifnotAvailable}`
               )
             })
             let row = {

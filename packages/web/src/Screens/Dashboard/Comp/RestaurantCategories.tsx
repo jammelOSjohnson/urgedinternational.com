@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme: Theme) =>
         cardTitle2: {
             fontSize: "20px",
             fontWeight: 700,
-            color: "#FFFFFF",
+            color: "#FF5E14",
             fontFamily: "PT Sans",
         },
         links: {

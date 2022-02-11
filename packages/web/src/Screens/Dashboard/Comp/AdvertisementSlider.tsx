@@ -135,7 +135,7 @@ export const AdvertisementSlider: React.FC = function AdvertisementSlider() {
                             />
                             <Carousel.Caption>
                                 <Typography className={`${classes.fonts} ${classes.sliderSlogan}`}>
-                                    We are the definition of SPEED
+                                    We provide CONVENIENCE
                                 </Typography>
                                 <Typography className={`${classes.fonts} ${classes.sliderText}`}>
                                     Here at Urged, Quality and Time is our main priority. You can trust us to be on-time with your packages and food.
@@ -190,7 +190,7 @@ export const AdvertisementSlider: React.FC = function AdvertisementSlider() {
                             />
                             <Carousel.Caption>
                                 <Typography className={`${classes.fonts} ${classesMobile.sliderSlogan}`}>
-                                    We are the definition of SPEED
+                                    We provide CONVENIENCE
                                 </Typography>
                                 <Typography className={`${classes.fonts} ${classesMobile.sliderText}`}>
                                     Here at Urged, Quality and Time is our main priority. You can trust us to be on-time with your packages and food.

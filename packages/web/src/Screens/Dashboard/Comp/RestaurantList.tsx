@@ -142,7 +142,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
         return (
             <>
                 <Typography variant="body1" style={{paddingTop: "3%", paddingBottom: "3%"}}>
-                    Please select from the list of reataurants listed below to see their menu.
+                    Please select reataurants listed below to see their menu.
                 </Typography>
                 <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
                     {restaurants.map((restaurant, index) => {

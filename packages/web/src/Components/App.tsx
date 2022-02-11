@@ -17,6 +17,7 @@ import { RestaurantMenuScreen } from '../Screens/Dashboard/RestaurantMenuScreen'
 import { ShoppingCartScreen } from '../Screens/Dashboard/ShoppingCartScreen';
 import { OrdersHistory } from '../Screens/Dashboard/OrderHistoryScreen';
 import { ErrandScreen } from '../Screens/Dashboard/ErrandScreen';
+import { CargoAndFreight } from '../Screens/Dashboard/CargoAndFreight'
 //Admin
 import { AdminDashboard } from '../Screens/AdminDashboard/AdminDashboard';
 import { OrdersScreen } from '../Screens/AdminDashboard/OrdersScreen';
@@ -24,6 +25,8 @@ import { OrdersDetailsScreen } from '../Screens/AdminDashboard/OrdersDetailsScre
 import { EmployeesScreen } from '../Screens/AdminDashboard/EmployeesScreen';
 import { EmployeeDetailsScreen } from '../Screens/AdminDashboard/EmployeeDetailsScreen';
 import { OrganisationsScreen } from '../Screens/AdminDashboard/OrganisationsScreen';
+import { SettingsScreen } from '../Screens/AdminDashboard/SettingsScreen';
+import { PaySettingsScreen } from '../Screens/AdminDashboard/PaySettingsScreen';
 //Rider
 import { RiderOrderDetailsScreen } from '../Screens/RiderDashboard/RiderOrderDetailsScreen';
 import { RiderOrdersScreen } from '../Screens/RiderDashboard/RiderOrdersScreen';
@@ -35,16 +38,17 @@ import { OrderCompleted } from '../Screens/Checkout/OrderCompleted'
 //Import provider
 import AppDataProvider from '../Context/AppDataContext';
 import { useAppData } from '../Context/AppDataContext';
-import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, from } from '@apollo/client';
+//Graphql Client
+import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, from, split } from '@apollo/client';
 import {onError} from '@apollo/client/link/error';
+import { WebSocketLink } from '@apollo/client/link/ws';
+import { getMainDefinition } from '@apollo/client/utilities';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { useEffect } from 'react';
 import "jspdf/dist/polyfills.es.js";
 
-//Client Socket
-import io from "socket.io-client";
 
 //not found page
 import {NotFound} from './NotFound';
@@ -123,7 +127,7 @@ const errorLink = onError(({ graphQLErrors, networkError}) => {
   if(graphQLErrors){
     graphQLErrors.map(({message, locations, path}) => {
       if(process.env.NODE_ENV === 'development'){
-        //console.log(`Graphql error ${message}`)
+        console.log(`Graphql error ${message}`)
       };
       return message;
     })
@@ -131,11 +135,31 @@ const errorLink = onError(({ graphQLErrors, networkError}) => {
 }); 
 
 var db_server = process.env.NODE_ENV === 'development'? process.env.REACT_APP_DEV_DB_URL : process.env.REACT_APP_PROD_DB_URL;
+var ws_db_server = process.env.NODE_ENV === 'development'? process.env.REACT_APP_DEV_WS_DB_URL : process.env.REACT_APP_PROD_WS_DB_URL;
 
-const link = from([
+const wsLink = new WebSocketLink({
+  uri: ws_db_server !== undefined ? ws_db_server: '',
+  options: {
+    reconnect: true,
+  },
+});
+
+const httpLink = from([
   errorLink,
-  new HttpLink({uri: db_server})
+  new HttpLink({uri: db_server, credentials: 'include'})
 ])
+
+const link = split(
+  ({query}) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === 'OperationDefinition' &&
+      definition.operation === 'subscription'
+    );
+  },
+  wsLink,
+  httpLink
+);
 
 const client = new ApolloClient({
   cache: new InMemoryCache(),
@@ -196,6 +220,7 @@ const App: React.FC = function App() {
                     <Route path="/Dashboard" exact component={CustomerDashboardScreen} />
                     <Route path="/FoodDelivery" exact component={FoodDeliveryDashboardScreen} />
                     <Route path="/Restaurants" exact component={RestaurantsScreen} />
+                    <Route path="/CargoAndFreight" exact component={CargoAndFreight} />
                     <Route path="/ShoppingCart" exact component={ShoppingCartScreen} />
                     <Route path="/OrderHistory" exact component={OrdersHistory} />
                     <Route path="/Errands" exact component={ErrandScreen} />
@@ -206,6 +231,8 @@ const App: React.FC = function App() {
                     <Route path="/Employees" exact component={EmployeesScreen} />
                     <Route path="/EmployeeDetails" exact component={EmployeeDetailsScreen} />
                     <Route path="/Organisations" exact component={OrganisationsScreen} />
+                    <Route path="/AdminSettings" exact component={SettingsScreen} />
+                    <Route path="/PaySettings" exact component={PaySettingsScreen} />
                     {/* Rider Screens */}
                     <Route path="/DeliveryOrders" exact component={RiderOrdersScreen} />
                     <Route path="/DeliveryOrdersDetails" exact component={RiderOrderDetailsScreen} />

@@ -105,9 +105,9 @@ export const Section7: React.FC = function Section7() {
                     Need Help?
                 </Typography>
                 <Typography className={classes.heroText2}>
-                    Everything you need to know about the product and billing.
+                    {/* Everything you need to know about the product and billing. */}
                 </Typography>
-                <Accordion className={classes.accord}>
+                {/* <Accordion className={classes.accord}>
                     <AccordionSummary
                     expandIcon={<img src="Images/expandIcon.png" alt="expandIcon" />}
                     aria-controls="panel1a-content"
@@ -130,7 +130,7 @@ export const Section7: React.FC = function Section7() {
                             may not be eligible for a refund.
                         </Typography>
                     </AccordionDetails>
-                </Accordion>
+                </Accordion> */}
                 <Accordion className={classes.accord}>
                     <AccordionSummary
                     expandIcon={<img src="Images/expandIcon.png" alt="expandIcon" />}
@@ -146,7 +146,7 @@ export const Section7: React.FC = function Section7() {
                         follow the on-screen prompts.
                         <br />
                         <br />
-                        You can also call us via <a target="_blank" href="tel:8769601004" title="Contact Us" className={classes.links} style={{color: "#F7B614"}}>876 960 1004</a> for help.
+                        You can also call us via <a target="_blank" href="tel:8769601004" title="Contact Us" className={classes.links} style={{color: "#F7B614"}}>876 773 5015</a> for help.
                     </Typography>
                     </AccordionDetails>
                 </Accordion>
@@ -166,7 +166,7 @@ export const Section7: React.FC = function Section7() {
                         items, and how much you were charged for each.
                         <br />
                         <br />
-                        To speak to someone immediately, please reach out to your local <a target="_blank" href="tel:8769601004" title="Contact Us" className={classes.links} style={{color: "#F7B614"}}>876 960 1004</a> for help.
+                        To speak to someone immediately, please reach out to your local <a target="_blank" href="tel:8769601004" title="Contact Us" className={classes.links} style={{color: "#F7B614"}}>876 773 5015</a> for help.
                     </Typography>
                     </AccordionDetails>
                 </Accordion>

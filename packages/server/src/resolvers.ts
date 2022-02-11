@@ -8,6 +8,27 @@ import Order from './models/Order.model';
 import { json } from 'express';
 const { GraphQLScalarType, Kind } = require('graphql');
 
+//subscriptions test 
+import { PubSub } from 'graphql-subscriptions';
+//import { GooglePubSub } from '@axelspringer/graphql-google-pubsub';// For Production
+import { RedisPubSub } from 'graphql-redis-subscriptions'; // For Production
+import PaySetting from './models/PaySetting.model';
+const pubsub = new RedisPubSub(
+                process.env.NODE_ENV === "production"
+                ? {
+                    connection: {
+                        host: process.env.REDIS_DOMAIN_NAME as any,
+                        port: process.env.PORT_NUMBER as any,
+                        // retryStrategy: options => {
+                        //   // reconnect after
+                        //   return Math.max(options.attempt * 100, 3000);
+                        // }
+                      }
+                }
+                : {});
+//const pubsubProd = new GooglePubSub();
+//subscriptions test 
+
 const dateScalar = new GraphQLScalarType({
   name: 'Date',
   description: 'Date custom scalar type',
@@ -35,7 +56,16 @@ const jsonScalar = new GraphQLScalarType({
       return json(value); // Convert incoming integer to Date
     },
   });
+
+const ORDER_CREATED = 'ORDER_CREATED';
+
 const resolvers = {
+    Subscription: {
+        orderCreated: {
+          // More on pubsub below
+          subscribe: () => pubsub.asyncIterator(ORDER_CREATED),
+        },
+    },
     Json: jsonScalar, 
     Query: {
         hello: () => {
@@ -58,16 +88,21 @@ const resolvers = {
         },
 
         getOrdersByDateAndTime: async (_,{StartDate, EndDate}) => {
-            console.log(StartDate);
-            console.log(EndDate);
+            // console.log(StartDate);
+            // console.log(EndDate);
             let startConverted = new Date(StartDate);
             let endConverted = new Date(EndDate);
-            console.log(startConverted.toISOString());
-            console.log(endConverted.toISOString());
+            // console.log(startConverted.toISOString());
+            // console.log(endConverted.toISOString());
             let res = await Order.find({"OrderDate": {"$gte": startConverted}});
-            console.log(res);
+            //console.log(res);
             return res;
-        }
+        },
+
+        getPaySettings: async () => {
+            return await PaySetting.find();
+        },
+
         
     },
 
@@ -123,9 +158,18 @@ const resolvers = {
         },
 
         //Orders
-        createOrder: (_,{Id,OrderItems,OrderStatus,OrderTotal,OrderDate,Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal, OrderType}) => {
+        createOrder: async(_,{Id,OrderItems,OrderStatus,OrderTotal,OrderDate,Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal, OrderType}) => {
             const orderItem = new Order({Id, OrderItems, OrderStatus, OrderTotal, OrderDate, Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal, OrderType});
-            return orderItem.save();
+            const newOrder = await orderItem.save();
+            const orderId = newOrder._id;
+            // console.log(newOrder)
+            // console.log(orderId);
+            
+            const finalOrder = await Order.find().where("_id").equals(orderId).populate("Rider");
+            //console.log(finalOrder);
+            pubsub.publish(ORDER_CREATED, {orderCreated: finalOrder[0]});
+            
+            return finalOrder[0];
         },
 
         getOrdersByUserId: async (_,{Id}) => {
@@ -163,6 +207,19 @@ const resolvers = {
             const order = await Order.findOne({_id});
             Object.assign(order, newOrder);
             return order.save();
+        },
+
+        updatePaySetting: async(_, {_id, perDeliveryEnabled, percentagePerOrderTotal, value}) => {
+            let newPaySetting = {
+                _id,
+                perDeliveryEnabled,
+                percentagePerOrderTotal,
+                value
+            }
+            //console.log(newPaySetting);
+            const paySetting = await PaySetting.findOne({_id});
+            Object.assign(paySetting, newPaySetting);
+            return paySetting.save(); 
         },
         
         //Reastaurants

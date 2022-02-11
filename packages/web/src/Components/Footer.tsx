@@ -65,7 +65,7 @@ export const Footer: React.FC = function Footer() {
                         </div>
                         <div>
                             <Typography >
-                                Tel: 876 960 1004
+                            Tel: <a style={{color:"#F7B614", textDecoration: "none"}} href="tel:8767735015" title="telephone">876 773 5015</a>
                             </Typography>
                             <Typography >
                                 77 Manchester Ave, May Pen
