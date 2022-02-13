@@ -272,6 +272,41 @@ export const GET_ORDERS_BY_RIDERID = gql`
     }
 `
 
+export const GET_ORDERS_BY_RIDERID_AND_DATE = gql`
+    mutation getOrdersByRiderIdAnDate($Rider: ID!, $StartDate: String!, $EndDate: String!) {
+        getOrdersByRiderIdAnDate(Rider: $Rider, StartDate: $StartDate, EndDate: $EndDate){
+            _id
+            Id
+            OrderItems 
+            OrderStatus
+            OrderTotal
+            OrderDate
+            Rider{
+                _id
+                Id 
+                FirstName 
+                LastName 
+                Email
+                AddressLine1
+                AddressLine2
+                City 
+                ContactNumber
+                ImageName
+                isAvailable
+                disabled
+            }
+            DeliveryAddress 
+            PaymentMethod
+            AdditionalInfo
+            DeliveryFee
+            GCT
+            ServiceCharge
+            CartTotal
+            OrderType
+        }
+    }
+`
+
 export const GET_ORDERS = gql`
     mutation getOrders {
         getOrders{
@@ -393,6 +428,17 @@ export const UPDATE_PAY_SETTING = gql`
             _id
             perDeliveryEnabled
             percentagePerOrderTotal 
+            value
+        }
+    }
+`
+
+export const GET_PAY_SETTINGS = gql`
+    mutation  getPaySettings {
+        getPaySettings{
+            _id
+            perDeliveryEnabled
+            percentagePerOrderTotal
             value
         }
     }

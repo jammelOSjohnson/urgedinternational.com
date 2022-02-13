@@ -1,13 +1,13 @@
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
-import * as serviceWorkerRegistration from '../serviceWorkerRegistration';
-import { Header } from '../Components/Header';
+//import * as serviceWorkerRegistration from '../serviceWorkerRegistration';
+//import { Header } from '../Components/Header';
 import { Header2 } from '../Components/Header2';
 import { Footer } from '../Components/Footer';
 import { HomeScreen } from '../Screens/Home/HomeScreen';
 import { ServicesScreen } from '../Screens/Services/ServicesScreen';
 import { ContactUsScreen } from '../Screens/ContactUs/ContactUsScreen';
-import { AboutScreen } from '../Screens/About/AboutScreen';
+//import { AboutScreen } from '../Screens/About/AboutScreen';
 import { LoginScreen } from '../Screens/Auth/LoginScreen';
 import { RegisterScreen } from '../Screens/Auth/RegisterScreen';
 import { CustomerDashboardScreen } from '../Screens/Dashboard/CustomerDashboard';
@@ -37,7 +37,7 @@ import { OrderCompleted } from '../Screens/Checkout/OrderCompleted'
 
 //Import provider
 import AppDataProvider from '../Context/AppDataContext';
-import { useAppData } from '../Context/AppDataContext';
+//import { useAppData } from '../Context/AppDataContext';
 //Graphql Client
 import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, from, split } from '@apollo/client';
 import {onError} from '@apollo/client/link/error';
@@ -168,9 +168,9 @@ const client = new ApolloClient({
 
 
 const App: React.FC = function App() {
-  var { value, userRolef }  = useAppData();
+  //var { value }  = useAppData();
   //var { serviceWorkerUpdate, serviceWorkerInit } = value;
-  var { refreshingOrderTables } = value;
+  //var { refreshingOrderTables, userRolef } = value;
   //serviceWorkerRegistration.register();
   // {
   //   onSuccess: () => serviceWorkerInit(),

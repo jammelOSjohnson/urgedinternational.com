@@ -13,12 +13,13 @@ import {
         GET_ROLE, 
         CREATE_ROLE, 
         GET_MENU_CATEGORIES, 
-        UPDATE_PAY_SETTING 
+        UPDATE_PAY_SETTING, 
+        GET_ORDERS_BY_RIDERID_AND_DATE
       } from '../GraphQL/Mutations';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import sendEmail from "../email.js";
 import moment from 'moment-timezone';
-import { GET_PAY_SETTINGS } from '../GraphQL/Queries';
+import { GET_PAY_SETTINGS } from '../GraphQL/Mutations';
 
 //import serverPI from '../Apis/serverPI';
 
@@ -124,7 +125,12 @@ function appDataReducer(state, action){
             selectedRestaurant: action.payload.selectedRestaurant,
             receiptDetails: action.payload.receiptDetails
           }
-          case "refreshOrderTable": 
+        case "fetch_rider_orders_for_date":
+          return {
+            ...state,
+            rider_orders: action.payload.rider_orders
+          }
+        case "refreshOrderTable": 
           console.log("dispatching orders");
           console.log(action.payload.orders);
           return {
@@ -147,16 +153,21 @@ function appDataReducer(state, action){
             riders: action.payload.riders
           }
 
-          case "get_rider_id":
-            return {
-              ...state,
-              rider: action.payload.riders
-            }
-
+        case "get_rider_id":
+          return {
+            ...state,
+            rider: action.payload.riders
+          }
+        case "selected_rider": {
+          return {
+            ...state,
+            selectedRider: action.payload.selectedRider
+          }
+        }
         case "fetch_pay_settings":
           return {
             ...state,
-            riders: action.payload.paySettings
+            paySettings: action.payload.paySettings
           }
 
         case "SW_INIT":
@@ -192,7 +203,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const [addUserToRole] = useMutation(CREATE_ROLE);
     const [getRestaurants] = useMutation(GET_RESTAURANTS);
     const [getRiders] = useMutation(GET_RIDERS);
-    const {data} = useQuery(GET_PAY_SETTINGS);
+    //const {data} = useQuery(GET_PAY_SETTINGS);
+    const [getPaySettings] = useMutation(GET_PAY_SETTINGS);
     const [getMenucategories] = useMutation(GET_MENU_CATEGORIES);
     // eslint-disable-next-line
     // const {data} = useQuery(GET_ORDERS,{
@@ -205,6 +217,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const [updateOrder] = useMutation(UPDATE_ORDER);
     const [updatePaySetting] = useMutation(UPDATE_PAY_SETTING);
     const [getOrdersByRiderId] = useMutation(GET_ORDERS_BY_RIDERID);
+    const [getOrdersByRiderIdAnDate] = useMutation(GET_ORDERS_BY_RIDERID_AND_DATE);
 
     var currentUser = undefined;
     var selectedRestaurant = undefined;
@@ -220,6 +233,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var cartItems = [];
     var noties = [];
     var orders = [];
+    var rider_orders = [];
     var restaurants = [];
     var menuCategories = [];
     var riders = [];
@@ -704,6 +718,17 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       }
     }
 
+    var viewRiderDetails = async function viewRiderDetails(payload){
+      // //console.log("about to dispatch");
+      // //console.log(payload.selectedRestaurant);
+      if(payload.selectedRider !== undefined){
+          dispatch({
+            type: "selected_rider",
+            payload: payload
+          });
+      }
+    }
+
     var getMenuCats = async function getMenuCats(payload, Id){
       if(Id !== null && Id !== undefined){
          await getMenucategories({variables: {Id: Id}}).then(async function(response) {
@@ -965,16 +990,16 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       }
     }
 
-    var fetchOrdersForRider2  = async function fetchOrdersForRider2(payload, RiderId){
+    var fetchOrdersForRider2  = async function fetchOrdersForRider2(payload, RiderId, StartDate, EndDate){
       if(payload.currentUser !== undefined){
         //console.log("Rider Id is:");
         //console.log(payload.userInfo._id);
         if(RiderId !== undefined){
-          await getOrdersByRiderId({variables: {Rider: RiderId}}).then(async function(response) {
-            if (response.data.getOrdersByRiderId !== null) {
-              payload.orders = response.data.getOrdersByRiderId;
+          await getOrdersByRiderIdAnDate({variables: {Rider: RiderId, StartDate, EndDate}}).then(async function(response) {
+            if (response.data.getOrdersByRiderIdAnDate !== null) {
+              payload.rider_orders = response.data.getOrdersByRiderIdAnDate;
               dispatch({
-                type: "checkout",
+                type: "fetch_rider_orders_for_date",
                 payload: payload
               })
             }
@@ -1024,7 +1049,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     };
 
     var sendOrderCompletedEmail = async function sendOrderCompletedEmail(fileType,file, UserInfo, orderNum) {
-      var fileType = fileType;
+      //var fileType = fileType;
       var RequestParams = {
         user_email: "",
         user_name: "",
@@ -1189,19 +1214,25 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     }
 
     var fetchPaySettings = async function fetchPaySettings(payload){
-      console.log("about to fetch pay settings");
+      //console.log("about to fetch pay settings");
         try{
-          if (data.getPaySettings !== null) {
-            ////console.log("got list of restaurants");
-            ////console.log(response);
-
-            var paySet = data.getPaySettings;
-
-            if (paySet !== null) {
-              payload.paySettings = paySet !== undefined ? paySet[0] : undefined;
-              return payload;
+          await getPaySettings().then((response) => {
+            if (response.data.getPaySettings !== null) {
+              //console.log("got list of restaurants");
+              //console.log(response);
+  
+              var paySet = response.data.getPaySettings;
+              //console.log(paySet);
+  
+              if (paySet !== null) {
+                payload.paySettings = paySet !== undefined ? paySet[0] : undefined;
+                return payload;
+              }
             }
-          }
+          }).catch((err) => {
+            //console.log(err);
+          })
+          
         }catch(err){
           ////console.log(err);
         };
@@ -1242,6 +1273,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         cartItems,
         noties,
         orders,
+        rider_orders,
         restaurants,
         selectedRestaurant,
         selectedRestaurantName,
@@ -1290,7 +1322,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         serviceWorkerUpdate,
         sendContactUsEmail,
         fetchPaySettings,
-        UpdatePaySettings
+        UpdatePaySettings,
+        viewRiderDetails
     });
     
      

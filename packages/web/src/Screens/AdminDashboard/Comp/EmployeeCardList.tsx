@@ -1,20 +1,20 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardHeader, Avatar, CardMedia, CardContent } from '@material-ui/core';
+import { Grid, makeStyles, createStyles, Typography, Theme, IconButton, Card, CardHeader, Avatar, CardMedia, CardContent } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
+//import clsx from 'clsx';
 //Import Components
-import { ItemRating } from '../../../Components/ItemRating';
+//import { ItemRating } from '../../../Components/ItemRating';
 import { Link } from "react-router-dom";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 
 
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
+// interface State {
+//     email: string;
+//     password: string;
+//     showPassword: boolean;
+// }
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -137,7 +137,7 @@ export const EmployeeCardList: React.FC = function EmployeeCardList(props) {
     const classes = useStyles();
     
     var { value }  = useAppData();
-    var { fetchRiders, riders, viewMenuItems } = value;
+    var { fetchRiders, riders, viewRiderDetails } = value;
     
     useEffect(() => {
         //console.log("inside use effect");
@@ -145,38 +145,38 @@ export const EmployeeCardList: React.FC = function EmployeeCardList(props) {
         if(riders.length === 0){
             fetchRiders(value);
         }
-    }, [riders])
+    }, [])
 
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-      });
+    // const [values, setValues] = React.useState<State>({
+    //     email: '',
+    //     password: '',
+    //     showPassword: false,
+    //   });
     
     var history = useHistory();
 
-    var handleSelectedRestaurant = async function(index){
+    var handleSelectedRider = async function(index){
         if(index !== undefined || index !== null){
             //console.log("Index is");
             //console.log(index);
             var payload = value;
-            payload.selectedRestaurant = index;
-            await viewMenuItems(payload).then(() => {
-                history.push("/Menu")
+            payload.selectedRider = index;
+            await viewRiderDetails(payload).then(() => {
+                history.push("/EmployeeDetails")
             })
         } 
     }
     if (riders.length !== 0){  
         return (
             <>
-                <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
+                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                     {riders.map((rider, index) => {
                         //console.log("rider is");
                         //console.log(rider);
                         return(
                             
                             <Grid item xs={10} md={6} lg={3} xl={3} className={classes.gridSpacing} key={index}>
-                                <Link onClick={() =>handleSelectedRestaurant(index)} className={classes.link}>
+                                <Link onClick={() =>handleSelectedRider(index)} className={classes.link}>
                                 <Card className={classes.root}>
                                     <CardHeader
                                         action={
@@ -186,11 +186,11 @@ export const EmployeeCardList: React.FC = function EmployeeCardList(props) {
                                         }
                                     />
                                     <CardContent>
-                                        <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
+                                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                             <Grid item xs={12}>
                                                 <Avatar variant="circle" aria-label="rider" className={classes.avatar}>
                                                     <CardMedia className={classes.cardImage}>
-                                                        <img className={classes.kfcImage} src={rider.ImageName}></img>
+                                                        <img className={classes.kfcImage} src={rider.ImageName} alt="rider"></img>
                                                     </CardMedia>
                                                 </Avatar>
                                             </Grid>

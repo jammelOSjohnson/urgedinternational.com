@@ -5,7 +5,7 @@ import MUIDataTable from "mui-datatables";
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { EditRounded } from "@material-ui/icons/";
-import { Backdrop, CircularProgress, createStyles, FormControl, makeStyles, MenuItem, Select, Snackbar, Theme } from '@material-ui/core';
+import { createStyles, FormControl, makeStyles, MenuItem, Select, Snackbar, Theme } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
 import { GET_ORDERS } from '../../../GraphQL/Queries';
 import { Alert } from '@material-ui/lab';
@@ -118,7 +118,7 @@ import { Alert } from '@material-ui/lab';
   export const OrdersTable: React.FC = function OrdersTable () {
     const classes = useStyles();
     var { value }  = useAppData();
-    var { orders, fetchOrders, UpdateOrder, currentUser, userRolef, refreshingOrderTables } = value;
+    var { orders, UpdateOrder, currentUser, userRolef, refreshingOrderTables } = value;
     var history = useHistory();
 
     const [open, setOpen] = React.useState(false);

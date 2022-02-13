@@ -1,6 +1,6 @@
 import React from 'react'
 //import CSS
-import { Container, Typography, makeStyles, createStyles, Theme, Grid} from '@material-ui/core';
+import { Container, makeStyles, createStyles, Theme} from '@material-ui/core';
 import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) => 

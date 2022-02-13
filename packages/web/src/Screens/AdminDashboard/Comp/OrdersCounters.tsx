@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 //import clsx from 'clsx';
 import { Link } from "react-router-dom";
 import { useAppData } from '../../../Context/AppDataContext';
-import { GET_ORDERS, GET_ORDERS_BY_DATE_AND_TYPE } from '../../../GraphQL/Queries';
+import { GET_ORDERS_BY_DATE_AND_TYPE } from '../../../GraphQL/Queries';
 import {
     Chart as ChartJS,
     CategoryScale,

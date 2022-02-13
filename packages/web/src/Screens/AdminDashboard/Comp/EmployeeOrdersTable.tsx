@@ -4,9 +4,9 @@ import { useAppData } from '../../../Context/AppDataContext';
 import MUIDataTable from "mui-datatables";
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
-import { EditRounded } from "@material-ui/icons/";
-import { Backdrop, CircularProgress, createStyles, FormControl, makeStyles, MenuItem, Select, Snackbar, Theme } from '@material-ui/core';
-import { useQuery } from '@apollo/client';
+//import { EditRounded } from "@material-ui/icons/";
+import { createStyles, makeStyles, Snackbar, Theme } from '@material-ui/core';
+//import { useQuery } from '@apollo/client';
 import { Alert } from '@material-ui/lab';
   
 
@@ -91,9 +91,9 @@ import { Alert } from '@material-ui/lab';
   
   
   export const EmployeeOrdersTable: React.FC = function EmployeeOrdersTable () {
-    const classes = useStyles();
+    //const classes = useStyles();
     var { value }  = useAppData();
-    var { orders, fetchOrdersForRider2, UpdateOrder, currentUser, userRolef, refreshingOrderTables } = value;
+    var { rider_orders, fetchOrdersForRider2, UpdateOrder, userRolef, riders, selectedRider } = value;
     var history = useHistory();
 
     const [open, setOpen] = React.useState(false);
@@ -110,8 +110,12 @@ import { Alert } from '@material-ui/lab';
     const rows = [] as Object[];
     useEffect(() => {
       try{
-        if(orders.length == 0){
-          fetchOrdersForRider2(value, ).then(()=>{
+        if(selectedRider !== undefined && riders.length !== 0){
+          let riderId = riders[selectedRider]._id;
+          let start = moment().startOf('month').format('YYYY-MM-DD[T00:00:00.000Z]');
+          let end =  moment().endOf('month').format('YYYY-MM-DD[T00:00:00.000Z]');
+          //console.log("fetching");
+          fetchOrdersForRider2(value, riderId, start, end).then(()=>{
           
           });
         }
@@ -123,7 +127,7 @@ import { Alert } from '@material-ui/lab';
         //console.log(e)
       }
       // eslint-disable-next-line
-    }, [currentUser, orders]);
+    }, [selectedRider, riders]);
     
     // const handleEdit = (event) => {
     //   event.preventDefault();
@@ -133,31 +137,31 @@ import { Alert } from '@material-ui/lab';
       try{
           setOpen(false);
           setOpen2(false);
-          console.log(status);
-          console.log(orders[orderIndex].OrderStatus);
-          let order = {...orders[orderIndex], OrderStatus: status, Rider: orders[orderIndex].Rider._id };
-          console.log(order);
+          //console.log(status);
+          //console.log(rider_orders[orderIndex].OrderStatus);
+          let order = {...rider_orders[orderIndex], OrderStatus: status, Rider: rider_orders[orderIndex].Rider._id };
+          //console.log(order);
           await UpdateOrder(value, order).then((res) => {
               if(res){
                   setOpen(true);
               }
           }) 
       }catch(err){
-          console.log(err);
+          //console.log(err);
           setOpen2(true);
       }
     }
 
-    const handleChange = (event, index) => {
-      // setValues({...values,[event.target.name]:event.target.value, itemName: selectedItem.ItemName, itemCost: selectedItem.ItemCost, itemDescription: selectedItem.ItemDescription});
-      try{
-        let status = event.target.value;
-        handleSubmit(status,index);
-      }catch(err){
-        console.log(err);
-        setOpen2(true);
-      }
-    };
+    // const handleChange = (event, index) => {
+    //   // setValues({...values,[event.target.name]:event.target.value, itemName: selectedItem.ItemName, itemCost: selectedItem.ItemCost, itemDescription: selectedItem.ItemDescription});
+    //   try{
+    //     let status = event.target.value;
+    //     handleSubmit(status,index);
+    //   }catch(err){
+    //     //console.log(err);
+    //     setOpen2(true);
+    //   }
+    // };
 
     const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
       if (reason === 'clickaway') {
@@ -180,12 +184,12 @@ import { Alert } from '@material-ui/lab';
     const options = {
       filterType: 'dropdown',
       search: true,
-      selectableRows: false
+      selectableRows: "none"
     };
     
-    if(userRolef !== undefined && orders.length !== 0){
+    if(userRolef !== undefined && rider_orders.length !== 0){
        if(userRolef === "Admin"){
-          orders.map((item, index) => {
+        rider_orders.map((item, index) => {
             const now = new Date(parseInt(item.OrderDate, 10));
             const estTime = moment.tz(now, "America/Jamaica").format("YYYY-MM-DD h:mm a");
 
@@ -202,27 +206,7 @@ import { Alert } from '@material-ui/lab';
               _id: item._id, 
               Description: orderItems,
               OrderDate: estTime,
-              OrderStatus: <>
-                <FormControl variant="outlined" className={classes.formControl} fullWidth required>
-                  {/* <InputLabel id="demo-simple-select-outlined-label">Status</InputLabel> */}
-                  <Select
-                      labelId="demo-simple-select-outlined-label"
-                      id="demo-simple-select-outlined"
-                      value={item.OrderStatus}
-                      onChange={(e) => handleChange(e,index)}
-                      label="Status"
-                      name="Status"
-                      className={classes.root}
-                      style={{color: 'black'}}
-                      required
-                  >
-                      <MenuItem value={"Ordered"}>Ordered</MenuItem>
-                      <MenuItem value={"Picked Up"}>Picked Up</MenuItem>
-                      <MenuItem value={"In Transit"}>In Transit</MenuItem>
-                      <MenuItem value={"Delivered"}>Delivered</MenuItem>
-                  </Select>
-                </FormControl>
-              </>, 
+              OrderStatus: item.OrderStatus, 
               OrderTotal: `$ ${item.OrderTotal}`,
               // Rider: item.Rider.FirstName,
               // Actions: <><a href="/AdminOrderSDetails" title="edit" onClick={(e) => {e.preventDefault(); history.push('/AdminOrderSDetails', { from: index});}}><EditRounded color="primary" /></a></>

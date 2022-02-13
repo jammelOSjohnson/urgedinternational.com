@@ -57,12 +57,12 @@ export const EmployeeDetailsScreen: React.FC = () => {
                                 <HeaderRight />
                             </Grid>
                             <Grid container direction="column" xs={12} spacing={0}>
-                                <Grid item xs={9}>
+                                <Grid item xs={12}>
                                     <EmployeeOrdersCounters />
                                 </Grid>
-                                <Grid item xs={3}>
+                                {/* <Grid item xs={12}>
                                     <EmployeeDetailsRight />
-                                </Grid>
+                                </Grid> */}
                             </Grid>
                         </Grid>
                     </Grid>

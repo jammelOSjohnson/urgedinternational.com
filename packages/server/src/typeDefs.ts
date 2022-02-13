@@ -274,6 +274,12 @@ const typeDefs = /* GraphQL */`
             Rider: ID
         ): [Order]
 
+        getOrdersByRiderIdAnDate(
+            Rider: ID,
+            StartDate: String,
+            EndDate: String,
+        ):[Order]
+
         getOrders: [Order]
         
         updateOrder(
@@ -292,7 +298,9 @@ const typeDefs = /* GraphQL */`
             ServiceCharge: Float,
             CartTotal: Float,
             OrderType: String): Order
-
+        
+        getPaySettings: [PaySetting!]!
+        
         updatePaySetting(
             _id: ID
             perDeliveryEnabled: Boolean,

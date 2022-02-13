@@ -168,7 +168,7 @@ export const OrganisationsCardList: React.FC = function OrganisationsCardList(pr
                 <Typography variant="body1" style={{paddingTop: "3%", paddingBottom: "3%"}}>
                     {/* Please select from the list of reataurants listed below to see their menu. */}
                 </Typography>
-                <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
+                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                     {restaurants.map((restaurant, index) => {
                         //console.log("restaurant is");
                         //console.log(restaurant);
@@ -182,7 +182,7 @@ export const OrganisationsCardList: React.FC = function OrganisationsCardList(pr
                                         action={
                                             <Avatar variant="square" aria-label="restaurant" className={classes.avatar}>
                                                     <CardMedia className={classes.cardImage}>
-                                                        <img className={classes.kfcImage} src={restaurant.ImageName}></img>
+                                                        <img className={classes.kfcImage} src={restaurant.ImageName} alt=""></img>
                                                     </CardMedia>
                                              </Avatar>
                                         }

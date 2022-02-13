@@ -87,6 +87,8 @@ const resolvers = {
             .where("OrderStatus").ne("Delivered"); 
         },
 
+        
+
         getOrdersByDateAndTime: async (_,{StartDate, EndDate}) => {
             // console.log(StartDate);
             // console.log(EndDate);
@@ -181,6 +183,19 @@ const resolvers = {
             .where("OrderStatus").ne("Delivered"); 
         },
 
+        getOrdersByRiderIdAnDate: async (_,{Rider, StartDate, EndDate}) => {
+            // console.log(StartDate);
+            // console.log(EndDate);
+            // console.log(Rider);
+            let startConverted = new Date(StartDate);
+            let endConverted = new Date(EndDate);
+
+            let res = await Order.find({"OrderDate": {"$gte": startConverted}}).where("Rider").equals(Rider)
+            .where("OrderStatus").equals("Delivered"); 
+            //console.log(res);
+            return res;
+        },
+
         getOrders: async () => {
             return await Order.find().populate("Rider");
         },
@@ -207,6 +222,10 @@ const resolvers = {
             const order = await Order.findOne({_id});
             Object.assign(order, newOrder);
             return order.save();
+        },
+
+        getPaySettings: async () => {
+            return await PaySetting.find();
         },
 
         updatePaySetting: async(_, {_id, perDeliveryEnabled, percentagePerOrderTotal, value}) => {

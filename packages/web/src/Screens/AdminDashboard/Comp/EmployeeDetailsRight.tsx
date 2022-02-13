@@ -4,7 +4,8 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 // import Visibility from '@material-ui/icons/Visibility';
 // import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import React, { useEffect } from 'react';
-import { Calendar } from './Calendar';
+//import { Calendar } from './Calendar';
+import clsx from 'clsx';
 // import { useHistory } from 'react-router-dom';
 // import clsx from 'clsx';
 // import { NotificationImportantRounded, ShoppingCartRounded } from "@material-ui/icons/";
@@ -13,11 +14,13 @@ import { Calendar } from './Calendar';
     
 // }
 
-// interface State {
-//     email: string;
-//     password: string;
-//     showPassword: boolean;
-// }
+interface State {
+    email: string;
+    name: string;
+    city: string;
+    image: string;
+    status: boolean;
+}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -47,11 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
             position: "relative"
         },
         card: {
-            background: "#FFFFFF",
-            border: "0.813791px solid #E2E2E2",
-            boxSizing: "border-box",
-            boxShadow: "0px 4.64215px 12.2069px rgba(0, 0, 0, 0.11)",
-            borderRadius: "34.3745px",
+            height: "60vh"
         },
         avatar: {
             width: "105px",
@@ -61,8 +60,8 @@ const useStyles = makeStyles((theme: Theme) =>
             marginRight: "auto"
           },
         kfcImage: {
-            width: "105px",
-            height: "105px",
+            width: "170px",
+            height: "170px",
             margin: "0% 0% 14% 8%",
         },
         statusDot: {
@@ -88,15 +87,28 @@ export const EmployeeDetailsRight: React.FC = function EmployeeDetailsRight() {
     const classes = useStyles();
 
     var { value }  = useAppData();
-    var { fetchRiders, riders, viewMenuItems } = value;
+    var { riders, selectedRider } = value;
+    const [riderState, setRiderState] = React.useState<State>({
+        name: "",
+        email: "",
+        city: "",
+        image: "",
+        status: false
+    })
     
     useEffect(() => {
         //console.log("inside use effect");
         //console.log(restaurants);
-        if(riders.length === 0){
-            fetchRiders(value);
+        if(riders.length > 0 && selectedRider !== undefined){
+            setRiderState({
+                name: riders[selectedRider].FirstName,
+                email: riders[selectedRider].Email,
+                city: riders[selectedRider].City,
+                image: riders[selectedRider].ImageName,
+                status: riders[selectedRider].isAvailable
+            });
         }
-    }, [riders])
+    }, [selectedRider])
 
     // const [values, setValues] = React.useState<State>({
     //     email: '',
@@ -112,11 +124,11 @@ export const EmployeeDetailsRight: React.FC = function EmployeeDetailsRight() {
         <>
             <Container maxWidth="xl" className={classes.main} style={{background: "transparent"}}>
                 <Grid container direction="row" spacing={2} className={classes.gridRoot} alignItems="center">
-                    <Grid item xs={12} spacing={1}>
+                    {/* <Grid item xs={12} spacing={1}>
                         <Calendar />
-                    </Grid>
+                    </Grid> */}
                     <Grid item xs={12} spacing={1}>
-                            <Card className={classes.gridRoot}>
+                            <Card className={clsx(classes.gridRoot, classes.card)}>
                                 <CardHeader
                                     action={
                                         <IconButton aria-label="settings">
@@ -130,33 +142,9 @@ export const EmployeeDetailsRight: React.FC = function EmployeeDetailsRight() {
                                             <Avatar variant="circle" aria-label="rider" className={classes.avatar}>
                                                 <CardMedia className={classes.cardImage}>
                                                     {/* <img className={classes.kfcImage} src={rider.ImageName}></img> */}
-                                                    <img className={classes.kfcImage} src="Images/KFC Avatar.png"></img> 
+                                                    <img className={classes.kfcImage} src={riderState.image} alt=""></img> 
                                                 </CardMedia>
                                             </Avatar>
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <Typography variant="h5"  component="p" align="center">
-                                                {/* {rider.FirstName} */}
-                                                Dilan
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <Typography variant="h6"  component="p" align="center">
-                                                {/* {rider.City} */}
-                                                Kingston
-                                            </Typography>
-                                        </Grid>
-                                        <br />
-                                        <Grid item xs={12}>
-                                            <Typography variant="body2"  component="p" align="center">
-                                                {/* {rider.Email} */}
-                                                Dilan.Po@gmail.com
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <Typography variant="body2"  component="p" align="center">
-                                            Errand Runner
-                                            </Typography>
                                         </Grid>
                                         <Grid item xs={12}>
                                             <Typography variant="body2"  component="p" align="center">
@@ -165,9 +153,36 @@ export const EmployeeDetailsRight: React.FC = function EmployeeDetailsRight() {
                                                 :
                                                 <span><span className={classes.statusDotI}></span> In-active</span>
                                             } */}
-                                            <span><span className={classes.statusDot}></span> Active</span>
+                                            <span>
+                                                {riderState.status?
+                                                    <><span className={classes.statusDot}></span> Active</>
+                                                :
+                                                    <><span className={classes.statusDotI}></span> In-active</>
+                                                }
+                                            </span>
+                                            </Typography><br />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Typography variant="h5"  component="p" align="center">
+                                                {riderState.name}
+                                            </Typography><br />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Typography variant="body2"  component="p" align="center">
+                                                {riderState.email}
+                                            </Typography><br />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Typography variant="body2"  component="p" align="center">
+                                            Errand Runner
+                                            </Typography><br />
+                                        </Grid>
+                                        <Grid item xs={12}>
+                                            <Typography variant="h6"  component="p" align="center">
+                                                {riderState.city}
                                             </Typography>
                                         </Grid>
+                                        <br />
                                     </Grid>
                                 </CardContent>
                             </Card>

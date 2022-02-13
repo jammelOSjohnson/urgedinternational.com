@@ -2,9 +2,9 @@ import { useAppData } from '../Context/AppDataContext';
 import { HeaderLogo } from './HeaderLogo';
 import React, { useEffect } from 'react'
 import { useHistory, Link as RouterLink } from 'react-router-dom';
-import { useMediaQuery , useTheme,Typography, AppBar, Toolbar, makeStyles, Theme, createStyles, Grid, Modal, Fade, FormControl, InputLabel, Select, MenuItem, Backdrop, Button, Drawer, List, ListItem, ListItemIcon, Divider, ListItemText } from '@material-ui/core';
+import { useMediaQuery , useTheme,Typography, AppBar, Toolbar, makeStyles, Theme, createStyles, Button, Drawer, List, ListItem, ListItemIcon, Divider, ListItemText } from '@material-ui/core';
 // eslint-disable-next-line
-import  { auth, socialAuth } from '../firebase';
+import  { auth } from '../firebase';
 import clsx from 'clsx';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import {HomeRounded, InfoRounded, ContactMailRounded, HelpRounded, RoomServiceRounded} from '@material-ui/icons';
@@ -182,18 +182,19 @@ export const Header2: React.FC = function Header2() {
     var location = history.location;
     var referralPath = location.pathname;
     var { value }  = useAppData();
-    var { orders, refreshingOrderTables , fetchUserInfo, generalLocation, AddGeneralLocation, serviceWorkerUpdated, serviceWorkerRegistration } = value;
+    var { orders, refreshingOrderTables , fetchUserInfo } = value;
+    // AddGeneralLocation, serviceWorkerUpdated, serviceWorkerRegistration
 
     //Subscriptions
-    const {data, loading} = useSubscription(ORDERS_SUBSCRIPTION);
+    const {data} = useSubscription(ORDERS_SUBSCRIPTION);
     const classes = useStyles();
 
     //Breakpoints
     const theme = useTheme();
 
     //State
-    const [open, setOpen] = React.useState(false);
-    var [error, setError] = React.useState('');
+    //const [open, setOpen] = React.useState(false);
+    //var [error, setError] = React.useState('');
     const [state, setState] = React.useState({
       top: false,
       left: false,
@@ -203,11 +204,11 @@ export const Header2: React.FC = function Header2() {
 
     //Media Query
     const isMatch = useMediaQuery(theme.breakpoints.down('md'));
-    const isMaatchMedium = useMediaQuery(theme.breakpoints.down('md'));
+    //const isMaatchMedium = useMediaQuery(theme.breakpoints.down('md'));
 
-    const [values, setValues] = React.useState<State>({
-      genralLocation: 'Select Location',
-    });
+    // const [values, setValues] = React.useState<State>({
+    //   genralLocation: 'Select Location',
+    // });
 
     //const isServiceWorkerUpdated  = serviceWorkerUpdated;
 
@@ -279,19 +280,19 @@ export const Header2: React.FC = function Header2() {
       return false;
     }
 
-    const handleChange = (event) => {
-      try{
-        setError('');
-        if(event.target.value !== "Select Location"){
-          setValues({...values,[event.target.name]:event.target.value});
-          AddGeneralLocation(value, event.target.value);
-        }else{
-          setError('Please Select Location');
-        }
-      }catch(err){
-        //console.log(err);
-      }
-    };
+    // const handleChange = (event) => {
+    //   try{
+    //     //setError('');
+    //     if(event.target.value !== "Select Location"){
+    //       setValues({...values,[event.target.name]:event.target.value});
+    //       //AddGeneralLocation(value, event.target.value);
+    //     }else{
+    //       //setError('Please Select Location');
+    //     }
+    //   }catch(err){
+    //     //console.log(err);
+    //   }
+    // };
 
     // const updateServiceWorker = () => {
     //   const registrationWaiting = serviceWorkerRegistration.waiting;
@@ -305,13 +306,13 @@ export const Header2: React.FC = function Header2() {
     //   }
     // }
 
-    const handleOpen = (item) => {
-      setOpen(true);
-    };
+    // const handleOpen = (item) => {
+    //   //setOpen(true);
+    // };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+    // const handleClose = () => {
+    //     //setOpen(false);
+    // };
 
     if(referralPath !== '/' && referralPath.toLowerCase() !== '/services' && referralPath.toLowerCase() !== '/contactus'){
       return(

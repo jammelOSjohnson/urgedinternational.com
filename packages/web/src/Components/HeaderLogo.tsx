@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMediaQuery , useTheme,Typography, makeStyles, Theme, createStyles, Grid, Button } from '@material-ui/core';
+import { useMediaQuery , useTheme,Typography, makeStyles, Theme, createStyles, Grid } from '@material-ui/core';
 
 
 
@@ -116,7 +116,7 @@ export const HeaderLogo: React.FC = function HeaderLogo() {
     //Breakpoints
     const theme = useTheme();
 
-    const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
+    //const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
     const isMaatchMedium = useMediaQuery(theme.breakpoints.down('md'));
 
     
