@@ -92,7 +92,7 @@ export const CardTotal: React.FC = function CardTotal() {
                     let newTotal = 0;
                     for(let i = 0; i < rider_orders.length;){
                         let percentage = paySettings.value / 100;
-                        let percentTotal = rider_orders[i].OrderTotal * percentage;
+                        let percentTotal = rider_orders[i].DeliveryFee * percentage;
                         newTotal = newTotal + percentTotal;
                         i = i + 1;
                     }
