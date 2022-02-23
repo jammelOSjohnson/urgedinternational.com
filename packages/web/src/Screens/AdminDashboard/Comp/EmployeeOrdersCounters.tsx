@@ -21,6 +21,7 @@ import {
   //import { Line } from 'react-chartjs-2';
 //import { GET_ORDERS_BY_DATE_AND_TYPE } from '../../../GraphQL/Queries';
 import { EmployeeDetailsRight } from './EmployeeDetailsRight';
+import { Calendar } from './Calendar';
 
   ChartJS.register(
     CategoryScale,
@@ -192,17 +193,11 @@ export const EmployeeOrdersCounters: React.FC = function EmployeeOrdersCounters(
           // eslint-disable-next-line
     },[rider_orders])
     
-    // const refreshOrders = async (Orders) => {
-    //     await refreshingOrderTables(value, Orders).then(()=>{
-    //         console.log("completed updating rider_orders")
-    //         //setTotal(Food + Errand + Express);
-    //     });
-    // }
 
     return (
         <>
             <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                <Grid item xs={10} md={3}>
+                <Grid item xs={6} md={3}>
                     <Card className={classes.card}>
                         <Typography gutterBottom className={classes.cardTitle0}>
                             Total Food Orders
@@ -217,7 +212,7 @@ export const EmployeeOrdersCounters: React.FC = function EmployeeOrdersCounters(
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={10} md={3}>
+                <Grid item xs={6} md={3}>
                     <Card className={classes.card}>
                         <Typography gutterBottom className={classes.cardTitle0}>
                             Total Errand Orders
@@ -234,7 +229,7 @@ export const EmployeeOrdersCounters: React.FC = function EmployeeOrdersCounters(
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xs={10} md={3}>
+                <Grid item xs={6} md={3}>
                     <Card className={classes.card}>
                         <Typography gutterBottom className={classes.cardTitle0}>
                             Total Express Order
@@ -252,6 +247,11 @@ export const EmployeeOrdersCounters: React.FC = function EmployeeOrdersCounters(
                     </Card>
                 </Grid>
                 <CardTotal />
+            </Grid>
+            <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                <Grid item xs={12} style={{textAlign: "right"}}>
+                    <Calendar />
+                </Grid>
             </Grid>
             <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                 <Grid item xs={9}>

@@ -106,7 +106,7 @@ export const CardTotal: React.FC = function CardTotal() {
         }
     }, [rider_orders, paySettings])
     return (
-        <Grid item xs={10} md={3}>
+        <Grid item xs={6} md={3}>
             <Card className={classes.card}>
                 <Typography gutterBottom className={classes.cardTitle0}>
                     Total Earned
