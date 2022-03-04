@@ -27,9 +27,11 @@ import { EmployeeDetailsScreen } from '../Screens/AdminDashboard/EmployeeDetails
 import { OrganisationsScreen } from '../Screens/AdminDashboard/OrganisationsScreen';
 import { SettingsScreen } from '../Screens/AdminDashboard/SettingsScreen';
 import { PaySettingsScreen } from '../Screens/AdminDashboard/PaySettingsScreen';
+import { OrgDetailsScreen } from '../Screens/AdminDashboard/OrgDetailsScreen';
 //Rider
 import { RiderOrderDetailsScreen } from '../Screens/RiderDashboard/RiderOrderDetailsScreen';
 import { RiderOrdersScreen } from '../Screens/RiderDashboard/RiderOrdersScreen';
+import { testmap } from '../Screens/Dashboard/testmap';
 //import { RiderDashboard } from '../Screens/RiderDashboard/RiderDashboard';
 //import { Sidebar } from '../Screens/Dashboard/Comp/Sidebar';
 import { CheckoutScreen } from '../Screens/Checkout/CheckoutScreen';
@@ -210,6 +212,7 @@ const App: React.FC = function App() {
                   {/* <Sidebar/> */}
                     {/* <Route path="/" exact component={AboutScreen} /> */}
                     <Route path="/" exact component={HomeScreen} />
+                    <Route path="/testmap" exact component={testmap} />
                     {/* Customer Screens */}
                     <Route path="/Services" exact component={ServicesScreen} />
                     <Route path="/ContactUs" exact component={ContactUsScreen} />
@@ -233,6 +236,7 @@ const App: React.FC = function App() {
                     <Route path="/Organisations" exact component={OrganisationsScreen} />
                     <Route path="/AdminSettings" exact component={SettingsScreen} />
                     <Route path="/PaySettings" exact component={PaySettingsScreen} />
+                    <Route path="/OrgDetails" exact component={OrgDetailsScreen} />
                     {/* Rider Screens */}
                     <Route path="/DeliveryOrders" exact component={RiderOrdersScreen} />
                     <Route path="/DeliveryOrdersDetails" exact component={RiderOrderDetailsScreen} />

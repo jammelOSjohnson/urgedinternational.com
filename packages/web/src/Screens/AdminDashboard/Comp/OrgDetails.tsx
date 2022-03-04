@@ -129,7 +129,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const OrganisationsCardList: React.FC = function OrganisationsCardList(props) {
+export const OrgDetails: React.FC = function OrgDetails(props) {
     const classes = useStyles();
     
     var { value }  = useAppData();
@@ -138,9 +138,7 @@ export const OrganisationsCardList: React.FC = function OrganisationsCardList(pr
     useEffect(() => {
         //console.log("inside use effect");
         //console.log(restaurants);
-        if(restaurants.length === 0){
-            fetchRestaurants(value);
-        }
+        
     }, [restaurants])
 
     // const [values, setValues] = React.useState<State>({
@@ -158,7 +156,7 @@ export const OrganisationsCardList: React.FC = function OrganisationsCardList(pr
             var payload = value;
             payload.selectedRestaurant = index;
             await viewMenuItems(payload).then(() => {
-                history.push("/OrgDetails")
+                history.push("/Menu")
             })
         } 
     }
@@ -169,61 +167,68 @@ export const OrganisationsCardList: React.FC = function OrganisationsCardList(pr
                     {/* Please select from the list of reataurants listed below to see their menu. */}
                 </Typography>
                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                    {restaurants.map((restaurant, index) => {
-                        //console.log("restaurant is");
-                        //console.log(restaurant);
-                        return(
-                            
-                            <Grid item xs={12} md={4} lg={4} xl={4} className={classes.gridSpacing} key={index}>
-                                <Link onClick={() =>handleSelectedRestaurant(index)} className={classes.link}>
-                                <Card className={classes.root}>
-                                    <CardHeader
-                                        title={`${index + 1}. ${restaurant.FirstName}`}
-                                        action={
-                                            <Avatar variant="square" aria-label="restaurant" className={classes.avatar}>
-                                                    <CardMedia className={classes.cardImage}>
-                                                        <img className={classes.kfcImage} src={restaurant.ImageName} alt=""></img>
-                                                    </CardMedia>
-                                             </Avatar>
-                                        }
-                                    />
-                                    <CardContent>
-                                        <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
-                                            <Grid item xs={12}>
-                                            </Grid>
-                                            <Grid item container xs={12} direction="row" spacing={0}>
-                                                <Grid item xs={1}>
-                                                    <LocationOnIcon color="primary"/>
-                                                </Grid>
-                                                <Grid item xs={11}>
-                                                    <Typography variant="h6"  component="p">
-                                                        {`${restaurant.AddressLine1}`}
-                                                    </Typography>    
-                                                </Grid>                                            
-                                            </Grid>
-                                            <br />
-                                            <Grid item container xs={8} direction="row">
-                                                <Grid item xs={1}>
-                                                    <PhoneEnabledIcon color="primary"/>
-                                                </Grid>
-                                                <Grid item xs={11}>
-                                                    <Typography variant="h6"  component="p">
-                                                         (876)-888-8888
-                                                    </Typography>
-                                                </Grid>
-                                            </Grid>
-                                            <Grid item xs={4}>
-                                                <Typography variant="body2"  component="p" align="center" style={{ background: "#13ADD1", color: "#FFFFFF", padding: "0% 0% 0% 0%"}}>
-                                                    Open
-                                                </Typography>
-                                            </Grid>
-                                        </Grid>
-                                    </CardContent>
-                                </Card>
-                                </Link>
-                            </Grid>       
-                        )
-                    })}
+                    <Card>
+                        <CardContent>
+                        <form>
+                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                            <Grid item xs={12} sm={12} >
+                                <TextField
+                                    id="outlined-multiline-static1"
+                                    label="Delivery Address"
+                                    multiline
+                                    rows={4}
+                                    defaultValue={values.DeliveryAddress}
+                                    onChange={handleChange2('DeliveryAddress')}
+                                    variant="outlined"
+                                    placeholder="Enter Address Here"
+                                    fullWidth
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={12}>
+                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                    <InputLabel id="demo-simple-select-outlined-label">Payment Method</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-outlined-label"
+                                        id="demo-simple-select-outlined"
+                                        value={values.PaymentMethod}
+                                        onChange={handleChange}
+                                        label="Payment Method"
+                                        name="PaymentMethod"
+                                        className={classes.root}
+                                    >
+                                        {/* <MenuItem value={"Select Method"}>Select Method</MenuItem> */}
+                                        {/* <MenuItem value={"Credit, Visa Debit Or Master Card"}>Credit, Visa Debit Or Master Card</MenuItem> */}
+                                        <MenuItem value={"Cash on Delivery"}>Cash on Delivery</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={12} sm={12} >
+                                <TextField
+                                    id="outlined-multiline-static"
+                                    label="Additionl Info"
+                                    multiline
+                                    rows={4}
+                                    defaultValue={values.AdditionalInfo}
+                                    onChange={handleChange2('AdditionalInfo')}
+                                    variant="outlined"
+                                    placeholder="Enter Additional Info Here"
+                                    fullWidth
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={12} >
+                                {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
+                                {success && <Alert variant="filled" severity="success" className={classes.alert}>{success}</Alert>}
+                                <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button" onClick={handleSubmit}>
+                                    Complete Order 
+                                </Button>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <DashboardFooter />
+                            </Grid>
+                        </Grid>
+                    </form>
+                        </CardContent>
+                    </Card>
                 </Grid>
             </>
         )
