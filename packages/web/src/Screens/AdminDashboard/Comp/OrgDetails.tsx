@@ -1,6 +1,6 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { Grid, makeStyles, createStyles, Typography, Theme, Card, CardHeader, Avatar, CardMedia, CardContent } from '@material-ui/core';
-import React, { useEffect } from 'react';
+import { AppBar ,Grid, makeStyles, createStyles, Typography, Theme, Card, CardHeader, Avatar, CardMedia, CardContent, TextField, FormControl, InputLabel, Select, MenuItem, Button, Box, Tabs, Tab } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 //import clsx from 'clsx';
 //Import Components
@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import PhoneEnabledIcon from '@material-ui/icons/PhoneEnabled';
+import { Alert } from '@material-ui/lab';
 
 
 
@@ -19,12 +20,91 @@ import PhoneEnabledIcon from '@material-ui/icons/PhoneEnabled';
 
 // Phone Number to test
 //const phoneNumber = " (876)-888-8888"
+interface State {
+    Name: string;
+    Email: string;
+    StreetAddress: string;
+    City: string;
+    Contact: string;
+    Category: string;
+}
+
+interface TabPanelProps {
+    children?: React.ReactNode;
+    index: any;
+    value: any;
+}
+
+function TabPanel(props: TabPanelProps) {
+    const { children, value, index, ...other } = props;
+  
+    return (
+      <div
+        role="tabpanel"
+        hidden={value !== index}
+        id={`scrollable-auto-tabpanel-${index}`}
+        aria-labelledby={`scrollable-auto-tab-${index}`}
+        {...other}
+      >
+        {value === index && (
+          <Box p={3}>
+            <Typography>{children}</Typography>
+          </Box>
+        )}
+      </div>
+    );
+  }
+  
+  function a11yProps(index: any) {
+    return {
+      id: `scrollable-auto-tab-${index}`,
+      'aria-controls': `scrollable-auto-tabpanel-${index}`,
+    };
+  }
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
         root: {
-            padding: "2% 0% 5% 0%",
+            padding: "2% 5% 0% 5%",
             // borderRadius: "22px"
+            borderRadius: "22px",
+            "& .MuiInputBase-root": {
+                color: "#9B9B9B ",
+                borderColor: "#888888",
+                border: "0.1px dotted"
+            },
+            "& .MuiSelect-select:$focus": {
+                backgroundColor: "inherit",
+                color: "#9B9B9B"
+            },
+            "& .MuiFormLabel-root": {
+                fontWeight: 700,
+                fontSize: "1.2rem"
+            },
+            "& .MuiInputLabel-root.Mui-focused":{
+                color: "#9B9B9B"
+            }
+        },
+        root2: {
+            padding: "0% 5% 0% 5%",
+            // borderRadius: "22px"
+            borderRadius: "22px",
+            "& .MuiInputBase-root": {
+                color: "#9B9B9B ",
+                borderColor: "#888888",
+                border: "0.1px dotted"
+            },
+            "& .MuiSelect-select:$focus": {
+                backgroundColor: "inherit",
+                color: "#9B9B9B"
+            },
+            "& .MuiFormLabel-root": {
+                fontWeight: 700,
+                fontSize: "1.2rem"
+            },
+            "& .MuiInputLabel-root.Mui-focused":{
+                color: "#9B9B9B"
+            }
         },
         category: {
             fontWeight: "bold"
@@ -125,21 +205,55 @@ const useStyles = makeStyles((theme: Theme) =>
                 /*backgroundColor: "#F86363", In-Active*/
                 borderRadius: "50%",
                 display: "inline-block"
+        },
+        formControl: {
+            margin: theme.spacing(1),
+            minWidth: 120,
+            marginLeft: "0px"
+        },
+        alert: {
+            marginBottom: "5%"
         }
     }),
 );
 
-export const OrgDetails: React.FC = function OrgDetails(props) {
+export const OrgDetails: React.FC = function OrgDetails() {
     const classes = useStyles();
     
+    const [values, setValues] = React.useState<State>({
+        Name: '',
+        Email: '',
+        StreetAddress: '',
+        City: '',
+        Contact: '',
+        Category: ''
+    });
+    const [tab, setTab] = React.useState(0);
     var { value }  = useAppData();
-    var { fetchRestaurants, restaurants, viewMenuItems } = value;
-    
+    var { fetchRestaurants, selectedRestaurant, restaurants, viewMenuItems } = value;
+    var [error, setError] = useState('');
+    var [success, setSuccess] = useState('');
+
     useEffect(() => {
         //console.log("inside use effect");
         //console.log(restaurants);
+        try{
+            if(restaurants.length > 0 && selectedRestaurant !== undefined){
+                let restaurant = restaurants[selectedRestaurant];
+                setValues({
+                    Name: restaurant.FirstName,
+                    Email: restaurant.Email,
+                    StreetAddress: restaurant.AddressLine1,
+                    City: restaurant.City,
+                    Contact: restaurant.ContactNumber,
+                    Category: restaurant.category.Name
+                })
+            }
+        }catch(err) {
+            console.log(err)
+        }
         
-    }, [restaurants])
+    }, [restaurants, selectedRestaurant])
 
     // const [values, setValues] = React.useState<State>({
     //     email: '',
@@ -148,6 +262,19 @@ export const OrgDetails: React.FC = function OrgDetails(props) {
     //   });
     
     var history = useHistory();
+
+    const handleSubmit = async () => {
+        try{
+            setError('');
+            setSuccess('');
+            
+        }catch(e: any) { 
+            ////console.log(e.message)
+            let path = e.message
+            let result = path.split("Path")
+            setError(result[1]);
+        }
+    }
 
     var handleSelectedRestaurant = async function(index){
         if(index !== undefined || index !== null){
@@ -160,73 +287,143 @@ export const OrgDetails: React.FC = function OrgDetails(props) {
             })
         } 
     }
+    const handleChange3 = (event: React.ChangeEvent<{}>, newValue: number) => {
+        setTab(newValue);
+      };
+
+    const handleChange2 = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+        setValues({ ...values, [prop]: event.target.value });
+    };
+
+    const handleChange = (event) => {
+        setValues({...values,[event.target.name]:event.target.value});
+    };
+
     if (restaurants.length !== 0){  
         return (
             <>
-                <Typography variant="body1" style={{paddingTop: "3%", paddingBottom: "3%"}}>
-                    {/* Please select from the list of reataurants listed below to see their menu. */}
+                <Typography variant="h5" 
+                style={{paddingTop: "3%", paddingBottom: "3%",
+                 fontWeight: "bold", textAlign: "center", color: "#FF5E14"}}>
+                    Edit restaurant details below.
                 </Typography>
                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                     <Card>
                         <CardContent>
-                        <form>
-                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                            <Grid item xs={12} sm={12} >
-                                <TextField
-                                    id="outlined-multiline-static1"
-                                    label="Delivery Address"
-                                    multiline
-                                    rows={4}
-                                    defaultValue={values.DeliveryAddress}
-                                    onChange={handleChange2('DeliveryAddress')}
-                                    variant="outlined"
-                                    placeholder="Enter Address Here"
-                                    fullWidth
-                                />
+                            <AppBar position="static" color="default">
+                                <Tabs
+                                value={tab}
+                                onChange={handleChange3}
+                                indicatorColor="primary"
+                                textColor="primary"
+                                variant="scrollable"
+                                scrollButtons="auto"
+                                aria-label="scrollable auto tabs example"
+                                >
+                                <Tab label="Gernal Details" {...a11yProps(0)} />
+                                <Tab label="Menu Details" {...a11yProps(1)} />
+                                
+                                </Tabs>
+                            </AppBar>
+                            <TabPanel value={tab} index={0}>
+                                <form>
+                                    <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                        <Grid item xs={12} sm={6} >
+                                            <TextField
+                                                id="outlined-multiline-static1"
+                                                label="Restaurant Name"
+                                                // multiline
+                                                // rows={4}
+                                                value={values.Name}
+                                                onChange={handleChange2('Name')}
+                                                variant="outlined"
+                                                placeholder="Enter Restaurant Name"
+                                                fullWidth
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} sm={6} >
+                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                <TextField
+                                                    id="outlined-multiline-static"
+                                                    label="Email"
+                                                    // multiline
+                                                    // rows={4}
+                                                    value={values.Email}
+                                                    onChange={handleChange2('Email')}
+                                                    variant="outlined"
+                                                    placeholder="Enter Email Address"
+                                                    fullWidth
+                                                />
+                                            </FormControl>
+                                        </Grid>
+                                        <Grid item xs={12} sm={6}>
+                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                            <TextField
+                                                id="outlined-multiline-static1"
+                                                label="City"
+                                                // multiline
+                                                // rows={4}
+                                                value={values.City}
+                                                onChange={handleChange2('City')}
+                                                variant="outlined"
+                                                placeholder="Enter City"
+                                                fullWidth
+                                            />
+                                            </FormControl>
+                                        </Grid>
+                                        <Grid item xs={12} sm={6}>
+                                            <TextField
+                                                id="outlined-multiline-static1"
+                                                label="Contact"
+                                                // multiline
+                                                // rows={4}
+                                                value={values.Contact}
+                                                onChange={handleChange2('Contact')}
+                                                variant="outlined"
+                                                placeholder="Enter Contact"
+                                                fullWidth
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} sm={6}>
+                                            <TextField
+                                                id="outlined-multiline-static1"
+                                                label="Category"
+                                                multiline
+                                                rows={2}
+                                                value={values.Category}
+                                                onChange={handleChange2('Category')}
+                                                variant="outlined"
+                                                placeholder="Enter Category"
+                                                fullWidth
+                                            />
+                                        </Grid>
+                                        <Grid item xs={12} sm={6}>
+                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                            <TextField
+                                                id="outlined-multiline-static1"
+                                                label="Street Address"
+                                                multiline
+                                                rows={2}
+                                                value={values.StreetAddress}
+                                                onChange={handleChange2('StreetAddress')}
+                                                variant="outlined"
+                                                placeholder="Enter Street Address"
+                                                fullWidth
+                                            />
+                                            </FormControl>
+                                        </Grid>
+                                    </Grid>
+                                </form>
+                            </TabPanel>
+                            <Grid container direction="row" spacing={1} className={classes.root2} alignItems="center">
+                                <Grid item xs={12} sm={12} >
+                                    {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
+                                    {success && <Alert variant="filled" severity="success" className={classes.alert}>{success}</Alert>}
+                                    <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button" onClick={handleSubmit}>
+                                        Update Details
+                                    </Button>
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12} sm={12}>
-                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                    <InputLabel id="demo-simple-select-outlined-label">Payment Method</InputLabel>
-                                    <Select
-                                        labelId="demo-simple-select-outlined-label"
-                                        id="demo-simple-select-outlined"
-                                        value={values.PaymentMethod}
-                                        onChange={handleChange}
-                                        label="Payment Method"
-                                        name="PaymentMethod"
-                                        className={classes.root}
-                                    >
-                                        {/* <MenuItem value={"Select Method"}>Select Method</MenuItem> */}
-                                        {/* <MenuItem value={"Credit, Visa Debit Or Master Card"}>Credit, Visa Debit Or Master Card</MenuItem> */}
-                                        <MenuItem value={"Cash on Delivery"}>Cash on Delivery</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item xs={12} sm={12} >
-                                <TextField
-                                    id="outlined-multiline-static"
-                                    label="Additionl Info"
-                                    multiline
-                                    rows={4}
-                                    defaultValue={values.AdditionalInfo}
-                                    onChange={handleChange2('AdditionalInfo')}
-                                    variant="outlined"
-                                    placeholder="Enter Additional Info Here"
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={12} >
-                                {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
-                                {success && <Alert variant="filled" severity="success" className={classes.alert}>{success}</Alert>}
-                                <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button" onClick={handleSubmit}>
-                                    Complete Order 
-                                </Button>
-                            </Grid>
-                            <Grid item xs={12}>
-                                <DashboardFooter />
-                            </Grid>
-                        </Grid>
-                    </form>
                         </CardContent>
                     </Card>
                 </Grid>

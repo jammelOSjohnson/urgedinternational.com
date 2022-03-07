@@ -53,7 +53,9 @@ export const OrgDetailsScreen: React.FC = () => {
                             <Grid item xs={8} style={{ marginBottom: "2%", marginTop: "1%", background: "transparent" }}>
                                 <HeaderLeft />
                             </Grid>
-                            <Grid item xs={4} style={{ marginBottom: "2%", marginTop: "1%", background: "transparent" }}>
+                            <Grid item xs={4} 
+                                style={{ marginBottom: "2%", marginTop: "1%", background: "transparent", 
+                                position: 'sticky',top: 0}}>
                                 <HeaderRight />
                             </Grid>
                             <Grid item xs={12}>
