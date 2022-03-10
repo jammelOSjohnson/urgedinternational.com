@@ -8,7 +8,7 @@ import clsx from 'clsx';
 import { LockRounded, EmailOutlined, PlayArrowRounded } from "@material-ui/icons/";
 import Alert from '@material-ui/lab/Alert';
 import { Link } from "react-router-dom";
-import { position } from 'html2canvas/dist/types/css/property-descriptors/position';
+import  { auth } from '../../firebase';
 
 interface State {
     email: string;
@@ -262,6 +262,9 @@ const mobileStyles = makeStyles((theme: Theme) =>
 export const LoginScreen: React.FC = function LoginScreen() {
     const classes = useStyles();
     const mobClasses = mobileStyles();
+    var history = useHistory();
+    var location = history.location;
+    var referralPath = location.pathname;
     //Breakpoints
     const theme = useTheme();
     const [open2, setOpen2] = React.useState(false);
@@ -284,8 +287,6 @@ export const LoginScreen: React.FC = function LoginScreen() {
     var [success2, setSuccess2] = useState('');
     // eslint-disable-next-line
     var [loading, setLoading] = useState(false);
-    
-    var history = useHistory();
 
     
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -378,6 +379,35 @@ export const LoginScreen: React.FC = function LoginScreen() {
             //console.log(err);
         }
     }
+
+    //Auth Change
+    auth.onAuthStateChanged(function (user){
+        console.log("auth");
+        if(referralPath === "/Login"){
+          //update the state for current user to the user logged in
+          ////console.log("about to set current user");
+          ////console.log(user);
+          //var userInfo = fetchUserInfo();
+          //const payload = {currentUser : user, loading: false, userInfo: userInfo}
+          var signonStatus = false;
+          if(user !== null){
+            signonStatus = user.uid !== null && user.uid !== undefined? true : false
+          
+          
+              var payload = {...value,currentUser : user, loading: false, loggedIn: signonStatus}
+              if(value.userInfo.email === "" ){
+                console.log("about to fetch user details")
+                  fetchUserDetails(payload);
+                  //  .then(function(res){
+                  //     if(!res){
+                  //         ////console.log('Unable to fetch user data at this time'); 
+                  //     }
+                  // });
+              }
+          } 
+          // eslint-disable-next-line
+        }
+      });
 
     var handleGoogleSubmit = async function handleGoogleSubmit(event) {
         event.preventDefault();
@@ -485,6 +515,8 @@ export const LoginScreen: React.FC = function LoginScreen() {
       };
 
     useEffect(() => {
+        console.log("Checking role");
+        console.log(userRolef);
         if(userRolef !== undefined && userRolef === "Admin" && userRolef !== ""){
             setLoading(false);
             setSuccess('Sign In Successful.');
@@ -513,9 +545,9 @@ export const LoginScreen: React.FC = function LoginScreen() {
                 ////console.log("about to go to dashboard");
                 if(history.location.state !== undefined){
                     history.push(history.location.state.from);
+                }else{
+                    history.push("/FoodDelivery");
                 }
-                
-                //history.push("/");
             }, 1500);
         }
     }, [userRolef])

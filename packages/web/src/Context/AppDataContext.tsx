@@ -592,8 +592,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
 
             var userRoleResf = undefined;
             await userHasRole(uid, payloadf).then(function (userRoleRes) {
-              //console.log("Final user ref is: ");
-              //console.log(userRoleRes);
+              console.log("Final user ref is: ");
+              console.log(userRoleRes);
               userRoleResf = userRoleRes;
               payloadf = userRoleRes;
               dispatch({
