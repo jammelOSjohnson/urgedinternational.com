@@ -192,10 +192,15 @@ export const OrdersCounters: React.FC = function OrdersCounters() {
     },[orders, data])
     
     const refreshOrders = async (Orders) => {
-        await refreshingOrderTables(value, Orders).then(()=>{
-            console.log("completed updating orders")
-            setTotal(Food + Errand + Express);
-        });
+        try{
+            await refreshingOrderTables(value, Orders).then(()=>{
+                console.log("completed updating orders")
+                setTotal(Food + Errand + Express);
+            });
+        }catch(err){
+            console.log(err);
+        }
+        
     }
 
     return (
