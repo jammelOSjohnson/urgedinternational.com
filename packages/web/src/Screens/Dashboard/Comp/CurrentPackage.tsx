@@ -3,7 +3,7 @@ import { Grid, makeStyles, createStyles, withStyles, Typography, Theme, CardMedi
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import LocalShippingOutlinedIcon from '@material-ui/icons/LocalShippingOutlined';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
-import React from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { useHistory } from 'react-router-dom';
 
@@ -149,29 +149,37 @@ export const CurrentPackage: React.FC = function CurrentPackage() {
       //     setActiveStep(0);
       // };
       
-      if(orders.length > 0){
-        let latestOrderLength = orders.length -1;
+      const [latestOrderLength, setLatestOrderLength] = React.useState(0);
+      const [latestOrderImage, setLatestOrderImage] = React.useState('');
+      const [latestOrderStatus, setLatestOrderStatus] = React.useState('');
 
-        let latestOrderImage = "";
-        let latestOrderStatus = "";
+      useEffect(() => {
+        try{
+          orders.map((item, index) => {
+            if(index === orders.length -1){
+              setLatestOrderImage(item.OrderItems[0].imageName);
+              setLatestOrderStatus(item.OrderStatus);
+            }
+          })
 
-        orders.map((item, index) => {
-          if(index === orders.length -1){
-            latestOrderImage = item.OrderItems[0].imageName;
-            latestOrderStatus = item.OrderStatus;
+          if(latestOrderStatus === "Ordered" && activeStep !== 0){
+            setActiveStep(-1);
+          }else if(latestOrderStatus === "Picked Up" && activeStep !== 1){
+            setActiveStep(1);
+          }else if(latestOrderStatus === "In Transit" && activeStep !== 2){
+            setActiveStep(2);
+          }else if(latestOrderStatus === "Delivered" && activeStep !== 3){
+            setActiveStep(2);
           }
-        })
 
-        if(latestOrderStatus === "Ordered" && activeStep !== 0){
-          setActiveStep(-1);
-        }else if(latestOrderStatus === "Picked Up" && activeStep !== 1){
-          setActiveStep(1);
-        }else if(latestOrderStatus === "In Transit" && activeStep !== 2){
-          setActiveStep(2);
-        }else if(latestOrderStatus === "Delivered" && activeStep !== 3){
-          setActiveStep(2);
+          setLatestOrderLength(orders.length -1);
+        }catch(err){
+          console.log(err);
         }
+      }, [orders])
       
+      if(orders.length > 0 && latestOrderStatus !== ""){
+        
         return (
             <>
                 

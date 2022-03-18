@@ -90,24 +90,68 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                                         <br /><br />We convey by Air and Sea.
                                         </Typography>
                                         <hr />
-                                        <Typography>
-                                            My Shipping Address
-                                        </Typography>
-                                        <Typography style={{color: "#FF5E14"}}>
-                                            {userInfo.fullName}
-                                        </Typography>
-                                        <Typography>
-                                            3489 N.W 19th street 
-                                        </Typography>
-                                        <Typography>
-                                            Urged
-                                        </Typography>
-                                        <Typography>
-                                            Lauderdale Lakes 
-                                        </Typography>
-                                        <Typography>
-                                            Florida 33311 
-                                        </Typography>
+                                        <Grid container direction="row" xs={12} spacing={0}>
+                                            <Grid item xs={12} sm={4}>
+                                                <Typography>
+                                                    Uship Air Freight Address
+                                                </Typography>
+                                                <Typography >
+                                                    Name:&nbsp; 
+                                                    <span style={{color: "#FF5E14"}}>{userInfo.fullName}</span>
+                                                </Typography>
+                                                <Typography>
+                                                    Address 1&nbsp;
+                                                    <span>3750 W OAKLAND PARK BLVD</span> 
+                                                </Typography>
+                                                <Typography>
+                                                    Address 2:&nbsp;
+                                                    <span>LOC25 US
+                                                        <span style={{color: "#FF5E14", textDecoration: "underline"}}>
+                                                            MAILBOX NUMBER
+                                                        </span>
+                                                    </span>
+                                                </Typography>
+                                                <Typography>
+                                                    City:&nbsp;
+                                                    <span>Lauderdale Lakes</span> 
+                                                </Typography>
+                                                <Typography>
+                                                    State:&nbsp;
+                                                    <span>Florida</span>&nbsp;ZipCode:&nbsp;
+                                                    <span>33311</span>
+                                                </Typography>
+                                                <Typography style={{color: "#FF5E14"}}>
+                                                    NB: ADDRESS LINE 2 “LOC25 US__”<br /> 
+                                                    MUST BE ADDED AT ALL GIVING TIMES UNLESS PACKAGES WILL BE MISPLACED. 
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item xs={12} sm={4}>
+                                                <Typography>
+                                                    UShip Sea Shipping Address
+                                                </Typography>
+                                                <Typography >
+                                                    Name:&nbsp; 
+                                                    <span style={{color: "#FF5E14"}}>{userInfo.fullName}</span>
+                                                </Typography>
+                                                <Typography>
+                                                    Address 1&nbsp;
+                                                    <span>3489 N.W 19th street</span> 
+                                                </Typography>
+                                                <Typography>
+                                                    Address 2:&nbsp;
+                                                    <span>Urged</span>
+                                                </Typography>
+                                                <Typography>
+                                                    City:&nbsp;
+                                                    <span>Lauderdale Lakes</span> 
+                                                </Typography>
+                                                <Typography>
+                                                    State:&nbsp;
+                                                    <span>Florida</span>&nbsp;ZipCode:&nbsp;
+                                                    <span>33311</span>
+                                                </Typography>
+                                            </Grid>
+                                        </Grid>
                                         <br />
                                         <hr />
                                         <br />

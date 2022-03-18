@@ -158,7 +158,7 @@ export const OrganisationsCardList: React.FC = function OrganisationsCardList(pr
             var payload = value;
             payload.selectedRestaurant = index;
             await viewMenuItems(payload).then(() => {
-                history.push("/Menu")
+                history.push("/OrgDetails")
             })
         } 
     }

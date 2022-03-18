@@ -348,25 +348,11 @@ export const Categories: React.FC = function Categories() {
                     <Link to={`${referralPath}`} className={classes.links} onClick={handleOpen2} title="Errand Services">
                         <Card className={classes.card}>
                             <CardMedia className={classes.cardImage}>
-                                <img src="Images/lightbluetruckIconImageSM.png" alt="lightbluetruckIconImageSM"></img>
+                                <img src="Images/UShip.png" alt="lightbluetruckIconImageSM"></img>
                             </CardMedia>
                             <CardContent className={classes.cardContent}>
                                 <Typography gutterBottom className={classes.cardTitle2}>
-                                    Errand Services
-                                </Typography>
-                            </CardContent>
-                        </Card>
-                    </Link>
-                </Grid>
-                <Grid item xs={12} md={3}>
-                    <Link to={`${referralPath}`} className={classes.links} onClick={handleOpen2} title="Urged Express">
-                        <Card className={classes.card}>
-                            <CardMedia className={classes.cardImage}>
-                                <img src="Images/yellowtruckIconImageSM.png" alt="yellowtruckIconImageSM"></img>
-                            </CardMedia>
-                            <CardContent className={classes.cardContent}>
-                                <Typography gutterBottom className={classes.cardTitle3}>
-                                    Urged Express
+                                    Express &amp; Errand
                                 </Typography>
                             </CardContent>
                         </Card>
@@ -383,15 +369,29 @@ export const Categories: React.FC = function Categories() {
                     }}>
                         <Card className={classes.card}>
                             <CardMedia className={classes.cardImage}>
-                                <img src="Images/GreenMarketPlace.png" alt="GreenMarketPlace"></img>
+                                <img src="Images/yellowtruckIconImageSM.png" alt="GreenMarketPlace"></img>
                             </CardMedia>
                             <CardContent className={classes.cardContent}>
-                                <Typography gutterBottom className={classes.cardTitle4}>
-                                    Cargo &amp; Freight
+                                <Typography gutterBottom className={classes.cardTitle3}>
+                                    UShip
                                 </Typography>
                             </CardContent>
                         </Card>
                     </Link>
+                </Grid>
+                <Grid item xs={12} md={3}>
+                    <a href='https://sallyspantry.com/' target="_blank" className={classes.links} onClick={handleOpen2} title="Sally's Pantry">
+                        <Card className={classes.card}>
+                            <CardMedia className={classes.cardImage}>
+                                <img src="Images/GreenMarketPlace.png" alt="yellowtruckIconImageSM"></img>
+                            </CardMedia>
+                            <CardContent className={classes.cardContent}>
+                                <Typography gutterBottom className={classes.cardTitle4}>
+                                    Sally's Pantry
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    </a>
                 </Grid>
             </Grid>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>

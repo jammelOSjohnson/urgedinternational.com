@@ -310,7 +310,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 {
                                   index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
                                   index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                  index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                  index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                   index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
                                   index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                 }
@@ -324,7 +324,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 {
                                   index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
                                   index === 1 ? <img src="Images/WhiteFoodDeliveryService.png" alt="Food icon"/> : 
-                                  index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                  index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                   index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
                                   index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                 }
@@ -338,7 +338,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 {
                                   index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
                                   index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                  index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                  index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                   index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
                                   index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                 }
@@ -352,7 +352,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 {
                                   index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
                                   index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                  index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                  index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                   index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
                                   index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                 }
@@ -367,7 +367,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                   {
                                     index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
                                     index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                    index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                    index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                     index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
                                     index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  />: <MailIcon />
                                   }
@@ -383,7 +383,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                     {
                                       index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
                                       index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                      index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                       index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
                                       index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                     }
@@ -399,7 +399,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                     {
                                       index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
                                       index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                      index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                       index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
                                       index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                     }
@@ -414,7 +414,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                   {
                                     index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
                                     index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                    index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                    index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                     index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
                                     index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                   }
@@ -430,7 +430,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                       {
                                         index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
                                         index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                        index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                        index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                         index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
                                         index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                       }
@@ -446,7 +446,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 {
                                   index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
                                   index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                  index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                  index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                   index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
                                   index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                 }
@@ -641,7 +641,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 {
                                   index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
                                   index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                  index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                  index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                   index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
                                   index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                 }
@@ -655,7 +655,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 {
                                   index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
                                   index === 1 ? <img src="Images/WhiteFoodDeliveryService.png" alt="Food icon"/> : 
-                                  index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                  index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                   index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
                                   index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                 }
@@ -669,7 +669,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 {
                                   index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
                                   index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                  index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                  index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                   index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
                                   index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                 }
@@ -683,7 +683,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 {
                                   index === 0 ? <img src="Images/GroupSquareIcon.png2" alt="square icon"/> :
                                   index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                  index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                  index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                   index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
                                   index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                 }
@@ -698,7 +698,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                   {
                                     index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
                                     index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                    index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                    index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                     index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
                                     index === 4 ? <HistoryRounded style={{width: "36px", height: "38px", color: "#FFF"}}  /> : <MailIcon />
                                   }
@@ -714,7 +714,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                     {
                                       index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
                                       index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                      index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                       index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
                                       index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                     }
@@ -731,7 +731,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                       {
                                         index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
                                         index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                        index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                        index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                         index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
                                         index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                       }
@@ -749,7 +749,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                     {
                                       index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
                                       index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                      index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                       index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
                                       index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                     }
@@ -764,7 +764,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                   {
                                     index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
                                     index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                    index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                    index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                     index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
                                     index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                   }
@@ -778,7 +778,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                   {
                                     index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
                                     index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                    index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                    index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                     index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
                                     index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                   }
@@ -791,7 +791,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                               {
                                 index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
                                 index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                 index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
                                 index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                               }

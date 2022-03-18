@@ -396,6 +396,13 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         });
       }); //return res;
     };
+
+    var resetPassword = function resetPassword(email) {
+      //retuns a promise
+      var resultf = auth.sendPasswordResetEmail(email); //console.log(resultf);
+    
+      return resultf;
+    };
     
     var userHasRole = async function userHasRole(uid, payload) {
       //console.log("User id is: ");
@@ -585,8 +592,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
 
             var userRoleResf = undefined;
             await userHasRole(uid, payloadf).then(function (userRoleRes) {
-              //console.log("Final user ref is: ");
-              //console.log(userRoleRes);
+              console.log("Final user ref is: ");
+              console.log(userRoleRes);
               userRoleResf = userRoleRes;
               payloadf = userRoleRes;
               dispatch({
@@ -1297,6 +1304,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         login,
         gLogin,
         logout,
+        resetPassword,
         getAddress,
         fetchUserInfoForSignUp,
         fetchUserInfo,
