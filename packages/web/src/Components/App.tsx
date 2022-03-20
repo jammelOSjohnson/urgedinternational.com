@@ -49,6 +49,7 @@ import { getMainDefinition } from '@apollo/client/utilities';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createTheme, ThemeProvider } from '@material-ui/core';
 import { useEffect } from 'react';
+import "../css/scrollbar.css";
 import "jspdf/dist/polyfills.es.js";
 
 
