@@ -16,7 +16,8 @@ import {
         UPDATE_PAY_SETTING, 
         GET_ORDERS_BY_RIDERID_AND_DATE,
         GET_PACKAGE_BYID_MUTATION,
-        ADD_PACKAGE_MUTATION
+        ADD_PACKAGE_MUTATION,
+        UPDATE_CONTACT_AND_ADDRESS_BYID_MUTATION
       } from '../GraphQL/Mutations';
 import { useMutation } from '@apollo/client';
 import sendEmail from "../email.js";
@@ -224,6 +225,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
 
     const [getPackageById] = useMutation(GET_PACKAGE_BYID_MUTATION);
     const [addPackage] = useMutation(ADD_PACKAGE_MUTATION);
+    const [updateContactAndAddress] = useMutation(UPDATE_CONTACT_AND_ADDRESS_BYID_MUTATION);
 
     var currentUser = undefined;
     var selectedRestaurant = undefined;
@@ -256,6 +258,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       addressLine2: "",
       city: ""
     };
+
+    let mailbox_Num = undefined;
 
     let paySettings = undefined;
 
@@ -489,6 +493,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           var user = response.data.getUser;
     
           if (user !== null) {
+            payload.userInfo._id = user._id;
             payload.userInfo.contactNumber = user.ContactNumber;
             payload.userInfo.email = user.Email;
             payload.userInfo.fullName = user.FirstName;
@@ -521,7 +526,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             createUser({variables: {...user2}}).then(async function (response2) {
               if(response2.data.getUser !== null){
                 ////console.log("User info  successfully written!");
-                ////console.log(response2.data);  
+                ////console.log(response2.data);
+                payload.userInfo._id = user._id;  
                 payload.userInfo.contactNumber = user2.ContactNumber;
                 payload.userInfo.email = user2.Email;
                 payload.userInfo.fullName = user2.FirstName;
@@ -585,6 +591,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           //console.log("firstname is:");
           //console.log(user.FirstName);
           if (user !== null) {
+            payloadf.userInfo._id = user._id;
             payloadf.userInfo.contactNumber = user.ContactNumber !== null && user.ContactNumber !== undefined ? user.ContactNumber : "";
             payloadf.userInfo.email = user.Email !== null && user.Email !== undefined ? user.Email : "";
             payloadf.userInfo.fullName = user.FirstName !== null && user.FirstName !== undefined? user.FirstName : "";
@@ -1291,7 +1298,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           Courier: ''
       };
 
-      let user= uid;
+      let Pickup = packageZip.pickup;
+      let Deliver = packageZip.deliver;
+      let Customer= `${UserInfo._id}`;
       let TrackingNumber= packageZip.trackingNum2;
       
       var fileType = packageZip.content.type;
@@ -1299,33 +1308,57 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         user_email: "",
         user_name: "",
         merchant: packageZip.merchant !== null && packageZip.merchant !== undefined ? packageZip.merchant : "",
-        status: packageZip.status !== null && packageZip.status !== undefined ? packageZip.status : "",
+        status: PackageInfo.Status !== null && PackageInfo.Status !== undefined ? PackageInfo.Status : "",
         content: file,
-        tracking_number: packageZip.tracking_number
+        tracking_number: packageZip.trackingNum2,
+        Contact: packageZip.contact,
+        ALine1: packageZip.aLine1,
+        ALine2: packageZip.aLine2,
+        City: packageZip.city,
+        Pickup: packageZip.pickup
       };
       var packArr = [];
       
       var checkIfPackageExists = await getPackageById({variables: {TrackingNumber: packageZip.trackingNum2}}).then(async function(response) {
         console.log("Checking user result for fetch user info");
-        console.log(response.data.getUser);
-        if (response.data.getUser !== null && response.data.getUser !== undefined) {
+        //console.log(response.data.getPackageById);
+        if (response.data.getPackageById !== null && response.data.getPackageById !== undefined) {
           return "Tracking number exist";
         } else {
-          //console.log("Package with Tracking number does not exist.")
-          var storeRes = await addPackage({variables: {PackageInfo, user, TrackingNumber}}).then(async function (response2) {
+          console.log("Package with Tracking number does not exist.")
+          var storeRes = await addPackage({variables: {PackageInfo, Customer, TrackingNumber, Pickup, Deliver}}).then(async function (response2) {
             //console.log("New Package Details  successfully written!");
             if (UserInfo !== null && UserInfo !== undefined && UserInfo.fullName !== "" && UserInfo.email !== "") {
               RequestParams.user_email = UserInfo.email;
               RequestParams.user_name = UserInfo.fullName; //console.log("Params going to sendNewPackageMethod");
               //console.log(RequestParams);
     
-              var emailRes = await sendPreAlertEmail(RequestParams, fileType).then(function (emailSentRes) {
-                if (emailSentRes) {
-                  return true;
-                } else {
-                  //console.log("Unable to send add package email at this time.")
-                  return true;
+              var emailRes = await sendPreAlertEmail(RequestParams, fileType).then(async function (emailSentRes) {
+                if(Deliver){
+                  console.log("about to update contact and address details.")
+                  let updateCAndAddress = await updateContactAndAddress({variables: {_id: Customer, ALine1: packageZip.aLine1, ALine2: packageZip.aLine2,
+                    Contact: packageZip.contact, City: packageZip.city}}).then(async function (response2) {
+                    if (emailSentRes) {
+                      return true;
+                    } else {
+                      //console.log("Unable to send add package email at this time.")
+                      return true;
+                    }
+                  }).catch(function (err) {
+                    //console.log("Unable to send add package email at this time.")
+                    //console.log(err);
+                    return true;
+                  });
+                  return updateCAndAddress;
+                }else{
+                  if (emailSentRes) {
+                    return true;
+                  } else {
+                    //console.log("Unable to send add package email at this time.")
+                    return true;
+                  }
                 }
+                
               }).catch(function (err) {
                 //console.log("Unable to send add package email at this time.")
                 //console.log(err);
@@ -1351,10 +1384,19 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var sendPreAlertEmail = async function sendPreAlertEmail(formVals, filetype) {
       //console.log("Wtf is in formVals");
       //console.log(formVals);
+      let endingMessage = formVals.Pickup? "delivered to the store." : 
+                          "delivered to " + formVals.ALine1 + ", " + 
+                          formVals.ALine2 + ", " + formVals.City + ".";
       var RequestParams = {
         from_name: formVals.user_name,
         user_email: formVals.user_email,
-        message: "A new pre alert was added by " + formVals.user_name + " with status of " + formVals.status + " and tracking number " + formVals.tracking_number + ".",
+        message: "A new pre alert was added by " + 
+                formVals.user_name + " with status of " + 
+                formVals.status + " and tracking number " + 
+                formVals.tracking_number + ". " + formVals.user_name + 
+                " can be contacted via " + formVals.Contact +
+                " and package(s) should be " 
+                + endingMessage,
         content_pdf: undefined,
         content_svg: undefined,
         content_jpeg: undefined,
@@ -1414,6 +1456,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         serviceWorkerUpdated,
         serviceWorkerRegistration,
         paySettings,
+        mailbox_Num,
         JoinUs,
         signup,
         login,

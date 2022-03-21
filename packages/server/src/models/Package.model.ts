@@ -6,16 +6,23 @@ const PackageSchema = new Schema({
         type: Object,
         required: true
     },
-    user: {
+    Customer: {
         type: Schema.Types.ObjectId, 
         ref: 'user',
-        required: true
+        required: false
     },
     TrackingNumber: {
         type: String,
         required: true
+    },
+    Pickup: {
+        type: Boolean,
+        required: true
+    },
+    Deliver: {
+        type: Boolean,
+        required: true
     }
-
 });
 
 const Package = model('package', PackageSchema);

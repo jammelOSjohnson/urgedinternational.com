@@ -183,8 +183,10 @@ const typeDefs = /* GraphQL */`
 
     type Package {
         PackageInfo: JSONObject,
-        user: User,
-        TrackingNumber: String
+        Customer: User,
+        TrackingNumber: String,
+        Pickup: Boolean,
+        Deliver: Boolean
     }
 
     type Query {
@@ -319,11 +321,21 @@ const typeDefs = /* GraphQL */`
 
         addPackage(
             PackageInfo: JSONObject,
-            user: String,
-            TrackingNumber: String
-            ): Package!
+            Customer: ID,
+            TrackingNumber: String,
+            Pickup: Boolean,
+            Deliver: Boolean
+            ): Package
             
         getPackageById(TrackingNumber: String): Package 
+
+        updateContactAndAddress(
+            _id: ID,
+            ALine1: String,
+            ALine2: String,
+            Contact: String,
+            City: String
+        ): User
     }
 `;
 

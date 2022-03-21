@@ -16,6 +16,7 @@ import GpsFixedIcon from '@material-ui/icons/GpsFixed';
 import { Field } from './Comp/Field';
 import DescriptionIcon from '@material-ui/icons/Description';
 import Alert from '@material-ui/lab/Alert';
+import { MailBoxNumber } from './Comp/MailBoxNumber';
 
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -374,12 +375,11 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
             setError("Please enter a valid tracking number.");
         }else if(state.contact.length < 7){
             setError("Please enter a valid contact number.");
-        }else if(state.deliver){
-            if(state.aLine1.length < 5){
-                setError("Please enter a address line 1.");
-            }else if(state.city.length < 2){
-                setError("Please a city.");
-            }
+        }else if(state.deliver && state.aLine1.length < 5){
+            setError("Please enter a address line 1.");
+        }else if(state.deliver && state.city.length < 2){
+            setError("Please a Parish.");
+        
         }else{
             if(state.content !== null && state.content !== undefined ){
                 if(state.content.type !== null || state.content.type !== undefined){
@@ -399,18 +399,18 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                                 try{
                                     setError('');
                                     setSuccess('');
-                                    var createPreAlertBtn = document.getElementById("create_prealert_btn") as HTMLButtonElement;
-                                    var dateFeildDesktop = document.getElementById("your_unique_id_desk");
-                                    var dateFeildMobile = document.getElementById("your_unique_id_mobile");
+                                    // var createPreAlertBtn = document.getElementById("create_prealert_btn") as HTMLButtonElement;
+                                    // var dateFeildDesktop = document.getElementById("your_unique_id_desk");
+                                    // var dateFeildMobile = document.getElementById("your_unique_id_mobile");
                                     await createPreAlert(state, data, currentUser.uid, userInfo, mailbox_Num).then(function(res){
                                         if(res === true){
                                             setSuccess('Pre alert created successfully.');
-                                            if(createPreAlertBtn !== null){
-                                                if(createPreAlertBtn.disabled === true){
-                                                    //console.log("Enabling button");
-                                                    createPreAlertBtn.disabled = false;
-                                                }
-                                            }
+                                            // if(createPreAlertBtn !== null){
+                                            //     if(createPreAlertBtn.disabled === true){
+                                            //         //console.log("Enabling button");
+                                            //         createPreAlertBtn.disabled = false;
+                                            //     }
+                                            // }
 
                                             setState({
                                                 trackingNum: '',
@@ -428,20 +428,20 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                                             
                                         }else if(res === false){
                                             setError('Unable to create Pre Alert at this time');
-                                            if(createPreAlertBtn !== null){
-                                                if(createPreAlertBtn.disabled === true){
-                                                    //console.log("Enabling button");
-                                                    createPreAlertBtn.disabled = false;
-                                                }
-                                            }
+                                            // if(createPreAlertBtn !== null){
+                                            //     if(createPreAlertBtn.disabled === true){
+                                            //         //console.log("Enabling button");
+                                            //         createPreAlertBtn.disabled = false;
+                                            //     }
+                                            // }
                                         }else if(res === "Tracking number exist"){
                                             setError("A package was already added with tracking number " + state.trackingNum2);
-                                            if(createPreAlertBtn !== null){
-                                                if(createPreAlertBtn.disabled === true){
-                                                    //console.log("Enabling button");
-                                                    createPreAlertBtn.disabled = false;
-                                                }
-                                            }
+                                            // if(createPreAlertBtn !== null){
+                                            //     if(createPreAlertBtn.disabled === true){
+                                            //         //console.log("Enabling button");
+                                            //         createPreAlertBtn.disabled = false;
+                                            //     }
+                                            // }
                                         }
                                     }).catch(function(err){
                                         //console.log(err);
@@ -449,13 +449,13 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                 
                                 }catch{
                                     setError('Unable to create Pre Alert at this time.');
-                                    var createPreAlertBtn = document.getElementById("create_prealert_btn") as HTMLButtonElement;
-                                    if(createPreAlertBtn !== null){
-                                        if(createPreAlertBtn.disabled === true){
-                                            //console.log("Enabling button");
-                                            createPreAlertBtn.disabled = false;
-                                        }
-                                    }
+                                    // var createPreAlertBtn = document.getElementById("create_prealert_btn") as HTMLButtonElement;
+                                    // if(createPreAlertBtn !== null){
+                                    //     if(createPreAlertBtn.disabled === true){
+                                    //         //console.log("Enabling button");
+                                    //         createPreAlertBtn.disabled = false;
+                                    //     }
+                                    // }
                                 }
                             });
                         }else{
@@ -567,9 +567,7 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                                                         <Typography>
                                                             Address 2:&nbsp;
                                                             <span>LOC25 US
-                                                                <span style={{color: "#FF5E14", textDecoration: "underline"}}>
-                                                                    MAILBOX NUMBER
-                                                                </span>
+                                                                <MailBoxNumber />
                                                             </span>
                                                         </Typography>
                                                         <Typography>
@@ -778,7 +776,7 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                                                             <FormControl variant="outlined" className={classes.formControl} fullWidth>
                                                                 <TextField
                                                                     id="outlined-helperText"
-                                                                    label="Enter City"
+                                                                    label="Enter Parish"
                                                                     value={state.city}
                                                                     variant="outlined"
                                                                     onChange={handleChange2('city')}

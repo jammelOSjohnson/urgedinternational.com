@@ -5,15 +5,16 @@ import MenuItem from './models/MenuItem.model';
 import Category from './models/Category.model';
 import MenuCategory from './models/MenuCategory.model';
 import Order from './models/Order.model';
+import PaySetting from './models/PaySetting.model';
+import Package from './models/Package.model';
 import { json } from 'express';
 const { GraphQLScalarType, Kind } = require('graphql');
+const mongoose = require('mongoose');
 
 //subscriptions test 
 import { PubSub } from 'graphql-subscriptions';
 //import { GooglePubSub } from '@axelspringer/graphql-google-pubsub';// For Production
 import { RedisPubSub } from 'graphql-redis-subscriptions'; // For Production
-import PaySetting from './models/PaySetting.model';
-import Package from './models/Package.model';
 const pubsub = new RedisPubSub(
                 process.env.NODE_ENV === "production"
                 ? {
@@ -258,12 +259,47 @@ const resolvers = {
 
         //Packages
         getPackageById: async (_,{TrackingNumber}) => {
-            return await Package.findOne({TrackingNumber}).populate({path: "users", model: "user"});    
+            let packFound = await Package.findOne({TrackingNumber}).populate('Customer'); 
+            //console.log('pack found is')  
+            //console.log(packFound);
+            return packFound; 
         },
 
-        addPackage: (_,{PackageInfo, user, TrackingNumber}) => {
-            const Pack = new Package({PackageInfo, user, TrackingNumber});
-            return Pack.save();
+        addPackage: async (_,{PackageInfo, Customer, TrackingNumber, Pickup, Deliver}) => {
+            //console.log('im here');
+            let id = new mongoose.Types.ObjectId(Customer);
+            //console.log(id)
+            const Pack = new Package({PackageInfo, Customer: id, TrackingNumber, Pickup, Deliver});
+            const newPack =  await Pack.save();
+
+            const packId = newPack._id;
+            //console.log(newPack)
+            //console.log(packId);
+            
+            const finalPack = await Package.find().where("_id").equals(packId).populate("Customer");
+            //console.log(finalPack);
+            
+            return finalPack[0];
+        },
+
+        updateContactAndAddress: async(_, {_id, ALine1, ALine2, City, Contact}) => {
+            let newUser = {
+                _id,
+                FirstName: '',
+                LastName: '',
+                Email: '',
+                AddressLine1: ALine1,
+                AddressLine2: ALine2,
+                City: City,
+                ContactNumber: Contact
+            }
+            //console.log(newPaySetting);
+            const user = await User.findOne({_id});
+            newUser.FirstName = user.FirstName;
+            newUser.LastName = user.LastName;
+            newUser.Email = user.LastName;
+            Object.assign(user, newUser);
+            return user.save(); 
         },
     }
 };

@@ -11,6 +11,7 @@ export const CREATE_USER_MUTATION = gql`
             AddressLine1: $AddressLine1, AddressLine2: $AddressLine2, City: $City,
             ContactNumber: $ContactNumber
         ){
+            _id
             Id
             FirstName 
             LastName
@@ -444,10 +445,35 @@ export const GET_PAY_SETTINGS = gql`
     }
 `
 export const ADD_PACKAGE_MUTATION = gql`
-mutation addPackage($PackageInfo: JSONObject! ,$user: String!, $TrackingNumber: String!) {
-    addPackage(PackageInfo: $PackageInfo ,user: $user, TrackingNumber: $TrackingNumber){
+mutation addPackage($PackageInfo: JSONObject! ,$Customer: ID!,
+                    $TrackingNumber: String!, $Pickup: Boolean, 
+                    $Deliver: Boolean) {
+                        addPackage(PackageInfo: $PackageInfo ,Customer: $Customer,
+                            TrackingNumber: $TrackingNumber, Pickup: $Pickup, Deliver: $Deliver){
+                            PackageInfo,
+                            Customer{
+                                _id
+                                Id
+                                FirstName
+                                LastName
+                                Email
+                                AddressLine1
+                                AddressLine2
+                                City
+                                ContactNumber
+                            },
+                            TrackingNumber,
+                            Pickup,
+                            Deliver
+                        }
+}
+`
+
+export const GET_PACKAGE_BYID_MUTATION = gql`
+mutation getPackageById($TrackingNumber: String!) {
+    getPackageById(TrackingNumber: $TrackingNumber){
         PackageInfo,
-        user{
+        Customer{
             _id
             Id
             FirstName
@@ -458,26 +484,26 @@ mutation addPackage($PackageInfo: JSONObject! ,$user: String!, $TrackingNumber: 
             City
             ContactNumber
         },
-        TrackingNumber
+        Pickup,
+        Deliver
     }
 }
 `
 
-export const GET_PACKAGE_BYID_MUTATION = gql`
-mutation getPackageById($TrackingNumber: String!) {
-    getPackageById(TrackingNumber: $TrackingNumber){
-        PackageInfo,
-        user{
-            _id
-            Id
-            FirstName
-            LastName
-            Email
-            AddressLine1
-            AddressLine2
-            City
-            ContactNumber
-        }
+export const UPDATE_CONTACT_AND_ADDRESS_BYID_MUTATION = gql`
+mutation updateContactAndAddress($_id: ID!, $ALine1: String, $ALine2: String,
+                                $Contact: String, $City: String,) {
+    updateContactAndAddress(_id: $_id, ALine1: $ALine1, ALine2: $ALine2,
+                            Contact: $Contact, City: $City,){
+        _id
+        Id
+        FirstName
+        LastName
+        Email
+        AddressLine1
+        AddressLine2
+        City
+        ContactNumber
     }
 }
 `
