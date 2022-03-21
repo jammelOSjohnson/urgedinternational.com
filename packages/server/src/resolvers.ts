@@ -13,6 +13,7 @@ import { PubSub } from 'graphql-subscriptions';
 //import { GooglePubSub } from '@axelspringer/graphql-google-pubsub';// For Production
 import { RedisPubSub } from 'graphql-redis-subscriptions'; // For Production
 import PaySetting from './models/PaySetting.model';
+import Package from './models/Package.model';
 const pubsub = new RedisPubSub(
                 process.env.NODE_ENV === "production"
                 ? {
@@ -135,7 +136,7 @@ const resolvers = {
         },
 
         getUser: async (_,{Id}) => {
-            return await User.findOne({Id}).populate({path: "categories", model: "category"});; 
+            return await User.findOne({Id}).populate({path: "categories", model: "category"}); 
         },
 
         //Categories
@@ -253,7 +254,17 @@ const resolvers = {
             return await User.find().where('isAvailable').ne(null).where('disabled').ne(null);
             //console.log(res);
             //return res;
-        }
+        },
+
+        //Packages
+        getPackageById: async (_,{TrackingNumber}) => {
+            return await Package.findOne({TrackingNumber}).populate({path: "users", model: "user"});    
+        },
+
+        addPackage: (_,{PackageInfo, user, TrackingNumber}) => {
+            const Pack = new Package({PackageInfo, user, TrackingNumber});
+            return Pack.save();
+        },
     }
 };
 

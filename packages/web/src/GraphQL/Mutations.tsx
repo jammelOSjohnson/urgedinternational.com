@@ -443,3 +443,41 @@ export const GET_PAY_SETTINGS = gql`
         }
     }
 `
+export const ADD_PACKAGE_MUTATION = gql`
+mutation addPackage($PackageInfo: JSONObject! ,$user: String!, $TrackingNumber: String!) {
+    addPackage(PackageInfo: $PackageInfo ,user: $user, TrackingNumber: $TrackingNumber){
+        PackageInfo,
+        user{
+            _id
+            Id
+            FirstName
+            LastName
+            Email
+            AddressLine1
+            AddressLine2
+            City
+            ContactNumber
+        },
+        TrackingNumber
+    }
+}
+`
+
+export const GET_PACKAGE_BYID_MUTATION = gql`
+mutation getPackageById($TrackingNumber: String!) {
+    getPackageById(TrackingNumber: $TrackingNumber){
+        PackageInfo,
+        user{
+            _id
+            Id
+            FirstName
+            LastName
+            Email
+            AddressLine1
+            AddressLine2
+            City
+            ContactNumber
+        }
+    }
+}
+`

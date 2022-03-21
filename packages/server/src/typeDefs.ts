@@ -181,6 +181,12 @@ const typeDefs = /* GraphQL */`
         value: Float
     }
 
+    type Package {
+        PackageInfo: JSONObject,
+        user: User,
+        TrackingNumber: String
+    }
+
     type Query {
         hello: String
 
@@ -309,7 +315,15 @@ const typeDefs = /* GraphQL */`
 
         fetchRestaurantsByCategory(
             categoryID: String
-        ): RestaurantsByCategories 
+        ): RestaurantsByCategories
+
+        addPackage(
+            PackageInfo: JSONObject,
+            user: String,
+            TrackingNumber: String
+            ): Package!
+            
+        getPackageById(TrackingNumber: String): Package 
     }
 `;
 

@@ -14,7 +14,9 @@ import {
         CREATE_ROLE, 
         GET_MENU_CATEGORIES, 
         UPDATE_PAY_SETTING, 
-        GET_ORDERS_BY_RIDERID_AND_DATE
+        GET_ORDERS_BY_RIDERID_AND_DATE,
+        GET_PACKAGE_BYID_MUTATION,
+        ADD_PACKAGE_MUTATION
       } from '../GraphQL/Mutations';
 import { useMutation } from '@apollo/client';
 import sendEmail from "../email.js";
@@ -191,6 +193,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     //Email variables
     const emailServiceId = "service_9xw19wc";
     const emailNewJobAppTemplate = "template_vt5fmwm";
+    const emailNewPreAlertTemplate = "template_k8ycohd";
     const emailContactUsTemplate = "template_lwlimnm"
     const emailNewInvoiceUploadTemplate = "template_a7m014a";
     const emailNewCustomerTemplate = "template_jqixj7b";
@@ -218,6 +221,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const [updatePaySetting] = useMutation(UPDATE_PAY_SETTING);
     const [getOrdersByRiderId] = useMutation(GET_ORDERS_BY_RIDERID);
     const [getOrdersByRiderIdAnDate] = useMutation(GET_ORDERS_BY_RIDERID_AND_DATE);
+
+    const [getPackageById] = useMutation(GET_PACKAGE_BYID_MUTATION);
+    const [addPackage] = useMutation(ADD_PACKAGE_MUTATION);
 
     var currentUser = undefined;
     var selectedRestaurant = undefined;
@@ -1271,6 +1277,115 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       return false
     }
 
+    var createPreAlert = async function createPreAlert(packageZip, file, uid, UserInfo, mbNum) {
+      var tstamp = ''
+      let PackageInfo = {
+          Cost: '',
+          ItemName: '',
+          MailBoxNumber: '',
+          Merchant: '',
+          OrderDate: '',
+          Status: 'In Transit',
+          TrackingNumber: packageZip.trackingNum2,
+          Weight: '',
+          Courier: ''
+      };
+
+      let user= uid;
+      let TrackingNumber= packageZip.trackingNum2;
+      
+      var fileType = packageZip.content.type;
+      var RequestParams = {
+        user_email: "",
+        user_name: "",
+        merchant: packageZip.merchant !== null && packageZip.merchant !== undefined ? packageZip.merchant : "",
+        status: packageZip.status !== null && packageZip.status !== undefined ? packageZip.status : "",
+        content: file,
+        tracking_number: packageZip.tracking_number
+      };
+      var packArr = [];
+      
+      var checkIfPackageExists = await getPackageById({variables: {TrackingNumber: packageZip.trackingNum2}}).then(async function(response) {
+        console.log("Checking user result for fetch user info");
+        console.log(response.data.getUser);
+        if (response.data.getUser !== null && response.data.getUser !== undefined) {
+          return "Tracking number exist";
+        } else {
+          //console.log("Package with Tracking number does not exist.")
+          var storeRes = await addPackage({variables: {PackageInfo, user, TrackingNumber}}).then(async function (response2) {
+            //console.log("New Package Details  successfully written!");
+            if (UserInfo !== null && UserInfo !== undefined && UserInfo.fullName !== "" && UserInfo.email !== "") {
+              RequestParams.user_email = UserInfo.email;
+              RequestParams.user_name = UserInfo.fullName; //console.log("Params going to sendNewPackageMethod");
+              //console.log(RequestParams);
+    
+              var emailRes = await sendPreAlertEmail(RequestParams, fileType).then(function (emailSentRes) {
+                if (emailSentRes) {
+                  return true;
+                } else {
+                  //console.log("Unable to send add package email at this time.")
+                  return true;
+                }
+              }).catch(function (err) {
+                //console.log("Unable to send add package email at this time.")
+                //console.log(err);
+                return true;
+              });
+              return emailRes;
+            } else {
+              return true;
+            }
+          }).catch(function (error) {
+            //console.error("Error writing New Package Details: ", error);
+            return false;
+          });
+          return storeRes;
+        }
+      }).catch(function (err) {
+        //console.error("Error checking if package exist: ", err);
+        return false;
+      });
+      return checkIfPackageExists;
+    };
+
+    var sendPreAlertEmail = async function sendPreAlertEmail(formVals, filetype) {
+      //console.log("Wtf is in formVals");
+      //console.log(formVals);
+      var RequestParams = {
+        from_name: formVals.user_name,
+        user_email: formVals.user_email,
+        message: "A new pre alert was added by " + formVals.user_name + " with status of " + formVals.status + " and tracking number " + formVals.tracking_number + ".",
+        content_pdf: undefined,
+        content_svg: undefined,
+        content_jpeg: undefined,
+        content_png: undefined,
+        tracking_number: formVals.tracking_number
+      };
+    
+      if (filetype.toLowerCase() === "application/pdf") {
+        RequestParams.content_pdf = formVals.content;
+      } else if (filetype.toLowerCase() === "image/png") {
+        RequestParams.content_png = formVals.content;
+      } else if (filetype.toLowerCase() === "image/svg+xml") {
+        RequestParams.content_svg = formVals.content;
+      } else if (filetype.toLowerCase() === "image/jpeg") {
+        RequestParams.content_jpeg = formVals.content;
+      } //console.log("What is in this package b4 emails sent");
+      //console.log(RequestParams);
+    
+    
+      var fianlRes = await sendEmail(emailServiceId, emailNewPreAlertTemplate, RequestParams, emailUserId).then(function (res) {
+        if (res) {
+          return true;
+        }
+      }).catch(function (err) {
+        //console.log("Send email error");
+        //console.log(err);
+        return false;
+      });
+      return fianlRes;
+    };
+
     const [value, dispatch] = useReducer(appDataReducer, {
         currentUser,
         loading,
@@ -1331,7 +1446,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         sendContactUsEmail,
         fetchPaySettings,
         UpdatePaySettings,
-        viewRiderDetails
+        viewRiderDetails,
+        createPreAlert
     });
     
      

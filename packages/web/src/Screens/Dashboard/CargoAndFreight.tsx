@@ -1,5 +1,5 @@
-import { Container, Grid, makeStyles, createStyles, Theme, Typography, CardContent, Card, Button, Modal, Fade, Backdrop, CardMedia, TextField, FormControl } from '@material-ui/core';
-import React, { useState } from 'react';
+import { Container, Grid, makeStyles, createStyles, Theme, Typography, CardContent, Card, Button, Modal, Fade, Backdrop, CardMedia, TextField, FormControl, FormGroup, FormControlLabel, Checkbox } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 // import clsx from 'clsx';
 //Import Components
@@ -13,6 +13,9 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import HelpIcon from '@material-ui/icons/Help';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import GpsFixedIcon from '@material-ui/icons/GpsFixed';
+import { Field } from './Comp/Field';
+import DescriptionIcon from '@material-ui/icons/Description';
+import Alert from '@material-ui/lab/Alert';
 
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -180,19 +183,38 @@ const useStyles = makeStyles((theme: Theme) =>
             minWidth: 120,
             marginLeft: "0px"
         },
+        alert: {
+            marginBottom: "5%"
+        },
     }),
 );
+
+interface content {
+    lastModified: number;
+    name: string;
+    size: number;
+    type: string;
+    webkitRelativePath: string;
+    lastModifiedDate: Date;
+}
 
 interface State {
     trackingNum: string;
     trackingNum2: string;
     contact: string;
+    deliver: boolean;
+    pickup: boolean;
+    file: string;
+    content: content;
+    aLine1: string;
+    aLine2: string;
+    city: string;
 }
 
 export const CargoAndFreight: React.FC = function CargoAndFreight() {
     const classes = useStyles();
     var { value }  = useAppData();
-    var { currentUser, userInfo } = value;
+    var { currentUser, userInfo, createPreAlert, mailbox_Num } = value;
 
     var [error, setError] = useState('');
     var [success, setSuccess] = useState('');
@@ -200,11 +222,29 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
     const [open2, setOpen2] = React.useState(false);
     const [open3, setOpen3] = React.useState(false);
     const [open4, setOpen4] = React.useState(false);
+
+    let initContent = {
+        lastModified: 0,
+        name: '',
+        size: 0,
+        type: '',
+        webkitRelativePath: '',
+        lastModifiedDate: new Date(),
+    }
+
     const [state, setState] = React.useState<State>({
         trackingNum: '',
         trackingNum2: '',
-        contact: ''
-      });
+        contact: '',
+        deliver: false,
+        pickup: false,
+        file: '',
+        content: initContent,
+        aLine1: userInfo.addressLine1,
+        aLine2: userInfo.addressLine2,
+        city: userInfo.city,
+    });
+    var [file_display, setFile_Display] = useState('');
       
     var history = useHistory();
     var location = history.location;
@@ -212,19 +252,6 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
 
     if(currentUser === undefined){
         history.push("/Dashboard")
-    }
-
-    const handleSubmit = async () => {
-        try{
-            setError('');
-            setSuccess('');
-            
-        }catch(e: any) { 
-            ////console.log(e.message)
-            let path = e.message
-            let result = path.split("Path")
-            setError(result[1]);
-        }
     }
 
     const handleClose4 = () => {
@@ -286,6 +313,163 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
     const handleChange2 = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setState({ ...state, [prop]: event.target.value });
     };
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if(event.target.name === 'deliver' && event.target.checked === true){
+            setState({ ...state, [event.target.name]: event.target.checked, pickup: false });
+        }else if(event.target.name === 'pickup' && event.target.checked === true){
+            setState({ ...state, [event.target.name]: event.target.checked, deliver: false });
+        }else{
+            setState({ ...state, [event.target.name]: event.target.checked });
+        }
+        
+      };
+
+    var onInputChange2 = function onInputChange2(event){
+        //console.log(event.target.value);
+        let {value, name } = event.target;
+
+        if(name === "file"){
+            //console.log(event.target.files[0])
+            setState({...state,[name.toLowerCase()]: value, content: event.target.files[0]});
+        }else{
+            setState({...state,[name.toLowerCase()]: value})
+        }
+    };
+
+    useEffect(() => {
+        if(state.content !== undefined && state.content.name !== file_display){
+            setFile_Display(state.content.name);
+        }
+    }, [state.content, file_display])
+    
+    var getBase64 = async function getBase64(file, cb){
+        try{
+            if(file !== ""){
+                let reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = function () {
+                    cb(reader.result)
+                };
+                reader.onerror = function (error) {
+                    //console.log('Error: ', error);
+                };
+            }else{
+                return "";
+            }
+            
+        }catch(err){
+            //console.log(err);
+            setError('Unable to create Pre Alert at this time.');
+        }
+        
+    }
+
+    var handleSubmit = async function handleSubmit(event){
+        event.preventDefault();
+        let data = '';
+        
+        
+        if(state.trackingNum2.length < 5){
+            setError("Please enter a valid tracking number.");
+        }else if(state.contact.length < 7){
+            setError("Please enter a valid contact number.");
+        }else if(state.deliver){
+            if(state.aLine1.length < 5){
+                setError("Please enter a address line 1.");
+            }else if(state.city.length < 2){
+                setError("Please a city.");
+            }
+        }else{
+            if(state.content !== null && state.content !== undefined ){
+                if(state.content.type !== null || state.content.type !== undefined){
+                    if(state.content.type === "application/pdf" || 
+                        state.content.type === "image/png" ||
+                        state.content.type === "image/svg+xml" ||
+                        state.content.type === "image/jpeg"){
+                            await getBase64(state.content, async function(result){
+                                data = result;
+                                console.log("data is: ");
+                                console.log(data);
+                                //prevents default form refresh
+                                //console.log("I am inside fuction");
+                                // if(state.password !== state.passwordconf){
+                                //     return setError('Passwords do not match');
+                                // }
+                                try{
+                                    setError('');
+                                    setSuccess('');
+                                    var createPreAlertBtn = document.getElementById("create_prealert_btn") as HTMLButtonElement;
+                                    var dateFeildDesktop = document.getElementById("your_unique_id_desk");
+                                    var dateFeildMobile = document.getElementById("your_unique_id_mobile");
+                                    await createPreAlert(state, data, currentUser.uid, userInfo, mailbox_Num).then(function(res){
+                                        if(res === true){
+                                            setSuccess('Pre alert created successfully.');
+                                            if(createPreAlertBtn !== null){
+                                                if(createPreAlertBtn.disabled === true){
+                                                    //console.log("Enabling button");
+                                                    createPreAlertBtn.disabled = false;
+                                                }
+                                            }
+
+                                            setState({
+                                                trackingNum: '',
+                                                trackingNum2: '',
+                                                contact: '',
+                                                deliver: false,
+                                                pickup: false,
+                                                file: '',
+                                                content: initContent,
+                                                aLine1: userInfo.addressLine1,
+                                                aLine2: userInfo.addressLine2,
+                                                city: userInfo.city
+                                            });
+                                            //console.log(dateFeildDesktop.value);
+                                            
+                                        }else if(res === false){
+                                            setError('Unable to create Pre Alert at this time');
+                                            if(createPreAlertBtn !== null){
+                                                if(createPreAlertBtn.disabled === true){
+                                                    //console.log("Enabling button");
+                                                    createPreAlertBtn.disabled = false;
+                                                }
+                                            }
+                                        }else if(res === "Tracking number exist"){
+                                            setError("A package was already added with tracking number " + state.trackingNum2);
+                                            if(createPreAlertBtn !== null){
+                                                if(createPreAlertBtn.disabled === true){
+                                                    //console.log("Enabling button");
+                                                    createPreAlertBtn.disabled = false;
+                                                }
+                                            }
+                                        }
+                                    }).catch(function(err){
+                                        //console.log(err);
+                                    });
+                
+                                }catch{
+                                    setError('Unable to create Pre Alert at this time.');
+                                    var createPreAlertBtn = document.getElementById("create_prealert_btn") as HTMLButtonElement;
+                                    if(createPreAlertBtn !== null){
+                                        if(createPreAlertBtn.disabled === true){
+                                            //console.log("Enabling button");
+                                            createPreAlertBtn.disabled = false;
+                                        }
+                                    }
+                                }
+                            });
+                        }else{
+                            setError("Please upload a valid invoice. Only Pdf, Png, Jpg/Jpeg and Svg files are allowed.")
+                        }
+                    }else{
+                        setError("Please upload a valid invoice. Only Pdf, Png, Jpg/Jpeg and Svg files are allowed.")
+                    }
+                }else{
+                    setError("Please upload a valid invoice. Only Pdf, Png, Jpg/Jpeg and Svg files are allowed.")
+                } 
+            
+            }
+    }
 
     return (
         <>
@@ -529,7 +713,7 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                                                 <Grid item xs={12} style={{overflowY: "auto", maxHeight: "60vh"}}>
                                                 <Card className={classes.card3} >
                                                     <CardContent className={classes.cardContent} >
-                                                        <form className={classes.form}>
+                                                        <form onSubmit={handleSubmit} className={classes.form}>
                                                             <FormControl variant="outlined" className={classes.formControl} fullWidth>
                                                                 <TextField
                                                                     id="outlined-helperText"
@@ -548,15 +732,77 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                                                                     onChange={handleChange2('contact')}
                                                                 />
                                                             </FormControl>
-                                                            <a href={`${'https://www.aftership.com/track/'}${state.trackingNum}`} 
-                                                                target={'_blank'} 
-                                                                rel={'no-refer'}
-                                                                className={classes.links}
+                                                            <FormGroup row>
+                                                                <FormControlLabel
+                                                                    control={
+                                                                        <Checkbox 
+                                                                            checked={state.pickup} 
+                                                                            onChange={handleChange} 
+                                                                            name="pickup"
+                                                                            color="primary" 
+                                                                        />
+                                                                    }
+                                                                    label="Store Pick Up"
+                                                                />
+                                                                <FormControlLabel
+                                                                    control={
+                                                                    <Checkbox
+                                                                        checked={state.deliver}
+                                                                        onChange={handleChange}
+                                                                        name="deliver"
+                                                                        color="primary"
+                                                                    />
+                                                                    }
+                                                                    label="Deliver To My Address"
+                                                                />
+                                                            </FormGroup>
+                                                            {state.deliver &&<>
+                                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                <TextField
+                                                                    id="outlined-helperText"
+                                                                    label="Enter Address Line1"
+                                                                    value={state.aLine1}
+                                                                    variant="outlined"
+                                                                    onChange={handleChange2('aLine1')}
+                                                                />
+                                                            </FormControl>
+                                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                <TextField
+                                                                    id="outlined-helperText"
+                                                                    label="Enter Address Line2"
+                                                                    value={state.aLine2}
+                                                                    variant="outlined"
+                                                                    onChange={handleChange2('aLine2')}
+                                                                />
+                                                            </FormControl>
+                                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                <TextField
+                                                                    id="outlined-helperText"
+                                                                    label="Enter City"
+                                                                    value={state.city}
+                                                                    variant="outlined"
+                                                                    onChange={handleChange2('city')}
+                                                                />
+                                                            </FormControl>
+                                                            </>}
+                                                            <Field 
+                                                                name="file" 
+                                                                placeholder='Upload invoice'
+                                                                value={state.file}
+                                                                type="file"
+                                                                onChange={onInputChange2}
+                                                                required='' 
+                                                            />
+                                                            {file_display && <div style={{paddingBottom: "1%"}}><DescriptionIcon style={{color: "#F7B614", fontSize: "30px"}} /> {file_display}</div> }
+                                                            {error && <Alert severity="error" className={classes.alert}>{error}</Alert>}
+                                                            {success && <Alert severity="success" className={classes.alert}>{success}</Alert>}
+                                                            <Button 
+                                                                className={classes.trackBtn} 
+                                                                id="create_prealert_btn"
+                                                                type="submit"
                                                             >
-                                                                <Button className={classes.trackBtn}>
-                                                                    Create
-                                                                </Button>
-                                                            </a>
+                                                                Create
+                                                            </Button>
                                                         </form>
                                                     </CardContent>
                                                 </Card>
