@@ -252,7 +252,7 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
     var referralPath = location.pathname;
 
     if(currentUser === undefined){
-        history.push("/Dashboard")
+        history.push("/Login", { from: "/CargoAndFreight" })
     }
 
     const handleClose4 = () => {
@@ -578,10 +578,6 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                                                             State:&nbsp;
                                                             <span>Florida</span>&nbsp;ZipCode:&nbsp;
                                                             <span>33311</span>
-                                                        </Typography>
-                                                        <Typography style={{color: "#FF5E14"}}>
-                                                            NB: ADDRESS LINE 2 “LOC25 US__”<br /> 
-                                                            MUST BE ADDED AT ALL GIVING TIMES UNLESS PACKAGES WILL BE MISPLACED. 
                                                         </Typography>
                                                     </Grid>
                                                     <hr />

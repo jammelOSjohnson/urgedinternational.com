@@ -237,7 +237,6 @@ export const Header2: React.FC = function Header2() {
         }
 
       auth.onAuthStateChanged(function (user){
-        console.log("auth");
         if(referralPath !== "/Register" && referralPath !== "/Login"){
           //update the state for current user to the user logged in
           ////console.log("about to set current user");
@@ -246,12 +245,13 @@ export const Header2: React.FC = function Header2() {
           //const payload = {currentUser : user, loading: false, userInfo: userInfo}
           var signonStatus = false;
           if(user !== null){
+            //console.log("auth");
             signonStatus = user.uid !== null && user.uid !== undefined? true : false
           
           
               var payload = {...value,currentUser : user, loading: false, loggedIn: signonStatus}
               if(value.userInfo.email === "" ){
-                console.log("about to fetch user details")
+                //console.log("about to fetch user details")
                   fetchUserDetails(payload);
                   //  .then(function(res){
                   //     if(!res){
