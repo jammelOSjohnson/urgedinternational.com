@@ -15,6 +15,7 @@ const mongoose = require('mongoose');
 import { PubSub } from 'graphql-subscriptions';
 //import { GooglePubSub } from '@axelspringer/graphql-google-pubsub';// For Production
 import { RedisPubSub } from 'graphql-redis-subscriptions'; // For Production
+import Mailbox from './models/MailBox.model';
 const pubsub = new RedisPubSub(
                 process.env.NODE_ENV === "production"
                 ? {
@@ -301,6 +302,31 @@ const resolvers = {
             Object.assign(user, newUser);
             return user.save(); 
         },
+
+        //Mailbox
+        getMailboxById: async(_,{Uid}) => {
+            let mBoxFound = await Mailbox.findOne({Uid}).populate('Uid'); 
+            //console.log('mailbox found is')  
+            //console.log(mBoxFound);
+            return mBoxFound;
+        },
+        
+        addMailbox: async(_,{Status, Uid, MailboxNum}) => {
+            //console.log('im here');
+            let id = new mongoose.Types.ObjectId(Uid);
+            //console.log(id)
+            const mBox = new Mailbox({Status, Uid: id, MailboxNum});
+            const newmBox =  await mBox.save();
+
+            const mBoxId = newmBox._id;
+            //console.log(newmBox)
+            //console.log(mBoxId);
+            
+            const finalMBox = await Mailbox.find().where("_id").equals(mBoxId).populate("Uid");
+            //console.log(finalMBox);
+            
+            return finalMBox[0];
+        }
     }
 };
 

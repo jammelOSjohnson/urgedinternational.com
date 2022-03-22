@@ -507,3 +507,63 @@ mutation updateContactAndAddress($_id: ID!, $ALine1: String, $ALine2: String,
     }
 }
 `
+
+export const ADD_MAILBOXNUM_MUTATION = gql`
+mutation addMailbox($Status: String, $Uid: ID!, $MailboxNum: String) {
+    addMailbox(Status: $Status, Uid: $Uid, MailboxNum: $MailboxNum){
+        Status
+        Uid{
+            _id
+            Id
+            FirstName
+            LastName
+            Email
+            AddressLine1
+            AddressLine2
+            City
+            ContactNumber
+        }
+        MailboxNum
+    }
+}
+`
+
+export const GET_MAILBOX_BYID_MUTATION = gql`
+mutation getMailboxById($Uid: ID!) {
+    getMailboxById(Uid: $Uid){
+        Status
+        Uid{
+            _id
+            Id
+            FirstName
+            LastName
+            Email
+            AddressLine1
+            AddressLine2
+            City
+            ContactNumber
+        }
+        MailboxNum
+    }
+}
+`
+
+export const GET_MAILBOX_BYMBOX_MUTATION = gql`
+mutation getMailboxByMbox($MailboxNum: String!) {
+    getMailboxByMbox(MailboxNum: $MailboxNum){
+        Status
+        Uid{
+            _id
+            Id
+            FirstName
+            LastName
+            Email
+            AddressLine1
+            AddressLine2
+            City
+            ContactNumber
+        }
+        MailboxNum
+    }
+}
+`

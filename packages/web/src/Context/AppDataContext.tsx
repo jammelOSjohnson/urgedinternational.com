@@ -17,7 +17,10 @@ import {
         GET_ORDERS_BY_RIDERID_AND_DATE,
         GET_PACKAGE_BYID_MUTATION,
         ADD_PACKAGE_MUTATION,
-        UPDATE_CONTACT_AND_ADDRESS_BYID_MUTATION
+        UPDATE_CONTACT_AND_ADDRESS_BYID_MUTATION,
+        ADD_MAILBOXNUM_MUTATION,
+        GET_MAILBOX_BYID_MUTATION,
+        GET_MAILBOX_BYMBOX_MUTATION
       } from '../GraphQL/Mutations';
 import { useMutation } from '@apollo/client';
 import sendEmail from "../email.js";
@@ -172,7 +175,11 @@ function appDataReducer(state, action){
             ...state,
             paySettings: action.payload.paySettings
           }
-
+        case "fetch_mailbox":
+          return {
+            ...state,
+            mailbox_Num: action.payload.mailbox_Num
+          }
         case "SW_INIT":
           return{
             ...state,
@@ -226,6 +233,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const [getPackageById] = useMutation(GET_PACKAGE_BYID_MUTATION);
     const [addPackage] = useMutation(ADD_PACKAGE_MUTATION);
     const [updateContactAndAddress] = useMutation(UPDATE_CONTACT_AND_ADDRESS_BYID_MUTATION);
+    const [addMailbox] = useMutation(ADD_MAILBOXNUM_MUTATION);
+    const [getMailboxById] = useMutation(GET_MAILBOX_BYID_MUTATION);
+    const [getMailboxByMbox] = useMutation(GET_MAILBOX_BYMBOX_MUTATION);
 
     var currentUser = undefined;
     var selectedRestaurant = undefined;
@@ -1428,6 +1438,134 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       return fianlRes;
     };
 
+    var fetchMailBoxNumberByUserId = async function fetchMailBoxNumberByUserId(uid, payload) {
+      //console.log("User id inside fetchMailBoxNumberByUserId is: ");
+      //console.log(uid);
+      //console.log("getting ref for MailBoxes");
+      //console.log("querying Mailboxes");
+      var mbFound = "";
+      var mboxRes = await getMailboxById({variables: {Uid: uid}}).then(function (response) {
+        //console.log("Logging MailBox");
+        if (response.data.getMailboxById !== null && response.data.getMailboxById !== undefined) {
+          //console.log(doc.data());
+          var mbFound = response.data.getMailboxById.MailboxNum;
+        }
+    
+        if (mbFound !== "") {
+          payload.mailbox_Num = mbFound;
+        } else {
+          //console.log("mailbox does not exist");
+          payload.mailbox_Num = "None";
+        }
+    
+    
+        return payload;
+      }).catch(function (err) {
+        //console.log(err);
+        payload.mailbox_Num = "None";
+        return payload;
+      });
+      return mboxRes.mailbox_Num;
+    };
+
+    var mailBoxExist = async function mailBoxExist(number) {
+    
+      let finalRes = await getMailboxByMbox({variables: {MailboxNum: number}}).then(function (response) {
+        if (response.data.getMailboxByMbox !== null && response.data.getMailboxByMbox !== undefined) {
+          //console.log("Document data:", response.data.getMailboxByMbox);
+          return true;
+        } else {
+          // response.data.getMailboxByMbox will be undefined in this case
+          //console.log("No such document!");
+          return false;
+        }
+      }).catch(function (error) {
+        //console.log("Error getting document:", error);
+        return false;
+      });
+
+      return finalRes;
+    };
+
+    var storeMailBoxNumber = async function storeMailBoxNumber(number, uid) {
+      var res = await mailBoxExist(number);
+    
+      if (!res) {
+        var storeRes = await addMailbox({variables: {Status: "O", Uid: uid, MailboxNum: number}}).then(function (response) {
+          //console.log("Mailbox number  successfully written!");  
+          return true;
+        }).catch(function (error) {
+          //console.error("Error writing mailbox number: ", error);
+          return false;
+        });
+        return storeRes;
+      } else {
+        return false;
+      }
+    };
+
+    var generate = async function generate(uid) {
+      //console.log("inside generate method")
+      try {
+        var number = 0;
+        number = Math.floor(Math.random() * 90000) + 10000; //console.log(number);
+    
+        var storedNumber = await storeMailBoxNumber(number.toString(), uid).then(function (res) {
+          //console.log("result from store method: " + res);
+          if (!res === true) {
+            return "failed";
+          } //console.log("returning number")
+    
+    
+          return number.toString();
+        }).catch(function (error) {
+          //console.log(error);
+          return "failed";
+        });
+        return storedNumber;
+      } catch {
+        return "failed";
+      }
+    };
+
+    var fetchAddress = async function fetchAddress(uid, payload) {
+      //console.log("User id is: ");
+      //console.log(uid);
+      //console.log("fetching mailboxNumber");
+      await fetchMailBoxNumberByUserId(uid, payload).then(async function (res1) {
+        if (res1 !== null && res1 !== undefined && res1 !== "None") {
+          //console.log("Existing user mailboxnumber is: " + res1)
+          payload.mailbox_Num = res1; //console.log("fetching addresses");
+          dispatch({
+              type: "fetch_mailbox",
+              payload: payload
+          });
+        } else {
+          //console.log("creating new mailbox address");
+          var loop = "failed";
+    
+          while (loop === "failed") {
+            //console.log("inside generate loop");
+            // eslint-disable-next-line no-loop-func
+            await generate(uid).then(async function (res) {
+              loop = res;
+    
+              if (loop !== "failed") {
+                //console.log("New user mailbox number is: " + res);
+                payload.mailbox_Num = res; //console.log("fetching addresses");
+                dispatch({
+                  type: "fetch_mailbox",
+                  payload: payload
+                });
+              }
+            }).catch(function (error) {
+              console.log("unable to generate mailbox number at this time");
+            });
+          }
+        }
+      });
+    };
+
     const [value, dispatch] = useReducer(appDataReducer, {
         currentUser,
         loading,
@@ -1490,7 +1628,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         fetchPaySettings,
         UpdatePaySettings,
         viewRiderDetails,
-        createPreAlert
+        createPreAlert,
+        fetchAddress
     });
     
      

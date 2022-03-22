@@ -189,6 +189,12 @@ const typeDefs = /* GraphQL */`
         Deliver: Boolean
     }
 
+    type Mailbox {
+        Status: String,
+        Uid: User,
+        MailboxNum: String
+    }
+
     type Query {
         hello: String
 
@@ -336,6 +342,14 @@ const typeDefs = /* GraphQL */`
             Contact: String,
             City: String
         ): User
+
+        getMailboxById(Uid: ID): Mailbox
+
+        addMailbox(
+            Status: String,
+            Uid: ID,
+            MailboxNum: String
+        ): Mailbox
     }
 `;
 

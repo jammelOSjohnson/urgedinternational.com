@@ -5,13 +5,17 @@ import { useAppData } from '../../../Context/AppDataContext';
 
 export const MailBoxNumber: React.FC = function MailBoxNumber() {
     var { value }  = useAppData();
-    var { mailbox_Num } = value;
+    var { mailbox_Num, fetchAddress, userInfo } = value;
 
     var [mailboxNum, setMailboxNum] = useState('');
 
+    var onload = async function onload(){
+        await fetchAddress(userInfo._id, value);
+    }
+
     useEffect(() => {
         if(mailbox_Num === undefined){
-
+            onload();
         }else{
             setMailboxNum(mailbox_Num);
         }
