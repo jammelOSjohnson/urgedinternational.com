@@ -307,7 +307,12 @@ export const LoginScreen: React.FC = function LoginScreen() {
     }
 
     const handleClickSignUp = () => {
-      history.push("/Register")
+        if(history.location.state === undefined){
+            history.push("/Register");
+        }else{
+            history.push("/Register", { from: history.location.state.from})
+        }
+      
     }
 
     var handleSubmit = async function handleSubmit(event) {
@@ -382,7 +387,6 @@ export const LoginScreen: React.FC = function LoginScreen() {
 
     //Auth Change
     auth.onAuthStateChanged(function (user){
-        console.log("auth");
         if(referralPath === "/Login"){
           //update the state for current user to the user logged in
           ////console.log("about to set current user");
@@ -391,12 +395,13 @@ export const LoginScreen: React.FC = function LoginScreen() {
           //const payload = {currentUser : user, loading: false, userInfo: userInfo}
           var signonStatus = false;
           if(user !== null){
+            //console.log("auth");
             signonStatus = user.uid !== null && user.uid !== undefined? true : false
           
           
               var payload = {...value,currentUser : user, loading: false, loggedIn: signonStatus}
               if(value.userInfo.email === "" ){
-                console.log("about to fetch user details")
+                //console.log("about to fetch user details")
                   fetchUserDetails(payload);
                   //  .then(function(res){
                   //     if(!res){
@@ -542,11 +547,14 @@ export const LoginScreen: React.FC = function LoginScreen() {
             setSuccess('Sign In Successful.');
             setTimeout(() => {
                 setSuccess('');
-                ////console.log("about to go to dashboard");
+                
                 if(history.location.state !== undefined){
+                    console.log("about to go to from address");
+                    console.log(history.location.state.from)
                     history.push(history.location.state.from);
                 }else{
-                    history.push("/FoodDelivery");
+                    console.log("about to go to food dashboard");
+                    history.push("/Dashboard");
                 }
             }, 1500);
         }

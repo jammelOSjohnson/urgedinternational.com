@@ -11,6 +11,7 @@ export const CREATE_USER_MUTATION = gql`
             AddressLine1: $AddressLine1, AddressLine2: $AddressLine2, City: $City,
             ContactNumber: $ContactNumber
         ){
+            _id
             Id
             FirstName 
             LastName
@@ -442,4 +443,127 @@ export const GET_PAY_SETTINGS = gql`
             value
         }
     }
+`
+export const ADD_PACKAGE_MUTATION = gql`
+mutation addPackage($PackageInfo: JSONObject! ,$Customer: ID!,
+                    $TrackingNumber: String!, $Pickup: Boolean, 
+                    $Deliver: Boolean) {
+                        addPackage(PackageInfo: $PackageInfo ,Customer: $Customer,
+                            TrackingNumber: $TrackingNumber, Pickup: $Pickup, Deliver: $Deliver){
+                            PackageInfo,
+                            Customer{
+                                _id
+                                Id
+                                FirstName
+                                LastName
+                                Email
+                                AddressLine1
+                                AddressLine2
+                                City
+                                ContactNumber
+                            },
+                            TrackingNumber,
+                            Pickup,
+                            Deliver
+                        }
+}
+`
+
+export const GET_PACKAGE_BYID_MUTATION = gql`
+mutation getPackageById($TrackingNumber: String!) {
+    getPackageById(TrackingNumber: $TrackingNumber){
+        PackageInfo,
+        Customer{
+            _id
+            Id
+            FirstName
+            LastName
+            Email
+            AddressLine1
+            AddressLine2
+            City
+            ContactNumber
+        },
+        Pickup,
+        Deliver
+    }
+}
+`
+
+export const UPDATE_CONTACT_AND_ADDRESS_BYID_MUTATION = gql`
+mutation updateContactAndAddress($_id: ID!, $ALine1: String, $ALine2: String,
+                                $Contact: String, $City: String,) {
+    updateContactAndAddress(_id: $_id, ALine1: $ALine1, ALine2: $ALine2,
+                            Contact: $Contact, City: $City,){
+        _id
+        Id
+        FirstName
+        LastName
+        Email
+        AddressLine1
+        AddressLine2
+        City
+        ContactNumber
+    }
+}
+`
+
+export const ADD_MAILBOXNUM_MUTATION = gql`
+mutation addMailbox($Status: String, $Uid: ID!, $MailboxNum: String) {
+    addMailbox(Status: $Status, Uid: $Uid, MailboxNum: $MailboxNum){
+        Status
+        Uid{
+            _id
+            Id
+            FirstName
+            LastName
+            Email
+            AddressLine1
+            AddressLine2
+            City
+            ContactNumber
+        }
+        MailboxNum
+    }
+}
+`
+
+export const GET_MAILBOX_BYID_MUTATION = gql`
+mutation getMailboxById($Uid: ID!) {
+    getMailboxById(Uid: $Uid){
+        Status
+        Uid{
+            _id
+            Id
+            FirstName
+            LastName
+            Email
+            AddressLine1
+            AddressLine2
+            City
+            ContactNumber
+        }
+        MailboxNum
+    }
+}
+`
+
+export const GET_MAILBOX_BYMBOX_MUTATION = gql`
+mutation getMailboxByMbox($MailboxNum: String!) {
+    getMailboxByMbox(MailboxNum: $MailboxNum){
+        Status
+        Uid{
+            _id
+            Id
+            FirstName
+            LastName
+            Email
+            AddressLine1
+            AddressLine2
+            City
+            ContactNumber
+        }
+        MailboxNum
+    }
+}
 `

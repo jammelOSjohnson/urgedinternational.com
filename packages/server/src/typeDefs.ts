@@ -181,6 +181,20 @@ const typeDefs = /* GraphQL */`
         value: Float
     }
 
+    type Package {
+        PackageInfo: JSONObject,
+        Customer: User,
+        TrackingNumber: String,
+        Pickup: Boolean,
+        Deliver: Boolean
+    }
+
+    type Mailbox {
+        Status: String,
+        Uid: User,
+        MailboxNum: String
+    }
+
     type Query {
         hello: String
 
@@ -309,7 +323,33 @@ const typeDefs = /* GraphQL */`
 
         fetchRestaurantsByCategory(
             categoryID: String
-        ): RestaurantsByCategories 
+        ): RestaurantsByCategories
+
+        addPackage(
+            PackageInfo: JSONObject,
+            Customer: ID,
+            TrackingNumber: String,
+            Pickup: Boolean,
+            Deliver: Boolean
+            ): Package
+            
+        getPackageById(TrackingNumber: String): Package 
+
+        updateContactAndAddress(
+            _id: ID,
+            ALine1: String,
+            ALine2: String,
+            Contact: String,
+            City: String
+        ): User
+
+        getMailboxById(Uid: ID): Mailbox
+
+        addMailbox(
+            Status: String,
+            Uid: ID,
+            MailboxNum: String
+        ): Mailbox
     }
 `;
 

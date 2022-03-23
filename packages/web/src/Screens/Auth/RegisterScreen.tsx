@@ -310,7 +310,11 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                                 setTimeout(() => {
                                     setSuccess('');
                                     //console.log("about to go to dashboard");
-                                    history.push('/Dashboard')
+                                    if(history.location.state === undefined){
+                                        history.push("/Dashboard");
+                                    }else{
+                                        history.push(history.location.state.from)
+                                    }
                                     //history.push("/");
                                 }, 1500);
                             }else{
@@ -349,7 +353,11 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                             setTimeout(() => {
                                 setSuccess('');
                                 //console.log("about to go to dashboard");
-                                history.push('/Dashboard')
+                                if(history.location.state === undefined){
+                                    history.push("/Dashboard");
+                                }else{
+                                    history.push(history.location.state.from)
+                                }
                                 //history.push("/");
                             }, 1500);
                         }else{

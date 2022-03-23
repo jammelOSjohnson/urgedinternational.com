@@ -14,7 +14,13 @@ import {
         CREATE_ROLE, 
         GET_MENU_CATEGORIES, 
         UPDATE_PAY_SETTING, 
-        GET_ORDERS_BY_RIDERID_AND_DATE
+        GET_ORDERS_BY_RIDERID_AND_DATE,
+        GET_PACKAGE_BYID_MUTATION,
+        ADD_PACKAGE_MUTATION,
+        UPDATE_CONTACT_AND_ADDRESS_BYID_MUTATION,
+        ADD_MAILBOXNUM_MUTATION,
+        GET_MAILBOX_BYID_MUTATION,
+        GET_MAILBOX_BYMBOX_MUTATION
       } from '../GraphQL/Mutations';
 import { useMutation } from '@apollo/client';
 import sendEmail from "../email.js";
@@ -169,7 +175,11 @@ function appDataReducer(state, action){
             ...state,
             paySettings: action.payload.paySettings
           }
-
+        case "fetch_mailbox":
+          return {
+            ...state,
+            mailbox_Num: action.payload.mailbox_Num
+          }
         case "SW_INIT":
           return{
             ...state,
@@ -191,6 +201,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     //Email variables
     const emailServiceId = "service_9xw19wc";
     const emailNewJobAppTemplate = "template_vt5fmwm";
+    const emailNewPreAlertTemplate = "template_k8ycohd";
     const emailContactUsTemplate = "template_lwlimnm"
     const emailNewInvoiceUploadTemplate = "template_a7m014a";
     const emailNewCustomerTemplate = "template_jqixj7b";
@@ -218,6 +229,13 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const [updatePaySetting] = useMutation(UPDATE_PAY_SETTING);
     const [getOrdersByRiderId] = useMutation(GET_ORDERS_BY_RIDERID);
     const [getOrdersByRiderIdAnDate] = useMutation(GET_ORDERS_BY_RIDERID_AND_DATE);
+
+    const [getPackageById] = useMutation(GET_PACKAGE_BYID_MUTATION);
+    const [addPackage] = useMutation(ADD_PACKAGE_MUTATION);
+    const [updateContactAndAddress] = useMutation(UPDATE_CONTACT_AND_ADDRESS_BYID_MUTATION);
+    const [addMailbox] = useMutation(ADD_MAILBOXNUM_MUTATION);
+    const [getMailboxById] = useMutation(GET_MAILBOX_BYID_MUTATION);
+    const [getMailboxByMbox] = useMutation(GET_MAILBOX_BYMBOX_MUTATION);
 
     var currentUser = undefined;
     var selectedRestaurant = undefined;
@@ -250,6 +268,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       addressLine2: "",
       city: ""
     };
+
+    let mailbox_Num = undefined;
 
     let paySettings = undefined;
 
@@ -483,6 +503,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           var user = response.data.getUser;
     
           if (user !== null) {
+            payload.userInfo._id = user._id;
             payload.userInfo.contactNumber = user.ContactNumber;
             payload.userInfo.email = user.Email;
             payload.userInfo.fullName = user.FirstName;
@@ -515,7 +536,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             createUser({variables: {...user2}}).then(async function (response2) {
               if(response2.data.getUser !== null){
                 ////console.log("User info  successfully written!");
-                ////console.log(response2.data);  
+                ////console.log(response2.data);
+                payload.userInfo._id = user._id;  
                 payload.userInfo.contactNumber = user2.ContactNumber;
                 payload.userInfo.email = user2.Email;
                 payload.userInfo.fullName = user2.FirstName;
@@ -579,6 +601,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           //console.log("firstname is:");
           //console.log(user.FirstName);
           if (user !== null) {
+            payloadf.userInfo._id = user._id;
             payloadf.userInfo.contactNumber = user.ContactNumber !== null && user.ContactNumber !== undefined ? user.ContactNumber : "";
             payloadf.userInfo.email = user.Email !== null && user.Email !== undefined ? user.Email : "";
             payloadf.userInfo.fullName = user.FirstName !== null && user.FirstName !== undefined? user.FirstName : "";
@@ -1271,6 +1294,278 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       return false
     }
 
+    var createPreAlert = async function createPreAlert(packageZip, file, uid, UserInfo, mbNum) {
+      var tstamp = ''
+      let PackageInfo = {
+          Cost: '',
+          ItemName: '',
+          MailBoxNumber: '',
+          Merchant: '',
+          OrderDate: '',
+          Status: 'In Transit',
+          TrackingNumber: packageZip.trackingNum2,
+          Weight: '',
+          Courier: ''
+      };
+
+      let Pickup = packageZip.pickup;
+      let Deliver = packageZip.deliver;
+      let Customer= `${UserInfo._id}`;
+      let TrackingNumber= packageZip.trackingNum2;
+      
+      var fileType = packageZip.content.type;
+      var RequestParams = {
+        user_email: "",
+        user_name: "",
+        merchant: packageZip.merchant !== null && packageZip.merchant !== undefined ? packageZip.merchant : "",
+        status: PackageInfo.Status !== null && PackageInfo.Status !== undefined ? PackageInfo.Status : "",
+        content: file,
+        tracking_number: packageZip.trackingNum2,
+        Contact: packageZip.contact,
+        ALine1: packageZip.aLine1,
+        ALine2: packageZip.aLine2,
+        City: packageZip.city,
+        Pickup: packageZip.pickup
+      };
+      var packArr = [];
+      
+      var checkIfPackageExists = await getPackageById({variables: {TrackingNumber: packageZip.trackingNum2}}).then(async function(response) {
+        console.log("Checking user result for fetch user info");
+        //console.log(response.data.getPackageById);
+        if (response.data.getPackageById !== null && response.data.getPackageById !== undefined) {
+          return "Tracking number exist";
+        } else {
+          console.log("Package with Tracking number does not exist.")
+          var storeRes = await addPackage({variables: {PackageInfo, Customer, TrackingNumber, Pickup, Deliver}}).then(async function (response2) {
+            //console.log("New Package Details  successfully written!");
+            if (UserInfo !== null && UserInfo !== undefined && UserInfo.fullName !== "" && UserInfo.email !== "") {
+              RequestParams.user_email = UserInfo.email;
+              RequestParams.user_name = UserInfo.fullName; //console.log("Params going to sendNewPackageMethod");
+              //console.log(RequestParams);
+    
+              var emailRes = await sendPreAlertEmail(RequestParams, fileType).then(async function (emailSentRes) {
+                if(Deliver){
+                  console.log("about to update contact and address details.")
+                  let updateCAndAddress = await updateContactAndAddress({variables: {_id: Customer, ALine1: packageZip.aLine1, ALine2: packageZip.aLine2,
+                    Contact: packageZip.contact, City: packageZip.city}}).then(async function (response2) {
+                    if (emailSentRes) {
+                      return true;
+                    } else {
+                      //console.log("Unable to send add package email at this time.")
+                      return true;
+                    }
+                  }).catch(function (err) {
+                    //console.log("Unable to send add package email at this time.")
+                    //console.log(err);
+                    return true;
+                  });
+                  return updateCAndAddress;
+                }else{
+                  if (emailSentRes) {
+                    return true;
+                  } else {
+                    //console.log("Unable to send add package email at this time.")
+                    return true;
+                  }
+                }
+                
+              }).catch(function (err) {
+                //console.log("Unable to send add package email at this time.")
+                //console.log(err);
+                return true;
+              });
+              return emailRes;
+            } else {
+              return true;
+            }
+          }).catch(function (error) {
+            //console.error("Error writing New Package Details: ", error);
+            return false;
+          });
+          return storeRes;
+        }
+      }).catch(function (err) {
+        //console.error("Error checking if package exist: ", err);
+        return false;
+      });
+      return checkIfPackageExists;
+    };
+
+    var sendPreAlertEmail = async function sendPreAlertEmail(formVals, filetype) {
+      //console.log("Wtf is in formVals");
+      //console.log(formVals);
+      let endingMessage = formVals.Pickup? "delivered to the store." : 
+                          "delivered to " + formVals.ALine1 + ", " + 
+                          formVals.ALine2 + ", " + formVals.City + ".";
+      var RequestParams = {
+        from_name: formVals.user_name,
+        user_email: formVals.user_email,
+        message: "A new pre alert was added by " + 
+                formVals.user_name + " with status of " + 
+                formVals.status + " and tracking number " + 
+                formVals.tracking_number + ". " + formVals.user_name + 
+                " can be contacted via " + formVals.Contact +
+                " and package(s) should be " 
+                + endingMessage,
+        content_pdf: undefined,
+        content_svg: undefined,
+        content_jpeg: undefined,
+        content_png: undefined,
+        tracking_number: formVals.tracking_number
+      };
+    
+      if (filetype.toLowerCase() === "application/pdf") {
+        RequestParams.content_pdf = formVals.content;
+      } else if (filetype.toLowerCase() === "image/png") {
+        RequestParams.content_png = formVals.content;
+      } else if (filetype.toLowerCase() === "image/svg+xml") {
+        RequestParams.content_svg = formVals.content;
+      } else if (filetype.toLowerCase() === "image/jpeg") {
+        RequestParams.content_jpeg = formVals.content;
+      } //console.log("What is in this package b4 emails sent");
+      //console.log(RequestParams);
+    
+    
+      var fianlRes = await sendEmail(emailServiceId, emailNewPreAlertTemplate, RequestParams, emailUserId).then(function (res) {
+        if (res) {
+          return true;
+        }
+      }).catch(function (err) {
+        //console.log("Send email error");
+        //console.log(err);
+        return false;
+      });
+      return fianlRes;
+    };
+
+    var fetchMailBoxNumberByUserId = async function fetchMailBoxNumberByUserId(uid, payload) {
+      //console.log("User id inside fetchMailBoxNumberByUserId is: ");
+      //console.log(uid);
+      //console.log("getting ref for MailBoxes");
+      //console.log("querying Mailboxes");
+      var mbFound = "";
+      var mboxRes = await getMailboxById({variables: {Uid: uid}}).then(function (response) {
+        //console.log("Logging MailBox");
+        if (response.data.getMailboxById !== null && response.data.getMailboxById !== undefined) {
+          //console.log(doc.data());
+          var mbFound = response.data.getMailboxById.MailboxNum;
+        }
+    
+        if (mbFound !== "") {
+          payload.mailbox_Num = mbFound;
+        } else {
+          //console.log("mailbox does not exist");
+          payload.mailbox_Num = "None";
+        }
+    
+    
+        return payload;
+      }).catch(function (err) {
+        //console.log(err);
+        payload.mailbox_Num = "None";
+        return payload;
+      });
+      return mboxRes.mailbox_Num;
+    };
+
+    var mailBoxExist = async function mailBoxExist(number) {
+    
+      let finalRes = await getMailboxByMbox({variables: {MailboxNum: number}}).then(function (response) {
+        if (response.data.getMailboxByMbox !== null && response.data.getMailboxByMbox !== undefined) {
+          //console.log("Document data:", response.data.getMailboxByMbox);
+          return true;
+        } else {
+          // response.data.getMailboxByMbox will be undefined in this case
+          //console.log("No such document!");
+          return false;
+        }
+      }).catch(function (error) {
+        //console.log("Error getting document:", error);
+        return false;
+      });
+
+      return finalRes;
+    };
+
+    var storeMailBoxNumber = async function storeMailBoxNumber(number, uid) {
+      var res = await mailBoxExist(number);
+    
+      if (!res) {
+        var storeRes = await addMailbox({variables: {Status: "O", Uid: uid, MailboxNum: number}}).then(function (response) {
+          //console.log("Mailbox number  successfully written!");  
+          return true;
+        }).catch(function (error) {
+          //console.error("Error writing mailbox number: ", error);
+          return false;
+        });
+        return storeRes;
+      } else {
+        return false;
+      }
+    };
+
+    var generate = async function generate(uid) {
+      //console.log("inside generate method")
+      try {
+        var number = 0;
+        number = Math.floor(Math.random() * 90000) + 10000; //console.log(number);
+    
+        var storedNumber = await storeMailBoxNumber(number.toString(), uid).then(function (res) {
+          //console.log("result from store method: " + res);
+          if (!res === true) {
+            return "failed";
+          } //console.log("returning number")
+    
+    
+          return number.toString();
+        }).catch(function (error) {
+          //console.log(error);
+          return "failed";
+        });
+        return storedNumber;
+      } catch {
+        return "failed";
+      }
+    };
+
+    var fetchAddress = async function fetchAddress(uid, payload) {
+      //console.log("User id is: ");
+      //console.log(uid);
+      //console.log("fetching mailboxNumber");
+      await fetchMailBoxNumberByUserId(uid, payload).then(async function (res1) {
+        if (res1 !== null && res1 !== undefined && res1 !== "None") {
+          //console.log("Existing user mailboxnumber is: " + res1)
+          payload.mailbox_Num = res1; //console.log("fetching addresses");
+          dispatch({
+              type: "fetch_mailbox",
+              payload: payload
+          });
+        } else {
+          //console.log("creating new mailbox address");
+          var loop = "failed";
+    
+          while (loop === "failed") {
+            //console.log("inside generate loop");
+            // eslint-disable-next-line no-loop-func
+            await generate(uid).then(async function (res) {
+              loop = res;
+    
+              if (loop !== "failed") {
+                //console.log("New user mailbox number is: " + res);
+                payload.mailbox_Num = res; //console.log("fetching addresses");
+                dispatch({
+                  type: "fetch_mailbox",
+                  payload: payload
+                });
+              }
+            }).catch(function (error) {
+              console.log("unable to generate mailbox number at this time");
+            });
+          }
+        }
+      });
+    };
+
     const [value, dispatch] = useReducer(appDataReducer, {
         currentUser,
         loading,
@@ -1299,6 +1594,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         serviceWorkerUpdated,
         serviceWorkerRegistration,
         paySettings,
+        mailbox_Num,
         JoinUs,
         signup,
         login,
@@ -1331,7 +1627,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         sendContactUsEmail,
         fetchPaySettings,
         UpdatePaySettings,
-        viewRiderDetails
+        viewRiderDetails,
+        createPreAlert,
+        fetchAddress
     });
     
      
