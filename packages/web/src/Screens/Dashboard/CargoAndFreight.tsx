@@ -590,28 +590,28 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                                                     <br />
                                                     <Grid item xs={12} sm={10}>
                                                         <Typography style={{fontWeight: "bold"}}>
-                                                            UShip Sea Shipping Address
+                                                            {/* &nbsp;UShip Sea Shipping Address */}
                                                         </Typography>
                                                         <Typography >
-                                                            Name:&nbsp; 
-                                                            <span style={{color: "#FF5E14"}}>{userInfo.fullName}</span>
+                                                        {/* &nbsp;Name: 
+                                                            <span style={{color: "#FF5E14"}}>{userInfo.fullName}</span> */}
                                                         </Typography>
                                                         <Typography>
-                                                            Address 1&nbsp;
-                                                            <span>3489 N.W 19th street</span> 
+                                                        &nbsp;{/* Address 1&nbsp;
+                                                            <span>3489 N.W 19th street</span>  */}
                                                         </Typography>
                                                         <Typography>
-                                                            Address 2:&nbsp;
-                                                            <span>Urged</span>
+                                                        &nbsp;{/* Address 2:&nbsp;
+                                                            <span>Urged</span> */}
                                                         </Typography>
                                                         <Typography>
-                                                            City:&nbsp;
-                                                            <span>Lauderdale Lakes</span> 
+                                                        &nbsp;{/* City:&nbsp;
+                                                            <span>Lauderdale Lakes</span>  */}
                                                         </Typography>
                                                         <Typography>
-                                                            State:&nbsp;
+                                                            {/* State:&nbsp;
                                                             <span>Florida</span>&nbsp;ZipCode:&nbsp;
-                                                            <span>33311</span>
+                                                            <span>33311</span> */}
                                                         </Typography>
                                                     </Grid>
                                             </Grid>
@@ -919,14 +919,14 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                                                         Each additional lb over 10lbs is just $350JMD per lb
                                                     </Typography> 
                                                     <Typography className={classes.paragraph}>
-                                                        &#123;&#123; Processing Fee: 
-                                                        Each package is subject to a processing fee of $230&#125;&#125; 
+                                                        {/* &#123;&#123; */} <span style={{fontWeight: 800}}>Processing Fee: </span>  
+                                                        Each package is subject to a processing fee of $230 { /* &#125;&#125; */} 
                                                         <br /><br />
                                                         <Typography variant={"h6"} className={classes.paragraphHeadings}>
                                                             Customs Fee:
                                                         </Typography>
                                                         Packages deemed by Customs as intended for personal use, valued in excess of US$50.00 (C.I.F.) may be subject to Customs Duty Charges.
-                                                        For more details as it relates to customs charges, please visit <a href="https://www.jacustoms.gov.jm/" title="jacustoms" target="_blank">https://www.jacustoms.gov.jm/</a>
+                                                        For more details as it relates to customs charges, please visit <a href="https://www.jacustoms.gov.jm/" title="jacustoms" target="_blank">www.jacustoms.gov.jm</a>
                                                         <br /><br />
                                                         <Typography variant={"h6"} className={classes.paragraphHeadings}>
                                                             Our Local Delivery Rates:
