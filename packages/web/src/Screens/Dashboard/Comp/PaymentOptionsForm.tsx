@@ -1,9 +1,9 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent, Grid, Paper, Divider, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, TextField, Button, InputLabel, Select, MenuItem } from '@material-ui/core';
+import {GeoMap } from './GeoMap';
+import { makeStyles, createStyles, Typography, Theme, Grid, Paper, Divider, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, TextField, Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
-import addressPI from '../../../Apis/addressPI';
 
 interface State {
     Street: string;
@@ -17,6 +17,14 @@ interface State {
 
 interface Fee {
     Cost: string;
+}
+
+interface checkoutCalc {
+    deliveryFee: Fee;
+    cartItemsSum: Fee;
+    serviceFee: Fee;
+    GCT: Fee;
+    Total: Fee;
 }
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -147,18 +155,21 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
         long: null
     });
 
+    const [checkoutVals, setCheckoutVals] = React.useState<checkoutCalc>({
+        deliveryFee: {Cost: "0.00"},
+        cartItemsSum: {Cost: "0.00"},
+        serviceFee: {Cost: "0.00"},
+        GCT: {Cost: "0.00"},
+        Total: {Cost: "0.00"}
+    });
+
     //const [isgeoAllowed, setIsGeoAllowed] = useState(false);
 
     var { value }  = useAppData();
-    var { cartItems, checkoutOrder, restaurants, selectedRestaurant, generalLocation, latitude, longitude } = value;
+    var { cartItems, checkoutOrder, restaurants, selectedRestaurant } = value;
     var history = useHistory();
     var [error, setError] = useState('');
     var [success, setSuccess] = useState('');
-    var [deliveryFee, setdeliveryFee] = useState<Fee>({Cost: "0.00"});
-    var [cartItemsSum, setcartItemsSum] = useState<Fee>({Cost: "0.00"});
-    var [serviceFee, setserviceFee] = useState<Fee>({Cost: "0.00"});
-    var [GCT, setGCT] = useState<Fee>({Cost: "0.00"});
-    var [Total, setTotal] = useState<Fee>({Cost: "0.00"});
 
     const handleSubmit = async () => {
         try{
@@ -170,7 +181,9 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
             values.ContactNum === '' || values.Street === undefined?
                 setError('Please enter Contact number')
             :
-            await checkoutOrder(value, cartItems, values, deliveryFee, GCT, serviceFee, cartItemsSum, Total).then(() => {
+            await checkoutOrder(value, cartItems, values, checkoutVals.deliveryFee, 
+                checkoutVals.GCT, checkoutVals.serviceFee, checkoutVals.cartItemsSum,
+                checkoutVals.Total).then(() => {
                 setValues({
                     Street: '',
                     Town: 'Select Town',
@@ -179,6 +192,13 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                     Parish: 'Clarendon',
                     lat: null,
                     long: null
+                });
+                setCheckoutVals({
+                    deliveryFee: {Cost: "0.00"},
+                    cartItemsSum: {Cost: "0.00"},
+                    serviceFee: {Cost: "0.00"},
+                    GCT: {Cost: "0.00"},
+                    Total: {Cost: "0.00"}
                 });
                 history.push("/OrderCompleted");
             });
@@ -202,87 +222,14 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
         setValues({ ...values, [prop]: event.target.value });
     };
 
-    const getLocation = () => {
-        try{
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(getCoordinates, handleLocationError);
-              } else {
-                //alert("Geolocation is not supported by this browser.");
-            }
-            var location = "";
-
-            // AddGeneralLocation(value, )
-        }catch(err){
-
-        }
-    }
-
-    const getCoordinates = (position) => {
-        // console.log(position);
-        setValues({...values, lat: position.coords.latitude, long: position.coords.longitude});
-    }
-
-    const reverseGeoCodeCoordinates = () => {
-        try{
-            addressPI.get(`/json?latlng=${values.lat},${values.long}&key=${process.env.REACT_APP_GEO_API2}`).then((response) => {
-                if(response.data !== null){
-                    if(response.data.results !== undefined){
-                        let resArr = response.data.results;
-                        let addressArr = "";
-                        resArr.map((item,index) => {
-                            if(item.types[0] === "route"){
-                                addressArr = item.formatted_address.split(',')
-                            }
-                        })
-                        // resArr[0].formatted_address.split(',');
-                        setValues({...values, Street: addressArr[0], Town: addressArr[1]});
-                    }
-                }
-            }).catch((err) => {
-    
-            });
-        }catch(err){
-
-        }
-        
-    }
-
-    const handleLocationError = (error) => {
-        switch(error.code) {
-            case error.PERMISSION_DENIED:
-              console.log("User denied the request for Geolocation.");
-              break;
-            case error.POSITION_UNAVAILABLE:
-              console.log("Location information is unavailable.");
-              break;
-            case error.TIMEOUT:
-              console.log("The request to get user location timed out.");
-              break;
-            case error.UNKNOWN_ERROR:
-              console.log("An unknown error occurred.");
-              break;
-            default:
-                break;    
-        }
-    }
-
     useEffect(() =>{
 
-        if(values.lat === null && values.long === null){
-            getLocation();
-        }else{
-            reverseGeoCodeCoordinates();
-        }
-
-        let delFee = "500";
-
+        
         //Calc Delivery Fee
-        if(delFee !== deliveryFee.Cost && delFee !== "0.00" && delFee !== undefined){
-            let newFee:Fee = {
-                Cost: delFee
-            }
-            setdeliveryFee(newFee);
-        }
+        let delFee = "500";
+        // if(delFee !== deliveryFee.Cost && delFee !== "0.00" && delFee !== undefined){
+            
+        // }
 
         //Calc cart total
         let cartTotal = 0.00;
@@ -304,50 +251,74 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
             cartTotal = cartTotal + sidesTotal; 
         });
 
-        let newcartTotal:Fee = {
-            Cost: cartTotal.toString()
-        }
-
-        setcartItemsSum(newcartTotal);
+        
 
         //Calc gct
-        let gct = process.env.REACT_APP_GCT?.toString()
+        let gct = process.env.REACT_APP_GCT?.toString();
+        let finalgct = 0;
         if(gct !== undefined){
             var fetchGCT:number = Number(gct);
-            let finalgct = cartTotal * fetchGCT
+            //console.log(cartTotal)
+            finalgct = cartTotal * fetchGCT
+            //console.log(finalgct);
 
-            let newGCT:Fee = {
-                Cost: finalgct.toString()
-            }
-            setGCT(newGCT);
+            
         }
 
         //Calc service Fee
         let serviceCharge = process.env.REACT_APP_ServiceFee?.toString()
+        let finalserviceCharge = 0;
         if(serviceCharge !== undefined){
             var fetchserviceCharge:number = Number(serviceCharge);
-            let finalserviceCharge = cartTotal * fetchserviceCharge
+            finalserviceCharge = cartTotal * fetchserviceCharge
 
-            let newserviceCharge:Fee = {
-                Cost: finalserviceCharge.toString()
-            }
-            setserviceFee(newserviceCharge);
+            
         }
 
         //Calc grand total
+        //console.log("Calc grand total");
+        let finalTotal = 0
         if(serviceCharge !== undefined && gct !== undefined && cartTotal !== undefined && delFee !== undefined){
-            var fetchserviceCharge:number = Number(serviceCharge);
-            var fetchGCT:number = Number(gct);
+            var fetchserviceCharge = finalserviceCharge;
             var fetchDelFee = Number(delFee)
 
-            let finalTotal = cartTotal + fetchserviceCharge + fetchGCT + fetchDelFee
+            //console.log(finalgct);
+            //console.log(fetchserviceCharge);
 
-            let newTotal:Fee = {
-                Cost: finalTotal.toString()
-            }
-            setTotal(newTotal);
+            finalTotal = cartTotal + fetchserviceCharge + finalgct + fetchDelFee
+
+            
         }
-    },[deliveryFee.Cost,  cartItems, value, values.lat, values.long])
+
+        
+        let newFee:Fee = {
+            Cost: delFee
+        }
+        //setdeliveryFee(newFee);
+
+        let newcartTotal:Fee = {
+            Cost: cartTotal.toString()
+        }
+
+        //setcartItemsSum(newcartTotal);
+
+        let newGCT:Fee = {
+            Cost: finalgct.toString()
+        }
+        //setGCT(newGCT);
+
+        let newserviceCharge:Fee = {
+            Cost: finalserviceCharge.toString()
+        }
+        //setserviceFee(newserviceCharge);
+
+        let newTotal:Fee = {
+            Cost: finalTotal.toString()
+        }
+        //setTotal(newTotal);
+
+        setCheckoutVals({deliveryFee: newFee, cartItemsSum: newcartTotal, GCT: newGCT, serviceFee: newserviceCharge, Total: newTotal })
+    },[cartItems, value])
     // generalLocation, values.Town
       
     return (
@@ -410,12 +381,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                                         <Divider variant="middle" className={classes.divider}/>
                                         
                                     </Grid>
-                                    {
-                                        values.lat && values.long ?
-                                        <img src={`https://maps.googleapis.com/maps/api/staticmap?center=${values.lat},${values.long}&zoom=14&size=600x300&sensor=false&markers=color:orange%7C${values.lat},${values.long}&key=${process.env.REACT_APP_GEO_API}`} style={{width: "100%"}} alt='' />
-                                        :
-                                        <></>
-                                    }
+                                    <GeoMap setValues={setValues} values={values} />
                                     <Grid item xs={12}>
                                         <Typography className={classes.formSubheading}>Please enter delivery address below.</Typography>
                                     </Grid>
@@ -438,31 +404,31 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                                                 <Typography style={{fontFamily: "Inter", fontSize: "14px"}}><span className={classes.fees}>Cart Items:</span> </Typography>
                                             </Grid>
                                             <Grid item xs={3}>
-                                                <Typography><span>{`$ ${ parseFloat(cartItemsSum.Cost).toFixed(2)}`}</span></Typography>
+                                                <Typography><span>{`$ ${ parseFloat(checkoutVals.cartItemsSum.Cost).toFixed(2)}`}</span></Typography>
                                             </Grid>
                                             <Grid item xs={9}>
                                                 <Typography style={{fontFamily: "Inter", fontSize: "14px"}}><span className={classes.fees}>Delivery Fee:</span> </Typography>
                                             </Grid>
                                             <Grid item xs={3}>
-                                                <Typography><span>{`$ ${ parseFloat(deliveryFee.Cost).toFixed(2)}`}</span></Typography>
+                                                <Typography><span>{`$ ${ parseFloat(checkoutVals.deliveryFee.Cost).toFixed(2)}`}</span></Typography>
                                             </Grid>
                                             <Grid item xs={9}>
                                                 <Typography style={{fontFamily: "Inter", fontSize: "14px"}}><span className={classes.fees}>Processing Fee:</span> </Typography>
                                             </Grid>
                                             <Grid item xs={3}>
-                                                <Typography><span>{`$ ${ parseFloat(serviceFee.Cost).toFixed(2)}`}</span></Typography>
+                                                <Typography><span>{`$ ${ parseFloat(checkoutVals.serviceFee.Cost).toFixed(2)}`}</span></Typography>
                                             </Grid>
                                             <Grid item xs={9}>
                                                 <Typography style={{fontFamily: "Inter", fontSize: "14px"}}><span className={classes.fees}>GCT:</span> </Typography>
                                             </Grid>
                                             <Grid item xs={3}>
-                                                <Typography><span>{`$ ${ parseFloat(GCT.Cost).toFixed(2)}`}</span></Typography>
+                                                <Typography><span>{`$ ${ parseFloat(checkoutVals.GCT.Cost).toFixed(2)}`}</span></Typography>
                                             </Grid>
                                             <Grid item xs={9}>
                                                 <Typography style={{fontFamily: "Inter", fontSize: "14px"}}><span className={classes.fees}>Total:</span> </Typography>
                                             </Grid>
                                             <Grid item xs={3}>
-                                                <Typography><span style={{color: "#FF5E14", fontWeight: 600}}>{`$ ${ parseFloat(Total.Cost).toFixed(2)}`}</span></Typography>
+                                                <Typography><span style={{color: "#FF5E14", fontWeight: 600}}>{`$ ${ parseFloat(checkoutVals.Total.Cost).toFixed(2)}`}</span></Typography>
                                             </Grid>      
                                         </Grid>
                                     </Grid>
