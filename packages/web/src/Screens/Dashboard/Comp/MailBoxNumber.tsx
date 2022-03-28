@@ -24,7 +24,7 @@ export const MailBoxNumber: React.FC = function MailBoxNumber() {
     if(mailboxNum != ''){
         return (
             <>
-                <span style={{color: "#FF5E14", textDecoration: "underline"}}>
+                <span>
                     {mailboxNum}
                 </span>
             </>
@@ -32,7 +32,7 @@ export const MailBoxNumber: React.FC = function MailBoxNumber() {
     }else{
         return (
             <>
-                <span style={{color: "#FF5E14", textDecoration: "underline"}}>
+                <span>
                     MBNUM
                 </span>
             </>
