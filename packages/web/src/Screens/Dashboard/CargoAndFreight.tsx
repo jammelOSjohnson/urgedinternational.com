@@ -571,6 +571,12 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                                                             </span>
                                                         </Typography>
                                                         <Typography>
+                                                            Account Number:&nbsp;
+                                                            <span style={{color: "#FF5E14"}}>
+                                                                <MailBoxNumber />
+                                                            </span>
+                                                        </Typography>
+                                                        <Typography>
                                                             City:&nbsp;
                                                             <span>Lauderdale Lakes</span> 
                                                         </Typography>
