@@ -554,7 +554,7 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                                             <Grid container direction="row" xs={12} spacing={1}>
                                                     <Grid item xs={12} sm={10}>
                                                         <Typography style={{fontWeight: "bold"}}>
-                                                            Uship Air Freight Address
+                                                            My Air Freight Address
                                                         </Typography>
                                                         <Typography >
                                                             Name:&nbsp; 
@@ -571,7 +571,7 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                                                             </span>
                                                         </Typography>
                                                         <Typography>
-                                                            Account Number:&nbsp;
+                                                            Mailbox Number:&nbsp;
                                                             <span style={{color: "#FF5E14"}}>
                                                                 <MailBoxNumber />
                                                             </span>
