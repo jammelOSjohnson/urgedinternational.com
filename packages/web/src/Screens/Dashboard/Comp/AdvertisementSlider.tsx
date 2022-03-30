@@ -144,7 +144,7 @@ export const AdvertisementSlider: React.FC = function AdvertisementSlider() {
                                     <a href="#categories" title="categories" className={clsx("inactiveItemLink")}>
                                         <Button className={clsx(classes.Button, "catBtn")}>
                                             <Typography className={`${classes.fonts}`}>
-                                                Categories
+                                                Services
                                             </Typography>
                                         </Button>
                                     </a>
@@ -199,7 +199,7 @@ export const AdvertisementSlider: React.FC = function AdvertisementSlider() {
                                 <a href="#categories" title="categories" className={clsx("inactiveItemLink")}>
                                     <Button className={clsx(classes.Button, "catBtn")}>
                                         <Typography className={`${classes.fonts}`}>
-                                            Categories
+                                            Services
                                         </Typography>
                                     </Button>
                                 </a>

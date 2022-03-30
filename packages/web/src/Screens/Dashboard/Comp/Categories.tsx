@@ -324,7 +324,7 @@ export const Categories: React.FC = function Categories() {
                 <Grid item xs={12} md={6} lg={3} container spacing={1}>
                     <Grid item xs={10} md={10}>
                         <Typography variant="subtitle1" className={classes.category}>
-                            Categories
+                            Our Services
                         </Typography>
                     </Grid>
                 </Grid>
