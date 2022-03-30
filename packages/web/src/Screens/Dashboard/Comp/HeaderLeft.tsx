@@ -163,17 +163,18 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                 <CloseRounded className={classes.closeIcon}/>
             </IconButton>
           <List style={{marginTop: "15%"}}>
-          {['Overview', 'Food Delivery', 'Package Delivery', 'Market Place', 'Orders'].map((text, index) => (
+          {['Overview', 'Food Delivery', 'Errands Solution', 'Uship', "Sally's Pantry", 'Orders'].map((text, index) => (
                         referralPath === "/Dashboard" && text === "Overview" ?
                           <ListItem button key={text} className={classes.activeItem}>
                             <ListItemIcon>
-                              {
-                                index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
-                                index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
-                                index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
-                              }
+                                    {
+                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                      index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
+                                      index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
+                                      index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                    }
                             </ListItemIcon>
                             <ListItemText primary={text} />
                           </ListItem>
@@ -181,41 +182,44 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                         (referralPath === "/FoodDelivery" || referralPath === "/Restaurants" || referralPath === "/Menu") && text === "Food Delivery" ?
                           <ListItem button key={text} className={classes.activeItem2}>
                             <ListItemIcon className={classes.activeIcon2}>
-                              {
-                                index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
-                                index === 1 ? <img src="Images/WhiteFoodDeliveryService.png" alt="Food icon"/> : 
-                                index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
-                                index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
-                              }
+                                    {
+                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                      index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
+                                      index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
+                                      index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                    }
                             </ListItemIcon>
                             <ListItemText primary={text} />
                           </ListItem>
                         :
-                        referralPath === "/PackageDelivery" && text === "Package Delivery" ?
+                        referralPath === "/PackageDelivery" && text === "Errands Solution" ?
                           <ListItem button key={text} className={classes.activeItem}>
                             <ListItemIcon>
-                              {
-                                index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
-                                index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
-                                index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
-                              }
+                                    {
+                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                      index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
+                                      index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
+                                      index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                    }
                             </ListItemIcon>
                             <ListItemText primary={text} />
                           </ListItem>
                         :
-                        referralPath === "/MarketPlace" && text === "Market Place" ?
+                        referralPath === "/CargoAndFreight" && text === "Uship" ?
                           <ListItem button key={text} className={classes.activeItem}>
                             <ListItemIcon>
-                              {
-                                index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
-                                index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
-                                index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
-                              }
+                                    {
+                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                      index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
+                                      index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
+                                      index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                    }
                             </ListItemIcon>
                             <ListItemText primary={text} />
                           </ListItem>
@@ -224,13 +228,14 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                           <Link to="/OrdersHistory" className={classes.activeItem}>
                             <ListItem button key={text}>
                               <ListItemIcon>
-                                {
-                                  index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
-                                  index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                  index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
-                                  index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                  index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  />: <MailIcon />
-                                }
+                                    {
+                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                      index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
+                                      index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
+                                      index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                    }
                               </ListItemIcon>
                               <ListItemText primary={text} />
                             </ListItem>
@@ -240,13 +245,14 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                           <Link to="/Dashboard" className={classes.inactiveItemLink}>
                             <ListItem button key={text}>
                                 <ListItemIcon>
-                                  {
-                                    index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
-                                    index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                    index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
-                                    index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                    index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
-                                  }
+                                    {
+                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                      index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
+                                      index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
+                                      index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                    }
                                 </ListItemIcon>
                                 <ListItemText primary={text} />
                             </ListItem>
@@ -256,43 +262,80 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                           <Link to="/Restaurants" className={classes.inactiveItemLink}>
                             <ListItem button key={text}>
                                 <ListItemIcon>
-                                  {
-                                    index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
-                                    index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                    index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
-                                    index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                    index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
-                                  }
+                                    {
+                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                      index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
+                                      index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
+                                      index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                    }
                                 </ListItemIcon>
                                 <ListItemText primary={text} />
                             </ListItem>
                           </Link>
                         :
-                        text === "Package Delivery" ?
+                        text === "Errands Solution" ?
                           <ListItem button key={text} onClick={handleOpen2}>
                               <ListItemIcon>
-                                {
-                                  index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
-                                  index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                  index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
-                                  index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                  index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
-                                }
+                                    {
+                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                      index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
+                                      index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
+                                      index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                    }
                               </ListItemIcon>
                               <ListItemText className="link-fontH" primary={text} />
                           </ListItem>
+                        :
+                        text === "Uship" ?
+                          <Link to="/CargoAndFreight" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
+                            <ListItem button key={text} >
+                                <ListItemIcon>
+                                  {
+                                    index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                    index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                    index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
+                                    index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
+                                    index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                    index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                  }
+                                </ListItemIcon>
+                                <ListItemText className="link-fontH" primary={text} />
+                            </ListItem>
+                          </Link>
+                        :
+                        text === "Sally's Pantry" ?
+                        <a href='https://sallyspantry.com/' target="_blank" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")} title="Sally's Pantry">
+                            <ListItem button key={text} >
+                                <ListItemIcon>
+                                  {
+                                    index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                    index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                    index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
+                                    index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
+                                    index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                    index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                  }
+                                </ListItemIcon>
+                                <ListItemText className="link-fontH" primary={text} />
+                            </ListItem>
+                          </a>
                         :
                         text === "Orders" ?
                           <Link to="/OrderHistory" className={classes.inactiveItemLink}>
                             <ListItem button key={text}>
                                 <ListItemIcon>
-                                  {
-                                    index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
-                                    index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                    index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
-                                    index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                    index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
-                                  }
+                                    {
+                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                      index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
+                                      index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
+                                      index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                    }
                                 </ListItemIcon>
                                 <ListItemText primary={text} />
                             </ListItem>
@@ -300,13 +343,14 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                         :
                         <ListItem button key={text} style={{paddingLeft: "12px"}}>
                             <ListItemIcon>
-                              {
-                                index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
-                                index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                index === 2 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
-                                index === 3 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                index === 4 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
-                              }
+                                    {
+                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                      index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
+                                      index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
+                                      index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                    }
                             </ListItemIcon>
                             <ListItemText primary={text} />
                         </ListItem>
