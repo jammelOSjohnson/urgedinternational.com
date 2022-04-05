@@ -35,6 +35,9 @@
     "test": "echo \"Error: no text specified\" && exit 1",
     "dev": "nodemon src/index.ts",
     "build": "tsc -p .",
+    "dockbuild": "docker build -t urgedinternationalsite/server:server .",
+    "dockstart": "docker-compose up",
+    "dockstop": "docker-compose down",
     "deploy": "npm run build && gcloud app deploy"
   }
 }

@@ -16,19 +16,29 @@ import { PubSub } from 'graphql-subscriptions';
 //import { GooglePubSub } from '@axelspringer/graphql-google-pubsub';// For Production
 import { RedisPubSub } from 'graphql-redis-subscriptions'; // For Production
 import Mailbox from './models/MailBox.model';
-const pubsub = new RedisPubSub(
-                process.env.NODE_ENV === "production"
-                ? {
+// const pubsub = new RedisPubSub(
+//                 process.env.NODE_ENV === "production"
+//                 ? {
+//                     connection: {
+//                         host: process.env.REDIS_DOMAIN_NAME as any,
+//                         port: process.env.PORT_NUMBER as any,
+//                         // retryStrategy: options => {
+//                         //   // reconnect after
+//                         //   return Math.max(options.attempt * 100, 3000);
+//                         // }
+//                       }
+//                 }
+//                 : {});
+const pubsub = new RedisPubSub({
                     connection: {
-                        host: process.env.REDIS_DOMAIN_NAME as any,
-                        port: process.env.PORT_NUMBER as any,
+                        host: process.env.REDIS_DOMAIN_NAME as any || "localhost",
+                        port: process.env.PORT_NUMBER as any || "6379",
                         // retryStrategy: options => {
                         //   // reconnect after
                         //   return Math.max(options.attempt * 100, 3000);
                         // }
                       }
-                }
-                : {});
+                });
 //const pubsubProd = new GooglePubSub();
 //subscriptions test 
 
