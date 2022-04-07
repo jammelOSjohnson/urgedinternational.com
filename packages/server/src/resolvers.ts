@@ -336,7 +336,25 @@ const resolvers = {
             //console.log(finalMBox);
             
             return finalMBox[0];
-        }
+        },
+
+        updateRestaurantById: async(_, {
+            _id, Id, FirstName, LastName, Email, AddressLine1, 
+            AddressLine2, City, ContactNumber, OpeningHrs, 
+            category, MenuItems, ImageName
+        }) => {
+            let newRestaurantUser = {
+                _id, Id, FirstName,
+                LastName, Email, AddressLine1,
+                AddressLine2, City, ContactNumber,
+                OpeningHrs, category, MenuItems,
+                ImageName
+            }
+            //console.log(newRestaurantUser);
+            const user = await User.findOne({_id});
+            Object.assign(user, newRestaurantUser);
+            return user.save(); 
+        },
     }
 };
 

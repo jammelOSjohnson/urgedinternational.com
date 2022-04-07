@@ -70,6 +70,7 @@ export const CREATE_ROLE = gql`
 export const GET_RESTAURANTS = gql`
     mutation getRestaurants {
         getRestaurants{
+            _id
             Id
             FirstName
             LastName
@@ -566,4 +567,49 @@ mutation getMailboxByMbox($MailboxNum: String!) {
         MailboxNum
     }
 }
+`
+
+export const UPDATE_RESTAURANT_BYID = gql`
+    mutation updateRestaurantById (
+        $_id: ID, $Id: String! ,$FirstName: String!, 
+        $LastName: String!, $Email: String!, 
+        $AddressLine1: String, $AddressLine2: String, 
+        $City: String, $ContactNumber: String, 
+        $OpeningHrs: JSONObject, $category: ID, 
+        $MenuItems: JSONObject, $ImageName: String
+
+    ) {
+        updateRestaurantById{
+            Id
+            FirstName
+            LastName
+            Email
+            AddressLine1
+            AddressLine2
+            City
+            ContactNumber
+            OpeningHrs{
+            Sunday
+            Monday
+            Tuesday
+            Wednesday
+            Thursday
+            Friday
+            Saturday
+            }
+            category{
+                _id
+                Name
+                Id
+            }
+            MenuItems{
+                MenuCategory
+                ItemName
+                ItemCost
+                ItemDescription
+                ImageName
+            },
+            ImageName
+        }
+    }
 `

@@ -350,6 +350,15 @@ const typeDefs = /* GraphQL */`
             Uid: ID,
             MailboxNum: String
         ): Mailbox
+
+        updateRestaurantById (
+            _id: ID, Id: String! , FirstName: String!, 
+            LastName: String!, Email: String!, 
+            AddressLine1: String, AddressLine2: String, 
+            City: String, ContactNumber: String, 
+            OpeningHrs: JSONObject, category: ID, 
+            MenuItems: JSONObject, ImageName: String
+        ): User
     }
 `;
 

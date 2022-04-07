@@ -297,7 +297,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
     });
     const [tab, setTab] = React.useState(0);
     var { value }  = useAppData();
-    var { fetchRestaurants, selectedRestaurant, restaurants, viewMenuItems } = value;
+    var { fetchRestaurants, selectedRestaurant, restaurants, viewMenuItems, UpdateRestaurantByID } = value;
     var [error, setError] = useState('');
     var [success, setSuccess] = useState('');
 
@@ -315,8 +315,9 @@ export const OrgDetails: React.FC = function OrgDetails() {
         //console.log("inside use effect");
         //console.log(restaurants);
         try{
-            if(restaurants.length > 0 && selectedRestaurant !== undefined && values.Menu.length !== 0){
+            if(restaurants.length > 0 && selectedRestaurant !== undefined && values.Menu.length === 0){
                 let restaurant = restaurants[selectedRestaurant];
+                console.log("about to set form values")
                 setValues({
                     Name: restaurant.FirstName,
                     Email: restaurant.Email,
@@ -345,6 +346,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
         try{
             setError('');
             setSuccess('');
+            UpdateRestaurantByID(value, )
             
         }catch(e: any) { 
             ////console.log(e.message)

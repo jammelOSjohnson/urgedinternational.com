@@ -20,7 +20,8 @@ import {
         UPDATE_CONTACT_AND_ADDRESS_BYID_MUTATION,
         ADD_MAILBOXNUM_MUTATION,
         GET_MAILBOX_BYID_MUTATION,
-        GET_MAILBOX_BYMBOX_MUTATION
+        GET_MAILBOX_BYMBOX_MUTATION,
+        UPDATE_RESTAURANT_BYID
       } from '../GraphQL/Mutations';
 import { useMutation } from '@apollo/client';
 import sendEmail from "../email.js";
@@ -217,6 +218,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     //const {data} = useQuery(GET_PAY_SETTINGS);
     const [getPaySettings] = useMutation(GET_PAY_SETTINGS);
     const [getMenucategories] = useMutation(GET_MENU_CATEGORIES);
+    const [updateRestaurantById] = useMutation(UPDATE_RESTAURANT_BYID);
     // eslint-disable-next-line
     // const {data} = useQuery(GET_ORDERS,{
     //   pollInterval: 500,
@@ -1566,6 +1568,27 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       });
     };
 
+    var UpdateRestaurantByID  = async function UpdateRestaurantByID(payload, restaurant){
+      if(restaurant !== null && restaurant !== undefined){
+          let newrestaurant = restaurant;
+          console.log(newrestaurant);
+          var updateRes = await updateRestaurantById({variables: newrestaurant}).then(async function(response) {
+            ////console.log("create orer result");
+            if (response.data.updateRestaurantById !== null) {
+              await fetchRestaurants(payload);
+              return true;
+            }
+          });
+
+          if(updateRes !== undefined){
+            return updateRes;
+          }
+      }else{
+        return false
+      }
+      return false
+    }
+
     const [value, dispatch] = useReducer(appDataReducer, {
         currentUser,
         loading,
@@ -1629,7 +1652,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         UpdatePaySettings,
         viewRiderDetails,
         createPreAlert,
-        fetchAddress
+        fetchAddress,
+        UpdateRestaurantByID
     });
     
      
