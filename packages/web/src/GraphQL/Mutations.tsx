@@ -99,7 +99,7 @@ export const GET_RESTAURANTS = gql`
                 ItemCost
                 ItemDescription
                 ImageName
-            },
+            }
             ImageName
         }
     }
@@ -570,8 +570,8 @@ mutation getMailboxByMbox($MailboxNum: String!) {
 `
 
 export const UPDATE_RESTAURANT_BYID = gql`
-    mutation updateRestaurantById (
-        $_id: ID, $Id: String! ,$FirstName: String!, 
+    mutation updateRestaurantById(
+        $_id: ID, $Id: String!, $FirstName: String!, 
         $LastName: String!, $Email: String!, 
         $AddressLine1: String, $AddressLine2: String, 
         $City: String, $ContactNumber: String, 
@@ -579,7 +579,12 @@ export const UPDATE_RESTAURANT_BYID = gql`
         $MenuItems: JSONObject, $ImageName: String
 
     ) {
-        updateRestaurantById{
+        updateRestaurantById(_id: $_id, Id:$Id, FirstName:$FirstName, 
+            LastName:$LastName, Email:$Email, 
+            AddressLine1:$AddressLine1, AddressLine2:$AddressLine2, 
+            City:$City, ContactNumber:$ContactNumber, 
+            OpeningHrs:$OpeningHrs, category:$category, 
+            MenuItems:$MenuItems, ImageName:$ImageName){
             Id
             FirstName
             LastName

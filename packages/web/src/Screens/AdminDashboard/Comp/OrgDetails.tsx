@@ -1,5 +1,5 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { AppBar ,Grid, makeStyles, createStyles, Typography, Theme, Card, CardHeader, Avatar, CardMedia, CardContent, TextField, FormControl, InputLabel, Select, MenuItem, Button, Box, Tabs, Tab } from '@material-ui/core';
+import { AppBar ,Grid, makeStyles, createStyles, Typography, Theme, Card, CardHeader, Avatar, CardMedia, CardContent, TextField, FormControl, InputLabel, Select, MenuItem, Button, Box, Tabs, Tab, Modal, Backdrop, Fade } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import MUIDataTable from "mui-datatables";
@@ -11,6 +11,7 @@ import LocationOnIcon from '@material-ui/icons/LocationOn';
 import PhoneEnabledIcon from '@material-ui/icons/PhoneEnabled';
 import { Alert } from '@material-ui/lab';
 import { EditRounded } from '@material-ui/icons';
+import clsx from 'clsx';
 
 
 
@@ -26,10 +27,30 @@ interface State {
     Name: string;
     Email: string;
     StreetAddress: string;
+    StreetAddress2: string;
     City: string;
     Contact: string;
     Category: string;
-    Menu: object[];
+    Menu: MenuItem[];
+    OpeningHrs: OpenHrs
+}
+
+interface MenuItem {
+    MenuCategory: string;
+    ItemName: string;
+    ItemCost: string;
+    ItemDescription: string;
+    ImageName: string;
+}
+
+interface OpenHrs {
+    Sunday: string;
+    Monday: string;
+    Tuesday: string;
+    Wednesday: string;
+    Thursday: string;
+    Friday: string;
+    Saturday: string;
 }
 
 interface TabPanelProps {
@@ -68,7 +89,7 @@ function a11yProps(index: any) {
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
         root: {
-            padding: "2% 5% 0% 5%",
+            padding: "0% 5% 0% 5%",
             // borderRadius: "22px"
             borderRadius: "22px",
             "& .MuiInputBase-root": {
@@ -237,6 +258,27 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         alert: {
             marginBottom: "5%"
+        },
+        modal: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+        paper: {
+            backgroundColor: theme.palette.primary.contrastText,
+            border: '2px solid #000',
+            boxShadow: theme.shadows[5],
+            padding: theme.spacing(2, 4, 3),
+            minWidth: "34%",
+            maxWidth: "400px",
+            borderRadius: "20px",
+            borderColor: theme.palette.primary.light,
+            position: "relative"
+        },
+        cartIcon: {
+            position: "absolute",
+            top: 18,
+            right: 10
         }
     }),
 );
@@ -290,16 +332,47 @@ export const OrgDetails: React.FC = function OrgDetails() {
         Name: '',
         Email: '',
         StreetAddress: '',
+        StreetAddress2: '',
         City: '',
         Contact: '',
         Category: '',
-        Menu: []
+        Menu: [],
+        OpeningHrs: {
+            Sunday: '',
+            Monday: '',
+            Tuesday: '',
+            Wednesday: '',
+            Thursday: '',
+            Friday: '',
+            Saturday: ''
+        }
+    });
+    const [ohrs, setOhrs] = React.useState<OpenHrs>({
+        Sunday: '',
+        Monday: '',
+        Tuesday: '',
+        Wednesday: '',
+        Thursday: '',
+        Friday: '',
+        Saturday: ''
     });
     const [tab, setTab] = React.useState(0);
     var { value }  = useAppData();
-    var { fetchRestaurants, selectedRestaurant, restaurants, viewMenuItems, UpdateRestaurantByID } = value;
-    var [error, setError] = useState('');
-    var [success, setSuccess] = useState('');
+    var { selectedRestaurant, restaurants, viewMenuItems, UpdateRestaurantBy_ID } = value;
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+    const [open2, setOpen2] = React.useState(false);
+    const [selectedMenuItemIndex, setSelectedMenuItemIndex] = React.useState(0);
+    const [selectedMenuItem, setSelectedMenuItem] = React.useState<MenuItem>({
+        MenuCategory: '',
+        ItemName: '',
+        ItemCost: '',
+        ItemDescription: '',
+        ImageName: ''
+    });
+    var history = useHistory();
+    var location = history.location;
+    var referralPath = location.pathname;
 
     //Define table attributes
     const rows = [] as Object[];
@@ -308,7 +381,8 @@ export const OrgDetails: React.FC = function OrgDetails() {
         search: true,
         selectableRows: false,
         download: false,
-        print: false
+        print: false,
+        count: 5
     };
 
     useEffect(() => {
@@ -322,23 +396,21 @@ export const OrgDetails: React.FC = function OrgDetails() {
                     Name: restaurant.FirstName,
                     Email: restaurant.Email,
                     StreetAddress: restaurant.AddressLine1,
+                    StreetAddress2: restaurant.AddressLine2,
                     City: restaurant.City,
                     Contact: restaurant.ContactNumber,
                     Category: restaurant.category.Name,
-                    Menu: restaurant.MenuItems
-                })
+                    Menu: restaurant.MenuItems,
+                    OpeningHrs: restaurant.OpeningHrs
+                });
+
+                setOhrs(restaurant.OpeningHrs);
             }
         }catch(err) {
             console.log(err)
         }
         
     }, [restaurants, selectedRestaurant])
-
-    // const [values, setValues] = React.useState<State>({
-    //     email: '',
-    //     password: '',
-    //     showPassword: false,
-    //   });
     
     var history = useHistory();
 
@@ -346,7 +418,23 @@ export const OrgDetails: React.FC = function OrgDetails() {
         try{
             setError('');
             setSuccess('');
-            UpdateRestaurantByID(value, )
+            let final_restaurant = restaurants[selectedRestaurant];
+            final_restaurant.FirstName = values.Name;
+            final_restaurant.Email = values.Email;
+            final_restaurant.AddressLine1 = values.StreetAddress;
+            final_restaurant.AddressLine2 = values.StreetAddress2;
+            final_restaurant.City = values.City;
+            final_restaurant.ContactNumber = values.Contact;
+            //final_restaurant.category = values.Category;
+            final_restaurant.MenuItems = values.Menu;
+            final_restaurant.OpeningHrs = ohrs;
+
+            UpdateRestaurantBy_ID(value, final_restaurant).then(() => {
+                setSuccess('Restaurant Updated Seccessfully');
+                setTimeout(() => {
+                    setSuccess('');
+                }, 3000)
+            })
             
         }catch(e: any) { 
             ////console.log(e.message)
@@ -356,17 +444,14 @@ export const OrgDetails: React.FC = function OrgDetails() {
         }
     }
 
-    var handleSelectedRestaurant = async function(index){
-        if(index !== undefined || index !== null){
-            //console.log("Index is");
-            //console.log(index);
-            var payload = value;
-            payload.selectedRestaurant = index;
-            await viewMenuItems(payload).then(() => {
-                history.push("/Menu")
-            })
-        } 
-    }
+    const handleChange5 = (prop: keyof OpenHrs) => (event: React.ChangeEvent<HTMLInputElement>) => {
+        setOhrs({ ...ohrs, [prop]: event.target.value });
+    };
+
+    const handleChange4 = (prop: keyof MenuItem) => (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSelectedMenuItem({ ...selectedMenuItem, [prop]: event.target.value });
+    };
+
     const handleChange3 = (event: React.ChangeEvent<{}>, newValue: number) => {
         setTab(newValue);
       };
@@ -379,14 +464,34 @@ export const OrgDetails: React.FC = function OrgDetails() {
         setValues({...values,[event.target.name]:event.target.value});
     };
 
-    if (restaurants.length !== 0 && restaurants[selectedRestaurant].MenuItems.length !== 0){
-        restaurants[selectedRestaurant].MenuItems.map((item, index) => {
+    const handleClose2 = () => {
+        let newMenu = values.Menu;
+        newMenu[selectedMenuItemIndex] = selectedMenuItem;
+        console.log(newMenu[selectedMenuItemIndex])
+        setValues({ ...values, Menu: newMenu});
+        setOpen2(false);
+    };
+  
+    const handleOpen2 = (index: React.SetStateAction<number>) => {
+      try
+      {
+        setSelectedMenuItemIndex(index);
+        setSelectedMenuItem(restaurants[selectedRestaurant].MenuItems[parseInt(index.toString())]);
+        setOpen2(true);
+      }catch(err){
+
+      }
+      
+    };
+
+    if (restaurants.length !== 0 && values.Menu.length !== 0){
+        values.Menu.map((item, index) => {
             let row = {
               MenuCategory: item.MenuCategory,
               ItemName: item.ItemName, 
-              ItemCost: item.ItemCost,
+              ItemCost: `$ ${ parseFloat(item.ItemCost).toFixed(2)}`,
               ItemDescription: item.ItemDescription,
-              Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); history.push('/DeliveryOrdersDetails', { from: index});}}><EditRounded color="primary" /></a></>
+              Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); handleOpen2(index);}}><EditRounded color="primary" /></a></>
             };
       
             rows.push(row)
@@ -395,9 +500,9 @@ export const OrgDetails: React.FC = function OrgDetails() {
         return (
             <>
                 <Typography variant="h5" 
-                style={{paddingTop: "3%", paddingBottom: "3%",
+                style={{paddingTop: "3%", paddingBottom: "0%",
                  fontWeight: "bold", textAlign: "center", color: "#FF5E14"}}>
-                    Edit restaurant details below.
+                    Edit Restaurant Details Below
                 </Typography>
                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                     <Grid item xs={12} >
@@ -415,6 +520,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
                                     >
                                     <Tab label="Gernal Details" {...a11yProps(0)} />
                                     <Tab label="Menu Details" {...a11yProps(1)} />
+                                    <Tab label="Openning Hours" {...a11yProps(2)} />
                                     
                                     </Tabs>
                                 </AppBar>
@@ -516,9 +622,215 @@ export const OrgDetails: React.FC = function OrgDetails() {
                                                 data={rows}
                                                 columns={columns}
                                                 options={options}
-                                            />  
+                                            />
+
+                                            <Modal
+                                                aria-labelledby="transition-modal-title"
+                                                aria-describedby="transition-modal-description"
+                                                className={classes.modal}
+                                                open={open2}
+                                                onClose={handleClose2}
+                                                closeAfterTransition
+                                                BackdropComponent={Backdrop}
+                                                BackdropProps={{
+                                                timeout: 500,
+                                                }}
+                                            >
+                                                <Fade in={open2}>
+                                                    <div className={clsx(classes.paper, 'modalMobile')}>
+                                                        <h3 id="transition-modal-title" style={{textAlign: "center", color: "#F7B614"}}>Edit Item</h3>
+                                                        <Link to={referralPath} className={classes.cartIcon} onClick={handleClose2}>
+                                                                <img src="Images/CartCloseIcon.png" alt="closemodal" />
+                                                        </Link>
+                                                        <br />
+                                                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                            <Grid item xs={12}>
+                                                                <Grid item xs={12} >
+                                                                    <form autoComplete="off">
+                                                                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                                            <Grid item xs={12} >
+                                                                                <TextField
+                                                                                    id="outlined-multiline-static1"
+                                                                                    label="Item Name"
+                                                                                    // multiline
+                                                                                    // rows={4}
+                                                                                    value={selectedMenuItem.ItemName}
+                                                                                    onChange={handleChange4('ItemName')}
+                                                                                    variant="outlined"
+                                                                                    placeholder="Enter Item Name"
+                                                                                    fullWidth
+                                                                                />
+                                                                            </Grid>
+                                                                            <Grid item xs={12} >
+                                                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                                    <TextField
+                                                                                        id="outlined-multiline-static"
+                                                                                        label="Item Description"
+                                                                                        // multiline
+                                                                                        // rows={4}
+                                                                                        value={selectedMenuItem.ItemDescription}
+                                                                                        onChange={handleChange4('ItemDescription')}
+                                                                                        variant="outlined"
+                                                                                        placeholder="Enter Item Description"
+                                                                                        fullWidth
+                                                                                    />
+                                                                                </FormControl>
+                                                                            </Grid>
+                                                                            <Grid item xs={12} sm={6}>
+                                                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                                <TextField
+                                                                                    id="outlined-multiline-static1"
+                                                                                    label="Category"
+                                                                                    // multiline
+                                                                                    // rows={4}
+                                                                                    value={selectedMenuItem.MenuCategory}
+                                                                                    onChange={handleChange4('MenuCategory')}
+                                                                                    variant="outlined"
+                                                                                    placeholder="Enter Category"
+                                                                                    fullWidth
+                                                                                />
+                                                                                </FormControl>
+                                                                            </Grid>
+                                                                            <Grid item xs={12} sm={6}>
+                                                                                <TextField
+                                                                                    id="outlined-multiline-static1"
+                                                                                    label="Item Cost"
+                                                                                    // multiline
+                                                                                    // rows={4}
+                                                                                    value={selectedMenuItem.ItemCost}
+                                                                                    onChange={handleChange4('ItemCost')}
+                                                                                    variant="outlined"
+                                                                                    placeholder="Enter Item Cost"
+                                                                                    fullWidth
+                                                                                />
+                                                                            </Grid>
+                                                                            <Grid item xs={6}>
+                                                                                <Button variant="contained" 
+                                                                                    style={{backgroundColor: "#F7B614", fontFamily: "PT Sans"}} onClick={handleClose2}
+                                                                                    color="secondary" size="small" className={`${classes.Button} ${classes.btnfonts}`}
+                                                                                    fullWidth>
+                                                                                    Continue
+                                                                                </Button>
+                                                                            </Grid>
+                                                                        </Grid>
+                                                                    </form>
+                                                                </Grid>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </div>
+                                                </Fade>
+                                            </Modal>  
                                         </Grid>
                                     </Grid>  
+                                </TabPanel>
+                                <TabPanel value={tab} index={2}>
+                                    <form>
+                                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                            <Grid item xs={12} sm={6} >
+                                                <TextField
+                                                    id="outlined-multiline-static1"
+                                                    label="Sunday"
+                                                    // multiline
+                                                    // rows={4}
+                                                    value={ohrs.Sunday}
+                                                    onChange={handleChange5('Sunday')}
+                                                    variant="outlined"
+                                                    placeholder="Eg. 8:00am - 11:00pm"
+                                                    fullWidth
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12} sm={6} >
+                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                    <TextField
+                                                        id="outlined-multiline-static"
+                                                        label="Monday"
+                                                        // multiline
+                                                        // rows={4}
+                                                        value={ohrs.Monday}
+                                                        onChange={handleChange5('Monday')}
+                                                        variant="outlined"
+                                                        placeholder="Eg. 8:00am - 11:00pm"
+                                                        fullWidth
+                                                    />
+                                                </FormControl>
+                                            </Grid>
+                                            <Grid item xs={12} sm={6} >
+                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                    <TextField
+                                                        id="outlined-multiline-static"
+                                                        label="Tuesday"
+                                                        // multiline
+                                                        // rows={4}
+                                                        value={ohrs.Tuesday}
+                                                        onChange={handleChange5('Tuesday')}
+                                                        variant="outlined"
+                                                        placeholder="Eg. 8:00am - 11:00pm"
+                                                        fullWidth
+                                                    />
+                                                </FormControl>
+                                            </Grid>
+                                            <Grid item xs={12} sm={6} >
+                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                    <TextField
+                                                        id="outlined-multiline-static"
+                                                        label="Wednesday"
+                                                        // multiline
+                                                        // rows={4}
+                                                        value={ohrs.Wednesday}
+                                                        onChange={handleChange5('Wednesday')}
+                                                        variant="outlined"
+                                                        placeholder="Eg. 8:00am - 11:00pm"
+                                                        fullWidth
+                                                    />
+                                                </FormControl>
+                                            </Grid>
+                                            <Grid item xs={12} sm={6} >
+                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                    <TextField
+                                                        id="outlined-multiline-static"
+                                                        label="Thursday"
+                                                        // multiline
+                                                        // rows={4}
+                                                        value={ohrs.Thursday}
+                                                        onChange={handleChange5('Thursday')}
+                                                        variant="outlined"
+                                                        placeholder="Eg. 8:00am - 11:00pm"
+                                                        fullWidth
+                                                    />
+                                                </FormControl>
+                                            </Grid>
+                                            <Grid item xs={12} sm={6} >
+                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                    <TextField
+                                                        id="outlined-multiline-static"
+                                                        label="Friday"
+                                                        // multiline
+                                                        // rows={4}
+                                                        value={ohrs.Friday}
+                                                        onChange={handleChange5('Friday')}
+                                                        variant="outlined"
+                                                        placeholder="Eg. 8:00am - 11:00pm"
+                                                        fullWidth
+                                                    />
+                                                </FormControl>
+                                            </Grid>
+                                            <Grid item xs={12} sm={6} >
+                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                    <TextField
+                                                        id="outlined-multiline-static"
+                                                        label="Saturday"
+                                                        // multiline
+                                                        // rows={4}
+                                                        value={ohrs.Saturday}
+                                                        onChange={handleChange5('Saturday')}
+                                                        variant="outlined"
+                                                        placeholder="Eg. 8:00am - 11:00pm"
+                                                        fullWidth
+                                                    />
+                                                </FormControl>
+                                            </Grid>
+                                        </Grid>
+                                    </form>
                                 </TabPanel>
                                 <Grid container direction="row" spacing={1} className={classes.root2} alignItems="center">
                                     <Grid item xs={12} sm={12} >

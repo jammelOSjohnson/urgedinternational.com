@@ -350,7 +350,7 @@ const resolvers = {
                 OpeningHrs, category, MenuItems,
                 ImageName
             }
-            //console.log(newRestaurantUser);
+            console.log(newRestaurantUser);
             const user = await User.findOne({_id});
             Object.assign(user, newRestaurantUser);
             return user.save(); 

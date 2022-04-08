@@ -1568,11 +1568,25 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       });
     };
 
-    var UpdateRestaurantByID  = async function UpdateRestaurantByID(payload, restaurant){
+    var UpdateRestaurantBy_ID  = async function UpdateRestaurantBy_ID(payload: any, restaurant: { _id: any; Id: any; FirstName: any; LastName: any; Email: any; AddressLine1: any; AddressLine2: any; City: any; ContactNumber: any; OpeningHrs: any; category: { _id: any; }; MenuItems: any; ImageName: any; } | null | undefined){
       if(restaurant !== null && restaurant !== undefined){
-          let newrestaurant = restaurant;
-          console.log(newrestaurant);
-          var updateRes = await updateRestaurantById({variables: newrestaurant}).then(async function(response) {
+          
+          console.log(restaurant);
+          var updateRes = await updateRestaurantById({variables: {
+            _id: restaurant._id,
+            Id: restaurant.Id,
+            FirstName: restaurant.FirstName,
+            LastName: restaurant.LastName,
+            Email: restaurant.Email,
+            AddressLine1: restaurant.AddressLine1,
+            AddressLine2: restaurant.AddressLine2,
+            City: restaurant.City,
+            ContactNumber: restaurant.ContactNumber,
+            OpeningHrs: restaurant.OpeningHrs,
+            category: restaurant.category._id,
+            MenuItems: restaurant.MenuItems,
+            ImageName: restaurant.ImageName,
+          }}).then(async function(response) {
             ////console.log("create orer result");
             if (response.data.updateRestaurantById !== null) {
               await fetchRestaurants(payload);
@@ -1653,7 +1667,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         viewRiderDetails,
         createPreAlert,
         fetchAddress,
-        UpdateRestaurantByID
+        UpdateRestaurantBy_ID
     });
     
      

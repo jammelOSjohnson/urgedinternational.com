@@ -561,18 +561,12 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                                                             <span style={{color: "#FF5E14"}}>{userInfo.fullName}</span>
                                                         </Typography>
                                                         <Typography>
-                                                            Address 1&nbsp;
+                                                            Address 1:&nbsp;
                                                             <span>3750 W OAKLAND PARK BLVD</span> 
                                                         </Typography>
                                                         <Typography>
                                                             Address 2:&nbsp;
                                                             <span>LOC25 US
-                                                                <MailBoxNumber />
-                                                            </span>
-                                                        </Typography>
-                                                        <Typography>
-                                                            Mailbox Number:&nbsp;
-                                                            <span style={{color: "#FF5E14"}}>
                                                                 <MailBoxNumber />
                                                             </span>
                                                         </Typography>
@@ -584,6 +578,15 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                                                             State:&nbsp;
                                                             <span>Florida</span>&nbsp;ZipCode:&nbsp;
                                                             <span>33311</span>
+                                                        </Typography>
+                                                        <br />
+                                                        <Typography style={{fontWeight: "bold"}}>
+                                                            Mailbox Number
+                                                        </Typography>
+                                                        <Typography>
+                                                            <span style={{color: "#FF5E14"}}>
+                                                                <MailBoxNumber />
+                                                            </span>
                                                         </Typography>
                                                     </Grid>
                                                     <hr />
@@ -917,9 +920,12 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                                                     </Typography>    
                                                     <Typography className={classes.paragraph}>
                                                         Each additional lb over 10lbs is just $350JMD per lb
+                                                    </Typography>
+                                                    <br />
+                                                    <Typography gutterBottom className={classes.cardTitle3}>
+                                                        Processing Fee:
                                                     </Typography> 
-                                                    <Typography className={classes.paragraph}>
-                                                        {/* &#123;&#123; */} <span style={{fontWeight: 800}}>Processing Fee: </span>  
+                                                    <Typography className={classes.paragraph}> 
                                                         Each package is subject to a processing fee of $230 { /* &#125;&#125; */} 
                                                         <br /><br />
                                                         <Typography variant={"h6"} className={classes.paragraphHeadings}>

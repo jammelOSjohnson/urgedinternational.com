@@ -507,17 +507,17 @@ export const LoginScreen: React.FC = function LoginScreen() {
 
     const handleClose2 = () => {
         setOpen2(false);
-      };
+    };
   
-      const handleOpen2 = () => {
-        try
-        {
-          setOpen2(true);
-        }catch(err){
-  
-        }
-        
-      };
+    const handleOpen2 = () => {
+      try
+      {
+        setOpen2(true);
+      }catch(err){
+
+      }
+      
+    };
 
     useEffect(() => {
         console.log("Checking role");
