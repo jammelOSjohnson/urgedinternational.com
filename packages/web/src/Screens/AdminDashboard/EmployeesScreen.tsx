@@ -6,7 +6,8 @@ import clsx from 'clsx';
 import { Sidebar } from './Comp/Sidebar';
 import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
-
+import { FilterBar } from './Comp/FilterBar'
+import { EmployeeCardList } from './Comp/EmployeeCardList'
 
 interface Props {
     
@@ -47,7 +48,7 @@ export const EmployeesScreen: React.FC = () => {
             <Sidebar>
                 <Container maxWidth="xl" style={{ paddingLeft: "8px", paddingRight: "8px" }} className={classes.main}>
                     <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
-                        <Grid container direction="row" xs={12} spacing={0}>
+                        <Grid container direction="row" spacing={0}>
                             <Grid item xs={8} style={{ marginBottom: "2%", marginTop: "1%", background: "transparent" }}>
                                 <HeaderLeft />
                             </Grid>
@@ -55,7 +56,8 @@ export const EmployeesScreen: React.FC = () => {
                                 <HeaderRight />
                             </Grid>
                             <Grid item xs={12}>
-                                Employee Screen
+                                {/* <FilterBar /> */}
+                                <EmployeeCardList />
                             </Grid>
                         </Grid>
                     </Grid>

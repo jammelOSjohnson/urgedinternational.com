@@ -1,19 +1,14 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardHeader, Avatar, CardMedia, CardContent } from '@material-ui/core';
+import { Grid, makeStyles, createStyles, Typography, Theme, IconButton, Card, CardHeader, Avatar, CardMedia, CardContent } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
 //Import Components
 import { ItemRating } from '../../../Components/ItemRating';
 import { Link } from "react-router-dom";
 
 
 
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
+
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -119,28 +114,26 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
     var { fetchRestaurants, restaurants, viewMenuItems } = value;
     
     useEffect(() => {
-        console.log("inside use effect");
-        console.log(restaurants);
+        ////console.log("inside use effect");
+        ////console.log(restaurants);
         if(restaurants.length === 0){
             fetchRestaurants(value);
         }
+        // eslint-disable-next-line
     }, [restaurants])
 
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-      });
     
     var history = useHistory();
 
-    var handleSelectedRestaurant = async function(index){
+    var handleSelectedRestaurant = async function(index, restaurantName){
         if(index !== undefined || index !== null){
-            console.log("Index is");
-            console.log(index);
+            // //console.log("Index is");
+            // //console.log(index);
             var payload = value;
             payload.selectedRestaurant = index;
+            payload.selectedRestaurantName = restaurantName
             await viewMenuItems(payload).then(() => {
+                //console.log("about to leave page")
                 history.push("/Menu")
             })
         } 
@@ -149,28 +142,27 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
         return (
             <>
                 <Typography variant="body1" style={{paddingTop: "3%", paddingBottom: "3%"}}>
-                    Please select from the list of reataurants listed below to see their menu.
+                    Please select reataurants listed below to see their menu.
                 </Typography>
                 <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
                     {restaurants.map((restaurant, index) => {
-                        console.log("restaurant is");
-                        console.log(restaurant);
+                        ////console.log("restaurant is");
+                        ////console.log(restaurant);
                         return(
-                            
-                            <Grid item xs={10} md={6} lg={3} xl={3} className={classes.gridSpacing} key={index}>
-                                <Link onClick={() =>handleSelectedRestaurant(index)} className={classes.link}>
+                            <Grid item xs={12} sm={6} md={6} lg={3} xl={3} className={classes.gridSpacing} key={index}>
+                                <Link onClick={(e) => { e.preventDefault(); handleSelectedRestaurant(index, restaurant.FirstName);}} className={classes.link}>
                                 <Card className={classes.root}>
                                     <CardHeader
                                         avatar={
                                             <Avatar variant="square" aria-label="restaurant" className={classes.avatar}>
                                                 <CardMedia className={classes.cardImage}>
-                                                    <img className={classes.kfcImage} src={restaurant.ImageName}></img>
+                                                    <img className={classes.kfcImage} src={restaurant.ImageName} alt="kfcImage"></img>
                                                 </CardMedia>
                                             </Avatar>
                                         }
                                         action={
                                             <IconButton aria-label="settings">
-                                                <img className={classes.kfcImage} src="Images/FavIcon.png"></img>
+                                                <img className={classes.kfcImage} src="Images/FavIcon.png" alt="FavIcon"></img>
                                             </IconButton>
                                         }
                                         title={restaurant.FirstName}
@@ -188,15 +180,15 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                                                     <ItemRating rating={3.5}/>
                                                     </Typography>
                                             </Grid>
-                                                <Grid item xs={4}>
-                                                        <img className={classes.menuImages} src="Images/KFC Order1.png"></img>
-                                                </Grid>
-                                                <Grid item xs={4}>
-                                                        <img className={classes.menuImages} src="Images/KFC Order2.png"></img>
-                                                </Grid>
-                                                <Grid item xs={4}>
-                                                        <img className={classes.menuImages} src="Images/KFC Order3.png"></img>
-                                                </Grid>
+                                            {
+                                                restaurant.MenuItems.filter((item, index) => index < 3).map((item, index)=> {
+                                                    return(
+                                                        <Grid item xs={4} key={index}>
+                                                                <img className={classes.menuImages} src={item.ImageName} height="81px" width="100%" alt="img3"></img>
+                                                        </Grid>
+                                                    )
+                                                })
+                                            }
                                         </Grid>
                                     </CardContent>
                                 </Card>

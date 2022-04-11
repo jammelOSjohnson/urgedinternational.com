@@ -1,8 +1,14 @@
-import { gql } from 'apollo-server-express';
+import { ApolloServer } from 'apollo-server';
+import { json } from 'express';
 
-const typeDefs = gql`
+
+const typeDefs = /* GraphQL */`
+    scalar GraphQLDateTime
+    scalar JSONObject  
+    scalar Json
+
     type Role {
-        id: ID!
+        _id: ID
         description: String!
     }
 
@@ -19,42 +25,73 @@ const typeDefs = gql`
     }
 
     type MenuItem {
-        MenuCategory:  String,
-        ItemName:String,
-        ItemCost: Float,
-        ItemDescription: String,
+        MenuCategory:  String
+        ItemName:String
+        ItemCost: Float
+        ItemDescription: String
         ImageName: String
     }
 
     input MenuItem2 {
-        MenuCategory:  String,
-        ItemName:String,
-        ItemCost: Float,
-        ItemDescription: String,
+        MenuCategory:  String
+        ItemName:String
+        ItemCost: Float
+        ItemDescription: String
         ImageName: String
     }
 
     type OpeningHrs {
-        Sunday: String,
-        Monday: String,
-        Tuesday: String,
-        Wednesday: String,
-        Thursday: String,
-        Friday: String,
-        Saturday: String,
+        Sunday: String
+        Monday: String
+        Tuesday: String
+        Wednesday: String
+        Thursday: String
+        Friday: String
+        Saturday: String
     }
 
     input OpeningHrs2 {
-        Sunday: String,
-        Monday: String,
-        Tuesday: String,
-        Wednesday: String,
-        Thursday: String,
-        Friday: String,
-        Saturday: String,
+        Sunday: String
+        Monday: String
+        Tuesday: String
+        Wednesday: String
+        Thursday: String
+        Friday: String
+        Saturday: String
+    }
+
+    type Rider {
+        _id: ID,
+        Id: String 
+        FirstName: String 
+        LastName: String 
+        Email: String 
+        AddressLine1: String 
+        AddressLine2: String 
+        City: String 
+        ContactNumber: String
+        ImageName: String
+        isAvailable: Boolean
+        disabled: Boolean
+    }
+
+    input Rider2 {
+        _id: ID,
+        Id: String 
+        FirstName: String 
+        LastName: String 
+        Email: String 
+        AddressLine1: String 
+        AddressLine2: String 
+        City: String 
+        ContactNumber: String
+        ImageName: String
+        isAvailable: Boolean
+        disabled: Boolean
     }
 
     type User {
+        _id: ID,
         Id: String! 
         FirstName: String 
         LastName: String 
@@ -65,8 +102,10 @@ const typeDefs = gql`
         ContactNumber: String
         OpeningHrs: OpeningHrs
         category: Category
-        MenuItems: [MenuItem],
+        MenuItems: [MenuItem]
         ImageName: String
+        isAvailable: Boolean
+        disabled: Boolean
     }
 
     type MenuCategory {
@@ -77,18 +116,17 @@ const typeDefs = gql`
 
     
 
-   
 
     type Restaurant {
-        Id: String,
-        FirstName: String,
-        LastName: String,
-        Email: String,
-        AddressLine1: String,
-        AddressLine2: String,
-        City: String,
-        ContactNumber: String,
-        OpeningHrs: OpeningHrs,
+        Id: String
+        FirstName: String
+        LastName: String
+        Email: String
+        AddressLine1: String
+        AddressLine2: String
+        City: String
+        ContactNumber: String
+        OpeningHrs: OpeningHrs
         category: ID
     }
 
@@ -98,6 +136,65 @@ const typeDefs = gql`
         Category: Category
     }
 
+    type OrderItem {
+        itemName: String
+        chickenFlavour1: String
+        chickenFlavour2: String
+        drink: String
+        otherIntructions: String
+        itemCost: Float
+        imageName: String
+    }
+
+    input OrderItem2 {
+        itemName: String
+        chickenFlavour1: String
+        chickenFlavour2: String
+        drink: String
+        otherIntructions: String
+        itemCost: Float
+        imageName: String
+    }
+
+    type Order{
+        _id: Float
+        Id: String,
+        OrderItems: JSONObject 
+        OrderStatus:  String
+        OrderTotal: Float
+        OrderDate: String
+        Rider: Rider,
+        DeliveryAddress: String,
+        PaymentMethod: String,
+        AdditionalInfo: String
+        DeliveryFee: Float,
+        GCT: Float,
+        ServiceCharge: Float,
+        CartTotal: Float,
+        OrderType: String
+    }
+
+    type PaySetting {
+        _id: ID,
+        perDeliveryEnabled: Boolean,
+        percentagePerOrderTotal: Boolean,
+        value: Float
+    }
+
+    type Package {
+        PackageInfo: JSONObject,
+        Customer: User,
+        TrackingNumber: String,
+        Pickup: Boolean,
+        Deliver: Boolean
+    }
+
+    type Mailbox {
+        Status: String,
+        Uid: User,
+        MailboxNum: String
+    }
+
     type Query {
         hello: String
 
@@ -105,13 +202,29 @@ const typeDefs = gql`
 
         getCategories: [Category!]!
 
+        getOrders: [Order]
+
+        getOrdersByRiderId(
+            Rider: ID
+        ): [Order]
+
+        getOrdersByDateAndTime(
+            StartDate: String,
+            EndDate: String,
+        ): [Order]
+
+        getPaySettings: [PaySetting!]!
+
     }
-    
+
+    type Subscription {
+        orderCreated: Order
+    }
 
     type Mutation {
         createRole(description: String): Role!
 
-        getRole(id: String): Role!
+        getRole(_id: String): Role!
 
         getUserInRole(UserID: String): UserInRole
 
@@ -129,6 +242,8 @@ const typeDefs = gql`
         getMenucategories(Id: String): User
 
         getRestaurants: [User!]!
+
+        getRiders: [User!]!
 
         createMenuItem(
             RetaurantID: String,
@@ -148,11 +263,102 @@ const typeDefs = gql`
             Category: String
         ): MenuCategory
 
+        createOrder(
+            Id: String,
+            OrderItems: JSONObject ,
+            OrderStatus:  String,
+            OrderTotal: Float,
+            OrderDate: String,
+            Rider: String,
+            DeliveryAddress: String,
+            PaymentMethod: String,
+            AdditionalInfo: String,
+            DeliveryFee: Float,
+            GCT: Float,
+            ServiceCharge: Float,
+            CartTotal: Float,
+            OrderType: String
+        ): Order
+
+        getOrdersByUserId(
+            Id: String
+        ): [Order]
+
+        getOrdersByRiderId(
+            Rider: ID
+        ): [Order]
+
+        getOrdersByRiderIdAnDate(
+            Rider: ID,
+            StartDate: String,
+            EndDate: String,
+        ):[Order]
+
+        getOrders: [Order]
+        
+        updateOrder(
+            _id: ID
+            Id: String,
+            OrderItems: JSONObject ,
+            OrderStatus:  String,
+            OrderTotal: Float,
+            OrderDate: String,
+            Rider: String,
+            DeliveryAddress: String,
+            PaymentMethod: String,
+            AdditionalInfo: String,
+            DeliveryFee: Float,
+            GCT: Float,
+            ServiceCharge: Float,
+            CartTotal: Float,
+            OrderType: String): Order
+        
+        getPaySettings: [PaySetting!]!
+        
+        updatePaySetting(
+            _id: ID
+            perDeliveryEnabled: Boolean,
+            percentagePerOrderTotal: Boolean,
+            value: Float): PaySetting
+
         fetchRestaurantsByCategory(
             categoryID: String
-        ):RestaurantsByCategories 
+        ): RestaurantsByCategories
 
-        
+        addPackage(
+            PackageInfo: JSONObject,
+            Customer: ID,
+            TrackingNumber: String,
+            Pickup: Boolean,
+            Deliver: Boolean
+            ): Package
+            
+        getPackageById(TrackingNumber: String): Package 
+
+        updateContactAndAddress(
+            _id: ID,
+            ALine1: String,
+            ALine2: String,
+            Contact: String,
+            City: String
+        ): User
+
+        getMailboxById(Uid: ID): Mailbox
+
+        addMailbox(
+            Status: String,
+            Uid: ID,
+            MailboxNum: String
+        ): Mailbox
+
+        updateRestaurantById (
+            _id: ID, Id: String! , FirstName: String!, 
+            LastName: String!, Email: String!, 
+            AddressLine1: String, AddressLine2: String, 
+            City: String, ContactNumber: String, 
+            OpeningHrs: JSONObject, category: ID, 
+            MenuItems: JSONObject, ImageName: String
+        ): User
     }
 `;
 

@@ -1,362 +1,140 @@
-import React from 'react';
-import clsx from 'clsx';
-import { createStyles, lighten, makeStyles, Theme, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TableSortLabel, Toolbar, Typography, Paper, Checkbox, IconButton, Tooltip, FormControlLabel, Switch } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
+import React, {useEffect} from 'react';
+import { useAppData } from '../../../Context/AppDataContext';
+import { DataGrid, GridColDef } from '@material-ui/data-grid';
+import moment from 'moment';
+import { useHistory } from 'react-router-dom';
+import MUIDataTable from "mui-datatables";
 
-interface Data {
-    transactionType: string;
-    transactionDate: string;
-    status: string;
-    cost: number;
-    actions: string;
-}
+const columns = [
+  { 
+    name: 'id', 
+    label: 'Transaction', 
+    options: {
+      filter: true,
+      sort: true,
+     }
+  },{
+    name: 'Description',
+    label: 'Order Details',
+    options: {
+      filter: true,
+      sort: true,
+     }
+  },{
+    name: 'OrderDate',
+    label: 'Date',
+    options: {
+      filter: true,
+      sort: true,
+     }
+  },
+  {
+    name: 'OrderStatus',
+    label: 'Status',
+    options: {
+      filter: true,
+      sort: true,
+     }
+  },
+  {
+    name: 'OrderTotal',
+    label: 'Order Total',
+    options: {
+      filter: true,
+      sort: true,
+     }
+  },
+  {
+    name: 'Rider',
+    label: 'Delivery Partner',
+    options: {
+      filter: true,
+      sort: true,
+     }
+  },
+]
 
-function createData(
-    transactionType: string,
-    transactionDate: string,
-    status: string,
-    cost: number,
-    actions: string,
-): Data {
-  return { transactionType, transactionDate, status, cost, actions };
-}
 
-const rows = [
-  createData('UG977KN9NHD1','2000-01-01', 'Completed', 22.87, 'Marcus Henry'),
-  createData('UG977KN9NHD4', '2000-01-01', 'In Progress',  44.00, 'Janiesha James'),
-  createData('UG977KN9NH59', '2000-01-01', 'New', 68.76, 'Leon Gordon'),
-  createData('UG977KN9D960','2000-01-01', 'Completed',  944.45, 'Marcia Duffus'),
-  createData('UG977KN9NHD2', '2000-01-01', 'Completed',  1000.50, 'David Grey'),
-  createData('UG977KN9NH58','2000-01-01', 'Cancelled',  36.99, 'Rudeus Greyrat'),
-  createData('UG977KN9D961','2000-01-01', 'In Progress', 88.99, 'Uzumaki Boruto'),
-  createData('UG977KN9NHD3','2000-01-01', 'Completed',  78.57, 'Uchiha Sarada'),
-];
-
-function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
-  if (b[orderBy] < a[orderBy]) {
-    return -1;
-  }
-  if (b[orderBy] > a[orderBy]) {
-    return 1;
-  }
-  return 0;
-}
-
-type Order = 'asc' | 'desc';
-
-function getComparator<Key extends keyof any>(
-  order: Order,
-  orderBy: Key,
-): (a: { [key in Key]: number | string }, b: { [key in Key]: number | string }) => number {
-  return order === 'desc'
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-}
-
-function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
-  const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
-  stabilizedThis.sort((a, b) => {
-    const order = comparator(a[0], b[0]);
-    if (order !== 0) return order;
-    return a[1] - b[1];
-  });
-  return stabilizedThis.map((el) => el[0]);
-}
-
-interface HeadCell {
-  disablePadding: boolean;
-  id: keyof Data;
-  label: string;
-  numeric: boolean;
-}
-
-const headCells: HeadCell[] = [
-  { id: 'transactionType', numeric: false, disablePadding: true, label: 'Transaction' },
-  { id: 'transactionDate', numeric: true, disablePadding: false, label: 'Date' },
-  { id: 'status', numeric: true, disablePadding: false, label: 'Status' },
-  { id: 'cost', numeric: true, disablePadding: false, label: 'Cost' },
-  { id: 'actions', numeric: true, disablePadding: false, label: 'Delivered By' },
-];
-
-interface EnhancedTableProps {
-  classes: ReturnType<typeof useStyles>;
-  numSelected: number;
-  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
-  onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  order: Order;
-  orderBy: string;
-  rowCount: number;
-}
-
-function EnhancedTableHead(props: EnhancedTableProps) {
-  const { classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } = props;
-  const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
-    onRequestSort(event, property);
-  };
-
-  return (
-    <TableHead>
-      <TableRow>
-        <TableCell padding="checkbox">
-          <Checkbox
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{ 'aria-label': 'select all desserts' }}
-          />
-        </TableCell>
-        {headCells.map((headCell) => (
-          <TableCell
-            key={headCell.id}
-            align={headCell.numeric ? 'right' : 'left'}
-            padding={headCell.disablePadding ? 'none' : 'normal'}
-            sortDirection={orderBy === headCell.id ? order : false}
-          >
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
-            >
-              {headCell.label}
-              {orderBy === headCell.id ? (
-                <span className={classes.visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </span>
-              ) : null}
-            </TableSortLabel>
-          </TableCell>
-        ))}
-      </TableRow>
-    </TableHead>
-  );
-}
-
-const useToolbarStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(1),
-    },
-    highlight:
-      theme.palette.type === 'light'
-        ? {
-            color: theme.palette.secondary.main,
-            backgroundColor: lighten(theme.palette.secondary.light, 0.85),
-          }
-        : {
-            color: theme.palette.text.primary,
-            backgroundColor: theme.palette.secondary.dark,
-          },
-    title: {
-      flex: '1 1 100%',
-    },
-  }),
-);
-
-interface EnhancedTableToolbarProps {
-  numSelected: number;
-}
-
-// const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
-//   const classes = useToolbarStyles();
-//   const { numSelected } = props;
-
-//   return (
-//     <Toolbar
-//       className={clsx(classes.root, {
-//         [classes.highlight]: numSelected > 0,
-//       })}
-//     >
-//       {numSelected > 0 ? (
-//         <Typography className={classes.title} color="inherit" variant="subtitle1" component="div">
-//           {numSelected} selected
-//         </Typography>
-//       ) : (
-//         <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
-//           Nutrition
-//         </Typography>
-//       )}
-//       {numSelected > 0 ? (
-//         <Tooltip title="Delete">
-//           <IconButton aria-label="delete">
-//             <DeleteIcon />
-//           </IconButton>
-//         </Tooltip>
-//       ) : (
-//         <Tooltip title="Filter list">
-//           <IconButton aria-label="filter list">
-//             <FilterListIcon />
-//           </IconButton>
-//         </Tooltip>
-//       )}
-//     </Toolbar>
-//   );
-// };
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: '100%',
-    },
-    paper: {
-      width: '100%',
-      marginBottom: theme.spacing(2),
-    },
-    table: {
-      minWidth: 750,
-    },
-    visuallyHidden: {
-      border: 0,
-      clip: 'rect(0 0 0 0)',
-      height: 1,
-      margin: -1,
-      overflow: 'hidden',
-      padding: 0,
-      position: 'absolute',
-      top: 20,
-      width: 1,
-    },
-  }),
-);
 
 export const HistoryTable: React.FC = function HistoryTable () {
-  const classes = useStyles();
-  const [order, setOrder] = React.useState<Order>('asc');
-  const [orderBy, setOrderBy] = React.useState<keyof Data>('transactionType');
-  const [selected, setSelected] = React.useState<string[]>([]);
-  const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+ 
+  var { value }  = useAppData();
+  var history = useHistory();
+  var { orders, fetchOrdersByUser, currentUser, userRolef } = value;
 
-  const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
+  const rows = [] as Object[];
+  useEffect(() => {
+    try{
+      fetchOrdersByUser(value).then(()=>{
+        
+      });
 
-  const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.transactionType);
-      setSelected(newSelecteds);
-      return;
+    }catch(e){
+      //console.log(e)
     }
-    setSelected([]);
+    // eslint-disable-next-line
+  }, [currentUser]);
+
+  const options = {
+    filterType: 'dropdown',
+    search: true,
+    selectableRows: false,
+    download: false,
+    print: false
   };
 
-  const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected: string[] = [];
+  if(userRolef !== undefined && orders.length !== 0){
+    if(userRolef === "Admin" || userRolef === "Rider" || userRolef === "Customer" ){
+      orders.map((item, index) => {
+        const now = new Date(parseInt(item.OrderDate, 10));
+        const estTime = moment.tz(now, "America/Jamaica").format("YYYY-MM-DD h:mm a");
+        //console.log(item);
+        var orderItems = "";
+        orderItems = orderItems + item.OrderItems.map((item,index) => {
+          return(
+            item.chickenFlavour1 !== "" && item.chickenFlavour1 !== "Select Flavour" && item.chickenFlavour1 !== null && item.chickenFlavour1 !== undefined?
+          `${item.itemName + ": "}\n${item.chickenFlavour1 + " | "}\n${item.chickenFlavour2 + " | "}
+          \n${item.drink !== "Select Drink"? item.drink + " | ": "" + " | "}\n${item.otherIntructions + " | "}\n${'Not Available? ' + item.ifnotAvailable}` :
+          `${item.itemName + ": "}\n${item.drink !== "Select Drink"? item.drink + " | ": "" + " | "}\n${item.otherIntructions + " | "}\n${item.side!== undefined && item.side!== "Select Side"?'Side:' + item.side + " | ": ""}\n${'Not Available? ' + item.ifnotAvailable}`
+          )
+        })
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
+        let row = {
+          id: item._id,
+          Description: orderItems,
+          OrderDate: estTime, 
+          OrderStatus: item.OrderStatus, 
+          OrderTotal: `$ ${item.OrderTotal}`, 
+          Rider: item.Rider.FirstName
+        };
 
-    setSelected(newSelected);
-  };
-
-  const handleChangePage = (event: unknown, newPage: number) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
-  };
-
-  const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDense(event.target.checked);
-  };
-
-  const isSelected = (name: string) => selected.indexOf(name) !== -1;
-
-  const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+        rows.push(row)
+        return true;
+      })
+    }else{
+      return history.push("/Dashboard");
+     }
+  }
 
   return (
-    <div className={classes.root}>
-      <Paper className={classes.paper}>
-        {/* <EnhancedTableToolbar numSelected={selected.length} /> */}
-        <TableContainer>
-          <Table
-            className={classes.table}
-            aria-labelledby="tableTitle"
-            size={dense ? 'small' : 'medium'}
-            aria-label="enhanced table"
-          >
-            <EnhancedTableHead
-              classes={classes}
-              numSelected={selected.length}
-              order={order}
-              orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
-              onRequestSort={handleRequestSort}
-              rowCount={rows.length}
-            />
-            <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
-                  const isItemSelected = isSelected(row.transactionType);
-                  const labelId = `enhanced-table-checkbox-${index}`;
-
-                  return (
-                    <TableRow
-                      hover
-                      onClick={(event) => handleClick(event, row.transactionType)}
-                      role="checkbox"
-                      aria-checked={isItemSelected}
-                      tabIndex={-1}
-                      key={row.transactionType}
-                      selected={isItemSelected}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={isItemSelected}
-                          inputProps={{ 'aria-labelledby': labelId }}
-                        />
-                      </TableCell>
-                      <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.transactionType}
-                      </TableCell>
-                      <TableCell align="center">{row.transactionDate}</TableCell>
-                      <TableCell align="center">{row.status}</TableCell>
-                      <TableCell align="center">${row.cost.toFixed(2)}</TableCell>
-                      <TableCell align="center">{row.actions}</TableCell>
-                    </TableRow>
-                  );
-                })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: (dense ? 33 : 53) * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          labelRowsPerPage = "Items per page"
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
+    <div style={{ height: 400, width: '100%' }}>
+      <MUIDataTable
+          title={""}
+          data={rows}
+          columns={columns}
+          options={options}
         />
-      </Paper>
-      {/* <FormControlLabel
-        control={<Switch checked={dense} onChange={handleChangeDense} />}
-        label="Dense padding"
-      /> */}
+      <style>
+        {`
+          th{
+            background-color: #F7B614 !important;
+          }
+
+          th > span > button > span div > div{
+            color: #FFF !important;
+          }
+        `}
+      </style>
     </div>
   );
 }

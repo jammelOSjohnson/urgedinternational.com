@@ -7,3 +7,7 @@ temp/
 dump.rdb
 .env
 dist
+packages/server/app.yaml
+packages/server/docker-compose.yaml
+packages/server/docker-compose.yaml.prod
+packages/server/docker-compose.yaml.dev

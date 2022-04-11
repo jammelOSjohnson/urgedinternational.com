@@ -1,7 +1,5 @@
-import { Container, Grid, makeStyles, createStyles, Typography, Theme} from '@material-ui/core';
+import { makeStyles, createStyles, Theme} from '@material-ui/core';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
 import { Rating } from '@material-ui/lab';
 //Import Components
 
@@ -13,12 +11,6 @@ type Props = {
     rating: number
 }
 
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
-
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
 
@@ -26,13 +18,10 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const ItemRating: React.FC<Props> = function ItemRating(props) {
+    // eslint-disable-next-line
     const classes = useStyles();
     const { rating } = props;
     const [value, setValue] = React.useState<number | null>(rating);
-    
-      var history = useHistory();
-
-    
       
     return (
         <>

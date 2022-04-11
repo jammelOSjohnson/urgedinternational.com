@@ -6,9 +6,6 @@ import Twitter from '@material-ui/icons/Twitter';
 import Facebook from '@material-ui/icons/Facebook';
 import Instagram from "@material-ui/icons/Instagram";
 
-interface Props {
-    
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({

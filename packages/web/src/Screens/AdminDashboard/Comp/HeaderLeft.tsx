@@ -1,30 +1,33 @@
 import { makeStyles, createStyles, Typography, Theme, useMediaQuery, useTheme } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
+//import clsx from 'clsx';
 import { PlayArrowRounded } from "@material-ui/icons/";
+import { Link } from "react-router-dom";
 
-
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
+// interface State {
+//     email: string;
+//     password: string;
+//     showPassword: boolean;
+// }
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
-        
+        links: {
+            textDecoration: "none",
+            color: "inherit"
+        }
     }),
 );
 
 export const HeaderLeft: React.FC = function HeaderLeft() {
     const classes = useStyles();
     const theme = useTheme();
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-      });
+    // const [values, setValues] = React.useState<State>({
+    //     email: '',
+    //     password: '',
+    //     showPassword: false,
+    //   });
 
     const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
     const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
@@ -39,17 +42,24 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
         <>
             {isMatchMedium? (
                 <Typography variant="h6" style={{fontWeight: "bold", background: "transparent"}}>
-                    Orders
-                    {referralPath === "/fooddelivery" || referralPath === "/FoodDelivery" ?
-                    <span><PlayArrowRounded /> FOOD DELIVERY</span> :
-                    referralPath === "/Restaurants" || referralPath === "/restaurants" ?
-                    <span><PlayArrowRounded /> FOOD DELIVERY <PlayArrowRounded /> RESTAURANTS</span> : ""}
+                    {referralPath === "/Organisations" || referralPath === "/organisations" ?
+                    <span><Link to="/Organisations" className={classes.links}>Organisations</Link></span> :
+                    referralPath === "/AdminDashboard" || referralPath === "/admindashboard" ?
+                    <span><Link to="/AdminDashboard" className={classes.links}>Dashboard</Link></span> :
+                    referralPath === "/Employees" || referralPath === "/employees" ?
+                    <span><Link to="/Employees" className={classes.links}>Employees</Link></span> :
+                    referralPath === "/AdminOrderSDetails" || referralPath === "/adminordersdetails" ?
+                    <span><Link to="/AdminOrderSDetails" className={classes.links}>Order Details</Link></span> :
+                    referralPath === "/AdminSettings" || referralPath === "/adminsettings" ?
+                    <span><Link to="/AdminSettings" className={classes.links}>Settings</Link></span> :
+                    referralPath === "/PaySettings" || referralPath === "/paysettings" ?
+                    <span><Link to="/PaySettings" className={classes.links}>Pay Settings</Link></span> : ""}
                     
                 </Typography>
             ):<></>}
 
             {isMatch? (
-                <img src="Images/MobileMenuIcon.png"></img>
+                <img src="Images/MobileMenuIcon.png" alt="MobileMenuIcon"></img>
             ):<></>}
         </>
     )

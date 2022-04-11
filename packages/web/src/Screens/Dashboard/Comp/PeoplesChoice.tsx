@@ -1,21 +1,6 @@
-import { useAppData } from '../../../Context/AppDataContext';
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardMedia, CardContent, useMediaQuery, useTheme} from '@material-ui/core';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+//import { useAppData } from '../../../Context/AppDataContext';
+import { Grid, makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent, useMediaQuery, useTheme} from '@material-ui/core';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
-import { LockRounded, EmailRounded, PlayArrowRounded } from "@material-ui/icons/";
-
-interface Props {
-    
-}
-
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -84,20 +69,9 @@ const useStyles = makeStyles((theme: Theme) =>
 export const PeoplesChoice: React.FC = function PeoplesChoice() {
     const classes = useStyles();
     const theme = useTheme();
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-      });
-      var { value }  = useAppData();
-      var { orders } = value;
 
     const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
     const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
-
-      var TotalOrders = orders.length;
-      var OrdersInProcess = 0;
-      var history = useHistory();
 
     
       
@@ -118,7 +92,7 @@ export const PeoplesChoice: React.FC = function PeoplesChoice() {
                         <Grid xs={'auto'} className={classes.gridSpacing}>
                             <Card className={classes.card}>
                                 <CardMedia className={classes.cardImage}>
-                                    <img src="Images/ExampleSalad.png"></img>
+                                    <img src="Images/ExampleSalad.png" alt="ExampleSalad1"></img>
                                 </CardMedia>
                                 <CardContent className={classes.cardContent}>
                                         <Typography gutterBottom className={classes.cardTitle}>
@@ -130,7 +104,7 @@ export const PeoplesChoice: React.FC = function PeoplesChoice() {
                         <Grid xs={'auto'} className={classes.gridSpacing}>
                             <Card className={classes.card}>
                                 <CardMedia className={classes.cardImage}>
-                                    <img src="Images/ExampleSalad.png"></img>
+                                    <img src="Images/ExampleSalad.png" alt="ExampleSalad2"></img>
                                 </CardMedia>
                                 <CardContent className={classes.cardContent}>
                                         <Typography gutterBottom className={classes.cardTitle}>
@@ -142,7 +116,7 @@ export const PeoplesChoice: React.FC = function PeoplesChoice() {
                         <Grid xs={'auto'} className={classes.gridSpacing}>
                             <Card className={classes.card}>
                                 <CardMedia className={classes.cardImage}>
-                                    <img src="Images/ExampleSalad.png"></img>
+                                    <img src="Images/ExampleSalad.png" alt="ExampleSalad3"></img>
                                 </CardMedia>
                                 <CardContent className={classes.cardContent}>
                                         <Typography gutterBottom className={classes.cardTitle}>
@@ -154,7 +128,7 @@ export const PeoplesChoice: React.FC = function PeoplesChoice() {
                         <Grid xs={'auto'} className={classes.gridSpacing}>
                             <Card className={classes.card}>
                                 <CardMedia className={classes.cardImage}>
-                                    <img src="Images/ExampleSalad.png"></img>
+                                    <img src="Images/ExampleSalad.png" alt="ExampleSalad4"></img>
                                 </CardMedia>
                                 <CardContent className={classes.cardContent}>
                                         <Typography gutterBottom className={classes.cardTitle}>
@@ -166,7 +140,7 @@ export const PeoplesChoice: React.FC = function PeoplesChoice() {
                         <Grid xs={'auto'} className={classes.gridSpacing}>
                             <Card className={classes.card}>
                                 <CardMedia className={classes.cardImage}>
-                                    <img src="Images/ExampleSalad.png"></img>
+                                    <img src="Images/ExampleSalad.png" alt="ExampleSalad5"></img>
                                 </CardMedia>
                                 <CardContent className={classes.cardContent}>
                                         <Typography gutterBottom className={classes.cardTitle}>
@@ -195,7 +169,7 @@ export const PeoplesChoice: React.FC = function PeoplesChoice() {
                             <div className={classes.gridSpacingMobile}>
                                 <Card className={classes.card}>
                                     <CardMedia className={classes.cardImage}>
-                                        <img src="Images/ExampleSalad.png"></img>
+                                        <img src="Images/ExampleSalad.png" alt="ExampleSalad6"></img>
                                     </CardMedia>
                                     <CardContent className={classes.cardContent}>
                                             <Typography gutterBottom className={classes.cardTitle}>
@@ -207,7 +181,7 @@ export const PeoplesChoice: React.FC = function PeoplesChoice() {
                             <div className={classes.gridSpacingMobile}>
                                 <Card className={classes.card}>
                                     <CardMedia className={classes.cardImage}>
-                                        <img src="Images/ExampleSalad.png"></img>
+                                        <img src="Images/ExampleSalad.png" alt="ExampleSalad7"></img>
                                     </CardMedia>
                                     <CardContent className={classes.cardContent}>
                                             <Typography gutterBottom className={classes.cardTitle}>
@@ -219,7 +193,7 @@ export const PeoplesChoice: React.FC = function PeoplesChoice() {
                             <div className={classes.gridSpacingMobile}>
                                 <Card className={classes.card}>
                                     <CardMedia className={classes.cardImage}>
-                                        <img src="Images/ExampleSalad.png"></img>
+                                        <img src="Images/ExampleSalad.png" alt="ExampleSalad8"></img>
                                     </CardMedia>
                                     <CardContent className={classes.cardContent}>
                                             <Typography gutterBottom className={classes.cardTitle}>
@@ -231,7 +205,7 @@ export const PeoplesChoice: React.FC = function PeoplesChoice() {
                             <div className={classes.gridSpacingMobile}>
                                 <Card className={classes.card}>
                                     <CardMedia className={classes.cardImage}>
-                                        <img src="Images/ExampleSalad.png"></img>
+                                        <img src="Images/ExampleSalad.png" alt="ExampleSalad9"></img>
                                     </CardMedia>
                                     <CardContent className={classes.cardContent}>
                                             <Typography gutterBottom className={classes.cardTitle}>
@@ -243,7 +217,7 @@ export const PeoplesChoice: React.FC = function PeoplesChoice() {
                             <div className={classes.gridSpacingMobile}>
                                 <Card className={classes.card}>
                                     <CardMedia className={classes.cardImage}>
-                                        <img src="Images/ExampleSalad.png"></img>
+                                        <img src="Images/ExampleSalad.png" alt="ExampleSalad10"></img>
                                     </CardMedia>
                                     <CardContent className={classes.cardContent}>
                                             <Typography gutterBottom className={classes.cardTitle}>

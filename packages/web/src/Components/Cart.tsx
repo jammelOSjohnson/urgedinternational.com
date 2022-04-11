@@ -3,18 +3,9 @@ import { Badge , makeStyles, createStyles, Theme, Popper, Paper, Grow, MenuList,
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
-import { ShoppingCartRounded } from "@material-ui/icons/";
+import { PlayArrowRounded, ShoppingCartRounded } from "@material-ui/icons/";
 import { Link } from "react-router-dom";
 
-interface Props {
-    
-}
-
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -29,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
             left: "-11% !important",
             minWidth: "290px",
             maxWidth: "310px",
-            zIndex: 1
+            zIndex: 3
         },
         img: {
             width: "48px",
@@ -45,6 +36,11 @@ const useStyles = makeStyles((theme: Theme) =>
             fontWeight: 700,
             paddingLeft: "16px",
             paddingTop: "8px"
+        },
+        seeMore: {
+            paddingLeft: "16px",
+            color: theme.palette.primary.light,
+            fontWeight: "bolder"
         },
         Button: {
             backgroundColor: theme.palette.primary.light,
@@ -70,19 +66,14 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Cart: React.FC = function Cart() {
     const classes = useStyles();
     var history = useHistory();
-
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-      });
     
     var { value }  = useAppData();
     var { cartItems } = value;
 
     const [open, setOpen] = React.useState(false);
     const anchorRef = React.useRef<HTMLButtonElement>(null);
-    const handleToggle = () => {
+    const handleToggle = (e) => {
+        e.preventDefault();
         setOpen((prevOpen) => !prevOpen);
       };
     
@@ -96,8 +87,7 @@ export const Cart: React.FC = function Cart() {
 
     const handleCheckout =(event) =>{
         //setOpen(false);
-        console.log("here");
-        history.push("/Checkout");
+        history.push("/ShoppingCart");
     }
     
     function handleListKeyDown(event: React.KeyboardEvent) {
@@ -145,36 +135,58 @@ export const Cart: React.FC = function Cart() {
                                 <Link className={classes.cartIcon} onClick={handleClose}>
                                     <img src="Images/CartCloseIcon.png" alt="closecart" />
                                 </Link>
+                                {cartItems.length > 0 ?
+                                <Link to="/ShoppingCart" className={classes.link}>
+                                    <Typography className={classes.seeMore}>See More <PlayArrowRounded /></Typography>
+                                </Link>
+                                :
+                                <></>
+                                }
                             </Grid>
                             <Grid item xs={12}>
                                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                    {cartItems.map((item, idex) => (
-                                        <MenuItem onClick={handleClose}>
-                                            <Grid item xs={8}>
-                                                <Grid container direction="row" spacing={1}>
-                                                    <Grid item xs={6}>
-                                                        <img className={classes.img} src={item.imageName} alt="meal display"/>
-                                                    </Grid>
-                                                    <Grid item xs={6}>
-                                                        <Typography>{item.itemName}</Typography>
-                                                        <Typography>x1</Typography>
+                                    {cartItems.length > 0 ?
+                                        cartItems.map((item, idex) => (
+                                            <MenuItem onClick={handleClose}>
+                                                <Grid item xs={8}>
+                                                    <Grid container direction="row" spacing={1}>
+                                                        <Grid item xs={6}>
+                                                            <img className={classes.img} src={item.imageName} alt="meal display"/>
+                                                        </Grid>
+                                                        <Grid item xs={6}>
+                                                            <Typography>{item.itemName}</Typography>
+                                                            <p style={{display: "flex", marginBottom: 1}}>
+                                                                <Typography>x1</Typography>&nbsp; &nbsp;&nbsp;
+                                                                <Typography><span>$</span>{ parseFloat(item.itemCost).toFixed(2)}</Typography>
+                                                            </p>
+                                                            {
+                                                                item.side !== "" && item.side !== "Select Side"?
+                                                                    <Typography>Side: {item.side}</Typography>
+                                                                :
+                                                                    <></>
+                                                            }
+                                                            
+                                                        </Grid>
                                                     </Grid>
                                                 </Grid>
-                                            </Grid>
-                                            <Grid item xs={4}>
-                                                <Typography><span>$</span>{ parseFloat(item.itemCost).toFixed(2)}</Typography>
-                                            </Grid>
-                                        </MenuItem>
-                                    ))}
+                                            </MenuItem>
+                                        ))
+                                    :
+                                        <Typography style={{paddingLeft: "16px" }}>Cart is empty</Typography>
+                                    }
                                 </MenuList>
                             </Grid>
-                            <Grid item xs={12} style={{textAlign: "center"}}>
-                                <Link onClick={handleCheckout} className={classes.link}>
-                                    <Button size="large"  fullWidth={true} className={clsx(classes.Button,classes.btnfonts)}   type="button"> {/*onClick={handleCheckout}*/}
-                                            Checkout 
-                                    </Button>
-                                </Link>
-                            </Grid>
+                            {cartItems.length > 0 ?
+                                <Grid item xs={12} style={{textAlign: "center"}}>
+                                    <Link onClick={handleCheckout} className={classes.link}>
+                                        <Button size="large"  fullWidth={true} className={clsx(classes.Button,classes.btnfonts)}   type="button">
+                                                Checkout 
+                                        </Button>
+                                    </Link>
+                                </Grid>
+                            :
+                                <></>
+                            }
                         </Grid>
 
                         </ClickAwayListener>

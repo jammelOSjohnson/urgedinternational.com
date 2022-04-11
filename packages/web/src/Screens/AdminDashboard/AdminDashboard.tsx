@@ -1,7 +1,7 @@
-import { Container, Grid, makeStyles, createStyles, Typography, Theme } from '@material-ui/core';
+import { Container, Grid, makeStyles, createStyles, Theme } from '@material-ui/core';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
+//import { useHistory } from 'react-router-dom';
+//import clsx from 'clsx';
 //Import Components
 import { Sidebar } from './Comp/Sidebar';
 import { HeaderLeft } from './Comp/HeaderLeft';
@@ -9,15 +9,15 @@ import { HeaderRight } from './Comp/HeaderRight';
 import { OrdersCounters } from './Comp/OrdersCounters';
 
 
-interface Props {
+// interface Props {
     
-}
+// }
 
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
+// interface State {
+//     email: string;
+//     password: string;
+//     showPassword: boolean;
+// }
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -58,9 +58,9 @@ export const AdminDashboard: React.FC = () => {
                             <Grid item xs={12}>
                                 <OrdersCounters />
                             </Grid>
-                            <Grid item xs={12}>
+                            {/* <Grid item xs={12}>
                                 Order Statistics
-                            </Grid>
+                            </Grid> */}
                         </Grid>
                     </Grid>
                 </Container>

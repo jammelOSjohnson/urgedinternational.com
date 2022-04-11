@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { Sidebar } from './Comp/Sidebar';
 import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
+import { FilterBar } from './Comp/FilterBar'
 import { OrdersTable} from './Comp/OrdersTable'
 
 interface Props {
@@ -28,7 +29,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         main: {
             padding: 0,
-            backgroundImage: "url(Images/FoodPortalBackground.png)"
+            backgroundImage: "url(Images/FoodPortalBackground.png)",
+            height: "100vh"
         },
         content: {
             flexGrow: 1,
@@ -39,8 +41,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const OrdersScreen: React.FC = function OrdersScreen () {
     const classes = useStyles();
-
-
 
     return (
         <>
@@ -55,6 +55,7 @@ export const OrdersScreen: React.FC = function OrdersScreen () {
                                 <HeaderRight />
                             </Grid>
                             <Grid item xs={12}>
+                                {/* <FilterBar /> */}
                                 <OrdersTable />
                             </Grid>
                         </Grid>

@@ -1,18 +1,5 @@
 import { Grid, makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent } from '@material-ui/core';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
-import { Link } from "react-router-dom";
-
-interface Props {
-    
-}
-
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -76,23 +63,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const ErrandCards: React.FC = function ErrandCards() {
     const classes = useStyles();
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-      });
-    
-      var history = useHistory();
 
-    
-      
     return (
         <>
             <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                 <Grid item xs={10} md={3}>
                     <Card className={classes.card}>
                         <CardMedia className={classes.cardImage}>
-                            <img src="Images/Pay Bill.png"></img>
+                            <img src="Images/Pay Bill.png" alt="Pay Bill"></img>
                         </CardMedia>
                         <CardContent className={classes.cardContent}>
                             <Typography gutterBottom className={classes.cardTitle1}>
@@ -104,7 +82,7 @@ export const ErrandCards: React.FC = function ErrandCards() {
                 <Grid item xs={10} md={3}>
                     <Card className={classes.card}>
                         <CardMedia className={classes.cardImage}>
-                            <img src="Images/Bank.png"></img>
+                            <img src="Images/Bank.png" alt="Bank"></img>
                         </CardMedia>
                         <CardContent className={classes.cardContent}>
                             <Typography gutterBottom className={classes.cardTitle2}>
@@ -116,7 +94,7 @@ export const ErrandCards: React.FC = function ErrandCards() {
                 <Grid item xs={10} md={3}>
                     <Card className={classes.card}>
                         <CardMedia className={classes.cardImage}>
-                            <img src="Images/Tax Office.png"></img>
+                            <img src="Images/Tax Office.png" alt="Tax Office"></img>
                         </CardMedia>
                         <CardContent className={classes.cardContent}>
                             <Typography gutterBottom className={classes.cardTitle3}>
@@ -128,7 +106,7 @@ export const ErrandCards: React.FC = function ErrandCards() {
                 <Grid item xs={10} md={3}>
                     <Card className={classes.card}>
                         <CardMedia className={classes.cardImage}>
-                            <img src="Images/Other Errands.png"></img>
+                            <img src="Images/Other Errands.png" alt="Other Errands"></img>
                         </CardMedia>
                         <CardContent className={classes.cardContent}>
                             <Typography gutterBottom className={classes.cardTitle4}>

@@ -6,6 +6,8 @@ import clsx from 'clsx';
 import { Sidebar } from './Comp/Sidebar';
 import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
+import { FilterBar } from './Comp/FilterBar'
+import { OrganisationsCardList } from './Comp/OrganisationsCardList'
 
 interface Props {
     
@@ -54,7 +56,8 @@ export const OrganisationsScreen: React.FC = () => {
                                 <HeaderRight />
                             </Grid>
                             <Grid item xs={12}>
-                                Organisations
+                                {/* <FilterBar /> */}
+                                <OrganisationsCardList />
                             </Grid>
                         </Grid>
                     </Grid>

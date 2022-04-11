@@ -1,17 +1,12 @@
-import { makeStyles, createStyles, Typography, Theme, Button, IconButton, Slider, useMediaQuery, FormControl, OutlinedInput, InputAdornment, InputLabel, Select, MenuItem, TextField } from '@material-ui/core';
+import { makeStyles, createStyles, Typography, Theme, Button, IconButton, FormControl, InputAdornment, Select, MenuItem, TextField, useTheme, useMediaQuery, Input } from '@material-ui/core';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../CSS/FoodSlider.css";
 import { Link } from "react-router-dom";
-import { useAppData } from '../../../Context/AppDataContext';
+//import { useAppData } from '../../../Context/AppDataContext';
 import { LocationOnRounded } from "@material-ui/icons/";
-
-interface Props {
-    
-}
 
 interface State {
     address: string;
@@ -62,7 +57,7 @@ const useStyles = makeStyles((theme: Theme) =>
             lineHeight: '100%',
             //margin: '-10% -17% 8% 0%',
             position: "relative",
-            left: "45%",
+            left: "46%",
             // top: "-467%",
             width: "63%",
             textAlign: "left",
@@ -92,7 +87,7 @@ const useStyles = makeStyles((theme: Theme) =>
         btnLayout: {
             textAlign: "left",
             width: "100%",
-            left: "45%",
+            left: "46%",
             // top: "-108%",
             position: "relative",
             paddingTop: "3%",
@@ -106,7 +101,8 @@ const useStyles = makeStyles((theme: Theme) =>
             padding: "0% 0px 2% 0px",
             width: "70%",
             marginLeft: "44%;",
-            marginTop: "5%"
+            marginTop: "5%",
+            textAlign: "left"
         },
         formControl: {
             marginTop: theme.spacing(1),
@@ -130,6 +126,8 @@ const useStyles = makeStyles((theme: Theme) =>
             height: "55px",
             borderBottomRightRadius: "25px",
             borderTopRightRadius: "25px",
+            borderBottomLeftRadius: "25px",
+            borderTopLeftRadius: "25px",
             border: "none",
             backgroundColor: "#FFFFFF",
             color: "#9B9B9B !important"
@@ -137,9 +135,11 @@ const useStyles = makeStyles((theme: Theme) =>
         firstFormControl: {
             borderBottomRightRadius: "25px",
             borderTopRightRadius: "25px",
-            width: "47%",
+            // width: "47%",
+            minWidth: "247px",
             marginTop: theme.spacing(1),
             marginBottom: theme.spacing(1),
+            zIndex: 2
         },
         root: {
             "& .MuiFormLabel-root": {
@@ -168,6 +168,8 @@ const useStyles = makeStyles((theme: Theme) =>
                 backgroundColor: "#FFFFFF",
                 borderBottomRightRadius: "25px",
                 borderTopRightRadius: "25px",
+                borderBottomLeftRadius: "25px",
+                borderTopLeftRadius: "25px",
             },
             "& .MuiFilledInput-input": {
                 padding: "18px 12px 10px",
@@ -183,19 +185,67 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
+const useMobileStyles = makeStyles((theme: Theme) => 
+    createStyles({
+        image: {
+            zIndex: 1,
+            margin: '0% 0% 0% 0%',
+            position: "absolute",
+            right: "46%",
+            top: "-37%",
+            left: "0%",
+            width: "82%"
+        },
+        firstFormControl: {
+            borderBottomRightRadius: "25px",
+            borderTopRightRadius: "25px",
+            // width: "47%",
+            minWidth: "100%",
+            marginTop: theme.spacing(1),
+            marginBottom: theme.spacing(1),
+        },
+        form: {
+            padding: "0% 0px 2% 0px",
+            width: "100%",
+            marginLeft: "0%",
+            marginTop: "0%",
+            textAlign: "left",
+            position: 'absolute',
+            bottom: "-18%"
+        },
+        slider: {
+            borderRadius: '30px'
+        },
+        sliderSlogan: {
+            color: '#F9F9FB',
+            fontSize: 'clamp(16px, 3vw, 51.31px)',
+            fontWeight: 700,
+            lineHeight: '120%',
+            width: "36%",
+            textAlign: "left",
+            //padding: '0% 0% 2% 0%',
+            position: "relative",
+            left: "59%",
+            // top: "-760%"
+        }
+    })
+);
     
 
 export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
     const classes = useStyles();
-    var { value }  = useAppData();
+    const classesMobile = useMobileStyles();
+    const theme = useTheme();
+    const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
+
+    //var { value }  = useAppData();
     const [values, setValues] = React.useState<State>({
         address: 'Select Location',
         searchquery: '',
       });
-    
-      var history = useHistory();
 
-      const matches = useMediaQuery("(max-width:8000px)");
+      //const matches = useMediaQuery("(max-width:8000px)");
       
       const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setValues({ ...values, [prop]: event.target.value });
@@ -208,35 +258,9 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
     var handleSubmit = async function handleSubmit(event) {
         event.preventDefault();
         //prevents default form refresh
-        //console.log("I am inside fuction");
+        ////console.log("I am inside fuction");
         try{
-            // setSuccess('');
-            // setError('');
-            // setLoading(true);
-            // await signup(values, value).then(async function(res1){
-            //     if(res1 != null){
-            //         if(res1 !== "The email address is already in use by another account."){
-            //             await fetchUserDetailsSignUp(res1).then(function(res){
-            //                 if(res){
-            //                     //console.log("About to navigate to dashboard.");
-            //                     //console.log(userRolef);
-            //                     setSuccess('Sign Up Successful.');
-            //                     setTimeout(() => {
-            //                         setSuccess('');
-            //                         console.log("about to go to dashboard");
-            //                         history.push('/Dashboard')
-            //                     }, 1500);
-            //                 }else{
-            //                     setError('Unable to login at this time'); 
-            //                 } 
-            //             });
-            //         }else{
-            //             setError('The email address is already in use by another account.')
-            //         }
-            //     }else{
-            //         setError('Unable to Sign Up at this time.'); 
-            //     }
-            // });
+            
             
         }catch{
             // setError('Failed to Sign Up');
@@ -246,46 +270,23 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
       
     return (
         <>
+            {isMatchMedium?
                <div style={{position: "relative"}} id="FoodSlide">
                     <img className={classes.image} src="Images/KfcAdvertisement.png" alt="KFC Bucket"/>
-                    <Carousel nextIcon={false} prevIcon={false}>
+                    <Carousel nextIcon={false} prevIcon={false} className={classesMobile.slider}>
                         <Carousel.Item >  
                             <img
                             className="d-block"
                             src="Images/SliderFrame2.png"
                             alt="First slide"
                             width="100%"
-                            style={{minHeight: "300px"}}
+                            style={{minHeight: "30%"}}
                             />
                             <Carousel.Caption style={{top: "5%"}}>
                                 <Typography className={`${classes.fonts} ${classes.sliderSlogan}`}>
                                     Delicious Healthy Food
                                 </Typography>
-                                <form onSubmit={handleSubmit} className={classes.form} noValidate autoComplete="off">
-                                    <FormControl variant="filled" className={clsx(classes.formControlSelect,classes.formControl)}>
-                                        {/* <InputLabel id="demo-simple-select-filled-label">Select Location</InputLabel> */}
-                                        <Select
-                                            labelId="demo-simple-select-filled-label"
-                                            id="demo-simple-select-filled"
-                                            value={values.address}
-                                            onChange={handleChange2}
-                                            startAdornment={
-                                                <InputAdornment position="start">
-                                                    <IconButton style={{color: "#FF5E14"}}>
-                                                        <LocationOnRounded />
-                                                    </IconButton>
-                                                </InputAdornment>
-                                            }
-                                            className={clsx(classes.formSelect, classes.root)}
-                                        >
-                                            <MenuItem value="Select Location">
-                                                <em>Select Location</em>
-                                            </MenuItem>
-                                            <MenuItem value={10}>MAYPEN</MenuItem>
-                                            <MenuItem value={20}>CHAPELTON</MenuItem>
-                                        </Select>
-                                    </FormControl>
-                                    
+                                <form id="form-style" onSubmit={handleSubmit} className={classes.form} noValidate autoComplete="off">
                                     <FormControl variant="outlined" className={classes.firstFormControl}>
                                         <TextField 
                                             id="filled-basic"  
@@ -311,8 +312,8 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                 </Typography>
                                 <Typography className={classes.btnLayout}>
                                     <Link to="/Restaurants" title="Restaurants" className={classes.inactiveItemLink}>
-                                        <Button className={classes.Button}>
-                                            <Typography className={`${classes.btnfonts}`}>
+                                        <Button className={clsx(classes.Button, "restaurants-btn")}>
+                                            <Typography className={clsx(classes.btnfonts, "restaurants-font")}>
                                                 Restaurants
                                             </Typography>
                                         </Button>
@@ -321,7 +322,167 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                             </Carousel.Caption>
                         </Carousel.Item>
                     </Carousel>
+                    <style>
+                        {
+                            `
+                                #form-style {
+                                    display: none;
+                                }
+
+                                .restaurants-btn:hover {
+                                    background-color: #FEC109;
+                                    color: #fff;
+                                }
+
+                                .restaurants-font:hover{
+                                    color: #fff
+                                }
+                            `
+                        }
+                    </style>
                 </div>
+               :
+               <></>
+            }
+            {isMatch?
+                <div style={{position: "relative"}} id="FoodSlide">
+                    <img className="image" src="Images/KfcAdvertisement.png" alt="KFC Bucket"/>
+                    <Carousel nextIcon={false} prevIcon={false}>
+                        <Carousel.Item >  
+                            <img
+                            className="d-block"
+                            src="Images/SliderFrame2.png"
+                            alt="First slide"
+                            width="100%"
+                            style={{minHeight: "193px"}}
+                            />
+                            <Carousel.Caption style={{top: "5%", zIndex: 2}}>
+                                <Typography className={`${classes.fonts} ${classesMobile.sliderSlogan}`}>
+                                    Delicious Healthy Food
+                                </Typography>
+                                <form id="form-style" onSubmit={handleSubmit} className={classesMobile.form} noValidate autoComplete="off">
+                                    <FormControl variant="outlined" className={classesMobile.firstFormControl}>
+                                        {/* <TextField 
+                                            id="filled-basic"  
+                                            variant="filled"
+                                            value={values.searchquery} 
+                                            onChange={handleChange('searchquery')}
+                                            className={clsx(classes.firstTextField, classes.root)}
+                                            placeholder="Search restaurants or dishes."
+                                        /> */}
+                                        <Input
+                                            id="input-with-icon-adornment"
+                                            value={values.searchquery} 
+                                            onChange={handleChange('searchquery')}
+                                            className={clsx(classes.firstTextField, classes.root)}
+                                            placeholder="Search restaurants or dishes."
+                                            startAdornment={
+                                                <InputAdornment style={{marginLeft: "8px"}} position="start">
+                                                    <img src="Images/searchicongrey.png" style={{width: "100%"}} alt="icon"/>
+                                                </InputAdornment>
+                                            }
+                                        />
+                                    </FormControl>
+                                    {/* <IconButton
+                                        color="inherit"
+                                        aria-label="open drawer"
+                                        edge="start"
+                                        className={classes.searchBtn}
+                                        type="submit"
+                                    >
+                                        <img src="Images/searchicon.png" style={{width: "100%"}} alt="icon"/>
+                                    </IconButton> */}
+                                </form>
+                                
+                                {/* <Typography className={classes.btnLayout}>
+                                    <Link to="/Restaurants" title="Restaurants" className={classes.inactiveItemLink}>
+                                        <Button className={classes.Button}>
+                                            <Typography className={`${classes.btnfonts}`}>
+                                                Restaurants
+                                            </Typography>
+                                        </Button>
+                                    </Link>
+                                </Typography> */}
+                            </Carousel.Caption>
+                        </Carousel.Item>
+                    </Carousel>
+                    <style>
+                        {
+                            `
+                                .image {
+                                    z-index: 1;
+                                    margin: 0% 0% 0% 0%;
+                                    position: absolute;
+                                    right: 46%;
+                                    top: -37%;
+                                    left: 0%;
+                                    width: 82%;
+                                }
+
+                                #form-style {
+                                    display: none;
+                                }
+
+                                @media only screen and (min-width: 400px){
+                                    .image {
+                                        z-index: 1;
+                                        margin: 0% 0% 0% 0%;
+                                        position: absolute;
+                                        right: 46%;
+                                        top: -37%;
+                                        left: 0%;
+                                        width: 50%;
+                                    }
+
+                                    #form-style {
+                                        bottom: -8% !important;
+                                        display: none;
+                                    }
+                                }
+
+                                @media only screen and (min-width: 768px){
+                                    .image {
+                                        z-index: 1;
+                                        margin: 0% 0% 0% 0%;
+                                        position: absolute;
+                                        right: 46%;
+                                        top: -37%;
+                                        left: 0%;
+                                        width: 50%;
+                                    }
+                                }
+
+                                @media only screen and (min-width: 800px){
+                                    .image {
+                                        z-index: 1;
+                                        margin: 0% 0% 0% 0%;
+                                        position: absolute;
+                                        right: 46%;
+                                        top: -37%;
+                                        left: 0%;
+                                        width: 51%;
+                                    }
+
+                                    #form-style {
+                                        bottom: -8% !important;
+                                        display: none;
+                                    }
+                                }
+
+                                @media only screen and (max-width: 768px){
+                                    .carousel-caption {
+                                        right: 5%;
+                                        left: 5%;
+                                    }
+                                }
+                                
+                            `
+                        }
+                    </style>
+                </div>
+                :
+                <></>
+            }
         </>
     )
 }

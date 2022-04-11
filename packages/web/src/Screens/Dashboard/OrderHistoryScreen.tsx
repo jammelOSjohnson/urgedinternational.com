@@ -1,24 +1,16 @@
-import { Container, Grid, makeStyles, createStyles, Typography, Theme } from '@material-ui/core';
+import { Container, Grid, makeStyles, createStyles, Theme } from '@material-ui/core';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
+// import { useHistory } from 'react-router-dom';
+// import clsx from 'clsx';
 //Import Components
 import { Sidebar } from './Comp/Sidebar';
 import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
-import { ErrandCards } from './Comp/ErrandCards';
+//import { ErrandCards } from './Comp/ErrandCards';
 import { HistoryHeaderBar } from './Comp/HistoryHeaderBar';
 import { HistoryTable } from './Comp/HistoryTable';
 
-interface Props {
-    
-}
 
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -30,7 +22,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         main: {
             padding: 0,
-            backgroundImage: "url(Images/FoodPortalBackground.png)"
+            backgroundImage: "url(Images/FoodPortalBackground.png)",
+            height: "100vh"
         },
         content: {
             flexGrow: 1,
@@ -57,7 +50,7 @@ export const OrdersHistory: React.FC = function OrdersHistory () {
                                 <HeaderRight />
                             </Grid>
                             <Grid item xs={12}>
-                                <HistoryHeaderBar />
+                                {/* <HistoryHeaderBar /> */}
                                 <HistoryTable />
                             </Grid>
                         </Grid>

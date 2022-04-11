@@ -1,21 +1,11 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardMedia, CardContent, CardHeader, Avatar } from '@material-ui/core';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import React from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { Grid, makeStyles, createStyles, Typography, Theme, Button, Card, CardMedia, CardContent, CardHeader, Avatar } from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { Link } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
-import { LockRounded, EmailRounded, PlayArrowRounded } from "@material-ui/icons/";
 
-interface Props {
-    
-}
 
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -116,99 +106,159 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         menuImages: {
             borderRadius: "10px"
+        },
+        link: {
+            textDecoration: "none"
         }
     }),
 );
 
 export const PopularRestaurants: React.FC = function PopularRestaurants() {
     const classes = useStyles();
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-      });
-      var { value }  = useAppData();
-      var { orders } = value;
 
-      var TotalOrders = orders.length;
-      var OrdersInProcess = 0;
-      var history = useHistory();
+    var { value }  = useAppData();
+    var {restaurants, fetchRestaurants, viewMenuItems } = value;
 
-    
-      
-    return (
-        <>
-           <Grid container direction="row" spacing={3} className={classes.root} alignItems="center">
-                <Grid item xs={12} md={6} lg={3} container spacing={1}>
-                    <Grid item xs={10} md={10}>
-                        <Typography variant="subtitle1" className={classes.category}>
-                            Popular Restaurants
-                        </Typography>
+    var history = useHistory();
+
+    useEffect(() => {
+        ////console.log("inside use effect");
+        ////console.log(restaurants);
+        if(restaurants.length === 0){
+            fetchRestaurants(value);
+        }
+        // eslint-disable-next-line
+    }, [restaurants])
+
+    var handleSelectedRestaurant = async function(index, restaurantName){
+        if(index !== undefined || index !== null){
+            ////console.log("Index is");
+            ////console.log(index);
+            var payload = value;
+            payload.selectedRestaurant = index;
+            payload.selectedRestaurantName = restaurantName;
+            await viewMenuItems(payload).then(() => {
+                history.push("/Menu")
+            })
+        } 
+    }
+
+    if(restaurants.legth !== 0){
+        return (
+            <>
+            <Grid container direction="row" spacing={3} className={classes.root} alignItems="center">
+                    <Grid item xs={12} md={6} lg={3} container spacing={1}>
+                        <Grid item xs={10} md={10}>
+                            <Typography variant="subtitle1" className={classes.category}>
+                                Popular Restaurants
+                            </Typography>
+                        </Grid>
                     </Grid>
                 </Grid>
-            </Grid>
-            <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
-                {[1,2,3].map((text, index) => (
-                    <Grid item xs={10} md={6} lg={3} xl={3} className={classes.gridSpacing} key={text}>
-                        <Card className={classes.root}>
-                            <CardHeader
-                                avatar={
-                                    <Avatar variant="square" aria-label="restaurant" className={classes.avatar}>
-                                        <CardMedia className={classes.cardImage}>
-                                            <img className={classes.kfcImage} src="Images/KFC Avatar.png"></img>
-                                        </CardMedia>
-                                    </Avatar>
-                                }
-                                // action={
-                                //     <IconButton aria-label="settings">
-                                //         <img className={classes.kfcImage} src="Images/FavIcon.png"></img>
-                                //     </IconButton>
-                                // }
-                                title="Kentucky Fried Chicken"
-                                subheader="Kingston"
-                            />
-                            <CardContent>
-                                <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
-                                    <Grid item xs={6}>
-                                            <Typography variant="body2"  component="p">
-                                                Menu
-                                            </Typography>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                            <Typography variant="body2"  component="p">
-                                            {/* <ItemRating rating={3.5}/> */}
-                                            </Typography>
-                                    </Grid>
-                                        <Grid item xs={4}>
-                                                <img className={classes.menuImages} src="Images/KFC Order1.png"></img>
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                                <img className={classes.menuImages} src="Images/KFC Order2.png"></img>
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                                <img className={classes.menuImages} src="Images/KFC Order3.png"></img>
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                                <img className={classes.menuImages} src="Images/KFC Order4.png"></img>
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                                <img className={classes.menuImages} src="Images/KFC Order1.png"></img>
-                                        </Grid>
-                                        <Grid item xs={4}>
-                                                <img className={classes.menuImages} src="Images/KFC Order5.png"></img>
-                                        </Grid>
-                                        <Button variant="contained" fullWidth={true}
-                                            className={classes.Btn} 
-                                            type="button">
-                                            Place an Order
-                                        </Button>
+                <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
+                    {restaurants.map((item, index) => {
+                        if(index < 4 ) {
+                            return(
+                                <Grid item xs={12} sm={6} md={6} lg={3} xl={3} className={classes.gridSpacing} key={index}>
+                                    <Link onClick={() =>handleSelectedRestaurant(index, restaurants.FirstName)} className={classes.link}>
+                                        <Card className={classes.root}>
+                                            <CardHeader
+                                                avatar={
+                                                    <Avatar variant="square" aria-label="restaurant" className={classes.avatar}>
+                                                        <CardMedia className={classes.cardImage}>
+                                                            <img className={classes.kfcImage} src={item.ImageName}alt="img1"></img>
+                                                        </CardMedia>
+                                                    </Avatar>
+                                                }
+                                                // action={
+                                                //     <IconButton aria-label="settings">
+                                                //         <img className={classes.kfcImage} src="Images/FavIcon.png"alt="img2"></img>
+                                                //     </IconButton>
+                                                // }
+                                                title={item.FirstName}
+                                                subheader={item.City}
+                                            />
+                                            <CardContent>
+                                                <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                    <Grid item xs={6}>
+                                                            <Typography variant="body2"  component="p">
+                                                                Menu
+                                                            </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                            <Typography variant="body2"  component="p">
+                                                            {/* <ItemRating rating={3.5}/> */}
+                                                            </Typography>
+                                                    </Grid>
+                                                        {
+                                                            item.MenuItems.filter((item, index) => index < 6).map((item, index)=> {
+                                                                return(
+                                                                    <Grid item xs={4} key={index} className="mobileGrid">
+                                                                            <img className={clsx(classes.menuImages, "menuImages")} src={item.ImageName} width="100%" height="81px" alt="img3"></img>
+                                                                    </Grid>
+                                                                )
+                                                            })
+                                                        }
+                                                        <Button variant="contained" fullWidth={true}
+                                                            className={clsx(classes.Btn, "mobile-btn")} 
+                                                            type="button">
+                                                            Place an Order
+                                                        </Button>
+                                                </Grid>
+                                            </CardContent>
+                                        </Card>
+                                    </Link>
                                 </Grid>
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                ))}
-            </Grid>
+                            )
+                        }
+                })}
+                </Grid>
+                <style>
+                    {
+                        `
 
-        </>
-    )
+                        .mobile-btn{
+                            font-family: 'PT Sans'
+                        }
+
+                        .mobile-btn:hover{
+                            background-color: #FEC109;
+                        }
+
+                        @media only screen and (max-width: 950px){
+                            .mobileGrid {
+                                text-align: center;
+                            }
+
+                            .mobile-btn{
+                                padding-top: 5px;
+                            }
+                        }
+
+                        @media only screen and (min-width: 960px){
+                            .mobileGrid {
+                                text-align: center;
+                            }
+
+                            .menuImages{
+                                width: 100% !important;
+                            }
+                        }
+
+                        
+                        `
+                    }
+                </style>
+
+            </>
+        )
+    }else{
+        return (
+            <>
+                <Typography variant="body1" style={{paddingTop: "3%", paddingBottom: "3%"}}>
+                            Loading...
+                </Typography>
+            </>
+        )
+    }
 }

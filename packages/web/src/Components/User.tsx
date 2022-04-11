@@ -1,20 +1,10 @@
 import { useAppData } from '../Context/AppDataContext';
 import {  makeStyles, createStyles, Theme, Grid} from '@material-ui/core';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
 import { PersonRounded } from "@material-ui/icons/";
 
-interface Props {
-    
-}
 
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
-
+// eslint-disable-next-line
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
         noti: {
@@ -24,22 +14,15 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const User: React.FC = function User() {
-    const classes = useStyles();
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-      });
       
       var { value }  = useAppData();
       var { userInfo } = value;
-      var history = useHistory();
 
     
       
     return (
         <>
-            <Grid container direction="row" xs={12} spacing={1}>
+            <Grid container direction="row" xs={12} spacing={1} className="hideOnMobile">
                 <Grid item xs={6} spacing={1}>
                     
                 </Grid>
@@ -61,6 +44,17 @@ export const User: React.FC = function User() {
                     </Grid>
                 </Grid> */}
             </Grid>
+            <style>
+                {
+                    `
+                        @media only screen and (max-width: 768px){
+                            .hideOnMobile{
+                                display: none;
+                            }
+                        }
+                    `
+                }
+            </style>
         </>
     )
 }

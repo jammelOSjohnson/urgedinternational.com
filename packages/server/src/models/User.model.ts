@@ -50,6 +50,14 @@ const UserSchema = new Schema({
     ImageName: {
         type: String,
         required: false
+    },
+    isAvailable: {
+        type: Boolean,
+        required: false
+    },
+    disabled: {
+        type: Boolean,
+        required: false
     }
 
 });

@@ -1,10 +1,7 @@
-import { Box, Container, Grid, Typography, makeStyles, Theme, createStyles, Card, CardContent, CardMedia } from '@material-ui/core'
+import { Container, Grid, Typography, makeStyles, Theme, createStyles, Card, CardContent, CardMedia } from '@material-ui/core'
 import React from 'react'
 // import styles from '../CSS/section2.css'
 
-interface Props {
-    
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -101,7 +98,7 @@ export const Section2: React.FC = function Section2() {
                     <Grid item xs={6} md={3}>
                         <Card className={classes.card}>
                             <CardMedia className={classes.cardImage}>
-                                <img src="Images/Reliability.svg"></img>
+                                <img src="Images/Reliability.svg" alt="Reliability"></img>
                             </CardMedia>
                             <CardContent className={classes.cardContent}>
                                 <Typography gutterBottom className={classes.cardTitle}>
@@ -114,7 +111,7 @@ export const Section2: React.FC = function Section2() {
                     <Grid item xs={6} md={3}>
                         <Card className={classes.card}>
                             <CardMedia className={classes.cardImage}>
-                                <img src="Images/Fast Delivery.svg"></img>
+                                <img src="Images/Fast Delivery.svg" alt="Fast Delivery"></img>
                             </CardMedia>
                             <CardContent className={classes.cardContent}>
                                 <Typography gutterBottom className={classes.cardTitle}>
@@ -127,7 +124,7 @@ export const Section2: React.FC = function Section2() {
                     <Grid item xs={6} md={3}>              
                         <Card className={classes.card}>
                             <CardMedia className={classes.cardImage}>
-                                <img src="Images/Diversified.svg"></img>
+                                <img src="Images/Diversified.svg" alt="Diversified"></img>
                             </CardMedia>
                             <CardContent className={classes.cardContent}>
                                 <Typography gutterBottom className={classes.cardTitle}>
@@ -140,7 +137,7 @@ export const Section2: React.FC = function Section2() {
                     <Grid item xs={6} md={3}>              
                         <Card className={classes.card}>
                             <CardMedia className={classes.cardImage}>
-                                <img src="Images/Quality.svg"></img>
+                                <img src="Images/Quality.svg" alt="Quality"></img>
                             </CardMedia>
                             <CardContent className={classes.cardContent}>
                                 <Typography gutterBottom className={classes.cardTitle}>

@@ -1,17 +1,39 @@
 import { useAppData } from '../Context/AppDataContext';
 import React, { useEffect } from 'react'
 import { useHistory } from 'react-router-dom';
-import { useMediaQuery , useTheme,Typography, AppBar, Toolbar, makeStyles, Theme, createStyles, Grid } from '@material-ui/core'
+import { useMediaQuery , useTheme,Typography, AppBar, Toolbar, makeStyles, Theme, createStyles, Grid, Modal, Fade, FormControl, InputLabel, Select, MenuItem, Backdrop, Button } from '@material-ui/core'
 import SvgIcon, { SvgIconProps } from '@material-ui/core/SvgIcon';
 import { Container } from '@material-ui/core';
+// eslint-disable-next-line
 import  { auth, socialAuth } from '../firebase';
+import { Alert } from '@material-ui/lab';
 
 
+interface State {
+  genralLocation: string;
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
         flexGrow: 1,
+        "& .MuiInputBase-root": {
+          color: "#9B9B9B",
+          borderColor: "#EEE",
+          border: "0.1px solid",
+          borderRadius: "25px"
+        },
+        "& .MuiSelect-select:$focus": {
+            backgroundColor: "inherit",
+            color: "#9B9B9B"
+        },
+        "& .MuiFormLabel-root": {
+            fontWeight: 700,
+            fontSize: "1.2rem"
+        },
+        "& .MuiInputLabel-root.Mui-focused":{
+            color: "#9B9B9B"
+        }
     },
     appbar: {
         // position: "fixed",
@@ -56,6 +78,28 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex", 
       justifyContent: "space-evenly",
     },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+      marginLeft: "0px"
+    },
+    paper: {
+      backgroundColor: theme.palette.background.paper,
+      border: '2px solid #FF5E14',
+      boxShadow: theme.shadows[5],
+      padding: theme.spacing(2, 4, 3),
+      minWidth: "34%",
+      maxWidth: "400px",
+      borderRadius: "50px",
+      borderColor: theme.palette.primary.light
+     
+    },
+    modal: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+     
+    },
     // tabs: {
     //     fontStyle: "normal",
     //     fontWeight: "bold",
@@ -97,8 +141,8 @@ export const Header: React.FC = function Header() {
     var location = history.location;
     var referralPath = location.pathname;
     var { value }  = useAppData();
-    var { fetchUserInfo } = value;
-    //console.log("pathname is:" + location.pathname);
+    var { fetchUserInfo, generalLocation, AddGeneralLocation, serviceWorkerUpdated, serviceWorkerRegistration } = value;
+    ////console.log("pathname is:" + location.pathname);
 
     
     const classes = useStyles();
@@ -107,54 +151,220 @@ export const Header: React.FC = function Header() {
     const theme = useTheme();
 
     
-
+    const [open, setOpen] = React.useState(false);
+    var [error, setError] = React.useState('');
     const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
     const isMaatchMedium = useMediaQuery(theme.breakpoints.down('md'));
+
+    const [values, setValues] = React.useState<State>({
+      genralLocation: 'Select Location',
+    });
+
+    //const isServiceWorkerUpdated  = serviceWorkerUpdated;
+
     useEffect(function(){
-      var unsubscribe = auth.onAuthStateChanged(function (user){
-        //update the state for current user to the user logged in
-        //console.log("about to set current user");
-        //console.log(user);
-        //var userInfo = fetchUserInfo();
-        //const payload = {currentUser : user, loading: false, userInfo: userInfo}
-        var signonStatus = false;
-        if(user !== null){
-          signonStatus = user.uid !== null && user.uid !== undefined? true : false
-        
-        
-            var payload = {...value,currentUser : user, loading: false, loggedIn: signonStatus}
-            if(value.userInfo.email === "" ){
-                 fetchUserDetails(payload);
-                //  .then(function(res){
-                //     if(!res){
-                //         //console.log('Unable to fetch user data at this time'); 
-                //     }
-                // });
-            }
-         } 
+      // if(generalLocation === undefined){
+      //   setOpen(true);
+      // }else{
+      //   setOpen(false);
+      // }
+
+      auth.onAuthStateChanged(function (user){
+        ////console.log("auth");
+        if(referralPath !== "/Register" && referralPath !== "/Login"){
+          //update the state for current user to the user logged in
+          ////console.log("about to set current user");
+          ////console.log(user);
+          //var userInfo = fetchUserInfo();
+          //const payload = {currentUser : user, loading: false, userInfo: userInfo}
+          var signonStatus = false;
+          if(user !== null){
+            signonStatus = user.uid !== null && user.uid !== undefined? true : false
+          
+          
+              var payload = {...value,currentUser : user, loading: false, loggedIn: signonStatus}
+              if(value.userInfo.email === "" ){
+                  fetchUserDetails(payload);
+                  //  .then(function(res){
+                  //     if(!res){
+                  //         ////console.log('Unable to fetch user data at this time'); 
+                  //     }
+                  // });
+              }
+          } 
+          // eslint-disable-next-line
+        }
       });
-    },[value.userRolef])
+
+      // socialAuth.onAuthStateChanged( function (user) {
+      //   //console.log("Soical auth");
+      //   if(referralPath !== "/Register"){
+      //     //update the state for current user to the user logged in
+      //     ////console.log("about to set current user google");
+      //     ////console.log(user);
+      //     //var userInfo = fetchUserInfo();
+      //     //var payload = {currentUser : user, loading: false, userInfo: userInfo}
+      //     var signonStatus = false;
+      //     if(user !== null){
+      //         signonStatus = user.uid !== null && user.uid !== undefined? true : false;
+      //         var payload = {...value,currentUser : user, loading: false, loggedIn: signonStatus}
+      //         if(value.userInfo.email === "" ){
+      //             fetchUserDetails(payload)
+      //             // .then(function(res){
+      //             //     if(!res){
+      //             //         ////console.log('Unable to fetch user data at this time'); 
+      //             //     }
+      //             // });
+      //         }
+      //     }
+      //   }
+      // });
+
+      
+      
+    },[value.userRolef ,generalLocation])
 
     var fetchUserDetails = function  fetchUserDetails (payload) {
-      //console.log("Is current user null");
-      //console.log(payload);
+      ////console.log("Is current user null");
+      ////console.log(payload);
       if(payload.currentUser !== null && payload.currentUser !== undefined){
           if(payload.currentUser.uid !== null && payload.currentUser.uid !== undefined){
-              //console.log("Fetching user info");
+              ////console.log("Fetching user info");
               fetchUserInfo(payload.currentUser.uid, payload);
               return true;
           }
       }
       return false;
-  }
+    }
+
+    const handleChange = (event) => {
+      try{
+        setError('');
+        if(event.target.value !== "Select Location"){
+          setValues({...values,[event.target.name]:event.target.value});
+          AddGeneralLocation(value, event.target.value);
+        }else{
+          setError('Please Select Location');
+        }
+      }catch(err){
+        //console.log(err);
+      }
+    };
+
+    // const updateServiceWorker = () => {
+    //   const registrationWaiting = serviceWorkerRegistration.waiting;
+    //   if (registrationWaiting) {
+    //     registrationWaiting.postMessage({ type: 'SKIP_WAITING' });
+    //     registrationWaiting.addEventListener('statechange', e => {
+    //       if (e.target.state === 'activated') {
+    //         window.location.reload();
+    //       }
+    //     });
+    //   }
+    // }
+
+    const handleOpen = (item) => {
+      setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     if(referralPath !== '/'){
       return(
         <>
-
+          {/* <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    className={classes.modal}
+                    open={referralPath === "/Menu"? open : false}
+                    onClose={handleClose}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                    timeout: 500,
+                    }}
+                >
+                    <Fade in={open}>
+                    <div className={classes.paper}>
+                        <h2 id="transition-modal-title" style={{fontFamily: 'PT Sans'}}>Welcome</h2>
+                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                            <Grid item xs={10} sm={6} md={4} lg={4} xl={4}>
+                                
+                            </Grid>
+                            <Grid item xs={12}>
+                                    <form>
+                                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                            <Grid item xs={12} >
+                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                    <InputLabel id="demo-simple-select-outlined-label">Deliver To</InputLabel>
+                                                    <Select
+                                                        labelId="demo-simple-select-outlined-label"
+                                                        id="demo-simple-select-outlined"
+                                                        value={values.genralLocation}
+                                                        onChange={handleChange}
+                                                        label="Flavour1"
+                                                        name="chickenFlavour1"
+                                                        className={classes.root}
+                                                        fullWidth={true}
+                                                    >
+                                                        <MenuItem value={"Select Location"}>Select Location</MenuItem>
+                                                        <MenuItem value={"May Pen Hospital"}>May Pen Hospital</MenuItem>
+                                                        <MenuItem value={"May Pen"}>May Pen</MenuItem>
+                                                        <MenuItem value={"Bushy park"}>Bushy park</MenuItem>
+                                                        <MenuItem value={"Bucknor"}>Bucknor</MenuItem>
+                                                        <MenuItem value={"Clarendon park"}>Clarendon park</MenuItem>
+                                                        <MenuItem value={"Curatoe Hil"}>Curatoe Hil</MenuItem>
+                                                        <MenuItem value={"Denbigh"}>Denbigh</MenuItem>
+                                                        <MenuItem value={"Four paths"}>Four paths</MenuItem>
+                                                        <MenuItem value={"Foga Road"}>Foga Road</MenuItem>
+                                                        <MenuItem value={"Glenmuir"}>Glenmuir</MenuItem>
+                                                        <MenuItem value={"Halse Hall"}>Halse Hall</MenuItem>
+                                                        <MenuItem value={"Hartwell Gardens"}>Hartwell Gardens</MenuItem>
+                                                        <MenuItem value={"Hayes corn piece"}>Hayes corn piece</MenuItem>
+                                                        <MenuItem value={"Hazard"}>Hazard</MenuItem>
+                                                        <MenuItem value={"Inglewood"}>Inglewood</MenuItem>
+                                                        <MenuItem value={"Juno Crescent"}>Juno Crescent</MenuItem>
+                                                        <MenuItem value={"Midland Glades"}>Midland Glades</MenuItem>
+                                                        <MenuItem value={"Muirhead Avenue"}>Muirhead Avenue</MenuItem>
+                                                        <MenuItem value={"Mineral Heights"}>Mineral Heights</MenuItem>
+                                                        <MenuItem value={"Osborne Store"}>Osborne Store</MenuItem>
+                                                        <MenuItem value={"Paisley"}>Paisley</MenuItem>
+                                                        <MenuItem value={"Palmers Cross"}>Palmers Cross</MenuItem>
+                                                        <MenuItem value={"Race Track"}>Race Track</MenuItem>
+                                                        <MenuItem value={"Sandy Bay"}>Sandy Bay</MenuItem>
+                                                        <MenuItem value={"Swansea"}>Swansea</MenuItem>
+                                                        <MenuItem value={"Toll gate"}>Toll gate</MenuItem>
+                                                        <MenuItem value={"Trenton Road"}>Trenton Road</MenuItem>
+                                                        <MenuItem value={"Treadlight"}>Treadlight</MenuItem>
+                                                        <MenuItem value={"Twin Palm Estate"}>Twin Palm Estate</MenuItem>
+                                                        <MenuItem value={"Vere"}>Vere</MenuItem>
+                                                    </Select>
+                                                </FormControl>
+                                            </Grid>
+                                        </Grid>
+                                    </form>
+                            </Grid>
+                        </Grid>
+                    </div>
+                    </Fade>
+          </Modal> */}
+          {/* {isServiceWorkerUpdated && (
+            <Alert
+              severity="info"
+            >
+              There is a new version available.
+              <Button type="button" onClick={updateServiceWorker}>
+                Update
+              </Button>
+            </Alert>
+          )} */}
         </>
       )
     }
+
+    
 
     return (
        <>
@@ -219,6 +429,16 @@ export const Header: React.FC = function Header() {
                 </Container>
                 </Toolbar>
             </AppBar>
+            {/* {isServiceWorkerUpdated && (
+              <Alert
+                severity="info"
+              >
+                There is a new version available.
+                <Button type="button" onClick={updateServiceWorker}>
+                  Update
+                </Button>
+              </Alert>
+            )} */}
         </>
     )
 }

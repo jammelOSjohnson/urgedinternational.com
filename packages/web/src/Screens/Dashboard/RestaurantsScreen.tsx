@@ -1,7 +1,7 @@
 import { Container, Grid, makeStyles, createStyles, Typography, Theme } from '@material-ui/core';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
+// import { useHistory } from 'react-router-dom';
+// import clsx from 'clsx';
 //Import Components
 import { Sidebar } from './Comp/Sidebar';
 import { HeaderLeft } from './Comp/HeaderLeft';
@@ -10,15 +10,9 @@ import { RestaurantCategories } from './Comp/RestaurantCategories';
 import { RestaurantList } from './Comp/RestaurantList';
 import { DashboardFooter } from './Comp/DashboardFooter';
 
-interface Props {
-    
-}
 
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
+
+
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -30,7 +24,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         main: {
             padding: 0,
-            backgroundImage: "url(Images/FoodPortalBackground.png)"
+            backgroundImage: "url(Images/FoodPortalBackground.png)",
+            height: "100vh"
         },
         content: {
             flexGrow: 1,
@@ -57,7 +52,7 @@ export const RestaurantsScreen: React.FC = function RestaurantsScreen() {
                             <HeaderRight />
                         </Grid>
                         <Grid item xs={12}>
-                            <Typography variant="h3">Resraurants</Typography>
+                            <Typography style={{fontWeight: "bold", fontSize: "1.5em", fontFamily: "PT Sans"}} variant="h3">Restaurants</Typography>
                         </Grid>
                         <Grid item xs={12}>
                             <RestaurantCategories />
