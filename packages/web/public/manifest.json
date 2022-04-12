@@ -6,7 +6,8 @@
     {
       "src": "Images/urged logo64x23.png",
       "sizes": "64x23",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable"
     },
     {
       "src": "Images/urged logo.svg",
