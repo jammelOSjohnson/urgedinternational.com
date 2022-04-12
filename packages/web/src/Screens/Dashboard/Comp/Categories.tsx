@@ -1,18 +1,11 @@
-import { Grid, makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent } from '@material-ui/core';
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { Grid, makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent, useMediaQuery, useTheme, Backdrop, Modal, Fade, Button, Snackbar } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import clsx from 'clsx';
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link, useHistory } from "react-router-dom";
+import { useAppData } from '../../../Context/AppDataContext';
 
-interface Props {
-    
-}
 
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -66,91 +59,346 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         category: {
             fontWeight: "bold"
-        }
+        }, modal: {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+           
+          },
+          paper: {
+             backgroundColor: theme.palette.background.paper,
+             border: '2px solid #000',
+             boxShadow: theme.shadows[5],
+             padding: theme.spacing(2, 4, 3),
+             minWidth: "34%",
+             maxWidth: "400px",
+             borderRadius: "20px",
+             borderColor: theme.palette.primary.light
+            
+          },
+          ButtonMobile: {
+              backgroundColor: theme.palette.primary.light,
+              border: "1.21951px solid #FFFFFF",
+              height: "41px",
+              width: "100%",
+              borderRadius: 4,
+          },
+          btnfonts: {
+              fontFamily: "PT Sans",
+              fontSize: "13px",
+              lineHeight: "16.82px",
+              fontWeight: "bolder",
+              color: "#FAFAFA",
+              textTransform: "none"
+          },
+          cartIcon: {
+              position: "absolute",
+              top: 18,
+              right: 10
+          }
     }),
 );
 
 export const Categories: React.FC = function Categories() {
     const classes = useStyles();
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-      });
-    
-      var history = useHistory();
+    const theme = useTheme();
+    var { value }  = useAppData();
+    var { currentUser } = value;
 
+
+    const [open2, setOpen2] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
+
+    var history = useHistory();
+    var location = history.location;
+    var referralPath = location.pathname;
     
+    const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
+    
+    const handleClose2 = () => {
+        setOpen2(false);
+      };
+  
+    const handleOpen2 = () => {
+      try
+      {
+        setOpen2(true);
+      }catch(err){
+
+      }
+      
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleOpen = () => {
+        try
+        {
+          setOpen(true);
+        }catch(err){
+  
+        }
+        
+      };
       
     return (
         <>
+            {isMatchMedium? (
+                <>
+                <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                className={classes.modal}
+                open={open2}
+                onClose={handleClose2}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                timeout: 500,
+                }}
+                >
+                    <Fade in={open2}>
+                    <div className={clsx(classes.paper, 'modalMobile')}>
+                        <h2 id="transition-modal-title" style={{textAlign: "center"}}>Whatsapp Delivery</h2>
+                        <Link to={`${referralPath}`} className={classes.cartIcon} onClick={handleClose2}>
+                                <img src="Images/CartCloseIcon.png" alt="closemodal" />
+                        </Link>
+                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                            <Grid item xs={12}>
+                                <Grid item xs={12}>
+                                <Typography style={{textAlign: "center"}}>
+                                We provide both errand services and package delivery.<br />
+                                Click continue to contact us on whatsapp.
+                                </Typography>
+                                </Grid><br/>
+                                <Grid item xs={10} sm={12} >
+                                <a href="http://wa.me/18767735015" target="_blank" rel="nofollow noreferrer" style={{textDecoration: "none"}}>
+                                    <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} onClick={() => handleOpen2()} type="button">
+                                        Continue 
+                                    </Button>
+                                </a>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </div>
+                    </Fade>
+                </Modal>
+                <style>
+                    {
+                    `
+                        .link-font{
+                        font-family: 'PT Sans'
+                        }
+
+                        .link-fontH  {
+                        font-family: 'PT Sans';
+                        color: #5D6467;
+                        }
+
+                        .MuiTypography-body1 {
+                        font-family: PT Sans;
+                        }
+
+                        .activeLinkHover:hover{
+                        background-color: #F25A29;
+                        }
+
+                        .inactiveLinkHover:hover{
+                        background-color: #5D6467;
+                        }
+
+                        .MuiButton-root:hover {
+                            background-color: #FF5E14;
+                        }
+
+                        .modalMobile{
+                            position: relative;
+                        }
+                    `
+                    }
+                </style>
+                </>
+            ):<></>}
+            {isMatch? (
+                <>
+                <Modal
+                    aria-labelledby="transition-modal-title"
+                    aria-describedby="transition-modal-description"
+                    className={clsx(classes.modal)}
+                    open={open2}
+                    onClose={handleClose2}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{
+                    timeout: 500,
+                    }}
+                >
+                    <Fade in={open2}>
+                    <div className={clsx(classes.paper, "modalMobile")}>
+                        <h2 id="transition-modal-title" style={{textAlign: "center"}}>Whatsapp Delivery</h2>
+                        <Link to={`${referralPath}`} className={classes.cartIcon} onClick={handleClose2}>
+                                <img src="Images/CartCloseIcon.png" alt="closemodal" />
+                        </Link>
+                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                            <Grid item xs={12}>
+                            <Typography style={{textAlign: "center"}}>
+                                We provide both errand services and package delivery.<br />
+                                Click continue to contact us on whatsapp.
+                            </Typography>
+                            </Grid><br />
+                            <Grid item xs={12} sm={12} >
+                                <a href="http://wa.me/18767735015" target="_blank" rel="nofollow noreferrer" style={{textDecoration: "none"}}>  
+                                <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} onClick={() => handleOpen2()} type="button">
+                                    Continue 
+                                </Button>
+                                </a>
+                            </Grid>
+                        </Grid>
+                    </div>
+                    </Fade>
+                </Modal>
+                <style>
+                    {
+                      `
+                        .link-font{
+                          font-family: 'PT Sans'
+                        }
+
+                        .link-fontH  {
+                          font-family: 'PT Sans';
+                          color: #5D6467;
+                        }
+
+                        .MuiTypography-body1 {
+                          font-family: PT Sans;
+                        }
+
+                        .activeLinkHover:hover{
+                          background-color: #F25A29;
+                        }
+
+                        .inactiveLinkHover:hover{
+                          background-color: #5D6467;
+                        }
+
+                        .MuiButton-root:hover {
+                          background-color: #FF5E14;
+                        }
+
+                        @media only screen and (max-height: 679px) {
+                          .modalMobile{
+                              max-height: 590px;
+                              overflow-x: hidden;
+                              overflow-y: auto;
+                          }
+                        }
+
+                        @media only screen and (max-height: 600px) {
+                            .modalMobile{
+                                max-height: 500px;
+                                overflow-x: hidden;
+                                overflow-y: auto;
+                            }
+                        }
+
+                        @media only screen and (max-height: 560px) {
+                            .modalMobile{
+                                max-height: 490px;
+                                overflow-x: hidden;
+                                overflow-y: auto;
+                            }
+                        }
+
+                        .modalMobile{
+                          position: relative;
+                        }
+                      `
+                    }
+                  </style>
+                </>
+            ) : <></>}
             <Grid container direction="row" spacing={3} className={classes.root} alignItems="center">
                 <Grid item xs={12} md={6} lg={3} container spacing={1}>
                     <Grid item xs={10} md={10}>
                         <Typography variant="subtitle1" className={classes.category}>
-                            Categories
+                            Our Services
                         </Typography>
                     </Grid>
                 </Grid>
             </Grid>
             <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                <Grid item xs={10} md={3}>
-                    <Card className={classes.card}>
-                        <CardMedia className={classes.cardImage}>
-                            <img src="Images/FoodDeliveryServiceSM.png"></img>
-                        </CardMedia>
-                        <CardContent className={classes.cardContent}>
-                            <Link className={classes.links} to="#" title="Food Delivery">
+                <Grid item xs={12} md={3}>
+                    <Link to="/FoodDelivery" className={classes.links} id="categories">
+                        <Card className={classes.card}>
+                            <CardMedia className={classes.cardImage}>
+                                <img src="Images/FoodDeliveryServiceSM.png" alt="FoodDeliveryServiceSM"></img>
+                            </CardMedia>
+                            <CardContent className={classes.cardContent}>
                                 <Typography gutterBottom className={classes.cardTitle1}>
                                     Food Delivery
                                 </Typography>
-                            </Link>
-                        </CardContent>
-                    </Card>
+                            </CardContent>
+                        </Card>
+                    </Link>
                 </Grid>
-                <Grid item xs={10} md={3}>
-                    <Card className={classes.card}>
-                        <CardMedia className={classes.cardImage}>
-                            <img src="Images/lightbluetruckIconImageSM.png"></img>
-                        </CardMedia>
-                        <CardContent className={classes.cardContent}>
-                            <Link className={classes.links} to="#" title="Food Delivery">
+                <Grid item xs={12} md={3}>
+                    <Link to={`${referralPath}`} className={classes.links} onClick={handleOpen2} title="Errand Services">
+                        <Card className={classes.card}>
+                            <CardMedia className={classes.cardImage}>
+                                <img src="Images/UShip.png" alt="lightbluetruckIconImageSM"></img>
+                            </CardMedia>
+                            <CardContent className={classes.cardContent}>
                                 <Typography gutterBottom className={classes.cardTitle2}>
-                                    Errand Services
+                                    Express &amp; Errand
                                 </Typography>
-                            </Link>
-                        </CardContent>
-                    </Card>
+                            </CardContent>
+                        </Card>
+                    </Link>
                 </Grid>
-                <Grid item xs={10} md={3}>
-                    <Card className={classes.card}>
-                        <CardMedia className={classes.cardImage}>
-                            <img src="Images/yellowtruckIconImageSM.png"></img>
-                        </CardMedia>
-                        <CardContent className={classes.cardContent}>
-                            <Link className={classes.links} to="#" title="Food Delivery">
+                <Grid item xs={12} md={3}>
+                    <Link to={`${referralPath}`} className={classes.links} title="Market Place" onClick={(e) => {
+                        e.preventDefault(); 
+                        if(currentUser !== undefined){
+                             history.push("/CargoAndFreight");
+                        }else{
+                            history.push("/Login", { from: "/CargoAndFreight"})
+                        }
+                    }}>
+                        <Card className={classes.card}>
+                            <CardMedia className={classes.cardImage}>
+                                <img src="Images/yellowtruckIconImageSM.png" alt="GreenMarketPlace"></img>
+                            </CardMedia>
+                            <CardContent className={classes.cardContent}>
                                 <Typography gutterBottom className={classes.cardTitle3}>
-                                    Urged Express
+                                    UShip
                                 </Typography>
-                            </Link>
-                        </CardContent>
-                    </Card>
+                            </CardContent>
+                        </Card>
+                    </Link>
                 </Grid>
-                <Grid item xs={10} md={3}>
-                    <Card className={classes.card}>
-                        <CardMedia className={classes.cardImage}>
-                            <img src="Images/GreenMarketPlace.png"></img>
-                        </CardMedia>
-                        <CardContent className={classes.cardContent}>
-                            <Link className={classes.links} to="#" title="Food Delivery">
+                <Grid item xs={12} md={3}>
+                    <a href='https://sallyspantry.com/' target="_blank" className={classes.links} onClick={handleOpen2} title="Sally's Pantry">
+                        <Card className={classes.card}>
+                            <CardMedia className={classes.cardImage}>
+                                <img src="Images/GreenMarketPlace.png" alt="yellowtruckIconImageSM"></img>
+                            </CardMedia>
+                            <CardContent className={classes.cardContent}>
                                 <Typography gutterBottom className={classes.cardTitle4}>
-                                    Market Place
+                                    Sally's Pantry
                                 </Typography>
-                            </Link>
-                        </CardContent>
-                    </Card>
+                            </CardContent>
+                        </Card>
+                    </a>
                 </Grid>
             </Grid>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="info">
+                    <b><h4>Comming Soon !!!</h4></b>
+                </Alert>
+            </Snackbar>
         </>
     )
 }

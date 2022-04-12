@@ -27,7 +27,7 @@ var app = firebase.initializeApp({
 })
 
 //const analytics = getAnalytics(app);
-//console.log(analytics);
+////console.log(analytics);
 export var auth = app.auth();
 export var socialAuth = firebase.auth();
 export var googleAuthProvider = new firebase.auth.GoogleAuthProvider();

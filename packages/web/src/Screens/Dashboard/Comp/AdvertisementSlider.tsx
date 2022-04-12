@@ -1,25 +1,9 @@
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Slider, useMediaQuery } from '@material-ui/core';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import { makeStyles, createStyles, Typography, Theme, Button, useMediaQuery, useTheme } from '@material-ui/core';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
-import { LockRounded, EmailRounded, PlayArrowRounded } from "@material-ui/icons/";
-import { red, blue, green } from "@material-ui/core/colors";
-import { AutoRotatingCarousel, Slide } from 'material-auto-rotating-carousel';
-import { SwipableViews }  from 'react-swipeable-views';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../CSS/slider.css";
-interface Props {
-    
-}
-
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -90,21 +74,54 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
+const useMobileStyles = makeStyles((theme: Theme) => 
+    createStyles({
+        imageMobile: {
+            zIndex: 1,
+            margin: '0% 0% 0% 0%',
+            position: "absolute",
+            right: "2%",
+            top: "20%",
+            width: "35%"
+        },
+        sliderSlogan: {
+            color: '#F9F9FB',
+            fontSize: '30px',
+            fontWeight: 700,
+            lineHeight: '26.22px',
+            padding: '0% 0% 2% 0%',
+            position: "absolute",
+            left: "-17%",
+            top: "-138%",
+            width: "300px"
+        },
+        sliderText: {
+            color: '#F9F9FB',
+            fontSize: '16px',
+            fontWeight: 400,
+            lineHeight: '29.34px',
+            margin: '-10% -17% 8% 0%',
+            position: "absolute",
+            left: "-17%",
+            top: "-28%",
+            width: "86%",
+            textAlign: "left",
+        },
+    })
+)
+
 export const AdvertisementSlider: React.FC = function AdvertisementSlider() {
     const classes = useStyles();
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-      });
+    const classesMobile = useMobileStyles();
+    const theme = useTheme();
     
-      var history = useHistory();
-
-      const matches = useMediaQuery("(max-width:8000px)");
-    
+    //const matches = useMediaQuery("(max-width:8000px)");
+    const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
+    const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
       
     return (
         <>
+            {isMatchMedium?
                 <div style={{position: "relative"}}>
                     <img className={classes.image} src="Images/Rocket.png" alt="rocket logo"/>
                     <Carousel nextIcon={false} prevIcon={false}>
@@ -118,47 +135,102 @@ export const AdvertisementSlider: React.FC = function AdvertisementSlider() {
                             />
                             <Carousel.Caption>
                                 <Typography className={`${classes.fonts} ${classes.sliderSlogan}`}>
-                                    We are the definition of SPEED
+                                    We provide CONVENIENCE
                                 </Typography>
                                 <Typography className={`${classes.fonts} ${classes.sliderText}`}>
                                     Here at Urged, Quality and Time is our main priority. You can trust us to be on-time with your packages and food.
                                 </Typography>
                                 <Typography className={classes.btnLayout}>
-                                    <Button className={classes.Button}>
-                                        <Typography className={`${classes.fonts}`}>
-                                            Categories
-                                        </Typography>
-                                    </Button>
+                                    <a href="#categories" title="categories" className={clsx("inactiveItemLink")}>
+                                        <Button className={clsx(classes.Button, "catBtn")}>
+                                            <Typography className={`${classes.fonts}`}>
+                                                Services
+                                            </Typography>
+                                        </Button>
+                                    </a>
                                 </Typography>
                                 
                             </Carousel.Caption>
                         </Carousel.Item>
-                        {/* <Carousel.Item>
-                            <img
-                            className="d-block w-100"
-                            src="holder.js/800x400?text=Second slide&bg=282c34"
-                            alt="Second slide"
-                            />
+                    </Carousel>
+                    <style>
+                        {
+                            `
+                                .inactiveItemLink{
+                                    text-decoration: none;
+                                }
 
+                                inactiveItemLink:hover{
+                                    text-decoration: none;
+                                    background-color: none;
+                                }
+
+                                .catBtn:hover{
+                                    color: #5D6467;
+                                    background-color: #FF5E14;
+                                }
+                            `
+                        }
+                    </style>
+                </div>
+                :
+                <></>
+            }
+            {isMatch?
+                <div style={{position: "relative"}}>
+                    <img className={classesMobile.imageMobile} src="Images/Rocket.png" alt="rocket logo"/>
+                    <Carousel nextIcon={false} prevIcon={false}>
+                        <Carousel.Item>  
+                            <img
+                            className="d-block"
+                            src="Images/SliderFrame.png"
+                            alt="First slide"
+                            width="100%"
+                            style={{minHeight: "300px"}}
+                            />
                             <Carousel.Caption>
-                            <h3>Second slide label</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                <Typography className={`${classes.fonts} ${classesMobile.sliderSlogan}`}>
+                                    We provide CONVENIENCE
+                                </Typography>
+                                <Typography className={`${classes.fonts} ${classesMobile.sliderText}`}>
+                                    Here at Urged, Quality and Time is our main priority. You can trust us to be on-time with your packages and food.
+                                </Typography>
+                                <Typography className={classes.btnLayout}>
+                                <a href="#categories" title="categories" className={clsx("inactiveItemLink")}>
+                                    <Button className={clsx(classes.Button, "catBtn")}>
+                                        <Typography className={`${classes.fonts}`}>
+                                            Services
+                                        </Typography>
+                                    </Button>
+                                </a>
+                                </Typography>
+                                
                             </Carousel.Caption>
                         </Carousel.Item>
-                        <Carousel.Item>
-                            <img
-                            className="d-block w-100"
-                            src="holder.js/800x400?text=Third slide&bg=20232a"
-                            alt="Third slide"
-                            />
-
-                            <Carousel.Caption>
-                            <h3>Third slide label</h3>
-                            <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-                            </Carousel.Caption>
-                        </Carousel.Item> */}
                     </Carousel>
+                    <style>
+                        {
+                            `
+                                .inactiveItemLink{
+                                    text-decoration: none;
+                                }
+
+                                inactiveItemLink:hover{
+                                    text-decoration: none;
+                                    background-color: none;
+                                }
+
+                                .catBtn:hover{
+                                    color: #FFF;
+                                    background-color: #FF5E14;
+                                }
+                            `
+                        }
+                    </style>
                 </div>
+                :
+                <></>
+            }
         </>
     )
 }

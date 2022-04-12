@@ -1,5 +1,5 @@
 import { useAppData } from '../../Context/AppDataContext';
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, Button, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, useTheme, useMediaQuery, withWidth, colors } from '@material-ui/core';
+import { Container, Grid, makeStyles, createStyles, Typography, Theme, Button, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, useTheme, useMediaQuery } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import React, { useState } from 'react';
@@ -26,22 +26,22 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         root: {
             "& .MuiFormLabel-root": {
-                color: "#EEE"
+                color: "#000"
             },
             "&.MuiFormLabel-root.Mui-focused": {
-                  color: "#EEE"
+                  color: "#000"
             },
             "& .MuiInputBase-root": {
-                color: "#EEE"
+                color: "#000"
             },
             "& .MuiOutlinedInput-root": {
-                border: "1px solid #EEE",
-                color: "#EEEEEE !important"
+                border: "0.1px solid grey",
+                color: "#000000 !important"
             },
             "& .MuiIconButton-root": {
                 color: "#EEEEEE"
             },
-            color: "#EEE"
+            color: "#000"
         },
         gridRoot: {
             padding: "0px"
@@ -52,7 +52,8 @@ const useStyles = makeStyles((theme: Theme) =>
         textBox: {
             width: "100%",
             borderRadius: "25px",
-            border: "1px solid #EEEEEE"
+            border: "0.1px solid grey",
+            borderColor: "#EEEEEE",
         },
         section1H1: {
             fontSize: "44.6667px",
@@ -123,7 +124,8 @@ const useStyles = makeStyles((theme: Theme) =>
             marginBottom: "8%",
             width: "100%",
             borderRadius: "25px",
-            border: "1px solid"
+            border: "0.1px solid grey",
+            borderColor: "#EEEEEE"
         },
         skipBtn: {
             position: "absolute",
@@ -163,12 +165,15 @@ const useStyles = makeStyles((theme: Theme) =>
         firstTextFieldMobile: {
             marginBottom: "3%",
             width: "100%",
+            borderColor: "#EEEEEE",
             borderRadius: "25px",
+            border: "0.1px solid grey"
         },
         textBoxMobile: {
             width: "100%",
             borderColor: "#EEEEEE",
             borderRadius: "25px",
+            border: "0.1px solid grey"
         },
         forgotPassTextMobile: {
             color: "#FEC109",
@@ -212,22 +217,22 @@ const mobileStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
             "& .MuiFormLabel-root": {
-              color: "#EEE"
+              color: "#000"
             },
             "&.MuiFormLabel-root.Mui-focused": {
-                color: "#EEE"
+                color: "#000"
             },
             "& .MuiInputBase-root": {
-                color: "#EEE"
+                color: "#000"
             },
             "& .MuiOutlinedInput-root": {
                 border: "1px solid #EEE",
-                color: "#EEEEEE !important"
+                color: "#000000 !important"
             },
             "& .MuiIconButton-root": {
                 color: "#EEEEEE"
             },
-            color: "#EEE"
+            color: "#000"
         },
     })
 );
@@ -252,6 +257,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
 
     var [error, setError] = useState('');
     var [success, setSuccess] = useState('');
+    // eslint-disable-next-line
     var [loading, setLoading] = useState(false);
     
     var history = useHistory();
@@ -270,36 +276,49 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
     };
 
     const handleClickSkip = () => {
-      history.push("/Dashboard")
+       history.push("/Dashboard")
+        //history.push("/");
     }
 
     const handleClickSignIn = () => {
       history.push("/Login")
+      //history.push("/");
     }
 
     var handleSubmit = async function handleSubmit(event) {
         event.preventDefault();
         //prevents default form refresh
-        //console.log("I am inside fuction");
+        ////console.log("I am inside fuction");
         try{
             setSuccess('');
             setError('');
             setLoading(true);
-            await signup(values, value).then(async function(res1){
+            values.fullname === ''?
+                setError('Please enter your Full Name')
+            :values.email === '' || !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.email))?
+                setError('Please enter a valid Email')
+            :values.password === ''?
+                setError('Please enter a valid Password')
+            :await signup(values, value).then(async function(res1){
                 if(res1 != null){
                     if(res1 !== "The email address is already in use by another account."){
                         await fetchUserDetailsSignUp(res1).then(function(res){
                             if(res){
-                                //console.log("About to navigate to dashboard.");
-                                //console.log(userRolef);
+                                ////console.log("About to navigate to dashboard.");
+                                ////console.log(userRolef);
                                 setSuccess('Sign Up Successful.');
                                 setTimeout(() => {
                                     setSuccess('');
-                                    console.log("about to go to dashboard");
-                                    history.push('/Dashboard')
+                                    //console.log("about to go to dashboard");
+                                    if(history.location.state === undefined){
+                                        history.push("/Dashboard");
+                                    }else{
+                                        history.push(history.location.state.from)
+                                    }
+                                    //history.push("/");
                                 }, 1500);
                             }else{
-                                setError('Unable to login at this time'); 
+                                setError('Unable to Sign Up at this time'); 
                             } 
                         });
                     }else{
@@ -319,7 +338,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
     var handleGoogleSubmit = async function handleGoogleSubmit(event) {
         event.preventDefault();
         //prevents default form refresh
-        //console.log("I am inside Google Submit fuction");
+        ////console.log("I am inside Google Submit fuction");
         try{
             setSuccess('');
             setError('');
@@ -328,13 +347,18 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                 if(res1 != null){
                     await fetchUserDetails(res1).then(function (res){
                         if(res){
-                            //console.log("About to navigate to dashboard.");
+                            ////console.log("About to navigate to dashboard.");
                             setLoading(false);
                             setSuccess('Sign Up Successful.');
                             setTimeout(() => {
                                 setSuccess('');
-                                console.log("about to go to dashboard");
-                                history.push('/Dashboard')
+                                //console.log("about to go to dashboard");
+                                if(history.location.state === undefined){
+                                    history.push("/Dashboard");
+                                }else{
+                                    history.push(history.location.state.from)
+                                }
+                                //history.push("/");
                             }, 1500);
                         }else{
                             setError('Unable to login at this time'); 
@@ -352,13 +376,13 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
     }
 
     var fetchUserDetailsSignUp = async function fetchUserDetailsSignUp(payload) {
-        //console.log("Is current user null");
-        //console.log(value);
+        ////console.log("Is current user null");
+        ////console.log(value);
         if(payload.currentUser !== null && payload.currentUser !== undefined){
             if(payload.currentUser.uid !== null && payload.currentUser.uid !== undefined){
-                //console.log("Fetching user info");
-                //console.log(state);
-                await fetchUserInfoForSignUp(payload.currentUser.uid, payload, value);
+                ////console.log("Fetching user info");
+                ////console.log(state);
+                fetchUserInfoForSignUp(payload.currentUser.uid, payload, value);
                 return true;
             }
         }
@@ -366,12 +390,12 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
     }
 
     var fetchUserDetails = async function fetchUserDetails(payload) {
-        //console.log("Is current user null");
-        //console.log(value);
+        ////console.log("Is current user null");
+        ////console.log(value);
         if(payload.currentUser !== null && payload.currentUser !== undefined){
             if(payload.currentUser.uid !== null && payload.currentUser.uid !== undefined){
-                //console.log("Fetching user info");
-                //console.log(state);
+                ////console.log("Fetching user info");
+                ////console.log(state);
                 await fetchUserInfo(payload.currentUser.uid, payload);
                 return true;
             }
@@ -418,6 +442,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                                                     </InputAdornment>}
                                                 labelWidth={103}
                                                 required={true}
+                                                notched={true}
                                         />
                                         </FormControl><br />
                                         <FormControl fullWidth variant="outlined" >
@@ -436,6 +461,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                                                     </InputAdornment>}
                                                 labelWidth={103}
                                                 required={true}
+                                                notched={true}
                                             />
                                         </FormControl><br />
                                         <FormControl fullWidth variant="outlined">
@@ -466,6 +492,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                                                 }
                                                 labelWidth={70}
                                                 required={true}
+                                                notched={true}
                                             />
                                         </FormControl>
                                         <Typography variant="subtitle2" className={classes.forgotPassText}>Forgot Password?</Typography>
@@ -509,9 +536,9 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                         <Typography variant="subtitle1" className={classes.welcomeStyle}>Welcome Back</Typography>
                         <form onSubmit={handleSubmit} className={classes.form} noValidate autoComplete="off">
                             <FormControl fullWidth variant="outlined" >
-                                <InputLabel htmlFor="fullname" className={mobClasses.root}>Full Name</InputLabel>
+                                <InputLabel shrink htmlFor="fullname" className={mobClasses.root}>Full Name</InputLabel>
                                 <OutlinedInput 
-                                    className={clsx(classes.firstTextFieldMobile, mobClasses.root)}
+                                    className={clsx(classes.firstTextFieldMobile, mobClasses.root, "MuiOutlinedInput-notchedOutline")}
                                     id="fullname"
                                     type="text"
                                     value={values.fullname}
@@ -522,8 +549,10 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                                                 <PersonRounded />
                                             </IconButton>
                                         </InputAdornment>}
-                                    labelWidth={103}
+                                    //labelWidth={70}
                                     required={true}
+                                    notched={true}
+                                    label="Full Name"
                                 />
                             </FormControl><br />
                             <FormControl fullWidth variant="outlined">
@@ -542,6 +571,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                                         </InputAdornment>}
                                     labelWidth={103}
                                     required={true}
+                                    notched={true}
                                 />
                             </FormControl><br />
                             <FormControl fullWidth variant="outlined" color="secondary">
@@ -571,6 +601,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                                     }
                                     labelWidth={70}
                                     required={true}
+                                    notched={true}
                                 />
                             </FormControl>
                             <Typography variant="subtitle2" className={classes.forgotPassTextMobile}>Forgot Password?</Typography>

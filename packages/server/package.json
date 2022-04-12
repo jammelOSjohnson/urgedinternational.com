@@ -4,12 +4,19 @@
   "main": "index.ts",
   "license": "MIT",
   "dependencies": {
+    "@axelspringer/graphql-google-pubsub": "2.1.0",
+    "apollo-server": "2.25.2",
+    "apollo-server-core": "3.2.0",
     "apollo-server-express": "^3.1.2",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "firebase-admin": "^9.11.1",
     "graphql": "^15.5.1",
+    "graphql-redis-subscriptions": "1.5.0",
+    "graphql-subscriptions": "2.0.0",
+    "ioredis": "^3.2.2",
     "mongoose": "^5.13.5",
+    "mongoose-sequence": "^5.3.1",
     "ts-node": "^10.1.0"
   },
   "devDependencies": {
@@ -18,6 +25,7 @@
     "@babel/node": "^7.14.9",
     "@babel/preset-env": "^7.15.0",
     "@babel/preset-typescript": "^7.15.0",
+    "@types/ioredis": "^3.2.2",
     "@types/node": "^16.6.0",
     "nodemon": "^2.0.12",
     "typescript": "^4.3.5"
@@ -27,6 +35,9 @@
     "test": "echo \"Error: no text specified\" && exit 1",
     "dev": "nodemon src/index.ts",
     "build": "tsc -p .",
+    "dockbuild": "docker build -t urgedinternationalsite/server:server .",
+    "dockstart": "docker-compose up",
+    "dockstop": "docker-compose down",
     "deploy": "npm run build && gcloud app deploy"
   }
 }

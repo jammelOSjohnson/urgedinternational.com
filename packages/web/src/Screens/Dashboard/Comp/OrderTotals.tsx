@@ -1,21 +1,6 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardMedia, CardContent } from '@material-ui/core';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
-import { LockRounded, EmailRounded, PlayArrowRounded } from "@material-ui/icons/";
-
-interface Props {
-    
-}
-
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
+import { makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent } from '@material-ui/core';
+import React, { useEffect } from 'react';
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -63,25 +48,40 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const OrderTotals: React.FC = function OrderTotals() {
     const classes = useStyles();
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-      });
+
       var { value }  = useAppData();
-      var { orders } = value;
+      var { orders, fetchOrdersByUser, currentUser } = value;
 
       var TotalOrders = orders.length;
       var OrdersInProcess = 0;
-      var history = useHistory();
+      if(orders.length !== 0) {
+          orders.map((item, index) => (
+            OrdersInProcess =  item.OrderStatus !== "Delivered" ?
+                               OrdersInProcess + 1
+                               :
+                               OrdersInProcess
 
+          ))
+      }
+
+      useEffect(() => {
+        try{
+          fetchOrdersByUser(value).then(()=>{
+            
+          });
+    
+        }catch(e){
+          //console.log(e)
+        }
+        // eslint-disable-next-line
+      }, [currentUser]);
     
       
     return (
         <>
              <Card className={classes.card}>
                 <CardMedia className={classes.cardImage}>
-                    <img src="Images/MediumSpaceShip.png"></img>
+                    <img src="Images/MediumSpaceShip.png" alt="MediumSpaceShip"></img>
                     <Typography variant="h2" className={classes.OrderResult1}>{TotalOrders}</Typography>
                 </CardMedia>
                 <CardContent className={classes.cardContent}>
@@ -93,7 +93,7 @@ export const OrderTotals: React.FC = function OrderTotals() {
             <br />
             <Card className={classes.card}>
                 <CardMedia className={classes.cardImage}>
-                    <img src="Images/SmallSpaceShip.png"></img>
+                    <img src="Images/SmallSpaceShip.png" alt="SmallSpaceShip"></img>
                     <Typography variant="h2" className={classes.OrderResult2}>{OrdersInProcess}</Typography>
                 </CardMedia>
                 <CardContent className={classes.cardContent}>

@@ -1,25 +1,17 @@
-import { Container, Grid, makeStyles, createStyles, Typography, Theme } from '@material-ui/core';
+import { Container, Grid, makeStyles, createStyles, Theme } from '@material-ui/core';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
+// import { useHistory } from 'react-router-dom';
+// import clsx from 'clsx';
 //Import Components
 import { Sidebar } from './Comp/Sidebar';
 import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
 import { RestaurantMenuHeader } from './Comp/RestaurantMenuHeader';
-import { RestaurantCategories } from './Comp/RestaurantCategories';
+import { RestaurantMenuCategories } from './Comp/RestaurantMenuCategories';
 import { RestaurantMenu } from './Comp/RestaurantMenu';
 import { DashboardFooter } from './Comp/DashboardFooter';
 
-interface Props {
-    
-}
 
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -61,7 +53,7 @@ export const RestaurantMenuScreen: React.FC = function RestaurantMenuScreen() {
                             <RestaurantMenuHeader />
                         </Grid>
                         <Grid item xs={12}>
-                            <RestaurantCategories />
+                            <RestaurantMenuCategories />
                         </Grid>
                         <Grid item xs={12}>
                             <RestaurantMenu />                    

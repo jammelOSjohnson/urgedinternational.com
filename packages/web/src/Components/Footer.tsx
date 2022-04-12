@@ -46,9 +46,9 @@ export const Footer: React.FC = function Footer() {
     var history = useHistory();
     var location = history.location;
     var referralPath = location.pathname;
-    //console.log("pathname is:" + location.pathname);
+    ////console.log("pathname is:" + location.pathname);
     const classes = useStyles();
-    if(referralPath !== '/'){
+    if(referralPath !== '/' && referralPath.toLowerCase() !== '/services' && referralPath.toLowerCase() !== '/contactus'){
         return(
           <>
   
@@ -65,7 +65,7 @@ export const Footer: React.FC = function Footer() {
                         </div>
                         <div>
                             <Typography >
-                                Tel: 876 960 1004
+                            Tel: <a style={{color:"#F7B614", textDecoration: "none"}} href="tel:8767735015" title="telephone">876 773 5015</a>
                             </Typography>
                             <Typography >
                                 77 Manchester Ave, May Pen
@@ -74,7 +74,9 @@ export const Footer: React.FC = function Footer() {
                     </Grid>
                     <Grid item xs={12} sm={6} lg={3} >
                         <Typography variant="h6">Quick Links</Typography>
-                        <a href="/FoodDelivery" className={classes.linkDisabled}>
+                        {/* <a href="javascript()" className={classes.linkDisabled}> */}
+                        {/* <a href="/FoodDelivery" className={classes.linkDisabled}> */}
+                        <a href="/Restaurants" className={classes.linkDisabled}>
                             <Typography>Order Food</Typography>
                         </a>
                         <Typography>Order Pickup</Typography>
