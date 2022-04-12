@@ -54,6 +54,14 @@
     // if (typeof window.__REACT_DEVTOOLS_GLOBAL_HOOK__ === 'object') {
     //     __REACT_DEVTOOLS_GLOBAL_HOOK__.inject = function() {};
     // }
+    if('serviceWorker' in navigator){
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./serviceworker.js')
+          .then((reg) => console.log('Success: ', reg.scope))
+          .catch((err) => console.log('Failure: ', err))
+      })
+    }
+    
     var ua = window.navigator.userAgent;
     var msie = ua.indexOf("MSIE ");
     var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -64,15 +72,6 @@
       if (window.location.port != 3000) {
         __REACT_DEVTOOLS_GLOBAL_HOOK__.inject = function() {};
       }
-    }
-  </script>
-  <script>
-    if('serviceWorker' in navigator){
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./serviceworker.js')
-          .then((reg) => console.log('Success: ', reg.scope))
-          .catch((err) => console.log('Failure: ', err))
-      })
     }
   </script>
 </html>
