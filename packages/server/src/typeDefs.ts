@@ -171,7 +171,8 @@ const typeDefs = /* GraphQL */`
         GCT: Float,
         ServiceCharge: Float,
         CartTotal: Float,
-        OrderType: String
+        OrderType: String,
+        Restaurant: User
     }
 
     type PaySetting {
@@ -277,7 +278,8 @@ const typeDefs = /* GraphQL */`
             GCT: Float,
             ServiceCharge: Float,
             CartTotal: Float,
-            OrderType: String
+            OrderType: String,
+            Restaurant: String
         ): Order
 
         getOrdersByUserId(

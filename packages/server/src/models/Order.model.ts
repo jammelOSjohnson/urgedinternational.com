@@ -60,6 +60,10 @@ const OrderSchema = new Schema({
     OrderType: {
         type: String,
         required: false
+    }, Restaurant: {
+        type: Schema.Types.ObjectId,
+        ref: 'user',
+        required: true
     }
 });
 

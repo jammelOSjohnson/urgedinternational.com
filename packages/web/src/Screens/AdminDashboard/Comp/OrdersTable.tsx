@@ -131,8 +131,18 @@ import { Alert } from '@material-ui/lab';
       try{
         if(data.getOrders !== null){
           var Orders = data.getOrders;
-          if(Orders.length > orders.length){
-            refreshingOrderTables(value, Orders).then(()=>{
+          //console.log(Orders)
+          let filteredOrders = Orders.filter((item) => item.OrderStatus !== "Delivered");
+          let deliveredOrders = Orders.filter((item) => item.OrderStatus === "Delivered");
+          if(deliveredOrders.length > 0) 
+          {
+            deliveredOrders.map((item)=> {
+              filteredOrders.push(item);
+            })
+          }
+
+          if(filteredOrders.length > orders.length){
+            refreshingOrderTables(value, filteredOrders).then(()=>{
           
             });
           }

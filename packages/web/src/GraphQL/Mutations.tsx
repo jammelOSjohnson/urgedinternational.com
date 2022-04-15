@@ -154,7 +154,8 @@ export const CREATE_ORDER = gql`
         $GCT: Float,
         $ServiceCharge: Float,
         $CartTotal: Float,
-        $OrderType: String
+        $OrderType: String,
+        $Restaurant: String
         ) {
             createOrder(
                 Id: $Id, 
@@ -170,7 +171,8 @@ export const CREATE_ORDER = gql`
                 GCT: $GCT,
                 ServiceCharge: $ServiceCharge,
                 CartTotal: $CartTotal,
-                OrderType: $OrderType
+                OrderType: $OrderType,
+                Restaurant: $Restaurant
                 ){
                     _id
                     Id
@@ -200,6 +202,17 @@ export const CREATE_ORDER = gql`
                     ServiceCharge
                     CartTotal
                     OrderType
+                    Restaurant{
+                        _id
+                        Id
+                        FirstName 
+                        LastName
+                        Email
+                        AddressLine1
+                        AddressLine2
+                        City
+                        ContactNumber
+                    }
                 }
     }
 `

@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
                 color: "#9B9B9B"
             },
             "& .MuiOutlinedInput-input":{
-                padding: "18.5px 14px 18.5px 0px"
+                padding: "0px 14px 0px 0px"
             }
         },
         gridRoot: {
@@ -67,8 +67,9 @@ const useStyles = makeStyles((theme: Theme) =>
             borderRadius: "18px",
         },
         cardHeading: {
-            fontWeight: "bold",
-            fontFamily: "PT Sans"
+            fontWeight: 700,
+            fontFamily: "PT Sans",
+            fontSize: "1.5rem"
         },
         cardContent: {
           flexGrow: 1,
@@ -94,6 +95,9 @@ const useStyles = makeStyles((theme: Theme) =>
             minWidth: 60,
             marginLeft: "0px"
         },
+        boldSubtitle: {
+            fontWeight: 700
+        }
     }),
 );
 
@@ -103,7 +107,7 @@ export const OrderFullDetails: React.FC = () => {
     var { value }  = useAppData();
     var { orders, riders, fetchRiders, UpdateOrder } = value;
     const orderIndex = parseInt(history.location.state.from);
-    const [rider, setRider] = useState(orders.lengh > 0 ?orders[orderIndex].Rider.FirstName: "");
+    const [rider, setRider] = useState("");
     const [selectedRider, setSelectedRider] = useState();
     // var [error, setError] = useState('');
     // var [success, setSuccess] = useState('');
@@ -175,6 +179,8 @@ export const OrderFullDetails: React.FC = () => {
 
     useEffect(() => {
         try{
+            if(rider === "" && orders.length > 0 ) setRider(orders[orderIndex].Rider.FirstName);
+            
             if(riders.length === 0){
                 fetchRiders(value);
             }
@@ -207,6 +213,8 @@ export const OrderFullDetails: React.FC = () => {
                 email = personalInfo[0];
             }
         }
+
+        //console.log(orders[orderIndex])
         return (
             <>
                     <Container maxWidth="xl"  className={classes.main}>
@@ -220,7 +228,7 @@ export const OrderFullDetails: React.FC = () => {
                                             <Grid container direction="row" spacing={1} style={{paddingTop: "7px"}}>
                                                 {orders[orderIndex].OrderItems.map((item, index) => (
                                                     index !== 0?
-                                                        <Grid item xs={4}>
+                                                        <Grid item xs={4} key={index}>
                                                             <img style={{maxWidth: "73.42px"}} src={item.imageName} alt="ordered"></img>
                                                         </Grid>
                                                         :
@@ -244,39 +252,75 @@ export const OrderFullDetails: React.FC = () => {
                                         </CardMedia>
                                         <CardContent className={classes.cardContent}>
                                             <Typography className={classes.cardHeading}>
-                                            Details
+                                                Order Details
                                             </Typography>
                                             <Typography>
                                             <Grid container direction="row" spacing={1}>
+                                                <Grid item xs={12} md={2}>
+                                                    <Typography >
+                                                        Restaurant:
+                                                    </Typography>
+                                                </Grid>
+                                                <Grid item xs={12} md={10}>
+                                                    <Typography>
+                                                        {orders[orderIndex].Restaurant.FirstName}
+                                                    </Typography>
+                                                </Grid>
                                                 {orders[orderIndex].OrderItems.map((item, index) => (
-                                                        <Grid item xs={12}>
-                                                            {`
-                                                                ${item.itemName}: \n
-                                                                ${item.chickenFlavour1 === "Select Flavour"?'':item.chickenFlavour1} 
-                                                                ${item.chickenFlavour2 === "Select Flavour"?'':item.chickenFlavour2}
-                                                                ${item.drink === "Select Drink"?'':item.drink}
-                                                                ${item.otherIntructions}
-                                                             `}
+                                                    <>
+                                                        <Grid item xs={12} md={6} key={index}>
+                                                            <Typography>
+                                                                Order Item {index + 1}:
+                                                            </Typography>
+                                                            <Typography>
+                                                                {`
+                                                                    ${item.quantity + ' x ' + item.itemName}
+                                                                `}
+                                                                <br />
+                                                                {`
+                                                                    ${item.chickenFlavour1 === "Select Flavour"?'': "Flavours: " + item.chickenFlavour1} 
+                                                                    ${item.chickenFlavour2 === "Select Flavour"?'':item.chickenFlavour2}
+                                                                `}
+                                                                <br />
+                                                                {`
+                                                                    ${item.drink === "Select Drink"?'':"Drink: " + item.drink}
+                                                                `}
+                                                                <br />
+                                                                {`
+                                                                    ${"Side: "}${item.side !== undefined && item.side !== null? item.side : ""}
+                                                                `}
+                                                                <br />
+                                                                {`
+                                                                    ${"Instructions: " + item.otherIntructions}
+                                                                `}
+                                                            </Typography>
                                                         </Grid>
+                                                    </>
                                                 ))}
                                             </Grid>
                                             </Typography><br/>
                                             <Grid container direction="row" spacing={1}>
                                                 <Grid item xs={12} md={4}>
-                                                    Order Id
+                                                    <Typography className={classes.boldSubtitle}>
+                                                        Order ID
+                                                    </Typography>
                                                     <Typography>
                                                         {orders[orderIndex]._id}
                                                     </Typography>
                                                 </Grid>
                                                 <Grid item xs={12} md={4}>
-                                                    Order Date
+                                                    <Typography className={classes.boldSubtitle}>
+                                                        Order Date
+                                                    </Typography>
                                                     <Typography>
                                                     <img src={"Images/order-details-calendar.png"} alt="calendar" /> 
                                                     &nbsp;<span style={{verticalAlign: "middle"}}>{estTime}</span>
                                                     </Typography>
                                                 </Grid>
                                                 <Grid item xs={12} md={4}>
-                                                    Status
+                                                    <Typography className={classes.boldSubtitle}>
+                                                        Status
+                                                    </Typography>
                                                     <Typography>
                                                     {orders[orderIndex].OrderStatus}
                                                     </Typography>
@@ -284,14 +328,18 @@ export const OrderFullDetails: React.FC = () => {
                                             </Grid>
                                             <br />
                                             <Grid container direction="row" spacing={1}>
-                                                <Grid item xs={12} md={4}>
-                                                    Location
+                                                <Grid item xs={12} md={4} >
+                                                    <Typography className={classes.boldSubtitle}>
+                                                        Pick-Up From
+                                                    </Typography>
                                                     <Typography>
-                                                        {orders[orderIndex].DeliveryAddress}
+                                                        {orders[orderIndex].Restaurant.AddressLine1}
                                                     </Typography>
                                                 </Grid>
                                                 <Grid item xs={12} md={4}>
-                                                    Cost
+                                                    <Typography className={classes.boldSubtitle}>
+                                                        Order Total
+                                                    </Typography>
                                                     <Typography>
                                                     {`$${ parseFloat(orders[orderIndex].OrderTotal).toFixed(2)}`}
                                                     </Typography>
@@ -308,7 +356,7 @@ export const OrderFullDetails: React.FC = () => {
                                                             name="rider"
                                                             className={classes.root}
                                                         >
-                                                            <MenuItem value={"Assigned To"}>Assigned To</MenuItem>
+                                                            <MenuItem value={"Assigned To"} className={classes.boldSubtitle}>Assigned To</MenuItem>
                                                             {
                                                                 riders.map((item, index) => (
                                                                     <MenuItem key={index} value={index}>{item.FirstName}</MenuItem>
@@ -316,7 +364,6 @@ export const OrderFullDetails: React.FC = () => {
                                                             }
                                                         </Select>
                                                     </FormControl>
-                                                    Assigned To
                                                     <Typography>
                                                     <img src="Images/small_rider_placeholder.png" alt="ordered"></img> {rider}
                                                     </Typography>
@@ -334,6 +381,10 @@ export const OrderFullDetails: React.FC = () => {
                                         <CardContent className={classes.cardContent}>
                                             <br />
                                             <Typography className={classes.cardHeading}>
+                                                Deliver To:
+                                            </Typography>
+                                            <br />
+                                            <Typography>
                                                 {fullname}
                                             </Typography>
                                             <br />

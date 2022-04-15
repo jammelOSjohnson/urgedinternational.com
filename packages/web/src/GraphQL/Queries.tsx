@@ -51,6 +51,17 @@ export const GET_ORDERS = gql`
             ServiceCharge
             CartTotal
             OrderType
+            Restaurant{
+                _id
+                Id
+                FirstName 
+                LastName
+                Email
+                AddressLine1
+                AddressLine2
+                City
+                ContactNumber
+            }
         }
     }
 `
@@ -85,7 +96,18 @@ export const GET_ORDERS_BY_RIDERID = gql`
             GCT
             ServiceCharge
             CartTotal
-            OrderType
+            OrderType,
+            Restaurant{
+                _id
+                Id
+                FirstName 
+                LastName
+                Email
+                AddressLine1
+                AddressLine2
+                City
+                ContactNumber
+            }
         }
     }
 `
@@ -121,6 +143,17 @@ export const GET_ORDERS_BY_DATE_AND_TYPE = gql`
             ServiceCharge
             CartTotal
             OrderType
+            Restaurant{
+                _id
+                Id
+                FirstName 
+                LastName
+                Email
+                AddressLine1
+                AddressLine2
+                City
+                ContactNumber
+            }
         }
     }
 `

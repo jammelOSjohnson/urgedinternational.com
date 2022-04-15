@@ -92,11 +92,11 @@ const resolvers = {
         },
 
         getOrders: async () => {
-            return await Order.find().populate("Rider");
+            return await Order.find().sort({OrderDate: -1}).populate("Rider").populate("Restaurant");
         },
 
         getOrdersByRiderId: async (_,{Rider}) => {
-            return await Order.find().populate("Rider").where("Rider").equals(Rider)
+            return await Order.find().populate("Rider").populate("Restaurant").where("Rider").equals(Rider)
             .where("OrderStatus").ne("Delivered"); 
         },
 
@@ -173,14 +173,14 @@ const resolvers = {
         },
 
         //Orders
-        createOrder: async(_,{Id,OrderItems,OrderStatus,OrderTotal,OrderDate,Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal, OrderType}) => {
-            const orderItem = new Order({Id, OrderItems, OrderStatus, OrderTotal, OrderDate, Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal, OrderType});
+        createOrder: async(_,{Id,OrderItems,OrderStatus,OrderTotal,OrderDate,Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal, OrderType, Restaurant}) => {
+            const orderItem = new Order({Id, OrderItems, OrderStatus, OrderTotal, OrderDate, Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal, OrderType, Restaurant});
             const newOrder = await orderItem.save();
             const orderId = newOrder._id;
             // console.log(newOrder)
             // console.log(orderId);
             
-            const finalOrder = await Order.find().where("_id").equals(orderId).populate("Rider");
+            const finalOrder = await Order.find().where("_id").equals(orderId).populate("Rider").populate("Restaurant");
             //console.log(finalOrder);
             pubsub.publish(ORDER_CREATED, {orderCreated: finalOrder[0]});
             
@@ -188,11 +188,11 @@ const resolvers = {
         },
 
         getOrdersByUserId: async (_,{Id}) => {
-            return await Order.find().populate("Rider").where("Id").equals(Id);    
+            return await Order.find().populate("Rider").populate("Restaurant").where("Id").equals(Id);    
         },
 
         getOrdersByRiderId: async (_,{Rider}) => {
-            return await Order.find().populate("Rider").where("Rider").equals(Rider)
+            return await Order.find().populate("Rider").populate("Restaurant").where("Rider").equals(Rider)
             .where("OrderStatus").ne("Delivered"); 
         },
 
@@ -210,7 +210,7 @@ const resolvers = {
         },
 
         getOrders: async () => {
-            return await Order.find().populate("Rider");
+            return await Order.find().populate("Rider").populate("Restaurant");
         },
 
         updateOrder: async (_, {_id,Id,OrderItems,OrderStatus,OrderTotal,OrderDate,Rider, DeliveryAddress, PaymentMethod, AdditionalInfo, DeliveryFee, GCT, ServiceCharge, CartTotal, OrderType}) => {
