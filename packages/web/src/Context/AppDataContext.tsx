@@ -860,7 +860,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       }
     }
 
-    var checkoutOrder  = async function checkoutOrder(payload, cartItems, state, deliveryFee, GCT, serviceFee, cartItemsSum, Total){
+    var checkoutOrder  = async function checkoutOrder(payload, cartItems, state, deliveryFee, GCT, serviceFee, cartItemsSum, Total, restaurantID){
       if(cartItems.length !== 0){
         var orderItems : object[] = [];
         const now = new Date();
@@ -906,7 +906,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             GCT: Number(GCT.Cost),
             ServiceCharge: Number(serviceFee.Cost),
             CartTotal: Number(cartItemsSum.Cost),
-            OrderType: "Food"
+            OrderType: "Food",
+            Restaurant: restaurantID
           }
   
           await createOrder({variables: orderBody}).then(async function(response) {

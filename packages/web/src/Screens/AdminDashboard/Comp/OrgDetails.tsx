@@ -229,6 +229,14 @@ const useStyles = makeStyles((theme: Theme) =>
             width: "113px",
             borderRadius: 36,
         },
+        Button2: {
+            backgroundColor: theme.palette.primary.main,
+            border: "1.21951px solid #FFFFFF",
+            height: "41px",
+            width: "113px",
+            borderRadius: 36,
+            color: "#FFF"
+        },
         btnfonts: {
             fontFamily: "PT Sans",
             fontSize: "13px",
@@ -361,6 +369,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
     var { selectedRestaurant, restaurants, viewMenuItems, UpdateRestaurantBy_ID } = value;
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const [open, setOpen] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
     const [selectedMenuItemIndex, setSelectedMenuItemIndex] = React.useState(0);
     const [selectedMenuItem, setSelectedMenuItem] = React.useState<MenuItem>({
@@ -382,7 +391,6 @@ export const OrgDetails: React.FC = function OrgDetails() {
         selectableRows: false,
         download: false,
         print: false,
-        count: 5
     };
 
     useEffect(() => {
@@ -406,11 +414,26 @@ export const OrgDetails: React.FC = function OrgDetails() {
 
                 setOhrs(restaurant.OpeningHrs);
             }
+
+            if(values.Menu.length > rows.length){
+                values.Menu.map((item, index) => {
+                    let row = {
+                      MenuCategory: item.MenuCategory,
+                      ItemName: item.ItemName, 
+                      ItemCost: `$ ${ parseFloat(item.ItemCost).toFixed(2)}`,
+                      ItemDescription: item.ItemDescription,
+                      Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); handleOpen2(index);}}><EditRounded color="primary" /></a></>
+                    };
+              
+                    rows.push(row)
+                    return true;
+                  })  
+            }
         }catch(err) {
             console.log(err)
         }
         
-    }, [restaurants, selectedRestaurant])
+    }, [restaurants, selectedRestaurant, values.Menu])
     
     var history = useHistory();
 
@@ -467,9 +490,30 @@ export const OrgDetails: React.FC = function OrgDetails() {
     const handleClose2 = () => {
         let newMenu = values.Menu;
         newMenu[selectedMenuItemIndex] = selectedMenuItem;
-        console.log(newMenu[selectedMenuItemIndex])
+        //console.log(newMenu[selectedMenuItemIndex])
         setValues({ ...values, Menu: newMenu});
         setOpen2(false);
+    };
+
+    const handleClose = () => {
+        if(selectedMenuItem.ItemName !== ""){
+            let newMenu = values.Menu;
+            let finalMenuItem = {
+                MenuCategory: selectedMenuItem.MenuCategory,
+                ItemName: selectedMenuItem.ImageName,
+                ItemCost: selectedMenuItem.ItemCost,
+                ItemDescription: selectedMenuItem.ItemDescription,
+                ImageName: selectedMenuItem.ImageName
+            }
+            newMenu.unshift(finalMenuItem);
+            console.log(newMenu)
+            setValues({ ...values, Menu: newMenu});
+            setOpen(false);
+        }
+    };
+
+    const handleCloseX = () => {
+            setOpen(false);
     };
   
     const handleOpen2 = (index: React.SetStateAction<number>) => {
@@ -482,6 +526,16 @@ export const OrgDetails: React.FC = function OrgDetails() {
 
       }
       
+    };
+
+    const handleOpen = () => {
+        try
+        {
+          setSelectedMenuItem({MenuCategory: "", ItemName: "", ItemCost: "", ItemDescription: "", ImageName: "" });
+          setOpen(true);
+        }catch(err){
+  
+        }
     };
 
     if (restaurants.length !== 0 && values.Menu.length !== 0){
@@ -618,12 +672,20 @@ export const OrgDetails: React.FC = function OrgDetails() {
                                     <Grid container direction="row" spacing={1} className={classes.root3} alignItems="center">
                                         <Grid item xs={12} sm={12} >
                                             <MUIDataTable
-                                                title={"Items"}
+                                                title={
+                                                    <Button 
+                                                        size="small"  fullWidth={true} 
+                                                        className={`${classes.Button2}`} type="button"
+                                                        onClick={handleOpen}>
+                                                        Add Item
+                                                    </Button>
+                                                }
                                                 data={rows}
                                                 columns={columns}
                                                 options={options}
                                             />
 
+                                            {/*Edit Modal */}
                                             <Modal
                                                 aria-labelledby="transition-modal-title"
                                                 aria-describedby="transition-modal-description"
@@ -710,6 +772,104 @@ export const OrgDetails: React.FC = function OrgDetails() {
                                                                                     color="secondary" size="small" className={`${classes.Button} ${classes.btnfonts}`}
                                                                                     fullWidth>
                                                                                     Continue
+                                                                                </Button>
+                                                                            </Grid>
+                                                                        </Grid>
+                                                                    </form>
+                                                                </Grid>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </div>
+                                                </Fade>
+                                            </Modal>
+                                            
+                                            {/*Add Modal */}
+                                            <Modal
+                                                aria-labelledby="transition-modal-title"
+                                                aria-describedby="transition-modal-description"
+                                                className={classes.modal}
+                                                open={open}
+                                                onClose={handleClose}
+                                                closeAfterTransition
+                                                BackdropComponent={Backdrop}
+                                                BackdropProps={{
+                                                timeout: 500,
+                                                }}
+                                            >
+                                                <Fade in={open}>
+                                                    <div className={clsx(classes.paper, 'modalMobile')}>
+                                                        <h3 id="transition-modal-title" style={{textAlign: "center", color: "#F7B614"}}>Edit Item</h3>
+                                                        <Link to={referralPath} className={classes.cartIcon} onClick={handleCloseX}>
+                                                                <img src="Images/CartCloseIcon.png" alt="closemodal" />
+                                                        </Link>
+                                                        <br />
+                                                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                            <Grid item xs={12}>
+                                                                <Grid item xs={12} >
+                                                                    <form autoComplete="off">
+                                                                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                                            <Grid item xs={12} >
+                                                                                <TextField
+                                                                                    id="outlined-multiline-static1"
+                                                                                    label="Item Name"
+                                                                                    // multiline
+                                                                                    // rows={4}
+                                                                                    value={selectedMenuItem.ItemName}
+                                                                                    onChange={handleChange4('ItemName')}
+                                                                                    variant="outlined"
+                                                                                    placeholder="Enter Item Name"
+                                                                                    fullWidth
+                                                                                />
+                                                                            </Grid>
+                                                                            <Grid item xs={12} >
+                                                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                                    <TextField
+                                                                                        id="outlined-multiline-static"
+                                                                                        label="Item Description"
+                                                                                        // multiline
+                                                                                        // rows={4}
+                                                                                        value={selectedMenuItem.ItemDescription}
+                                                                                        onChange={handleChange4('ItemDescription')}
+                                                                                        variant="outlined"
+                                                                                        placeholder="Enter Item Description"
+                                                                                        fullWidth
+                                                                                    />
+                                                                                </FormControl>
+                                                                            </Grid>
+                                                                            <Grid item xs={12} sm={6}>
+                                                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                                <TextField
+                                                                                    id="outlined-multiline-static1"
+                                                                                    label="Category"
+                                                                                    // multiline
+                                                                                    // rows={4}
+                                                                                    value={selectedMenuItem.MenuCategory}
+                                                                                    onChange={handleChange4('MenuCategory')}
+                                                                                    variant="outlined"
+                                                                                    placeholder="Enter Category"
+                                                                                    fullWidth
+                                                                                />
+                                                                                </FormControl>
+                                                                            </Grid>
+                                                                            <Grid item xs={12} sm={6}>
+                                                                                <TextField
+                                                                                    id="outlined-multiline-static1"
+                                                                                    label="Item Cost"
+                                                                                    // multiline
+                                                                                    // rows={4}
+                                                                                    value={selectedMenuItem.ItemCost}
+                                                                                    onChange={handleChange4('ItemCost')}
+                                                                                    variant="outlined"
+                                                                                    placeholder="Enter Item Cost"
+                                                                                    fullWidth
+                                                                                />
+                                                                            </Grid>
+                                                                            <Grid item xs={6}>
+                                                                                <Button variant="contained" 
+                                                                                    style={{backgroundColor: "#F7B614", fontFamily: "PT Sans"}} onClick={handleClose}
+                                                                                    color="secondary" size="small" className={`${classes.Button} ${classes.btnfonts}`}
+                                                                                    fullWidth>
+                                                                                    Add Item
                                                                                 </Button>
                                                                             </Grid>
                                                                         </Grid>

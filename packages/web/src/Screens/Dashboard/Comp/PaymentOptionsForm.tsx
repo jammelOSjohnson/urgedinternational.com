@@ -183,7 +183,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
             :
             await checkoutOrder(value, cartItems, values, checkoutVals.deliveryFee, 
                 checkoutVals.GCT, checkoutVals.serviceFee, checkoutVals.cartItemsSum,
-                checkoutVals.Total).then(() => {
+                checkoutVals.Total, restaurants[selectedRestaurant]._id).then(() => {
                 setValues({
                     Street: '',
                     Town: 'Select Town',
