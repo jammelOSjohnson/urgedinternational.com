@@ -2,7 +2,7 @@ import { useAppData } from '../../../Context/AppDataContext';
 import { IconButton, makeStyles, createStyles, Typography, Theme, useMediaQuery, useTheme, Modal, Backdrop, Fade, Grid } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { HistoryRounded, PlayArrowRounded } from "@material-ui/icons/";
+import { HistoryRounded, PlayArrowRounded, ArrowBackRounded } from "@material-ui/icons/";
 import { Link } from "react-router-dom";
 import clsx from 'clsx';
 
@@ -209,7 +209,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                             <ListItemText primary={text} />
                           </ListItem>
                         :
-                        referralPath === "/CargoAndFreight" && text === "Uship" ?
+                        (referralPath === "/CargoAndFreight" || referralPath === "/Rates") && text === "Uship" ?
                           <ListItem button key={text} className={classes.activeItem}>
                             <ListItemIcon>
                                     {
@@ -471,7 +471,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
             {isMatchMedium? (
                 <Typography variant="h6" style={{fontWeight: "bold", background: "transparent"}}>
                     <Link to="/Dashboard" className={classes.link}>
-                        PORTAL
+                      {referralPath === "/Rates" || referralPath === "/rates" ? '' : 'PORTAL'}
                     </Link>
                     {referralPath === "/fooddelivery" || referralPath === "/FoodDelivery" ?
                     <span ><PlayArrowRounded /> <span style={{color: "#FF5E14"}}>FOOD DELIVERY</span></span> :
@@ -481,6 +481,8 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                     <span><PlayArrowRounded /> <Link to="/FoodDelivery" className={classes.link}>FOOD DELIVERY</Link> <PlayArrowRounded /> <span style={{color: "#FF5E14"}}>RESTAURANTS</span></span> :
                     referralPath === "/Menu" || referralPath === "/menu" ?
                     <span><PlayArrowRounded /> <Link to="/FoodDelivery" className={classes.link}>FOOD DELIVERY</Link> <PlayArrowRounded /> <Link to="/Restaurants" className={classes.link}>RESTAURANTS</Link> <PlayArrowRounded /> <span style={{color: "#FF5E14"}}>MENU</span></span> :
+                    referralPath === "/Rates" || referralPath === "/rates" ?
+                    <span><Link to="/CargoAndFreight" className={classes.link}><span style={{color: "#FF5E14"}}><ArrowBackRounded /> RETURN</span></Link></span> :
                     referralPath === "/CargoAndFreight" || referralPath === "/cargoandfreight" ?
                     <span><PlayArrowRounded /> <Link to="/CargoAndFreight" className={classes.link} style={{color: "#FF5E14"}}>CARGO &amp; FREIGHT</Link></span> : ""}
                     

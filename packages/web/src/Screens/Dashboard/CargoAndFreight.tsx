@@ -517,7 +517,7 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                                         </Link>
                                     </Grid>
                                     <Grid item xs={12}  sm={6}>
-                                        <Link to={`${referralPath}`} onClick={handleOpen4} className={classes.links}>
+                                        <Link to={"/Rates"} className={classes.links}>
                                             <Card className={classes.card2}>
                                                 <CardMedia className={classes.cardImage}>
                                                     <AttachMoneyIcon className={classes.icon} />
