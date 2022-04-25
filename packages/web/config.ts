@@ -44,6 +44,7 @@ interface ENV {
     REACT_APP_FEE_Inglewood:string|undefined;
     REACT_APP_FEE_FogaRoad:string|undefined;
     REACT_APP_GCT: string|undefined;
+    REACT_APP_DEFAULT_RESTAURANT_LOGO: string|undefined;
 }
 
 interface Config {
@@ -82,6 +83,7 @@ interface Config {
     REACT_APP_FEE_Inglewood:string;
     REACT_APP_FEE_FogaRoad:string;
     REACT_APP_GCT: string;
+    REACT_APP_DEFAULT_RESTAURANT_LOGO: string;
 }
 
 // Loading process.env as ENV interface
@@ -123,6 +125,7 @@ const getConfig = (): ENV => {
     REACT_APP_FEE_Inglewood:process.env.REACT_APP_FEE_Inglewood,
     REACT_APP_FEE_FogaRoad:process.env.REACT_APP_FEE_FogaRoad,
     REACT_APP_GCT:process.env.REACT_APP_GCT,
+    REACT_APP_DEFAULT_RESTAURANT_LOGO:process.env.REACT_APP_DEFAULT_RESTAURANT_LOGO
   };
 };
 
