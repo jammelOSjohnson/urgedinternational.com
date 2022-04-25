@@ -35,5 +35,6 @@ export namespace NodeJS {
         REACT_APP_FEE_Inglewood:string;
         REACT_APP_FEE_FogaRoad:string;
         REACT_APP_GCT:string;
+        REACT_APP_DEFAULT_RESTAURANT_LOGO: string;
     }
   }
