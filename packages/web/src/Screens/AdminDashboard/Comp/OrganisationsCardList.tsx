@@ -165,9 +165,6 @@ export const OrganisationsCardList: React.FC = function OrganisationsCardList(pr
     if (restaurants.length !== 0){  
         return (
             <>
-                <Typography variant="body1" style={{paddingTop: "3%", paddingBottom: "3%"}}>
-                    {/* Please select from the list of reataurants listed below to see their menu. */}
-                </Typography>
                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                     {restaurants.map((restaurant, index) => {
                         //console.log("restaurant is");

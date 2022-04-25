@@ -8,6 +8,7 @@ import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
 import { FilterBar } from './Comp/FilterBar'
 import { OrganisationsCardList } from './Comp/OrganisationsCardList'
+import { AddOrg } from './Comp/AddOrg';
 
 interface Props {
     
@@ -57,6 +58,7 @@ export const OrganisationsScreen: React.FC = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 {/* <FilterBar /> */}
+                                <AddOrg />
                                 <OrganisationsCardList />
                             </Grid>
                         </Grid>
