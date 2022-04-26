@@ -67,6 +67,54 @@ export const CREATE_ROLE = gql`
     }
 `
 
+export const CREATE_RESTAURANT_MUTATION = gql`
+    mutation createRestaurant(
+        $MenuItems: JSONObject,
+        $Id: String! ,$FirstName: String!, 
+        $LastName: String!, $Email: String!, 
+        $AddressLine1: String, $AddressLine2: String, 
+        $City: String, $ContactNumber: String, $OpeningHrs: JSONObject, 
+        $category: ID, $ImageName: String) {
+        createRestaurant(
+            MenuItems: $MenuItems, Id: $Id ,FirstName: $FirstName, LastName: $LastName, Email: $Email, 
+            AddressLine1: $AddressLine1, AddressLine2: $AddressLine2, City: $City,
+            ContactNumber: $ContactNumber, OpeningHrs: $OpeningHrs, category: $category, ImageName: $ImageName
+        ){
+            _id
+            Id
+            FirstName
+            LastName
+            Email
+            AddressLine1
+            AddressLine2
+            City
+            ContactNumber
+            OpeningHrs{
+                Sunday
+                Monday
+                Tuesday
+                Wednesday
+                Thursday
+                Friday
+                Saturday
+            }
+            category{
+                _id
+                Name
+                Id
+            }
+            MenuItems{
+                MenuCategory
+                ItemName
+                ItemCost
+                ItemDescription
+                ImageName
+            }
+            ImageName
+        }
+    }
+`
+
 export const GET_RESTAURANTS = gql`
     mutation getRestaurants {
         getRestaurants{
@@ -628,6 +676,16 @@ export const UPDATE_RESTAURANT_BYID = gql`
                 ImageName
             },
             ImageName
+        }
+    }
+`
+
+export const GET_CATEGORIES = gql`
+    mutation getCategories{
+        getCategories {
+            _id
+            Id
+            Name
         }
     }
 `

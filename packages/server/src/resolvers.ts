@@ -147,6 +147,11 @@ const resolvers = {
             return user.save();
         },
 
+        createRestaurant: (_, {Id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, OpeningHrs, category, MenuItems, ImageName}) => {
+            const user = new User({Id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, OpeningHrs, category, MenuItems, ImageName});
+            return user.save();
+        },
+
         getUser: async (_,{Id}) => {
             return await User.findOne({Id}).populate({path: "categories", model: "category"}); 
         },
@@ -354,6 +359,10 @@ const resolvers = {
             const user = await User.findOne({_id});
             Object.assign(user, newRestaurantUser);
             return user.save(); 
+        },
+
+        getCategories: async () => {
+            return await Category.find();
         },
     }
 };

@@ -241,6 +241,13 @@ const typeDefs = /* GraphQL */`
         getUser(Id: String): User
 
         getMenucategories(Id: String): User
+        
+        createRestaurant(
+            Id: String, FirstName: String, LastName: String, 
+            Email: String, AddressLine1: String, AddressLine2: String, 
+            City: String, ContactNumber: String, OpeningHrs: JSONObject,
+            category: ID, MenuItems: JSONObject, ImageName: String
+            ): User!
 
         getRestaurants: [User!]!
 
@@ -361,6 +368,8 @@ const typeDefs = /* GraphQL */`
             OpeningHrs: JSONObject, category: ID, 
             MenuItems: JSONObject, ImageName: String
         ): User
+
+        getCategories: [Category!]!
     }
 `;
 
