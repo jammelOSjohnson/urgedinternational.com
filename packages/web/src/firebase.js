@@ -2,6 +2,7 @@ import firebase from 'firebase/app';
 import "firebase/auth";
 import 'firebase/firestore';
 import 'firebase/analytics';
+import "firebase/functions";
 //import { getAnalytics } from "firebase/analytics";
 
 
@@ -33,4 +34,5 @@ export var socialAuth = firebase.auth();
 export var googleAuthProvider = new firebase.auth.GoogleAuthProvider();
 export var timeStamp = firebase.firestore.Timestamp;
 export var analytics2 = firebase.analytics();
+export var functions = firebase.functions();
 export default app
