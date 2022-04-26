@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import {useContext, useReducer, createContext} from 'react';
 //import fetchAddressApi from '../Apis/fetchAddressApi';
-import  { auth, socialAuth, googleAuthProvider } from '../firebase';
+import  { auth, socialAuth, googleAuthProvider, functions } from '../firebase';
 import { 
         GET_ORDERS_BY_RIDERID , 
         UPDATE_ORDER ,GET_RIDERS ,
@@ -21,7 +21,9 @@ import {
         ADD_MAILBOXNUM_MUTATION,
         GET_MAILBOX_BYID_MUTATION,
         GET_MAILBOX_BYMBOX_MUTATION,
-        UPDATE_RESTAURANT_BYID
+        UPDATE_RESTAURANT_BYID,
+        GET_CATEGORIES,
+        CREATE_RESTAURANT_MUTATION
       } from '../GraphQL/Mutations';
 import { useMutation } from '@apollo/client';
 import sendEmail from "../email.js";
@@ -176,6 +178,11 @@ function appDataReducer(state, action){
             ...state,
             paySettings: action.payload.paySettings
           }
+        case "fetch_rest_categories":
+          return {
+            ...state,
+            restaurantCategories: action.payload.restaurantCategories
+          }
         case "fetch_mailbox":
           return {
             ...state,
@@ -209,6 +216,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const emailUserId = "user_bDLFbepm6Arcdgh7Akzo3";
     //Declare necessary variables
     const [createUser] = useMutation(CREATE_USER_MUTATION);
+    const [createRestaurant] = useMutation(CREATE_RESTAURANT_MUTATION);
     const [getUser] = useMutation(GET_USER_MUTATION);
     const [getUserInRole] = useMutation(GET_USER_IN_ROLE);
     const [getRole] = useMutation(GET_ROLE);
@@ -238,6 +246,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const [addMailbox] = useMutation(ADD_MAILBOXNUM_MUTATION);
     const [getMailboxById] = useMutation(GET_MAILBOX_BYID_MUTATION);
     const [getMailboxByMbox] = useMutation(GET_MAILBOX_BYMBOX_MUTATION);
+    const [getCategories] = useMutation(GET_CATEGORIES);
 
     var currentUser = undefined;
     var selectedRestaurant = undefined;
@@ -274,6 +283,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     let mailbox_Num = undefined;
 
     let paySettings = undefined;
+    let restaurantCategories = [];
 
     var userRolef= "";
 
@@ -327,6 +337,39 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         });
         return result;
     };
+
+    var signup2 = function signup2(currentstate, payload) {
+      //retuns a promise
+      const creatRestauranteUser = functions.httpsCallable('creatRestauranteUser');
+      let email = currentstate.Email.trim();
+      let password = currentstate.password.trim()
+      var result = creatRestauranteUser({email, password}).then(async function ({ data: user}) {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        //var token = result.credential.accessToken;
+        // The signed-in user info.
+        var payloadf = { ...payload,
+          currentUser: user,
+          loading: false,
+          userInfo: {...userInfo, fullName: currentstate.Name, email: currentstate.Email}
+        };
+        return payloadf;
+      }).catch(function (error) {
+        // Handle Errors here.
+        //var errorCode = error.code;
+        //////console.log(error.code);
+        //var errorMessage = error.message;
+        //////console.log(error.message);
+        // The email of the user's account used.
+        //var email = error.email;
+        //////console.log(error.email);
+        // The firebase.auth.AuthCredential type that was used.
+        //var credential = error.credential;
+        //////console.log(error.credential);
+        // ...
+        return error.message;
+      });
+      return result;
+  };
 
     var login = function login(email, password, payload) {
         //retuns a promise
@@ -426,7 +469,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       return resultf;
     };
     
-    var userHasRole = async function userHasRole(uid, payload) {
+    var userHasRole = async function userHasRole(uid, payload, userType) {
       //console.log("User id is: ");
       //console.log(uid);
       //console.log("fetching user role");
@@ -456,9 +499,15 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         } else {
           //console.log("No such user role!")
           //console.log("creating new userinrole");
+          let rID = process.env.REACT_APP_CUSTOMER_ROLE_ID;
+          if(userType !== undefined && userType !== null){
+            rID = userType === 'restaurant' ? 
+              process.env.REACT_APP_RESTAURANT_ROLE_ID
+              : process.env.REACT_APP_CUSTOMER_ROLE_ID;
+          }
           var userInRole = {
             UserID: uid,
-            RoleID: process.env.REACT_APP_CUSTOMER_ROLE_ID
+            RoleID: rID
           };
           var storeRes = addUserToRole({variables: {UserID: userInRole.UserID, RoleID: userInRole.RoleID}}).then(function (response3) {
             if (response3.data.addUserToRole !== null) {
@@ -549,7 +598,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
                 payload.userInfo.city = user2.City !== null && user2.City !== undefined ? user2.City : "";
                 
                 var userRoleResf = undefined;
-                await userHasRole(uid, payload).then(function (userRoleRes) {
+                await userHasRole(uid, payload, undefined).then(function (userRoleRes) {
                   ////console.log("Final user ref after fetch role is: ");
                   ////console.log(userRoleRes);
                   userRoleResf = userRoleRes;
@@ -573,6 +622,115 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             
           }).catch(function (error) {
             console.error("Error writing user info: ", error);
+            return false;
+          });
+    
+          return payload;
+        }
+      }).catch(function(err){
+        ////console.log(err);
+      }); 
+      ////console.log("user ref b4 fetch role is: ");
+      ////console.log(userRef);
+      
+    };
+
+    var restaurantSignUp = async function restaurantSignUp(uid, payload, currentState, newRestaurant) {
+      ////console.log("User id is: ");
+      ////console.log(uid);
+      ////console.log("the currentState is: ");
+      ////console.log(currentState);
+      ////console.log("fetching user");
+      
+
+      
+       await getUser({variables: { Id: uid}}).then(function(response) {
+        ////console.log("Checking user result");
+        if (response.data.getUser !== null) {
+          ////console.log("user exist");
+          ////console.log(response);
+          ////console.log("what is inside payload");
+          ////console.log(payload);
+          // Convert to City object
+          var user = response.data.getUser;
+    
+          if (user !== null) {
+            payload.userInfo._id = user._id;
+            payload.userInfo.contactNumber = user.ContactNumber;
+            payload.userInfo.email = user.Email;
+            payload.userInfo.fullName = user.FirstName;
+            payload.loggedIn = true;
+            payload.userInfo.addressLine1 = user.AddressLine1 !== null && user.AddressLine1 !== undefined ? user.AddressLine1 : "";
+            payload.userInfo.addressLine2 = user.AddressLine2 !== null && user.AddressLine2 !== undefined ? user.AddressLine2 : "";
+            payload.userInfo.city = user.City !== null && user.City !== undefined ? user.City : "";
+          }
+    
+          return payload;
+        } else {
+          ////console.log("No such user!")
+          ////console.log("creating new user");
+          //////console.log("contact number is: " + currentState.contact);
+          var user2 = {
+            MenuItems: newRestaurant.Menu,
+            Id: uid,
+            FirstName: payload.userInfo.fullName !== null ? payload.userInfo.fullName : "",
+            LastName: payload.userInfo.fullName !== null ? payload.userInfo.fullName : "",
+            Email: payload.userInfo.email !== null ? payload.userInfo.email : "",
+            AddressLine1: newRestaurant.StreetAddress,
+            AddressLine2: newRestaurant.StreetAddress2,
+            City: newRestaurant.City,
+            ContactNumber: newRestaurant.Contact,
+            OpeningHrs: newRestaurant.OpeningHrs,
+            category: newRestaurant.Category,
+            ImageName: newRestaurant.ImageName
+          };
+          //verified: false,
+          //verifiedemailsent: false,
+          //postalCode: "",
+          //stateOrparish: ""
+          
+          createRestaurant({variables: {...user2}}).then(async function (response2) {
+              if(response2.data.createUser !== null){
+                ////console.log("User info  successfully written!");
+                ////console.log(response2.data);
+                // payload.userInfo._id = user._id;  
+                // payload.userInfo.contactNumber = user2.ContactNumber;
+                // payload.userInfo.email = user2.Email;
+                // payload.userInfo.fullName = user2.FirstName;
+                // payload.loggedIn = true;
+                // payload.userInfo.addressLine1 = user2.AddressLine1 !== null && user2.AddressLine1 !== undefined ? user2.AddressLine1 : "";
+                // payload.userInfo.addressLine2 = user2.AddressLine2 !== null && user2.AddressLine2 !== undefined ? user2.AddressLine2 : "";
+                // payload.userInfo.city = user2.City !== null && user2.City !== undefined ? user2.City : "";
+                
+                //var userRoleResf = undefined;
+                await userHasRole(uid, payload, 'restaurant').then(function (userRoleRes) {
+                  ////console.log("Final user ref after fetch role is: ");
+                  ////console.log(userRoleRes);
+                  //userRoleResf = userRoleRes;
+                  //Send Welcome Email
+                  // var RequestParams = {
+                  //   from_name: payload.userInfo.fullName,
+                  //   user_email: payload.userInfo.email,
+                  // }
+                  
+                  // sendEmail(emailServiceId, emailNewCustomerTemplate, RequestParams, emailUserId).then(function (res) {
+                  //   dispatch({
+                  //     type: "fetch_userinfo",
+                  //     payload: userRoleResf
+                  //   });
+                  // })
+
+                  //get updated restaurant list
+                  console.log('get updated restaurant list');
+                  fetchRestaurants(currentState);
+                  return userRoleRes;
+                });
+
+                return true;
+              }
+            
+          }).catch(function (error) {
+            console.error("Error writing restaurant info: ", error);
             return false;
           });
     
@@ -616,7 +774,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             payloadf.userInfo.city = user.City !== null && user.City !== undefined ? user.City : "";
 
             var userRoleResf = undefined;
-            await userHasRole(uid, payloadf).then(function (userRoleRes) {
+            await userHasRole(uid, payloadf, undefined).then(function (userRoleRes) {
               console.log("Final user ref is: ");
               console.log(userRoleRes);
               userRoleResf = userRoleRes;
@@ -656,7 +814,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
                 payloadf.userInfo.city = user2.City !== null && user2.City !== undefined ? user2.City : "";  
                 payloadf.userInfo._id = getUserResult._id !== null && getUserResult._id !== undefined && getUserResult._id !== ""? getUserResult._id : "";
                 var userRoleResf = undefined;
-                await userHasRole(uid, payloadf).then(function (userRoleRes) {
+                await userHasRole(uid, payloadf, undefined).then(function (userRoleRes) {
                   ////console.log("Final user ref is: ");
                   ////console.log(userRoleRes);
                   userRoleResf = userRoleRes;
@@ -1604,6 +1762,36 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       return false
     }
 
+    var fetchCategories = async function fetchCategories(payload){
+      //console.log("about to fetch pay settings");
+        try{
+          await getCategories().then((response) => {
+            if (response.data.getCategories !== null) {
+              //console.log("got list of restaurants");
+              //console.log(response);
+  
+              var cats = response.data.getCategories;
+              //console.log(paySet);
+  
+              if (cats !== null) {
+                payload.restaurantCategories = cats !== undefined ? cats : undefined;
+                return payload;
+              }
+            }
+          }).catch((err) => {
+            //console.log(err);
+          })
+          
+        }catch(err){
+          ////console.log(err);
+        };
+
+        dispatch({
+          type: "fetch_rest_categories",
+          payload: payload
+        });
+    }
+
     const [value, dispatch] = useReducer(appDataReducer, {
         currentUser,
         loading,
@@ -1633,6 +1821,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         serviceWorkerRegistration,
         paySettings,
         mailbox_Num,
+        restaurantCategories,
         JoinUs,
         signup,
         login,
@@ -1668,7 +1857,10 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         viewRiderDetails,
         createPreAlert,
         fetchAddress,
-        UpdateRestaurantBy_ID
+        UpdateRestaurantBy_ID,
+        fetchCategories,
+        restaurantSignUp,
+        signup2
     });
     
      

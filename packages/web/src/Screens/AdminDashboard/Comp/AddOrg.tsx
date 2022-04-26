@@ -1,8 +1,11 @@
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, Button, Modal, Fade, Backdrop, TextField, FormControl } from '@material-ui/core';
-import React from 'react';
+import { Container, Grid, makeStyles, createStyles, Typography, Theme, Button, Modal, Fade, Backdrop, TextField, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { Link, useHistory } from "react-router-dom";
-import { HistoryRounded, PlayArrowRounded, ArrowForwardRounded } from "@material-ui/icons/";
+import { HistoryRounded, PlayArrowRounded, ArrowForwardRounded, Restaurant } from "@material-ui/icons/";
+import {Categories} from "./Categories";
+import { useAppData } from '../../../Context/AppDataContext';
+import { Alert } from '@material-ui/lab';
 
 interface Props {
     
@@ -21,6 +24,7 @@ interface State {
     ImageName: String;
     isAvailable: Boolean;
     disabled: Boolean;
+    password: string;
 }
 
 interface MenuItem {
@@ -39,6 +43,12 @@ interface OpenHrs {
     Thursday: string;
     Friday: string;
     Saturday: string;
+}
+
+interface Categories {
+    _id: string,
+    Id: string,
+    Name: string
 }
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -131,11 +141,16 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "#FAFAFA",
             textTransform: "none"
         },
+        alert: {
+            marginBottom: "5%"
+        }
     }),
 );
 
 export const AddOrg: React.FC = () => {
     const classes = useStyles();
+    var { value }  = useAppData();
+    var { signup2, restaurantSignUp } = value;
     const [open, setOpen] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
     const [values, setValues] = React.useState<State>({
@@ -145,7 +160,7 @@ export const AddOrg: React.FC = () => {
         StreetAddress2: '',
         City: '',
         Contact: '',
-        Category: '',
+        Category: 'Select Category',
         Menu: [],
         OpeningHrs: {
             Sunday: '',
@@ -159,7 +174,14 @@ export const AddOrg: React.FC = () => {
         ImageName: process.env.REACT_APP_DEFAULT_RESTAURANT_LOGO != undefined ? process.env.REACT_APP_DEFAULT_RESTAURANT_LOGO : '',
         isAvailable: true,
         disabled: false,
+        password: '12345678'
     });
+
+    var [error, setError] = useState('');
+    var [success, setSuccess] = useState('');
+    var [loading, setLoading] = useState(false);
+
+    
 
     const [ohrs, setOhrs] = React.useState<OpenHrs>({
         Sunday: '',
@@ -174,6 +196,97 @@ export const AddOrg: React.FC = () => {
     var history = useHistory();
     var location = history.location;
     var referralPath = location.pathname;
+
+    var handleSubmit = async function handleSubmit(event) {
+        event.preventDefault();
+        //prevents default form refresh
+        console.log("I am inside fuction");
+        try{
+            setSuccess('');
+            setError('');
+            setLoading(true);
+            values.Name === ''?
+                setError('Please enter your Restaurant Name')
+            :values.Email === '' || !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.Email))?
+                setError('Please enter a valid Email')
+            :await signup2(values, value).then(async function(res1){
+                if(res1 != null){
+                    if(res1 !== "The email address is already in use by another account."){
+                        await fetchUserDetailsSignUp(res1).then(function(res){
+                            if(res){
+                                ////console.log("About to navigate to dashboard.");
+                                ////console.log(userRolef);
+                                setSuccess('Restaurant Created Successfully');
+                                setTimeout(() => {
+                                    setSuccess('');
+                                    //console.log("about to go to dashboard");
+                                    setValues({
+                                        Name: '',
+                                        Email: '',
+                                        StreetAddress: '',
+                                        StreetAddress2: '',
+                                        City: '',
+                                        Contact: '',
+                                        Category: 'Select Category',
+                                        Menu: [],
+                                        OpeningHrs: {
+                                            Sunday: '',
+                                            Monday: '',
+                                            Tuesday: '',
+                                            Wednesday: '',
+                                            Thursday: '',
+                                            Friday: '',
+                                            Saturday: ''
+                                        },
+                                        ImageName: process.env.REACT_APP_DEFAULT_RESTAURANT_LOGO != undefined ? process.env.REACT_APP_DEFAULT_RESTAURANT_LOGO : '',
+                                        isAvailable: true,
+                                        disabled: false,
+                                        password: '12345678'
+                                    });
+                                    setOhrs({
+                                        Sunday: '',
+                                        Monday: '',
+                                        Tuesday: '',
+                                        Wednesday: '',
+                                        Thursday: '',
+                                        Friday: '',
+                                        Saturday: ''
+                                    });
+                                    setOpen2(false);
+                                }, 1500);
+                            }else{
+                                setError('Unable to Create Restaurant at this time'); 
+                            } 
+                        });
+                        console.log(res1,"user account created");
+                    }else{
+                        setError('The email address is already in use by another account.')
+                    }
+                }else{
+                    setError('Unable to Sign Up at this time.'); 
+                }
+            });
+            
+        }catch(error){
+            console.log(error);
+            setError('Failed to create restaurant');
+        }
+        setLoading(false);
+    }
+
+    var fetchUserDetailsSignUp = async function fetchUserDetailsSignUp(payload) {
+        ////console.log("Is current user null");
+        ////console.log(value);
+        if(payload.currentUser !== null && payload.currentUser !== undefined){
+            if(payload.currentUser.uid !== null && payload.currentUser.uid !== undefined){
+                ////console.log("Fetching user info");
+                ////console.log(state);
+                restaurantSignUp(payload.currentUser.uid, payload, value , values);
+                return true;
+            }
+        }
+        return false;
+    }
 
     const handleClose = () => {
         setOpen(false);
@@ -206,7 +319,11 @@ export const AddOrg: React.FC = () => {
     };
 
     const handleChange4 = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-        //setSelectedMenuItem({ ...selectedMenuItem, [prop]: event.target.value });
+        setValues({ ...values, [prop]: event.target.value });
+    };
+
+    const handleChange = (event) => {
+        setValues({...values,[event.target.name]:event.target.value});
     };
 
     const handleOpen = () => {
@@ -221,6 +338,8 @@ export const AddOrg: React.FC = () => {
     const handleChange5 = (prop: keyof OpenHrs) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setOhrs({ ...ohrs, [prop]: event.target.value });
     };
+
+    
 
     return (
         <>
@@ -335,6 +454,9 @@ export const AddOrg: React.FC = () => {
                                                     placeholder="Enter Contact"
                                                     fullWidth
                                                 />
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <Categories values={values} handleChange={handleChange} />
                                             </Grid>
                                             <Grid item xs={6}>
                                                 <Button variant="contained" 
@@ -483,11 +605,18 @@ export const AddOrg: React.FC = () => {
                                             </Grid>
                                             <Grid item xs={6}>
                                                 <Button variant="contained" 
-                                                    style={{backgroundColor: "#F7B614", fontFamily: "PT Sans"}} onClick={handleClose}
-                                                    color="secondary" size="small" className={`${classes.Button} ${classes.btnfonts}`}
+                                                    style={{backgroundColor: "#F7B614", fontFamily: "PT Sans"}}
+                                                    color="secondary" size="small" 
+                                                    className={`${classes.Button} ${classes.btnfonts}`}
+                                                    onClick={handleSubmit}
+                                                    type="button"
                                                     fullWidth>
                                                     Submit Details
                                                 </Button>
+                                            </Grid>
+                                            <Grid item xs={12} >
+                                                {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
+                                                {success && <Alert variant="filled" severity="success" className={classes.alert}>{success}</Alert>}
                                             </Grid>
                                         </Grid>
                                     </form>
