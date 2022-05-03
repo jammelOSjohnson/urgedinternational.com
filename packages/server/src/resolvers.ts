@@ -16,6 +16,7 @@ import { PubSub } from 'graphql-subscriptions';
 //import { GooglePubSub } from '@axelspringer/graphql-google-pubsub';// For Production
 import { RedisPubSub } from 'graphql-redis-subscriptions'; // For Production
 import Mailbox from './models/MailBox.model';
+import ShippingAddress from './models/ShippingAddress';
 // const pubsub = new RedisPubSub(
 //                 process.env.NODE_ENV === "production"
 //                 ? {
@@ -359,6 +360,23 @@ const resolvers = {
             const user = await User.findOne({_id});
             Object.assign(user, newRestaurantUser);
             return user.save(); 
+        },
+
+        updateShippingAddress: async(_,{
+            _id,AirFreight,SeaFreight
+        }) => {
+            let newShippingAddress = {
+                _id,AirFreight,SeaFreight
+            }
+
+            const shippingAddress = await User.findOne({_id});
+            shippingAddress.AirFreight = newShippingAddress.AirFreight;
+            shippingAddress.SeaFreight = newShippingAddress.SeaFreight;
+            return shippingAddress.save(); 
+        },
+
+        fetchShippingAddress: async () => {
+            return await ShippingAddress.find();
         },
 
         getCategories: async () => {

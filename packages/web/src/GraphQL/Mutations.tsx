@@ -506,6 +506,36 @@ export const GET_PAY_SETTINGS = gql`
         }
     }
 `
+
+export const FETCH_SHIPPING_ADDRESS = gql`
+    mutation  fetchShippingAddress {
+        fetchShippingAddress{
+            _id
+            AirFreight
+            SeaFreight
+        }
+    }
+`
+
+export const UPDATE_SHIPPING_ADDRESS = gql`
+    #scalar GraphQLDateTime
+    mutation updateShippingAddress(
+        $_id: ID!
+        $AirFreight: JSONObject!, 
+        $SeaFreight: JSONObject!
+    ) {
+        updateShippingAddress(
+            _id: $_id,
+            AirFreight: $AirFreight, 
+            SeaFreight: $SeaFreight
+        ){
+            _id
+            AirFreight
+            SeaFreight
+        }
+    }
+`
+
 export const ADD_PACKAGE_MUTATION = gql`
 mutation addPackage($PackageInfo: JSONObject! ,$Customer: ID!,
                     $TrackingNumber: String!, $Pickup: Boolean, 

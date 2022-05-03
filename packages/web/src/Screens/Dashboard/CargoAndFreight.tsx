@@ -17,6 +17,7 @@ import { Field } from './Comp/Field';
 import DescriptionIcon from '@material-ui/icons/Description';
 import Alert from '@material-ui/lab/Alert';
 import { MailBoxNumber } from './Comp/MailBoxNumber';
+import { ShippingAddress } from './Comp/ShippingAddress';
 
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -553,32 +554,7 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                                             <CardContent className={classes.cardContent}>
                                             <Grid container direction="row" xs={12} spacing={1}>
                                                     <Grid item xs={12} sm={10}>
-                                                        <Typography style={{fontWeight: "bold"}}>
-                                                            My Air Freight Address
-                                                        </Typography>
-                                                        <Typography >
-                                                            Name:&nbsp; 
-                                                            <span style={{color: "#FF5E14"}}>{userInfo.fullName}</span>
-                                                        </Typography>
-                                                        <Typography>
-                                                            Address 1:&nbsp;
-                                                            <span>3750 W OAKLAND PARK BLVD</span> 
-                                                        </Typography>
-                                                        <Typography>
-                                                            Address 2:&nbsp;
-                                                            <span>LOC25 US
-                                                                <MailBoxNumber />
-                                                            </span>
-                                                        </Typography>
-                                                        <Typography>
-                                                            City:&nbsp;
-                                                            <span>Lauderdale Lakes</span> 
-                                                        </Typography>
-                                                        <Typography>
-                                                            State:&nbsp;
-                                                            <span>Florida</span>&nbsp;ZipCode:&nbsp;
-                                                            <span>33311</span>
-                                                        </Typography>
+                                                        <ShippingAddress />
                                                         <br />
                                                         <Typography style={{fontWeight: "bold"}}>
                                                             Mailbox Number

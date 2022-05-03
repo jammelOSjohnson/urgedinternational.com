@@ -1,5 +1,6 @@
 import { useAppData } from '../../../Context/AppDataContext';
 import { Grid, makeStyles, createStyles, Typography, Theme, IconButton, Card, CardHeader, Avatar, CardContent } from '@material-ui/core';
+import { LocationOnRounded } from '@material-ui/icons';
 import React, { useEffect } from 'react';
 //import { useHistory } from 'react-router-dom';
 //import clsx from 'clsx';
@@ -174,11 +175,32 @@ export const AdminSettings: React.FC = function EmployeeCardList(props) {
                                         className={classes.cardHeader}
                                     />
                                     <CardContent>
-                                    <Typography gutterBottom variant="h5" component="h2">
-                                        Driver pay settings
-                                    </Typography>
+                                        <Typography gutterBottom variant="h5" component="h2">
+                                            Driver Pay
+                                        </Typography>
                                     </CardContent>
-                                    
+                                </Card>
+                            </Link>
+                        </Grid>
+                        <Grid item xs={3}>
+                            <Link to="/ShippingAddressSettings" className={classes.link}>
+                                <Card className={classes.root}>
+                                    <CardHeader
+                                        //className={classes.avatar}
+                                        avatar={
+                                            <Avatar aria-label="driver pay" className={classes.avatar}>
+                                            <IconButton>
+                                                <LocationOnRounded fontSize={'large'} />
+                                            </IconButton>
+                                            </Avatar>
+                                        }
+                                        className={classes.cardHeader}
+                                    />
+                                    <CardContent>
+                                        <Typography gutterBottom variant="h5" component="h2">
+                                            Shipping Addresses
+                                        </Typography>
+                                    </CardContent>
                                 </Card>
                             </Link>
                         </Grid>

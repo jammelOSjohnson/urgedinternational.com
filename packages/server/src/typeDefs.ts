@@ -196,6 +196,12 @@ const typeDefs = /* GraphQL */`
         MailboxNum: String
     }
 
+    type ShippingAddress {
+        _id: ID,
+        AirFreight: JSONObject,
+        SeaFreight: JSONObject
+    }
+
     type Query {
         hello: String
 
@@ -351,6 +357,14 @@ const typeDefs = /* GraphQL */`
             Contact: String,
             City: String
         ): User
+
+        fetchShippingAddress: [ShippingAddress!]!
+
+        updateShippingAddress(
+            _id: ID,
+            AirFreight: JSONObject,
+            SeaFreight: JSONObject
+        ): ShippingAddress
 
         getMailboxById(Uid: ID): Mailbox
 

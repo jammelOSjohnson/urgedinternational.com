@@ -23,7 +23,9 @@ import {
         GET_MAILBOX_BYMBOX_MUTATION,
         UPDATE_RESTAURANT_BYID,
         GET_CATEGORIES,
-        CREATE_RESTAURANT_MUTATION
+        CREATE_RESTAURANT_MUTATION,
+        FETCH_SHIPPING_ADDRESS,
+        UPDATE_SHIPPING_ADDRESS
       } from '../GraphQL/Mutations';
 import { useMutation } from '@apollo/client';
 import sendEmail from "../email.js";
@@ -178,6 +180,11 @@ function appDataReducer(state, action){
             ...state,
             paySettings: action.payload.paySettings
           }
+        case "fetch_shipping_address":
+          return {
+            ...state,
+            shippingAddress: action.payload.shippingAddress
+          }
         case "fetch_rest_categories":
           return {
             ...state,
@@ -247,6 +254,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const [getMailboxById] = useMutation(GET_MAILBOX_BYID_MUTATION);
     const [getMailboxByMbox] = useMutation(GET_MAILBOX_BYMBOX_MUTATION);
     const [getCategories] = useMutation(GET_CATEGORIES);
+    const [fetchShippingAddress] = useMutation(FETCH_SHIPPING_ADDRESS);
+    const [updateShippingAddress] = useMutation(UPDATE_SHIPPING_ADDRESS);
 
     var currentUser = undefined;
     var selectedRestaurant = undefined;
@@ -284,6 +293,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
 
     let paySettings = undefined;
     let restaurantCategories = [];
+
+    let shippingAddress = undefined;
 
     var userRolef= "";
 
@@ -1455,6 +1466,57 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       return false
     }
 
+    var getShippingAddress = async function getShippingAddress(payload){
+      //console.log("about to fetch pay settings");
+        try{
+          await fetchShippingAddress().then((response) => {
+            if (response.data.fetchShippingAddress !== null) {
+              //console.log("got shipping address");
+              //console.log(response);
+  
+              var shippingAdd = response.data.fetchShippingAddress;
+              //console.log(paySet);
+  
+              if (shippingAdd !== null) {
+                payload.shippingAddress = shippingAdd !== undefined ? shippingAdd[0] : undefined;
+                return payload;
+              }
+            }
+          }).catch((err) => {
+            //console.log(err);
+          })
+          
+        }catch(err){
+          ////console.log(err);
+        };
+
+        dispatch({
+          type: "fetch_shipping_address",
+          payload: payload
+        });
+    }
+
+    var UpdateShippingAddress  = async function UpdateShippingAddress(payload, shippingaddress){
+      if(shippingaddress !== null && shippingaddress !== undefined){
+          let newShippingAdd = shippingaddress;
+          //console.log(newShippingAdd);
+          var updateRes = await updateShippingAddress({variables: newShippingAdd}).then(async function(response) {
+            ////console.log("create orer result");
+            if (response.data.updateShippingAddress !== null) {
+              await getShippingAddress(payload);
+              return true;
+            }
+          });
+
+          if(updateRes !== undefined){
+            return updateRes;
+          }
+      }else{
+        return false
+      }
+      return false
+    }
+
     var createPreAlert = async function createPreAlert(packageZip, file, uid, UserInfo, mbNum) {
       var tstamp = ''
       let PackageInfo = {
@@ -1822,6 +1884,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         paySettings,
         mailbox_Num,
         restaurantCategories,
+        shippingAddress,
         JoinUs,
         signup,
         login,
@@ -1860,7 +1923,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         UpdateRestaurantBy_ID,
         fetchCategories,
         restaurantSignUp,
-        signup2
+        signup2,
+        getShippingAddress,
+        UpdateShippingAddress
     });
     
      
