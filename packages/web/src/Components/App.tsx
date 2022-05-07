@@ -30,6 +30,10 @@ import { SettingsScreen } from '../Screens/AdminDashboard/SettingsScreen';
 import { PaySettingsScreen } from '../Screens/AdminDashboard/PaySettingsScreen';
 import { ShippingAddressSettingsScreen } from '../Screens/AdminDashboard/ShippingAddressSettingsScreen';
 import { OrgDetailsScreen } from '../Screens/AdminDashboard/OrgDetailsScreen';
+//Restaurant
+import { RestaurantDashboardScreen } from '../Screens/RestaurantDashboard/RestaurantDashboardScreen';
+import { RestaurantOrderDetailsScreen } from '../Screens/RestaurantDashboard/RestaurantOrderDetailsScreen';
+import { RestaurantProfileDetailsScreen } from '../Screens/RestaurantDashboard/RestaurantProfileDetailsScreen';
 //Rider
 import { RiderOrderDetailsScreen } from '../Screens/RiderDashboard/RiderOrderDetailsScreen';
 import { RiderOrdersScreen } from '../Screens/RiderDashboard/RiderOrdersScreen';
@@ -231,6 +235,10 @@ const App: React.FC = function App() {
                     <Route path="/ShoppingCart" exact component={ShoppingCartScreen} />
                     <Route path="/OrderHistory" exact component={OrdersHistory} />
                     <Route path="/Errands" exact component={ErrandScreen} />
+                    {/* Restaurant Screens */}
+                    <Route path="/RestaurantDashboard" exact component={RestaurantDashboardScreen} />
+                    <Route path="/ViewOrdersDetails" exact component={RestaurantOrderDetailsScreen} />
+                    <Route path="/RestaurantProfile" exact component={RestaurantProfileDetailsScreen} />
                     {/* Admin Screens */}
                     <Route path="/AdminDashboard" exact component={AdminDashboard} />
                     <Route path="/AdminOrders" exact component={OrdersScreen} />
@@ -245,6 +253,7 @@ const App: React.FC = function App() {
                     {/* Rider Screens */}
                     <Route path="/DeliveryOrders" exact component={RiderOrdersScreen} />
                     <Route path="/DeliveryOrdersDetails" exact component={RiderOrderDetailsScreen} />
+                    <Route path="/OrgDetails" exact component={OrgDetailsScreen} />
                     {/* <Route path="/Menu/:id" exact component={RestaurantMenuScreen} /> */}
                     <Route path="/Menu" exact component={RestaurantMenuScreen} />
                     <Route path="/Checkout" exact component={CheckoutScreen} />

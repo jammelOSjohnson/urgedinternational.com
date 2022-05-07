@@ -2,7 +2,7 @@ import { makeStyles, createStyles, Typography, Theme, useMediaQuery, useTheme, F
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
-import { PlayArrowRounded } from "@material-ui/icons/";
+import { PlayArrowRounded, ArrowBackRounded } from "@material-ui/icons/";
 import { Link } from "react-router-dom";
 import { useAppData } from '../../../Context/AppDataContext';
 
@@ -52,9 +52,10 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
     const classes = useStyles();
     const theme = useTheme();
     var { value }  = useAppData();
-    var { userInfo, rider, fetchRiderInfo, udateRiderStatusInfo } = value;
+    //, rider, fetchRiderInfo, udateRiderStatusInfo
+    var { userInfo } = value;
     //console.log(userInfo)
-    const [availability, setAvailability] = React.useState(rider !== undefined ? rider.isAvailable : false);
+    //const [availability, setAvailability] = React.useState(rider !== undefined ? rider.isAvailable : false);
 
     const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
     const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
@@ -63,28 +64,28 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
     var location = history.location;
     var referralPath = location.pathname;
     
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        //setAvailability(event.target.checked);
-        udateRiderStatusInfo(value, userInfo._id, event.target.checked, rider.disabled );
-    }
+    // const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     //setAvailability(event.target.checked);
+    //     udateRiderStatusInfo(value, userInfo._id, event.target.checked, rider.disabled );
+    // }
 
-    useEffect(() => {
-        if(rider === undefined && userInfo._id !== ""){
-            //console.log(userInfo._id)
-            fetchRiderInfo(value,userInfo._id);
-        }else if(rider !== undefined){
-            if(rider.isAvailable !== availability){
-                setAvailability(rider.isAvailable)
-            }
-        }
-    }, [rider, userInfo._id])
+    // useEffect(() => {
+    //     if(rider === undefined && userInfo._id !== ""){
+    //         //console.log(userInfo._id)
+    //         fetchRiderInfo(value,userInfo._id);
+    //     }else if(rider !== undefined){
+    //         if(rider.isAvailable !== availability){
+    //             setAvailability(rider.isAvailable)
+    //         }
+    //     }
+    // }, [rider, userInfo._id])
     
       
     return (
         <>
             {isMatchMedium? (
                 <Typography variant="h6" style={{fontWeight: "bold", background: "transparent"}}>
-                    <form>
+                    {/* <form>
                         <FormGroup row className={classes.root}>
                             <FormControlLabel
                                 control={
@@ -97,9 +98,13 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                                 label={availability? "I'm Available" : "Not Available"}
                             />
                         </FormGroup>
-                    </form>
-                    {referralPath === "/adminordersdetails" || referralPath === "/AdminOrderSDetails" ?
-                    <span><PlayArrowRounded /> <Link to="/AdminOrders" className={classes.links}>Orders</Link> <PlayArrowRounded /> Order Details</span> :
+                    </form> */}
+                    {referralPath === "/restaurantdashboard" || referralPath === "/RestaurantDashboard" ?
+                    <span>DASHBOARD</span> :
+                    referralPath === "/viewordersdetails" || referralPath === "/ViewOrdersDetails" ?
+                    <span style={{color: "#FF5E14"}}><ArrowBackRounded /> <Link to="/RestaurantDashboard" className={classes.links}>RETURN</Link></span> :
+                    referralPath === "/restaurantprofile" || referralPath === "/RestaurantProfile" ?
+                    <span style={{color: "#FF5E14"}}><ArrowBackRounded /> <Link to="/RestaurantDashboard" className={classes.links}>RETURN</Link></span> :
                     referralPath === "/Restaurants" || referralPath === "/restaurants" ?
                     <span><PlayArrowRounded /> FOOD DELIVERY <PlayArrowRounded /> RESTAURANTS</span> : ""}
                     

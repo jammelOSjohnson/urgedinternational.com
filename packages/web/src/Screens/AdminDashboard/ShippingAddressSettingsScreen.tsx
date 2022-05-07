@@ -1,5 +1,5 @@
 import { useAppData } from '../../Context/AppDataContext';
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, FormGroup, TextField, Card, Button, Snackbar } from '@material-ui/core';
+import { Container, Grid, makeStyles, createStyles, Typography, Theme, FormGroup, TextField, Card, Button, Snackbar, CircularProgress } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 //Import Components
 import { Sidebar } from './Comp/Sidebar';
@@ -44,6 +44,9 @@ const useStyles = makeStyles((theme: Theme) =>
                 borderColor: "#888888",
                 border: "0.1px dotted"
             },
+            "& .MuiButton-textSecondary:$hover": {
+                backgroundColor: "#F7B614"
+            },
             "& .MuiSelect-select:$focus": {
                 backgroundColor: "inherit",
                 color: "#9B9B9B"
@@ -86,6 +89,9 @@ const useStyles = makeStyles((theme: Theme) =>
         submitbtnForm: {
             backgroundColor: theme.palette.primary.main,
             width: "200px"
+        },
+        alert: {
+            marginBottom: "5%"
         }
     }),
 );
@@ -134,7 +140,9 @@ export const ShippingAddressSettingsScreen: React.FC = () => {
     
     const [open, setOpen] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
-
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+    const [Loading, setLoading] = useState(false);
 
     
 
@@ -180,23 +188,42 @@ export const ShippingAddressSettingsScreen: React.FC = () => {
 
     const handleSubmit = () => {
         try{
-            let newShippingAddress = {
-                _id:  state._id,
-                AirFreight: airaddress,
-                SeaFreight: seaaddress
-            }
-
-            UpdateShippingAddress(value, newShippingAddress).then((res) => {
-                if(res){
-                    setOpen(true);
-                    setOpen2(false);
-                }else{
-                    setOpen2(true);
-                    setOpen(false);
+            setLoading(true);
+            setError('');
+            setSuccess('');
+            if(airaddress.addressLine1.length === 0){
+                setError('Enter Address Line 1 For Air Address.')
+            }else if(airaddress.addressLine2.length === 0){
+                setError('Enter Address Line 2 For Air Address.')
+            }else if(airaddress.city.length === 0){
+                setError('Enter City For Air Address.')
+            }else if(airaddress.state.length === 0){
+                setError('Enter State For Air Address.')
+            }else if(airaddress.zipCode.length === 0){
+                setError('Enter ZipCode For Air Address.')
+            }else{
+                let newShippingAddress = {
+                    _id:  state._id,
+                    AirFreight: airaddress,
+                    SeaFreight: seaaddress
                 }
-            });
+
+                UpdateShippingAddress(value, newShippingAddress).then((res) => {
+                    if(res){
+                        setOpen(true);
+                        setOpen2(false);
+                        setLoading(false);
+                    }else{
+                        setOpen2(true);
+                        setOpen(false);
+                        setLoading(false);
+                    }
+                });
+            }
         }catch(err){
             //console.log(err)
+            setOpen2(true);
+            setLoading(false);
         }
     }
 
@@ -316,25 +343,33 @@ export const ShippingAddressSettingsScreen: React.FC = () => {
                                         </Grid>
                                         <Grid xs={12}>
                                             <br />
+                                            {error && <Alert severity="error" className={classes.alert}>{error}</Alert>}
+                                            {success && <Alert severity="success" className={classes.alert}>{success}</Alert>}
                                             <Typography style={{textAlign: "center"}}>
                                                 <Button 
                                                     color="secondary" 
                                                     className={classes.submitbtnForm}
-                                                    onClick={handleSubmit} 
+                                                    onClick={handleSubmit}
+                                                    disabled={Loading} 
                                                 >
-                                                    Update Settings
+                                                    {Loading ? 
+                                                        <CircularProgress color="secondary" />
+                                                    :
+                                                        'Update Settings'
+                                                    }
+                                                    
                                                 </Button>
                                             </Typography>
                                         </Grid>
                                     </Grid>
                                     <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
                                         <Alert onClose={handleClose} severity="success">
-                                            Settings Updated Successfully.
+                                            Shipping Address Updated Successfully.
                                         </Alert>
                                     </Snackbar>
                                     <Snackbar open={open2} autoHideDuration={6000} onClose={handleClose2}>
                                         <Alert onClose={handleClose2} severity="error">
-                                            Unable to settings at this time.
+                                            Unable to Shipping Address at this time.
                                         </Alert>
                                     </Snackbar>
                                 </Card>

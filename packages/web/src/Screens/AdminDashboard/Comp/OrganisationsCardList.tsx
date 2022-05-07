@@ -162,6 +162,33 @@ export const OrganisationsCardList: React.FC = function OrganisationsCardList(pr
             })
         } 
     }
+
+    var shrinkAddress = function(address: string): string{
+        let addy = '';
+        if(address.length >= 24) {
+            let addyArr = address.split('');
+            //console.log(addyArr);
+            let addyFiltered = addyArr.map((item: any,index: number) => {
+                if(index <= 23) {
+                    return item;
+                }else{
+                    return '';
+                } 
+            });
+            //console.log(addyFiltered)
+            for(let i =0; i < addyFiltered.length;){
+                addy = addy + addyFiltered[i];
+                i += 1;
+            }
+
+            addy = addy + '...';
+        }
+
+        return addy;
+    }
+
+    
+
     if (restaurants.length !== 0){  
         return (
             <>
@@ -169,6 +196,9 @@ export const OrganisationsCardList: React.FC = function OrganisationsCardList(pr
                     {restaurants.map((restaurant, index) => {
                         //console.log("restaurant is");
                         //console.log(restaurant);
+                        let addy = shrinkAddress(restaurant.AddressLine1);
+                        let name = '';
+
                         return(
                             
                             <Grid item xs={12} md={4} lg={4} xl={4} className={classes.gridSpacing} key={index}>
@@ -194,7 +224,12 @@ export const OrganisationsCardList: React.FC = function OrganisationsCardList(pr
                                                 </Grid>
                                                 <Grid item xs={11}>
                                                     <Typography variant="h6"  component="p">
-                                                        {`${restaurant.AddressLine1}`}
+                                                        {
+                                                            addy !== '' ? 
+                                                                addy 
+                                                            :
+                                                                restaurant.AddressLine1
+                                                        }
                                                     </Typography>    
                                                 </Grid>                                            
                                             </Grid>

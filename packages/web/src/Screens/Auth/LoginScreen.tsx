@@ -542,6 +542,13 @@ export const LoginScreen: React.FC = function LoginScreen() {
                 //history.push("/");
             }, 1500);
             
+        }else if(userRolef !== undefined && userRolef === "Restaurant" && userRolef !== ""){
+            setLoading(false);
+            setSuccess('Sign In Successful.');
+            setTimeout(() => {
+                setSuccess('');
+                history.push("/RestaurantDashboard")
+            }, 1500)
         }else if(userRolef !== undefined && userRolef !== ""){
             setLoading(false);
             setSuccess('Sign In Successful.');

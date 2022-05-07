@@ -215,6 +215,10 @@ const typeDefs = /* GraphQL */`
             Rider: ID
         ): [Order]
 
+        getOrdersByRestaurantId(
+            Restaurant: ID
+        ): [Order]
+
         getOrdersByDateAndTime(
             StartDate: String,
             EndDate: String,
@@ -258,6 +262,16 @@ const typeDefs = /* GraphQL */`
         getRestaurants: [User!]!
 
         getRiders: [User!]!
+
+        getRider(_id: String): User!
+
+        getRestaurant(_id: String): User!
+
+        updateRiderStatus(
+            _id: String,
+            isAvailable: Boolean,
+            disabled: Boolean
+        ): User!
 
         createMenuItem(
             RetaurantID: String,

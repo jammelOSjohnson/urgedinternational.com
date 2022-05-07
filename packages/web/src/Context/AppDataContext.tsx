@@ -25,7 +25,10 @@ import {
         GET_CATEGORIES,
         CREATE_RESTAURANT_MUTATION,
         FETCH_SHIPPING_ADDRESS,
-        UPDATE_SHIPPING_ADDRESS
+        UPDATE_SHIPPING_ADDRESS,
+        GET_RIDER,
+        UPDATE_RIDER_STATUS,
+        GET_RESTAURANT
       } from '../GraphQL/Mutations';
 import { useMutation } from '@apollo/client';
 import sendEmail from "../email.js";
@@ -142,8 +145,8 @@ function appDataReducer(state, action){
             rider_orders: action.payload.rider_orders
           }
         case "refreshOrderTable": 
-          console.log("dispatching orders");
-          console.log(action.payload.orders);
+          //console.log("dispatching orders");
+          //console.log(action.payload.orders);
           return {
             ...state,
             orders: action.payload.orders
@@ -163,7 +166,21 @@ function appDataReducer(state, action){
             ...state,
             riders: action.payload.riders
           }
-
+        case "fetch_rider":
+          return {
+            ...state,
+            rider: action.payload.rider
+          }
+        case "fetch_restaurant":
+          return {
+            ...state,
+            restaurantInfo: action.payload.restaurantInfo
+          }
+        case "update_rider_status":
+          return {
+            ...state,
+            rider: action.payload.rider
+          }
         case "get_rider_id":
           return {
             ...state,
@@ -230,10 +247,12 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const [addUserToRole] = useMutation(CREATE_ROLE);
     const [getRestaurants] = useMutation(GET_RESTAURANTS);
     const [getRiders] = useMutation(GET_RIDERS);
+    const [getRider] = useMutation(GET_RIDER);
     //const {data} = useQuery(GET_PAY_SETTINGS);
     const [getPaySettings] = useMutation(GET_PAY_SETTINGS);
     const [getMenucategories] = useMutation(GET_MENU_CATEGORIES);
     const [updateRestaurantById] = useMutation(UPDATE_RESTAURANT_BYID);
+    const [updateRiderStatus] = useMutation(UPDATE_RIDER_STATUS);
     // eslint-disable-next-line
     // const {data} = useQuery(GET_ORDERS,{
     //   pollInterval: 500,
@@ -256,6 +275,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const [getCategories] = useMutation(GET_CATEGORIES);
     const [fetchShippingAddress] = useMutation(FETCH_SHIPPING_ADDRESS);
     const [updateShippingAddress] = useMutation(UPDATE_SHIPPING_ADDRESS);
+    const [getRestaurant] = useMutation(GET_RESTAURANT);
 
     var currentUser = undefined;
     var selectedRestaurant = undefined;
@@ -273,8 +293,10 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var orders = [];
     var rider_orders = [];
     var restaurants = [];
+    var restaurantInfo = undefined;
     var menuCategories = [];
     var riders = [];
+    var rider = undefined;
     var receiptDetails = undefined;
     var longitude = undefined;
     var latitude = undefined;
@@ -786,8 +808,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
 
             var userRoleResf = undefined;
             await userHasRole(uid, payloadf, undefined).then(function (userRoleRes) {
-              console.log("Final user ref is: ");
-              console.log(userRoleRes);
+              //console.log("Final user ref is: ");
+              //console.log(userRoleRes);
               userRoleResf = userRoleRes;
               payloadf = userRoleRes;
               dispatch({
@@ -1389,6 +1411,75 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         });
     }
 
+    var fetchRestaurantInfo = async function fetchRestaurantInfo(payload, id){
+      ////console.log("about to fetch restaurants");
+        await getRestaurant({variables: {_id: id}}).then(async function(response) {
+          if (response.data.getRestaurant !== null) {
+            ////console.log("got list of restaurants");
+            ////console.log(response);
+
+            var result = response.data.getRestaurant;
+
+            if (result !== null) {
+              payload.restaurantInfo = result !== undefined && result !== null? result : undefined;
+              dispatch({
+                type: "fetch_restaurant",
+                payload: payload
+              });
+              return payload;
+            }
+          }
+        }).catch(function(err){
+          ////console.log(err);
+        });
+    }
+
+    var fetchRiderInfo = async function fetchRiderInfo(payload, id){
+      ////console.log("about to fetch restaurants");
+        await getRider({variables: {_id: id}}).then(async function(response) {
+          if (response.data.getRider !== null) {
+            ////console.log("got list of restaurants");
+            ////console.log(response);
+
+            var result = response.data.getRider;
+
+            if (result !== null) {
+              payload.rider = result !== undefined && result !== null? result : undefined;
+              dispatch({
+                type: "fetch_rider",
+                payload: payload
+              });
+              return payload;
+            }
+          }
+        }).catch(function(err){
+          ////console.log(err);
+        });
+    }
+
+    var udateRiderStatusInfo = async function udateRiderStatusInfo(payload, id: string, isAvailable: boolean, disabled: boolean){
+      ////console.log("about to fetch restaurants");
+        await updateRiderStatus({variables: {_id: id, isAvailable: isAvailable, disabled: disabled}}).then(async function(response) {
+          if (response.data.updateRiderStatus !== null) {
+            ////console.log("got list of restaurants");
+            ////console.log(response);
+
+            var result = response.data.updateRiderStatus;
+
+            if (result !== null) {
+              payload.rider = result !== undefined && result !== null? result : undefined;
+              dispatch({
+                type: "update_rider_status",
+                payload: payload
+              });
+              return payload;
+            }
+          }
+        }).catch(function(err){
+          ////console.log(err);
+        }); 
+    }
+
     var fetchRidersForOrder = async function fetchRidersForOrder(){
       ////console.log("about to fetch restaurants");
         return await getRiders().then(async function(response) {
@@ -1500,7 +1591,13 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       if(shippingaddress !== null && shippingaddress !== undefined){
           let newShippingAdd = shippingaddress;
           //console.log(newShippingAdd);
-          var updateRes = await updateShippingAddress({variables: newShippingAdd}).then(async function(response) {
+          var updateRes = await updateShippingAddress({
+            variables: {
+              _id: shippingaddress._id,
+              AirFreight: shippingaddress.AirFreight,
+              SeaFreight: shippingaddress.SeaFreight
+            }
+          }).then(async function(response) {
             ////console.log("create orer result");
             if (response.data.updateShippingAddress !== null) {
               await getShippingAddress(payload);
@@ -1878,6 +1975,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         latitude,
         receiptDetails,
         riders,
+        rider,
         serviceWorkerInitialized,
         serviceWorkerUpdated,
         serviceWorkerRegistration,
@@ -1885,6 +1983,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         mailbox_Num,
         restaurantCategories,
         shippingAddress,
+        restaurantInfo,
         JoinUs,
         signup,
         login,
@@ -1925,7 +2024,10 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         restaurantSignUp,
         signup2,
         getShippingAddress,
-        UpdateShippingAddress
+        UpdateShippingAddress,
+        fetchRiderInfo,
+        udateRiderStatusInfo,
+        fetchRestaurantInfo
     });
     
      

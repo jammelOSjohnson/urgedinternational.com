@@ -22,17 +22,15 @@ export const User: React.FC = function User() {
       
     return (
         <>
-            <Grid container direction="row" xs={12} spacing={1} className="hideOnMobile">
-                <Grid item xs={6} spacing={1}>
+            <Grid container direction="row" spacing={1} className="hideOnMobile">
+                <Grid item xs={6}>
                     
                 </Grid>
-                <Grid container direction="column" xs={12} spacing={1}>
-                    <Grid item xs={12} spacing={1}>
-                        <Grid item xs={12} spacing={1}>
-                            <PersonRounded style={{color: "#FF5E14"}} /> 
-                            <span style={{color: "#FF5E14"}}>Hello, </span>
-                            <span style={{textAlign: "right"}}>{userInfo.fullName !== null && userInfo.fullName !== "" && userInfo.fullName !== undefined? userInfo.fullName : "user"}</span>
-                        </Grid>
+                <Grid container direction="column" spacing={1}>
+                    <Grid item xs={12}>
+                        <PersonRounded style={{color: "#FF5E14"}} /> 
+                        <span style={{color: "#FF5E14"}}>Hello, </span>
+                        <span style={{textAlign: "right"}}>{userInfo.fullName !== null && userInfo.fullName !== "" && userInfo.fullName !== undefined? userInfo.fullName : "user"}</span>
                     </Grid>
                 </Grid>
                 {/* <Grid container direction="column" xs={12} spacing={1}>

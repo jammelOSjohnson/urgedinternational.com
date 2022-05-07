@@ -230,7 +230,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                     {!open && <img className={classes.logosmall} src="Images/SmallSidebarLogo.png" alt="Urged Logo"></img>}
                     <List style={{marginTop: "20%"}}>
                     {['Overview', 'Delivery Orders'].map((text, index) => (
-                        referralPath === "/AdminDashboard" && text === "Overview" ?
+                        referralPath === "/RestaurantDashboard" && text === "Overview" ?
                           <ListItem button key={0} className={classes.activeItem}>
                             <ListItemIcon>
                               {
@@ -297,15 +297,17 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                               </ListItem>
                             </a>
                             :
-                            <ListItem button key={6}>
-                            <ListItemIcon>
-                              {
-                                index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
-                                index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
-                              }
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                            </ListItem>
+                              <Link to="/RestaurantProfile" className={classes.inactiveItemLink}>
+                                <ListItem button key={6}>
+                                  <ListItemIcon>
+                                    {
+                                      index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                      index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
+                                    }
+                                  </ListItemIcon>
+                                  <ListItemText primary={text} />
+                                </ListItem>
+                              </Link>
                         )) :
                         ['Settings', 'Login'].map((text, index) => (
                           text === 'Login'?
@@ -388,7 +390,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                     {!open1 && <img className={classes.logosmall} src="Images/SmallSidebarLogo.png" alt="Urged Logo"></img>}
                     <List>
                     {['Overview', 'Delivery Orders'].map((text, index) => (
-                        referralPath === "/AdminDashboard" && text === "Overview" ?
+                        referralPath === "/RestaurantDashboard" && text === "Overview" ?
                           <ListItem button key={0} className={classes.activeItem}>
                             <ListItemIcon>
                               {
@@ -400,7 +402,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                             <ListItemText primary={text} />
                           </ListItem>
                         :
-                        referralPath === "/DeliveryOrdersDetails" || referralPath === "/DeliveryOrders" && text === "Delivery Orders" ?
+                        referralPath === "/ViewOrdersDetails" && text === "Delivery Orders" ?
                           <ListItem button key={1} className={classes.activeItem}>
                             <ListItemIcon>
                               {
@@ -467,15 +469,17 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                               </ListItem>
                             </a>
                             :
-                            <ListItem button key={6}>
-                              <ListItemIcon>
-                                {
-                                  index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
-                                  index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
-                                }
-                              </ListItemIcon>
-                              <ListItemText primary={text} />
-                            </ListItem>
+                            <Link to="/RestaurantProfile" className={classes.inactiveItemLink}>
+                              <ListItem button key={6}>
+                                <ListItemIcon>
+                                  {
+                                    index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                    index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
+                                  }
+                                </ListItemIcon>
+                                <ListItemText primary={text} />
+                              </ListItem>
+                            </Link>
                         )) :
                         ['Settings', 'Login'].map((text, index) => (
                           text === 'Login'?

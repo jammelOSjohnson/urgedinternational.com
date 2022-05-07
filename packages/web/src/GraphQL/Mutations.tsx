@@ -172,6 +172,90 @@ export  const GET_RIDERS = gql`
     }
 `
 
+export  const GET_RIDER = gql`
+     mutation getRider($_id: String!) {
+        getRider(_id: $_id){
+            _id
+            Id
+            FirstName
+            LastName
+            Email
+            AddressLine1
+            AddressLine2
+            City
+            ContactNumber
+            isAvailable
+            disabled
+            ImageName
+        }
+    }
+`
+
+export  const GET_RESTAURANT = gql`
+     mutation getRestaurant($_id: String!) {
+        getRestaurant(_id: $_id){
+            _id
+            MenuItems{
+                MenuCategory
+                ItemName
+                ItemCost
+                ItemDescription
+                ImageName
+            }
+            Id
+            FirstName
+            LastName
+            Email
+            AddressLine1
+            AddressLine2
+            City
+            ContactNumber
+            OpeningHrs{
+                Sunday
+                Monday
+                Tuesday
+                Wednesday
+                Thursday
+                Friday
+                Saturday
+            }
+            category{
+                _id
+                Name
+                Id
+            }
+            ImageName
+        }
+    }
+`
+
+export  const UPDATE_RIDER_STATUS = gql`
+     mutation updateRiderStatus(
+        $_id: String!,
+        $isAvailable: Boolean,
+        $disabled: Boolean
+        ) {
+        updateRiderStatus(
+            _id: $_id,
+            isAvailable: $isAvailable,
+            disabled: $disabled
+        ){
+            _id
+            Id
+            FirstName
+            LastName
+            Email
+            AddressLine1
+            AddressLine2
+            City
+            ContactNumber
+            isAvailable
+            disabled
+            ImageName
+        }
+    }
+`
+
 export const GET_MENU_CATEGORIES = gql`
     mutation getMenucategories($Id: String!) {
         getMenucategories(Id: $Id){

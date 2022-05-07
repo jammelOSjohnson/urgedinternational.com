@@ -2,7 +2,7 @@ import { createStyles, FormControl, InputLabel, makeStyles, MenuItem, Select, Th
 import React, { useEffect } from "react";
 import { useAppData } from "../../../Context/AppDataContext";
 
-interface Categories {
+interface Cats {
     _id: string,
     Id: string,
     Name: string
@@ -48,7 +48,7 @@ export const Categories: React.FC<Props> = ({handleChange, values}) => {
     const classes = useStyles();
     var { value }  = useAppData();
     var { fetchCategories, restaurantCategories } = value;
-    const [Categs,setCategories] = React.useState<Categories[]>([]);
+    const [Categs,setCategories] = React.useState<Cats[]>([]);
 
 
     useEffect(() => {

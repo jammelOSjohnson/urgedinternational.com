@@ -12,9 +12,9 @@ import MailIcon from '@material-ui/icons/Mail';
 import { useSubscription } from '@apollo/client';
 import { ORDERS_SUBSCRIPTION } from '../GraphQL/Subscriptions';
 
-interface State {
-  genralLocation: string;
-}
+// interface State {
+//   genralLocation: string;
+// }
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

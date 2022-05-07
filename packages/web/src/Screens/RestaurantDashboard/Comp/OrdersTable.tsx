@@ -4,10 +4,11 @@ import { useAppData } from '../../../Context/AppDataContext';
 import MUIDataTable from "mui-datatables";
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
-import { EditRounded } from "@material-ui/icons/";
+import { SearchRounded } from "@material-ui/icons/";
 import { Backdrop, CircularProgress, createStyles, FormControl, makeStyles, MenuItem, Select, Snackbar, Theme } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
-import { GET_ORDERS_BY_RIDERID } from '../../../GraphQL/Queries';
+//import { GET_ORDERS_BY_RIDERID } from '../../../GraphQL/Queries';
+import { GET_ORDERS_BY_RESTAURANTID } from '../../../GraphQL/Queries';
 import { Alert } from '@material-ui/lab';
   
  
@@ -124,16 +125,16 @@ import { Alert } from '@material-ui/lab';
     const [open, setOpen] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
 
-    const {data} = useQuery(GET_ORDERS_BY_RIDERID,{
-      variables: {Rider: value.userInfo._id},
+    const {data} = useQuery(GET_ORDERS_BY_RESTAURANTID,{
+      variables: {Restaurant: value.userInfo._id},
       pollInterval: 500,
     });
     
     const rows = [] as Object[];
     useEffect(() => {
       try{
-        if(data.getOrdersByRiderId !== null){
-          var Orders = data.getOrdersByRiderId;
+        if(data.getOrdersByRestaurantId !== null){
+          var Orders = data.getOrdersByRestaurantId;
           refreshingOrderTables(value, Orders).then(()=>{
           
           });
@@ -204,7 +205,7 @@ import { Alert } from '@material-ui/lab';
     };
     
     if(userRolef !== undefined && orders.length !== 0){
-       if(userRolef === "Rider"){
+       if(userRolef === "Restaurant" || userRolef === "Restaurant_Admin"){
         orders.map((item, index) => {
           const now = new Date(parseInt(item.OrderDate, 10));
           const estTime = moment.tz(now, "America/Jamaica").format("YYYY-MM-DD h:mm a");
@@ -223,31 +224,11 @@ import { Alert } from '@material-ui/lab';
             _id: item._id,
             Description: orderItems, 
             OrderDate: estTime,
-            OrderStatus: <>
-            <FormControl variant="outlined" className={classes.formControl} fullWidth required>
-              {/* <InputLabel id="demo-simple-select-outlined-label">Status</InputLabel> */}
-              <Select
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  value={item.OrderStatus}
-                  onChange={(e) => handleChange(e,index)}
-                  label="Status"
-                  name="Status"
-                  className={classes.root}
-                  style={{color: 'black'}}
-                  required
-              >
-                  <MenuItem value={"Ordered"}>Ordered</MenuItem>
-                  <MenuItem value={"Picked Up"}>Picked Up</MenuItem>
-                  <MenuItem value={"In Transit"}>In Transit</MenuItem>
-                  <MenuItem value={"Delivered"}>Delivered</MenuItem>
-              </Select>
-            </FormControl>
-          </>,  
+            OrderStatus: item.OrderStatus,  
             OrderTotal: `$ ${item.OrderTotal}`, 
             PaymentMethod: item.PaymentMethod,
             Rider: item.Rider.FirstName,
-            Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); history.push('/DeliveryOrdersDetails', { from: index});}}><EditRounded color="primary" /></a></>
+            Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); history.push('/ViewOrdersDetails', { from: index});}}><SearchRounded color="primary" /></a></>
           };
     
           rows.push(row)

@@ -1,23 +1,11 @@
 import { Container, Grid, makeStyles, createStyles, Typography, Theme, useTheme, useMediaQuery } from '@material-ui/core';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
 //Import Components
 import { Sidebar } from './Comp/Sidebar';
 import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
-import { FilterBar } from './Comp/FilterBar'
-import { OrdersTable} from './Comp/OrdersTable'
+import { OrdersTable} from './Comp/OrdersTable';
 
-interface Props {
-    
-}
-
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -39,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const RiderOrdersScreen: React.FC = function RiderOrdersScreen () {
+export const RestaurantDashboardScreen: React.FC = function RestaurantDashboardScreen () {
     const classes = useStyles();
     const theme = useTheme();
     const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
@@ -72,7 +60,6 @@ export const RiderOrdersScreen: React.FC = function RiderOrdersScreen () {
                                 </>
                             ):<></>}
                             <Grid item xs={12}>
-                                {/* <FilterBar /> */}
                                 <OrdersTable />
                             </Grid>
                         </Grid>

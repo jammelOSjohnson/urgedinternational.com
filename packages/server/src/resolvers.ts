@@ -101,6 +101,11 @@ const resolvers = {
             .where("OrderStatus").ne("Delivered"); 
         },
 
+        getOrdersByRestaurantId: async (_,{Restaurant}) => {
+            return await Order.find().populate("Rider").populate("Restaurant").where("Restaurant").equals(Restaurant)
+            .where("OrderStatus").ne("Delivered"); 
+        },
+
         
 
         getOrdersByDateAndTime: async (_,{StartDate, EndDate}) => {
@@ -267,11 +272,32 @@ const resolvers = {
             //return res;
         },
 
+        getRestaurant: async (_,{_id}) => {
+            return await User.findOne({_id}).populate("category");
+            //console.log(res);
+            //return res;
+        },
+
         //Riders
         getRiders: async () => {
             return await User.find().where('isAvailable').ne(null).where('disabled').ne(null);
             //console.log(res);
             //return res;
+        },
+
+        getRider: async (_,{_id}) => {
+            return await User.findOne({_id}).where('isAvailable').ne(null).where('disabled').ne(null);
+            //console.log(res);
+            //return res;
+        },
+
+        updateRiderStatus: async (_,{_id, isAvailable, disabled}) => {
+           
+            //console.log(newPaySetting);
+            const user = await User.findOne({_id});
+            user.isAvailable = isAvailable;
+            user.disabled = disabled;
+            return user.save();
         },
 
         //Packages
@@ -366,10 +392,16 @@ const resolvers = {
             _id,AirFreight,SeaFreight
         }) => {
             let newShippingAddress = {
-                _id,AirFreight,SeaFreight
+                _id: _id,
+                AirFreight: AirFreight,
+                SeaFreight: SeaFreight
             }
 
-            const shippingAddress = await User.findOne({_id});
+            //console.log(newShippingAddress);
+            
+
+            const shippingAddress = await ShippingAddress.findOne({_id});
+            //console.log(shippingAddress);
             shippingAddress.AirFreight = newShippingAddress.AirFreight;
             shippingAddress.SeaFreight = newShippingAddress.SeaFreight;
             return shippingAddress.save(); 
