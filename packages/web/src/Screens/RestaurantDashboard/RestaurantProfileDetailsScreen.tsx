@@ -1,5 +1,5 @@
 import { useAppData } from '../../Context/AppDataContext';
-import { AppBar ,Grid, makeStyles, createStyles, Typography, Theme, Card, CardHeader, Avatar, CardMedia, CardContent, TextField, FormControl, InputLabel, Select, MenuItem, Button, Box, Tabs, Tab, Modal, Backdrop, Fade, Container, useTheme, useMediaQuery } from '@material-ui/core';
+import { AppBar ,Grid, makeStyles, createStyles, Typography, Theme, Card, Tabs, Tab, Modal, Backdrop, Fade, Container, useTheme, useMediaQuery, CardContent, TextField, FormControl, Button, Box } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import MUIDataTable from "mui-datatables";
@@ -7,14 +7,13 @@ import MUIDataTable from "mui-datatables";
 //Import Components
 //import { ItemRating } from '../../../Components/ItemRating';
 import { Link } from "react-router-dom";
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import PhoneEnabledIcon from '@material-ui/icons/PhoneEnabled';
 import { Alert } from '@material-ui/lab';
 import { EditRounded } from '@material-ui/icons';
 import clsx from 'clsx';
 import { Sidebar } from './Comp/Sidebar';
 import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
+import { Spinner } from '../../Components/spinner';
 
 
 
@@ -301,7 +300,19 @@ const useStyles = makeStyles((theme: Theme) =>
             position: "absolute",
             top: 18,
             right: 10
-        }
+        },
+        spinner: {
+            paddingTop: 0,
+            paddingBottom: 0,
+            height: "80vh",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+        },
+        backdrop: {
+            zIndex: theme.zIndex.drawer + 1,
+            color: '#fff',
+        },
     }),
 );
 
@@ -1071,9 +1082,37 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
     }else {
         return (
             <>
-                <Typography variant="body1" style={{paddingTop: "3%", paddingBottom: "3%"}}>
-                            Loading...
-                </Typography>
+                <Sidebar>
+                    <Container maxWidth="xl" style={{ paddingLeft: "8px", paddingRight: "8px" }} className={classes.main}>
+                        <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
+                            <Grid container direction="row" spacing={0}>
+                            {isMatchMedium? (
+                                <>
+                                    <Grid item xs={8} style={{ marginBottom: "2%", marginTop: "1%", background: "transparent" }}>
+                                        <HeaderLeft />
+                                    </Grid>
+                                    <Grid item xs={4} style={{ marginBottom: "2%", marginTop: "1%", background: "transparent" }}>
+                                        <HeaderRight />
+                                    </Grid>
+                                </>
+                            ):<></>}
+                            {isMatch? (
+                                <>
+                                    <Grid item xs={4} style={{ marginBottom: "2%", marginTop: "1%", background: "transparent" }}>
+                                        <HeaderLeft />
+                                    </Grid>
+                                    <Grid item xs={8} style={{ marginBottom: "2%", marginTop: "1%", background: "transparent" }}>
+                                        <HeaderRight />
+                                    </Grid>
+                                </>
+                            ):<></>}
+                                <Grid item xs={12}>
+                                    <Spinner />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Container>
+                </Sidebar>
             </>
         )
     }

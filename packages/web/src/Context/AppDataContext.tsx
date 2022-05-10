@@ -86,7 +86,11 @@ function appDataReducer(state, action){
               currentUser: action.payload.currentUser,
               loggedIn: action.payload.loggedIn,
               userInfo: action.payload.userInfo,
-              userRolef: action.payload.userRolef
+              userRolef: action.payload.userRolef,
+              restaurantInfo: action.payload.restaurantInfo = undefined,
+              paySettings: action.payload.paySettings = undefined,
+              shippingAddress: action.payload.shippingAddress = undefined,
+              restaurantCategories: action.payload.restaurantCategories = undefined
             }
         case "fetch_restaurants": 
           return {
@@ -484,8 +488,11 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           addressLine2: "",
           city: ""
         };
-
         payload.orders = [];
+        payload.restaurantInfo = undefined;
+        payload.paySettings = undefined;
+        payload.shippingAddress = undefined;
+        payload.restaurantCategories = undefined;
 
         payload.userRolef = undefined;
         dispatch({
