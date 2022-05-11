@@ -87,9 +87,9 @@ export const Section6: React.FC = function Section6() {
                 
                     {isMatchMedium?
                         <Grid container spacing={0} className={classes.root}>
-                            <Grid md={6}>
+                            <Grid item md={6}>
                                 <Grid container spacing={0}>
-                                    <Grid xs={12} style={{padding: "5% 0 0 0%"}}>
+                                    <Grid item xs={12} style={{padding: "5% 0 0 0%"}}>
                                         <Typography className={classes.text1}>
                                             You Order
                                         </Typography>
@@ -98,7 +98,7 @@ export const Section6: React.FC = function Section6() {
                                             consectetur adipiscing elit.  */}
                                         </Typography>
                                     </Grid>
-                                    <Grid md={12}>
+                                    <Grid item md={12}>
                                         <Typography className={classes.text1}>
                                             We Pickup
                                         </Typography>
@@ -107,7 +107,7 @@ export const Section6: React.FC = function Section6() {
                                             consectetur adipiscing elit.  */}
                                         </Typography>
                                     </Grid>
-                                    <Grid md={12}>
+                                    <Grid item md={12}>
                                         <Typography className={classes.text1}>
                                             We Deliver
                                         </Typography>
@@ -118,7 +118,7 @@ export const Section6: React.FC = function Section6() {
                                     </Grid>
                                 </Grid>
                             </Grid>
-                            <Grid md={6}>
+                            <Grid item md={6}>
                                 <img src="Images/Errand Services.png" alt="" />
                             </Grid>
                         </Grid>
@@ -128,12 +128,12 @@ export const Section6: React.FC = function Section6() {
 
                     {isMatch? 
                         <Grid container spacing={0} className={classes.root}>
-                            <Grid xs={12} md={6}>
+                            <Grid item xs={12} md={6}>
                                 <img src="Images/Errand Services.png" width="100%" style={{marginLeft: "auto", marginRight: "auto"}} alt="" />
                             </Grid>
-                            <Grid xs={12} md={6}>
+                            <Grid item xs={12} md={6}>
                                 <Grid container spacing={0}>
-                                    <Grid xs={12} style={{padding: "5% 0 0 0%"}}>
+                                    <Grid item xs={12} style={{padding: "5% 0 0 0%"}}>
                                         <Typography className={classes.text1}>
                                             You Order
                                         </Typography>
@@ -142,7 +142,7 @@ export const Section6: React.FC = function Section6() {
                                             consectetur adipiscing elit.  */}
                                         </Typography>
                                     </Grid>
-                                    <Grid xs={12}>
+                                    <Grid item xs={12}>
                                         <Typography className={classes.text1}>
                                             We Pickup
                                         </Typography>
@@ -151,7 +151,7 @@ export const Section6: React.FC = function Section6() {
                                             consectetur adipiscing elit.  */}
                                         </Typography>
                                     </Grid>
-                                    <Grid xs={12}>
+                                    <Grid item xs={12}>
                                         <Typography className={classes.text1}>
                                             We Deliver
                                         </Typography>

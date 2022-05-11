@@ -134,12 +134,12 @@ export const Section2: React.FC = function Section2() {
                 <Container maxWidth="xl" className={classes.mainContainer}>
                     <Grid container direction="row" spacing={0} className={classes.root} alignItems="flex-start" justifyContent="flex-start">
                         <Grid item xs={12} md={9}>
-                            <Typography style={{textAlign: "center"}}>
+                            <Typography style={{textAlign: "center"}} variant="caption">
                                 <Typography variant="h2" className={classes.s2Heading}>
                                     No more long lines
                                 </Typography>
                             </Typography>
-                            <Typography style={{textAlign: "center"}}>
+                            <Typography style={{textAlign: "center"}} variant="caption">
                                 <Typography className={classes.Typo2}>
                                     Ease your everyday life, by allowing
                                     <br />us to take care of all your
@@ -214,7 +214,7 @@ export const Section2: React.FC = function Section2() {
                 <Container maxWidth="xl" className={classes.mainContainer}>
                     <Grid container direction="row" spacing={0} className={classes.root} alignItems="center" justifyContent="center">
                         <Grid item xs={12} md={9}>
-                            <Typography style={{textAlign:"center"}}>
+                            <Typography style={{textAlign:"center"}} variant="caption">
                                 <Typography variant="h2" className={classes.s2HeadingMobile}>
                                     No more long lines
                                 </Typography>
@@ -276,7 +276,7 @@ export const Section2: React.FC = function Section2() {
                                     </Button>
                                 </a>
                             </Typography>
-                            <Typography style={{textAlign:"center"}}>
+                            <Typography style={{textAlign:"center"}} variant="caption">
                                 <Typography className={classes.Typo2Mobile}>
                                     Ease your everyday life, by allowing
                                     <br />us to take care of all your errands and delivery needs.

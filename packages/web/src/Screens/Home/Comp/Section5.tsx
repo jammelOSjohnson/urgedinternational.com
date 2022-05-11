@@ -81,13 +81,13 @@ export const Section5: React.FC = function Section5() {
     return (
         <>
             <Container maxWidth="xl" className={classes.Background2} >
-                <Typography>
+                <Typography variant="caption">
                     <Typography className={classes.sectionTitle}>
                         Stay Home,<br/> 
                         We Got You Covered
                     </Typography>
                 </Typography>
-                <Typography>
+                <Typography variant="caption">
                     <Typography className={classes.sectionTitle2}>
                         {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vitae cursus et<br/>
                         euismod tempor. Adipiscing elementum vestibulum in eget enim donec sed tincidunt. */}
@@ -165,7 +165,7 @@ export const Section5: React.FC = function Section5() {
                         </Grid>
                     </Grid>
                 </Container>
-                <Typography>
+                <Typography variant="caption">
                     <Typography style={{textAlign: "center", paddingTop: "5%"}}>
                         <a href="/Restaurants" title="Food Delivery" className={classes.links}>
                             <Button

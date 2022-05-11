@@ -49,7 +49,7 @@ export const Section3: React.FC = function Section3() {
         <>
             <Container maxWidth="xl" className={classes.heroBackground}>
                 <div className={classes.innerContainer}>
-                   <Typography>
+                   <Typography variant="caption">
                        <Typography className={classes.Text1}>
                             Our services are entensible to a wide range of companies
                        </Typography>

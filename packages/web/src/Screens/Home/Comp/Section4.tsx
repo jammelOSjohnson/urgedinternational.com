@@ -41,10 +41,10 @@ export const Section4: React.FC = function Section4() {
     return (
         <>
             <Container maxWidth="xl" className={classes.cardGrid3}>
-                <Typography>
+                <Typography variant="caption">
                     <Typography className={classes.text1}>And many more...</Typography>
                 </Typography>
-                <Typography>
+                <Typography variant="caption">
                     <Typography className={classes.text2}>
                         {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
                         Vitae cursus et<br /> euismod tempor. Adipiscing elementum vestibulum in eget
@@ -53,7 +53,7 @@ export const Section4: React.FC = function Section4() {
                 </Typography>
                 <Grid container spacing={0}>
                     {isMatchMedium?
-                        <Grid item xs={12} md={6} alignItems="center" alignContent="center">
+                        <Grid item xs={12} md={6}>
                             <Typography style={{textAlign: "center"}}>
                                 <img src="Images/Samsung Galaxy A50.png" alt="urged phone" />
                             </Typography>
