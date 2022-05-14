@@ -5,7 +5,7 @@ import MUIDataTable from "mui-datatables";
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { EditRounded } from "@material-ui/icons/";
-import { Backdrop, CircularProgress, createStyles, FormControl, makeStyles, MenuItem, Select, Snackbar, Theme } from '@material-ui/core';
+import { Backdrop, Button, CircularProgress, createStyles, FormControl, makeStyles, MenuItem, Select, Snackbar, Theme, Typography } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
 import { GET_ORDERS_BY_RIDERID } from '../../../GraphQL/Queries';
 import { Alert } from '@material-ui/lab';
@@ -109,6 +109,20 @@ import { Alert } from '@material-ui/lab';
           minWidth: 120,
           marginLeft: "0px"
       },
+      Accept: {
+        backgroundColor: "#4caf50",
+        color: "#FFF",
+        width: "150px",
+        marginLeft: "auto",
+        marginRight: "auto"
+      },
+      Reject: {
+        backgroundColor: "#f50057",
+        color: "#FFF",
+        width: "150px",
+        marginLeft: "auto",
+        marginRight: "auto"
+      }
     }),
   );
   
@@ -223,7 +237,26 @@ import { Alert } from '@material-ui/lab';
             _id: item._id,
             Description: orderItems, 
             OrderDate: estTime,
-            OrderStatus: <>
+            OrderStatus:
+            item.OrderStatus === "Pending"?
+              <>
+                <Button className={classes.Accept}>
+                  Accept
+                </Button>
+                <br />
+                <br />
+                <Button className={classes.Reject}>
+                  Reject
+                </Button>
+              </>
+            :
+            item.OrderStatus === "Cancelled"?
+              <>
+                <Typography style={{color: "red"}}>
+                  Cancelled
+                </Typography>
+              </>
+            :
             <FormControl variant="outlined" className={classes.formControl} fullWidth required>
               {/* <InputLabel id="demo-simple-select-outlined-label">Status</InputLabel> */}
               <Select
@@ -237,13 +270,16 @@ import { Alert } from '@material-ui/lab';
                   style={{color: 'black'}}
                   required
               >
+                  {/* <MenuItem value={"Pending"} style={{color: "red"}}>
+                    Pending
+                  </MenuItem> */}
                   <MenuItem value={"Ordered"}>Ordered</MenuItem>
                   <MenuItem value={"Picked Up"}>Picked Up</MenuItem>
                   <MenuItem value={"In Transit"}>In Transit</MenuItem>
                   <MenuItem value={"Delivered"}>Delivered</MenuItem>
               </Select>
             </FormControl>
-          </>,  
+            ,  
             OrderTotal: `$ ${item.OrderTotal}`, 
             PaymentMethod: item.PaymentMethod,
             Rider: item.Rider.FirstName,

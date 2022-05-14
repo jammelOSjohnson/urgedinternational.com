@@ -250,6 +250,9 @@ import { Alert } from '@material-ui/lab';
                       style={{color: 'black'}}
                       required
                   >
+                      <MenuItem value={"Pending"} style={{color: "red"}}>
+                        Pending
+                      </MenuItem>
                       <MenuItem value={"Ordered"}>Ordered</MenuItem>
                       <MenuItem value={"Picked Up"}>Picked Up</MenuItem>
                       <MenuItem value={"In Transit"}>In Transit</MenuItem>

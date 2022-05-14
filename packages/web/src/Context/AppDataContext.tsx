@@ -1093,7 +1093,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           var orderBody = {
             Id: payload.currentUser.uid,
             OrderItems: orderItems,
-            OrderStatus: "Ordered",
+            OrderStatus: "Pending",
             OrderTotal: Number(Total.Cost),
             OrderDate: estTime,
             Rider: res[randRider]._id,

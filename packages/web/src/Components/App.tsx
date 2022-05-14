@@ -191,7 +191,10 @@ const App: React.FC = function App() {
 
   useEffect(() =>{
     document.body.style.backgroundColor = "#fff";
-    ReactGa.initialize('UA-228459826-1');
+    if(process.env.NODE_ENV !== 'development'){
+      ReactGa.initialize('UA-228459826-1');
+    }
+    
     // try{
     //   var db_server_socket = process.env.NODE_ENV === 'development'? process.env.REACT_APP_SocketURL : process.env.REACT_APP_SocketProd_URL;
     //   const socket = io(`${db_server_socket}/socket`);

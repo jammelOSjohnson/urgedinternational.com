@@ -105,7 +105,7 @@ export const OrderStatuses: React.FC = () => {
     var history = useHistory();
     var { value }  = useAppData();
     var { orders, changeOrderStatus } = value;
-    const orderIndex = parseInt(history.location.state.from);
+    const orderIndex = history.location.state !== undefined? parseInt(history.location.state.from) : history.push("/Login");
     const [status, setStatus] = useState(orders[orderIndex].OrderStatus);
 
     const handleStatus = async (status) => {
