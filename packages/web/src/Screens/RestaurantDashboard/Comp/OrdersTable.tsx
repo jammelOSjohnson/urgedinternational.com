@@ -206,7 +206,12 @@ import { Alert } from '@material-ui/lab';
     
     if(userRolef !== undefined && orders.length !== 0){
        if(userRolef === "Restaurant" || userRolef === "Restaurant_Admin"){
-        orders.map((item, index) => {
+        let filteredOrders = orders.filter((item) => 
+        item.OrderStatus !== "Pending" 
+        && item.OrderStatus !== "Not Assigned"
+        && item.OrderStatus !== "Delivered");
+        
+        filteredOrders.map((item, index) => {
           const now = new Date(parseInt(item.OrderDate, 10));
           const estTime = moment.tz(now, "America/Jamaica").format("YYYY-MM-DD h:mm a");
 

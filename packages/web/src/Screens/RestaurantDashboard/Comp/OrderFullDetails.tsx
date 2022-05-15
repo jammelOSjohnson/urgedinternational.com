@@ -7,10 +7,6 @@ import moment from 'moment';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 //Import Components
 
-interface Props {
-    
-}
-
 function Alert(props: AlertProps) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }

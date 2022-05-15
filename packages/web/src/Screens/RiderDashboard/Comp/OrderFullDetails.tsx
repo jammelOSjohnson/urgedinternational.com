@@ -234,6 +234,7 @@ export const OrderFullDetails: React.FC = () => {
                                                         <></>
                                                 ))}
                                                 <Grid item xs={12}>
+                                                { orders[orderIndex].OrderStatus !== "Not Assigned" && orders[orderIndex].OrderStatus !== "Cancelled"?
                                                     <form>
                                                     <Button type="button" className={clsx(classes.Button, "update-order")} onClick={(e) => {
                                                         selectedRider !== undefined?
@@ -246,6 +247,9 @@ export const OrderFullDetails: React.FC = () => {
                                                         </Typography>
                                                     </Button>
                                                     </form>
+                                                    :
+                                                    <></>
+                                                }
                                                 </Grid>
                                             </Grid>
                                         </CardMedia>
@@ -321,7 +325,12 @@ export const OrderFullDetails: React.FC = () => {
                                                         Status
                                                     </Typography>
                                                     <Typography>
-                                                    {orders[orderIndex].OrderStatus}
+                                                    {orders[orderIndex].OrderStatus === "Not Assigned"
+                                                        ? 
+                                                            <b style={{color: "#f50057"}}>REJECTED</b>
+                                                        :
+                                                        orders[orderIndex].OrderStatus
+                                                    }
                                                     </Typography>
                                                 </Grid>
                                             </Grid>

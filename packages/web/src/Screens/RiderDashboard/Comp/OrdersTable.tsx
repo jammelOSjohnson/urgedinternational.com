@@ -9,6 +9,7 @@ import { Backdrop, Button, CircularProgress, createStyles, FormControl, makeStyl
 import { useQuery } from '@apollo/client';
 import { GET_ORDERS_BY_RIDERID } from '../../../GraphQL/Queries';
 import { Alert } from '@material-ui/lab';
+import clsx from 'clsx';
   
  
   const columns = [
@@ -219,7 +220,8 @@ import { Alert } from '@material-ui/lab';
     
     if(userRolef !== undefined && orders.length !== 0){
        if(userRolef === "Rider"){
-        orders.map((item, index) => {
+        let filteredOrders = orders.filter((item) => item.OrderStatus !== "Delivered");
+        filteredOrders.map((item, index) => {
           const now = new Date(parseInt(item.OrderDate, 10));
           const estTime = moment.tz(now, "America/Jamaica").format("YYYY-MM-DD h:mm a");
 
@@ -240,20 +242,26 @@ import { Alert } from '@material-ui/lab';
             OrderStatus:
             item.OrderStatus === "Pending"?
               <>
-                <Button className={classes.Accept}>
+                <Button 
+                  className={clsx(classes.Accept, 'btn-accept')} 
+                  onClick={() => handleSubmit("Ordered",index)}
+                >
                   Accept
                 </Button>
                 <br />
                 <br />
-                <Button className={classes.Reject}>
+                <Button 
+                  className={clsx(classes.Reject, 'btn-reject')}
+                  onClick={() => handleSubmit("Not Assigned",index)}
+                >
                   Reject
                 </Button>
               </>
             :
-            item.OrderStatus === "Cancelled"?
+            item.OrderStatus === "Cancelled" || item.OrderStatus === "Not Assigned"?
               <>
                 <Typography style={{color: "red"}}>
-                  Cancelled
+                  <b>{item.OrderStatus === "Not Assigned"? <b>REJECTED</b>: item.OrderStatus}</b>
                 </Typography>
               </>
             :
@@ -329,6 +337,14 @@ import { Alert } from '@material-ui/lab';
 
             th > span > button > span div > div{
               color: #FFF !important;
+            }
+
+            .btn-accept:hover{
+              background-color: #4caf50;
+            }
+
+            .btn-reject:hover{
+              background-color: #f50057;
             }
           `}
         </style>
