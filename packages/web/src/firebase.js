@@ -3,6 +3,7 @@ import "firebase/auth";
 import 'firebase/firestore';
 import 'firebase/analytics';
 import "firebase/functions";
+import "firebase/storage";
 //import { getAnalytics } from "firebase/analytics";
 
 
@@ -17,7 +18,7 @@ import "firebase/functions";
 //     measurementId: "G-PD84R40CS4"
 // })
 
-var app = firebase.initializeApp({
+const app = firebase.initializeApp({
     apiKey: process.env.REACT_APP_apiKey,
     authDomain: process.env.REACT_APP_authDomain,
     projectId: process.env.REACT_APP_projectId,
@@ -29,10 +30,12 @@ var app = firebase.initializeApp({
 
 //const analytics = getAnalytics(app);
 ////console.log(analytics);
-export var auth = app.auth();
-export var socialAuth = firebase.auth();
-export var googleAuthProvider = new firebase.auth.GoogleAuthProvider();
-export var timeStamp = firebase.firestore.Timestamp;
-export var analytics2 = firebase.analytics();
-export var functions = firebase.functions();
+export const auth = app.auth();
+export const socialAuth = firebase.auth();
+export const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+export const timeStamp = firebase.firestore.Timestamp;
+export const analytics2 = firebase.analytics();
+export const functions = firebase.functions();
+export const storage = firebase.storage();
+export const ref = firebase.storage().ref(); 
 export default app

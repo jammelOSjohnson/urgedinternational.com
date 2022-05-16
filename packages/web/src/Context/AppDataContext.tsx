@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import {useContext, useReducer, createContext} from 'react';
 //import fetchAddressApi from '../Apis/fetchAddressApi';
-import  { auth, socialAuth, googleAuthProvider, functions } from '../firebase';
+import  { auth, socialAuth, googleAuthProvider, functions, storage, ref } from '../firebase';
 import { 
         GET_ORDERS_BY_RIDERID , 
         UPDATE_ORDER ,GET_RIDERS ,
@@ -1126,9 +1126,6 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
                   })
                 }
               });
-              
-             
-        
               return payload;
             }
           });
@@ -1958,6 +1955,26 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         });
     }
 
+    var uploadToFirebaseCloud = async function uploadToFirebaseCloud(payload, file){
+      try{
+        if(!file) return;
+        // Create a reference to 'images/filename'
+        const storageRef = ref.child(`/images/${file.name}`);
+       // var bytes = new Uint8Array(file);
+        storageRef.put(file).then(async (snapshot) => {
+          console.log('Uploaded an array!', snapshot);
+          let res = await storageRef.getDownloadURL();
+          console.log(res);
+          if(res !== null && res !== undefined) {
+            payload.restaurantInfo.ImageName = res;
+            UpdateRestaurantBy_ID(payload, payload.restaurantInfo);
+          }
+        })
+      }catch(err){
+        console.log(err)
+      }
+    }
+
     const [value, dispatch] = useReducer(appDataReducer, {
         currentUser,
         loading,
@@ -2034,7 +2051,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         UpdateShippingAddress,
         fetchRiderInfo,
         udateRiderStatusInfo,
-        fetchRestaurantInfo
+        fetchRestaurantInfo,
+        uploadToFirebaseCloud
     });
     
      

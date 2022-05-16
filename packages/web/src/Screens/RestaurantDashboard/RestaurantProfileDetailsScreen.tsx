@@ -34,7 +34,8 @@ interface State {
     Contact: string;
     Category: string;
     Menu: MenuItem[];
-    OpeningHrs: OpenHrs
+    OpeningHrs: OpenHrs,
+    ImageName: string
 }
 
 interface MenuItem {
@@ -112,7 +113,7 @@ const useStyles = makeStyles((theme: Theme) =>
             }
         },
         root2: {
-            padding: "0% 5% 0% 5%",
+            padding: "0% 0% 0% 5%",
             // borderRadius: "22px"
             borderRadius: "22px",
             "& .MuiInputBase-root": {
@@ -130,6 +131,9 @@ const useStyles = makeStyles((theme: Theme) =>
             },
             "& .MuiInputLabel-root.Mui-focused":{
                 color: "#9B9B9B"
+            },
+            "& .MuiButton-root:hover": {
+                backgroundColor: "#FF5E14"
             }
         },
         root3: {
@@ -247,6 +251,14 @@ const useStyles = makeStyles((theme: Theme) =>
             border: "1.21951px solid #FFFFFF",
             height: "41px",
             width: "113px",
+            borderRadius: 36,
+            color: "#FFF"
+        },
+        uploadButton: {
+            backgroundColor: "#FF5E14",
+            border: "1.21951px solid #FFFFFF",
+            height: "41px",
+            width: "200px",
             borderRadius: 36,
             color: "#FFF"
         },
@@ -381,7 +393,8 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
             Thursday: '',
             Friday: '',
             Saturday: ''
-        }
+        },
+        ImageName: ''
     });
     const [ohrs, setOhrs] = React.useState<OpenHrs>({
         Sunday: '',
@@ -394,7 +407,7 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
     });
     const [tab, setTab] = React.useState(0);
     var { value }  = useAppData();
-    var { userInfo, restaurantInfo, UpdateRestaurantBy_ID, fetchRestaurantInfo } = value;
+    var { userInfo, restaurantInfo, UpdateRestaurantBy_ID, fetchRestaurantInfo, uploadToFirebaseCloud } = value;
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [open, setOpen] = React.useState(false);
@@ -439,11 +452,20 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
                     Contact: restaurant.ContactNumber,
                     Category: restaurant.category.Name,
                     Menu: restaurantInfo.MenuItems,
-                    OpeningHrs: restaurant.OpeningHrs
+                    OpeningHrs: restaurant.OpeningHrs,
+                    ImageName: restaurant.ImageName
                 });
 
                 setOhrs(restaurant.OpeningHrs);
+            }else if(values.ImageName !== restaurantInfo.ImageName){
+                let restaurant = restaurantInfo;
+                console.log("about to set form values")
+                setValues({
+                    ...values,
+                    ImageName: restaurant.ImageName
+                });
             }
+            
 
             if(values.Menu.length > rows.length){
                 values.Menu.map((item, index) => {
@@ -495,6 +517,29 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
             let result = path.split("Path")
             setError(result[1]);
         }
+    }
+
+    const changeRestaurangtLogo = async (file) => {
+        try{
+            uploadToFirebaseCloud(value,file);
+            setSuccess('Restaurant Updated Seccessfully');
+            setTimeout(() => {
+                setSuccess('');
+            }, 3000)
+        }catch(err){
+            console.log(err)
+        }
+    }
+
+    const handleImageUpload = (e) => {
+        try{
+            e.preventDefault();
+            const file = e.target[0].files[0];
+            changeRestaurangtLogo(file);
+        }catch(err){
+            console.log(err);
+        }
+        
     }
 
     const handleChange5 = (prop: keyof OpenHrs) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -568,7 +613,7 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
         }
     };
 
-    if (restaurantInfo !== undefined && values.Menu.length !== 0){
+    if (restaurantInfo !== undefined){
         values.Menu.map((item, index) => {
             let row = {
               MenuCategory: item.MenuCategory,
@@ -627,10 +672,10 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
                                                         scrollButtons="auto"
                                                         aria-label="scrollable auto tabs example"
                                                         >
-                                                        <Tab label="Gernal Details" {...a11yProps(0)} />
-                                                        <Tab label="Menu Details" {...a11yProps(1)} />
-                                                        <Tab label="Openning Hours" {...a11yProps(2)} />
-                                                        
+                                                            <Tab label="Gernal Details" {...a11yProps(0)} />
+                                                            <Tab label="Menu Details" {...a11yProps(1)} />
+                                                            <Tab label="Openning Hours" {...a11yProps(2)} />
+                                                            <Tab label="Restaurant Logo" {...a11yProps(3)} />
                                                         </Tabs>
                                                     </AppBar>
                                                     <TabPanel value={tab} index={0}>
@@ -720,6 +765,15 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
                                                                         fullWidth
                                                                     />
                                                                     </FormControl>
+                                                                </Grid>
+                                                                <Grid container direction="row" spacing={1} className={classes.root2} alignItems="center">
+                                                                    <Grid item xs={12} sm={12} >
+                                                                        {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
+                                                                        {success && <Alert variant="filled" severity="success" className={classes.alert}>{success}</Alert>}
+                                                                        <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button" onClick={handleSubmit}>
+                                                                            Update Details
+                                                                        </Button>
+                                                                    </Grid>
                                                                 </Grid>
                                                             </Grid>
                                                         </form>
@@ -937,6 +991,15 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
                                                                     </Fade>
                                                                 </Modal>  
                                                             </Grid>
+                                                            <Grid container direction="row" spacing={1} className={classes.root2} alignItems="center">
+                                                            <Grid item xs={12} sm={12} >
+                                                                {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
+                                                                {success && <Alert variant="filled" severity="success" className={classes.alert}>{success}</Alert>}
+                                                                <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button" onClick={handleSubmit}>
+                                                                    Update Details
+                                                                </Button>
+                                                            </Grid>
+                                                    </Grid>
                                                         </Grid>  
                                                     </TabPanel>
                                                     <TabPanel value={tab} index={2}>
@@ -1045,18 +1108,43 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
                                                                         />
                                                                     </FormControl>
                                                                 </Grid>
+                                                                <Grid container direction="row" spacing={1} className={classes.root2} alignItems="center">
+                                                                    <Grid item xs={12} sm={12} >
+                                                                        {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
+                                                                        {success && <Alert variant="filled" severity="success" className={classes.alert}>{success}</Alert>}
+                                                                        <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button" onClick={handleSubmit}>
+                                                                            Update Details
+                                                                        </Button>
+                                                                    </Grid>
+                                                                </Grid>
                                                             </Grid>
                                                         </form>
                                                     </TabPanel>
-                                                    <Grid container direction="row" spacing={1} className={classes.root2} alignItems="center">
-                                                        <Grid item xs={12} sm={12} >
-                                                            {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
-                                                            {success && <Alert variant="filled" severity="success" className={classes.alert}>{success}</Alert>}
-                                                            <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button" onClick={handleSubmit}>
-                                                                Update Details
-                                                            </Button>
-                                                        </Grid>
-                                                    </Grid>
+                                                    <TabPanel value={tab} index={3}>
+                                                        <form onSubmit={handleImageUpload}>
+                                                            <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                                <Grid item xs={12} sm={12} 
+                                                                    style={{textAlign:"left"}}
+                                                                >
+                                                                    <img 
+                                                                        src={values.ImageName} 
+                                                                        width={"100px"}
+                                                                    />
+                                                                </Grid>
+                                                                <Grid item xs={12} sm={12} >
+                                                                    <input type="file" className='input' />
+                                                                    <br /><br />
+                                                                </Grid>
+                                                                <Grid item xs={12} sm={12} >
+                                                                    <Button type="submit"
+                                                                        className={classes.uploadButton}
+                                                                    >
+                                                                        Change Logo
+                                                                    </Button>
+                                                                </Grid>
+                                                            </Grid>
+                                                        </form>
+                                                    </TabPanel>
                                                 </CardContent>
                                             </Card>
                                         </Grid>
