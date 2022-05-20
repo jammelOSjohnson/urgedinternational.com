@@ -1,16 +1,11 @@
-import { makeStyles, createStyles, Typography, Theme, useMediaQuery, useTheme, FormGroup, Switch, FormControlLabel, Grid } from '@material-ui/core';
-import React, { useEffect } from 'react';
+import { makeStyles, createStyles, Typography, Theme, useMediaQuery, useTheme, Grid } from '@material-ui/core';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
 import { PlayArrowRounded, ArrowBackRounded } from "@material-ui/icons/";
 import { Link } from "react-router-dom";
 import { useAppData } from '../../../Context/AppDataContext';
 
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
+
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -53,7 +48,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
     const theme = useTheme();
     var { value }  = useAppData();
     //, rider, fetchRiderInfo, udateRiderStatusInfo
-    var { userInfo } = value;
+    //var { userInfo } = value;
     //console.log(userInfo)
     //const [availability, setAvailability] = React.useState(rider !== undefined ? rider.isAvailable : false);
 
@@ -118,6 +113,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                             <img 
                                 src="Images/MobileMenuIcon.png"
                                 style={{marginTop: "10px"}}
+                                alt="MobileMenuIcon"
                             >
                             </img>
                         </Grid>

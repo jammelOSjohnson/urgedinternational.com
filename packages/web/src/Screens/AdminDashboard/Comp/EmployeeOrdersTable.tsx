@@ -5,7 +5,7 @@ import MUIDataTable from "mui-datatables";
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 //import { EditRounded } from "@material-ui/icons/";
-import { createStyles, makeStyles, Snackbar, Theme } from '@material-ui/core';
+import { Snackbar } from '@material-ui/core';
 //import { useQuery } from '@apollo/client';
 import { Alert } from '@material-ui/lab';
   
@@ -52,41 +52,41 @@ import { Alert } from '@material-ui/lab';
     },
   ];
 
-  const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-      root: {
-        padding: "0% 0px 0% 0px",
-        borderRadius: "22px",
-        "& .MuiInputBase-root": {
-            color: "#9B9B9B ",
-            borderColor: "#888888",
-            border: "3px solid black"
-        },
-        "& .MuiSelect-select:$focus": {
-            backgroundColor: "inherit",
-            color: "black"
-        },
-        "& .MuiSelect-select": {
-            border: "2px dotted black"
-        },
-        "& .MuiFormLabel-root": {
-            fontWeight: 700,
-            fontSize: "1.2rem"
-        },
-        "& .MuiInputLabel-root.Mui-focused":{
-            color: "#9B9B9B"
-        }
+  // const useStyles = makeStyles((theme: Theme) =>
+  //   createStyles({
+  //     root: {
+  //       padding: "0% 0px 0% 0px",
+  //       borderRadius: "22px",
+  //       "& .MuiInputBase-root": {
+  //           color: "#9B9B9B ",
+  //           borderColor: "#888888",
+  //           border: "3px solid black"
+  //       },
+  //       "& .MuiSelect-select:$focus": {
+  //           backgroundColor: "inherit",
+  //           color: "black"
+  //       },
+  //       "& .MuiSelect-select": {
+  //           border: "2px dotted black"
+  //       },
+  //       "& .MuiFormLabel-root": {
+  //           fontWeight: 700,
+  //           fontSize: "1.2rem"
+  //       },
+  //       "& .MuiInputLabel-root.Mui-focused":{
+  //           color: "#9B9B9B"
+  //       }
         
-    },backdrop: {
-        zIndex: theme.zIndex.drawer + 1,
-        color: '#fff',
-      },formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
-        marginLeft: "0px"
-    },
-    }),
-  );
+  //   },backdrop: {
+  //       zIndex: theme.zIndex.drawer + 1,
+  //       color: '#fff',
+  //     },formControl: {
+  //       margin: theme.spacing(1),
+  //       minWidth: 120,
+  //       marginLeft: "0px"
+  //   },
+  //   }),
+  // );
   
   
   
@@ -133,24 +133,24 @@ import { Alert } from '@material-ui/lab';
     //   event.preventDefault();
     // }
 
-    const handleSubmit = async(status, orderIndex) => {
-      try{
-          setOpen(false);
-          setOpen2(false);
-          //console.log(status);
-          //console.log(rider_orders[orderIndex].OrderStatus);
-          let order = {...rider_orders[orderIndex], OrderStatus: status, Rider: rider_orders[orderIndex].Rider._id };
-          //console.log(order);
-          await UpdateOrder(value, order).then((res) => {
-              if(res){
-                  setOpen(true);
-              }
-          }) 
-      }catch(err){
-          //console.log(err);
-          setOpen2(true);
-      }
-    }
+    // const handleSubmit = async(status, orderIndex) => {
+    //   try{
+    //       setOpen(false);
+    //       setOpen2(false);
+    //       //console.log(status);
+    //       //console.log(rider_orders[orderIndex].OrderStatus);
+    //       let order = {...rider_orders[orderIndex], OrderStatus: status, Rider: rider_orders[orderIndex].Rider._id };
+    //       //console.log(order);
+    //       await UpdateOrder(value, order).then((res) => {
+    //           if(res){
+    //               setOpen(true);
+    //           }
+    //       }) 
+    //   }catch(err){
+    //       //console.log(err);
+    //       setOpen2(true);
+    //   }
+    // }
 
     // const handleChange = (event, index) => {
     //   // setValues({...values,[event.target.name]:event.target.value, itemName: selectedItem.ItemName, itemCost: selectedItem.ItemCost, itemDescription: selectedItem.ItemDescription});

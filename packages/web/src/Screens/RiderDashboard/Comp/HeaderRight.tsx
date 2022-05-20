@@ -1,23 +1,9 @@
-import { Container, Grid, Badge , makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardMedia, CardContent, useMediaQuery, useTheme, FormGroup, FormControlLabel, Switch } from '@material-ui/core';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import { Container, Grid, Badge , makeStyles, createStyles,Theme, useMediaQuery, useTheme, FormGroup, FormControlLabel, Switch } from '@material-ui/core';
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
-import { NotificationImportantRounded, ShoppingCartRounded } from "@material-ui/icons/";
 import { Notification } from "../../../Components/Notification";
 import { User } from "../../../Components/User"
 import { useAppData } from '../../../Context/AppDataContext';
 
-interface Props {
-    
-}
-
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -65,16 +51,9 @@ export const HeaderRight: React.FC = function HeaderRight() {
     const theme = useTheme();
     const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
     const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-    });
     var { value }  = useAppData();
     var { userInfo, rider, fetchRiderInfo, udateRiderStatusInfo } = value;
-    const [availability, setAvailability] = React.useState(rider !== undefined ? rider.isAvailable : false)
-
-    var history = useHistory();
+    const [availability, setAvailability] = React.useState(rider !== undefined ? rider.isAvailable : false);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         //setAvailability(event.target.checked);

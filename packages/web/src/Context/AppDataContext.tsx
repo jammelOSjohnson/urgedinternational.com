@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import {useContext, useReducer, createContext} from 'react';
 //import fetchAddressApi from '../Apis/fetchAddressApi';
-import  { auth, socialAuth, googleAuthProvider, functions, storage, ref } from '../firebase';
+import  { auth, socialAuth, googleAuthProvider, functions, ref } from '../firebase';
 import { 
         GET_ORDERS_BY_RIDERID , 
         UPDATE_ORDER ,GET_RIDERS ,
@@ -999,6 +999,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           if(item.MenuCategory === category){
             newMenuItems.push(item);
           }
+          return;
         });
         //return newMenuItems;
         payload.filteredMenuItems = newMenuItems;
@@ -1619,7 +1620,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     }
 
     var createPreAlert = async function createPreAlert(packageZip, file, uid, UserInfo, mbNum) {
-      var tstamp = ''
+      //var tstamp = ''
       let PackageInfo = {
           Cost: '',
           ItemName: '',
@@ -1651,7 +1652,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         City: packageZip.city,
         Pickup: packageZip.pickup
       };
-      var packArr = [];
+      //var packArr = [];
       
       var checkIfPackageExists = await getPackageById({variables: {TrackingNumber: packageZip.trackingNum2}}).then(async function(response) {
         console.log("Checking user result for fetch user info");
@@ -1767,7 +1768,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       //console.log(uid);
       //console.log("getting ref for MailBoxes");
       //console.log("querying Mailboxes");
-      var mbFound = "";
+      //var mbFound = "";
       var mboxRes = await getMailboxById({variables: {Uid: uid}}).then(function (response) {
         //console.log("Logging MailBox");
         if (response.data.getMailboxById !== null && response.data.getMailboxById !== undefined) {

@@ -1,5 +1,5 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { Button, Container, Grid, makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent, FormControl, InputLabel, Select, MenuItem, Snackbar } from '@material-ui/core';
+import { Container, Grid, makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent, Snackbar } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
@@ -104,20 +104,18 @@ export const OrderFullDetails: React.FC = () => {
     const orderIndex = parseInt(history.location.state.from);
     const [rider, setRider] = useState("");
     const [selectedRider, setSelectedRider] = useState();
-    var [error, setError] = useState('');
-    var [success, setSuccess] = useState('');
     const [open, setOpen] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
     
 
-    const handleChange = (event) => {
-        // //console.log(event.target.name);
-        // //console.log(event.target.value);
-        if(event.target.value !== "Assigned To"){
-            setSelectedRider(event.target.value);
-            setRider(riders[event.target.value].FirstName);
-        }
-    };
+    // const handleChange = (event) => {
+    //     // //console.log(event.target.name);
+    //     // //console.log(event.target.value);
+    //     if(event.target.value !== "Assigned To"){
+    //         setSelectedRider(event.target.value);
+    //         setRider(riders[event.target.value].FirstName);
+    //     }
+    // };
     
     const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
       if (reason === 'clickaway') {
@@ -134,43 +132,6 @@ export const OrderFullDetails: React.FC = () => {
   
         setOpen2(false);
       };
-
-    const handleSubmit = async(finalselectedRider, orderIndex) => {
-        try{
-            setOpen(false);
-            setOpen2(false);
-            //console.log("trying to see id");
-            //console.log(finalselectedRider);
-            //console.log(riders[finalselectedRider]);
-            if(finalselectedRider != undefined){
-                orders[orderIndex].Rider = riders[finalselectedRider]._id;
-                await UpdateOrder(value, orders[orderIndex]).then((res) => {
-                    if(res){
-                        setOpen(true);
-                        setTimeout(()=> {
-                            setSelectedRider(undefined);
-                            history.push("/DeliveryOrders");
-                        }, 5000)
-                    }
-                })
-            }else if(orderIndex != undefined){
-                orders[orderIndex].Rider = orders[orderIndex].Rider._id;
-                await UpdateOrder(value, orders[orderIndex]).then((res) => {
-                    if(res){
-                        setOpen(true);
-                        setTimeout(()=> {
-                            history.push("/DeliveryOrders");
-                        }, 5000)
-                    }
-                })
-            }
-            
-            
-        }catch(err){
-            //console.log(err);
-            setOpen2(true);
-        }
-    }
 
     useEffect(() => {
         try{

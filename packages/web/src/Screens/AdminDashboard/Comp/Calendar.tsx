@@ -1,20 +1,9 @@
 import React, { useEffect, useState } from "react";
 import 'date-fns';
-import DateFnsUtils from '@date-io/date-fns';
-import { Paper, TextField } from "@material-ui/core";
-import { createStyles, createTheme, makeStyles , Theme} from "@material-ui/core/styles";
-import green from "@material-ui/core/colors/green";
+import { TextField } from "@material-ui/core";
+import { createStyles, makeStyles , Theme} from "@material-ui/core/styles";
 import { useAppData } from '../../../Context/AppDataContext';
-
-
-import { MuiPickersUtilsProvider, KeyboardDatePicker, } from "@material-ui/pickers";
 import moment from "moment";
-
-const theme = createTheme({
-  palette: {
-    primary: { light: green[300], main: green[200], dark: green[400] }
-  }
-});
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -108,7 +97,7 @@ export const Calendar: React.FC =  function Calendar ()  {
     }catch(err) {
       console.log(err);
     }
-    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedRider, searchdate])
 
   const handleDateChange = (date) => {

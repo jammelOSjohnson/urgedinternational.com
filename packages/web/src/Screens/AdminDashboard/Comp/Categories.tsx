@@ -60,6 +60,7 @@ export const Categories: React.FC<Props> = ({handleChange, values}) => {
         }catch(err){
 
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[restaurantCategories])
 
     if(Categs.length > 0) {

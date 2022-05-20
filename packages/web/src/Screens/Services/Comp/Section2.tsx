@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 //import CSS
-import { Container, Grid, Typography, makeStyles, createStyles, Theme, Card, CardMedia, CardContent, Button, useMediaQuery, useTheme, AppBar, Tabs, Box, Tab, FormControl, InputLabel, OutlinedInput} from '@material-ui/core';
-import { Link } from "react-router-dom";
+import { Container, Grid, Typography, makeStyles, createStyles, Theme, Button, useMediaQuery, useTheme, AppBar, Tabs, Box, Tab, FormControl, InputLabel, OutlinedInput} from '@material-ui/core';
 import SwipeableViews from 'react-swipeable-views';
 import clsx from 'clsx';
 import { useAppData } from '../../../Context/AppDataContext';

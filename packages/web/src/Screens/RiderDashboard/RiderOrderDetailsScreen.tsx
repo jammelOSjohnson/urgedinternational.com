@@ -1,7 +1,5 @@
-import { Container, Grid, makeStyles, createStyles, Typography, Theme } from '@material-ui/core';
+import { Container, Grid, makeStyles, createStyles, Theme } from '@material-ui/core';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
 //Import Components
 import { Sidebar } from './Comp/Sidebar';
 import { HeaderLeft } from './Comp/HeaderLeft';
@@ -9,15 +7,6 @@ import { HeaderRight } from './Comp/HeaderRight';
 import {OrderStatuses} from './Comp/OrderStatuses';
 import {OrderFullDetails} from './Comp/OrderFullDetails';
 
-interface Props {
-    
-}
-
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({

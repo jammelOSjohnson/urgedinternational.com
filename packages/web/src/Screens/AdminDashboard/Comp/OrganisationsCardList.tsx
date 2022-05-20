@@ -197,7 +197,7 @@ export const OrganisationsCardList: React.FC = function OrganisationsCardList(pr
                         //console.log("restaurant is");
                         //console.log(restaurant);
                         let addy = shrinkAddress(restaurant.AddressLine1);
-                        let name = '';
+                        //let name = '';
 
                         return(
                             

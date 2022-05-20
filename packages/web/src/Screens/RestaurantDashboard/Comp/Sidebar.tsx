@@ -1,19 +1,13 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, useTheme, CssBaseline, AppBar, Toolbar, Drawer, Divider, List, ListItem, ListItemIcon, ListItemText, useMediaQuery } from '@material-ui/core';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import React, { Children } from 'react';
+import { makeStyles, createStyles, Theme, IconButton, useTheme, CssBaseline, Drawer, Divider, List, ListItem, ListItemIcon, ListItemText, useMediaQuery } from '@material-ui/core';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import clsx from 'clsx';
 import "../CSS/sidebar.css";
 
-import MenuIcon from '@material-ui/icons/Menu';
 import MailIcon from '@material-ui/icons/Mail';
 
-interface Props {
-    
-}
 
 interface State {
     email: string;
@@ -152,12 +146,6 @@ export const Sidebar: React.FC = function Sidebar({children}) {
 
     const [open, setOpen] = React.useState(true);
     const [open1, setOpen1] = React.useState(false);
-
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-    });
     
     var history = useHistory();
     var location = history.location;

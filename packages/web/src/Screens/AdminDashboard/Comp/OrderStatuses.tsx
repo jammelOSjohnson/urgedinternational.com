@@ -124,6 +124,7 @@ export const OrderStatuses: React.FC = () => {
 
     useEffect(() => {
         setStatus(orders[orderIndex].OrderStatus);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [orders.length > 0 ? orders[orderIndex].OrderStatus: null])
 
     if(orders.length !== 0 && orderIndex !== undefined){

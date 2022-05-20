@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 //import CSS
 import { Container, Typography, makeStyles, createStyles, Theme, Accordion, AccordionSummary, AccordionDetails, Button} from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -92,12 +91,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const Section7: React.FC = function Section7() {
     const classes = useStyles();
-    const [expand1, setExpand1] = useState(false);
-    const [expand2, setExpand2] = useState(false);
-    const [expand3, setExpand3] = useState(false);
-    const [expand4, setExpand4] = useState(false);
-    const [expand5, setExpand5] = useState(false);
-    const [expand6, setExpand6] = useState(false);
     return (
         <>
             <Container maxWidth="xl" className={classes.heroBackground}>

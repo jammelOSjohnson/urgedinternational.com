@@ -104,6 +104,7 @@ export const CardTotal: React.FC = function CardTotal() {
         }catch(err){
             //console.log(err)
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [rider_orders, paySettings])
     return (
         <Grid item xs={6} md={3}>

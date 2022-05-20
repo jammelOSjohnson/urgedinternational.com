@@ -1,8 +1,6 @@
 import { useAppData } from '../../Context/AppDataContext';
 import { Container, Grid, makeStyles, createStyles, Typography, Theme, FormGroup, TextField, Card, Button, Snackbar } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
 //Import Components
 import { Sidebar } from './Comp/Sidebar';
 import { HeaderLeft } from './Comp/HeaderLeft';
@@ -12,11 +10,6 @@ import Switch from '@material-ui/core/Switch';
 import { GET_PAY_SETTINGS } from '../../GraphQL/Queries';
 import { useQuery } from '@apollo/client';
 import { Alert } from '@material-ui/lab';
-
-
-interface Props {
-    
-}
 
 interface State {
     checkedA: boolean;
@@ -87,10 +80,9 @@ export const PaySettingsScreen: React.FC = () => {
     const classes = useStyles();
     //Data Store
     const { value } = useAppData();
-    const { paySettings , fetchPaySettings, UpdatePaySettings } = value;
+    const { UpdatePaySettings } = value;
     const {data} = useQuery(GET_PAY_SETTINGS);
     //Local State
-    const [perDelivery, setPerDelivery] = useState(0);
     const [state, setState] = React.useState<State>({
         checkedA: true,
         checkedB: false,

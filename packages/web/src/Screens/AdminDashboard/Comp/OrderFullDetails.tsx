@@ -187,7 +187,7 @@ export const OrderFullDetails: React.FC = () => {
         }catch(err){
 
         }
-        
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [riders])
     
     ////console.log();
