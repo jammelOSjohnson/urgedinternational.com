@@ -241,7 +241,7 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any, me
                                     {
                                         menuItems.map((item2, index) => {
                                             if(item2.MenuCategory === "Sides"){
-                                               return <MenuItem key={index} value={item2.ItemName}>{item2.ItemName}</MenuItem>
+                                               return <MenuItem key={index} value={item2.ItemName}>{`${item2.ItemName} $${parseFloat(item2.ItemCost).toFixed(2)}`}</MenuItem>
                                             }
                                         })
                                     }
@@ -309,7 +309,7 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any, me
                                     {
                                         menuItems.map((item2, index) => {
                                             if(item2.MenuCategory === "Sides"){
-                                               return <MenuItem key={index} value={item2.ItemName}>{item2.ItemName}</MenuItem>
+                                               return <MenuItem key={index} value={item2.ItemName}>{`${item2.ItemName} $${parseFloat(item2.ItemCost).toFixed(2)}`}</MenuItem>
                                             }
                                         })
                                     }
@@ -358,7 +358,7 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any, me
                                     {
                                         menuItems.map((item2, index) => {
                                             if(item2.MenuCategory === "Sides"){
-                                               return <MenuItem key={index} value={item2.ItemName}>{item2.ItemName}</MenuItem>
+                                               return <MenuItem key={index} value={item2.ItemName}>{`${item2.ItemName} $${parseFloat(item2.ItemCost).toFixed(2)}`}</MenuItem>
                                             }
                                         })
                                     }
@@ -426,7 +426,7 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any, me
                                     {
                                         menuItems.map((item2, index) => {
                                             if(item2.MenuCategory === "Sides"){
-                                               return <MenuItem key={index} value={item2.ItemName}>{item2.ItemName}</MenuItem>
+                                               return <MenuItem key={index} value={item2.ItemName}>{`${item2.ItemName} $${parseFloat(item2.ItemCost).toFixed(2)}`}</MenuItem>
                                             }
                                         })
                                     }
@@ -492,7 +492,7 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any, me
                                     {
                                         menuItems.map((item2, index) => {
                                             if(item2.MenuCategory === "Sides"){
-                                               return <MenuItem key={index} value={item2.ItemName}>{item2.ItemName}</MenuItem>
+                                               return <MenuItem key={index} value={item2.ItemName}>{`${item2.ItemName} $${parseFloat(item2.ItemCost).toFixed(2)}`}</MenuItem>
                                             }
                                         })
                                     }
@@ -541,7 +541,7 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any, me
                                     {
                                         menuItems.map((item2, index) => {
                                             if(item2.MenuCategory === "Sides"){
-                                               return <MenuItem key={index} value={item2.ItemName}>{item2.ItemName}</MenuItem>
+                                               return <MenuItem key={index} value={item2.ItemName}>{`${item2.ItemName} $${parseFloat(item2.ItemCost).toFixed(2)}`}</MenuItem>
                                             }
                                         })
                                     }
