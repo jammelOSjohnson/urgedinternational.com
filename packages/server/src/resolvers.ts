@@ -199,7 +199,7 @@ const resolvers = {
         },
 
         getOrdersByUserId: async (_,{Id}) => {
-            return await Order.find().populate("Rider").populate("Restaurant").where("Id").equals(Id);    
+            return await Order.find().sort({OrderDate: -1}).populate("Rider").populate("Restaurant").where("Id").equals(Id);    
         },
 
         getOrdersByRiderId: async (_,{Rider}) => {
