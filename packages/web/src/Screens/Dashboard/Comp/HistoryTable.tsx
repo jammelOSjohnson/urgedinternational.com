@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import { useAppData } from '../../../Context/AppDataContext';
-import { DataGrid, GridColDef } from '@material-ui/data-grid';
 import moment from 'moment';
 import { Link, useHistory } from 'react-router-dom';
 import MUIDataTable from "mui-datatables";

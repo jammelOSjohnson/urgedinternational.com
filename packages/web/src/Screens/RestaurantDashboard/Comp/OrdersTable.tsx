@@ -5,7 +5,7 @@ import MUIDataTable from "mui-datatables";
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { SearchRounded } from "@material-ui/icons/";
-import { Backdrop, CircularProgress, createStyles, FormControl, makeStyles, MenuItem, Select, Snackbar, Theme } from '@material-ui/core';
+import { createStyles, makeStyles, Snackbar, Theme } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
 //import { GET_ORDERS_BY_RIDERID } from '../../../GraphQL/Queries';
 import { GET_ORDERS_BY_RESTAURANTID } from '../../../GraphQL/Queries';
@@ -116,7 +116,7 @@ import { Alert } from '@material-ui/lab';
   
   
   export const OrdersTable: React.FC = function OrdersTable () {
-    const classes = useStyles();
+    //const classes = useStyles();
     var { value }  = useAppData();
     var { orders, UpdateOrder, refreshingOrderTables, currentUser, userRolef } = value;
 
@@ -146,9 +146,9 @@ import { Alert } from '@material-ui/lab';
       // eslint-disable-next-line
     }, [currentUser, data]);
     
-    const handleEdit = (event) => {
-      event.preventDefault();
-    }
+    // const handleEdit = (event) => {
+    //   event.preventDefault();
+    // }
 
     const options = {
       filterType: 'dropdown',
@@ -177,16 +177,16 @@ import { Alert } from '@material-ui/lab';
       }
     }
 
-    const handleChange = (event, index) => {
-      // setValues({...values,[event.target.name]:event.target.value, itemName: selectedItem.ItemName, itemCost: selectedItem.ItemCost, itemDescription: selectedItem.ItemDescription});
-      try{
-        let status = event.target.value;
-        handleSubmit(status,index);
-      }catch(err){
-        console.log(err);
-        setOpen2(true);
-      }
-    };
+    // const handleChange = (event, index) => {
+    //   // setValues({...values,[event.target.name]:event.target.value, itemName: selectedItem.ItemName, itemCost: selectedItem.ItemCost, itemDescription: selectedItem.ItemDescription});
+    //   try{
+    //     let status = event.target.value;
+    //     handleSubmit(status,index);
+    //   }catch(err){
+    //     console.log(err);
+    //     setOpen2(true);
+    //   }
+    // };
 
     const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
       if (reason === 'clickaway') {

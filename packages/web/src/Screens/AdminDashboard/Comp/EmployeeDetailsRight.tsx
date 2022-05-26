@@ -108,6 +108,7 @@ export const EmployeeDetailsRight: React.FC = function EmployeeDetailsRight() {
                 status: riders[selectedRider].isAvailable
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedRider])
 
     // const [values, setValues] = React.useState<State>({

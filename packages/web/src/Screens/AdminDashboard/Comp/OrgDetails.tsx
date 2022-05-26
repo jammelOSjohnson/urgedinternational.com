@@ -1,5 +1,5 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { AppBar ,Grid, makeStyles, createStyles, Typography, Theme, Card, CardHeader, Avatar, CardMedia, CardContent, TextField, FormControl, InputLabel, Select, MenuItem, Button, Box, Tabs, Tab, Modal, Backdrop, Fade } from '@material-ui/core';
+import { AppBar ,Grid, makeStyles, createStyles, Typography, Theme, Card, CardContent, TextField, FormControl, MenuItem, Button, Box, Tabs, Tab, Modal, Backdrop, Fade } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import MUIDataTable from "mui-datatables";
@@ -7,8 +7,6 @@ import MUIDataTable from "mui-datatables";
 //Import Components
 //import { ItemRating } from '../../../Components/ItemRating';
 import { Link } from "react-router-dom";
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import PhoneEnabledIcon from '@material-ui/icons/PhoneEnabled';
 import { Alert } from '@material-ui/lab';
 import { EditRounded } from '@material-ui/icons';
 import clsx from 'clsx';
@@ -366,7 +364,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
     });
     const [tab, setTab] = React.useState(0);
     var { value }  = useAppData();
-    var { selectedRestaurant, restaurants, viewMenuItems, UpdateRestaurantBy_ID } = value;
+    var { selectedRestaurant, restaurants, UpdateRestaurantBy_ID } = value;
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [open, setOpen] = React.useState(false);
@@ -434,8 +432,6 @@ export const OrgDetails: React.FC = function OrgDetails() {
         }
         
     }, [restaurants, selectedRestaurant, values.Menu])
-    
-    var history = useHistory();
 
     const handleSubmit = async () => {
         try{
@@ -483,9 +479,9 @@ export const OrgDetails: React.FC = function OrgDetails() {
         setValues({ ...values, [prop]: event.target.value });
     };
 
-    const handleChange = (event) => {
-        setValues({...values,[event.target.name]:event.target.value});
-    };
+    // const handleChange = (event) => {
+    //     setValues({...values,[event.target.name]:event.target.value});
+    // };
 
     const handleClose2 = () => {
         let newMenu = values.Menu;

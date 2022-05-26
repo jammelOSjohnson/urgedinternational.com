@@ -1,8 +1,7 @@
 import { useAppData } from '../../../Context/AppDataContext';
 import { Grid, makeStyles, createStyles, Typography, Theme, useMediaQuery, Card, CardMedia, CardContent, TableContainer, Table, Paper, TableHead, TableRow, TableCell, TableBody, useTheme } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import clsx from 'clsx';
-import { Link } from "react-router-dom";
 import '../CSS/RestaurantCategories.css'
 //Import Components
 
@@ -126,7 +125,7 @@ export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategor
     const theme = useTheme();
 
     var { value }  = useAppData();
-    var { getMenuCats, selectedRestaurant, restaurants, menuCategories, selectedMenuCategory, getMenuBycategory, filterCategory } = value;
+    var { getMenuCats, selectedRestaurant, restaurants, menuCategories, getMenuBycategory, filterCategory } = value;
     var restaurant = restaurants[selectedRestaurant];
 
     const isMatch = useMediaQuery(theme.breakpoints.down('sm'));

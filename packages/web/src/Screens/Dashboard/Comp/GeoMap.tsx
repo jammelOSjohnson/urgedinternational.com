@@ -1,7 +1,5 @@
-import { useAppData } from '../../../Context/AppDataContext';
 import { makeStyles, createStyles, Theme } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import addressPI from '../../../Apis/addressPI';
 
 interface State {
@@ -26,123 +24,123 @@ interface Props {
 
 
 
-const useStyles = makeStyles((theme: Theme) => 
-    createStyles({
-        root: {
-            borderRadius: "33px",
-            "& .MuiInputBase-root": {
-                color: "#9B9B9B ",
-                borderColor: "#888888",
-                border: "0.1px dotted",
-                marginBottom: "3%",
-                borderRadius: "12px"
-            },
-            "& .MuiSelect-select:$focus": {
-                backgroundColor: "inherit",
-                color: "#9B9B9B"
-            },
-            "& .MuiFormLabel-root": {
-                fontWeight: 700,
-                fontSize: "1.2rem"
-            },
-            "& .MuiInputLabel-root.Mui-focused":{
-                color: "#9B9B9B"
-            }
-        },
-        formHeading: {
-            fontSize: "1.5rem",
-            fontWeight: "normal",
-            lineHeight: "21px",
-            color: "#4A4A4A",
-            fontFamily: "PT Sans",
-            paddingTop: "2%",
-            paddingBottom: "2%"
-        },
-        formSubheading: {
-            fontSize: "14px",
-            fontFamily: "Open Sans",
-            fontStyle: "normal",
-            color: "#4A4A4A",
-            paddingTop: "5%",
-            paddingBottom: "5%",
-            fontWeight: "normal"
-        },
-        paper: {
-            borderRadius: "33px"
-        },
-        divider: {
-            height: "3px"
-        },
-        form: {
-            marginLeft: "5%",
-            marginRight: "5%",
-        },
-        cardTitle: {
-            fontSize: "20px",
-            fontWeight: 700,
-            color: "#1D2635",
-            fontFamily: "PT Sans",
-        },
-        cardContent: {
-            flexGrow: 1,
-            textAlign: "left",
-            paddingBottom: "0px",
-            paddingTop: "0px",
-        },
-        cardImage: {
-            textAlign: "left",
-            position: "relative"
-        },
-        card: {
-            background: "#FFFFFF",
-            border: "0.813791px solid #E2E2E2",
-            boxSizing: "border-box",
-            boxShadow: "0px 4.64215px 12.2069px rgba(0, 0, 0, 0.11)",
-            borderRadius: "34.3745px",
-        },
-        OrderResult1: {
-            position: "absolute",
-            top: "23%",
-            right: "9%",
-            color: "#13ADD1",
-            fontFamily: "PT Sans",
-            fontWeight: "bold"
-        },
-        OrderResult2: {
-            position: "absolute",
-            top: "23%",
-            right: "9%",
-            color: "#13ADD1",
-            fontFamily: "PT Sans",
-            fontWeight: "bold"
-        },
-        button: {
-            margin: theme.spacing(1),
-            color: "#FFFFFF",
-            backgroundColor: "#FF5E14",
-            borderRadius: "22px",
-            width: "95%"
-        },
-        alert: {
-            marginBottom: "5%"
-        },
-        formControl: {
-            margin: theme.spacing(1),
-            minWidth: 120,
-            marginLeft: "0px"
-        },
-        fees: {
-            fontSize: "14px",
-            fontFamily: "PT Sans",
-            fontStyle: "normal",
-            color: "#4A4A4A",
-            fontWeight: 600
-        }
-    }),
-);
+// const useStyles = makeStyles((theme: Theme) => 
+//     createStyles({
+//         root: {
+//             borderRadius: "33px",
+//             "& .MuiInputBase-root": {
+//                 color: "#9B9B9B ",
+//                 borderColor: "#888888",
+//                 border: "0.1px dotted",
+//                 marginBottom: "3%",
+//                 borderRadius: "12px"
+//             },
+//             "& .MuiSelect-select:$focus": {
+//                 backgroundColor: "inherit",
+//                 color: "#9B9B9B"
+//             },
+//             "& .MuiFormLabel-root": {
+//                 fontWeight: 700,
+//                 fontSize: "1.2rem"
+//             },
+//             "& .MuiInputLabel-root.Mui-focused":{
+//                 color: "#9B9B9B"
+//             }
+//         },
+//         formHeading: {
+//             fontSize: "1.5rem",
+//             fontWeight: "normal",
+//             lineHeight: "21px",
+//             color: "#4A4A4A",
+//             fontFamily: "PT Sans",
+//             paddingTop: "2%",
+//             paddingBottom: "2%"
+//         },
+//         formSubheading: {
+//             fontSize: "14px",
+//             fontFamily: "Open Sans",
+//             fontStyle: "normal",
+//             color: "#4A4A4A",
+//             paddingTop: "5%",
+//             paddingBottom: "5%",
+//             fontWeight: "normal"
+//         },
+//         paper: {
+//             borderRadius: "33px"
+//         },
+//         divider: {
+//             height: "3px"
+//         },
+//         form: {
+//             marginLeft: "5%",
+//             marginRight: "5%",
+//         },
+//         cardTitle: {
+//             fontSize: "20px",
+//             fontWeight: 700,
+//             color: "#1D2635",
+//             fontFamily: "PT Sans",
+//         },
+//         cardContent: {
+//             flexGrow: 1,
+//             textAlign: "left",
+//             paddingBottom: "0px",
+//             paddingTop: "0px",
+//         },
+//         cardImage: {
+//             textAlign: "left",
+//             position: "relative"
+//         },
+//         card: {
+//             background: "#FFFFFF",
+//             border: "0.813791px solid #E2E2E2",
+//             boxSizing: "border-box",
+//             boxShadow: "0px 4.64215px 12.2069px rgba(0, 0, 0, 0.11)",
+//             borderRadius: "34.3745px",
+//         },
+//         OrderResult1: {
+//             position: "absolute",
+//             top: "23%",
+//             right: "9%",
+//             color: "#13ADD1",
+//             fontFamily: "PT Sans",
+//             fontWeight: "bold"
+//         },
+//         OrderResult2: {
+//             position: "absolute",
+//             top: "23%",
+//             right: "9%",
+//             color: "#13ADD1",
+//             fontFamily: "PT Sans",
+//             fontWeight: "bold"
+//         },
+//         button: {
+//             margin: theme.spacing(1),
+//             color: "#FFFFFF",
+//             backgroundColor: "#FF5E14",
+//             borderRadius: "22px",
+//             width: "95%"
+//         },
+//         alert: {
+//             marginBottom: "5%"
+//         },
+//         formControl: {
+//             margin: theme.spacing(1),
+//             minWidth: 120,
+//             marginLeft: "0px"
+//         },
+//         fees: {
+//             fontSize: "14px",
+//             fontFamily: "PT Sans",
+//             fontStyle: "normal",
+//             color: "#4A4A4A",
+//             fontWeight: 600
+//         }
+//     }),
+// );
 
 export const GeoMap: React.FC<Props> = function GeoMap({setValues, values}) {
-    const classes = useStyles();
+    //const classes = useStyles();
 
     const [compCoords, setcompCoords] = React.useState<State>({
         lat: null,
@@ -151,11 +149,7 @@ export const GeoMap: React.FC<Props> = function GeoMap({setValues, values}) {
 
     //const [isgeoAllowed, setIsGeoAllowed] = useState(false);
 
-    var { value }  = useAppData();
-    var { cartItems, checkoutOrder, restaurants, selectedRestaurant, generalLocation, latitude, longitude } = value;
-    var history = useHistory();
-    var [error, setError] = useState('');
-    var [success, setSuccess] = useState('');
+    
 
 
 

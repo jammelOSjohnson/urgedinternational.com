@@ -1,15 +1,11 @@
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, Button, Modal, Fade, Backdrop, TextField, FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
+import {  Grid, makeStyles, createStyles, Theme, Button, Modal, Fade, Backdrop, TextField, FormControl, MenuItem } from '@material-ui/core';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import { Link, useHistory } from "react-router-dom";
-import { HistoryRounded, PlayArrowRounded, ArrowForwardRounded, Restaurant } from "@material-ui/icons/";
+import { ArrowForwardRounded } from "@material-ui/icons/";
 import {Categories} from "./Categories";
 import { useAppData } from '../../../Context/AppDataContext';
 import { Alert } from '@material-ui/lab';
-
-interface Props {
-    
-}
 
 interface State {
     Name: string;
@@ -19,7 +15,7 @@ interface State {
     City: string;
     Contact: string;
     Category: string;
-    Menu: MenuItem[];
+    Menu: MenuItemm[];
     OpeningHrs: OpenHrs;
     ImageName: String;
     isAvailable: Boolean;
@@ -27,7 +23,7 @@ interface State {
     password: string;
 }
 
-interface MenuItem {
+interface MenuItemm {
     MenuCategory: string;
     ItemName: string;
     ItemCost: string;
@@ -43,12 +39,6 @@ interface OpenHrs {
     Thursday: string;
     Friday: string;
     Saturday: string;
-}
-
-interface Categories {
-    _id: string,
-    Id: string,
-    Name: string
 }
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -171,7 +161,7 @@ export const AddOrg: React.FC = () => {
             Friday: '',
             Saturday: ''
         },
-        ImageName: process.env.REACT_APP_DEFAULT_RESTAURANT_LOGO != undefined ? process.env.REACT_APP_DEFAULT_RESTAURANT_LOGO : '',
+        ImageName: process.env.REACT_APP_DEFAULT_RESTAURANT_LOGO !== undefined ? process.env.REACT_APP_DEFAULT_RESTAURANT_LOGO : '',
         isAvailable: true,
         disabled: false,
         password: '12345678'
@@ -238,7 +228,7 @@ export const AddOrg: React.FC = () => {
                                             Friday: '',
                                             Saturday: ''
                                         },
-                                        ImageName: process.env.REACT_APP_DEFAULT_RESTAURANT_LOGO != undefined ? process.env.REACT_APP_DEFAULT_RESTAURANT_LOGO : '',
+                                        ImageName: process.env.REACT_APP_DEFAULT_RESTAURANT_LOGO !== undefined ? process.env.REACT_APP_DEFAULT_RESTAURANT_LOGO : '',
                                         isAvailable: true,
                                         disabled: false,
                                         password: '12345678'

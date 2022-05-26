@@ -121,7 +121,6 @@ export const EmployeeOrdersCounters: React.FC = function EmployeeOrdersCounters(
     //const [startDate, setStartDate] = useState("");
     //const [endDate, setEndDate] = useState("");
     //const [labels, setLabels] = useState<string[]>([]);
-    const [labelVals, setLabelVals] = useState<number[]>([]);
     //const [rider, setRider] = useState<string[]>([]);
     // console.log(startDate);
     // console.log(endDate);

@@ -2,7 +2,7 @@ import { makeStyles, createStyles, Typography, Theme, useMediaQuery, useTheme } 
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 //import clsx from 'clsx';
-import { PlayArrowRounded } from "@material-ui/icons/";
+//import { PlayArrowRounded } from "@material-ui/icons/";
 import { Link } from "react-router-dom";
 
 // interface State {

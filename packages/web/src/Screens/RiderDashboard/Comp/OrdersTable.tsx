@@ -5,7 +5,7 @@ import MUIDataTable from "mui-datatables";
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { EditRounded } from "@material-ui/icons/";
-import { Backdrop, Button, CircularProgress, createStyles, FormControl, makeStyles, MenuItem, Select, Snackbar, Theme, Typography } from '@material-ui/core';
+import { Button, createStyles, FormControl, makeStyles, MenuItem, Select, Snackbar, Theme, Typography } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
 import { GET_ORDERS_BY_RIDERID } from '../../../GraphQL/Queries';
 import { Alert } from '@material-ui/lab';
@@ -159,10 +159,6 @@ import clsx from 'clsx';
       }
       // eslint-disable-next-line
     }, [currentUser, data]);
-    
-    const handleEdit = (event) => {
-      event.preventDefault();
-    }
 
     const options = {
       filterType: 'dropdown',

@@ -1,4 +1,4 @@
-import { Grid, makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent, CircularProgress, Backdrop } from '@material-ui/core';
+import { Grid, makeStyles, createStyles, Typography, Theme, CircularProgress, Backdrop } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { useAppData } from '../../../Context/AppDataContext';
 import { MailBoxNumber } from './MailBoxNumber';
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const ShippingAddress: React.FC = function ShippingAddress() {
     const classes = useStyles();
     var { value }  = useAppData();
-    var { currentUser, userInfo, createPreAlert, mailbox_Num, shippingAddress, getShippingAddress } = value;
+    var { userInfo, shippingAddress, getShippingAddress } = value;
     const [open, setOpen] = React.useState(true);
 
     useEffect(() => {

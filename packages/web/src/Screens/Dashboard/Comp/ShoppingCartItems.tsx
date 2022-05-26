@@ -1,14 +1,9 @@
-import { Avatar, Grid, makeStyles, createStyles, withStyles, Typography, Theme, CardMedia, Card, CardContent, Stepper, Step, StepLabel, StepIconProps, StepConnector, Divider, CardHeader, IconButton } from '@material-ui/core';
+import { Avatar, Grid, makeStyles, createStyles, Typography, Theme, CardMedia, Card, CardContent, CardHeader, IconButton } from '@material-ui/core';
 import { useAppData } from '../../../Context/AppDataContext';
-import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
-import LocalShippingOutlinedIcon from '@material-ui/icons/LocalShippingOutlined';
-import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import { PaymentOptionsForm } from './PaymentOptionsForm';
 import React from 'react';
-import clsx from 'clsx';
 import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
-import CloseIcon from '@material-ui/icons/Close';
 import {CloseRounded} from '@material-ui/icons';
 
 
@@ -100,84 +95,9 @@ const useStyles = makeStyles((theme: Theme) =>
 export const ShoppingCartItems: React.FC = function ShoppingCartItems() {
   const classes = useStyles();
   var { value }  = useAppData();
-  var { cartItems, checkoutOrder, removeCartItem, addItemToCart } = value;
-
-  const ColorlibConnector = withStyles({
-      alternativeLabel: {
-        top: 22,
-      },
-      active: {
-        '& $line': {
-          backgroundImage:
-          'linear-gradient( 95deg, #fea709a6 0%, #fec909 50%, #fec109 100%)',
-        },
-      },
-      completed: {
-        '& $line': {
-          backgroundImage:
-              'linear-gradient( 95deg, #fea709a6 0%, #fec909 50%, #fec109 100%)',
-        },
-      },
-      line: {
-        height: 3,
-        border: 0,
-        backgroundColor: '#eaeaf0',
-        borderRadius: 1,
-      },
-    })(StepConnector);
-
-  const useColorlibStepIconStyles = makeStyles({
-    root: {
-      backgroundColor: '#ccc',
-      zIndex: 1,
-      color: '#fff',
-      width: 50,
-      height: 50,
-      display: 'flex',
-      borderRadius: '50%',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    active: {
-      backgroundImage:
-        'linear-gradient( 136deg, #fea709a6 0%, #fec909 50%, #fec109 100%)',
-      boxShadow: '0 4px 10px 0 #fec109',
-    },
-    completed: {
-      backgroundImage:
-      'linear-gradient( 136deg, #fea709a6 0%, #fec909 50%, #fec109 100%)',
-    },
-  });
-
-function ColorlibStepIcon(props: StepIconProps) {
-    const classes = useColorlibStepIconStyles();
-    const { active, completed } = props;
-
-    const icons: { [index: string]: React.ReactElement } = {
-      1: <LocationOnOutlinedIcon />,
-      2: <LocalShippingOutlinedIcon />,
-      3: <HomeOutlinedIcon />,
-    };
-
-    return (
-      <div
-        className={clsx(classes.root, {
-          [classes.active]: active,
-          [classes.completed]: completed,
-        })}
-      >
-        {icons[String(props.icon)]}
-      </div>
-    );
-  }
-
-  function getSteps() {
-    return ['Pick-Up Time', 'In Transit', 'Delivered'];
-    }
+  var { cartItems, removeCartItem, addItemToCart } = value;
 
     // eslint-disable-next-line
-    const [activeStep, setActiveStep] = React.useState(1);
-    const steps = getSteps();
 
     // const handleNext = () => {
     //     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -199,7 +119,6 @@ function ColorlibStepIcon(props: StepIconProps) {
       }
     }
     
-    const[quantity, setQuantity] = React.useState(1);
     
     const increment = async (index) => {
       try{
