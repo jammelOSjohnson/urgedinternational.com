@@ -4,8 +4,9 @@ import { DataGrid, GridColDef } from '@material-ui/data-grid';
 import moment from 'moment';
 import { Link, useHistory } from 'react-router-dom';
 import MUIDataTable from "mui-datatables";
-import { Backdrop, Button, createStyles, Fade, Grid, makeStyles, Modal, Theme, Typography } from '@material-ui/core';
+import { Backdrop, Button, createStyles, Fade, Grid, makeStyles, Modal, Snackbar, Theme, Typography } from '@material-ui/core';
 import clsx from 'clsx';
+import { Alert } from '@material-ui/lab';
 
 const columns = [
   { 
@@ -99,6 +100,14 @@ const useStyles = makeStyles((theme: Theme) =>
         position: "absolute",
         top: 18,
         right: 10
+    },
+    YesBtn: {
+      backgroundColor: "#72C123",
+      color: "#FFF"
+    },
+    NoBtn: {
+      backgroundColor: "red",
+      color: "#FFF"
     }
   }),
 );
@@ -110,8 +119,11 @@ export const HistoryTable: React.FC = function HistoryTable () {
   var location = history.location;
   var referralPath = location.pathname;
 
-  var { orders, fetchOrdersByUser, currentUser, userRolef } = value;
+  var { orders, fetchOrdersByUser, currentUser, userRolef, UpdateOrder } = value;
   const [open, setOpen] = React.useState(false);
+  const [open1, setOpen1] = React.useState(false);
+  const [open2, setOpen2] = React.useState(false);
+  const [selectedOrderNumber, setSelectedOrderNumber] = React.useState("");
 
   
 
@@ -136,10 +148,11 @@ export const HistoryTable: React.FC = function HistoryTable () {
     print: false
   };
 
-  const handleOpen = () => {
+  const handleOpen = (orderNumber) => {
     try
     {
       setOpen(true);
+      setSelectedOrderNumber(orderNumber);
     }catch(err){
 
     }
@@ -148,6 +161,36 @@ export const HistoryTable: React.FC = function HistoryTable () {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleClose1 = () => {
+    setOpen1(false);
+  };
+
+  const handleClose2 = () => {
+    setOpen2(false);
+  };
+
+  const handleSubmit = async(status) => {
+    try{
+        setOpen(false);
+        setOpen2(false);
+        console.log(status);
+        console.log(selectedOrderNumber);
+        console.log(orders);
+        let filteredOrder = orders.filter((item) => item._id.toString() === selectedOrderNumber);
+        console.log(filteredOrder);
+        let order = {...filteredOrder[0], OrderStatus: status, Rider: filteredOrder[0].Rider._id };
+        console.log(order);
+        await UpdateOrder(value, order).then((res) => {
+            if(res){
+                setOpen1(true);
+            }
+        }) 
+    }catch(err){
+        console.log(err);
+        setOpen2(true);
+    }
+  }
 
   if(userRolef !== undefined && orders.length !== 0){
     if(userRolef === "Admin" || userRolef === "Rider" || userRolef === "Customer" ){
@@ -200,7 +243,7 @@ export const HistoryTable: React.FC = function HistoryTable () {
                         :item.OrderStatus === "Not Assigned" || item.OrderStatus === "Pending"?
                         <>
                           <Button
-                          onClick={handleOpen}
+                          onClick={() => handleOpen(item._id.toString())}
                           style={{backgroundColor: "red", color:"#FFF", textAlign:"center"}}>
                               Cancel Order ?
                           </Button>
@@ -236,6 +279,17 @@ export const HistoryTable: React.FC = function HistoryTable () {
           options={options}
         />
 
+      <Snackbar open={open1} autoHideDuration={6000} onClose={handleClose1}>
+          <Alert onClose={handleClose1} severity="success">
+              Order Updated Successfully.
+          </Alert>
+      </Snackbar>
+      <Snackbar open={open2} autoHideDuration={6000} onClose={handleClose2}>
+            <Alert onClose={handleClose2} severity="error">
+                Unable to update order at this time.
+            </Alert>
+      </Snackbar>
+
       <Modal
           aria-labelledby="transition-modal-title"
           aria-describedby="transition-modal-description"
@@ -256,14 +310,14 @@ export const HistoryTable: React.FC = function HistoryTable () {
                   </Link>
                   <br />
                   <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                          <Grid item xs={12} md={6} >
-                              <Button>
-                                yes
+                          <Grid item xs={12} sm={6} style={{textAlign: "center"}}>
+                              <Button className={classes.YesBtn} onClick={() => handleSubmit("Cancelled")}>
+                                Yes
                               </Button>
                           </Grid>
-                          <Grid item xs={12} md={6} >
-                              <Button>
-                                no
+                          <Grid item xs={12} sm={6} style={{textAlign: "center"}}>
+                              <Button className={classes.NoBtn}>
+                                No
                               </Button>
                           </Grid>
                   </Grid>
