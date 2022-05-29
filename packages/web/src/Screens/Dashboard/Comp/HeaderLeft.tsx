@@ -1,5 +1,5 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { IconButton, makeStyles, createStyles, Typography, Theme, useMediaQuery, useTheme, Modal, Backdrop, Fade, Grid } from '@material-ui/core';
+import { IconButton, makeStyles, createStyles, Typography, Theme, useMediaQuery, useTheme, Modal, Backdrop, Fade, Grid, FormControl, InputLabel, OutlinedInput, InputAdornment } from '@material-ui/core';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { HistoryRounded, PlayArrowRounded, ArrowBackRounded } from "@material-ui/icons/";
@@ -14,10 +14,23 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MailIcon from '@material-ui/icons/Mail';
-import {CloseRounded} from '@material-ui/icons';
+import {CloseRounded, SearchRounded} from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) => 
-    createStyles({
+        createStyles({
+          root: {
+            display: 'flex',
+            "& .MuiFormLabel-root": {
+              color: "#4D4D4D"
+            },
+            color: "#4D4D4D",
+            "& .MuiIconButton-root": {
+                fontFamily: "PT Sans"
+            },
+            "& .MuiButtonBase-root": {
+                fontFamily: "PT Sans"
+            },
+        },
         link: {
             textDecoration: "none",
             color: "inherit"
@@ -94,14 +107,20 @@ const useStyles = makeStyles((theme: Theme) =>
             fontWeight: "bolder",
             color: "#FAFAFA",
             textTransform: "none"
-        },root: {
-          display: 'flex',
         },
         cartIcon: {
             position: "absolute",
             top: 18,
             right: 10
-        }
+        },
+        textBox: {
+          width: "320px",
+          borderColor: "#F3F3F3",
+          backgroundColor: "#F9F9FB",
+          borderRadius: "25px",
+          fontFamily: "PT Sans"
+          // border: "2px solid #ffffff"
+        },
     }),
 );
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
@@ -127,6 +146,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
         right: false,
     });
     const [open2, setOpen2] = React.useState(false);
+    const [searchTerm, setSearchTerm] = React.useState('');
     
     const toggleDrawer = (anchor: Anchor, open: boolean) => (
       event: React.KeyboardEvent | React.MouseEvent,
@@ -464,27 +484,58 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
       
     };
 
+    const handleChange = () => (event: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchTerm(event.target.value);
+    };
+
     return (
         <>
             {isMatchMedium? (
-                <Typography variant="h6" style={{fontWeight: "bold", background: "transparent"}}>
-                    <Link to="/Dashboard" className={classes.link}>
-                      {referralPath === "/Rates" || referralPath === "/rates" ? '' : 'PORTAL'}
-                    </Link>
-                    {referralPath === "/fooddelivery" || referralPath === "/FoodDelivery" ?
-                    <span ><PlayArrowRounded /> <span style={{color: "#FF5E14"}}>FOOD DELIVERY</span></span> :
-                    referralPath === "/orderhistory" || referralPath === "/OrderHistory" ?
-                    <span ><PlayArrowRounded /><span style={{color: "#FF5E14"}}>Order History</span></span> :
-                    referralPath === "/Restaurants" || referralPath === "/restaurants" ?
-                    <span><PlayArrowRounded /> <Link to="/FoodDelivery" className={classes.link}>FOOD DELIVERY</Link> <PlayArrowRounded /> <span style={{color: "#FF5E14"}}>RESTAURANTS</span></span> :
-                    referralPath === "/Menu" || referralPath === "/menu" ?
-                    <span><PlayArrowRounded /> <Link to="/FoodDelivery" className={classes.link}>FOOD DELIVERY</Link> <PlayArrowRounded /> <Link to="/Restaurants" className={classes.link}>RESTAURANTS</Link> <PlayArrowRounded /> <span style={{color: "#FF5E14"}}>MENU</span></span> :
-                    referralPath === "/Rates" || referralPath === "/rates" ?
-                    <span><Link to="/CargoAndFreight" className={classes.link}><span style={{color: "#FF5E14"}}><ArrowBackRounded /> RETURN</span></Link></span> :
-                    referralPath === "/CargoAndFreight" || referralPath === "/cargoandfreight" ?
-                    <span><PlayArrowRounded /> <Link to="/CargoAndFreight" className={classes.link} style={{color: "#FF5E14"}}>CARGO &amp; FREIGHT</Link></span> : ""}
-                    
-                </Typography>
+              <>
+                <div style={{backgroundColor: "#FFF", display: "flex"}}>
+                  <FormControl variant="outlined" style={{color: "#4D4D4D"}}>
+                      <InputLabel htmlFor="search" className={classes.root}>Portal Search</InputLabel>
+                      <OutlinedInput 
+                          className={classes.textBox}
+                          id="search"
+                          type={'text'}
+                          value={searchTerm}
+                          onChange={handleChange()}
+                          startAdornment={
+                              <InputAdornment position="start">
+                                  <IconButton style={{color: "#374957"}}>
+                                      <SearchRounded/>
+                                  </IconButton>
+                              </InputAdornment>
+                          }
+                          color="secondary"
+                          labelWidth={70}
+                          required={true}
+                      />
+                  </FormControl>
+                  <Typography variant="h6" style={{fontWeight: "bold", background: "transparent"}}>
+                      <Link to="/Dashboard" className={classes.link}>
+                        {
+                          referralPath === "/Rates" || referralPath === "/rates" ||
+                          referralPath === "/Dashboard" || referralPath === "/dashboard"
+                          ? '' : 'PORTAL'
+                        }
+                      </Link>
+                      {referralPath === "/fooddelivery" || referralPath === "/FoodDelivery" ?
+                      <span ><PlayArrowRounded /> <span style={{color: "#FF5E14"}}>FOOD DELIVERY</span></span> :
+                      referralPath === "/orderhistory" || referralPath === "/OrderHistory" ?
+                      <span ><PlayArrowRounded /><span style={{color: "#FF5E14"}}>Order History</span></span> :
+                      referralPath === "/Restaurants" || referralPath === "/restaurants" ?
+                      <span><PlayArrowRounded /> <Link to="/FoodDelivery" className={classes.link}>FOOD DELIVERY</Link> <PlayArrowRounded /> <span style={{color: "#FF5E14"}}>RESTAURANTS</span></span> :
+                      referralPath === "/Menu" || referralPath === "/menu" ?
+                      <span><PlayArrowRounded /> <Link to="/FoodDelivery" className={classes.link}>FOOD DELIVERY</Link> <PlayArrowRounded /> <Link to="/Restaurants" className={classes.link}>RESTAURANTS</Link> <PlayArrowRounded /> <span style={{color: "#FF5E14"}}>MENU</span></span> :
+                      referralPath === "/Rates" || referralPath === "/rates" ?
+                      <span><Link to="/CargoAndFreight" className={classes.link}><span style={{color: "#FF5E14"}}><ArrowBackRounded /> RETURN</span></Link></span> :
+                      referralPath === "/CargoAndFreight" || referralPath === "/cargoandfreight" ?
+                      <span><PlayArrowRounded /> <Link to="/CargoAndFreight" className={classes.link} style={{color: "#FF5E14"}}>CARGO &amp; FREIGHT</Link></span> : ""}
+                  </Typography>
+                </div>
+              </>
             ):<></>}
 
             {isMatch? (
