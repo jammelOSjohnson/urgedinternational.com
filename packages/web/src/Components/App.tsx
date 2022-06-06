@@ -17,6 +17,7 @@ import { CustomerDashboardScreen } from '../Screens/Dashboard/CustomerDashboard'
 import { FoodDeliveryDashboardScreen } from '../Screens/Dashboard/FoodDeliveryDashboardScreen';
 import { RestaurantsScreen } from '../Screens/Dashboard/RestaurantsScreen';
 import { RestaurantMenuScreen } from '../Screens/Dashboard/RestaurantMenuScreen';
+import { ViewRestaurantItem } from '../Screens/Dashboard/ViewRestaurantItem';
 import { ShoppingCartScreen } from '../Screens/Dashboard/ShoppingCartScreen';
 import { OrdersHistory } from '../Screens/Dashboard/OrderHistoryScreen';
 import { ErrandScreen } from '../Screens/Dashboard/ErrandScreen';
@@ -237,6 +238,7 @@ const App: React.FC = function App() {
                     <Route path="/Dashboard" exact component={CustomerDashboardScreen} />
                     <Route path="/FoodDelivery" exact component={FoodDeliveryDashboardScreen} />
                     <Route path="/Restaurants" exact component={RestaurantsScreen} />
+                    <Route path="/RestaurantItem" exact component={ViewRestaurantItem} />
                     <Route path="/CargoAndFreight" exact component={CargoAndFreight} />
                     <Route path="/Rates" exact component={RatesScreen} />
                     <Route path="/ShoppingCart" exact component={ShoppingCartScreen} />

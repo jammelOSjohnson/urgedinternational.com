@@ -284,6 +284,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var currentUser = undefined;
     var selectedRestaurant = undefined;
     var selectedRestaurantName = undefined;
+    var selectedMenuSearchItem = undefined;
     var selectedMenuCategory = undefined;
     var selectedRider = undefined;
     var filteredMenuItems = [];
@@ -1989,6 +1990,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         restaurants,
         selectedRestaurant,
         selectedRestaurantName,
+        selectedMenuSearchItem,
         selectedMenuCategory,
         selectedRider,
         prevSelectedrestaurant,

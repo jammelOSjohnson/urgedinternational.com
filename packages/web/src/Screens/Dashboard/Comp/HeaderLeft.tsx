@@ -1,9 +1,8 @@
 import { useAppData } from '../../../Context/AppDataContext';
 import { IconButton, makeStyles, createStyles, Typography, Theme, useMediaQuery, useTheme, Modal, Backdrop, Fade, Grid, FormControl, InputLabel, OutlinedInput, InputAdornment } from '@material-ui/core';
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { HistoryRounded, PlayArrowRounded, ArrowBackRounded } from "@material-ui/icons/";
-import { Link } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useHistory, Link } from 'react-router-dom';
+import { HistoryRounded } from "@material-ui/icons/";
 import clsx from 'clsx';
 
 import Drawer from '@material-ui/core/Drawer';
@@ -14,7 +13,18 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MailIcon from '@material-ui/icons/Mail';
-import {CloseRounded, SearchRounded} from '@material-ui/icons';
+import {CloseRounded} from '@material-ui/icons';
+import { DashboardBreadCrumbs } from './DashboardBreadCrumbs';
+import PortalSearch from './PortalSrearch';
+
+interface restItemsArr {
+  ImageName: string;
+  ItemName: string;
+  ItemDescription: string;
+  ItemCost: number;
+  MenuCategory: string;
+  rest: Object[];
+}
 
 const useStyles = makeStyles((theme: Theme) => 
         createStyles({
@@ -29,6 +39,9 @@ const useStyles = makeStyles((theme: Theme) =>
             },
             "& .MuiButtonBase-root": {
                 fontFamily: "PT Sans"
+            },
+            "& .MuiInputLabel-root.Mui-focused": {
+              color: "#4D4D4D"
             },
         },
         link: {
@@ -116,11 +129,20 @@ const useStyles = makeStyles((theme: Theme) =>
         textBox: {
           width: "320px",
           borderColor: "#F3F3F3",
-          backgroundColor: "#F9F9FB",
+          backgroundColor: "#D8D8D8",
           borderRadius: "25px",
           fontFamily: "PT Sans"
           // border: "2px solid #ffffff"
         },
+        searchResult: { 
+          textAlign: "left", 
+          zIndex: 100, 
+          position: "absolute", 
+          backgroundColor: "#FFF", 
+          width: "300px", 
+          maxHeight: "400px", 
+          overflowY: "scroll" 
+        }
     }),
 );
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
@@ -133,7 +155,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
     const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
     
     var { value }  = useAppData();
-    var { logout, userInfo } = value;
+    var { logout, userInfo, restaurants, viewMenuItems } = value;
 
     var history = useHistory();
     var location = history.location;
@@ -146,7 +168,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
         right: false,
     });
     const [open2, setOpen2] = React.useState(false);
-    const [searchTerm, setSearchTerm] = React.useState('');
+    const [restItems, setRestItems] = React.useState<restItemsArr[]>([]);
     
     const toggleDrawer = (anchor: Anchor, open: boolean) => (
       event: React.KeyboardEvent | React.MouseEvent,
@@ -161,6 +183,18 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
 
       setState({ ...state, [anchor]: open });
     };
+
+    useEffect(() => {
+      if (restaurants.length > 0) {
+        let itemArr = restItems;
+        restaurants.map((val) => {
+          val.MenuItems.map((item) => {
+            itemArr.push({...item, rest: val});
+            setRestItems(itemArr);
+          })
+        })
+      }
+    }, [restaurants])
 
     const list = (anchor: Anchor) => (
         <div
@@ -484,57 +518,19 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
       
     };
 
-    const handleChange = () => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchTerm(event.target.value);
-    };
-
     return (
         <>
             {isMatchMedium? (
               <>
-                <div style={{backgroundColor: "#FFF", display: "flex"}}>
-                  <FormControl variant="outlined" style={{color: "#4D4D4D"}}>
-                      <InputLabel htmlFor="search" className={classes.root}>Portal Search</InputLabel>
-                      <OutlinedInput 
-                          className={classes.textBox}
-                          id="search"
-                          type={'text'}
-                          value={searchTerm}
-                          onChange={handleChange()}
-                          startAdornment={
-                              <InputAdornment position="start">
-                                  <IconButton style={{color: "#374957"}}>
-                                      <SearchRounded/>
-                                  </IconButton>
-                              </InputAdornment>
-                          }
-                          color="secondary"
-                          labelWidth={70}
-                          required={true}
-                      />
-                  </FormControl>
-                  <Typography variant="h6" style={{fontWeight: "bold", background: "transparent"}}>
-                      <Link to="/Dashboard" className={classes.link}>
-                        {
-                          referralPath === "/Rates" || referralPath === "/rates" ||
-                          referralPath === "/Dashboard" || referralPath === "/dashboard"
-                          ? '' : 'PORTAL'
-                        }
-                      </Link>
-                      {referralPath === "/fooddelivery" || referralPath === "/FoodDelivery" ?
-                      <span ><PlayArrowRounded /> <span style={{color: "#FF5E14"}}>FOOD DELIVERY</span></span> :
-                      referralPath === "/orderhistory" || referralPath === "/OrderHistory" ?
-                      <span ><PlayArrowRounded /><span style={{color: "#FF5E14"}}>Order History</span></span> :
-                      referralPath === "/Restaurants" || referralPath === "/restaurants" ?
-                      <span><PlayArrowRounded /> <Link to="/FoodDelivery" className={classes.link}>FOOD DELIVERY</Link> <PlayArrowRounded /> <span style={{color: "#FF5E14"}}>RESTAURANTS</span></span> :
-                      referralPath === "/Menu" || referralPath === "/menu" ?
-                      <span><PlayArrowRounded /> <Link to="/FoodDelivery" className={classes.link}>FOOD DELIVERY</Link> <PlayArrowRounded /> <Link to="/Restaurants" className={classes.link}>RESTAURANTS</Link> <PlayArrowRounded /> <span style={{color: "#FF5E14"}}>MENU</span></span> :
-                      referralPath === "/Rates" || referralPath === "/rates" ?
-                      <span><Link to="/CargoAndFreight" className={classes.link}><span style={{color: "#FF5E14"}}><ArrowBackRounded /> RETURN</span></Link></span> :
-                      referralPath === "/CargoAndFreight" || referralPath === "/cargoandfreight" ?
-                      <span><PlayArrowRounded /> <Link to="/CargoAndFreight" className={classes.link} style={{color: "#FF5E14"}}>CARGO &amp; FREIGHT</Link></span> : ""}
-                  </Typography>
-                </div>
+                <PortalSearch backgroundColor={'#FFF'} color={'#4D4D4D'} screen={'desktop'} />
+                <DashboardBreadCrumbs />
+                <style>
+                  {`
+                    .MuiInputLabel-root.Mui-focused {
+                      color: #4D4D4D
+                    }
+                  `}
+                </style>
               </>
             ):<></>}
 
@@ -576,15 +572,18 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                         </div>
                         </Fade>
                     </Modal>
-                    <div style={{marginTop: "5%"}}>
+                    <div style={{marginTop: "1%"}}>
                         {(['left'] as Anchor[]).map((anchor) => (
                             <React.Fragment key={anchor}>
-                            <Button style={{zIndex: 1000}} onClick={toggleDrawer(anchor, true)} className="mobileMenuToggle">
-                                <img src="Images/MobileMenuIcon.png" alt="MobileMenuIcon"></img>
-                            </Button>
-                            <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
-                                {list(anchor)}
-                            </Drawer>
+                              <div style={{display: "flex"}}>
+                                <Button style={{zIndex: 1000}} onClick={toggleDrawer(anchor, true)} className="mobileMenuToggle">
+                                    <img src="Images/MobileMenuIcon.png" alt="MobileMenuIcon"></img>
+                                </Button>
+                                <PortalSearch backgroundColor={'#FFF'} color={'#4D4D4D'} screen={'mobile'} />
+                              </div>
+                              <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
+                                  {list(anchor)}
+                              </Drawer>
                             </React.Fragment>
                         ))}
                     </div>

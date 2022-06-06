@@ -319,7 +319,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                               <ListItemText className="link-font" primary={text} />
                             </ListItem>
                           :
-                          (referralPath === "/FoodDelivery" || referralPath === "/Restaurants" || referralPath === "/Menu") && text === "Food Delivery" ?
+                          (referralPath === "/FoodDelivery" || referralPath === "/Restaurants" || referralPath === "/Menu" || referralPath === "/RestaurantItem") && text === "Food Delivery" ?
                             <ListItem button key={text} className={classes.activeItem2}>
                               <ListItemIcon className={classes.activeIcon2}>
                               {
@@ -694,7 +694,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                               <ListItemText className="link-font" primary={text} />
                             </ListItem>
                           :
-                          (referralPath === "/FoodDelivery" || referralPath === "/Restaurants" || referralPath === "/Menu")  && text === "Food Delivery" ?
+                          (referralPath === "/FoodDelivery" || referralPath === "/Restaurants" || referralPath === "/Menu" || referralPath === "/RestaurantItem")  && text === "Food Delivery" ?
                             <ListItem button key={text} className={classes.activeItem2}>
                               <ListItemIcon className={classes.activeIcon2}>
                                     {
