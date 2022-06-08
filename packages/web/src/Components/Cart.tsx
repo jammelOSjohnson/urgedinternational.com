@@ -116,6 +116,7 @@ export const Cart: React.FC = function Cart() {
                 aria-controls={open ? 'menu-list-grow' : undefined}
                 aria-haspopup="true"
                 onClick={handleToggle}
+                id='cart-icon-header-right'
             >
                 <Badge badgeContent={cartItems.length} color="primary">
                     <ShoppingCartRounded className={classes.noti} />

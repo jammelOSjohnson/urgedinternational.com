@@ -576,7 +576,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                         {(['left'] as Anchor[]).map((anchor) => (
                             <React.Fragment key={anchor}>
                               <div style={{display: "flex"}}>
-                                <Button style={{zIndex: 1000}} onClick={toggleDrawer(anchor, true)} className="mobileMenuToggle">
+                                <Button style={{zIndex: 2, position: 'fixed'}} onClick={toggleDrawer(anchor, true)} className="mobileMenuToggle">
                                     <img src="Images/MobileMenuIcon.png" alt="MobileMenuIcon"></img>
                                 </Button>
                                 <PortalSearch backgroundColor={'#FFF'} color={'#4D4D4D'} screen={'mobile'} />

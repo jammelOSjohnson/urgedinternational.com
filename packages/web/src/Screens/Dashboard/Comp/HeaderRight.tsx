@@ -1,5 +1,6 @@
 import { Container, Grid, makeStyles, createStyles, Theme } from '@material-ui/core';
-import React from 'react';
+import clsx from 'clsx';
+import React, { useEffect } from 'react';
 import { Cart } from "../../../Components/Cart";
 import { Notification } from "../../../Components/Notification";
 import { User } from "../../../Components/User"
@@ -19,29 +20,104 @@ const useStyles = makeStyles((theme: Theme) =>
         gridRoot: {
             padding: "0px"
         },
+        notScrolled:{
+            backgroundColor: "transparent",
+        }
     }),
 );
 
 export const HeaderRight: React.FC = function HeaderRight() {
     const classes = useStyles();
+    const [scrolled, setScrolled] = React.useState(false);
+    const handleScroll = () => {
+        let container = document.getElementById("right-container");
+        let cart = document.getElementById("cart-icon-header-right");
+        let scrollY = window.scrollY;
+        console.log('scrolled', scrollY)
+        if (scrollY > 0) {
+            setScrolled(true);
+            if(!(container?.classList.contains("scrolled"))){
+                container?.classList.toggle("scrolled");
+            }
+            if(!(cart?.classList.contains("cart-scrolled"))){
+                cart?.classList.toggle("cart-scrolled");
+            }
+        } else {
+            setScrolled(false);
+            if(container?.classList.contains("scrolled")){
+                container.classList.toggle("scrolled");
+            }
 
-    
-      
-    return (
-        <>
-            <Container maxWidth="xl" className={classes.main} style={{background: "transparent"}}>
-                <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
-                    <Grid item xs={6} spacing={1}>
-                        <User />
-                    </Grid>
-                    <Grid container direction="row" xs={6} spacing={1}>
-                        <Grid item xs={12} spacing={0} style={{marginTop: "10%"}}>
-                            <Notification /> <span style={{marginRight: "10%"}}></span>
-                            <Cart />
+            if(cart?.classList.contains("cart-scrolled")){
+                cart?.classList.toggle("cart-scrolled");
+            }
+        }
+    }
+
+    useEffect(() => {
+        handleScroll();
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        }
+    })
+    if(!scrolled){
+        return (
+            <>
+                <Container id='right-container' maxWidth="xl" className={clsx(classes.main, classes.notScrolled)} onScroll={handleScroll}>
+                    <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
+                        <Grid item xs={6} spacing={1}>
+                            <User />
+                        </Grid>
+                        <Grid container direction="row" xs={6} spacing={1}>
+                            <Grid item xs={12} spacing={0} style={{marginTop: "10%"}}>
+                                <Notification /> <span style={{marginRight: "10%"}}></span>
+                                <Cart />
+                            </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-            </Container>
-        </>
-    )
+                </Container>
+                <style>
+                    {`
+                        .scrolled {
+                            background-color: #FFF;
+                            position: fixed;
+                            z-index: 2;
+                        }
+
+                        .cart-scrolled {
+                            position: relative;
+                        }
+
+                    `}
+                </style>
+            </>
+        )
+    }else {
+        return (
+            <>
+                <div id='right-container'>
+                    <Cart />
+                </div>
+                <style>
+                    {`
+                        .scrolled {
+                            position: fixed;
+                            z-index: 2;
+                            text-align: right;
+                            width: 30%;
+                            padding-top: 1.5%;
+                        }
+
+                        .cart-scrolled {
+                            position: relative;
+                            text-align: right;
+                            margin-right: 26%;
+                        }
+
+                    `}
+                </style>
+            </>
+        )
+    }
 }

@@ -236,30 +236,34 @@ import { Alert } from '@material-ui/lab';
               _id: item._id, 
               Description: orderItems,
               OrderDate: estTime,
-              OrderStatus: <>
-                <FormControl variant="outlined" className={classes.formControl} fullWidth required>
-                  {/* <InputLabel id="demo-simple-select-outlined-label">Status</InputLabel> */}
-                  <Select
-                      labelId="demo-simple-select-outlined-label"
-                      id="demo-simple-select-outlined"
-                      value={item.OrderStatus}
-                      onChange={(e) => handleChange(e,index)}
-                      label="Status"
-                      name="Status"
-                      className={classes.root}
-                      style={{color: 'black'}}
-                      required
-                  >
-                      <MenuItem value={"Pending"} style={{color: "red"}}>
-                        Pending
-                      </MenuItem>
-                      <MenuItem value={"Ordered"}>Ordered</MenuItem>
-                      <MenuItem value={"Picked Up"}>Picked Up</MenuItem>
-                      <MenuItem value={"In Transit"}>In Transit</MenuItem>
-                      <MenuItem value={"Delivered"}>Delivered</MenuItem>
-                  </Select>
-                </FormControl>
-              </>, 
+              OrderStatus: 
+                item.OrderStatus !== "Cancelled" && item.OrderStatus !== "Not Assigned" ?
+                  <>
+                    <FormControl variant="outlined" className={classes.formControl} fullWidth required>
+                      {/* <InputLabel id="demo-simple-select-outlined-label">Status</InputLabel> */}
+                      <Select
+                          labelId="demo-simple-select-outlined-label"
+                          id="demo-simple-select-outlined"
+                          value={item.OrderStatus}
+                          onChange={(e) => handleChange(e,index)}
+                          label="Status"
+                          name="Status"
+                          className={classes.root}
+                          style={{color: 'black'}}
+                          required
+                      >
+                          <MenuItem value={"Pending"} style={{color: "red"}}>
+                            Pending
+                          </MenuItem>
+                          <MenuItem value={"Ordered"}>Ordered</MenuItem>
+                          <MenuItem value={"Picked Up"}>Picked Up</MenuItem>
+                          <MenuItem value={"In Transit"}>In Transit</MenuItem>
+                          <MenuItem value={"Delivered"}>Delivered</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </>
+                :
+                item.OrderStatus.toUpperCase(),
               OrderTotal: `$ ${item.OrderTotal}`,
               PaymentMethod: item.PaymentMethod, 
               Rider: item.Rider.FirstName,

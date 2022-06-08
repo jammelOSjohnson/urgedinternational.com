@@ -152,7 +152,12 @@ const useStyles = makeStyles((theme: Theme) =>
             width: "auto", 
             maxHeight: "400px", 
             overflowY: "scroll" 
-          }
+        },
+        mobileSearchContainer: {
+          position: 'fixed',
+          top: '-3px',
+          right: '46%',
+        }
     }),
 );
 
@@ -340,7 +345,7 @@ const PortalSearch: React.FC<Props> = function PortalSearch({color, backgroundCo
                         </div>
                     </Fade>
                 </Modal>
-                <div style={{backgroundColor: backgroundColor, marginLeft: 'auto', marginRight: 'auto'}}>
+                <div className={classes.mobileSearchContainer}>
                     <IconButton 
                         style={{color: "#374957", marginLeft: "auto"}}
                         onClick={handleOpen}
