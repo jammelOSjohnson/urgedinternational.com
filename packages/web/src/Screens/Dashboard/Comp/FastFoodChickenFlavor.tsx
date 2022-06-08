@@ -243,6 +243,7 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any, me
                                             if(item2.MenuCategory === "Sides"){
                                                return <MenuItem key={index} value={item2.ItemName}>{`${item2.ItemName} $${parseFloat(item2.ItemCost).toFixed(2)}`}</MenuItem>
                                             }
+                                            return
                                         })
                                     }
                                 </Select>

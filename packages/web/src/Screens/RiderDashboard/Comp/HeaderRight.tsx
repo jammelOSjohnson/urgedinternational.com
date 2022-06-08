@@ -1,4 +1,4 @@
-import { Container, Grid, Badge , makeStyles, createStyles,Theme, useMediaQuery, useTheme, FormGroup, FormControlLabel, Switch } from '@material-ui/core';
+import { Container, Grid, makeStyles, createStyles,Theme, useMediaQuery, useTheme, FormGroup, FormControlLabel, Switch } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { Notification } from "../../../Components/Notification";
 import { User } from "../../../Components/User"
@@ -69,6 +69,7 @@ export const HeaderRight: React.FC = function HeaderRight() {
                 setAvailability(rider.isAvailable)
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [rider, userInfo._id])
       
     return (

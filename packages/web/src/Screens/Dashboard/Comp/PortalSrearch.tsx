@@ -163,7 +163,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const PortalSearch: React.FC<Props> = function PortalSearch({color, backgroundColor, screen}) {
     const classes = useStyles();
-    const theme = useTheme();
     const [searchTerm, setSearchTerm] = React.useState('');
     const [open, setOpen] = React.useState(false);
     const [restItems, setRestItems] = React.useState<restItemsArr[]>([]);
@@ -213,6 +212,7 @@ const PortalSearch: React.FC<Props> = function PortalSearch({color, backgroundCo
           if(item.ItemName === itemOBJ.ItemName) {
             itemIndex = index; 
           }
+          return
         })
         // console.log("Item Index is");
         // console.log(itemIndex);
@@ -288,9 +288,9 @@ const PortalSearch: React.FC<Props> = function PortalSearch({color, backgroundCo
                             {
                                 restaurants.filter((val) => {
                                     if(searchTerm === "") {
-                                    return;
+                                      return;
                                     }else if(val.FirstName.toLowerCase().includes(searchTerm.toLowerCase())){
-                                    return val;
+                                      return val;
                                     }
                                     return 
                                 }).map((val, index) => {
@@ -417,7 +417,7 @@ const PortalSearch: React.FC<Props> = function PortalSearch({color, backgroundCo
                           />
                       </FormControl>
                 </div>
-                <div className={classes.searchResultMobile}>
+                <div className={classes.searchResult}>
                   {
                       restaurants.filter((val) => {
                         if(searchTerm === "") {

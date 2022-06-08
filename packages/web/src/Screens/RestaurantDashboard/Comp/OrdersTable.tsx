@@ -5,7 +5,7 @@ import MUIDataTable from "mui-datatables";
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { SearchRounded } from "@material-ui/icons/";
-import { createStyles, makeStyles, Snackbar, Theme } from '@material-ui/core';
+import { Snackbar } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
 //import { GET_ORDERS_BY_RIDERID } from '../../../GraphQL/Queries';
 import { GET_ORDERS_BY_RESTAURANTID } from '../../../GraphQL/Queries';
@@ -78,47 +78,47 @@ import { Alert } from '@material-ui/lab';
     },
   ];
 
-  const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-      root: {
-        padding: "0% 0px 0% 0px",
-        borderRadius: "22px",
-        "& .MuiInputBase-root": {
-            color: "#9B9B9B ",
-            borderColor: "#888888",
-            border: "3px solid black"
-        },
-        "& .MuiSelect-select:$focus": {
-            backgroundColor: "inherit",
-            color: "black"
-        },
-        "& .MuiSelect-select": {
-            border: "2px dotted black"
-        },
-        "& .MuiFormLabel-root": {
-            fontWeight: 700,
-            fontSize: "1.2rem"
-        },
-        "& .MuiInputLabel-root.Mui-focused":{
-            color: "#9B9B9B"
-        }
-      },backdrop: {
-          zIndex: theme.zIndex.drawer + 1,
-          color: '#fff',
-      },formControl: {
-          margin: theme.spacing(1),
-          minWidth: 120,
-          marginLeft: "0px"
-      },
-    }),
-  );
+  // const useStyles = makeStyles((theme: Theme) =>
+  //   createStyles({
+  //     root: {
+  //       padding: "0% 0px 0% 0px",
+  //       borderRadius: "22px",
+  //       "& .MuiInputBase-root": {
+  //           color: "#9B9B9B ",
+  //           borderColor: "#888888",
+  //           border: "3px solid black"
+  //       },
+  //       "& .MuiSelect-select:$focus": {
+  //           backgroundColor: "inherit",
+  //           color: "black"
+  //       },
+  //       "& .MuiSelect-select": {
+  //           border: "2px dotted black"
+  //       },
+  //       "& .MuiFormLabel-root": {
+  //           fontWeight: 700,
+  //           fontSize: "1.2rem"
+  //       },
+  //       "& .MuiInputLabel-root.Mui-focused":{
+  //           color: "#9B9B9B"
+  //       }
+  //     },backdrop: {
+  //         zIndex: theme.zIndex.drawer + 1,
+  //         color: '#fff',
+  //     },formControl: {
+  //         margin: theme.spacing(1),
+  //         minWidth: 120,
+  //         marginLeft: "0px"
+  //     },
+  //   }),
+  // );
   
   
   
   export const OrdersTable: React.FC = function OrdersTable () {
     //const classes = useStyles();
     var { value }  = useAppData();
-    var { orders, UpdateOrder, refreshingOrderTables, currentUser, userRolef } = value;
+    var { orders, refreshingOrderTables, currentUser, userRolef } = value;
 
     var history = useHistory();
 
@@ -158,24 +158,24 @@ import { Alert } from '@material-ui/lab';
       print: false
     };
 
-    const handleSubmit = async(status, orderIndex) => {
-      try{
-          setOpen(false);
-          setOpen2(false);
-          console.log(status);
-          console.log(orders[orderIndex].OrderStatus);
-          let order = {...orders[orderIndex], OrderStatus: status, Rider: orders[orderIndex].Rider._id };
-          console.log(order);
-          await UpdateOrder(value, order).then((res) => {
-              if(res){
-                  setOpen(true);
-              }
-          }) 
-      }catch(err){
-          console.log(err);
-          setOpen2(true);
-      }
-    }
+    // const handleSubmit = async(status, orderIndex) => {
+    //   try{
+    //       setOpen(false);
+    //       setOpen2(false);
+    //       console.log(status);
+    //       console.log(orders[orderIndex].OrderStatus);
+    //       let order = {...orders[orderIndex], OrderStatus: status, Rider: orders[orderIndex].Rider._id };
+    //       console.log(order);
+    //       await UpdateOrder(value, order).then((res) => {
+    //           if(res){
+    //               setOpen(true);
+    //           }
+    //       }) 
+    //   }catch(err){
+    //       console.log(err);
+    //       setOpen2(true);
+    //   }
+    // }
 
     // const handleChange = (event, index) => {
     //   // setValues({...values,[event.target.name]:event.target.value, itemName: selectedItem.ItemName, itemCost: selectedItem.ItemCost, itemDescription: selectedItem.ItemDescription});
@@ -219,8 +219,9 @@ import { Alert } from '@material-ui/lab';
           orderItems = orderItems + item.OrderItems.map((item,index) => {
             return(
               item.chickenFlavour1 !== "" && item.chickenFlavour1 !== "Select Flavour" && item.chickenFlavour1 !== null && item.chickenFlavour1 !== undefined?
-            `${item.itemName + ": "}\n${item.chickenFlavour1 + " | "}\n${item.chickenFlavour2 + " | "}
-            \n${item.drink !== "Select Drink"? item.drink + " | ": "" + " | "}\n${item.otherIntructions + " | "}\n${'Not Available? ' + item.ifnotAvailable}` :
+              // eslint-disable-next-line no-useless-concat
+            `${item.itemName + ": "}\n${item.chickenFlavour1 + " | "}\n${item.chickenFlavour2 + " | "}\n${item.drink !== "Select Drink"? item.drink + " | ": "" + " | "}\n${item.otherIntructions + " | "}\n${'Not Available? ' + item.ifnotAvailable}` :
+            // eslint-disable-next-line no-useless-concat
             `${item.itemName + ": "}\n${item.drink !== "Select Drink"? item.drink + " | ": "" + " | "}\n${item.otherIntructions + " | "}\n${item.side!== undefined && item.side!== "Select Side"?'Side:' + item.side + " | ": ""}\n${'Not Available? ' + item.ifnotAvailable}`
             )
           })

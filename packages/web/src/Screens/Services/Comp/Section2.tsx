@@ -4,6 +4,7 @@ import { Container, Grid, Typography, makeStyles, createStyles, Theme, Button, u
 import SwipeableViews from 'react-swipeable-views';
 import clsx from 'clsx';
 import { useAppData } from '../../../Context/AppDataContext';
+import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -202,6 +203,9 @@ const useStyles = makeStyles((theme: Theme) =>
             borderRadius: "30px",
             color: "#FFF",
             height: "50px"
+        },
+        alert: {
+            marginBottom: "5%"
         }
     }),
 );
@@ -272,6 +276,7 @@ export const Section2: React.FC = function Section2() {
     const [value2, setValue] = React.useState(0);
     const [step1, setStep1] = useState(true);
     const [step2, setStep2] = useState(false);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [step3, setStep3] = useState(false);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -313,6 +318,7 @@ export const Section2: React.FC = function Section2() {
                 setError('Please enter your Full Name')
             :values.businessname === ''?
                 setError('Please enter your Business Name')
+                // eslint-disable-next-line no-useless-escape
             :values.businessemail === '' || !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.businessemail))?
                 setError('Please enter a valid Email')
             :values.contact === ''?
@@ -664,6 +670,8 @@ export const Section2: React.FC = function Section2() {
                                                             fullWidth
                                                         />
                                                     </FormControl>
+                                                    {error && <Alert severity="error" className={classes.alert}>{error}</Alert>}
+                                                    {success && <Alert severity="success" className={classes.alert}>{success}</Alert>}
                                                     <Button 
                                                         type="button"
                                                         onClick={handleSubmit} 

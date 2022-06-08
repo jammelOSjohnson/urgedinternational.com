@@ -100,10 +100,9 @@ export const OrderFullDetails: React.FC = () => {
     const classes = useStyles();
     var history = useHistory();
     var { value }  = useAppData();
-    var { orders, riders, fetchRiders, UpdateOrder } = value;
+    var { orders, riders, fetchRiders } = value;
     const orderIndex = parseInt(history.location.state.from);
     const [rider, setRider] = useState("");
-    const [selectedRider, setSelectedRider] = useState();
     const [open, setOpen] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
     
@@ -143,34 +142,34 @@ export const OrderFullDetails: React.FC = () => {
         }catch(err){
 
         }
-        
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [riders])
     
     ////console.log();
     if(orders.length !== 0 && orderIndex !== undefined){
         const now = new Date(parseInt(orders[orderIndex].OrderDate, 10));
         const estTime = moment.tz(now, "America/Jamaica").format("YYYY-MM-DD h:mm a");
-        var region = orders[orderIndex].DeliveryAddress.split(',');
-        var personalInfo = orders[orderIndex].AdditionalInfo.split(' ');
-        var email = '';
-        var contactnum = '';
-        var fullname = '';
+        //var region = orders[orderIndex].DeliveryAddress.split(',');
+        //var personalInfo = orders[orderIndex].AdditionalInfo.split(' ');
+        //var email = '';
+        //var contactnum = '';
+        //var fullname = '';
 
         ////console.log(personalInfo);
-        if(personalInfo !== undefined && personalInfo !== null){
-            if(personalInfo.length === 4){
-                fullname = personalInfo[2]; 
-                //+ " " + personalInfo[3];
-                email = personalInfo[1];
-                contactnum = personalInfo[0];
-            }else if(personalInfo.length === 3){
-                fullname = personalInfo[1];
-                //+ " " + personalInfo[2];
-                email = personalInfo[0];
-            }else{
-                email = personalInfo[0];
-            }
-        }
+        // if(personalInfo !== undefined && personalInfo !== null){
+        //     if(personalInfo.length === 4){
+        //         //fullname = personalInfo[2]; 
+        //         //+ " " + personalInfo[3];
+        //         //email = personalInfo[1];
+        //         contactnum = personalInfo[0];
+        //     }else if(personalInfo.length === 3){
+        //         //fullname = personalInfo[1];
+        //         //+ " " + personalInfo[2];
+        //         //email = personalInfo[0];
+        //     }else{
+        //         //email = personalInfo[0];
+        //     }
+        // }
         return (
             <>
                     <Container maxWidth="xl"  className={classes.main}>

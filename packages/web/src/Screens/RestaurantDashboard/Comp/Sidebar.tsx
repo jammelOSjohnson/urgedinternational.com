@@ -9,12 +9,6 @@ import "../CSS/sidebar.css";
 import MailIcon from '@material-ui/icons/Mail';
 
 
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
-
 // const drawerWidth = "16.5%";
 const drawerWidth = 240;
 
@@ -230,6 +224,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                             <ListItemText primary={1} />
                           </ListItem>
                         :
+                        // eslint-disable-next-line no-mixed-operators
                         referralPath === "/DeliveryOrdersDetails" || referralPath === "/DeliveryOrders" && text === "Delivery Orders" ?
                           <ListItem button key={2} className={classes.activeItem}>
                             <ListItemIcon>

@@ -135,11 +135,11 @@ export const Section7: React.FC = function Section7() {
                     <AccordionDetails>
                     <Typography>
                         If you didn't receive your order and it's been marked complete by the delivery 
-                        person in the app, contact your delivery person directly by tapping <a target="_blank" href="/ContactUs" title="Contact Us" className={classes.links} style={{color: "#F7B614"}}>Contact Us</a> then 
+                        person in the app, contact your delivery person directly by tapping <a target="_blank" rel="noreferrer" href="/ContactUs" title="Contact Us" className={classes.links} style={{color: "#F7B614"}}>Contact Us</a> then 
                         follow the on-screen prompts.
                         <br />
                         <br />
-                        You can also call us via <a target="_blank" href="tel:8769601004" title="Contact Us" className={classes.links} style={{color: "#F7B614"}}>876 773 5015</a> for help.
+                        You can also call us via <a target="_blank" rel="noreferrer" href="tel:8769601004" title="Contact Us" className={classes.links} style={{color: "#F7B614"}}>876 773 5015</a> for help.
                     </Typography>
                     </AccordionDetails>
                 </Accordion>
@@ -159,7 +159,7 @@ export const Section7: React.FC = function Section7() {
                         items, and how much you were charged for each.
                         <br />
                         <br />
-                        To speak to someone immediately, please reach out to your local <a target="_blank" href="tel:8769601004" title="Contact Us" className={classes.links} style={{color: "#F7B614"}}>876 773 5015</a> for help.
+                        To speak to someone immediately, please reach out to your local <a target="_blank" rel="noreferrer" href="tel:8769601004" title="Contact Us" className={classes.links} style={{color: "#F7B614"}}>876 773 5015</a> for help.
                     </Typography>
                     </AccordionDetails>
                 </Accordion>

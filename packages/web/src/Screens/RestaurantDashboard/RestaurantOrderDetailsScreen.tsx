@@ -1,7 +1,5 @@
-import { Container, Grid, makeStyles, createStyles, Typography, Theme } from '@material-ui/core';
+import { Container, Grid, makeStyles, createStyles, Theme } from '@material-ui/core';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
 //Import Components
 import { Sidebar } from './Comp/Sidebar';
 import { HeaderLeft } from './Comp/HeaderLeft';

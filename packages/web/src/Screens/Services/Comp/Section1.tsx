@@ -160,15 +160,6 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Section1: React.FC = function Section1() {
     const classes = useStyles();
     const theme = useTheme();
-    
-    const handleFood = (event) => {
-        try{
-            event.preventDefault();
-        }catch{
-            
-        }
-        
-    }
 
     const isMatch = useMediaQuery(theme.breakpoints.down('xs'));
     const isMatchMedium = useMediaQuery(theme.breakpoints.up('sm'));

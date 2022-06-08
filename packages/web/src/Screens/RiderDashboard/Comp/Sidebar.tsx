@@ -6,14 +6,6 @@ import clsx from 'clsx';
 import "../CSS/sidebar.css";
 import MailIcon from '@material-ui/icons/Mail';
 
-
-
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
-
 // const drawerWidth = "16.5%";
 const drawerWidth = 240;
 
@@ -145,12 +137,6 @@ export const Sidebar: React.FC = function Sidebar({children}) {
 
     const [open, setOpen] = React.useState(true);
     const [open1, setOpen1] = React.useState(false);
-
-    const [values, setValues] = React.useState<State>({
-        email: '',
-        password: '',
-        showPassword: false,
-    });
     
     var history = useHistory();
     var location = history.location;
@@ -232,11 +218,12 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 index === 2 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> : <MailIcon />
                               }
                             </ListItemIcon>
-                            <ListItemText primary={1} />
+                            <ListItemText primary={text} />
                           </ListItem>
                         :
+                        //eslint-disable-next-line no-mixed-operators
                         referralPath === "/DeliveryOrdersDetails" || referralPath === "/DeliveryOrders" && text === "Delivery Orders" ?
-                          <ListItem button key={2} className={classes.activeItem}>
+                          <ListItem button key={1} className={classes.activeItem}>
                             <ListItemIcon>
                               {
                                 index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
@@ -249,7 +236,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                         :
                         text === "Overview" ?
                           // <Link to="/AdminDashboard" className={classes.inactiveItemLink}>
-                            <ListItem button key={3}>
+                            <ListItem button key={2}>
                                 <ListItemIcon>
                                   {
                                     index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
@@ -261,7 +248,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                             </ListItem>
                           // </Link>
                         :
-                        <ListItem button key={4}>
+                        <ListItem button key={3}>
                             <ListItemIcon>
                               {
                                 index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
@@ -278,8 +265,8 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                         {userInfo.fullName !== null && userInfo.fullName !== "" && userInfo.fullName !== undefined?
                         ['Settings', 'Logout'].map((text, index) => (
                             text === 'Logout'?
-                            <a href="/" onClick={handleLogout} className={classes.inactiveItemLink}>
-                              <ListItem button key={5} >
+                            <a href="/" key={4} onClick={handleLogout} className={classes.inactiveItemLink}>
+                              <ListItem button>
                                 <ListItemIcon>
                                   {
                                     index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
@@ -290,20 +277,20 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                               </ListItem>
                             </a>
                             :
-                            <ListItem button key={6}>
-                            <ListItemIcon>
-                              {
-                                index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
-                                index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
-                              }
-                            </ListItemIcon>
+                            <ListItem button key={5}>
+                              <ListItemIcon>
+                                {
+                                  index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                  index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
+                                }
+                              </ListItemIcon>
                             <ListItemText primary={text} />
                             </ListItem>
                         )) :
                         ['Settings', 'Login'].map((text, index) => (
                           text === 'Login'?
-                          <a href="/Login" onClick={handleLogin} className={classes.inactiveItemLink}>
-                            <ListItem button key={7}>
+                          <a href="/Login" key={6} onClick={handleLogin} className={classes.inactiveItemLink}>
+                            <ListItem button>
                               <ListItemIcon>
                                 {
                                   index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
@@ -314,13 +301,13 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                               </ListItem>
                           </a>
                           :
-                          <ListItem button key={8}>
-                          <ListItemIcon>
-                            {
-                              index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
-                              index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
-                            }
-                          </ListItemIcon>
+                          <ListItem button key={7}>
+                            <ListItemIcon>
+                              {
+                                index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
+                              }
+                            </ListItemIcon>
                           <ListItemText primary={text} />
                           </ListItem>
                       ))
@@ -333,6 +320,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                             className={clsx(classes.expandIconStyle,{
                             [classes.hide]: open,
                             })}
+                            key="expand"
                         >
                             <img src="Images/collapse_icon1.svg" style={{width: "100%"}} alt="icon"/>
                         </IconButton>
@@ -344,6 +332,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                             className={clsx( classes.callapsibleIconStyle, {
                             [classes.hide]: !open,
                             })}
+                            key="collapse"
                         >
                             <img src="Images/collapse_icon1.svg" style={{width: "100%"}} alt="icon"/>
                         </IconButton>
@@ -382,7 +371,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                     <List>
                     {['Overview', 'Delivery Orders'].map((text, index) => (
                         referralPath === "/AdminDashboard" && text === "Overview" ?
-                          <ListItem button key={0} className={classes.activeItem}>
+                          <ListItem button key={8} className={classes.activeItem}>
                             <ListItemIcon>
                               {
                                 index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
@@ -393,8 +382,9 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                             <ListItemText primary={text} />
                           </ListItem>
                         :
+                        //eslint-disable-next-line no-mixed-operators
                         referralPath === "/DeliveryOrdersDetails" || referralPath === "/DeliveryOrders" && text === "Delivery Orders" ?
-                          <ListItem button key={1} className={classes.activeItem}>
+                          <ListItem button key={9} className={classes.activeItem}>
                             <ListItemIcon>
                               {
                                 index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
@@ -407,7 +397,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                         :
                         text === "Overview" ?
                           // <Link to="/AdminDashboard" className={classes.inactiveItemLink}>
-                            <ListItem button key={2}>
+                            <ListItem button key={10}>
                                 <ListItemIcon>
                                   {
                                     index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
@@ -420,7 +410,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                           // </Link>
                         :
                         text !== "Overview"?
-                          <ListItem button key={3} style={{marginTop: "5%"}}>
+                          <ListItem button key={11} style={{marginTop: "5%"}}>
                               <ListItemIcon>
                                 {
                                   index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
@@ -431,7 +421,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                               <ListItemText primary={text} />
                           </ListItem>
                       :
-                        <ListItem button key={4}>
+                        <ListItem button key={12}>
                           <ListItemIcon>
                             {
                               index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
@@ -448,8 +438,8 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                         {userInfo.fullName !== null && userInfo.fullName !== "" && userInfo.fullName !== undefined?
                         ['Settings', 'Logout'].map((text, index) => (
                             text === 'Logout'?
-                            <a href="/" onClick={handleLogout} className={classes.inactiveItemLink}>
-                              <ListItem button key={5} >
+                            <a href="/" key={13} onClick={handleLogout} className={classes.inactiveItemLink}>
+                              <ListItem button >
                                 <ListItemIcon>
                                   {
                                     index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
@@ -460,7 +450,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                               </ListItem>
                             </a>
                             :
-                            <ListItem button key={6}>
+                            <ListItem button key={14}>
                               <ListItemIcon>
                                 {
                                   index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
@@ -472,8 +462,8 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                         )) :
                         ['Settings', 'Login'].map((text, index) => (
                           text === 'Login'?
-                          <a href="/Login" onClick={handleLogin} className={classes.inactiveItemLink}>
-                            <ListItem button key={7}>
+                          <a href="/Login" key={15} onClick={handleLogin} className={classes.inactiveItemLink}>
+                            <ListItem button>
                               <ListItemIcon>
                                 {
                                   index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
@@ -484,7 +474,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                               </ListItem>
                           </a>
                           :
-                          <ListItem button key={8}>
+                          <ListItem button key={16}>
                             <ListItemIcon>
                               {
                                 index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
@@ -503,6 +493,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                             className={clsx(classes.expandIconStyle,{
                             [classes.hide]: open1,
                             })}
+                            key={17}
                         >
                             <img src="Images/collapse_icon1.svg" style={{width: "100%"}} alt="icon"/>
                         </IconButton>
@@ -514,6 +505,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                             className={clsx( classes.callapsibleIconStyle, {
                             [classes.hide]: !open1,
                             })}
+                            key={18}
                         >
                             <img src="Images/collapse_icon1.svg" style={{width: "100%"}} alt="icon"/>
                         </IconButton>

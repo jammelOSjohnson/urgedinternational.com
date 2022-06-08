@@ -3,7 +3,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { PlayArrowRounded, ArrowBackRounded } from "@material-ui/icons/";
 import { Link } from "react-router-dom";
-import { useAppData } from '../../../Context/AppDataContext';
+//import { useAppData } from '../../../Context/AppDataContext';
 
 
 
@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const HeaderLeft: React.FC = function HeaderLeft() {
     const classes = useStyles();
     const theme = useTheme();
-    var { value }  = useAppData();
+    //var { value }  = useAppData();
     //, rider, fetchRiderInfo, udateRiderStatusInfo
     //var { userInfo } = value;
     //console.log(userInfo)

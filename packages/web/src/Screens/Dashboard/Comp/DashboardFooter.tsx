@@ -1,10 +1,7 @@
-import { makeStyles, createStyles, Typography, Theme, List, ListItem, ListItemIcon, ListItemText, Divider, Button, Drawer, BottomNavigation, BottomNavigationAction } from '@material-ui/core';
-import clsx from 'clsx';
+import { makeStyles, createStyles, Typography, Theme } from '@material-ui/core';
 import React from 'react';
 import { Link } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 //Import Components
 
 
@@ -49,22 +46,14 @@ type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 export const DashboardFooter: React.FC = function DashboardFooter() {
     const classes = useStyles();
-
-    const [state, setState] = React.useState({
-        top: false,
-        left: false,
-        bottom: false,
-        right: false,
-      });
-
     var history = useHistory();
     var location = history.location;
     var referralPath = location.pathname;
 
-    const [value, setValue] = React.useState('recents');
-    const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
-      setValue(newValue);
-    };
+    // const [value, setValue] = React.useState('recents');
+    // const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+    //   setValue(newValue);
+    // };
     
       
     return (

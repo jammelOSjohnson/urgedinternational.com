@@ -2,7 +2,7 @@ import { Container, Grid, makeStyles, createStyles, Theme, useMediaQuery, useThe
 import React from 'react';
 import { Notification } from "../../../Components/Notification";
 import { User } from "../../../Components/User"
-import { useAppData } from '../../../Context/AppDataContext';
+//import { useAppData } from '../../../Context/AppDataContext';
 
 
 
@@ -52,7 +52,7 @@ export const HeaderRight: React.FC = function HeaderRight() {
     const theme = useTheme();
     const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
     const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
-    var { value }  = useAppData();
+    //var { value }  = useAppData();
     //, rider, fetchRiderInfo, udateRiderStatusInfo
     //var { userInfo } = value;
     //const [availability, setAvailability] = React.useState(rider !== undefined ? rider.isAvailable : false)

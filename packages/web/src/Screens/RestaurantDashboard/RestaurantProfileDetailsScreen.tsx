@@ -484,10 +484,8 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
         }catch(err) {
             console.log(err)
         }
-        
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [restaurantInfo, values.Menu])
-    
-    var history = useHistory();
 
     const handleSubmit = async () => {
         try{
@@ -558,9 +556,9 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
         setValues({ ...values, [prop]: event.target.value });
     };
 
-    const handleChange = (event) => {
-        setValues({...values,[event.target.name]:event.target.value});
-    };
+    // const handleChange = (event) => {
+    //     setValues({...values,[event.target.name]:event.target.value});
+    // };
 
     const handleClose2 = () => {
         let newMenu = values.Menu;
@@ -1129,6 +1127,7 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
                                                                     <img 
                                                                         src={values.ImageName} 
                                                                         width={"100px"}
+                                                                        alt="profile"
                                                                     />
                                                                 </Grid>
                                                                 <Grid item xs={12} sm={12} >

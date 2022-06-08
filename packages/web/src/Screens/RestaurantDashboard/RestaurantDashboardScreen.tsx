@@ -1,4 +1,4 @@
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, useTheme, useMediaQuery } from '@material-ui/core';
+import { Container, Grid, makeStyles, createStyles, Theme, useTheme, useMediaQuery } from '@material-ui/core';
 import React from 'react';
 //Import Components
 import { Sidebar } from './Comp/Sidebar';

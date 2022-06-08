@@ -180,16 +180,17 @@ export const OrderFullDetails: React.FC = () => {
         }catch(err){
 
         }
-        
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [riders])
     
     ////console.log();
     if(orders.length !== 0 && orderIndex !== undefined){
         const now = new Date(parseInt(orders[orderIndex].OrderDate, 10));
         const estTime = moment.tz(now, "America/Jamaica").format("YYYY-MM-DD h:mm a");
-        var region = orders[orderIndex].DeliveryAddress.split(',');
+        //var region = orders[orderIndex].DeliveryAddress.split(',');
         var personalInfo = orders[orderIndex].AdditionalInfo.split(' ');
-        var email = '';
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        //var email = '';
         var contactnum = '';
         var fullname = '';
 
@@ -198,14 +199,14 @@ export const OrderFullDetails: React.FC = () => {
             if(personalInfo.length === 4){
                 fullname = personalInfo[2]; 
                 //+ " " + personalInfo[3];
-                email = personalInfo[1];
+                //email = personalInfo[1];
                 contactnum = personalInfo[0];
             }else if(personalInfo.length === 3){
                 fullname = personalInfo[1];
                 //+ " " + personalInfo[2];
-                email = personalInfo[0];
+                //email = personalInfo[0];
             }else{
-                email = personalInfo[0];
+                //email = personalInfo[0];
             }
         }
         return (

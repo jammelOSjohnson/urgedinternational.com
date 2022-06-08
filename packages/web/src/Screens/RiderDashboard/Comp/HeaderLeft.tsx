@@ -1,16 +1,9 @@
 import { makeStyles, createStyles, Typography, Theme, useMediaQuery, useTheme, FormGroup, Switch, FormControlLabel, Grid } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
 import { PlayArrowRounded } from "@material-ui/icons/";
 import { Link } from "react-router-dom";
 import { useAppData } from '../../../Context/AppDataContext';
-
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -77,6 +70,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                 setAvailability(rider.isAvailable)
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [rider, userInfo._id])
     
       
@@ -113,6 +107,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                             <img 
                                 src="Images/MobileMenuIcon.png"
                                 style={{marginTop: "10px"}}
+                                alt={"Menu Icon"}
                             >
                             </img>
                         </Grid>

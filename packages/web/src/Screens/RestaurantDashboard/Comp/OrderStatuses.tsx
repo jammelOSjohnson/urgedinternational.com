@@ -2,18 +2,7 @@ import { useAppData } from '../../../Context/AppDataContext';
 import { Container, Grid, makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import clsx from 'clsx';
 //Import Components
-
-interface Props {
-    
-}
-
-interface State {
-    email: string;
-    password: string;
-    showPassword: boolean;
-}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -104,20 +93,22 @@ export const OrderStatuses: React.FC = () => {
     const classes = useStyles();
     var history = useHistory();
     var { value }  = useAppData();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     var { orders, changeOrderStatus } = value;
     const orderIndex = parseInt(history.location.state.from);
     const [status, setStatus] = useState(orders[orderIndex].OrderStatus);
 
-    const handleStatus = async (status) => {
-        // setStatus(status);
-        var payload = value;
-        payload.orders[orderIndex].OrderStatus = status;
+    // const handleStatus = async (status) => {
+    //     // setStatus(status);
+    //     var payload = value;
+    //     payload.orders[orderIndex].OrderStatus = status;
 
-        await changeOrderStatus(payload);
-    }
+    //     await changeOrderStatus(payload);
+    // }
 
     useEffect(() => {
         setStatus(orders[orderIndex].OrderStatus);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [orders[orderIndex].OrderStatus])
 
     if(orders.length !== 0 && orderIndex !== undefined){
