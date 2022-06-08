@@ -3,7 +3,7 @@ const { model, Schema } = require('mongoose');
 
 const OrderRejectionSchema = new Schema({
     OrderId: {
-        type: Schema.Types.ObjectId, 
+        type: Number, 
         ref: 'order',
         required: true
     },

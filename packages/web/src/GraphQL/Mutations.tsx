@@ -419,6 +419,26 @@ export const GET_ORDERS_BY_RIDERID = gql`
     }
 `
 
+export const GET_ORDER_REJECTLIST_BY_ORDERID = gql`
+    mutation getOrderRejection($OrderId: Float!) {
+        getOrderRejection(OrderId: $OrderId){
+            _id,
+        OrderId,
+        RejectionList
+        }
+    }
+`
+
+export const CREATE_ORDER_REJECTLIST = gql`
+    mutation createOrderRejection($OrderId: Float!, $RejectionList: [String]) {
+        createOrderRejection(OrderId: $OrderId, RejectionList: $RejectionList){
+            _id,
+        OrderId,
+        RejectionList
+        }
+    }
+`
+
 export const GET_ORDERS_BY_RIDERID_AND_DATE = gql`
     mutation getOrdersByRiderIdAnDate($Rider: ID!, $StartDate: String!, $EndDate: String!) {
         getOrdersByRiderIdAnDate(Rider: $Rider, StartDate: $StartDate, EndDate: $EndDate){

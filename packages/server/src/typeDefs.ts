@@ -110,7 +110,7 @@ const typeDefs = /* GraphQL */`
 
     type OrderRejection {
         _id: ID,
-        OrderId: String!,
+        OrderId: Float!,
         RejectionList: [String]!
     }
 
@@ -255,14 +255,14 @@ const typeDefs = /* GraphQL */`
             ): User!
 
         createOrderRejection(
-            OrderId: String, RejectionList: [String]
+            OrderId: Float, RejectionList: [String]
         ): OrderRejection
 
         updateOrderRejection(
-            _id: ID, OrderId: String, RejectionList: [String]
+            _id: ID, OrderId: Float, RejectionList: [String]
         ): OrderRejection
 
-        getOrderRejection(OrderId: String): OrderRejection
+        getOrderRejection(OrderId: Float): OrderRejection
 
         getUser(Id: String): User
 

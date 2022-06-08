@@ -132,7 +132,7 @@ import clsx from 'clsx';
   export const OrdersTable: React.FC = function OrdersTable () {
     const classes = useStyles();
     var { value }  = useAppData();
-    var { orders, UpdateOrder, refreshingOrderTables, currentUser, userRolef } = value;
+    var { orders, UpdateOrder, CreateOrderRejectionList, OrderRejectionList, refreshingOrderTables, currentUser, userRolef } = value;
 
     var history = useHistory();
 
@@ -187,6 +187,33 @@ import clsx from 'clsx';
       }
     }
 
+    const handleReject = async(status, orderIndex) => {
+      try{
+          setOpen(false);
+          setOpen2(false);
+          console.log(status);
+          console.log(orders[orderIndex].OrderStatus);
+          let order = {...orders[orderIndex], OrderStatus: status, Rider: orders[orderIndex].Rider._id };
+          console.log(order);
+          await OrderRejectionList(order).then(async(res) => {
+              if(res === null){
+                await UpdateOrder(value, order).then(async (res) => {
+                  if(res){
+                      await CreateOrderRejectionList((res) => {
+                        if(res !== null){
+                            setOpen(true);
+                        }
+                      });
+                  }
+              }) 
+              }
+          });
+      }catch(err){
+          console.log(err);
+          setOpen2(true);
+      }
+    }
+
     const handleChange = (event, index) => {
       // setValues({...values,[event.target.name]:event.target.value, itemName: selectedItem.ItemName, itemCost: selectedItem.ItemCost, itemDescription: selectedItem.ItemDescription});
       try{
@@ -225,8 +252,9 @@ import clsx from 'clsx';
           orderItems = orderItems + item.OrderItems.map((item,index) => {
             return(
               item.chickenFlavour1 !== "" && item.chickenFlavour1 !== "Select Flavour" && item.chickenFlavour1 !== null && item.chickenFlavour1 !== undefined?
-            `${item.itemName + ": "}\n${item.chickenFlavour1 + " | "}\n${item.chickenFlavour2 + " | "}
-            \n${item.drink !== "Select Drink"? item.drink + " | ": "" + " | "}\n${item.otherIntructions + " | "}\n${'Not Available? ' + item.ifnotAvailable}` :
+              // eslint-disable-next-line no-useless-concat
+            `${item.itemName + ": "}\n${item.chickenFlavour1 + " | "}\n${item.chickenFlavour2 + " | "}\n${item.drink !== "Select Drink"? item.drink + " | ": "" + " | "}\n${item.otherIntructions + " | "}\n${'Not Available? ' + item.ifnotAvailable}` :
+            // eslint-disable-next-line no-useless-concat
             `${item.itemName + ": "}\n${item.drink !== "Select Drink"? item.drink + " | ": "" + " | "}\n${item.otherIntructions + " | "}\n${item.side!== undefined && item.side!== "Select Side"?'Side:' + item.side + " | ": ""}\n${'Not Available? ' + item.ifnotAvailable}`
             )
           })
@@ -248,7 +276,7 @@ import clsx from 'clsx';
                 <br />
                 <Button 
                   className={clsx(classes.Reject, 'btn-reject')}
-                  onClick={() => handleSubmit("Not Assigned",index)}
+                  onClick={() => handleReject("Not Assigned",index)}
                 >
                   Reject
                 </Button>

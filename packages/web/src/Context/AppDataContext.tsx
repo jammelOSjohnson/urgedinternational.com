@@ -28,7 +28,9 @@ import {
         UPDATE_SHIPPING_ADDRESS,
         GET_RIDER,
         UPDATE_RIDER_STATUS,
-        GET_RESTAURANT
+        GET_RESTAURANT,
+        GET_ORDER_REJECTLIST_BY_ORDERID,
+        CREATE_ORDER_REJECTLIST
       } from '../GraphQL/Mutations';
 import { useMutation } from '@apollo/client';
 import sendEmail from "../email.js";
@@ -257,6 +259,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const [getMenucategories] = useMutation(GET_MENU_CATEGORIES);
     const [updateRestaurantById] = useMutation(UPDATE_RESTAURANT_BYID);
     const [updateRiderStatus] = useMutation(UPDATE_RIDER_STATUS);
+    const [getOrderRejection] = useMutation(GET_ORDER_REJECTLIST_BY_ORDERID);
+    const [createOrderRejection] = useMutation(CREATE_ORDER_REJECTLIST);
     // eslint-disable-next-line
     // const {data} = useQuery(GET_ORDERS,{
     //   pollInterval: 500,
@@ -1158,6 +1162,25 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       return false
     }
 
+    var OrderRejectionList  = async function OrderRejectionList(order){
+      if(order._id !== undefined){
+        let OrderId = order._id;
+        return await getOrderRejection({variables:{OrderId}}).then(async function(response) {
+          return response.data.getOrderRejection;
+        });
+      }
+    }
+
+    var CreateOrderRejectionList  = async function CreateOrderRejectionList(order){
+      if(order._id !== undefined){
+        let OrderId = order._id;
+        let OrderRejection = [order.Rider];
+        return await createOrderRejection({variables:{OrderId, OrderRejection}}).then(async function(response) {
+          return response.data.createOrderRejection;
+        });
+      }
+    }
+
     var fetchOrdersByUser  = async function fetchOrdersByUser(payload){
       if(payload.currentUser !== undefined && payload.currentUser !== null){
         if(payload.currentUser.uid !== undefined){
@@ -2011,6 +2034,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         restaurantCategories,
         shippingAddress,
         restaurantInfo,
+        OrderRejectionList,
+        CreateOrderRejectionList,
         JoinUs,
         signup,
         login,
