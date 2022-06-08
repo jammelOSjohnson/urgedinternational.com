@@ -108,6 +108,12 @@ const typeDefs = /* GraphQL */`
         disabled: Boolean
     }
 
+    type OrderRejection {
+        _id: ID,
+        OrderId: String!,
+        RejectionList: [String]!
+    }
+
     type MenuCategory {
         _id: ID
         restaurant: String
@@ -247,7 +253,17 @@ const typeDefs = /* GraphQL */`
             City: String, ContactNumber: String, OpeningHrs: OpeningHrs2,
             category: ID, MenuItems: [MenuItem2]
             ): User!
-            
+
+        createOrderRejection(
+            OrderId: String, RejectionList: [String]
+        ): OrderRejection
+
+        updateOrderRejection(
+            _id: ID, OrderId: String, RejectionList: [String]
+        ): OrderRejection
+
+        getOrderRejection(OrderId: String): OrderRejection
+
         getUser(Id: String): User
 
         getMenucategories(Id: String): User

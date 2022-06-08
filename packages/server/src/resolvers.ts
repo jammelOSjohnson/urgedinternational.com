@@ -17,6 +17,7 @@ import { PubSub } from 'graphql-subscriptions';
 import { RedisPubSub } from 'graphql-redis-subscriptions'; // For Production
 import Mailbox from './models/MailBox.model';
 import ShippingAddress from './models/ShippingAddress';
+import OrderRejection from './models/OrderRejection.model';
 // const pubsub = new RedisPubSub(
 //                 process.env.NODE_ENV === "production"
 //                 ? {
@@ -414,6 +415,23 @@ const resolvers = {
         getCategories: async () => {
             return await Category.find();
         },
+
+        createOrderRejection: async(_, {
+            OrderId, RejectionList}) => {
+            let orderrejection = new OrderRejection({OrderId, RejectionList});
+            return await orderrejection.save();
+        },
+
+        updateOrderRejection: async(_, {
+            _id, OrderId, RejectionList}) => {
+            let orderrejection = await OrderRejection({_id});
+            orderrejection.RejectionList.concat(RejectionList[RejectionList.length - 1]);
+            return await orderrejection.save();
+        }, 
+
+        getOrderRejection: async (_,{OrderId}) => {
+            return await OrderRejection.findOne({OrderId});
+        } 
     }
 };
 
