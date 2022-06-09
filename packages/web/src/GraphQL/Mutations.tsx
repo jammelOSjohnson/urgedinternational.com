@@ -439,6 +439,16 @@ export const CREATE_ORDER_REJECTLIST = gql`
     }
 `
 
+export const UPDATE_ORDER_REJECTLIST = gql`
+    mutation updateOrderRejection($_id: String, $OrderId: Float!, $RejectionList: [String]) {
+        updateOrderRejection(_id: $_id, OrderId: $OrderId, RejectionList: $RejectionList){
+            _id,
+        OrderId,
+        RejectionList
+        }
+    }
+`
+
 export const GET_ORDERS_BY_RIDERID_AND_DATE = gql`
     mutation getOrdersByRiderIdAnDate($Rider: ID!, $StartDate: String!, $EndDate: String!) {
         getOrdersByRiderIdAnDate(Rider: $Rider, StartDate: $StartDate, EndDate: $EndDate){

@@ -259,7 +259,7 @@ const typeDefs = /* GraphQL */`
         ): OrderRejection
 
         updateOrderRejection(
-            _id: ID, OrderId: Float, RejectionList: [String]
+            _id: String, OrderId: Float, RejectionList: [String]
         ): OrderRejection
 
         getOrderRejection(OrderId: Float): OrderRejection

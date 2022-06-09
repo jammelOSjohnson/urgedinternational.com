@@ -30,7 +30,8 @@ import {
         UPDATE_RIDER_STATUS,
         GET_RESTAURANT,
         GET_ORDER_REJECTLIST_BY_ORDERID,
-        CREATE_ORDER_REJECTLIST
+        CREATE_ORDER_REJECTLIST,
+        UPDATE_ORDER_REJECTLIST
       } from '../GraphQL/Mutations';
 import { useMutation } from '@apollo/client';
 import sendEmail from "../email.js";
@@ -284,6 +285,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const [fetchShippingAddress] = useMutation(FETCH_SHIPPING_ADDRESS);
     const [updateShippingAddress] = useMutation(UPDATE_SHIPPING_ADDRESS);
     const [getRestaurant] = useMutation(GET_RESTAURANT);
+    const [updateOrderRejection] = useMutation(UPDATE_ORDER_REJECTLIST);
 
     var currentUser = undefined;
     var selectedRestaurant = undefined;
@@ -1144,6 +1146,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var UpdateOrder  = async function UpdateOrder(payload, order){
       if(order !== null && order !== undefined){
           let newOrder = order;
+          if(newOrder.Rider.AddressLine1 !== undefined){
+            newOrder.Rider = newOrder.Rider._id;
+          }
           //console.log(newOrder);
           var updateRes = await updateOrder({variables: newOrder}).then(async function(response) {
             ////console.log("create orer result");
@@ -1174,9 +1179,23 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var CreateOrderRejectionList  = async function CreateOrderRejectionList(order){
       if(order._id !== undefined){
         let OrderId = order._id;
-        let OrderRejection = [order.Rider];
-        return await createOrderRejection({variables:{OrderId, OrderRejection}}).then(async function(response) {
+        let RejectionList = [] as String[];
+        RejectionList.push(order.Rider);
+        //console.log('rejection list', RejectionList);
+        return await createOrderRejection({variables:{OrderId, RejectionList}}).then(async function(response) {
           return response.data.createOrderRejection;
+        });
+      }
+    }
+
+    var UpdateOrderRejectionList  = async function UpdateOrderRejectionList(order, _id){
+      if(order._id !== undefined){
+        let OrderId = order._id;
+        let RejectionList = [] as String[];
+        RejectionList.push(order.Rider);
+        console.log('rejection list', _id);
+        return await updateOrderRejection({variables:{_id: _id, OrderId, RejectionList}}).then(async function(response) {
+          return response.data.updateOrderRejection;
         });
       }
     }
@@ -2035,6 +2054,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         shippingAddress,
         restaurantInfo,
         OrderRejectionList,
+        UpdateOrderRejectionList,
         CreateOrderRejectionList,
         JoinUs,
         signup,

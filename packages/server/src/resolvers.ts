@@ -243,7 +243,7 @@ const resolvers = {
                 CartTotal,
                 OrderType
             }
-            //console.log(newOrder);
+            console.log(newOrder);
             const order = await Order.findOne({_id});
             Object.assign(order, newOrder);
             return order.save();
@@ -418,14 +418,19 @@ const resolvers = {
 
         createOrderRejection: async(_, {
             OrderId, RejectionList}) => {
+               // console.log(RejectionList)
             let orderrejection = new OrderRejection({OrderId, RejectionList});
             return await orderrejection.save();
         },
 
         updateOrderRejection: async(_, {
             _id, OrderId, RejectionList}) => {
-            let orderrejection = await OrderRejection({_id});
-            orderrejection.RejectionList.concat(RejectionList[RejectionList.length - 1]);
+            console.log('im here', _id)
+            let orderrejection = await OrderRejection.findOne({_id});
+            console.log(orderrejection)
+            let refListUpdated = orderrejection.RejectionList.concat(RejectionList[RejectionList.length - 1]);
+            orderrejection.RejectionList = refListUpdated;
+            console.log(orderrejection);
             return await orderrejection.save();
         }, 
 

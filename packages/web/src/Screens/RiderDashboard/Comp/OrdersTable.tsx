@@ -132,7 +132,7 @@ import clsx from 'clsx';
   export const OrdersTable: React.FC = function OrdersTable () {
     const classes = useStyles();
     var { value }  = useAppData();
-    var { orders, UpdateOrder, CreateOrderRejectionList, OrderRejectionList, refreshingOrderTables, currentUser, userRolef } = value;
+    var { orders, riders, fetchRiders, UpdateOrderRejectionList, UpdateOrder, CreateOrderRejectionList, OrderRejectionList, refreshingOrderTables, currentUser, userRolef } = value;
 
     var history = useHistory();
 
@@ -147,6 +147,9 @@ import clsx from 'clsx';
     const rows = [] as Object[];
     useEffect(() => {
       try{
+        if(value.riders.length === 0){
+          fetchRiders(value);
+        }
         if(data.getOrdersByRiderId !== null){
           var Orders = data.getOrdersByRiderId;
           refreshingOrderTables(value, Orders).then(()=>{
@@ -193,19 +196,78 @@ import clsx from 'clsx';
           setOpen2(false);
           console.log(status);
           console.log(orders[orderIndex].OrderStatus);
-          let order = {...orders[orderIndex], OrderStatus: status, Rider: orders[orderIndex].Rider._id };
+          let order = {...orders[orderIndex], Rider: orders[orderIndex].Rider };
           console.log(order);
+          console.log(riders);
+          
           await OrderRejectionList(order).then(async(res) => {
               if(res === null){
+                let filteredRiders = 
+                  riders.filter(rider => rider.disabled === false 
+                  && rider.isAvailable === true &&
+                  rider._id !== orders[orderIndex].Rider._id);
+                console.log(filteredRiders);
+                if(filteredRiders.length > 0){ 
+                  order.Rider = filteredRiders[0]._id; 
+                }else{
+                  order.Status = "Rejected";
+                }
+                console.log('about to update order');
                 await UpdateOrder(value, order).then(async (res) => {
                   if(res){
-                      await CreateOrderRejectionList((res) => {
+                      console.log('about to create rejection list')
+                      await CreateOrderRejectionList(order).then((res) => {
                         if(res !== null){
                             setOpen(true);
+                        }else{
+                          setOpen2(true);
                         }
                       });
+                  }else{
+                    setOpen2(true);
                   }
-              }) 
+                }) 
+              }else{
+                console.log(res);
+                let unrestricted = true;
+                let filteredRiders = 
+                  riders.filter(rider => rider.disabled === false 
+                  && rider.isAvailable === true &&
+                  rider._id !== orders[orderIndex].Rider._id);
+                console.log(filteredRiders);
+                if(filteredRiders.length > 0){ 
+                  let unrestricktedRiders = filteredRiders.filter(rider => !res.RejectionList.includes(rider._id));
+                  console.log('unrestricted', unrestricktedRiders)
+                  if(unrestricktedRiders.length !== 0){
+                    order.Rider = unrestricktedRiders[0]._id; 
+                  }else{
+                    order.OrderStatus = "Not Assigned";
+                    unrestricted = false;
+                  }
+                  
+                }else{
+                  order.OrderStatus = "Not Assigned";
+                }
+                console.log('about to update order', order);
+                await UpdateOrder(value, order).then(async (res2) => {
+                  if(res2){
+                      if(unrestricted){
+                        console.log('about to update rejection list')
+                        await UpdateOrderRejectionList(order, res._id).then((res) => {
+                          if(res !== null){
+                              setOpen(true);
+                          }else{
+                            setOpen2(true);
+                          }
+                        });
+                      }else{
+                        setOpen(true);
+                      }
+
+                  }else{
+                    setOpen2(true);
+                  }
+                }) 
               }
           });
       }catch(err){
