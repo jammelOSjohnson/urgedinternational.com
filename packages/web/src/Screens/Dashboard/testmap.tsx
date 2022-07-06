@@ -1,105 +1,42 @@
 
-import React from 'react';
+import React, { ReactElement, useEffect, useRef } from 'react';
+import { Wrapper, Status } from "@googlemaps/react-wrapper";
+import { Spinner } from '../../Components/spinner';
+import ErrorComponent from './Comp/ErrorComponent';
+//import { MyMapComponent } from './Comp/MyMapComponent';
 
+const render = (status: Status): ReactElement => {
+    if (status === Status.FAILURE) return <ErrorComponent />;
+    return <Spinner />;
+};
 
-
+function MyMapComponent({
+    center,
+    zoom,
+  }: {
+    center: google.maps.LatLngLiteral;
+    zoom: number;
+  }) {
+    const ref = useRef();
+  
+    useEffect(() => {
+    //   new window.google.maps.Map(ref.current, {
+    //     center,
+    //     zoom,
+    //   });
+    });
+  
+    // return <div ref={ref} id="map" />;
+    return <></>
+}
 
 
 export const testmap: React.FC = function testmap() {
-    
-
-    // This example creates a simple polygon representing the Bermuda Triangle.
-    // When the user clicks on the polygon an info window opens, showing
-    // information about the polygon's coordinates.
-
-    // let map: new window.google.maps.Map;
-
-    // let infoWindow: window.google.maps.InfoWindow;
-
-    // function initMap(): void {
-    // map = new window.google.maps.Map(document.getElementById("map") as HTMLElement, {
-    //     zoom: 5,
-    //     center: { lat: 24.886, lng: -70.268 },
-    //     mapTypeId: "terrain",
-    // });
-
-    // // Define the LatLng coordinates for the polygon.
-    // const triangleCoords: google.maps.LatLngLiteral[] = [
-    //     { lat: 25.774, lng: -80.19 },
-    //     { lat: 18.466, lng: -66.118 },
-    //     { lat: 32.321, lng: -64.757 },
-    // ];
-
-    // // Construct the polygon.
-    // const bermudaTriangle = new google.maps.Polygon({
-    //     paths: triangleCoords,
-    //     strokeColor: "#FF0000",
-    //     strokeOpacity: 0.8,
-    //     strokeWeight: 3,
-    //     fillColor: "#FF0000",
-    //     fillOpacity: 0.35,
-    // });
-
-    // bermudaTriangle.setMap(map);
-
-    // // Add a listener for the click event.
-    // bermudaTriangle.addListener("click", showArrays);
-
-    // infoWindow = new google.maps.InfoWindow();
-    // }
-
-    // function showArrays(event: any) {
-    // // Since this polygon has only one path, we can call getPath() to return the
-    // // MVCArray of LatLngs.
-    // // @ts-ignore
-    // const polygon = this as google.maps.Polygon;
-    // const vertices = polygon.getPath();
-
-    // let contentString =
-    //     "<b>Bermuda Triangle polygon</b><br>" +
-    //     "Clicked location: <br>" +
-    //     event.latLng.lat() +
-    //     "," +
-    //     event.latLng.lng() +
-    //     "<br>";
-
-    // // Iterate over the vertices.
-    // for (let i = 0; i < vertices.getLength(); i++) {
-    //     const xy = vertices.getAt(i);
-
-    //     contentString +=
-    //     "<br>" + "Coordinate " + i + ":<br>" + xy.lat() + "," + xy.lng();
-    // }
-
-    // // Replace the info window's content and position.
-    // infoWindow.setContent(contentString);
-    // infoWindow.setPosition(event.latLng);
-
-    // infoWindow.open(map);
-    // }
-      
-    return (
-        <>
-            <style>
-                {
-                    `
-                        /* Always set the map height explicitly to define the size of the div
-                        * element that contains the map. */
-                        #map {
-                        height: 100%;
-                        }
-                        
-                        /* Optional: Makes the sample page fill the window. */
-                        html,
-                        body {
-                        height: 100%;
-                        margin: 0;
-                        padding: 0;
-                        }
-                    
-                    `
-                }
-            </style>
-        </>
-    )
+    const center = { lat: -34.397, lng: 150.644 };
+    const zoom = 4;
+    return <Wrapper apiKey={process.env.REACT_APP_GEO_API2 !== undefined? process.env.REACT_APP_GEO_API2: ""} render={render}>
+        <MyMapComponent center={center} zoom={zoom} />
+    </Wrapper>;
 }
+
+export default testmap;
