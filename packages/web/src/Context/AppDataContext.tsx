@@ -1974,11 +1974,11 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         try{
           await getCategories().then((response) => {
             if (response.data.getCategories !== null) {
-              //console.log("got list of restaurants");
-              //console.log(response);
+              // console.log("got list of restaurants");
+              // console.log(response);
   
               var cats = response.data.getCategories;
-              //console.log(paySet);
+              //console.log(cats);
   
               if (cats !== null) {
                 payload.restaurantCategories = cats !== undefined ? cats : undefined;

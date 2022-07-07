@@ -53,12 +53,18 @@ export const Categories: React.FC<Props> = ({handleChange, values}) => {
 
     useEffect(() => {
         try{
-            if(restaurantCategories.length === 0)
+            // console.log("checking");
+            // console.log(restaurantCategories);
+            if(restaurantCategories.length === 0){
+                //console.log("about to fetch");
                 fetchCategories(value);
-            else 
-                setCategories(restaurantCategories)
+            }   
+            else if(restaurantCategories.length > 0){
+                setCategories(restaurantCategories);
+            } 
+                
         }catch(err){
-
+            //console.log(err);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[restaurantCategories])
