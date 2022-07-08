@@ -137,7 +137,7 @@ export const NotFound: React.FC = function NotFound() {
                 <div className="text">
                     <h1>404 Error</h1>  
                 {/* <h2>Couldn't launch :(</h2> */}
-                    <h3>Page Not Found - Click <a href="https://urgedinternational.com">HERE</a> to go back.</h3> 
+                    <h3>Page Not Found - Click <a href="https://urgedservices.com/">HERE</a> to go back.</h3> 
                 </div>
             </Container>
             <style>
