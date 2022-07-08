@@ -228,7 +228,7 @@ export const Section1: React.FC = function Section1() {
                                                 </a>
                                             </Grid>
                                             <Grid item xs={12} sm={6}>
-                                                <Link className={classes.links} to="#" title="Food Delivery">
+                                                <Link className={classes.links} to="/CargoAndFreight" title="CargoAndFreight">
                                                     <Grid container justifyContent="center" spacing={2}>
                                                         <Grid key={1} item>
                                                             <Card className={classes.cardMiddle}>
@@ -237,7 +237,7 @@ export const Section1: React.FC = function Section1() {
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography gutterBottom className={classes.cardTitleMiddle}>
-                                                                            Package Delivery Services
+                                                                            UShip
                                                                         </Typography>
                                                                 </CardContent>
                                                             </Card>
@@ -246,7 +246,7 @@ export const Section1: React.FC = function Section1() {
                                                 </Link>
                                             </Grid>
                                             <Grid item xs={12} >
-                                                <Link className={classes.links} to="#" title="Food Delivery">
+                                                <a className={classes.links} href="https://sallyspantry.com/" target={"_blank"} title="Food Delivery">
                                                     <Grid container justifyContent="center" spacing={2}>
                                                         <Grid key={2} item>
                                                             <Card className={classes.card}>
@@ -255,13 +255,13 @@ export const Section1: React.FC = function Section1() {
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography style={{width: "150px"}} className={classes.cardTitle1}>
-                                                                            Market Place Services
+                                                                            Sally's Pantry
                                                                         </Typography>
                                                                 </CardContent>
                                                             </Card>
                                                         </Grid>
                                                     </Grid>
-                                                </Link>
+                                                </a>
                                             </Grid>
                                             </>
                                             :
@@ -291,7 +291,7 @@ export const Section1: React.FC = function Section1() {
                                                 </a>
                                             </Grid>
                                             <Grid item>
-                                                <Link className={classes.links} to="#" title="Food Delivery">
+                                                <Link className={classes.links} to="/CargoAndFreight" title="CargoAndFreight">
                                                     <Grid container justifyContent="center" spacing={2}>
                                                         <Grid key={1} item>
                                                             <Card className={classes.cardMiddle}>
@@ -300,7 +300,7 @@ export const Section1: React.FC = function Section1() {
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography gutterBottom className={classes.cardTitleMiddle}>
-                                                                            Package Delivery Services
+                                                                            UShip
                                                                         </Typography>
                                                                 </CardContent>
                                                             </Card>
@@ -309,7 +309,7 @@ export const Section1: React.FC = function Section1() {
                                                 </Link>
                                             </Grid>
                                             <Grid item style={{marginRight: "auto"}}>
-                                                <Link className={classes.links} to="#" title="Food Delivery">
+                                                <a className={classes.links} href="https://sallyspantry.com/" target={"_blank"} title="Food Delivery">
                                                     <Grid container justifyContent="center" spacing={2}>
                                                         <Grid key={2} item>
                                                             <Card className={classes.card}>
@@ -318,13 +318,13 @@ export const Section1: React.FC = function Section1() {
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography style={{width: "150px"}} className={classes.cardTitle1}>
-                                                                            Market Place Services
+                                                                            Sally's Pantry
                                                                         </Typography>
                                                                 </CardContent>
                                                             </Card>
                                                         </Grid>
                                                     </Grid>
-                                                </Link>
+                                                </a>
                                             </Grid>
                                             </>
                                             :
@@ -384,7 +384,7 @@ export const Section1: React.FC = function Section1() {
                                                 </a>
                                             </Grid>
                                             <Grid item xs={12} sm={6}>
-                                                <Link className={classes.links} to="#" title="Food Delivery">
+                                                <Link className={classes.links} to="/CargoAndFreight" title="CargoAndFreight">
                                                     <Grid container justifyContent="center" spacing={2}>
                                                         <Grid key={1} item>
                                                             <Card className={classes.cardMiddle2}>
@@ -393,7 +393,7 @@ export const Section1: React.FC = function Section1() {
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography gutterBottom className={classes.cardTitleMiddle}>
-                                                                            Package Delivery Services
+                                                                            UShip
                                                                         </Typography>
                                                                 </CardContent>
                                                             </Card>
@@ -402,7 +402,7 @@ export const Section1: React.FC = function Section1() {
                                                 </Link>
                                             </Grid>
                                             <Grid item xs={12} >
-                                                <Link className={classes.links} to="#" title="Food Delivery">
+                                                <a className={classes.links} href="https://sallyspantry.com/" target={"_blank"} title="Food Delivery">
                                                     <Grid container justifyContent="center" spacing={2}>
                                                         <Grid key={2} item>
                                                             <Card className={classes.card}>
@@ -411,13 +411,13 @@ export const Section1: React.FC = function Section1() {
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography style={{width: "150px"}} className={classes.cardTitle1}>
-                                                                            Market Place Services
+                                                                            Sally's Pantry
                                                                         </Typography>
                                                                 </CardContent>
                                                             </Card>
                                                         </Grid>
                                                     </Grid>
-                                                </Link>
+                                                </a>
                                             </Grid>
                                             </>
                                             :
@@ -447,7 +447,7 @@ export const Section1: React.FC = function Section1() {
                                                 </a>
                                             </Grid>
                                             <Grid item>
-                                                <Link className={classes.links} to="#" title="Food Delivery">
+                                                <Link className={classes.links} to="/CargoAndFreight" title="Cargo and Freight">
                                                     <Grid container justifyContent="center" spacing={2}>
                                                         <Grid key={1} item>
                                                             <Card className={classes.cardMiddle2}>
@@ -456,7 +456,7 @@ export const Section1: React.FC = function Section1() {
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography gutterBottom className={classes.cardTitleMiddle}>
-                                                                            Package Delivery Services
+                                                                            UShip
                                                                         </Typography>
                                                                 </CardContent>
                                                             </Card>
@@ -465,7 +465,7 @@ export const Section1: React.FC = function Section1() {
                                                 </Link>
                                             </Grid>
                                             <Grid item style={{marginRight: "auto"}}>
-                                                <Link className={classes.links} to="#" title="Food Delivery">
+                                                <a className={classes.links} href="https://sallyspantry.com/" target={"_blank"} title="Food Delivery">
                                                     <Grid container justifyContent="center" spacing={2}>
                                                         <Grid key={2} item>
                                                             <Card className={classes.card}>
@@ -474,13 +474,13 @@ export const Section1: React.FC = function Section1() {
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography style={{width: "150px"}} className={classes.cardTitle1}>
-                                                                            Market Place Services
+                                                                            Sally's Pantry
                                                                         </Typography>
                                                                 </CardContent>
                                                             </Card>
                                                         </Grid>
                                                     </Grid>
-                                                </Link>
+                                                </a>
                                             </Grid>
                                             </>
                                             :
@@ -549,7 +549,7 @@ export const Section1: React.FC = function Section1() {
                                                 </a>
                                             </Grid>
                                             <Grid item xs={12} sm={6}>
-                                                <Link className={classes.links} to="#" title="Food Delivery">
+                                                <Link className={classes.links} to="/CargoAndFreight" title="Cargo and Freight">
                                                     <Grid container justifyContent="center" spacing={2}>
                                                         <Grid key={1} item>
                                                             <Card className={classes.cardMiddle}>
@@ -558,7 +558,7 @@ export const Section1: React.FC = function Section1() {
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography gutterBottom className={classes.cardTitleMiddle}>
-                                                                            Package Delivery Services
+                                                                            UShip
                                                                         </Typography>
                                                                 </CardContent>
                                                             </Card>
@@ -567,7 +567,7 @@ export const Section1: React.FC = function Section1() {
                                                 </Link>
                                             </Grid>
                                             <Grid item xs={12} >
-                                                <Link className={classes.links} to="#" title="Food Delivery">
+                                                <a className={classes.links} href="https://sallyspantry.com/" title="Food Delivery">
                                                     <Grid container justifyContent="center" spacing={2}>
                                                         <Grid key={2} item>
                                                             <Card className={classes.card}>
@@ -576,13 +576,13 @@ export const Section1: React.FC = function Section1() {
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography style={{width: "150px"}} className={classes.cardTitle1}>
-                                                                            Market Place Services
+                                                                            Sally's Pantry
                                                                         </Typography>
                                                                 </CardContent>
                                                             </Card>
                                                         </Grid>
                                                     </Grid>
-                                                </Link>
+                                                </a>
                                             </Grid>
                                             </>
                                             :
@@ -612,7 +612,7 @@ export const Section1: React.FC = function Section1() {
                                                 </a>
                                             </Grid>
                                             <Grid item>
-                                                <Link className={classes.links} to="#" title="Food Delivery">
+                                                <Link className={classes.links} to="/CargoAndFreight" title="Cargo and Freight">
                                                     <Grid container justifyContent="center" spacing={2}>
                                                         <Grid key={1} item>
                                                             <Card className={classes.cardMiddle}>
@@ -621,7 +621,7 @@ export const Section1: React.FC = function Section1() {
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography gutterBottom className={classes.cardTitleMiddle}>
-                                                                            Package Delivery Services
+                                                                            UShip
                                                                         </Typography>
                                                                 </CardContent>
                                                             </Card>
@@ -630,7 +630,7 @@ export const Section1: React.FC = function Section1() {
                                                 </Link>
                                             </Grid>
                                             <Grid item style={{marginRight: "auto"}}>
-                                                <Link className={classes.links} to="#" title="Food Delivery">
+                                                <a className={classes.links} href="https://sallyspantry.com/" target={"_blank"} title="Food Delivery">
                                                     <Grid container justifyContent="center" spacing={2}>
                                                         <Grid key={2} item>
                                                             <Card className={classes.card}>
@@ -639,13 +639,13 @@ export const Section1: React.FC = function Section1() {
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography style={{width: "150px"}} className={classes.cardTitle1}>
-                                                                            Market Place Services
+                                                                            Sally's Pantry
                                                                         </Typography>
                                                                 </CardContent>
                                                             </Card>
                                                         </Grid>
                                                     </Grid>
-                                                </Link>
+                                                </a>
                                             </Grid>
                                             </>
                                             :

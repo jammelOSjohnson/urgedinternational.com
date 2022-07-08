@@ -441,7 +441,7 @@ export const Section2: React.FC = function Section2() {
                                             <img src="Images/ServicesP2.png" alt="ServicesP2" />
                                         </Grid>
                                         <Grid item xs={6}>
-                                            <img src="Images/ServicesP3.png" alt="ServicesP3" />
+                                            <img src="Images/PackageDeliveryServiceAlt2.jpg" width={"90%"} alt="PackageDeliveryServiceAlt2" />
                                         </Grid>
                                         <Grid item xs={6}>
                                             <Typography>
@@ -497,23 +497,21 @@ export const Section2: React.FC = function Section2() {
                                             <Typography>
                                                 <img src="Images/MarketPlaceServiceAlt.png" alt="MarketPlaceServiceAlt" />
                                                 &nbsp;&nbsp;&nbsp;
-                                                Urged Market Place
+                                                Uship
                                             </Typography>
                                             <Typography className={classes.foodDevSubheading}>
-                                                Get your favourite meal<br />
-                                                where ever you are.
+                                                Sign up for free US Shipping address. Send packages <br />
+                                                by air or sea from America to Jamaica.
                                             </Typography>
-                                            <Typography>
-                                                We deliver from your favorite local restaurant to<br />
-                                                your door. 
-                                            </Typography>
-                                            <Button
-                                                className={classes.pOrderBtn}
-                                                variant="outlined"
-                                                endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn6" />}
-                                            >
-                                                Comming Soon 
-                                            </Button>
+                                            <a className={classes.links} href="/CargoAndFreight" title="UShip">
+                                                <Button
+                                                    className={classes.pOrderBtn}
+                                                    variant="outlined"
+                                                    endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn6" />}
+                                                >
+                                                    Ship Today 
+                                                </Button>
+                                            </a>
                                         </Grid>
                                     </Grid>
                                 </Container>
@@ -571,30 +569,18 @@ export const Section2: React.FC = function Section2() {
                                             <Typography
                                                 style={{width: "100%", paddingTop: "1%", position: "absolute", top: 0, marginBottom: 0}}
                                                 className={classes.sectionHeaderText}>
-                                                Partner With Urged
+                                                Grow With Urged
                                             </Typography>
-                                            <img src="Images/ServicesMechant.png" alt="Merchant" />
+                                            <img width={"80%"} src="Images/ServicesMechant2.jpg" 
+                                            alt="Merchant" style={{marginTop: "7%"}}/>
                                         </Grid>
                                         {step1 && <Grid item xs={6}>
-                                            <Typography className={classes.paragraphHeader}>Grow With Us!</Typography>
-                                            <Typography className={classes.paragraph}>
-                                                Let us help you reach more people and provide hastle free engagements with your customers and business partners.
-                                            </Typography>
-                                            <Typography className={classes.paragraph}>
-                                                Lorem ipsum dolor sit amet, consectetur
-                                                 adipiscing elit. Posuere ut leo at parturient 
-                                                 arcu faucibus tincidunt. Varius blandit egestas mauris hac dui. 
-                                                 Pellentesque euismod malesuada elementum nulla eget nunc tortor 
-                                                 dolor. Arcu quisque sed sed sit. Id gravida pulvinar lacus porta ut in. 
-                                                 Nunc nunc ut lectus mus vel fusce.
-                                            </Typography>
-                                            <Typography className={classes.paragraph}>
-                                                Lectus donec suscipit pellentesque diam convallis. Lorem justo, lacinia
-                                                 amet ac tincidunt quam diam. Dui tortor augue dolor ornare fermentum.
-                                                  Id tellus massa et ac commodo. Quisque et in dignissim hac justo dolor iaculis.
-                                                   Integer pellentesque auctor diam ullamcorper eu porta mauris. Pulvinar 
-                                                   in integer eu fames felis, elit. Amet proin iaculis nec egestas elit 
-                                                   suspendisse morbi mi, dolor. Ipsum purus sit pulvinar non augue amet. 
+                                            <Typography style={{width: "100%",paddingTop: "1%", position: "absolute", top: 0, marginBottom: 0}} 
+                                            className={classes.paragraphHeader}>Grow your business with us</Typography>
+                                            <Typography style={{width: "100%",paddingTop: "1%", position: "absolute", top: 35, marginBottom: 0}}
+                                            className={classes.paragraph}>
+                                                Let us help you reach more people and provide Hassle free engagements with <br />
+                                                your customers and business partners.
                                             </Typography>
                                             <Button
                                                 className={classes.driverGetStarted}
@@ -609,9 +595,8 @@ export const Section2: React.FC = function Section2() {
                                             <Grid item xs={6}>
                                                 <Typography style={{fontSize: "1.5rem", fontFamily: "PT Sans"}}>Get Started</Typography>
                                                 <Typography style={{marginTop: "3%", fontSize: "16px", marginBottom: "3%"}}>
-                                                    Let us help you reach more people 
-                                                    and provide hastle free engagements with 
-                                                    your customers and business partners.
+                                                Become a Merchant<br /> 
+                                                List your menu on our website and start earning more.
                                                 </Typography> 
                                                 <form>
                                                     <FormControl variant="outlined" fullWidth>
@@ -807,7 +792,8 @@ export const Section2: React.FC = function Section2() {
                                             </Typography>
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <img width="100%" src="Images/ServicesP3.png" alt="ServicesP3" />
+                                            <img src="Images/PackageDeliveryServiceAlt2.jpg" width={"100%"} alt="PackageDeliveryServiceAlt2" />
+
                                             <a href="http://wa.me/18767735015" target="_blank" rel="nofollow noreferrer" style={{textDecoration: "none"}}>
                                                 <Button
                                                     style={{
@@ -858,33 +844,24 @@ export const Section2: React.FC = function Section2() {
                                             </a>
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <Typography>
+                                        <Typography>
                                                 <img src="Images/MarketPlaceServiceAlt.png" alt="MarketPlaceServiceAlt" />
                                                 &nbsp;&nbsp;&nbsp;
-                                                Urged Market Place
+                                                Uship
                                             </Typography>
-                                            <Typography className={classes.foodDevSubheadingMobile}>
-                                                Get your favourite meal<br />
-                                                where ever you are.
+                                            <Typography className={classes.foodDevSubheading}>
+                                                Sign up for free US Shipping address. Send packages <br />
+                                                by air or sea from America to Jamaica.
                                             </Typography>
-                                            <Typography>
-                                                We deliver from your favorite local restaurant to 
-                                                your door. 
-                                            </Typography>
-                                            <Button
-                                                style={{
-                                                    borderRadius: "47px",
-                                                    width: "100%",
-                                                    height: "50px",
-                                                    marginTop: "15%",
-                                                    marginBottom: "15%"
-                                                }}
-                                                className={classes.pOrderBtn}
-                                                variant="outlined"
-                                                endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn6" />}
-                                            >
-                                                Comming Soon 
-                                            </Button>
+                                            <a className={classes.links} href="/CargoAndFreight" title="UShip">
+                                                <Button
+                                                    className={classes.pOrderBtn}
+                                                    variant="outlined"
+                                                    endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn6" />}
+                                                >
+                                                    Ship Today 
+                                                </Button>
+                                            </a>
                                         </Grid>
                                     </Grid>
                                 </Container>
@@ -945,40 +922,102 @@ export const Section2: React.FC = function Section2() {
                                             <Typography
                                                 style={{ paddingTop: "1%", marginBottom: 0}}
                                                 className={classes.sectionHeaderText}>
-                                                Partner With Urged
+                                                Grow With Urged
                                             </Typography>
-                                            <img src="Images/ServicesMechant.png" width="100%" alt="Merchant" />
+                                            <img src="Images/ServicesMechant2.jpg" width="100%" alt="Merchant" />
                                         </Grid>
-                                        <Grid item xs={12}>
-                                            <Typography className={classes.paragraphHeader}>Grow With Us!</Typography>
+                                        {step1 && <Grid item xs={12}>
+                                            <Typography className={classes.paragraphHeader}>Grow your business with us</Typography>
                                             <Typography className={classes.paragraph}>
-                                                Let us help you reach more people and provide hastle free engagements with your customers and business partners.
-                                            </Typography>
-                                            <Typography className={classes.paragraph}>
-                                                Lorem ipsum dolor sit amet, consectetur
-                                                 adipiscing elit. Posuere ut leo at parturient 
-                                                 arcu faucibus tincidunt. Varius blandit egestas mauris hac dui. 
-                                                 Pellentesque euismod malesuada elementum nulla eget nunc tortor 
-                                                 dolor. Arcu quisque sed sed sit. Id gravida pulvinar lacus porta ut in. 
-                                                 Nunc nunc ut lectus mus vel fusce.
-                                            </Typography>
-                                            <Typography className={classes.paragraph}>
-                                                Lectus donec suscipit pellentesque diam convallis. Lorem justo, lacinia
-                                                 amet ac tincidunt quam diam. Dui tortor augue dolor ornare fermentum.
-                                                  Id tellus massa et ac commodo. Quisque et in dignissim hac justo dolor iaculis.
-                                                   Integer pellentesque auctor diam ullamcorper eu porta mauris. Pulvinar 
-                                                   in integer eu fames felis, elit. Amet proin iaculis nec egestas elit 
-                                                   suspendisse morbi mi, dolor. Ipsum purus sit pulvinar non augue amet. 
+                                                Let us help you reach more people and provide Hassle free engagements with your customers and business partners.
                                             </Typography>
                                             <Button
                                                 className={classes.driverGetStarted}
                                                 variant="contained"
                                                 style={{width: "100%"}}
+                                                onClick={(e) =>handleMerchantChange('step1')}
 
                                             >
                                                 Get Started
                                             </Button>
-                                        </Grid>
+                                            </Grid>
+                                        }
+                                        {step2 &&
+                                            <Grid item xs={12}>
+                                                <Typography style={{fontSize: "1.5rem", fontFamily: "PT Sans"}}>Get Started</Typography>
+                                                <Typography style={{marginTop: "3%", fontSize: "16px", marginBottom: "3%"}}>
+                                                Become a Merchant<br /> 
+                                                List your menu on our website and start earning more.
+                                                </Typography> 
+                                                <form>
+                                                    <FormControl variant="outlined" fullWidth>
+                                                        <InputLabel htmlFor="fullname" className={classes.root}>Full Name</InputLabel>
+                                                        <OutlinedInput 
+                                                            className={clsx(classes.firstTextField, classes.root)}
+                                                            id="fullname"
+                                                            type="text"
+                                                            value={values.fullname}
+                                                            onChange={handleChange2('fullname')}
+                                                            labelWidth={103}
+                                                            required={true}
+                                                            notched={true}
+                                                            fullWidth
+                                                        />
+                                                    </FormControl>
+                                                    <FormControl variant="outlined" fullWidth>
+                                                        <InputLabel htmlFor="businessname" className={classes.root}>Business Name</InputLabel>
+                                                        <OutlinedInput 
+                                                            className={clsx(classes.firstTextField, classes.root)}
+                                                            id="businessname"
+                                                            type="text"
+                                                            value={values.businessname}
+                                                            onChange={handleChange2('businessname')}
+                                                            labelWidth={103}
+                                                            required={true}
+                                                            notched={true}
+                                                            fullWidth
+                                                        />
+                                                    </FormControl>
+                                                    <FormControl variant="outlined" fullWidth>
+                                                        <InputLabel htmlFor="businessemail" className={classes.root}>Business Email</InputLabel>
+                                                        <OutlinedInput 
+                                                            className={clsx(classes.firstTextField, classes.root)}
+                                                            id="businessemail"
+                                                            type="text"
+                                                            value={values.businessemail}
+                                                            onChange={handleChange2('businessemail')}
+                                                            labelWidth={103}
+                                                            required={true}
+                                                            notched={true}
+                                                            fullWidth
+                                                        />
+                                                    </FormControl>
+                                                    <FormControl variant="outlined" fullWidth>
+                                                        <InputLabel htmlFor="contact" className={classes.root}>Contact Details</InputLabel>
+                                                        <OutlinedInput 
+                                                            className={clsx(classes.firstTextField, classes.root)}
+                                                            id="contact"
+                                                            type="text"
+                                                            value={values.contact}
+                                                            onChange={handleChange2('contact')}
+                                                            labelWidth={103}
+                                                            required={true}
+                                                            notched={true}
+                                                            fullWidth
+                                                        />
+                                                    </FormControl>
+                                                    {error && <Alert severity="error" className={classes.alert}>{error}</Alert>}
+                                                    {success && <Alert severity="success" className={classes.alert}>{success}</Alert>}
+                                                    <Button 
+                                                        type="button"
+                                                        onClick={handleSubmit} 
+                                                        fullWidth variant="outlined" 
+                                                        className={classes.doneBtn}>
+                                                            Done
+                                                    </Button>
+                                                </form>
+                                            </Grid>
+                                        }
                                     </Grid>
                                 </Container>
                             </TabPanel>

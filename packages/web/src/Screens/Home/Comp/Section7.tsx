@@ -134,9 +134,10 @@ export const Section7: React.FC = function Section7() {
                     </AccordionSummary>
                     <AccordionDetails>
                     <Typography>
-                        If you didn't receive your order and it's been marked complete by the delivery 
-                        person in the app, contact your delivery person directly by tapping <a target="_blank" rel="noreferrer" href="/ContactUs" title="Contact Us" className={classes.links} style={{color: "#F7B614"}}>Contact Us</a> then 
-                        follow the on-screen prompts.
+                        If your order has been marked complete by our delivery partner 
+                        in the webapp but you haven't received it, tap Contact Us and 
+                        then follow the on-screen instructions to get in touch with your 
+                        delivery partner.
                         <br />
                         <br />
                         You can also call us via <a target="_blank" rel="noreferrer" href="tel:8769601004" title="Contact Us" className={classes.links} style={{color: "#F7B614"}}>876 773 5015</a> for help.
@@ -153,10 +154,11 @@ export const Section7: React.FC = function Section7() {
                     </AccordionSummary>
                     <AccordionDetails>
                     <Typography>
-                        If you received someone else's order and were delivered the wrong items, 
-                        but were charged for your order please let us know here. We'll review and 
-                        make any necessary adjustments; be sure to include the missing/incorrect 
-                        items, and how much you were charged for each.
+                        If you were charged for your order but received someone else's 
+                        order with the incorrect items, please let us know here. Please 
+                        indicate any missing or inaccurate goods as well as the amounts 
+                        you were charged for each so we may review and make any required 
+                        corrections.
                         <br />
                         <br />
                         To speak to someone immediately, please reach out to your local <a target="_blank" rel="noreferrer" href="tel:8769601004" title="Contact Us" className={classes.links} style={{color: "#F7B614"}}>876 773 5015</a> for help.
@@ -216,19 +218,19 @@ export const Section7: React.FC = function Section7() {
                     </AccordionSummary>
                     <AccordionDetails>
                     <Typography>
-                        Restaurants and delivery people do their best to deliver your food within the 
-                        estimated delivery time, but external factors may cause delays (for example, if the 
-                        restaurant is busier than normal, your order is a large order, there's unexpected traffic 
-                        or bad weather conditions).
-                        <br />
-                        <br />
-                        If your order is taking longer than expected, check your delivery person's ETA in the 
-                        app or contact them directly for details.
-                        <br />
-                        <br />
-                        NOTE: If your delivery person arrived, attempted to contact you, and could not 
-                        deliver the order, you are charged for the order. In these instances, we cannot 
-                        provide a refund.
+                        While restaurants and our delivery partners try to bring your 
+                        meal within the estimated delivery window, unforeseen 
+                        circumstances (such as a busy restaurant, a large order, 
+                        unexpected traffic, or terrible weather) may result in delays. <br /><br />
+
+                        Check your delivery partner's ETA in the app or get in touch with 
+                        them directly for more information if your order is taking longer 
+                        than expected. <br /><br />
+
+                        NOTE: You will be charged for the order if 
+                        your delivery partner tried to reach you after 
+                        arriving and being unable to do so. In such 
+                        cases, we are unable to issue a refund.
                     </Typography>
                     </AccordionDetails>
                 </Accordion>
