@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { Cart } from "../../../Components/Cart";
 import { Notification } from "../../../Components/Notification";
 import { User } from "../../../Components/User"
+import { useHistory } from 'react-router-dom';
 
 
 
@@ -29,11 +30,15 @@ const useStyles = makeStyles((theme: Theme) =>
 export const HeaderRight: React.FC = function HeaderRight() {
     const classes = useStyles();
     const [scrolled, setScrolled] = React.useState(false);
+    var history = useHistory();
+    var location = history.location;
+    var referralPath = location.pathname;
+
     const handleScroll = () => {
         let container = document.getElementById("right-container");
         let cart = document.getElementById("cart-icon-header-right");
         let scrollY = window.scrollY;
-        console.log('scrolled', scrollY)
+        //console.log('scrolled', scrollY)
         if (scrollY > 0) {
             setScrolled(true);
             if(!(container?.classList.contains("scrolled"))){
@@ -93,7 +98,39 @@ export const HeaderRight: React.FC = function HeaderRight() {
                 </style>
             </>
         )
-    }else {
+    }else if(referralPath.toLowerCase() == "/shoppingcart") {
+        return (
+            <>
+                <Container id='right-container' maxWidth="xl" className={clsx(classes.main, classes.notScrolled)} onScroll={handleScroll}>
+                    <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
+                        <Grid item xs={6} spacing={1}>
+                            <User />
+                        </Grid>
+                        <Grid container direction="row" xs={6} spacing={1}>
+                            <Grid item xs={12} spacing={0} style={{marginTop: "10%"}}>
+                                <Notification /> <span style={{marginRight: "10%"}}></span>
+                                <Cart />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Container>
+                <style>
+                    {`
+                        .scrolled {
+                            // background-color: #FFF;
+                            // position: fixed;
+                            // z-index: 2;
+                        }
+
+                        .cart-scrolled {
+                            position: relative;
+                        }
+
+                    `}
+                </style>
+            </>
+        )
+    }else{
         return (
             <>
                 <div id='right-container'>
@@ -113,6 +150,9 @@ export const HeaderRight: React.FC = function HeaderRight() {
                             position: relative;
                             text-align: right;
                             margin-right: 26%;
+                            background-color: white;
+                            border-radius: 50px;
+                            padding: 15px;
                         }
 
                     `}
