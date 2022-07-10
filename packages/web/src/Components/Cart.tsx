@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import { PlayArrowRounded, ShoppingCartRounded } from "@material-ui/icons/";
 import { Link } from "react-router-dom";
+import { textAlign } from 'html2canvas/dist/types/css/property-descriptors/text-align';
 
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -35,12 +36,14 @@ const useStyles = makeStyles((theme: Theme) =>
         cartTitle: {
             fontWeight: 700,
             paddingLeft: "16px",
-            paddingTop: "8px"
+            paddingTop: "8px",
+            textAlign: "left"
         },
         seeMore: {
             paddingLeft: "16px",
             color: theme.palette.primary.light,
-            fontWeight: "bolder"
+            fontWeight: "bolder",
+            textAlign: "left"
         },
         Button: {
             backgroundColor: theme.palette.primary.light,
