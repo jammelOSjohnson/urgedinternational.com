@@ -167,10 +167,10 @@ const headersData = [
       label: "FAQ'S",
       href: "/#",
     },
-    {
-      label: "How it works",
-      href: "/HIW",
-    },
+    // {
+    //   label: "How it works",
+    //   href: "/HIW",
+    // },
     {
       label: "Contact Us",
       href: "/ContactUs",
