@@ -799,12 +799,13 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       await getUser({variables: { Id: uid}}).then(async function(response) {
         ////console.log("Checking user result for fetch user info");
         if (response.data.getUser !== null) {
-           ////console.log("user exist");
+          //console.log("user exist");
            ////console.log(response);
           ////console.log("what is inside payload for fetch user info");
           ////console.log(payloadf);
 
           var user = response.data.getUser;
+          //console.log(user);
           //console.log("firstname is:");
           //console.log(user.FirstName);
           if (user !== null) {
@@ -1320,13 +1321,54 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       return fianlRes;
     };
 
-    var sendOrderCompletedEmail = async function sendOrderCompletedEmail(fileType,file, UserInfo, orderNum) {
+    var buildTableItem = function buildTableItem(length : number,  cartItems){
+      if(length <= cartItems.length){
+        let result = cartItems[length - 1].chickenFlavour1 !== "" && cartItems[length - 1].chickenFlavour1 !== "Select Flavour" && cartItems[length - 1].chickenFlavour1 !== null && cartItems[length - 1].chickenFlavour1 !== undefined?
+        `${cartItems[length - 1].itemName + ": "}\n${cartItems[length - 1].chickenFlavour1 + " | "}\n${cartItems[length - 1].chickenFlavour2 + " | "}
+        \n${cartItems[length - 1].drink !== "Select Drink"? cartItems[length - 1].drink + " | ": "" + " | "}\n${cartItems[length - 1].otherIntructions + " | "}\n${'Not Available? ' + cartItems[length - 1].ifnotAvailable}` :
+        `${cartItems[length - 1].itemName + ": "}\n${cartItems[length - 1].drink !== "Select Drink"? cartItems[length - 1].drink + " | ": "" + " | "}\n${cartItems[length - 1].otherIntructions + " | "}\n${'Side:' + cartItems[length - 1].side + " | "}\n${'Not Available? ' + cartItems[length - 1].ifnotAvailable}`;
+        
+        return result;
+      }else{
+        return "";
+      }
+    }
+
+    var buildTableItemCost = function buildTableItemCost(length : number,  cartItems){
+      if(length <= cartItems.length){
+        let result = "$" + cartItems[length - 1].itemCost;
+        return result;
+      }else{
+        return "";
+      }
+    }
+
+    var sendOrderCompletedEmail = async function sendOrderCompletedEmail(fileType,file, UserInfo, orderNum, receiptInfo) {
       //var fileType = fileType;
+      let cartItems = receiptInfo.OrderItems;
       var RequestParams = {
         user_email: "",
         user_name: "",
         content: file,
-        order_number: orderNum
+        order_number: orderNum,
+        delivery_add: receiptInfo.DeliveryAddress,
+        order_date: receiptInfo.OrderDate,
+        payment_type: receiptInfo.PaymentMethod,
+        order_total: receiptInfo.OrderTotal,
+        item1: buildTableItem(1, cartItems),
+        item2: buildTableItem(2, cartItems),
+        item3: buildTableItem(3, cartItems),
+        item4: buildTableItem(4, cartItems),
+        item5: buildTableItem(5, cartItems),
+        item6: buildTableItem(6, cartItems),
+        item7: buildTableItem(7, cartItems),
+        itemcost1: buildTableItemCost(1, cartItems),
+        itemcost2: buildTableItemCost(2, cartItems),
+        itemcost3: buildTableItemCost(3, cartItems),
+        itemcost4: buildTableItemCost(4, cartItems),
+        itemcost5: buildTableItemCost(5, cartItems),
+        itemcost6: buildTableItemCost(6, cartItems),
+        itemcost7: buildTableItemCost(7, cartItems)
       };
 
       if (UserInfo !== null && UserInfo !== undefined && UserInfo.email !== "") {
@@ -1354,6 +1396,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var uploadInvoiceEmail = async function uploadInvoiceEmail(formVals, filetype) {
       ////console.log("Wtf is in formVals");
       ////console.log(formVals);
+      const now = new Date(parseInt(formVals.order_date, 10));
       var RequestParams = {
         to_name: formVals.user_name,
         user_email: formVals.user_email,
@@ -1362,7 +1405,25 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         content_svg: undefined,
         content_jpeg: undefined,
         content_png: undefined,
-        order_id: formVals.order_number
+        order_id: formVals.order_number,
+        delivery_add: formVals.delivery_add,
+        order_date: moment.tz(now, "America/Jamaica").format("YYYY-MM-DD h:mm a"),
+        payment_type: formVals.payment_type,
+        order_total: formVals.order_total,
+        item1: formVals.item1,
+        item2: formVals.item2,
+        item3: formVals.item3,
+        item4: formVals.item4,
+        item5: formVals.item5,
+        item6: formVals.item6,
+        item7: formVals.item7,
+        itemcost1: formVals.itemcost1,
+        itemcost2: formVals.itemcost2,
+        itemcost3: formVals.itemcost3,
+        itemcost4: formVals.itemcost4,
+        itemcost5: formVals.itemcost5,
+        itemcost6: formVals.itemcost6,
+        itemcost7: formVals.itemcost7
       };
     
       if (filetype.toLowerCase() === "application/pdf") {

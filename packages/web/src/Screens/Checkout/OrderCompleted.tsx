@@ -65,7 +65,7 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
                     //var filename = `${userInfo.fullName} order#${receiptDetails._id}`;
                     var file = pdf.output("datauri");
                     ////console.log(file);
-                    await sendOrderCompletedEmail("application/pdf", file, userInfo, receiptDetails._id).then((res) => {
+                    await sendOrderCompletedEmail("application/pdf", file, userInfo, receiptDetails._id, receiptDetails).then((res) => {
                         setTimeout(()=> {
                             history.push("/OrderHistory");
                         }, 5000)
@@ -1741,115 +1741,111 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
                         </>
                         ))}
                         
-                        <div
-                            className="u-row-container"
-                            style={{ padding: 0, backgroundColor: "transparent" }}
-                        >
-                            <div
-                            className="u-row"
-                            style={{
-                                margin: "0 auto",
-                                minWidth: 320,
-                                maxWidth: 600,
-                                overflowWrap: "break-word",
-                                wordWrap: "break-word",
-                                wordBreak: "break-word",
-                                backgroundColor: "#ffffff"
-                            }}
-                            >
-                            <div
+                        <div className="u-row-container" style={{ padding: 0, backgroundColor: "transparent" }}>
+                            <div className="u-row"
                                 style={{
-                                borderCollapse: "collapse",
-                                display: "table",
-                                width: "100%",
-                                backgroundColor: "transparent"
+                                    margin: "0 auto",
+                                    minWidth: 320,
+                                    maxWidth: 600,
+                                    overflowWrap: "break-word",
+                                    wordWrap: "break-word",
+                                    wordBreak: "break-word",
+                                    backgroundColor: "#ffffff"
                                 }}
                             >
-                                {/*[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #ffffff;"><![endif]*/}
-                                {/*[if (mso)|(IE)]><td align="center" width="179" style="width: 179px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
                                 <div
-                                className="u-col u-col-29p84"
-                                style={{
-                                    maxWidth: 320,
-                                    minWidth: 179,
-                                    display: "table-cell",
-                                    verticalAlign: "top"
-                                }}
-                                >
-                                <div style={{ width: "100% !important" }}>
-                                    {/*[if (!mso)&(!IE)]><!*/}
-                                    <div
                                     style={{
-                                        padding: 0,
-                                        borderTop: "0px solid transparent",
-                                        borderLeft: "0px solid transparent",
-                                        borderRight: "0px solid transparent",
-                                        borderBottom: "0px solid transparent"
+                                    borderCollapse: "collapse",
+                                    display: "table",
+                                    width: "100%",
+                                    backgroundColor: "transparent"
+                                    }}
+                                >
+                                    {/*[if (mso)|(IE)]><table width="100%" cellpadding="0" cellspacing="0" border="0"><tr><td style="padding: 0px;background-color: transparent;" align="center"><table cellpadding="0" cellspacing="0" border="0" style="width:600px;"><tr style="background-color: #ffffff;"><![endif]*/}
+                                    {/*[if (mso)|(IE)]><td align="center" width="179" style="width: 179px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
+                                    <div
+                                    className="u-col u-col-29p84"
+                                    style={{
+                                        maxWidth: 320,
+                                        minWidth: 179,
+                                        display: "table-cell",
+                                        verticalAlign: "top"
                                     }}
                                     >
-                                    {/*<![endif]*/}
-                                    <table
-                                        className="hide-mobile"
-                                        style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
-                                        role="presentation"
-                                        cellPadding={0}
-                                        cellSpacing={0}
-                                        width="100%"
-                                    >
-                                        <tbody>
-                                        <tr>
-                                            <td
-                                            className="v-container-padding-padding"
-                                            style={{
-                                                overflowWrap: "break-word",
-                                                wordBreak: "break-word",
-                                                padding: 10,
-                                                fontFamily: '"Montserrat",sans-serif'
-                                            }}
-                                            align="left"
-                                            >
-                                            <table
-                                                cellPadding={0}
-                                                cellSpacing={0}
+                                    <div style={{ width: "100% !important" }}>
+                                        {/*[if (!mso)&(!IE)]><!*/}
+                                        <div
+                                        style={{
+                                            padding: 0,
+                                            borderTop: "0px solid transparent",
+                                            borderLeft: "0px solid transparent",
+                                            borderRight: "0px solid transparent",
+                                            borderBottom: "0px solid transparent"
+                                        }}
+                                        >
+                                        {/*<![endif]*/}
+                                        <table
+                                            className="hide-mobile"
+                                            style={{ fontFamily: '"Montserrat",sans-serif', border:0 }}
+                                            role="presentation"
+                                            cellPadding={0}
+                                            cellSpacing={0}
+                                            width="100%"
+                                        >
+                                            <tbody>
+                                            <tr>
+                                                <td
+                                                className="v-container-padding-padding"
                                                 style={{
-                                                width:"100%",
-                                                height:"0px",
-                                                textAlign:"center",
-                                                border:0,
-                                                borderCollapse: "collapse",
-                                                tableLayout: "fixed",
-                                                borderSpacing: 0,
-                                                verticalAlign: "top",
-                                                borderTop: "0px solid #BBBBBB",
-                                                WebkitTextSizeAdjust: "100%"
+                                                    overflowWrap: "break-word",
+                                                    wordBreak: "break-word",
+                                                    padding: 10,
+                                                    fontFamily: '"Montserrat",sans-serif'
                                                 }}
-                                                className="table10"
-                                            >
-                                                <tbody>
-                                                <tr style={{ verticalAlign: "top" }}>
-                                                    <td
+                                                align="left"
+                                                >
+                                                <table
+                                                    cellPadding={0}
+                                                    cellSpacing={0}
                                                     style={{
-                                                        wordBreak: "break-word",
-                                                        verticalAlign: "top",
-                                                        fontSize: 0,
-                                                        lineHeight: 0,
-                                                        WebkitTextSizeAdjust: "100%"
+                                                    width:"100%",
+                                                    height:"0px",
+                                                    textAlign:"center",
+                                                    border:0,
+                                                    borderCollapse: "collapse",
+                                                    tableLayout: "fixed",
+                                                    borderSpacing: 0,
+                                                    verticalAlign: "top",
+                                                    borderTop: "0px solid #BBBBBB",
+                                                    WebkitTextSizeAdjust: "100%"
                                                     }}
-                                                    className="td10"
-                                                    >
-                                                    <span>&nbsp;</span>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    {/*[if (!mso)&(!IE)]><!*/}
+                                                    className="table10"
+                                                >
+                                                    <tbody>
+                                                    <tr style={{ verticalAlign: "top" }}>
+                                                        <td
+                                                        style={{
+                                                            wordBreak: "break-word",
+                                                            verticalAlign: "top",
+                                                            fontSize: 0,
+                                                            lineHeight: 0,
+                                                            WebkitTextSizeAdjust: "100%"
+                                                        }}
+                                                        className="td10"
+                                                        >
+                                                        <span>&nbsp;</span>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        {/*[if (!mso)&(!IE)]><!*/}
+                                        </div>
+                                        {/*<![endif]*/}
                                     </div>
-                                    {/*<![endif]*/}
-                                </div>
                                 </div>
                                 {/*[if (mso)|(IE)]></td><![endif]*/}
                                 {/*[if (mso)|(IE)]><td align="center" width="116" style="width: 116px;padding: 0px;border-top: 0px solid transparent;border-left: 0px solid transparent;border-right: 0px solid transparent;border-bottom: 0px solid transparent;" valign="top"><![endif]*/}
