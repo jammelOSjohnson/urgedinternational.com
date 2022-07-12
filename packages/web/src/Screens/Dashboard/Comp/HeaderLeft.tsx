@@ -261,7 +261,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                             <ListItemText primary={text} />
                           </ListItem>
                         :
-                        (referralPath === "/CargoAndFreight" || referralPath === "/Rates") && text === "Uship" ?
+                        (referralPath === "/Uship" || referralPath === "/Rates") && text === "Uship" ?
                           <ListItem button key={text} className={classes.activeItem}>
                             <ListItemIcon>
                                     {
@@ -343,7 +343,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                           </ListItem>
                         :
                         text === "Uship" ?
-                          <Link to="/CargoAndFreight" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
+                          <Link to="/Uship" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
                             <ListItem button key={text} >
                                 <ListItemIcon>
                                   {

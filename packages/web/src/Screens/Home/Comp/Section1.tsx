@@ -228,7 +228,7 @@ export const Section1: React.FC = function Section1() {
                                                 </a>
                                             </Grid>
                                             <Grid item xs={12} sm={6}>
-                                                <Link className={classes.links} to="/CargoAndFreight" title="CargoAndFreight">
+                                                <Link className={classes.links} to="/Uship" title="Uship">
                                                     <Grid container justifyContent="center" spacing={2}>
                                                         <Grid key={1} item>
                                                             <Card className={classes.cardMiddle}>
@@ -291,7 +291,7 @@ export const Section1: React.FC = function Section1() {
                                                 </a>
                                             </Grid>
                                             <Grid item>
-                                                <Link className={classes.links} to="/CargoAndFreight" title="CargoAndFreight">
+                                                <Link className={classes.links} to="/Uship" title="Uship">
                                                     <Grid container justifyContent="center" spacing={2}>
                                                         <Grid key={1} item>
                                                             <Card className={classes.cardMiddle}>
@@ -384,7 +384,7 @@ export const Section1: React.FC = function Section1() {
                                                 </a>
                                             </Grid>
                                             <Grid item xs={12} sm={6}>
-                                                <Link className={classes.links} to="/CargoAndFreight" title="CargoAndFreight">
+                                                <Link className={classes.links} to="/Uship" title="Uship">
                                                     <Grid container justifyContent="center" spacing={2}>
                                                         <Grid key={1} item>
                                                             <Card className={classes.cardMiddle2}>
@@ -447,7 +447,7 @@ export const Section1: React.FC = function Section1() {
                                                 </a>
                                             </Grid>
                                             <Grid item>
-                                                <Link className={classes.links} to="/CargoAndFreight" title="Cargo and Freight">
+                                                <Link className={classes.links} to="/Uship" title="Uship">
                                                     <Grid container justifyContent="center" spacing={2}>
                                                         <Grid key={1} item>
                                                             <Card className={classes.cardMiddle2}>
@@ -549,7 +549,7 @@ export const Section1: React.FC = function Section1() {
                                                 </a>
                                             </Grid>
                                             <Grid item xs={12} sm={6}>
-                                                <Link className={classes.links} to="/CargoAndFreight" title="Cargo and Freight">
+                                                <Link className={classes.links} to="/Uship" title="Uship">
                                                     <Grid container justifyContent="center" spacing={2}>
                                                         <Grid key={1} item>
                                                             <Card className={classes.cardMiddle}>
@@ -612,7 +612,7 @@ export const Section1: React.FC = function Section1() {
                                                 </a>
                                             </Grid>
                                             <Grid item>
-                                                <Link className={classes.links} to="/CargoAndFreight" title="Cargo and Freight">
+                                                <Link className={classes.links} to="/Uship" title="Uship">
                                                     <Grid container justifyContent="center" spacing={2}>
                                                         <Grid key={1} item>
                                                             <Card className={classes.cardMiddle}>

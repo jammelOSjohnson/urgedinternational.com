@@ -253,7 +253,7 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
     var referralPath = location.pathname;
 
     if(currentUser === undefined){
-        history.push("/Login", { from: "/CargoAndFreight" })
+        history.push("/Login", { from: "/Uship" })
     }
 
     const handleClose4 = () => {

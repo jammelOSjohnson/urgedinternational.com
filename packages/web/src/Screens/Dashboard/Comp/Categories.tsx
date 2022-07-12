@@ -362,9 +362,9 @@ export const Categories: React.FC = function Categories() {
                     <Link to={`${referralPath}`} className={classes.links} title="Market Place" onClick={(e) => {
                         e.preventDefault(); 
                         if(currentUser !== undefined){
-                             history.push("/CargoAndFreight");
+                             history.push("/Uship");
                         }else{
-                            history.push("/Login", { from: "/CargoAndFreight"})
+                            history.push("/Login", { from: "/Uship"})
                         }
                     }}>
                         <Card className={classes.card}>

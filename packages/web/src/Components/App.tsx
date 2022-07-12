@@ -239,7 +239,7 @@ const App: React.FC = function App() {
                     <Route path="/FoodDelivery" exact component={FoodDeliveryDashboardScreen} />
                     <Route path="/Restaurants" exact component={RestaurantsScreen} />
                     <Route path="/RestaurantItem" exact component={ViewRestaurantItem} />
-                    <Route path="/CargoAndFreight" exact component={CargoAndFreight} />
+                    <Route path="/Uship" exact component={CargoAndFreight} />
                     <Route path="/Rates" exact component={RatesScreen} />
                     <Route path="/ShoppingCart" exact component={ShoppingCartScreen} />
                     <Route path="/OrderHistory" exact component={OrdersHistory} />

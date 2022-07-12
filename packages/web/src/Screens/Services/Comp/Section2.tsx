@@ -503,7 +503,7 @@ export const Section2: React.FC = function Section2() {
                                                 Sign up for free US Shipping address. Send packages <br />
                                                 by air or sea from America to Jamaica.
                                             </Typography>
-                                            <a className={classes.links} href="/CargoAndFreight" title="UShip">
+                                            <a className={classes.links} href="/Uship" title="UShip">
                                                 <Button
                                                     className={classes.pOrderBtn}
                                                     variant="outlined"
@@ -853,7 +853,7 @@ export const Section2: React.FC = function Section2() {
                                                 Sign up for free US Shipping address. Send packages <br />
                                                 by air or sea from America to Jamaica.
                                             </Typography>
-                                            <a className={classes.links} href="/CargoAndFreight" title="UShip">
+                                            <a className={classes.links} href="/Uship" title="UShip">
                                                 <Button
                                                     className={classes.pOrderBtn}
                                                     variant="outlined"
