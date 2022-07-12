@@ -40,7 +40,7 @@ export const DashboardBreadCrumbs: React.FC = function DashboardBreadCrumbs() {
               referralPath === "/Rates" || referralPath === "/rates" ?
               <span><Link to="/Uship" className={classes.link}><span style={{color: "#FF5E14"}}><ArrowBackRounded /> RETURN</span></Link></span> :
               referralPath === "/Uship" || referralPath === "/uship" ?
-              <span><PlayArrowRounded /> <Link to="/Uship" className={classes.link} style={{color: "#FF5E14"}}>CARGO &amp; FREIGHT</Link></span> : ""}
+              <span><PlayArrowRounded /> <Link to="/Uship" className={classes.link} style={{color: "#FF5E14"}}>USHIP</Link></span> : ""}
           </Typography>
       </>
     );
