@@ -583,7 +583,9 @@ export const UPDATE_ORDER = gql`
             GCT
             ServiceCharge
             CartTotal
-            OrderType
+            OrderType,
+            userName,
+            userEmail
         }
     }
 `

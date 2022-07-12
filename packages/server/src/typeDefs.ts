@@ -181,6 +181,27 @@ const typeDefs = /* GraphQL */`
         Restaurant: User
     }
 
+    type OrderUpdated{
+        _id: Float
+        Id: String,
+        userName: String,
+        userEmail: String
+        OrderItems: JSONObject 
+        OrderStatus:  String
+        OrderTotal: Float
+        OrderDate: String
+        Rider: Rider,
+        DeliveryAddress: String,
+        PaymentMethod: String,
+        AdditionalInfo: String
+        DeliveryFee: Float,
+        GCT: Float,
+        ServiceCharge: Float,
+        CartTotal: Float,
+        OrderType: String,
+        Restaurant: User
+    }
+
     type PaySetting {
         _id: ID,
         perDeliveryEnabled: Boolean,
@@ -356,7 +377,7 @@ const typeDefs = /* GraphQL */`
             GCT: Float,
             ServiceCharge: Float,
             CartTotal: Float,
-            OrderType: String): Order
+            OrderType: String): OrderUpdated
         
         getPaySettings: [PaySetting!]!
         
