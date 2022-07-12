@@ -243,6 +243,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const emailNewPreAlertTemplate = "template_k8ycohd";
     const emailContactUsTemplate = "template_lwlimnm"
     const emailNewInvoiceUploadTemplate = "template_a7m014a";
+    const emailNewOrderStatusTemplate = "template_chhqfeg";
     const emailNewCustomerTemplate = "template_jqixj7b";
     const emailUserId = "user_bDLFbepm6Arcdgh7Akzo3";
     //Declare necessary variables
@@ -1154,8 +1155,18 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           var updateRes = await updateOrder({variables: newOrder}).then(async function(response) {
             ////console.log("create orer result");
             if (response.data.updateOrder !== null) {
-              await fetchOrders(payload);
-              return true;
+              //console.log(response.data.updateOrder);
+              let formVals = {
+                user_name: response.data.updateOrder.userName,
+                user_email: response.data.updateOrder.userEmail,
+                status: order.OrderStatus,
+                order_id: order._id
+              };
+
+              return await sendNewOrderStatusEmail(formVals).then(async(res) => {
+                await fetchOrders(payload);
+                return true;
+              })
             }
           });
 
@@ -1473,6 +1484,71 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       // ////console.log(RequestParams);
     
       var fianlRes = await sendEmail(emailServiceId, emailContactUsTemplate, RequestParams, emailUserId).then(function (res) {
+        if (res) {
+          return true;
+        }
+      }).catch(function (err) {
+        // var data3 = {event: 'staff add package',
+        //                     value:{"Send email error for user: " : formVals.user_email, error: err}
+        // };
+        // var entry3 = log.entry(METADATA, data3);
+        // log.write(entry3);
+        // ////console.log("Send email error");
+        // ////console.log(err);
+        return false;
+      });
+      return fianlRes;
+    };
+
+    var sendNewOrderStatusEmail = async function sendNewOrderStatusEmail(formVals) {
+      // var data1 = {event: 'staff add package send new package email',
+      //                 value:{"Wtf is in formVals: " : "Wtf is in formVals:", formVals: formVals}
+      // };
+      // var entry1 = log.entry(METADATA, data1);
+      // log.write(entry1);
+      // ////console.log("Wtf is in formVals");
+      // ////console.log(formVals);
+      let msgString = "";
+      let statString = "";
+      
+      switch(formVals.status){
+        case "Ordered":
+          statString = "Order Accepted";
+          msgString = "Your order has been accepted.";
+          break;
+        case "Picked Up":
+          statString = "Order Collected";
+          msgString = "Your order has been received at restaurant.";
+          break;
+        case "In Transit":
+          statString = "Order Enroute";
+          msgString = "The delivery personel is on the way to your address.";
+          break;
+        case "Delivered": 
+          statString = "Order Delivered";
+          msgString = "Your order has been delivered.";
+          break;
+        default:
+          break;
+      }
+      var RequestParams = {
+        to_name: formVals.user_name,
+        user_email: formVals.user_email,
+        reply_to: formVals.user_email,
+        message: msgString,
+        status_phrase: statString,
+        order_id: formVals.order_id
+      };
+      //console.log(RequestParams);
+      // var data2 = {event: 'staff add package',
+      //                       value:{"What is in this package b4 email sent for user: " : "What is in this package b4 email sent for user", RequestParams: RequestParams}
+      // };
+      // var entry2 = log.entry(METADATA, data2);
+      // log.write(entry2);
+      // ////console.log("What is in this package b4 emails sent");
+      // ////console.log(RequestParams);
+    
+      var fianlRes = await sendEmail(emailServiceId, emailNewOrderStatusTemplate, RequestParams, emailUserId).then(function (res) {
         if (res) {
           return true;
         }
