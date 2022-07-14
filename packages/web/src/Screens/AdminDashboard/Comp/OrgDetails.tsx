@@ -382,7 +382,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
     var referralPath = location.pathname;
 
     //Define table attributes
-    const rows = [] as Object[];
+    const [rows, setRows] = useState([] as Object[]);
     const options = {
         filterType: 'dropdown',
         search: true,
@@ -409,6 +409,24 @@ export const OrgDetails: React.FC = function OrgDetails() {
                     Menu: restaurant.MenuItems,
                     OpeningHrs: restaurant.OpeningHrs
                 });
+
+                if(restaurant.MenuItems.length > rows.length || rows.length === 0){
+                    let currentRows = rows;
+                    restaurant.MenuItems.map((item, index) => {
+                        let row = {
+                          MenuCategory: item.MenuCategory,
+                          ItemName: item.ItemName, 
+                          ItemCost: `$ ${ parseFloat(item.ItemCost).toFixed(2)}`,
+                          ItemDescription: item.ItemDescription,
+                          Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); handleOpen2(index);}}><EditRounded color="primary" /></a></>
+                        };
+                  
+                        currentRows.push(row)
+                        return true;
+                      });
+                      
+                    setRows(currentRows);
+                }
 
                 setOhrs(restaurant.OpeningHrs);
             }
@@ -570,7 +588,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
                                     >
                                     <Tab label="Gernal Details" {...a11yProps(0)} />
                                     <Tab label="Menu Details" {...a11yProps(1)} />
-                                    <Tab label="Openning Hours" {...a11yProps(2)} />
+                                    <Tab label="Opening Hours" {...a11yProps(2)} />
                                     
                                     </Tabs>
                                 </AppBar>

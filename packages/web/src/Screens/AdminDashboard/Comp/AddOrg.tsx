@@ -465,7 +465,7 @@ export const AddOrg: React.FC = () => {
                 </Fade>
             </Modal>
 
-            {/*Add Openning Hours Modal */}
+            {/*Add Opening Hours Modal */}
             <Modal
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
@@ -480,7 +480,7 @@ export const AddOrg: React.FC = () => {
             >
                 <Fade in={open2}>
                     <div className={clsx(classes.paper, 'modalMobile')}>
-                        <h3 id="transition-modal-title" style={{textAlign: "center", color: "#F7B614"}}>Openning Hours</h3>
+                        <h3 id="transition-modal-title" style={{textAlign: "center", color: "#F7B614"}}>Opening Hours</h3>
                         <Link to={referralPath} className={classes.cartIcon} onClick={handleCloseX2}>
                                 <img src="Images/CartCloseIcon.png" alt="closemodal" />
                         </Link>

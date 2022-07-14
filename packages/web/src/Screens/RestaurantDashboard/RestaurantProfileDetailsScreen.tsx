@@ -672,7 +672,7 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
                                                         >
                                                             <Tab label="Gernal Details" {...a11yProps(0)} />
                                                             <Tab label="Menu Details" {...a11yProps(1)} />
-                                                            <Tab label="Openning Hours" {...a11yProps(2)} />
+                                                            <Tab label="Opening Hours" {...a11yProps(2)} />
                                                             <Tab label="Restaurant Logo" {...a11yProps(3)} />
                                                         </Tabs>
                                                     </AppBar>
