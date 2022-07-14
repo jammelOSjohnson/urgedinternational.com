@@ -432,6 +432,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
             }
 
             if(values.Menu.length > rows.length || rows.length === 0){
+                let currentRows = rows;
                 values.Menu.map((item, index) => {
                     let row = {
                       MenuCategory: item.MenuCategory,
@@ -441,9 +442,11 @@ export const OrgDetails: React.FC = function OrgDetails() {
                       Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); handleOpen2(index);}}><EditRounded color="primary" /></a></>
                     };
               
-                    rows.push(row)
+                    currentRows.push(row)
                     return true;
                   })  
+
+                setRows(currentRows);
             }
         }catch(err) {
             console.log(err)
