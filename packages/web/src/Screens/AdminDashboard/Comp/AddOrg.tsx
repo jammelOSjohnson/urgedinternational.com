@@ -453,7 +453,7 @@ export const AddOrg: React.FC = () => {
                                                     style={{backgroundColor: "#F7B614", fontFamily: "PT Sans"}} onClick={handleClose}
                                                     color="secondary" size="small" className={`${classes.Button} ${classes.btnfonts}`}
                                                     fullWidth>
-                                                    Opening Hours <ArrowForwardRounded />
+                                                    Add Opening Hours <ArrowForwardRounded />
                                                 </Button>
                                             </Grid>
                                         </Grid>

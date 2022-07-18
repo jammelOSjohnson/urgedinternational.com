@@ -517,13 +517,14 @@ export const OrgDetails: React.FC = function OrgDetails() {
             let newMenu = values.Menu;
             let finalMenuItem = {
                 MenuCategory: selectedMenuItem.MenuCategory,
-                ItemName: selectedMenuItem.ImageName,
+                ItemName: selectedMenuItem.ItemName,
                 ItemCost: selectedMenuItem.ItemCost,
                 ItemDescription: selectedMenuItem.ItemDescription,
                 ImageName: selectedMenuItem.ImageName
             }
             newMenu.unshift(finalMenuItem);
             console.log(newMenu)
+            console.log("about to set rows");
             setValues({ ...values, Menu: newMenu});
             setOpen(false);
         }
