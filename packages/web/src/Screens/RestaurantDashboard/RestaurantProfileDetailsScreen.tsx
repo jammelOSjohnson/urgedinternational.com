@@ -365,7 +365,7 @@ const columns = [
       label: 'Action',
       options: {
         filter: true,
-        sort: true,
+        sort: false,
        }
     },
   ];
