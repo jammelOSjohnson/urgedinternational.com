@@ -11,3 +11,5 @@ packages/server/app.yaml
 packages/server/docker-compose.yaml
 packages/server/docker-compose.yaml.prod
 packages/server/docker-compose.yaml.dev
+packages/web/env
+packages/server/env
