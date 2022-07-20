@@ -36,7 +36,7 @@ interface State {
 interface MenuItem {
     MenuCategory: string;
     ItemName: string;
-    ItemCost: string;
+    ItemCost: number;
     ItemDescription: string;
     ImageName: string;
 }
@@ -373,7 +373,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
     const [selectedMenuItem, setSelectedMenuItem] = React.useState<MenuItem>({
         MenuCategory: '',
         ItemName: '',
-        ItemCost: '',
+        ItemCost: 0,
         ItemDescription: '',
         ImageName: ''
     });
@@ -392,7 +392,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
     };
 
     useEffect(() => {
-        //console.log("inside use effect");
+        console.log("inside use effect");
         //console.log(restaurants);
         try{
             if(restaurants.length > 0 && selectedRestaurant !== undefined && values.Menu.length === 0){
@@ -437,7 +437,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
                     let row = {
                       MenuCategory: item.MenuCategory,
                       ItemName: item.ItemName, 
-                      ItemCost: `$ ${ parseFloat(item.ItemCost).toFixed(2)}`,
+                      ItemCost: `$ ${ parseFloat(item.ItemCost.toString()).toFixed(2)}`,
                       ItemDescription: item.ItemDescription,
                       Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); handleOpen2(index);}}><EditRounded color="primary" /></a></>
                     };
@@ -489,7 +489,18 @@ export const OrgDetails: React.FC = function OrgDetails() {
     };
 
     const handleChange4 = (prop: keyof MenuItem) => (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedMenuItem({ ...selectedMenuItem, [prop]: event.target.value });
+        console.log(event.target.value)
+        if(prop === "ItemCost"){
+            if(event.target.value === ''){
+                setSelectedMenuItem({ ...selectedMenuItem, [prop]: 0 });
+            }else if(event.target.value !== null && event.target.value !== undefined){ 
+                let valCost = event.target.value;
+                event.target.value = '';
+                setSelectedMenuItem({ ...selectedMenuItem, [prop]: parseFloat(valCost) });
+            }
+        }else{
+            setSelectedMenuItem({ ...selectedMenuItem, [prop]: event.target.value });
+        }
     };
 
     const handleChange3 = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -549,7 +560,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
     const handleOpen = () => {
         try
         {
-          setSelectedMenuItem({MenuCategory: "", ItemName: "", ItemCost: "", ItemDescription: "", ImageName: "" });
+          setSelectedMenuItem({MenuCategory: "", ItemName: "", ItemCost: 0, ItemDescription: "", ImageName: "" });
           setOpen(true);
         }catch(err){
   
@@ -879,6 +890,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
                                                                                     onChange={handleChange4('ItemCost')}
                                                                                     variant="outlined"
                                                                                     placeholder="Enter Item Cost"
+                                                                                    type='number'
                                                                                     fullWidth
                                                                                 />
                                                                             </Grid>

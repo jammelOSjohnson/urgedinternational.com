@@ -83,7 +83,7 @@ export const Footer: React.FC = function Footer() {
                         <Typography>Careers</Typography>        
                     </Grid>
                     <Grid item xs={12} sm={6} lg={3} >
-                        <Typography variant="h6">Services</Typography>
+                        <Typography variant="h6">WHAT WE DO</Typography>
                         <Typography>Food Delivery</Typography>
                         <Typography>Package Delivery</Typography>
                         <Typography>Market Place</Typography>    

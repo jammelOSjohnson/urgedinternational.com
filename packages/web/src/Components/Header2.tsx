@@ -160,13 +160,13 @@ const headersData = [
       href: "/",
     },
     {
-      label: "Services",
+      label: "What We Do",
       href: "/Services",
     },
-    {
-      label: "FAQ'S",
-      href: "/#",
-    },
+    // {
+    //   label: "FAQ'S",
+    //   href: "/#",
+    // },
     // {
     //   label: "How it works",
     //   href: "/HIW",
@@ -379,7 +379,7 @@ export const Header2: React.FC = function Header2() {
                     <ListItemText primary={label} />
                 </ListItem>
               </a>
-            :label === "Services"?
+            :label === "What We Do"?
               <a href={href} title="Place Order" className={classes.linkBtn}>
                 <ListItem button key={label}>
                     <ListItemIcon><RoomServiceRounded /></ListItemIcon>

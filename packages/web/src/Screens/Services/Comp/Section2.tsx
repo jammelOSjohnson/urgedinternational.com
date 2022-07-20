@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 //import CSS
-import { Container, Grid, Typography, makeStyles, createStyles, Theme, Button, useMediaQuery, useTheme, AppBar, Tabs, Box, Tab, FormControl, InputLabel, OutlinedInput} from '@material-ui/core';
+import { Container, Grid, Typography, makeStyles, createStyles, Theme, Button, useMediaQuery, useTheme, AppBar, Tabs, Box, Tab, FormControl, InputLabel, OutlinedInput, Select, MenuItem} from '@material-ui/core';
 import SwipeableViews from 'react-swipeable-views';
 import clsx from 'clsx';
 import { useAppData } from '../../../Context/AppDataContext';
@@ -222,6 +222,7 @@ interface State {
     businessname: string;
     businessemail: string;
     contact: string;
+    role: string;
 }
 
 function TabPanel(props: TabPanelProps) {
@@ -268,6 +269,7 @@ export const Section2: React.FC = function Section2() {
         businessname: '',
         businessemail: '',
         contact: '',
+        role: 'Select Role',
     });
 
     var [error, setError] = useState('');
@@ -281,6 +283,10 @@ export const Section2: React.FC = function Section2() {
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
       setValue(newValue);
+    };
+
+    const handleChange1 = (event) => {
+        setValues({...values,[event.target.name]:event.target.value});
     };
   
     const handleChangeIndex = (index: number) => {
@@ -323,7 +329,9 @@ export const Section2: React.FC = function Section2() {
                 setError('Please enter a valid Email')
             :values.contact === ''?
                 setError('Please enter a valid Subject')
-            :await sendMerchantFormEmail(values.fullname, values.businessemail, values.businessname, values.contact).then(async function(res1){
+            :values.role === 'Select Role'?
+                setError('Please select a role')
+            :await sendMerchantFormEmail(values.fullname, values.businessemail, values.businessname, values.contact, values.role).then(async function(res1){
                 if(res1 != null){
                     ////console.log("About to navigate to dashboard.");
                     ////console.log(userRolef);
@@ -334,6 +342,7 @@ export const Section2: React.FC = function Section2() {
                         businessname: '',
                         businessemail: '',
                         contact: '',
+                        role: 'Select Role',
                     });
                     setTimeout(() => {
                         setSuccess('');
@@ -599,7 +608,7 @@ export const Section2: React.FC = function Section2() {
                                                 List your menu on our website and start earning more.
                                                 </Typography> 
                                                 <form>
-                                                    <FormControl variant="outlined" fullWidth>
+                                                    <FormControl variant="outlined" fullWidth required>
                                                         <InputLabel htmlFor="fullname" className={classes.root}>Full Name</InputLabel>
                                                         <OutlinedInput 
                                                             className={clsx(classes.firstTextField, classes.root)}
@@ -613,7 +622,7 @@ export const Section2: React.FC = function Section2() {
                                                             fullWidth
                                                         />
                                                     </FormControl>
-                                                    <FormControl variant="outlined" fullWidth>
+                                                    <FormControl variant="outlined" fullWidth required>
                                                         <InputLabel htmlFor="businessname" className={classes.root}>Business Name</InputLabel>
                                                         <OutlinedInput 
                                                             className={clsx(classes.firstTextField, classes.root)}
@@ -627,7 +636,7 @@ export const Section2: React.FC = function Section2() {
                                                             fullWidth
                                                         />
                                                     </FormControl>
-                                                    <FormControl variant="outlined" fullWidth>
+                                                    <FormControl variant="outlined" fullWidth required>
                                                         <InputLabel htmlFor="businessemail" className={classes.root}>Business Email</InputLabel>
                                                         <OutlinedInput 
                                                             className={clsx(classes.firstTextField, classes.root)}
@@ -641,7 +650,7 @@ export const Section2: React.FC = function Section2() {
                                                             fullWidth
                                                         />
                                                     </FormControl>
-                                                    <FormControl variant="outlined" fullWidth>
+                                                    <FormControl variant="outlined" fullWidth required>
                                                         <InputLabel htmlFor="contact" className={classes.root}>Contact Details</InputLabel>
                                                         <OutlinedInput 
                                                             className={clsx(classes.firstTextField, classes.root)}
@@ -654,6 +663,24 @@ export const Section2: React.FC = function Section2() {
                                                             notched={true}
                                                             fullWidth
                                                         />
+                                                    </FormControl>
+                                                    <FormControl variant="outlined" fullWidth required>
+                                                        <InputLabel className={classes.root} id="demo-simple-select-outlined-label">Role</InputLabel>
+                                                        <Select
+                                                            className={clsx(classes.firstTextField, classes.root)}
+                                                            labelId="demo-simple-select-outlined-label"
+                                                            id="demo-simple-select-outlined"
+                                                            value={values.role}
+                                                            onChange={handleChange1}
+                                                            label="Role"
+                                                            name="role"
+                                                            required
+                                                        >
+                                                            <MenuItem value={"Select Role"} key={0}>Select Role</MenuItem>
+                                                            <MenuItem value={"Restaurant Ownwer"} key={1}>Restaurant Ownwer</MenuItem>
+                                                            <MenuItem value={"Restaurant Employee"} key={2}>Restaurant Employee</MenuItem>
+                                                            <MenuItem value={"Dinner / Customer"} key={3}>Dinner / Customer</MenuItem>
+                                                        </Select>
                                                     </FormControl>
                                                     {error && <Alert severity="error" className={classes.alert}>{error}</Alert>}
                                                     {success && <Alert severity="success" className={classes.alert}>{success}</Alert>}
@@ -950,7 +977,7 @@ export const Section2: React.FC = function Section2() {
                                                 List your menu on our website and start earning more.
                                                 </Typography> 
                                                 <form>
-                                                    <FormControl variant="outlined" fullWidth>
+                                                    <FormControl variant="outlined" fullWidth required>
                                                         <InputLabel htmlFor="fullname" className={classes.root}>Full Name</InputLabel>
                                                         <OutlinedInput 
                                                             className={clsx(classes.firstTextField, classes.root)}
@@ -964,7 +991,7 @@ export const Section2: React.FC = function Section2() {
                                                             fullWidth
                                                         />
                                                     </FormControl>
-                                                    <FormControl variant="outlined" fullWidth>
+                                                    <FormControl variant="outlined" fullWidth required>
                                                         <InputLabel htmlFor="businessname" className={classes.root}>Business Name</InputLabel>
                                                         <OutlinedInput 
                                                             className={clsx(classes.firstTextField, classes.root)}
@@ -978,7 +1005,7 @@ export const Section2: React.FC = function Section2() {
                                                             fullWidth
                                                         />
                                                     </FormControl>
-                                                    <FormControl variant="outlined" fullWidth>
+                                                    <FormControl variant="outlined" fullWidth required>
                                                         <InputLabel htmlFor="businessemail" className={classes.root}>Business Email</InputLabel>
                                                         <OutlinedInput 
                                                             className={clsx(classes.firstTextField, classes.root)}
@@ -992,7 +1019,7 @@ export const Section2: React.FC = function Section2() {
                                                             fullWidth
                                                         />
                                                     </FormControl>
-                                                    <FormControl variant="outlined" fullWidth>
+                                                    <FormControl variant="outlined" fullWidth required>
                                                         <InputLabel htmlFor="contact" className={classes.root}>Contact Details</InputLabel>
                                                         <OutlinedInput 
                                                             className={clsx(classes.firstTextField, classes.root)}
@@ -1005,6 +1032,24 @@ export const Section2: React.FC = function Section2() {
                                                             notched={true}
                                                             fullWidth
                                                         />
+                                                    </FormControl>
+                                                    <FormControl variant="outlined" fullWidth required>
+                                                        <InputLabel className={classes.root} id="demo-simple-select-outlined-label">Role</InputLabel>
+                                                        <Select
+                                                            className={clsx(classes.firstTextField, classes.root)}
+                                                            labelId="demo-simple-select-outlined-label"
+                                                            id="demo-simple-select-outlined"
+                                                            value={values.role}
+                                                            onChange={handleChange1}
+                                                            label="Role"
+                                                            name="role"
+                                                            required
+                                                        >
+                                                            <MenuItem value={"Select Role"} key={0}>Select Role</MenuItem>
+                                                            <MenuItem value={"Restaurant Ownwer"} key={1}>Restaurant Ownwer</MenuItem>
+                                                            <MenuItem value={"Restaurant Employee"} key={2}>Restaurant Employee</MenuItem>
+                                                            <MenuItem value={"Dinner / Customer"} key={3}>Dinner / Customer</MenuItem>
+                                                        </Select>
                                                     </FormControl>
                                                     {error && <Alert severity="error" className={classes.alert}>{error}</Alert>}
                                                     {success && <Alert severity="success" className={classes.alert}>{success}</Alert>}

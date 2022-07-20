@@ -237,7 +237,7 @@ export const Section1: React.FC = function Section1() {
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography gutterBottom className={classes.cardTitleMiddle}>
-                                                                            UShip
+                                                                            Freight Forwarding
                                                                         </Typography>
                                                                 </CardContent>
                                                             </Card>
@@ -255,7 +255,7 @@ export const Section1: React.FC = function Section1() {
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography style={{width: "150px"}} className={classes.cardTitle1}>
-                                                                            Sally's Pantry
+                                                                            Online Grocery
                                                                         </Typography>
                                                                 </CardContent>
                                                             </Card>
@@ -300,7 +300,7 @@ export const Section1: React.FC = function Section1() {
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography gutterBottom className={classes.cardTitleMiddle}>
-                                                                            UShip
+                                                                            Freight Forwarding
                                                                         </Typography>
                                                                 </CardContent>
                                                             </Card>
@@ -318,7 +318,7 @@ export const Section1: React.FC = function Section1() {
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography style={{width: "150px"}} className={classes.cardTitle1}>
-                                                                            Sally's Pantry
+                                                                            Online Grocery
                                                                         </Typography>
                                                                 </CardContent>
                                                             </Card>
@@ -393,7 +393,7 @@ export const Section1: React.FC = function Section1() {
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography gutterBottom className={classes.cardTitleMiddle}>
-                                                                            UShip
+                                                                            Freight Forwarding
                                                                         </Typography>
                                                                 </CardContent>
                                                             </Card>
@@ -411,7 +411,7 @@ export const Section1: React.FC = function Section1() {
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography style={{width: "150px"}} className={classes.cardTitle1}>
-                                                                            Sally's Pantry
+                                                                            Online Grocery
                                                                         </Typography>
                                                                 </CardContent>
                                                             </Card>
@@ -456,7 +456,7 @@ export const Section1: React.FC = function Section1() {
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography gutterBottom className={classes.cardTitleMiddle}>
-                                                                            UShip
+                                                                            Freight Forwarding
                                                                         </Typography>
                                                                 </CardContent>
                                                             </Card>
@@ -474,7 +474,7 @@ export const Section1: React.FC = function Section1() {
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography style={{width: "150px"}} className={classes.cardTitle1}>
-                                                                            Sally's Pantry
+                                                                            Online Grocery
                                                                         </Typography>
                                                                 </CardContent>
                                                             </Card>
@@ -558,7 +558,7 @@ export const Section1: React.FC = function Section1() {
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography gutterBottom className={classes.cardTitleMiddle}>
-                                                                            UShip
+                                                                            Freight Forwarding
                                                                         </Typography>
                                                                 </CardContent>
                                                             </Card>
@@ -576,7 +576,7 @@ export const Section1: React.FC = function Section1() {
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography style={{width: "150px"}} className={classes.cardTitle1}>
-                                                                            Sally's Pantry
+                                                                            Online Grocery
                                                                         </Typography>
                                                                 </CardContent>
                                                             </Card>
@@ -621,7 +621,7 @@ export const Section1: React.FC = function Section1() {
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography gutterBottom className={classes.cardTitleMiddle}>
-                                                                            UShip
+                                                                            Freight Forwarding
                                                                         </Typography>
                                                                 </CardContent>
                                                             </Card>
@@ -639,7 +639,7 @@ export const Section1: React.FC = function Section1() {
                                                                 </CardMedia>
                                                                 <CardContent className={classes.cardContent}>
                                                                         <Typography style={{width: "150px"}} className={classes.cardTitle1}>
-                                                                            Sally's Pantry
+                                                                            Online Grocery
                                                                         </Typography>
                                                                 </CardContent>
                                                             </Card>

@@ -245,6 +245,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const emailNewInvoiceUploadTemplate = "template_a7m014a";
     const emailNewOrderStatusTemplate = "template_chhqfeg";
     const emailNewCustomerTemplate = "template_jqixj7b";
+    const emailNewMerchantAppTemplate = "template_lc6ix4j";
     const emailUserId = "user_bDLFbepm6Arcdgh7Akzo3";
     //Declare necessary variables
     const [createUser] = useMutation(CREATE_USER_MUTATION);
@@ -923,11 +924,11 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     };
 
     var fetchRestaurants = async function fetchRestaurants(payload){
-      ////console.log("about to fetch restaurants");
+      console.log("about to fetch restaurants");
         await getRestaurants().then(async function(response) {
           if (response.data.getRestaurants !== null) {
-            ////console.log("got list of restaurants");
-            ////console.log(response);
+            console.log("got list of restaurants");
+            console.log(response);
 
             var restList = response.data.getRestaurants;
 
@@ -937,7 +938,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             }
           }
         }).catch(function(err){
-          ////console.log(err);
+          console.log(err);
         });
 
         dispatch({
@@ -1484,6 +1485,46 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       // ////console.log(RequestParams);
     
       var fianlRes = await sendEmail(emailServiceId, emailContactUsTemplate, RequestParams, emailUserId).then(function (res) {
+        if (res) {
+          return true;
+        }
+      }).catch(function (err) {
+        // var data3 = {event: 'staff add package',
+        //                     value:{"Send email error for user: " : formVals.user_email, error: err}
+        // };
+        // var entry3 = log.entry(METADATA, data3);
+        // log.write(entry3);
+        // ////console.log("Send email error");
+        // ////console.log(err);
+        return false;
+      });
+      return fianlRes;
+    };
+
+    var sendMerchantFormEmail = async function sendMerchantFormEmail(fullname, businessemail, businessname, contact, role) {
+      // var data1 = {event: 'staff add package send new package email',
+      //                 value:{"Wtf is in formVals: " : "Wtf is in formVals:", formVals: formVals}
+      // };
+      // var entry1 = log.entry(METADATA, data1);
+      // log.write(entry1);
+      // ////console.log("Wtf is in formVals");
+      // ////console.log(formVals);
+      var RequestParams = {
+        from_name: fullname,
+        user_email: businessemail,
+        business: businessname,
+        reply_to: businessemail,
+        contact: contact,
+        role: role
+      }; // var data2 = {event: 'staff add package',
+      //                       value:{"What is in this package b4 email sent for user: " : "What is in this package b4 email sent for user", RequestParams: RequestParams}
+      // };
+      // var entry2 = log.entry(METADATA, data2);
+      // log.write(entry2);
+      // ////console.log("What is in this package b4 emails sent");
+      // ////console.log(RequestParams);
+    
+      var fianlRes = await sendEmail(emailServiceId, emailNewMerchantAppTemplate, RequestParams, emailUserId).then(function (res) {
         if (res) {
           return true;
         }
@@ -2217,6 +2258,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         fetchOrdersForRider2, 
         AddGeneralLocation,
         sendOrderCompletedEmail,
+        sendMerchantFormEmail,
         changeOrderStatus,
         UpdateOrder,
         fetchRiders,
