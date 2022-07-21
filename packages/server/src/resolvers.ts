@@ -403,7 +403,7 @@ const resolvers = {
                 OpeningHrs, category, MenuItems,
                 ImageName
             }
-            console.log(newRestaurantUser);
+            //console.log(newRestaurantUser);
             const user = await User.findOne({_id});
             Object.assign(user, newRestaurantUser);
             return user.save(); 
@@ -445,12 +445,12 @@ const resolvers = {
 
         updateOrderRejection: async(_, {
             _id, OrderId, RejectionList}) => {
-            console.log('im here', _id)
+            //console.log('im here', _id)
             let orderrejection = await OrderRejection.findOne({_id});
-            console.log(orderrejection)
+            //console.log(orderrejection)
             let refListUpdated = orderrejection.RejectionList.concat(RejectionList[RejectionList.length - 1]);
             orderrejection.RejectionList = refListUpdated;
-            console.log(orderrejection);
+            //console.log(orderrejection);
             return await orderrejection.save();
         }, 
 
