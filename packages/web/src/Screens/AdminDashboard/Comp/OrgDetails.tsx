@@ -386,13 +386,13 @@ export const OrgDetails: React.FC = function OrgDetails() {
     const options = {
         filterType: 'dropdown',
         search: true,
-        selectableRows: false,
+        selectableRows: 'none',
         download: false,
         print: false,
     };
 
     useEffect(() => {
-        console.log("inside use effect");
+        //console.log("inside use effect");
         //console.log(restaurants);
         try{
             if(restaurants.length > 0 && selectedRestaurant !== undefined && values.Menu.length === 0){
@@ -431,8 +431,12 @@ export const OrgDetails: React.FC = function OrgDetails() {
                 setOhrs(restaurant.OpeningHrs);
             }
 
+            //console.log("Menu", values.Menu.length);
+            //console.log("Rows", rows.length);
+
             if(values.Menu.length > rows.length || rows.length === 0){
-                let currentRows = rows;
+                //console.log("inside second if");
+                let currentRows = [] as object[];
                 values.Menu.map((item, index) => {
                     let row = {
                       MenuCategory: item.MenuCategory,
@@ -452,7 +456,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
             console.log(err)
         }
         
-    }, [restaurants, selectedRestaurant, values.Menu])
+    }, [restaurants, selectedRestaurant, values])
 
     const handleSubmit = async () => {
         try{
@@ -489,7 +493,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
     };
 
     const handleChange4 = (prop: keyof MenuItem) => (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(event.target.value)
+        //console.log(event.target.value)
         if(prop === "ItemCost"){
             if(event.target.value === ''){
                 setSelectedMenuItem({ ...selectedMenuItem, [prop]: 0 });
@@ -534,8 +538,8 @@ export const OrgDetails: React.FC = function OrgDetails() {
                 ImageName: selectedMenuItem.ImageName
             }
             newMenu.unshift(finalMenuItem);
-            console.log(newMenu)
-            console.log("about to set rows");
+            //console.log(newMenu)
+            //console.log("about to set rows");
             setValues({ ...values, Menu: newMenu});
             setOpen(false);
         }
@@ -827,7 +831,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
                                             >
                                                 <Fade in={open}>
                                                     <div className={clsx(classes.paper, 'modalMobile')}>
-                                                        <h3 id="transition-modal-title" style={{textAlign: "center", color: "#F7B614"}}>Edit Item</h3>
+                                                        <h3 id="transition-modal-title" style={{textAlign: "center", color: "#F7B614"}}>Add Item</h3>
                                                         <Link to={referralPath} className={classes.cartIcon} onClick={handleCloseX}>
                                                                 <img src="Images/CartCloseIcon.png" alt="closemodal" />
                                                         </Link>
