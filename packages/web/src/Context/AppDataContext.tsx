@@ -924,11 +924,11 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     };
 
     var fetchRestaurants = async function fetchRestaurants(payload){
-      console.log("about to fetch restaurants");
+      //console.log("about to fetch restaurants");
         await getRestaurants().then(async function(response) {
           if (response.data.getRestaurants !== null) {
-            console.log("got list of restaurants");
-            console.log(response);
+            //console.log("got list of restaurants");
+            //console.log(response);
 
             var restList = response.data.getRestaurants;
 
@@ -1009,7 +1009,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           if(item.MenuCategory === category){
             newMenuItems.push(item);
           }
-          return;
+          return '';
         });
         //return newMenuItems;
         payload.filteredMenuItems = newMenuItems;
@@ -2115,7 +2115,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var UpdateRestaurantBy_ID  = async function UpdateRestaurantBy_ID(payload: any, restaurant: { _id: any; Id: any; FirstName: any; LastName: any; Email: any; AddressLine1: any; AddressLine2: any; City: any; ContactNumber: any; OpeningHrs: any; category: { _id: any; }; MenuItems: any; ImageName: any; } | null | undefined){
       if(restaurant !== null && restaurant !== undefined){
           
-          console.log(restaurant);
+          //console.log(restaurant);
           var updateRes = await updateRestaurantById({variables: {
             _id: restaurant._id,
             Id: restaurant.Id,

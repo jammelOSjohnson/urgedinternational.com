@@ -214,7 +214,7 @@ import { Alert } from '@material-ui/lab';
     const options = {
       filterType: 'dropdown',
       search: true,
-      selectableRows: false
+      selectableRows: 'none'
     };
     
     if(userRolef !== undefined && orders.length !== 0){

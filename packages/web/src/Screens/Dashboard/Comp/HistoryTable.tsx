@@ -142,7 +142,7 @@ export const HistoryTable: React.FC = function HistoryTable () {
   const options = {
     filterType: 'dropdown',
     search: true,
-    selectableRows: false,
+    selectableRows: 'none',
     download: false,
     print: false
   };

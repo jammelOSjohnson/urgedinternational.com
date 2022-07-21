@@ -48,12 +48,14 @@ export const HeaderRight: React.FC = function HeaderRight() {
         <>
             <Container maxWidth="xl" className={classes.main} style={{background: "transparent"}}>
                 <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
-                    <Grid item xs={6} spacing={1}>
+                    <Grid item xs={6}>
                         <User />
                     </Grid>
-                    <Grid container direction="row" xs={6} spacing={1}>
-                        <Grid item xs={12} spacing={0}>
-                            <Notification /> <span style={{marginRight: "10%"}}></span>
+                    <Grid item xs={6}>
+                        <Grid container direction="row" spacing={1}>
+                            <Grid item xs={12}>
+                                <Notification /> <span style={{marginRight: "10%"}}></span>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>

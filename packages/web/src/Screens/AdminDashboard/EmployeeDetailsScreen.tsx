@@ -5,7 +5,7 @@ import { Sidebar } from './Comp/Sidebar';
 import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
 import { EmployeeOrdersCounters } from './Comp/EmployeeOrdersCounters';
-import { EmployeeDetailsRight } from './Comp/EmployeeDetailsRight';
+//import { EmployeeDetailsRight } from './Comp/EmployeeDetailsRight';
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({

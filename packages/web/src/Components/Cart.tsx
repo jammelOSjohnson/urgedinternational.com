@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import { PlayArrowRounded, ShoppingCartRounded } from "@material-ui/icons/";
 import { Link } from "react-router-dom";
-import { textAlign } from 'html2canvas/dist/types/css/property-descriptors/text-align';
+//import { textAlign } from 'html2canvas/dist/types/css/property-descriptors/text-align';
 
 
 const useStyles = makeStyles((theme: Theme) => 

@@ -215,7 +215,7 @@ export const OrganisationsCardList: React.FC = function OrganisationsCardList(pr
                                         }
                                     />
                                     <CardContent>
-                                        <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
+                                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                             <Grid item xs={12}>
                                             </Grid>
                                             <Grid item container xs={12} direction="row" spacing={0}>

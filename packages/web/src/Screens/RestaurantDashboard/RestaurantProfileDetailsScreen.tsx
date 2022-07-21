@@ -429,7 +429,7 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
     const options = {
         filterType: 'dropdown',
         search: true,
-        selectableRows: false,
+        selectableRows: 'none',
         download: false,
         print: false,
     };
