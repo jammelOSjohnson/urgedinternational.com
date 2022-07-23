@@ -415,6 +415,17 @@ export const GET_ORDERS_BY_RIDERID = gql`
             ServiceCharge
             CartTotal
             OrderType
+            Restaurant{
+                _id
+                Id
+                FirstName 
+                LastName
+                Email
+                AddressLine1
+                AddressLine2
+                City
+                ContactNumber
+            }
         }
     }
 `

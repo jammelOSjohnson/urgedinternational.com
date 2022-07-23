@@ -132,7 +132,7 @@ import clsx from 'clsx';
   export const OrdersTable: React.FC = function OrdersTable () {
     const classes = useStyles();
     var { value }  = useAppData();
-    var { orders, riders, fetchRiders, UpdateOrderRejectionList, UpdateOrder, CreateOrderRejectionList, OrderRejectionList, refreshingOrderTables, currentUser, userRolef } = value;
+    var { orders, riders, fetchRiders, UpdateOrderRejectionList, UpdateOrderRider, CreateOrderRejectionList, OrderRejectionList, refreshingOrderTables, currentUser, userRolef } = value;
 
     var history = useHistory();
 
@@ -179,7 +179,7 @@ import clsx from 'clsx';
           console.log(orders[orderIndex].OrderStatus);
           let order = {...orders[orderIndex], OrderStatus: status, Rider: orders[orderIndex].Rider._id };
           console.log(order);
-          await UpdateOrder(value, order).then((res) => {
+          await UpdateOrderRider(value, order).then((res) => {
               if(res){
                   setOpen(true);
               }
@@ -213,7 +213,7 @@ import clsx from 'clsx';
                   order.Status = "Rejected";
                 }
                 console.log('about to update order');
-                await UpdateOrder(value, order).then(async (res) => {
+                await UpdateOrderRider(value, order).then(async (res) => {
                   if(res){
                       console.log('about to create rejection list')
                       await CreateOrderRejectionList(order).then((res) => {
@@ -249,7 +249,7 @@ import clsx from 'clsx';
                   order.OrderStatus = "Not Assigned";
                 }
                 console.log('about to update order', order);
-                await UpdateOrder(value, order).then(async (res2) => {
+                await UpdateOrderRider(value, order).then(async (res2) => {
                   if(res2){
                       if(unrestricted){
                         console.log('about to update rejection list')

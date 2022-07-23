@@ -1162,10 +1162,44 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
                 user_email: response.data.updateOrder.userEmail,
                 status: order.OrderStatus,
                 order_id: order._id
-              };
+              }; 
 
               return await sendNewOrderStatusEmail(formVals).then(async(res) => {
                 await fetchOrders(payload);
+                return true;
+              })
+            }
+          });
+
+          if(updateRes !== undefined){
+            return updateRes;
+          }
+      }else{
+        return false
+      }
+      return false
+    }
+
+    var UpdateOrderRider  = async function UpdateOrderRider(payload, order){
+      if(order !== null && order !== undefined){
+          let newOrder = order;
+          if(newOrder.Rider.AddressLine1 !== undefined){
+            newOrder.Rider = newOrder.Rider._id;
+          }
+          //console.log(newOrder);
+          var updateRes = await updateOrder({variables: newOrder}).then(async function(response) {
+            ////console.log("create orer result");
+            if (response.data.updateOrder !== null) {
+              //console.log(response.data.updateOrder);
+              let formVals = {
+                user_name: response.data.updateOrder.userName,
+                user_email: response.data.updateOrder.userEmail,
+                status: order.OrderStatus,
+                order_id: order._id
+              }; 
+
+              return await sendNewOrderStatusEmail(formVals).then(async(res) => {
+                await fetchOrdersForRider(payload);
                 return true;
               })
             }
@@ -2261,6 +2295,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         sendMerchantFormEmail,
         changeOrderStatus,
         UpdateOrder,
+        UpdateOrderRider,
         fetchRiders,
         serviceWorkerInit,
         serviceWorkerUpdate,
