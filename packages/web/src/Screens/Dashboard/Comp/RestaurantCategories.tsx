@@ -3,6 +3,7 @@ import React from 'react';
 import clsx from 'clsx';
 import { Link } from "react-router-dom";
 import '../CSS/RestaurantCategories.css'
+import { useAppData } from '../../../Context/AppDataContext';
 
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -122,9 +123,29 @@ export const RestaurantCategories: React.FC = function RestaurantCategories() {
     const classes = useStyles();
     const theme = useTheme();
 
+    var { value } = useAppData();
+    var { filterRestCategory, getRestBycategory } = value;
+
     const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
     const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
+
+    const restCategories = [
+        'Dinner', 'Breakfast',
+        'Dessert', 'Pastry', 'Chinese',
+        'Lunch', 'Salads'
+    ];
     
+    var filterCat = function(event, category){
+        try{
+            event.preventDefault();
+            getRestBycategory(value, category).then(() => {
+                //setSate
+            })
+        }catch(err){
+            //console.log(err)
+        }
+        
+    }
       
       return (
         <>
@@ -141,129 +162,87 @@ export const RestaurantCategories: React.FC = function RestaurantCategories() {
                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                     <Grid container xs={12} direction="column">
                         <Grid container direction="row" spacing={1}>
-                            <Grid item className={classes.gridSpacing}>
-                                {/* <Link to="/FoodDelivery/FastFood" title="Fast Food" className={classes.inactiveItemLink}> */}
-                                    <Card className={clsx(classes.card, "cardSizeCategoriesRestarants2")}>
-                                        <CardContent className={classes.cardContent2}>
-                                                <Typography gutterBottom className={classes.cardTitle2}>
-                                                    ALL
-                                                </Typography>
-                                        </CardContent>
-                                    </Card>
-                                {/* </Link> */}
-                            </Grid>
-                            <Grid item className={classes.gridSpacing}>
-                                {/* <Link to="/FoodDelivery/FastFood" title="Fast Food" className={classes.inactiveItemLink}> */}
-                                    <Card className={clsx(classes.card, "cardSizeCategoriesRestarants")}>
-                                        <CardMedia className={classes.cardImage}>
-                                            <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt="FoodDeliveryFastFood"></img>
-                                        </CardMedia>
-                                        <CardContent className={classes.cardContent}>
-                                                <Typography gutterBottom className={classes.cardTitle}>
-                                                    Fast Food
-                                                </Typography>
-                                        </CardContent>
-                                    </Card>
-                                {/* </Link> */}
-                            </Grid>
-                            <Grid item className={classes.gridSpacing}>
-                                {/* <Link to="/FoodDelivery/Dinner" title="Dinner" className={classes.inactiveItemLink}> */}
-                                    <Card className={clsx(classes.card, "cardSizeCategoriesRestarants")}>
-                                        <CardMedia className={classes.cardImage}>
-                                            <img src="Images/FoodDeliveryDinner.png" className={classes.Images} alt="FoodDeliveryDinner 2"></img>
-                                        </CardMedia>
-                                        <CardContent className={classes.cardContent}>
-                                                <Typography gutterBottom className={classes.cardTitle}>
-                                                    Dinner
-                                                </Typography>
-                                        </CardContent>
-                                    </Card>
-                                {/* </Link> */}
-                            </Grid>
-                            <Grid item className={classes.gridSpacing}>
-                                {/* <Link to="/FoodDelivery/Breakfast" title="Breakfast" className={classes.inactiveItemLink}> */}
-                                    <Card className={clsx(classes.card, "cardSizeCategoriesRestarants")}>
-                                        <CardMedia className={classes.cardImage}>
-                                            <img src="Images/FoodDeliveryBreakfast.png" className={classes.Images} alt="FoodDeliveryBreakfast 3"></img>
-                                        </CardMedia>
-                                        <CardContent className={classes.cardContent}>
-                                                <Typography gutterBottom className={classes.cardTitle}>
-                                                    Breakfast
-                                                </Typography>
-                                        </CardContent>
-                                    </Card>
-                                {/* </Link> */}
-                            </Grid>
-                            <Grid item className={classes.gridSpacing}>
-                                {/* <Link to="/FoodDelivery/Dessert" title="Dessert" className={classes.inactiveItemLink}> */}
-                                    <Card className={clsx(classes.card, "cardSizeCategoriesRestarants")}>
-                                        <CardMedia className={classes.cardImage}>
-                                            <img src="Images/FoodDeliveryDessert.png" className={classes.Images} alt="FoodDeliveryDessert 2"></img>
-                                        </CardMedia>
-                                        <CardContent className={classes.cardContent}>
-                                                <Typography gutterBottom className={classes.cardTitle}>
-                                                    Dessert
-                                                </Typography>
-                                        </CardContent>
-                                    </Card>
-                                {/* </Link> */}
-                            </Grid>
-                            <Grid item className={classes.gridSpacing}>
-                                {/* <Link to="/FoodDelivery/Pastry" title="Pastry" className={classes.inactiveItemLink}> */}
-                                    <Card className={clsx(classes.card, "cardSizeCategoriesRestarants")}>
-                                        <CardMedia className={classes.cardImage}>
-                                            <img src="Images/FoodDeliveryPastry.png" className={classes.Images} alt="FoodDeliveryPastry 2"></img>
-                                        </CardMedia>
-                                        <CardContent className={classes.cardContent}>
-                                                <Typography gutterBottom className={classes.cardTitle}>
-                                                    Pastry
-                                                </Typography>
-                                        </CardContent>
-                                    </Card>
-                                {/* </Link> */}
-                            </Grid>
-                            <Grid item className={classes.gridSpacing}>
-                                {/* <Link to="/FoodDelivery/Chinese" title="Chinese" className={classes.inactiveItemLink}> */}
-                                    <Card className={clsx(classes.card, "cardSizeCategoriesRestarants")}>
-                                        <CardMedia className={classes.cardImage}>
-                                            <img src="Images/FoodDeliveryChinese.png" className={classes.Images} alt="FoodDeliveryChinese"></img>
-                                        </CardMedia>
-                                        <CardContent className={classes.cardContent}>
-                                                <Typography gutterBottom className={classes.cardTitle}>
-                                                    Chinese
-                                                </Typography>
-                                        </CardContent>
-                                    </Card>
-                                {/* </Link> */}
-                            </Grid>
-                            <Grid item className={classes.gridSpacing}>
-                                {/* <Link to="/FoodDelivery/Lunch" title="Lunch" className={classes.inactiveItemLink}> */}
-                                    <Card className={clsx(classes.card, "cardSizeCategoriesRestarants")}>
-                                        <CardMedia className={classes.cardImage}>
-                                            <img src="Images/FoodDeliveryLunch.png" className={classes.Images} alt="FoodDeliveryLunch"></img>
-                                        </CardMedia>
-                                        <CardContent className={classes.cardContent}>
-                                                <Typography gutterBottom className={classes.cardTitle}>
-                                                    Lunch
-                                                </Typography>
-                                        </CardContent>
-                                    </Card>
-                                {/* </Link> */}
-                            </Grid>
-                            <Grid item className={classes.gridSpacing}>
-                                {/* <Link to="/FoodDelivery/Salads" title="Salads" className={classes.inactiveItemLink}> */}
-                                    <Card className={clsx(classes.card, "cardSizeCategoriesRestarants")}>
-                                        <CardMedia className={classes.cardImage}>
-                                            <img src="Images/FoodDeliverySalads.png" className={classes.Images} alt="FoodDeliverySalads 2"></img>
-                                        </CardMedia>
-                                        <CardContent className={classes.cardContent}>
-                                                <Typography gutterBottom className={classes.cardTitle}>
-                                                    Salads
-                                                </Typography>
-                                        </CardContent>
-                                    </Card>
-                                {/* </Link> */}
-                            </Grid>
+                            {
+                                filterRestCategory === undefined || filterRestCategory === "All"?
+                                    <a href="javascript()" title="All" className={clsx(classes.inactiveItemLink, classes.gridSpacing)} onClick={(e) => filterCat(e,"All")} key={"All"}>
+                                        <Grid item>
+                                            <Card className={clsx(classes.card, "cardSizeCategoriesRestarants2")}>
+                                                <CardContent className={classes.cardContent2}>
+                                                        <Typography gutterBottom className={classes.cardTitle2}>
+                                                            ALL
+                                                        </Typography>
+                                                </CardContent>
+                                            </Card>
+                                        </Grid>
+                                    </a>
+                                :
+                                    <a href="javascript()" className={clsx(classes.inactiveItemLink,classes.gridSpacing)} onClick={(e) => filterCat(e,"All")} key={"All"}>
+                                        <Grid item>
+                                                <Card className={clsx(classes.card, "cardSizeCategoriesRestarants3")}>
+                                                    <CardContent className={classes.cardContent2}>
+                                                            <Typography gutterBottom className={classes.cardTitle} style={{color: "#000000"}}>
+                                                                ALL
+                                                            </Typography>
+                                                    </CardContent>
+                                                </Card>
+                                        </Grid>
+                                    </a>
+                            }
+                            {
+                                filterRestCategory !== undefined ?
+                                    restCategories.map((item, index) => {
+                                        return filterRestCategory === item?
+                                            <a href="javascript()" title="Fast Food" className={clsx(classes.inactiveItemLink, classes.gridSpacing)} onClick={(e) => filterCat(e,item)} key={item}>
+                                                <Grid item>
+                                                    <Card className={clsx(classes.card, "cardSizeCategoriesRestarants2")}>
+                                                        <CardMedia className={classes.cardImage}>
+                                                            <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt="FoodDeliveryFastFood"></img>
+                                                        </CardMedia>
+                                                        <CardContent className={classes.cardContent2}>
+                                                                <Typography gutterBottom className={classes.cardTitle2}>
+                                                                    {item}
+                                                                </Typography>
+                                                        </CardContent>
+                                                    </Card>
+                                                </Grid>
+                                            </a>
+                                        :
+                                        <a href="javascript()" title="Fast Food" className={clsx(classes.inactiveItemLink, classes.gridSpacing)} onClick={(e) => filterCat(e,item)} key={item}>
+                                                <Grid item>
+                                                    <Card className={clsx(classes.card, "cardSizeCategoriesRestarants")}>
+                                                        <CardMedia className={classes.cardImage}>
+                                                            <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt="FoodDeliveryFastFood"></img>
+                                                        </CardMedia>
+                                                        <CardContent className={classes.cardContent}>
+                                                                <Typography gutterBottom className={classes.cardTitle}>
+                                                                    {item}
+                                                                </Typography>
+                                                        </CardContent>
+                                                    </Card>
+                                                </Grid>
+                                            </a>
+
+                                    })
+                                :
+                                    restCategories.map((item, index) => {
+                                        return(
+                                            <a href="javascript()" title="Fast Food" className={clsx(classes.inactiveItemLink, classes.gridSpacing)} onClick={(e) => filterCat(e,item)} key={item}>
+                                                <Grid item>
+                                                    <Card className={clsx(classes.card, "cardSizeCategoriesRestarants")}>
+                                                        <CardMedia className={classes.cardImage}>
+                                                            <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt="FoodDeliveryFastFood"></img>
+                                                        </CardMedia>
+                                                        <CardContent className={classes.cardContent}>
+                                                                <Typography gutterBottom className={classes.cardTitle}>
+                                                                    {item}
+                                                                </Typography>
+                                                        </CardContent>
+                                                    </Card>
+                                                </Grid>
+                                            </a>
+                                        )
+                                    })
+                            }
                         </Grid>
                     </Grid>
                 </Grid>
@@ -285,119 +264,94 @@ export const RestaurantCategories: React.FC = function RestaurantCategories() {
                         <TableBody>
                             <TableRow key={0}>
                                 <TableCell align="center">
-                                    {/* <Link to="/FoodDelivery/Breakfast" title="Breakfast" className={classes.inactiveItemLink}> */}
-                                       <Card className={classes.cardMobile}>
-                                           <CardMedia className={classes.cardImage}>
-                                               <img src="Images/FoodDeliveryBreakfast.png" className={classes.Images} alt="FoodDeliveryBreakfast 3"></img>
-                                           </CardMedia>
-                                           <CardContent className={classes.cardContent}>
-                                                   <Typography gutterBottom className={classes.cardTitle}>
-                                                       Breakfast
-                                                   </Typography>
-                                           </CardContent>
-                                       </Card>
-                                   {/* </Link> */}
+                                    {
+                                        filterRestCategory === undefined || filterRestCategory === "All"?
+                                            <a href="javascript()" title="All" className={classes.inactiveItemLink} onClick={(e) => filterCat(e,"All")} key={"All"}>
+                                                <Grid item>
+                                                    <Card className={clsx(classes.cardMobile, "cardSizeCategoriesRestarants2")}>
+                                                        <CardContent className={classes.cardContent}>
+                                                                <Typography gutterBottom className={classes.cardTitle2}>
+                                                                    ALL
+                                                                </Typography>
+                                                        </CardContent>
+                                                    </Card>
+                                                </Grid>
+                                            </a>
+                                        :
+                                            <a href="javascript()" className={classes.inactiveItemLink} onClick={(e) => filterCat(e,"All")} key={"All"}>
+                                                <Grid item>
+                                                        <Card className={clsx(classes.cardMobile, "cardSizeCategoriesRestarants3")}>
+                                                            <CardContent className={classes.cardContent}>
+                                                                    <Typography gutterBottom className={classes.cardTitle}>
+                                                                        ALL
+                                                                    </Typography>
+                                                            </CardContent>
+                                                        </Card>
+                                                </Grid>
+                                            </a>
+                                    }
                                 </TableCell>
-                                <TableCell align="center">
-                                    {/* <Link to="/FoodDelivery/Lunch" title="Lunch" className={classes.inactiveItemLink}> */}
-                                       <Card className={classes.cardMobile}>
-                                           <CardMedia className={classes.cardImage}>
-                                               <img src="Images/FoodDeliveryLunch.png" className={classes.Images} alt="FoodDeliveryLunch 3"></img>
-                                           </CardMedia>
-                                           <CardContent className={classes.cardContent}>
-                                                   <Typography gutterBottom className={classes.cardTitle}>
-                                                       Lunch
-                                                   </Typography>
-                                           </CardContent>
-                                       </Card>
-                                   {/* </Link> */}
-                                </TableCell>
-                                <TableCell align="center">
-                                    {/* <Link to="/FoodDelivery/Dessert" title="Dessert" className={classes.inactiveItemLink}> */}
-                                       <Card className={classes.cardMobile}>
-                                           <CardMedia className={classes.cardImage}>
-                                               <img src="Images/FoodDeliveryDessert.png" className={classes.Images} alt="FoodDeliveryDessert 3"></img>
-                                           </CardMedia>
-                                           <CardContent className={classes.cardContent}>
-                                                   <Typography gutterBottom className={classes.cardTitle}>
-                                                       Dessert
-                                                   </Typography>
-                                           </CardContent>
-                                       </Card>
-                                   {/* </Link> */}
-                                </TableCell>
-                                <TableCell align="center">
-                                    {/* <Link to="/FoodDelivery/Chinese" title="Chinese" className={classes.inactiveItemLink}> */}
-                                       <Card className={classes.cardMobile}>
-                                           <CardMedia className={classes.cardImage}>
-                                               <img src="Images/FoodDeliveryChinese.png" className={classes.Images} alt="FoodDeliveryChinese 3"></img>
-                                           </CardMedia>
-                                           <CardContent className={classes.cardContent}>
-                                                   <Typography gutterBottom className={classes.cardTitle}>
-                                                       Chinese
-                                                   </Typography>
-                                           </CardContent>
-                                       </Card>
-                                 {/* </Link> */}
-                                </TableCell>
-                            </TableRow>
-                            <TableRow key={1}>
-                                <TableCell align="center">
-                                    {/* <Link to="/FoodDelivery/FastFood" title="Fast Food" className={classes.inactiveItemLink}> */}
-                                       <Card className={classes.cardMobile}>
-                                           <CardMedia className={classes.cardImage}>
-                                               <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt="FoodDeliveryFastFood 3"></img>
-                                           </CardMedia>
-                                           <CardContent className={classes.cardContent}>
-                                                   <Typography gutterBottom className={classes.cardTitle}>
-                                                       Fast Food
-                                                   </Typography>
-                                           </CardContent>
-                                       </Card>
-                                   {/* </Link> */}
-                                </TableCell>
-                                <TableCell align="center">
-                                    {/* <Link to="/FoodDelivery/Dinner" title="Dinner" className={classes.inactiveItemLink}> */}
-                                     <Card className={classes.cardMobile}>
-                                         <CardMedia className={classes.cardImage}>
-                                             <img src="Images/FoodDeliveryDinner.png" className={classes.Images} alt="FoodDeliveryDinner 3"></img>
-                                         </CardMedia>
-                                         <CardContent className={classes.cardContent}>
-                                                 <Typography gutterBottom className={classes.cardTitle}>
-                                                     Dinner
-                                                 </Typography>
-                                         </CardContent>
-                                     </Card>
-                                 {/* </Link> */}
-                                </TableCell>
-                                <TableCell align="center">
-                                    {/* <Link to="/FoodDelivery/Pastry" title="Pastry" className={classes.inactiveItemLink}> */}
-                                       <Card className={classes.cardMobile}>
-                                           <CardMedia className={classes.cardImage}>
-                                               <img src="Images/FoodDeliveryPastry.png" className={classes.Images} alt="FoodDeliveryPastry 3"></img>
-                                           </CardMedia>
-                                           <CardContent className={classes.cardContent}>
-                                                   <Typography gutterBottom className={classes.cardTitle}>
-                                                       Pastry
-                                                   </Typography>
-                                           </CardContent>
-                                       </Card>
-                                   {/* </Link> */}
-                                </TableCell>
-                                <TableCell align="center">
-                                    {/* <Link to="/FoodDelivery/Salads" title="Salads" className={classes.inactiveItemLink}> */}
-                                       <Card className={classes.cardMobile}>
-                                           <CardMedia className={classes.cardImage} style={{paddingTop: "14px"}}>
-                                               <img src="Images/FoodDeliverySalads.png" className={classes.Images} alt="FoodDeliverySalads 3"></img>
-                                           </CardMedia>
-                                           <CardContent className={classes.cardContent}>
-                                                   <Typography gutterBottom className={classes.cardTitle}>
-                                                       Salads
-                                                   </Typography>
-                                           </CardContent>
-                                       </Card>
-                                   {/* </Link>    */}
-                                </TableCell>
+                                {
+                                    filterRestCategory !== undefined ?
+                                        restCategories.map((item, index) => {
+                                            return filterRestCategory === item?
+                                                <TableCell align="center">
+                                                    <a href="javascript()" title="Fast Food" className={classes.inactiveItemLink} onClick={(e) => filterCat(e,item)} key={item}>
+                                                        <Grid item>
+                                                            <Card className={clsx(classes.cardMobile, "cardSizeCategoriesRestarants2")}>
+                                                                <CardMedia className={classes.cardImage}>
+                                                                    <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt="FoodDeliveryFastFood"></img>
+                                                                </CardMedia>
+                                                                <CardContent className={classes.cardContent}>
+                                                                        <Typography gutterBottom className={clsx(classes.cardTitle2, "selected")}>
+                                                                            {item}
+                                                                        </Typography>
+                                                                </CardContent>
+                                                            </Card>
+                                                        </Grid>
+                                                    </a>
+                                                </TableCell>
+                                            :
+                                                <TableCell align="center">
+                                                    <a href="javascript()" title="Fast Food" className={classes.inactiveItemLink} onClick={(e) => filterCat(e,item)} key={item}>
+                                                        <Grid item>
+                                                            <Card className={classes.cardMobile}>
+                                                                <CardMedia className={classes.cardImage}>
+                                                                    <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt="FoodDeliveryFastFood 3"></img>
+                                                                </CardMedia>
+                                                                <CardContent className={classes.cardContent}>
+                                                                            <Typography gutterBottom className={clsx(classes.cardTitle, "selected")}>
+                                                                                {item}
+                                                                            </Typography>
+                                                                </CardContent>
+                                                            </Card>
+                                                        </Grid>
+                                                    </a>
+                                                </TableCell>
+
+                                        })
+                                    :
+                                        restCategories.map((item, index) => {
+                                            return(
+                                                <TableCell align="center">
+                                                    <a href="javascript()" title="Fast Food" className={clsx(classes.inactiveItemLink, classes.gridSpacing)} onClick={(e) => filterCat(e,item)} key={item}>
+                                                        <Grid item>
+                                                            <Card className={classes.cardMobile}>
+                                                                <CardMedia className={classes.cardImage}>
+                                                                    <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt="FoodDeliveryFastFood"></img>
+                                                                </CardMedia>
+                                                                <CardContent className={classes.cardContent}>
+                                                                        <Typography gutterBottom className={clsx(classes.cardTitle, "selected")}>
+                                                                            {item}
+                                                                        </Typography>
+                                                                </CardContent>
+                                                            </Card>
+                                                        </Grid>
+                                                    </a>
+                                                </TableCell>
+                                            )
+                                        })
+                                }
                             </TableRow>
                         </TableBody>
                     </Table>

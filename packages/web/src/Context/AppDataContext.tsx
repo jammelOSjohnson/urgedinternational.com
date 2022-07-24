@@ -123,6 +123,12 @@ function appDataReducer(state, action){
             filteredMenuItems: action.payload.filteredMenuItems,
             filterCategory: action.payload.filterCategory
           }
+        case "filter_rest_category":
+          return {
+            ...state,
+            filteredRestItems: action.payload.filteredRestItems,
+            filterRestCategory: action.payload.filterRestCategory
+          }
         case "add_cart_item":
           return {
             ...state,
@@ -296,7 +302,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var selectedMenuCategory = undefined;
     var selectedRider = undefined;
     var filteredMenuItems = [];
+    var filteredRestItems = [];
     var filterCategory = undefined;
+    var filterRestCategory = undefined;
     var generalLocation = undefined;
     var prevSelectedrestaurant = undefined; 
     var loading = true;
@@ -1030,6 +1038,35 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       }
       
       
+    }
+
+    var getRestBycategory = async function getRestBycategory(payload, category){
+      console.log(category)
+      if(category !== "All"){
+        var newRestItems = [] as Object[];
+        value.restaurants.map((item, index) => {
+          if(item.category.Name === category){
+            newRestItems.push(item);
+          }
+          return '';
+        });
+        //return newMenuItems;
+        payload.filteredRestItems = newRestItems;
+        payload.filterRestCategory = category;
+
+        dispatch({
+          type: "filter_menu_category",
+          payload: payload
+        });
+      }else{
+        payload.filteredRestItems = [];
+        payload.filterRestCategory = undefined;
+
+        dispatch({
+          type: "filter_rest_category",
+          payload: payload
+        });
+      }
     }
 
     var addItemToCart = async function addItemToCart(payload, item, index){
@@ -2251,6 +2288,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         menuCategories,
         filteredMenuItems,
         filterCategory,
+        filteredRestItems,
+        filterRestCategory,
         generalLocation,
         longitude,
         latitude,
@@ -2280,6 +2319,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         fetchRestaurants,
         viewMenuItems,
         getMenuBycategory,
+        getRestBycategory,
         addItemToCart,
         removeCartItem,
         clearCartItems,

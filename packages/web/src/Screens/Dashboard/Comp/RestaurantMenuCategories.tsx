@@ -270,91 +270,91 @@ export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategor
                                 </TableHead>
                                 <TableBody>
                                     <TableRow key={0}>
-                                    <TableCell align="center">
-                                    {
-                                            filterCategory === undefined || filterCategory === "All" ?
-                                                <a href="javascript()" className={classes.inactiveItemLink} onClick={(e) => filterCat(e,"All")} key={"All"}>
-                                                    <Card className={clsx(classes.cardMobile, "cardSizeCategoriesRestarants2")}>
-                                                        <CardMedia className={classes.cardImage}>
-                                                            <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt="FoodDeliveryFastFood 2"></img>
-                                                        </CardMedia><br/>
-                                                        <CardContent className={classes.cardContent}>
-                                                                <Typography gutterBottom className={classes.cardTitle2} style={{color: "#FFFFFF"}}>
-                                                                    All
-                                                                </Typography>
-                                                        </CardContent>
-                                                    </Card>
-                                                </a>
-                                            :
-                                                <a href="javascript()" className={classes.inactiveItemLink} onClick={(e) => filterCat(e,"All")} key={"All"}>
-                                                    <Card className={clsx(classes.cardMobile, "cardSizeCategoriesRestarants3")}>
-                                                        <CardMedia className={classes.cardImage}>
-                                                            <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt="FoodDeliveryFastFood 2"></img>
-                                                        </CardMedia><br/>
-                                                        <CardContent className={classes.cardContent}>
-                                                                <Typography gutterBottom className={classes.cardTitle}>
-                                                                    All
-                                                                </Typography>
-                                                        </CardContent>
-                                                    </Card>
-                                                </a>
-                                    }
-                                    </TableCell>
-                                    {
-                                        filterCategory !== undefined ?
-                                            menuCategories.map((item, index) => {
-                                                return filterCategory === item ?
-                                                    <TableCell align="center">
-                                                        <a href="javascript()" className={classes.inactiveItemLink} onClick={(e) => filterCat(e,item)} key={item}>
-                                                            <Card className={clsx(classes.cardMobile, "cardSizeCategoriesRestarants2")}>
-                                                                <CardMedia className={classes.cardImage}>
-                                                                    <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt=" FoodDeliveryFastFood 3"></img>
-                                                                </CardMedia><br/>
-                                                                <CardContent className={classes.cardContent}>
-                                                                        <Typography gutterBottom className={clsx(classes.cardTitle2, "selected")}>
-                                                                            {item}
-                                                                        </Typography>
-                                                                </CardContent>
-                                                            </Card>
-                                                        </a>
-                                                    </TableCell>
+                                        <TableCell align="center">
+                                        {
+                                                filterCategory === undefined || filterCategory === "All" ?
+                                                    <a href="javascript()" className={classes.inactiveItemLink} onClick={(e) => filterCat(e,"All")} key={"All"}>
+                                                        <Card className={clsx(classes.cardMobile, "cardSizeCategoriesRestarants2")}>
+                                                            <CardMedia className={classes.cardImage}>
+                                                                <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt="FoodDeliveryFastFood 2"></img>
+                                                            </CardMedia><br/>
+                                                            <CardContent className={classes.cardContent}>
+                                                                    <Typography gutterBottom className={classes.cardTitle2} style={{color: "#FFFFFF"}}>
+                                                                        All
+                                                                    </Typography>
+                                                            </CardContent>
+                                                        </Card>
+                                                    </a>
                                                 :
-                                                    <TableCell align="center">
-                                                        <a href="javascript()" className={classes.inactiveItemLink} onClick={(e) => filterCat(e,item)} key={item}>
-                                                            <Card className={classes.cardMobile}>
-                                                                <CardMedia className={classes.cardImage}>
-                                                                    <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt=" FoodDeliveryFastFood 3"></img>
-                                                                </CardMedia><br/>
-                                                                <CardContent className={classes.cardContent}>
-                                                                        <Typography gutterBottom className={clsx(classes.cardTitle, "selected")}>
-                                                                            {item}
-                                                                        </Typography>
-                                                                </CardContent>
-                                                            </Card>
-                                                        </a>
-                                                    </TableCell>
-                                            })
-                                        :
-                                            menuCategories.map((item, index) => {
-                                                return(
-                                                    <TableCell align="center">
-                                                        <a href="javascript()" className={classes.inactiveItemLink} onClick={(e) => filterCat(e,item)} key={item}>
-                                                            <Card className={classes.cardMobile}>
-                                                                <CardMedia className={classes.cardImage}>
-                                                                    <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt=" FoodDeliveryFastFood 3"></img>
-                                                                </CardMedia><br/>
-                                                                <CardContent className={classes.cardContent}>
-                                                                        <Typography gutterBottom className={clsx(classes.cardTitle, "selected")}>
-                                                                            {item}
-                                                                        </Typography>
-                                                                </CardContent>
-                                                            </Card>
-                                                        </a>
-                                                    </TableCell>
-                                                )
-                                            })
-                                            
-                                    }
+                                                    <a href="javascript()" className={classes.inactiveItemLink} onClick={(e) => filterCat(e,"All")} key={"All"}>
+                                                        <Card className={clsx(classes.cardMobile, "cardSizeCategoriesRestarants3")}>
+                                                            <CardMedia className={classes.cardImage}>
+                                                                <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt="FoodDeliveryFastFood 2"></img>
+                                                            </CardMedia><br/>
+                                                            <CardContent className={classes.cardContent}>
+                                                                    <Typography gutterBottom className={classes.cardTitle}>
+                                                                        All
+                                                                    </Typography>
+                                                            </CardContent>
+                                                        </Card>
+                                                    </a>
+                                        }
+                                        </TableCell>
+                                        {
+                                            filterCategory !== undefined ?
+                                                menuCategories.map((item, index) => {
+                                                    return filterCategory === item ?
+                                                        <TableCell align="center">
+                                                            <a href="javascript()" className={classes.inactiveItemLink} onClick={(e) => filterCat(e,item)} key={item}>
+                                                                <Card className={clsx(classes.cardMobile, "cardSizeCategoriesRestarants2")}>
+                                                                    <CardMedia className={classes.cardImage}>
+                                                                        <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt=" FoodDeliveryFastFood 3"></img>
+                                                                    </CardMedia><br/>
+                                                                    <CardContent className={classes.cardContent}>
+                                                                            <Typography gutterBottom className={clsx(classes.cardTitle2, "selected")}>
+                                                                                {item}
+                                                                            </Typography>
+                                                                    </CardContent>
+                                                                </Card>
+                                                            </a>
+                                                        </TableCell>
+                                                    :
+                                                        <TableCell align="center">
+                                                            <a href="javascript()" className={classes.inactiveItemLink} onClick={(e) => filterCat(e,item)} key={item}>
+                                                                <Card className={classes.cardMobile}>
+                                                                    <CardMedia className={classes.cardImage}>
+                                                                        <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt=" FoodDeliveryFastFood 3"></img>
+                                                                    </CardMedia><br/>
+                                                                    <CardContent className={classes.cardContent}>
+                                                                            <Typography gutterBottom className={clsx(classes.cardTitle, "selected")}>
+                                                                                {item}
+                                                                            </Typography>
+                                                                    </CardContent>
+                                                                </Card>
+                                                            </a>
+                                                        </TableCell>
+                                                })
+                                            :
+                                                menuCategories.map((item, index) => {
+                                                    return(
+                                                        <TableCell align="center">
+                                                            <a href="javascript()" className={classes.inactiveItemLink} onClick={(e) => filterCat(e,item)} key={item}>
+                                                                <Card className={classes.cardMobile}>
+                                                                    <CardMedia className={classes.cardImage}>
+                                                                        <img src="Images/FoodDeliveryFastFood.png" className={classes.Images} alt=" FoodDeliveryFastFood 3"></img>
+                                                                    </CardMedia><br/>
+                                                                    <CardContent className={classes.cardContent}>
+                                                                            <Typography gutterBottom className={clsx(classes.cardTitle, "selected")}>
+                                                                                {item}
+                                                                            </Typography>
+                                                                    </CardContent>
+                                                                </Card>
+                                                            </a>
+                                                        </TableCell>
+                                                    )
+                                                })
+                                                
+                                        }
                                     </TableRow>
                                 </TableBody>
                             </Table>
