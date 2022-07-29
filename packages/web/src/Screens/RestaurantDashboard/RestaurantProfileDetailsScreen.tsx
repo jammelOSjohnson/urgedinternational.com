@@ -8,7 +8,7 @@ import MUIDataTable from "mui-datatables";
 //import { ItemRating } from '../../../Components/ItemRating';
 import { Link } from "react-router-dom";
 import { Alert } from '@material-ui/lab';
-import { EditRounded } from '@material-ui/icons';
+import { EditRounded, DeleteOutlineRounded } from '@material-ui/icons';
 import clsx from 'clsx';
 import { Sidebar } from './Comp/Sidebar';
 import { HeaderLeft } from './Comp/HeaderLeft';
@@ -412,6 +412,7 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
     const [success, setSuccess] = useState('');
     const [open, setOpen] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
+    const [open3, setOpen3] = React.useState(false);
     const [selectedMenuItemIndex, setSelectedMenuItemIndex] = React.useState(0);
     const [selectedMenuItem, setSelectedMenuItem] = React.useState<MenuItem>({
         MenuCategory: '',
@@ -435,14 +436,14 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
     };
 
     useEffect(() => {
-        console.log("inside use effect");
+        //console.log("inside use effect");
         //console.log(restaurants);
         try{
             if(restaurantInfo === undefined){
                 fetchRestaurantInfo(value, userInfo._id);
             }else if(values.Name === ''){
                 let restaurant = restaurantInfo;
-                console.log("about to set form values")
+                //console.log("about to set form values")
                 setValues({
                     Name: restaurant.FirstName,
                     Email: restaurant.Email,
@@ -459,7 +460,7 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
                 setOhrs(restaurant.OpeningHrs);
             }else if(values.ImageName !== restaurantInfo.ImageName){
                 let restaurant = restaurantInfo;
-                console.log("about to set form values")
+                //console.log("about to set form values")
                 setValues({
                     ...values,
                     ImageName: restaurant.ImageName
@@ -467,8 +468,8 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
             }
             
 
-            if(values.Menu.length > rows.length){
-                console.log("inside if");
+            if(values.Menu.length > rows.length || values.Menu.length < rows.length && values.Menu.length !== 0){
+                //console.log("inside if");
                 let currentRows = [] as Object[];
                 values.Menu.map((item, index) => {
                     let row = {
@@ -476,7 +477,24 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
                       ItemName: item.ItemName, 
                       ItemCost: `$ ${ parseFloat(item.ItemCost.toString()).toFixed(2)}`,
                       ItemDescription: item.ItemDescription,
-                      Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); handleOpen2(index);}}><EditRounded color="primary" /></a></>
+                      Actions: <>
+                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                              <Grid item xs={6} style={{textAlign: "center"}}>
+                                    <a href="javascript()" title="Edit" 
+                                        onClick={(e) => {e.preventDefault(); handleOpen2(index);}}
+                                    >
+                                        <EditRounded color="primary" />
+                                    </a>
+                              </Grid>
+                              <Grid item xs={6} style={{textAlign: "center"}}>
+                                <a href="javascript()" title="Delete" 
+                                    onClick={(e) => {e.preventDefault(); handleOpen3(index);}}
+                                >
+                                    <DeleteOutlineRounded color="primary" />
+                                </a>
+                              </Grid>
+                          </Grid>
+                        </>
                     };
               
                     currentRows.push(row)
@@ -573,6 +591,13 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
     //     setValues({...values,[event.target.name]:event.target.value});
     // };
 
+    const handleClose3 = () => {
+        let newMenu = values.Menu.filter((item,index) => index != selectedMenuItemIndex);
+        //console.log(newMenu);
+        setValues({ ...values, Menu: newMenu});
+        setOpen3(false);
+    };
+
     const handleClose2 = () => {
         let newMenu = values.Menu;
         newMenu[selectedMenuItemIndex] = selectedMenuItem;
@@ -601,6 +626,10 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
     const handleCloseX = () => {
             setOpen(false);
     };
+
+    const handleCloseX2 = () => {
+        setOpen3(false);
+    };
   
     const handleOpen2 = (index: React.SetStateAction<number>) => {
       try
@@ -613,6 +642,18 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
       }
       
     };
+
+    const handleOpen3 = (index: React.SetStateAction<number>) => {
+        try
+        {
+          setSelectedMenuItemIndex(index);
+          setSelectedMenuItem(restaurantInfo.MenuItems[parseInt(index.toString())]);
+          setOpen3(true);
+        }catch(err){
+  
+        }
+        
+      };
 
     const handleOpen = () => {
         try
@@ -899,6 +940,46 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
                                                                                                 </Grid>
                                                                                             </Grid>
                                                                                         </form>
+                                                                                    </Grid>
+                                                                                </Grid>
+                                                                            </Grid>
+                                                                        </div>
+                                                                    </Fade>
+                                                                </Modal>
+
+                                                                {/*DELETE MODAL */}
+                                                                <Modal
+                                                                    aria-labelledby="transition-modal-title"
+                                                                    aria-describedby="transition-modal-description"
+                                                                    className={classes.modal}
+                                                                    open={open3}
+                                                                    onClose={handleCloseX2}
+                                                                    closeAfterTransition
+                                                                    BackdropComponent={Backdrop}
+                                                                    BackdropProps={{
+                                                                    timeout: 500,
+                                                                    }}
+                                                                >
+                                                                    <Fade in={open3}>
+                                                                        <div className={clsx(classes.paper, 'modalMobile')}>
+                                                                            <h3 id="transition-modal-title" style={{textAlign: "center", color: "#F7B614"}}>Are You Sure?</h3>
+                                                                            <Link to={referralPath} className={classes.cartIcon} onClick={handleCloseX2}>
+                                                                                    <img src="Images/CartCloseIcon.png" alt="closemodal" />
+                                                                            </Link>
+                                                                            <br />
+                                                                            <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                                                <Grid item xs={12}>
+                                                                                    <Grid item xs={12} >
+                                                                                            <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                                                                <Grid item xs={12} style={{textAlign: "center"}}>
+                                                                                                    <Button variant="contained" 
+                                                                                                        style={{backgroundColor: "red", fontFamily: "PT Sans"}} onClick={handleClose3}
+                                                                                                        color="secondary" size="small" className={`${classes.Button} ${classes.btnfonts}`}
+                                                                                                        fullWidth>
+                                                                                                        Delete
+                                                                                                    </Button>
+                                                                                                </Grid>
+                                                                                            </Grid>
                                                                                     </Grid>
                                                                                 </Grid>
                                                                             </Grid>

@@ -8,7 +8,7 @@ import MUIDataTable from "mui-datatables";
 //import { ItemRating } from '../../../Components/ItemRating';
 import { Link } from "react-router-dom";
 import { Alert } from '@material-ui/lab';
-import { EditRounded } from '@material-ui/icons';
+import { DeleteOutlineRounded, EditRounded } from '@material-ui/icons';
 import clsx from 'clsx';
 
 
@@ -326,7 +326,7 @@ const columns = [
       label: 'Action',
       options: {
         filter: true,
-        sort: true,
+        sort: false,
        }
     },
   ];
@@ -369,6 +369,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
     const [success, setSuccess] = useState('');
     const [open, setOpen] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
+    const [open3, setOpen3] = React.useState(false);
     const [selectedMenuItemIndex, setSelectedMenuItemIndex] = React.useState(0);
     const [selectedMenuItem, setSelectedMenuItem] = React.useState<MenuItem>({
         MenuCategory: '',
@@ -397,7 +398,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
         try{
             if(restaurants.length > 0 && selectedRestaurant !== undefined && values.Menu.length === 0){
                 let restaurant = restaurants[selectedRestaurant];
-                console.log("about to set form values")
+                //console.log("about to set form values")
                 setValues({
                     Name: restaurant.FirstName,
                     Email: restaurant.Email,
@@ -410,7 +411,13 @@ export const OrgDetails: React.FC = function OrgDetails() {
                     OpeningHrs: restaurant.OpeningHrs
                 });
 
-                if(restaurant.MenuItems.length > rows.length || rows.length === 0){
+                //console.log(restaurant.MenuItems.length);
+
+                if(restaurant.MenuItems.length > rows.length || 
+                    rows.length === 0 || 
+                    restaurant.MenuItems.length < rows.length &&
+                     restaurant.MenuItems.length !== 0
+                ){
                     let currentRows = rows;
                     restaurant.MenuItems.map((item, index) => {
                         let row = {
@@ -418,7 +425,24 @@ export const OrgDetails: React.FC = function OrgDetails() {
                           ItemName: item.ItemName, 
                           ItemCost: `$ ${ parseFloat(item.ItemCost).toFixed(2)}`,
                           ItemDescription: item.ItemDescription,
-                          Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); handleOpen2(index);}}><EditRounded color="primary" /></a></>
+                          Actions: <>
+                          <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                              <Grid item xs={6} style={{textAlign: "center"}}>
+                                  <a href="javascript()" title="Edit" 
+                                      onClick={(e) => {e.preventDefault(); handleOpen2(index);}}
+                                  >
+                                      <EditRounded color="primary" />
+                                  </a>
+                              </Grid>
+                              <Grid item xs={6} style={{textAlign: "center"}}>
+                                  <a href="javascript()" title="Delete" 
+                                      onClick={(e) => {e.preventDefault(); handleOpen3(index);}}
+                                  >
+                                      <DeleteOutlineRounded color="primary" />
+                                  </a>
+                              </Grid>
+                          </Grid>
+                        </>
                         };
                   
                         currentRows.push(row)
@@ -434,7 +458,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
             //console.log("Menu", values.Menu.length);
             //console.log("Rows", rows.length);
 
-            if(values.Menu.length > rows.length || rows.length === 0){
+            if(values.Menu.length > rows.length || rows.length === 0 || values.Menu.length < rows.length && values.Menu.length !== 0){
                 //console.log("inside second if");
                 let currentRows = [] as object[];
                 values.Menu.map((item, index) => {
@@ -443,7 +467,24 @@ export const OrgDetails: React.FC = function OrgDetails() {
                       ItemName: item.ItemName, 
                       ItemCost: `$ ${ parseFloat(item.ItemCost.toString()).toFixed(2)}`,
                       ItemDescription: item.ItemDescription,
-                      Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); handleOpen2(index);}}><EditRounded color="primary" /></a></>
+                      Actions: <>
+                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                            <Grid item xs={6} style={{textAlign: "center"}}>
+                                <a href="javascript()" title="Edit" 
+                                    onClick={(e) => {e.preventDefault(); handleOpen2(index);}}
+                                >
+                                    <EditRounded color="primary" />
+                                </a>
+                            </Grid>
+                            <Grid item xs={6} style={{textAlign: "center"}}>
+                                <a href="javascript()" title="Delete" 
+                                    onClick={(e) => {e.preventDefault(); handleOpen3(index);}}
+                                >
+                                    <DeleteOutlineRounded color="primary" />
+                                </a>
+                            </Grid>
+                        </Grid>
+                    </>
                     };
               
                     currentRows.push(row)
@@ -527,6 +568,13 @@ export const OrgDetails: React.FC = function OrgDetails() {
         setOpen2(false);
     };
 
+    const handleClose3 = () => {
+        let newMenu = values.Menu.filter((item,index) => index != selectedMenuItemIndex);
+        //console.log(newMenu);
+        setValues({ ...values, Menu: newMenu});
+        setOpen3(false);
+    };
+
     const handleClose = () => {
         if(selectedMenuItem.ItemName !== ""){
             let newMenu = values.Menu;
@@ -548,6 +596,22 @@ export const OrgDetails: React.FC = function OrgDetails() {
     const handleCloseX = () => {
             setOpen(false);
     };
+
+    const handleCloseX2 = () => {
+        setOpen3(false);
+    };
+
+    const handleOpen3 = (index: React.SetStateAction<number>) => {
+        try
+        {
+          setSelectedMenuItemIndex(index);
+          setSelectedMenuItem(restaurants[selectedRestaurant].MenuItems[parseInt(index.toString())]);
+          setOpen3(true);
+        }catch(err){
+  
+        }
+        
+      };
   
     const handleOpen2 = (index: React.SetStateAction<number>) => {
       try
@@ -812,6 +876,40 @@ export const OrgDetails: React.FC = function OrgDetails() {
                                                                 </Grid>
                                                             </Grid>
                                                         </Grid>
+                                                    </div>
+                                                </Fade>
+                                            </Modal>
+
+                                            {/*DELETE MODAL */}
+                                            <Modal
+                                                aria-labelledby="transition-modal-title"
+                                                aria-describedby="transition-modal-description"
+                                                className={classes.modal}
+                                                open={open3}
+                                                onClose={handleCloseX2}
+                                                closeAfterTransition
+                                                BackdropComponent={Backdrop}
+                                                BackdropProps={{
+                                                timeout: 500,
+                                                }}
+                                            >
+                                                <Fade in={open3}>
+                                                    <div className={clsx(classes.paper, 'modalMobile')}>
+                                                        <h3 id="transition-modal-title" style={{textAlign: "center", color: "#F7B614"}}>Are You Sure?</h3>
+                                                        <Link to={referralPath} className={classes.cartIcon} onClick={handleCloseX2}>
+                                                                <img src="Images/CartCloseIcon.png" alt="closemodal" />
+                                                        </Link>
+                                                        <br />
+                                                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                            <Grid item xs={12} style={{textAlign: "center"}}>
+                                                                <Button variant="contained" 
+                                                                    style={{backgroundColor: "red", fontFamily: "PT Sans"}} onClick={handleClose3}
+                                                                    color="secondary" size="small" className={`${classes.Button} ${classes.btnfonts}`}
+                                                                    fullWidth>
+                                                                    Delete
+                                                                </Button>
+                                                                </Grid>
+                                                            </Grid>
                                                     </div>
                                                 </Fade>
                                             </Modal>
