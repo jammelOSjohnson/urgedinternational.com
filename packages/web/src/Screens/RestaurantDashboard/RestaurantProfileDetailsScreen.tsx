@@ -41,7 +41,7 @@ interface State {
 interface MenuItem {
     MenuCategory: string;
     ItemName: string;
-    ItemCost: string;
+    ItemCost: number;
     ItemDescription: string;
     ImageName: string;
 }
@@ -416,7 +416,7 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
     const [selectedMenuItem, setSelectedMenuItem] = React.useState<MenuItem>({
         MenuCategory: '',
         ItemName: '',
-        ItemCost: '',
+        ItemCost: 0,
         ItemDescription: '',
         ImageName: ''
     });
@@ -425,7 +425,7 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
     var referralPath = location.pathname;
 
     //Define table attributes
-    const rows = [] as Object[];
+    const [rows, setRows] = useState([] as Object[]);
     const options = {
         filterType: 'dropdown',
         search: true,
@@ -435,7 +435,7 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
     };
 
     useEffect(() => {
-        //console.log("inside use effect");
+        console.log("inside use effect");
         //console.log(restaurants);
         try{
             if(restaurantInfo === undefined){
@@ -468,24 +468,27 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
             
 
             if(values.Menu.length > rows.length){
+                console.log("inside if");
+                let currentRows = [] as Object[];
                 values.Menu.map((item, index) => {
                     let row = {
                       MenuCategory: item.MenuCategory,
                       ItemName: item.ItemName, 
-                      ItemCost: `$ ${ parseFloat(item.ItemCost).toFixed(2)}`,
+                      ItemCost: `$ ${ parseFloat(item.ItemCost.toString()).toFixed(2)}`,
                       ItemDescription: item.ItemDescription,
                       Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); handleOpen2(index);}}><EditRounded color="primary" /></a></>
                     };
               
-                    rows.push(row)
+                    currentRows.push(row)
                     return true;
-                  })  
+                })
+                setRows(currentRows);  
             }
         }catch(err) {
             console.log(err)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [restaurantInfo, values.Menu])
+    }, [restaurantInfo, values])
 
     const handleSubmit = async () => {
         try{
@@ -545,7 +548,17 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
     };
 
     const handleChange4 = (prop: keyof MenuItem) => (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedMenuItem({ ...selectedMenuItem, [prop]: event.target.value });
+        if(prop === "ItemCost"){
+            if(event.target.value === ''){
+                setSelectedMenuItem({ ...selectedMenuItem, [prop]: 0 });
+            }else if(event.target.value !== null && event.target.value !== undefined){ 
+                let valCost = event.target.value;
+                event.target.value = '';
+                setSelectedMenuItem({ ...selectedMenuItem, [prop]: parseFloat(valCost) });
+            }
+        }else{
+            setSelectedMenuItem({ ...selectedMenuItem, [prop]: event.target.value });
+        }
     };
 
     const handleChange3 = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -573,7 +586,7 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
             let newMenu = values.Menu;
             let finalMenuItem = {
                 MenuCategory: selectedMenuItem.MenuCategory,
-                ItemName: selectedMenuItem.ImageName,
+                ItemName: selectedMenuItem.ItemName,
                 ItemCost: selectedMenuItem.ItemCost,
                 ItemDescription: selectedMenuItem.ItemDescription,
                 ImageName: selectedMenuItem.ImageName
@@ -604,26 +617,28 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
     const handleOpen = () => {
         try
         {
-          setSelectedMenuItem({MenuCategory: "", ItemName: "", ItemCost: "", ItemDescription: "", ImageName: "" });
+          setSelectedMenuItem({MenuCategory: "", ItemName: "", ItemCost: 0, ItemDescription: "", ImageName: "" });
           setOpen(true);
         }catch(err){
   
         }
     };
 
-    if (restaurantInfo !== undefined){
-        values.Menu.map((item, index) => {
-            let row = {
-              MenuCategory: item.MenuCategory,
-              ItemName: item.ItemName, 
-              ItemCost: `$ ${ parseFloat(item.ItemCost).toFixed(2)}`,
-              ItemDescription: item.ItemDescription,
-              Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); handleOpen2(index);}}><EditRounded color="primary" /></a></>
-            };
+    // if (restaurantInfo !== undefined){
+    //     let currentRows = rows;
+    //     values.Menu.map((item, index) => {
+    //         let row = {
+    //           MenuCategory: item.MenuCategory,
+    //           ItemName: item.ItemName, 
+    //           ItemCost: `$ ${ parseFloat(item.ItemCost.toString()).toFixed(2)}`,
+    //           ItemDescription: item.ItemDescription,
+    //           Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); handleOpen2(index);}}><EditRounded color="primary" /></a></>
+    //         };
       
-            rows.push(row)
-            return true;
-          })  
+    //         currentRows.push(row)
+    //         return true;
+    //       })
+    //       setRows(currentRows);  
         return (
             <>
                 <Sidebar>
@@ -906,7 +921,7 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
                                                                 >
                                                                     <Fade in={open}>
                                                                         <div className={clsx(classes.paper, 'modalMobile')}>
-                                                                            <h3 id="transition-modal-title" style={{textAlign: "center", color: "#F7B614"}}>Edit Item</h3>
+                                                                            <h3 id="transition-modal-title" style={{textAlign: "center", color: "#F7B614"}}>Add Item</h3>
                                                                             <Link to={referralPath} className={classes.cartIcon} onClick={handleCloseX}>
                                                                                     <img src="Images/CartCloseIcon.png" alt="closemodal" />
                                                                             </Link>
@@ -1166,41 +1181,41 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
                 </Sidebar>
             </>
         )
-    }else {
-        return (
-            <>
-                <Sidebar>
-                    <Container maxWidth="xl" style={{ paddingLeft: "8px", paddingRight: "8px" }} className={classes.main}>
-                        <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
-                            <Grid container direction="row" spacing={0}>
-                            {isMatchMedium? (
-                                <>
-                                    <Grid item xs={8} style={{ marginBottom: "2%", marginTop: "1%", background: "transparent" }}>
-                                        <HeaderLeft />
-                                    </Grid>
-                                    <Grid item xs={4} style={{ marginBottom: "2%", marginTop: "1%", background: "transparent" }}>
-                                        <HeaderRight />
-                                    </Grid>
-                                </>
-                            ):<></>}
-                            {isMatch? (
-                                <>
-                                    <Grid item xs={4} style={{ marginBottom: "2%", marginTop: "1%", background: "transparent" }}>
-                                        <HeaderLeft />
-                                    </Grid>
-                                    <Grid item xs={8} style={{ marginBottom: "2%", marginTop: "1%", background: "transparent" }}>
-                                        <HeaderRight />
-                                    </Grid>
-                                </>
-                            ):<></>}
-                                <Grid item xs={12}>
-                                    <Spinner />
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </Container>
-                </Sidebar>
-            </>
-        )
-    }
+    // }else {
+    //     return (
+    //         <>
+    //             <Sidebar>
+    //                 <Container maxWidth="xl" style={{ paddingLeft: "8px", paddingRight: "8px" }} className={classes.main}>
+    //                     <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
+    //                         <Grid container direction="row" spacing={0}>
+    //                         {isMatchMedium? (
+    //                             <>
+    //                                 <Grid item xs={8} style={{ marginBottom: "2%", marginTop: "1%", background: "transparent" }}>
+    //                                     <HeaderLeft />
+    //                                 </Grid>
+    //                                 <Grid item xs={4} style={{ marginBottom: "2%", marginTop: "1%", background: "transparent" }}>
+    //                                     <HeaderRight />
+    //                                 </Grid>
+    //                             </>
+    //                         ):<></>}
+    //                         {isMatch? (
+    //                             <>
+    //                                 <Grid item xs={4} style={{ marginBottom: "2%", marginTop: "1%", background: "transparent" }}>
+    //                                     <HeaderLeft />
+    //                                 </Grid>
+    //                                 <Grid item xs={8} style={{ marginBottom: "2%", marginTop: "1%", background: "transparent" }}>
+    //                                     <HeaderRight />
+    //                                 </Grid>
+    //                             </>
+    //                         ):<></>}
+    //                             <Grid item xs={12}>
+    //                                 <Spinner />
+    //                             </Grid>
+    //                         </Grid>
+    //                     </Grid>
+    //                 </Container>
+    //             </Sidebar>
+    //         </>
+    //     )
+    // }
 }
