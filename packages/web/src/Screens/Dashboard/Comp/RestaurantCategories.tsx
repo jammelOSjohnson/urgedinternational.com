@@ -130,9 +130,8 @@ export const RestaurantCategories: React.FC = function RestaurantCategories() {
     const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
 
     const restCategories = [
-        'Dinner', 'Breakfast',
-        'Dessert', 'Pastry', 'Chinese',
-        'Lunch', 'Salads'
+        'Breakfast','Lunch','Dinner','Dessert', 
+        'Fast Food', 'Pastry', 'Chinese','Salads'
     ];
     
     var filterCat = function(event, category){
