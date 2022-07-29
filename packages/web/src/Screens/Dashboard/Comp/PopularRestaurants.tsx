@@ -10,7 +10,7 @@ import clsx from 'clsx';
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
         root: {
-            padding: "2% 0px 5% 0px",
+            padding: "2% 0px 2% 0px",
             borderRadius: "22px"
         },
         category: {
@@ -146,7 +146,7 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
     if(restaurants.legth !== 0){
         return (
             <>
-            <Grid container direction="row" spacing={3} className={classes.root} alignItems="center">
+            <Grid container direction="row" spacing={2} className={classes.root} alignItems="center">
                     <Grid item xs={12} md={6} lg={3} container spacing={1}>
                         <Grid item xs={10} md={10}>
                             <Typography variant="subtitle1" className={classes.category}>
