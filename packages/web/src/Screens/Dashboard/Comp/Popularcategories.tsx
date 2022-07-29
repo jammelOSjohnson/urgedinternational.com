@@ -1,8 +1,9 @@
 import { Grid, makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent, useMediaQuery, useTheme, TableContainer, TableHead, TableRow, TableBody, TableCell, Table, Paper } from '@material-ui/core';
 import React from 'react';
 import clsx from 'clsx';
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import  '../CSS/PopularCategories.css';
+import { useAppData } from '../../../Context/AppDataContext';
 
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -98,10 +99,39 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Popularcategories: React.FC = function Popularcategories() {
     const classes = useStyles();
     const theme = useTheme();
+
+    var { value } = useAppData();
+    var { getRestBycategory } = value;
+
+    var history = useHistory();
+    var location = history.location;
+    var referralPath = location.pathname;
     
     
     const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
     const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
+
+    const restCategories = [
+        {cat: 'Breakfast', img: 'Images/FoodDeliveryBreakfast.png', alt:'img1'}, 
+        {cat:'Lunch', img: 'Images/FoodDeliveryLunch.png', alt:'img2'}, 
+        {cat:'Dinner', img: 'Images/FoodDeliveryDinner.png', alt:'img3'}, 
+        {cat:'Dessert', img: 'Images/FoodDeliveryDessert.png', alt:'img4'}, 
+        {cat:'Fast Food', img: 'Images/FoodDeliveryFastFood.png', alt:'img5'}, 
+        {cat:'Pastry', img: 'Images/FoodDeliveryPastry.png', alt:'img6'}, 
+        {cat:'Chinese', img: 'Images/FoodDeliveryChinese.png', alt:'img7'}, 
+        {cat:'Salads', img: 'Images/FoodDeliverySalads.png', alt:'img8'}
+    ];
+
+    var filterCat = function(event, category){
+        try{
+            event.preventDefault();
+            getRestBycategory(value, category).then(() => {
+                history.push("Restaurants")
+            })
+        }catch(err){
+            //console.log(err)
+        }
+    }
 
     
       
@@ -120,21 +150,27 @@ export const Popularcategories: React.FC = function Popularcategories() {
                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                     <Grid container xs={12} direction="column">
                         <Grid container direction="row" spacing={1}>
-                            <Grid item className={classes.gridSpacing}>
-                                <Link to="/Restaurants" title="Breakfast" className={classes.inactiveItemLink}>
-                                    <Card className={clsx(classes.card, "cardSizeCategories")}>
-                                        <CardMedia className={classes.cardImage}>
-                                            <img src="Images/FoodDeliveryBreakfast.png"alt="img1"></img>
-                                        </CardMedia>
-                                        <CardContent className={classes.cardContent}>
-                                                <Typography gutterBottom className={classes.cardTitle}>
-                                                    Breakfast
-                                                </Typography>
-                                        </CardContent>
-                                    </Card>
-                                </Link>
-                            </Grid>
-                            <Grid item className={classes.gridSpacing}>
+                            {
+                                restCategories.map((item, index) => {
+                                    return (
+                                        <Link to={referralPath} title={item.cat} className={clsx(classes.gridSpacing, classes.inactiveItemLink)} onClick={(e) => filterCat(e,item.cat)} key={index}>
+                                            <Grid item>
+                                                <Card className={clsx(classes.card, "cardSizeCategories")}>
+                                                    <CardMedia className={classes.cardImage}>
+                                                        <img src={item.img} alt={item.alt}></img>
+                                                    </CardMedia>
+                                                    <CardContent className={classes.cardContent}>
+                                                            <Typography gutterBottom className={classes.cardTitle}>
+                                                                {item.cat}
+                                                            </Typography>
+                                                    </CardContent>
+                                                </Card>
+                                            </Grid>
+                                        </Link>
+                                    )
+                                })
+                            }
+                            {/* <Grid item className={classes.gridSpacing}>
                                 <Link to="/Restaurants" title="Lunch" className={classes.inactiveItemLink}>
                                     <Card className={clsx(classes.card, "cardSizeCategories")}>
                                         <CardMedia className={classes.cardImage}>
@@ -191,7 +227,7 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                 </Link>
                             </Grid>
                             <Grid item className={classes.gridSpacing}>
-                                {/* <Link to="/FoodDelivery/Pastry" title="Pastry" className={classes.inactiveItemLink}> */}
+                                <Link to="/FoodDelivery/Pastry" title="Pastry" className={classes.inactiveItemLink}>
                                     <Card className={clsx(classes.card, "cardSizeCategories")}>
                                         <CardMedia className={classes.cardImage}>
                                             <img src="Images/FoodDeliveryPastry.png"alt="img6"></img>
@@ -202,10 +238,10 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                                 </Typography>
                                         </CardContent>
                                     </Card>
-                                {/* </Link> */}
+                                </Link>
                             </Grid>
                             <Grid item className={classes.gridSpacing}>
-                                {/* <Link to="/FoodDelivery/Chinese" title="Chinese" className={classes.inactiveItemLink}> */}
+                                <Link to="/FoodDelivery/Chinese" title="Chinese" className={classes.inactiveItemLink}>
                                     <Card className={clsx(classes.card, "cardSizeCategories")}>
                                         <CardMedia className={classes.cardImage}>
                                             <img src="Images/FoodDeliveryChinese.png"alt="img7"></img>
@@ -216,10 +252,10 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                                 </Typography>
                                         </CardContent>
                                     </Card>
-                                {/* </Link> */}
+                                </Link>
                             </Grid>
                             <Grid item className={classes.gridSpacing}>
-                                {/* <Link to="/FoodDelivery/Salads" title="Salads" className={classes.inactiveItemLink}> */}
+                                <Link to="/FoodDelivery/Salads" title="Salads" className={classes.inactiveItemLink}>
                                     <Card className={clsx(classes.card, "cardSizeCategories")}>
                                         <CardMedia className={classes.cardImage} style={{paddingTop: "14px"}}>
                                             <img src="Images/FoodDeliverySalads.png"alt="img8"></img>
@@ -230,8 +266,8 @@ export const Popularcategories: React.FC = function Popularcategories() {
                                                 </Typography>
                                         </CardContent>
                                     </Card>
-                                {/* </Link> */}
-                            </Grid>
+                                </Link>
+                            </Grid> */}
                         </Grid>
                     </Grid>
                 </Grid>
