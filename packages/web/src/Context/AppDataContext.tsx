@@ -1041,7 +1041,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     }
 
     var getRestBycategory = async function getRestBycategory(payload, category){
-      console.log(category)
+      //console.log(category)
       if(category !== "All"){
         var newRestItems = [] as Object[];
         value.restaurants.map((item, index) => {
