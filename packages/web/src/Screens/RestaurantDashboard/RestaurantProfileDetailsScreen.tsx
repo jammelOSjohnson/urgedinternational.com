@@ -658,7 +658,7 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
     const handleOpen = () => {
         try
         {
-          setSelectedMenuItem({MenuCategory: "", ItemName: "", ItemCost: 0, ItemDescription: "", ImageName: "" });
+          setSelectedMenuItem({MenuCategory: "", ItemName: "", ItemCost: 0, ItemDescription: "", ImageName: "Images/FoodItemPH.png" });
           setOpen(true);
         }catch(err){
   
