@@ -485,7 +485,7 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                                 <HeaderRight />
                             </Grid>
                             <Grid item xs={12} style={{textAlign: "center"}}>
-                                <img src="Images/ushipLogo.jpg" style={{width: "200px"}} alt="uship" />
+                                <img src="Images/uship logo.PNG" style={{width: "200px"}} alt="uship" />
                             </Grid>
                             <Grid item xs={12} md={8}>
                                 <Grid container direction="row" spacing={1}>
