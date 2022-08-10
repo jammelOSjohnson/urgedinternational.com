@@ -1608,7 +1608,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         <Typography>{selectedItem.ItemDescription}</Typography>
                                     </Grid>
                                     <Grid item xs={12}>
-                                    {restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory !== "Zingers" && values.itemCategory !== "Famous Bowl" && values.itemCategory !== "Buckets"?
+                                    {restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory !== "Zingers" && values.itemCategory !== "Famous Bowl" && values.itemCategory !== "Buckets" && values.itemCategory !== "Hot Wings" && values.itemCategory !== "Popcorn Chicken" && values.itemCategory !== "Sides"?
                                             <form onSubmit={(e) => AddToCart2(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                     <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
