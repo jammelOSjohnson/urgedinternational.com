@@ -160,7 +160,7 @@ export const AdminSettings: React.FC = function EmployeeCardList(props) {
             <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
                 <Grid item xs={10} md={12} lg={12} className={classes.gridSpacing} >
                     <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
-                        <Grid item xs={3}>
+                        <Grid item xs={12} md={3}>
                             <Link to="/PaySettings" className={classes.link}>
                                 <Card className={classes.root}>
                                     <CardHeader
@@ -182,7 +182,7 @@ export const AdminSettings: React.FC = function EmployeeCardList(props) {
                                 </Card>
                             </Link>
                         </Grid>
-                        <Grid item xs={3}>
+                        <Grid item xs={12} md={3}>
                             <Link to="/ShippingAddressSettings" className={classes.link}>
                                 <Card className={classes.root}>
                                     <CardHeader
