@@ -1197,21 +1197,27 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
               let formVals = {
                 user_name: response.data.updateOrder.userName,
                 user_email: response.data.updateOrder.userEmail,
-                status: order.OrderStatus,
+                status: response.data.updateOrder.OrderStatus,
                 order_id: order._id
               }; 
               if(newOrder.OrderStatus === response.data.updateOrder.OrderStatus){
-                console.log("same")
-                return await sendNewOrderStatusEmail(formVals).then(async(res) => {
-                  await fetchOrders(payload);
-                  return true;
-                })
+                //console.log("same")
+                if(newOrder.OrderStatus !== "Not Assigned" && newOrder.OrderStatus !== "Pending"){
+                  return await sendNewOrderStatusEmail(formVals).then(async(res) => {
+                    await fetchOrders(payload);
+                    return true;
+                  })
+                }else{
+                  return await fetchOrders(payload).then((res) => {
+                    return true;
+                  })
+                }
+                
               }else{
-                console.log("not same")
+                //console.log("not same")
                 return await fetchOrders(payload).then((res) => {
                   return "Already Accepted";
                 })
-                  
               }
               
             }
@@ -1628,11 +1634,15 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       // var entry1 = log.entry(METADATA, data1);
       // log.write(entry1);
       // ////console.log("Wtf is in formVals");
-      // ////console.log(formVals);
+      console.log(formVals);
       let msgString = "";
       let statString = "";
       
       switch(formVals.status){
+        case "Cancelled":
+          statString = "Order Cancelled";
+          msgString = "Your order has been cancelled.";
+          break;
         case "Ordered":
           statString = "Order Accepted";
           msgString = "Your order has been accepted.";
