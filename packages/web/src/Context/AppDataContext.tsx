@@ -1200,11 +1200,20 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
                 status: order.OrderStatus,
                 order_id: order._id
               }; 
-
-              return await sendNewOrderStatusEmail(formVals).then(async(res) => {
-                await fetchOrders(payload);
-                return true;
-              })
+              if(newOrder.OrderStatus === response.data.updateOrder.OrderStatus){
+                console.log("same")
+                return await sendNewOrderStatusEmail(formVals).then(async(res) => {
+                  await fetchOrders(payload);
+                  return true;
+                })
+              }else{
+                console.log("not same")
+                return await fetchOrders(payload).then((res) => {
+                  return "Already Accepted";
+                })
+                  
+              }
+              
             }
           });
 
