@@ -2,6 +2,7 @@ import { Container, Grid, makeStyles, createStyles, Theme } from '@material-ui/c
 import React from 'react';
 import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
+import { Profile } from './Comp/Profile';
 import { Sidebar } from './Comp/Sidebar';
 
 
@@ -42,8 +43,7 @@ export const UserProfileScreen: React.FC = function UserProfileScreen () {
                                 <HeaderRight />
                             </Grid>
                             <Grid item xs={12}>
-                                {/* <HistoryHeaderBar /> */}
-                                Profile Screen
+                                <Profile />
                             </Grid>
                         </Grid>
                     </Grid>
