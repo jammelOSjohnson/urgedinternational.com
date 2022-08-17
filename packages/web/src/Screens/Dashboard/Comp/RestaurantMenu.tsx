@@ -1475,7 +1475,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     {
                                                         userInfo.email === ""?
                                                             <Button size="small" onClick={handleLogin}  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button">
-                                                                Add To Cart
+                                                                Login
                                                             </Button>
                                                             :
                                                             <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
@@ -1539,7 +1539,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                 {
                                                     userInfo.email === ""?
                                                         <Button size="small" onClick={handleLogin}  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} type="button">
-                                                            Add To Cart 
+                                                            Login 
                                                         </Button>
                                                         :
                                                         <Button size="small"  fullWidth={true} className={`${classes.Button} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
@@ -2582,7 +2582,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             {
                                                                 userInfo.email === ""?
                                                                     <Button size="small" onClick={handleLogin}  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="button">
-                                                                        Add To Cart 
+                                                                        Login 
                                                                     </Button>
                                                                     :
                                                                     <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
@@ -2753,7 +2753,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         {
                                                             userInfo.email === ""?
                                                                 <Button size="small" onClick={handleLogin}  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="button">
-                                                                    Add To Cart 
+                                                                    Login 
                                                                 </Button>
                                                                 :
                                                                 <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} onClick={() => handleOpen(item)} type="button">
