@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 export const Spinner: React.FC = function Spinner() {
     const classes = useStyles();
-   
+    //@typescript-eslint/no-unused-vars
     const [open, setOpen] = React.useState(true);
 
     const handleClose = () => {
