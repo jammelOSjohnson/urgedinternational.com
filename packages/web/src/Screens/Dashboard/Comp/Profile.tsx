@@ -1,8 +1,9 @@
 import { Button, Container, FormControl, Grid, InputLabel, makeStyles, OutlinedInput, Theme, createStyles, InputAdornment, IconButton, Typography } from "@material-ui/core"
-import { EmailOutlined, PersonRounded } from "@material-ui/icons";
+import { EmailOutlined, PersonRounded, PhoneAndroidRounded, LocationCityRounded } from "@material-ui/icons";
 import { Alert } from "@material-ui/lab";
 import clsx from "clsx"
-import React,{ useState } from "react";
+import React,{ useEffect, useState } from "react";
+import { useAppData } from "../../../Context/AppDataContext";
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -60,8 +61,8 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         formSection: {
             backgroundColor: "#FFFFFF",
-            margin: "3% 0% 3% 3%",
-            padding: "0% 20% 0% 20%",
+            margin: "0% 0% 3% 3%",
+            padding: "0% 10% 0% 10%",
             borderRadius: "10px",
             color: "#333333",
             height: "94%"
@@ -203,26 +204,51 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface State {
-    fullname: string;
-    email: string;
-    password: string;
-    showPassword: boolean;
+    ContactNumber: string;
+    Email: string;
+    FullName: string;
+    AddressLine1: string;
+    AddressLine2: string;
+    City: string;
 }
 
 export const Profile: React.FC = function Profile(){
     const classes = useStyles();
 
+    var {value} = useAppData();
+
+    var {userInfo, UpdateUserInfo} = value;
+
     const [values, setValues] = React.useState<State>({
-        fullname: '',
-        email: '',
-        password: '',
-        showPassword: false,
+        ContactNumber: userInfo.contactNumber,
+        Email: userInfo.email,
+        FullName: userInfo.fullName,
+        AddressLine1: userInfo.addressLine1,
+        AddressLine2: userInfo.addressLine2,
+        City: userInfo.city,
       });
 
     var [error, setError] = useState('');
     var [success, setSuccess] = useState('');
     // eslint-disable-next-line
     var [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        try{
+            if(values.Email === ""){
+                setValues({
+                    Email: userInfo.email,
+                    FullName: userInfo.fullName,
+                    ContactNumber: userInfo.contactNumber,
+                    AddressLine1: userInfo.addressLine1,
+                    AddressLine2: userInfo.addressLine2,
+                    City: userInfo.city
+                });
+            }
+        }catch(e){
+            console.log(e)
+        }
+    },[userInfo])
 
     var handleSubmit = async function handleSubmit(event) {
         event.preventDefault();
@@ -232,23 +258,22 @@ export const Profile: React.FC = function Profile(){
             setSuccess('');
             setError('');
             setLoading(true);
-            values.fullname === ''?
+            values.FullName === ''?
                 setError('Please enter your Full Name')
-            :values.email === '' || !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.email))?
+            :values.Email === '' || !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.Email))?
                 setError('Please enter a valid Email')
-            :values.password === ''?
-                setError('Please enter a valid Password')
-            :
-            <></>
-            // :await signup(values, value).then(async function(res1){
-            //     if(res1){
-            //        setSuccess('Profile updated successfully.')
-            //     }else{
-            //         setError('Unable to update profile at this time.'); 
-            //     }
-            // });
+            // :values.password === ''?
+            //     setError('Please enter a valid Password')
+            :await UpdateUserInfo(value, values).then(async function(res1){
+                if(res1){
+                    setSuccess('Profile updated successfully.')
+                }else{
+                    setError('Unable to update profile at this time.'); 
+                }
+            });
             
-        }catch{
+        }catch(e){
+            console.log(e);
             setError('Unable to update profile at this time.');
         }
         setLoading(false);
@@ -267,52 +292,145 @@ export const Profile: React.FC = function Profile(){
                             <Typography variant="h6" className={classes.helloStyle}>Hello,</Typography>
                             <Typography variant="subtitle1" className={classes.welcomeStyle}>Welcome Back</Typography>
                             <form onSubmit={handleSubmit} className={classes.form} noValidate autoComplete="off">
-                                <FormControl fullWidth variant="outlined" >
-                                    <InputLabel htmlFor="fullname" className={classes.root}>Full Name</InputLabel>
-                                    <OutlinedInput 
-                                        className={clsx(classes.firstTextField, classes.root)}
-                                        id="fullname"
-                                        type="text"
-                                        value={values.fullname}
-                                        onChange={handleChange('fullname')}
-                                        startAdornment={
-                                            <InputAdornment position="start">
-                                                <IconButton color="secondary">
-                                                    <PersonRounded />
-                                                </IconButton>
-                                            </InputAdornment>}
-                                        labelWidth={103}
-                                        required={true}
-                                        notched={true}
-                                />
-                                </FormControl><br />
-                                <FormControl fullWidth variant="outlined" >
-                                    <InputLabel htmlFor="email" className={classes.root}>Email Address</InputLabel>
-                                    <OutlinedInput 
-                                        className={clsx(classes.firstTextField, classes.root)}
-                                        id="email"
-                                        type="text"
-                                        value={values.email}
-                                        onChange={handleChange('email')}
-                                        startAdornment={
-                                            <InputAdornment position="start">
-                                                <IconButton color="secondary">
-                                                    <EmailOutlined />
-                                                </IconButton>
-                                            </InputAdornment>}
-                                        labelWidth={103}
-                                        required={true}
-                                        notched={true}
-                                    />
-                                </FormControl><br />
-                                <Typography variant="subtitle2" className={classes.forgotPassText}>Forgot Password?</Typography>
-                                {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
-                                {success && <Alert variant="filled" severity="success" className={classes.alert}>{success}</Alert>}
-                                <Button variant="contained" 
-                                    style={{backgroundColor: "#FEC109"}}
-                                     className={classes.loginButton} type="submit">
-                                    Update Profile
-                                </Button>
+                                <Grid container spacing={2} alignItems="center">
+                                    <Grid item xs={12} md={6}>
+                                        <FormControl fullWidth variant="outlined" >
+                                            <InputLabel htmlFor="FullName" className={classes.root}>Full Name</InputLabel>
+                                            <OutlinedInput 
+                                                className={clsx(classes.firstTextField, classes.root)}
+                                                id="FullName"
+                                                type="text"
+                                                value={values.FullName}
+                                                onChange={handleChange('FullName')}
+                                                startAdornment={
+                                                    <InputAdornment position="start">
+                                                        <IconButton color="secondary">
+                                                            <PersonRounded />
+                                                        </IconButton>
+                                                    </InputAdornment>}
+                                                labelWidth={103}
+                                                required={true}
+                                                notched={true}
+                                        />
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <FormControl fullWidth variant="outlined" >
+                                            <InputLabel htmlFor="ContactNumber" className={classes.root}>Contact Number</InputLabel>
+                                            <OutlinedInput 
+                                                className={clsx(classes.firstTextField, classes.root)}
+                                                id="ContactNumber"
+                                                type="text"
+                                                value={values.ContactNumber}
+                                                onChange={handleChange('ContactNumber')}
+                                                startAdornment={
+                                                    <InputAdornment position="start">
+                                                        <IconButton color="secondary">
+                                                            <PhoneAndroidRounded />
+                                                        </IconButton>
+                                                    </InputAdornment>}
+                                                labelWidth={103}
+                                                required={true}
+                                                notched={true}
+                                        />
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <FormControl fullWidth variant="outlined" >
+                                            <InputLabel htmlFor="Email" className={classes.root}>Email Address</InputLabel>
+                                            <OutlinedInput 
+                                                className={clsx(classes.firstTextField, classes.root)}
+                                                id="Email"
+                                                type="text"
+                                                value={values.Email}
+                                                onChange={handleChange('Email')}
+                                                startAdornment={
+                                                    <InputAdornment position="start">
+                                                        <IconButton color="secondary">
+                                                            <EmailOutlined />
+                                                        </IconButton>
+                                                    </InputAdornment>}
+                                                labelWidth={103}
+                                                required={true}
+                                                notched={true}
+                                                disabled={true}
+                                            />
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <FormControl fullWidth variant="outlined" >
+                                            <InputLabel htmlFor="AddressLine1" className={classes.root}>AddressLine1</InputLabel>
+                                            <OutlinedInput 
+                                                className={clsx(classes.firstTextField, classes.root)}
+                                                id="AddressLine1"
+                                                type="text"
+                                                value={values.AddressLine1}
+                                                onChange={handleChange('AddressLine1')}
+                                                startAdornment={
+                                                    <InputAdornment position="start">
+                                                        <IconButton color="secondary">
+                                                            <LocationCityRounded />
+                                                        </IconButton>
+                                                    </InputAdornment>}
+                                                labelWidth={103}
+                                                required={true}
+                                                notched={true}
+                                        />
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <FormControl fullWidth variant="outlined" >
+                                            <InputLabel htmlFor="AddressLine2" className={classes.root}>AddressLine2</InputLabel>
+                                            <OutlinedInput 
+                                                className={clsx(classes.firstTextField, classes.root)}
+                                                id="AddressLine2"
+                                                type="text"
+                                                value={values.AddressLine2}
+                                                onChange={handleChange('AddressLine2')}
+                                                startAdornment={
+                                                    <InputAdornment position="start">
+                                                        <IconButton color="secondary">
+                                                            <LocationCityRounded />
+                                                        </IconButton>
+                                                    </InputAdornment>}
+                                                labelWidth={103}
+                                                required={true}
+                                                notched={true}
+                                        />
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12} md={6}>
+                                        <FormControl fullWidth variant="outlined" >
+                                            <InputLabel htmlFor="City" className={classes.root}>City</InputLabel>
+                                            <OutlinedInput 
+                                                className={clsx(classes.firstTextField, classes.root)}
+                                                id="City"
+                                                type="text"
+                                                value={values.City}
+                                                onChange={handleChange('City')}
+                                                startAdornment={
+                                                    <InputAdornment position="start">
+                                                        <IconButton color="secondary">
+                                                            <LocationCityRounded />
+                                                        </IconButton>
+                                                    </InputAdornment>}
+                                                labelWidth={103}
+                                                required={true}
+                                                notched={true}
+                                        />
+                                        </FormControl>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
+                                        {success && <Alert variant="filled" severity="success" className={classes.alert}>{success}</Alert>}
+                                        <Button variant="contained" 
+                                            style={{backgroundColor: "#FEC109"}}
+                                            className={classes.loginButton} type="submit"
+                                            disabled={loading}>
+                                            Update Profile
+                                        </Button>
+                                    </Grid>
+                                </Grid>
                             </form>
                         </div>
                     </Grid>

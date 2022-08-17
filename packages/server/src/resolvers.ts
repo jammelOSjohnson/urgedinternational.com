@@ -154,6 +154,13 @@ const resolvers = {
             return user.save();
         },
 
+        updateUser: async (_, {_id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber}) => {
+            const newUser = {_id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber};
+            const user = await User.findOne({_id});
+            Object.assign(user, newUser);
+            return user.save();
+        },
+
         createRestaurant: (_, {Id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, OpeningHrs, category, MenuItems, ImageName}) => {
             const user = new User({Id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, OpeningHrs, category, MenuItems, ImageName});
             return user.save();
