@@ -122,6 +122,7 @@ export const HistoryTable: React.FC = function HistoryTable () {
   const [open, setOpen] = React.useState(false);
   const [open1, setOpen1] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
+  const [open3, setOpen3] = React.useState(false);
   const [selectedOrderNumber, setSelectedOrderNumber] = React.useState("");
 
   
@@ -169,6 +170,10 @@ export const HistoryTable: React.FC = function HistoryTable () {
     setOpen2(false);
   };
 
+  const handleClose3 = () => {
+    setOpen3(false);
+  };
+
   const handleSubmit = async(status) => {
     try{
         setOpen(false);
@@ -181,8 +186,10 @@ export const HistoryTable: React.FC = function HistoryTable () {
         let order = {...filteredOrder[0], OrderStatus: status, Rider: filteredOrder[0].Rider._id };
         console.log(order);
         await UpdateOrder(value, order).then((res) => {
-            if(res){
-                setOpen1(true);
+            if(res === "Already Accepted"){
+                setOpen3(true);
+            }else if(res){
+              setOpen1(true);
             }
         }) 
     }catch(err){
@@ -286,6 +293,11 @@ export const HistoryTable: React.FC = function HistoryTable () {
       <Snackbar open={open2} autoHideDuration={6000} onClose={handleClose2}>
             <Alert onClose={handleClose2} severity="error">
                 Unable to update order at this time.
+            </Alert>
+      </Snackbar>
+      <Snackbar open={open3} autoHideDuration={6000} onClose={handleClose3}>
+            <Alert onClose={handleClose3} severity="warning">
+                The order is already being processed.
             </Alert>
       </Snackbar>
 

@@ -628,7 +628,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
     const handleOpen = () => {
         try
         {
-          setSelectedMenuItem({MenuCategory: "", ItemName: "", ItemCost: 0, ItemDescription: "", ImageName: "" });
+          setSelectedMenuItem({MenuCategory: "", ItemName: "", ItemCost: 0, ItemDescription: "", ImageName: "Images/FoodItemPH.png" });
           setOpen(true);
         }catch(err){
   

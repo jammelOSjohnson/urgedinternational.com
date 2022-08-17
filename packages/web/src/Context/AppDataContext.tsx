@@ -31,7 +31,8 @@ import {
         GET_RESTAURANT,
         GET_ORDER_REJECTLIST_BY_ORDERID,
         CREATE_ORDER_REJECTLIST,
-        UPDATE_ORDER_REJECTLIST
+        UPDATE_ORDER_REJECTLIST,
+        UPDATE_USER_MUTATION
       } from '../GraphQL/Mutations';
 import { useMutation } from '@apollo/client';
 import sendEmail from "../email.js";
@@ -255,6 +256,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const emailUserId = "user_bDLFbepm6Arcdgh7Akzo3";
     //Declare necessary variables
     const [createUser] = useMutation(CREATE_USER_MUTATION);
+    const [updateUser] = useMutation(UPDATE_USER_MUTATION);
     const [createRestaurant] = useMutation(CREATE_RESTAURANT_MUTATION);
     const [getUser] = useMutation(GET_USER_MUTATION);
     const [getUserInRole] = useMutation(GET_USER_IN_ROLE);
@@ -1197,14 +1199,29 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
               let formVals = {
                 user_name: response.data.updateOrder.userName,
                 user_email: response.data.updateOrder.userEmail,
-                status: order.OrderStatus,
+                status: response.data.updateOrder.OrderStatus,
                 order_id: order._id
               }; 
-
-              return await sendNewOrderStatusEmail(formVals).then(async(res) => {
-                await fetchOrders(payload);
-                return true;
-              })
+              if(newOrder.OrderStatus === response.data.updateOrder.OrderStatus){
+                //console.log("same")
+                if(newOrder.OrderStatus !== "Not Assigned" && newOrder.OrderStatus !== "Pending"){
+                  return await sendNewOrderStatusEmail(formVals).then(async(res) => {
+                    await fetchOrders(payload);
+                    return true;
+                  })
+                }else{
+                  return await fetchOrders(payload).then((res) => {
+                    return true;
+                  })
+                }
+                
+              }else{
+                //console.log("not same")
+                return await fetchOrders(payload).then((res) => {
+                  return "Already Accepted";
+                })
+              }
+              
             }
           });
 
@@ -1619,11 +1636,15 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       // var entry1 = log.entry(METADATA, data1);
       // log.write(entry1);
       // ////console.log("Wtf is in formVals");
-      // ////console.log(formVals);
+      console.log(formVals);
       let msgString = "";
       let statString = "";
       
       switch(formVals.status){
+        case "Cancelled":
+          statString = "Order Cancelled";
+          msgString = "Your order has been cancelled.";
+          break;
         case "Ordered":
           statString = "Order Accepted";
           msgString = "Your order has been accepted.";
@@ -2268,6 +2289,43 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       }
     }
 
+    var UpdateUserInfo  = async function UpdateUserInfo(payload, user){
+      if(user !== null && user !== undefined){
+          let newUser = {
+            FirstName: user.FullName,
+            LastName: "",
+            Email: user.Email,
+            AddressLine1: user.AddressLine1,
+            AddressLine2: user.AddressLine2,
+            ContactNumber: user.ContactNumber,
+            City: user.City,
+            _id: payload.userInfo._id
+          }
+          return await updateUser({variables: newUser}).then(async function(response) {
+            ////console.log("update user result");
+            if (response.data.updateUser !== null) {
+              //console.log(response.data.updateOrder);
+              payload.userInfo = {
+                fullName: user.FullName,
+                email: user.Email,
+                addressLine1: user.AddressLine1,
+                addressLine2: user.AddressLine2,
+                contactNumber: user.ContactNumber,
+                city: user.City,
+                _id: payload.userInfo._id
+              };
+              dispatch({type: "fetch_userinfo", payload: payload});
+              return true;
+            }else{
+              //console.log("not same")
+              return false;
+            }
+          });
+      }else{
+        return false
+      }
+    }
+
     const [value, dispatch] = useReducer(appDataReducer, {
         currentUser,
         loading,
@@ -2354,7 +2412,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         fetchRiderInfo,
         udateRiderStatusInfo,
         fetchRestaurantInfo,
-        uploadToFirebaseCloud
+        uploadToFirebaseCloud,
+        UpdateUserInfo
     });
     
      

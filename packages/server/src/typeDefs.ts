@@ -275,6 +275,14 @@ const typeDefs = /* GraphQL */`
             category: ID, MenuItems: [MenuItem2]
             ): User!
 
+        updateUser(
+            _id: String, FirstName: String, LastName: String, 
+            Email: String, AddressLine1: String, AddressLine2: String, 
+            City: String, ContactNumber: String,
+            ): User!
+
+        getUser(Id: String): User
+
         createOrderRejection(
             OrderId: Float, RejectionList: [String]
         ): OrderRejection
@@ -285,7 +293,7 @@ const typeDefs = /* GraphQL */`
 
         getOrderRejection(OrderId: Float): OrderRejection
 
-        getUser(Id: String): User
+        
 
         getMenucategories(Id: String): User
         

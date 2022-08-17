@@ -226,10 +226,15 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
 
         
         //Calc Delivery Fee
-        let delFee = "500";
-        // if(delFee !== deliveryFee.Cost && delFee !== "0.00" && delFee !== undefined){
+        let delFee = "";
+        if(cartItems.length !== 0){
+            if(cartItems[0].restaurantName === 'Fyahside' || cartItems[0].restaurantName === 'Murray’s Fish & Jerk Hut'){
+                delFee = "800"
+            }else{
+                delFee = "500"
+            }
             
-        // }
+        }
 
         //Calc cart total
         let cartTotal = 0.00;
@@ -259,7 +264,8 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
         if(gct !== undefined){
             var fetchGCT:number = Number(gct);
             //console.log(cartTotal)
-            finalgct = cartTotal * fetchGCT
+            var fetchdelFee:number = Number(delFee);
+            finalgct = fetchdelFee * fetchGCT
             //console.log(finalgct);
 
             
@@ -270,9 +276,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
         let finalserviceCharge = 0;
         if(serviceCharge !== undefined){
             var fetchserviceCharge:number = Number(serviceCharge);
-            finalserviceCharge = cartTotal * fetchserviceCharge
-
-            
+            finalserviceCharge = cartTotal * fetchserviceCharge;
         }
 
         //Calc grand total

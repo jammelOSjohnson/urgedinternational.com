@@ -154,6 +154,13 @@ const resolvers = {
             return user.save();
         },
 
+        updateUser: async (_, {_id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber}) => {
+            const newUser = {_id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber};
+            const user = await User.findOne({_id});
+            Object.assign(user, newUser);
+            return user.save();
+        },
+
         createRestaurant: (_, {Id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, OpeningHrs, category, MenuItems, ImageName}) => {
             const user = new User({Id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, OpeningHrs, category, MenuItems, ImageName});
             return user.save();
@@ -246,27 +253,51 @@ const resolvers = {
             //console.log(newOrder);
             const order = await Order.findOne({_id});
             const user = await User.findOne({Id}).populate("Rider");
-            Object.assign(order, newOrder);
-            order.save();
-            return {
-                _id : order._id,
-                Id: order.Id,
-                OrderItems: order.OrderItems, 
-                OrderStatus: order.OrderStatus,
-                OrderTotal: order.OrderTotal,
-                OrderDate: order.OrderDate,
-                Rider: order.Rider,
-                DeliveryAddress: order.DeliveryAddress, 
-                PaymentMethod: order.PaymentMethod,
-                AdditionalInfo: order.AdditionalInfo,
-                DeliveryFee: order.DeliveryFee,
-                GCT: order.GCT,
-                ServiceCharge: order.ServiceCharge,
-                CartTotal: order.CartTotal,
-                OrderType: order.OrderType,
-                userName: user.FirstName, 
-                userEmail: user.Email
+            if(newOrder.OrderStatus === "Cancelled" && (order.OrderStatus === "Pending" || order.OrderStatus === "Not Assigned")){
+                Object.assign(order, newOrder);
+                order.save();
+                return {
+                    _id : order._id,
+                    Id: order.Id,
+                    OrderItems: order.OrderItems, 
+                    OrderStatus: order.OrderStatus,
+                    OrderTotal: order.OrderTotal,
+                    OrderDate: order.OrderDate,
+                    Rider: order.Rider,
+                    DeliveryAddress: order.DeliveryAddress, 
+                    PaymentMethod: order.PaymentMethod,
+                    AdditionalInfo: order.AdditionalInfo,
+                    DeliveryFee: order.DeliveryFee,
+                    GCT: order.GCT,
+                    ServiceCharge: order.ServiceCharge,
+                    CartTotal: order.CartTotal,
+                    OrderType: order.OrderType,
+                    userName: user.FirstName, 
+                    userEmail: user.Email
+                }
+            }else{
+                //console.log("unchanged", order.OrderStatus);
+                return {
+                    _id : order._id,
+                    Id: order.Id,
+                    OrderItems: order.OrderItems, 
+                    OrderStatus: order.OrderStatus,
+                    OrderTotal: order.OrderTotal,
+                    OrderDate: order.OrderDate,
+                    Rider: order.Rider,
+                    DeliveryAddress: order.DeliveryAddress, 
+                    PaymentMethod: order.PaymentMethod,
+                    AdditionalInfo: order.AdditionalInfo,
+                    DeliveryFee: order.DeliveryFee,
+                    GCT: order.GCT,
+                    ServiceCharge: order.ServiceCharge,
+                    CartTotal: order.CartTotal,
+                    OrderType: order.OrderType,
+                    userName: user.FirstName, 
+                    userEmail: user.Email
+                }
             }
+            
         },
 
         getPaySettings: async () => {
