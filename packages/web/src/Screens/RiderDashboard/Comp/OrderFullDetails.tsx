@@ -188,13 +188,16 @@ export const OrderFullDetails: React.FC = () => {
         const now = new Date(parseInt(orders[orderIndex].OrderDate, 10));
         const estTime = moment.tz(now, "America/Jamaica").format("YYYY-MM-DD h:mm a");
         //var region = orders[orderIndex].DeliveryAddress.split(',');
+        // console.log(orderIndex);
+        // console.log(orders[orderIndex]);
+        // console.log(orders)
         var personalInfo = orders[orderIndex].AdditionalInfo.split(' ');
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         //var email = '';
         var contactnum = '';
         var fullname = '';
 
-        ////console.log(personalInfo);
+        //console.log(personalInfo);
         if(personalInfo !== undefined && personalInfo !== null){
             if(personalInfo.length === 4){
                 fullname = personalInfo[2]; 

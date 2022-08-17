@@ -549,6 +549,17 @@ export const GET_ORDERS = gql`
             ServiceCharge
             CartTotal
             OrderType
+            Restaurant{
+                _id
+                Id
+                FirstName 
+                LastName
+                Email
+                AddressLine1
+                AddressLine2
+                City
+                ContactNumber
+            }
         }
     }
 `

@@ -252,10 +252,13 @@ const resolvers = {
             }
             //console.log(newOrder);
             const order = await Order.findOne({_id});
-            const user = await User.findOne({Id}).populate("Rider");
+            const user = await User.findOne({Id});
+            Object.assign(order, newOrder);
+            order.save();
+            const order2 = await Order.find().populate("Rider").where("_id").equals(_id);
+            //console.log(order2);
             if(newOrder.OrderStatus === "Cancelled" && (order.OrderStatus === "Pending" || order.OrderStatus === "Not Assigned")){
-                Object.assign(order, newOrder);
-                order.save();
+                
                 return {
                     _id : order._id,
                     Id: order.Id,
@@ -263,7 +266,7 @@ const resolvers = {
                     OrderStatus: order.OrderStatus,
                     OrderTotal: order.OrderTotal,
                     OrderDate: order.OrderDate,
-                    Rider: order.Rider,
+                    Rider: order2[0].Rider,
                     DeliveryAddress: order.DeliveryAddress, 
                     PaymentMethod: order.PaymentMethod,
                     AdditionalInfo: order.AdditionalInfo,
@@ -276,7 +279,8 @@ const resolvers = {
                     userEmail: user.Email
                 }
             }else{
-                //console.log("unchanged", order.OrderStatus);
+                // console.log("unchanged", order.OrderStatus);
+                // console.log("Rider", order.Rider);
                 return {
                     _id : order._id,
                     Id: order.Id,
@@ -284,7 +288,7 @@ const resolvers = {
                     OrderStatus: order.OrderStatus,
                     OrderTotal: order.OrderTotal,
                     OrderDate: order.OrderDate,
-                    Rider: order.Rider,
+                    Rider: order2[0].Rider,
                     DeliveryAddress: order.DeliveryAddress, 
                     PaymentMethod: order.PaymentMethod,
                     AdditionalInfo: order.AdditionalInfo,

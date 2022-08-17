@@ -1195,7 +1195,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           var updateRes = await updateOrder({variables: newOrder}).then(async function(response) {
             ////console.log("create orer result");
             if (response.data.updateOrder !== null) {
-              //console.log(response.data.updateOrder);
+              console.log(response.data.updateOrder);
               let formVals = {
                 user_name: response.data.updateOrder.userName,
                 user_email: response.data.updateOrder.userEmail,
@@ -1242,9 +1242,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           }
           //console.log(newOrder);
           var updateRes = await updateOrder({variables: newOrder}).then(async function(response) {
-            ////console.log("create orer result");
+            console.log("update order result");
             if (response.data.updateOrder !== null) {
-              //console.log(response.data.updateOrder);
+              console.log(response.data.updateOrder);
               let formVals = {
                 user_name: response.data.updateOrder.userName,
                 user_email: response.data.updateOrder.userEmail,
@@ -1321,6 +1321,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var fetchOrders  = async function fetchOrders(payload){
       if(payload.currentUser !== undefined){
         await getOrders().then(async function(response) {
+          console.log(response.data.getOrders)
           if (response.data.getOrders !== null) {
             payload.orders = response.data.getOrders;
             dispatch({
@@ -1699,6 +1700,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     };
 
     var changeOrderStatus = async function changeOrderStatus(payload){
+      console.log("changing order status")
       dispatch({
         type: "status_change",
         payload: payload

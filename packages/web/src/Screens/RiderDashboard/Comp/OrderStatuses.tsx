@@ -93,15 +93,34 @@ export const OrderStatuses: React.FC = () => {
     var history = useHistory();
     var { value }  = useAppData();
     var { orders, changeOrderStatus } = value;
-    const orderIndex = history.location.state !== undefined? parseInt(history.location.state.from) : history.push("/Login");
+    const orderIndex = history.location.state !== undefined && orders.length !== 0 ? parseInt(history.location.state.from) : history.push("/Login");
     const [status, setStatus] = useState(orders[orderIndex].OrderStatus);
 
     const handleStatus = async (status) => {
-        // setStatus(status);
-        var payload = value;
-        payload.orders[orderIndex].OrderStatus = status;
+        try{
+             // setStatus(status);
+             //console.log(status);
+            var payload = {...value};
 
-        await changeOrderStatus(payload);
+            let neworders = [] as object[];
+            orders.map((item, index) => {
+                let newItem = {...item};
+                if(index === orderIndex){
+                    //console.log(newItem);
+                    
+                    newItem.OrderStatus = status;
+                }
+                neworders.push(newItem);
+                return;
+            });
+
+            payload.orders = neworders;
+
+            await changeOrderStatus(payload);
+        }catch(e){
+            console.log(e)
+        }
+       
     }
 
     useEffect(() => {
