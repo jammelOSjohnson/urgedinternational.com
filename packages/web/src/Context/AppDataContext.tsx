@@ -602,33 +602,43 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       
 
       
-       await getUser({variables: { Id: uid}}).then(function(response) {
-        ////console.log("Checking user result");
-        if (response.data.getUser !== null) {
-          ////console.log("user exist");
-          ////console.log(response);
-          ////console.log("what is inside payload");
-          ////console.log(payload);
-          // Convert to City object
-          var user = response.data.getUser;
+       await getUser({variables: { Id: uid}}).then(async function(response) {
+        //console.log("Checking user result");
+        //console.log("user exist");
+        //console.log(response);
+        //console.log("what is inside payload");
+        //console.log(payload);
+        // Convert to City object
+        var user = response.data.getUser;
     
-          if (user !== null) {
-            payload.userInfo._id = user._id;
-            payload.userInfo.contactNumber = user.ContactNumber;
-            payload.userInfo.email = user.Email;
-            payload.userInfo.fullName = user.FirstName;
-            payload.loggedIn = true;
-            payload.userInfo.addressLine1 = user.AddressLine1 !== null && user.AddressLine1 !== undefined ? user.AddressLine1 : "";
-            payload.userInfo.addressLine2 = user.AddressLine2 !== null && user.AddressLine2 !== undefined ? user.AddressLine2 : "";
-            payload.userInfo.city = user.City !== null && user.City !== undefined ? user.City : "";
-          }
-    
-          return payload;
+        if (user !== null) {
+          payload.userInfo._id = user._id;
+          payload.userInfo.contactNumber = user.ContactNumber;
+          payload.userInfo.email = user.Email;
+          payload.userInfo.fullName = user.FirstName;
+          payload.loggedIn = true;
+          payload.userInfo.addressLine1 = user.AddressLine1 !== null && user.AddressLine1 !== undefined ? user.AddressLine1 : "";
+          payload.userInfo.addressLine2 = user.AddressLine2 !== null && user.AddressLine2 !== undefined ? user.AddressLine2 : "";
+          payload.userInfo.city = user.City !== null && user.City !== undefined ? user.City : "";
+          var userRoleResf = undefined;
+          return await userHasRole(uid, payload, undefined).then(function (userRoleRes) {
+            ////console.log("Final user ref after fetch role is: ");
+            ////console.log(userRoleRes);
+            userRoleResf = userRoleRes;
+            //Send Welcome Email
+            dispatch({
+              type: "fetch_userinfo",
+              payload: userRoleResf
+            });
+            return true;
+          });
+        
         } else {
           ////console.log("No such user!")
           ////console.log("creating new user");
           //////console.log("contact number is: " + currentState.contact);
           var user2 = {
+            _id: "",
             Id: uid,
             FirstName: payload.userInfo.fullName !== null ? payload.userInfo.fullName.toLowerCase() : "",
             LastName: payload.userInfo.fullName !== null ? payload.userInfo.fullName.toLowerCase() : "",
@@ -643,42 +653,41 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           //postalCode: "",
           //stateOrparish: ""
           
-            createUser({variables: {...user2}}).then(async function (response2) {
-              if(response2.data.getUser !== null){
-                ////console.log("User info  successfully written!");
-                ////console.log(response2.data);
-                payload.userInfo._id = user._id;  
-                payload.userInfo.contactNumber = user2.ContactNumber;
-                payload.userInfo.email = user2.Email;
-                payload.userInfo.fullName = user2.FirstName;
-                payload.loggedIn = true;
-                payload.userInfo.addressLine1 = user2.AddressLine1 !== null && user2.AddressLine1 !== undefined ? user2.AddressLine1 : "";
-                payload.userInfo.addressLine2 = user2.AddressLine2 !== null && user2.AddressLine2 !== undefined ? user2.AddressLine2 : "";
-                payload.userInfo.city = user2.City !== null && user2.City !== undefined ? user2.City : "";
+          createUser({variables: {...user2}}).then(async function (response2) {
+            if(response2.data.createUser !== null){
+              ////console.log("User info  successfully written!");
+              ////console.log(response2.data);
+              user2._id = response2.data.createUser._id
+              payload.userInfo._id = user2._id;  
+              payload.userInfo.contactNumber = user2.ContactNumber;
+              payload.userInfo.email = user2.Email;
+              payload.userInfo.fullName = user2.FirstName;
+              payload.loggedIn = true;
+              payload.userInfo.addressLine1 = user2.AddressLine1 !== null && user2.AddressLine1 !== undefined ? user2.AddressLine1 : "";
+              payload.userInfo.addressLine2 = user2.AddressLine2 !== null && user2.AddressLine2 !== undefined ? user2.AddressLine2 : "";
+              payload.userInfo.city = user2.City !== null && user2.City !== undefined ? user2.City : "";
+              
+              var userRoleResf = undefined;
+              return await userHasRole(uid, payload, undefined).then(function (userRoleRes) {
+                ////console.log("Final user ref after fetch role is: ");
+                ////console.log(userRoleRes);
+                userRoleResf = userRoleRes;
+                //Send Welcome Email
+                var RequestParams = {
+                  from_name: payload.userInfo.fullName,
+                  user_email: payload.userInfo.email,
+                }
                 
-                var userRoleResf = undefined;
-                await userHasRole(uid, payload, undefined).then(function (userRoleRes) {
-                  ////console.log("Final user ref after fetch role is: ");
-                  ////console.log(userRoleRes);
-                  userRoleResf = userRoleRes;
-                  //Send Welcome Email
-                  var RequestParams = {
-                    from_name: payload.userInfo.fullName,
-                    user_email: payload.userInfo.email,
-                  }
-                  
-                  sendEmail(emailServiceId, emailNewCustomerTemplate, RequestParams, emailUserId).then(function (res) {
-                    dispatch({
-                      type: "fetch_userinfo",
-                      payload: userRoleResf
-                    });
-                  })
-                  return userRoleRes;
-                });
-
+                sendEmail(emailServiceId, emailNewCustomerTemplate, RequestParams, emailUserId).then(function (res) {
+                  dispatch({
+                    type: "fetch_userinfo",
+                    payload: userRoleResf
+                  });
+                })
                 return true;
-              }
-            
+              });
+            }
+          
           }).catch(function (error) {
             console.error("Error writing user info: ", error);
             return false;
@@ -810,7 +819,6 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
 
       await getUser({variables: { Id: uid}}).then(async function(response) {
         ////console.log("Checking user result for fetch user info");
-        if (response.data.getUser !== null) {
           //console.log("user exist");
            ////console.log(response);
           ////console.log("what is inside payload for fetch user info");
@@ -861,10 +869,10 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
               ContactNumber: ""
             };
             createUser({variables: {...user2}}).then(async function (response2) {
-              if(response2.data.getUser !== null){
+              if(response2.data.createUser !== null){
                 ////console.log("User info  successfully written!");
                 ////console.log(response2.data);
-                var getUserResult = response2.data.getUser;
+                var getUserResult = response2.data.createUser;
                 payloadf.userInfo.contactNumber = user2.ContactNumber;
                 payloadf.userInfo.email = user2.Email;
                 payloadf.userInfo.fullName = user2.FirstName;
@@ -903,7 +911,6 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       
             return payloadf;
           }
-        }
       }).catch(function(err){
         ////console.log(err);
       });
