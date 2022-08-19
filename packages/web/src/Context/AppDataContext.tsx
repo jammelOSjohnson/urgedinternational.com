@@ -533,9 +533,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       //console.log(uid);
       //console.log("fetching user role");
       var userRef = await getUserInRole({variables: {UserID: uid}}).then(async function(response) {
-        //console.log("Checking user result");
+        console.log("Checking userRole result");
         if (response.data.getUserInRole !== null) {
-          //console.log("user role exist");
+          console.log("user role exist");
           //console.log(response);
           //console.log("what is inside payload");
           //console.log(payload);
@@ -556,7 +556,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     
           return payload;
         } else {
-          //console.log("No such user role!")
+          console.log("No such user role!")
           //console.log("creating new userinrole");
           let rID = process.env.REACT_APP_CUSTOMER_ROLE_ID;
           if(userType !== undefined && userType !== null){
@@ -594,18 +594,18 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     };
 
     var fetchUserInfoForSignUp = async function fetchUserInfoForSignUp(uid, payload, currentState) {
-      ////console.log("User id is: ");
-      ////console.log(uid);
+      console.log("User id is: ");
+      console.log(uid);
       ////console.log("the currentState is: ");
       ////console.log(currentState);
-      ////console.log("fetching user");
+      console.log("fetching user");
       
 
       
        await getUser({variables: { Id: uid}}).then(async function(response) {
-        //console.log("Checking user result");
-        //console.log("user exist");
-        //console.log(response);
+        console.log("Checking user result");
+        console.log("user exist");
+        console.log(response);
         //console.log("what is inside payload");
         //console.log(payload);
         // Convert to City object
@@ -622,8 +622,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           payload.userInfo.city = user.City !== null && user.City !== undefined ? user.City : "";
           var userRoleResf = undefined;
           return await userHasRole(uid, payload, undefined).then(function (userRoleRes) {
-            ////console.log("Final user ref after fetch role is: ");
-            ////console.log(userRoleRes);
+            console.log("Final user ref after fetch role is: ");
+            console.log(userRoleRes);
             userRoleResf = userRoleRes;
             //Send Welcome Email
             dispatch({
@@ -634,7 +634,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           });
         
         } else {
-          ////console.log("No such user!")
+          //console.log("No such user!")
           ////console.log("creating new user");
           //////console.log("contact number is: " + currentState.contact);
           var user2 = {
@@ -655,8 +655,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           
           createUser({variables: {...user2}}).then(async function (response2) {
             if(response2.data.createUser !== null){
-              ////console.log("User info  successfully written!");
-              ////console.log(response2.data);
+              console.log("User info  successfully written!");
+              console.log(response2.data);
               user2._id = response2.data.createUser._id
               payload.userInfo._id = user2._id;  
               payload.userInfo.contactNumber = user2.ContactNumber;
@@ -669,8 +669,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
               
               var userRoleResf = undefined;
               return await userHasRole(uid, payload, undefined).then(function (userRoleRes) {
-                ////console.log("Final user ref after fetch role is: ");
-                ////console.log(userRoleRes);
+                console.log("Final user ref after fetch role is: ");
+                console.log(userRoleRes);
                 userRoleResf = userRoleRes;
                 //Send Welcome Email
                 var RequestParams = {
@@ -678,13 +678,14 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
                   user_email: payload.userInfo.email,
                 }
                 
-                sendEmail(emailServiceId, emailNewCustomerTemplate, RequestParams, emailUserId).then(function (res) {
+                return sendEmail(emailServiceId, emailNewCustomerTemplate, RequestParams, emailUserId).then(function (res) {
                   dispatch({
                     type: "fetch_userinfo",
                     payload: userRoleResf
                   });
+                  return true;
                 })
-                return true;
+                
               });
             }
           
@@ -813,14 +814,14 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     };
 
     var fetchUserInfo = async function fetchUserInfo(uid, payloadf) {
-      //console.log("User id is: ");
-      //console.log(uid);
-      //console.log("fetching user");
+      console.log("User id is: ");
+      console.log(uid);
+      console.log("fetching user");
 
-      await getUser({variables: { Id: uid}}).then(async function(response) {
-        ////console.log("Checking user result for fetch user info");
-          //console.log("user exist");
-           ////console.log(response);
+       getUser({variables: { Id: uid}}).then(async function(response) {
+          console.log("Checking user result for fetch user info");
+          console.log("user exist");
+          console.log(response);
           ////console.log("what is inside payload for fetch user info");
           ////console.log(payloadf);
 
@@ -842,22 +843,21 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             payloadf.userInfo.city = user.City !== null && user.City !== undefined ? user.City : "";
 
             var userRoleResf = undefined;
-            await userHasRole(uid, payloadf, undefined).then(function (userRoleRes) {
-              //console.log("Final user ref is: ");
-              //console.log(userRoleRes);
+             userHasRole(uid, payloadf, undefined).then(function (userRoleRes) {
+              console.log("Final user ref is: ");
+              console.log(userRoleRes);
               userRoleResf = userRoleRes;
               payloadf = userRoleRes;
               dispatch({
                   type: "fetch_userinfo",
                   payload: userRoleResf
               });
-              
+              return true;
             });
-            return userRoleResf;
           } else {
-            ////console.log("No such user!")
-            ////console.log(response);
-            // ////console.log("creating new user");
+            console.log("No such user!")
+            console.log(response);
+            console.log("creating new user");
             var user2 = {
               Id: uid,
               FirstName: payloadf.userInfo.fullName !== null ? payloadf.userInfo.fullName.toLowerCase() : "",
@@ -868,10 +868,10 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
               City: "",
               ContactNumber: ""
             };
-            createUser({variables: {...user2}}).then(async function (response2) {
+             createUser({variables: {...user2}}).then(async function (response2) {
               if(response2.data.createUser !== null){
-                ////console.log("User info  successfully written!");
-                ////console.log(response2.data);
+                console.log("User info  successfully written!");
+                console.log(response2.data);
                 var getUserResult = response2.data.createUser;
                 payloadf.userInfo.contactNumber = user2.ContactNumber;
                 payloadf.userInfo.email = user2.Email;
@@ -882,9 +882,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
                 payloadf.userInfo.city = user2.City !== null && user2.City !== undefined ? user2.City : "";  
                 payloadf.userInfo._id = getUserResult._id !== null && getUserResult._id !== undefined && getUserResult._id !== ""? getUserResult._id : "";
                 var userRoleResf = undefined;
-                await userHasRole(uid, payloadf, undefined).then(function (userRoleRes) {
-                  ////console.log("Final user ref is: ");
-                  ////console.log(userRoleRes);
+                  userHasRole(uid, payloadf, undefined).then(async function (userRoleRes) {
+                  console.log("Final user ref is: ");
+                  console.log(userRoleRes);
                   userRoleResf = userRoleRes;
 
                   var RequestParams = {
@@ -897,22 +897,18 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
                       type: "fetch_userinfo",
                       payload: userRoleResf
                     });
+                    return true;
                   })
-                  return userRoleRes;
                 });
-
-                
-                return true;
               }
             }).catch(function (error) {
               console.error("Error writing user info: ", error);
               return false;
             });
-      
-            return payloadf;
           }
       }).catch(function(err){
-        ////console.log(err);
+        console.log(err);
+        return false;
       });
     };
 

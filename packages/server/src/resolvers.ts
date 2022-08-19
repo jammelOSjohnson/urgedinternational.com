@@ -144,14 +144,27 @@ const resolvers = {
         },
 
         addUserToRole: (_, {UserID, RoleID}) => {
-            const userPermision = new UserInRole({UserID, RoleID});
-            return userPermision.save();
+            const checkRole =  UserInRole.findOne({UserID});
+            if(checkRole === null){
+                const userPermision = new UserInRole({UserID, RoleID});
+                return userPermision.save();
+            }else{
+                return checkRole;
+            }
+            
         },
 
         //Users
-        createUser: (_, {Id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, OpeningHrs, category, MenuItems}) => {
-            const user = new User({Id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, OpeningHrs, category, MenuItems});
-            return user.save();
+        createUser: async(_, {Id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, OpeningHrs, category, MenuItems}) => {
+            const checkUser = await User.findOne({Id});
+            console.log(checkUser);
+            if(checkUser === null){
+                const user = new User({Id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, OpeningHrs, category, MenuItems});
+                return user.save();
+            }else{
+                return checkUser;
+            }
+            
         },
 
         updateUser: async (_, {_id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber}) => {

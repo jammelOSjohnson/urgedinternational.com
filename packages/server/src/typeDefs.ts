@@ -262,11 +262,11 @@ const typeDefs = /* GraphQL */`
     type Mutation {
         createRole(description: String): Role!
 
-        getRole(_id: String): Role!
+        getRole(_id: String): Role
 
         getUserInRole(UserID: String): UserInRole
 
-        addUserToRole(UserID: String, RoleID: String): UserInRole!
+        addUserToRole(UserID: String, RoleID: String): UserInRole
 
         createUser(
             Id: String, FirstName: String, LastName: String, 

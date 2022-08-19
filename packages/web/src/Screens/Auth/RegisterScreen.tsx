@@ -396,8 +396,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
             if(payload.currentUser.uid !== null && payload.currentUser.uid !== undefined){
                 ////console.log("Fetching user info");
                 ////console.log(state);
-                await fetchUserInfo(payload.currentUser.uid, payload);
-                return true;
+                return fetchUserInfo(payload.currentUser.uid, payload);
             }
         }
         return false;
