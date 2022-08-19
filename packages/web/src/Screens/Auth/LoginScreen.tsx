@@ -520,8 +520,8 @@ export const LoginScreen: React.FC = function LoginScreen() {
     };
 
     useEffect(() => {
-        console.log("Checking role");
-        console.log(userRolef);
+        //console.log("Checking role");
+        //console.log(userRolef);
         if(userRolef !== undefined && userRolef === "Admin" && userRolef !== ""){
             setLoading(false);
             setSuccess('Sign In Successful.');
@@ -723,14 +723,15 @@ export const LoginScreen: React.FC = function LoginScreen() {
                                             {success && <Alert severity="success" className={classes.alert}>{success}</Alert>}
                                             <Button variant="contained" 
                                                 style={{backgroundColor: "#FFF", fontFamily: "PT Sans"}}
-                                                color="secondary" className={classes.loginButton} type="submit">
+                                                color="secondary" className={classes.loginButton} type="submit" disabled={loading}>
                                                 Sign In
                                             </Button>
                                             <Typography variant="subtitle2" className={classes.orText}>Or</Typography>
                                             <Button variant="outlined" fullWidth={true}
                                                 className={classes.googleBtn} 
                                                 startIcon={ <img src="Images/googleIcon.png" style={{width: "100%", fontFamily: "PT Sans"}} alt="google icon"/>}  
-                                                type="button" onClick={handleGoogleSubmit}>
+                                                type="button" onClick={handleGoogleSubmit}
+                                                disabled={loading}>
                                                 Continue With Google
                                             </Button>
                                         </form>
@@ -813,14 +814,14 @@ export const LoginScreen: React.FC = function LoginScreen() {
                             {success && <Alert severity="success" className={classes.alert}>{success}</Alert>}
                             <Button variant="contained" 
                                 style={{backgroundColor: "#FEC109"}}
-                                className={classes.loginButtonMobile} type="submit">
+                                className={classes.loginButtonMobile} type="submit" disabled={loading}>
                                 Sign In
                             </Button>
                             <Typography variant="subtitle2" className={classes.orTextMobile}>Or</Typography>
                             <Button variant="outlined" fullWidth={true}
                             className={classes.googleBtnMobile} 
                             startIcon={ <img src="Images/googleIcon.png" style={{width: "100%"}} alt="google icon"/>}  
-                            type="button" onClick={handleGoogleSubmit}>
+                            type="button" onClick={handleGoogleSubmit} disabled={loading}>
                                 Continue With Google
                             </Button>
                         </form>

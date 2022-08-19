@@ -143,8 +143,9 @@ const resolvers = {
             return await UserInRole.findOne({UserID});
         },
 
-        addUserToRole: (_, {UserID, RoleID}) => {
-            const checkRole =  UserInRole.findOne({UserID});
+        addUserToRole: async (_, {UserID, RoleID}) => {
+            const checkRole =  await UserInRole.findOne({UserID});
+            // console.log("checkRole is ", checkRole);
             if(checkRole === null){
                 const userPermision = new UserInRole({UserID, RoleID});
                 return userPermision.save();
@@ -157,7 +158,7 @@ const resolvers = {
         //Users
         createUser: async(_, {Id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, OpeningHrs, category, MenuItems}) => {
             const checkUser = await User.findOne({Id});
-            console.log(checkUser);
+            // console.log(checkUser);
             if(checkUser === null){
                 const user = new User({Id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, OpeningHrs, category, MenuItems});
                 return user.save();

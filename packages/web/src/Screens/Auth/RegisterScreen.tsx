@@ -2,7 +2,7 @@ import { useAppData } from '../../Context/AppDataContext';
 import { Container, Grid, makeStyles, createStyles, Typography, Theme, Button, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, useTheme, useMediaQuery } from '@material-ui/core';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import { LockRounded, EmailOutlined, PlayArrowRounded, PersonRounded } from "@material-ui/icons/";
@@ -247,7 +247,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
     const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
 
     var { value }  = useAppData();
-    var { signup, gLogin, fetchUserInfoForSignUp, fetchUserInfo } = value;
+    var { signup, gLogin, fetchUserInfoForSignUp, fetchUserInfo, userRolef } = value;
     const [values, setValues] = React.useState<State>({
         fullname: '',
         email: '',
@@ -304,19 +304,19 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                     if(res1 !== "The email address is already in use by another account."){
                         await fetchUserDetailsSignUp(res1).then(function(res){
                             if(res){
-                                ////console.log("About to navigate to dashboard.");
-                                ////console.log(userRolef);
-                                setSuccess('Sign Up Successful.');
-                                setTimeout(() => {
-                                    setSuccess('');
-                                    //console.log("about to go to dashboard");
-                                    if(history.location.state === undefined){
-                                        history.push("/Dashboard");
-                                    }else{
-                                        history.push(history.location.state.from)
-                                    }
-                                    //history.push("/");
-                                }, 1500);
+                                // ////console.log("About to navigate to dashboard.");
+                                // ////console.log(userRolef);
+                                // setSuccess('Sign Up Successful.');
+                                // setTimeout(() => {
+                                //     setSuccess('');
+                                //     //console.log("about to go to dashboard");
+                                //     if(history.location.state === undefined){
+                                //         history.push("/Dashboard");
+                                //     }else{
+                                //         history.push(history.location.state.from)
+                                //     }
+                                //     //history.push("/");
+                                // }, 1500);
                             }else{
                                 setError('Unable to Sign Up at this time'); 
                             } 
@@ -348,18 +348,18 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                     await fetchUserDetails(res1).then(function (res){
                         if(res){
                             ////console.log("About to navigate to dashboard.");
-                            setLoading(false);
-                            setSuccess('Sign Up Successful.');
-                            setTimeout(() => {
-                                setSuccess('');
-                                //console.log("about to go to dashboard");
-                                if(history.location.state === undefined){
-                                    history.push("/Dashboard");
-                                }else{
-                                    history.push(history.location.state.from)
-                                }
-                                //history.push("/");
-                            }, 1500);
+                            // setLoading(false);
+                            // setSuccess('Sign Up Successful.');
+                            // setTimeout(() => {
+                            //     setSuccess('');
+                            //     //console.log("about to go to dashboard");
+                            //     if(history.location.state === undefined){
+                            //         history.push("/Dashboard");
+                            //     }else{
+                            //         history.push(history.location.state.from)
+                            //     }
+                            //     //history.push("/");
+                            // }, 1500);
                         }else{
                             setError('Unable to login at this time'); 
                         }
@@ -376,6 +376,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
     }
 
     var fetchUserDetailsSignUp = async function fetchUserDetailsSignUp(payload) {
+        //console.log("signup");
         ////console.log("Is current user null");
         ////console.log(value);
         if(payload.currentUser !== null && payload.currentUser !== undefined){
@@ -390,17 +391,40 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
     }
 
     var fetchUserDetails = async function fetchUserDetails(payload) {
+        //console.log("google signup");
         ////console.log("Is current user null");
         ////console.log(value);
         if(payload.currentUser !== null && payload.currentUser !== undefined){
             if(payload.currentUser.uid !== null && payload.currentUser.uid !== undefined){
                 ////console.log("Fetching user info");
                 ////console.log(state);
-                return fetchUserInfo(payload.currentUser.uid, payload);
+                fetchUserInfo(payload.currentUser.uid, payload);
+                return true;
             }
         }
         return false;
     }
+
+    useEffect(() => {
+        //console.log("Checking role");
+        //console.log(userRolef);
+        if(userRolef !== undefined && userRolef !== ""){
+            setLoading(false);
+            setSuccess('Registration In Successful.');
+            setTimeout(() => {
+                setSuccess('');
+                
+                if(history.location.state !== undefined){
+                    console.log("about to go to from address");
+                    console.log(history.location.state.from)
+                    history.push(history.location.state.from);
+                }else{
+                    console.log("about to go to food dashboard");
+                    history.push("/Dashboard");
+                }
+            }, 1500);
+        }
+    }, [userRolef])
     
     return (
         <>
@@ -499,14 +523,14 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                                         {success && <Alert variant="filled" severity="success" className={classes.alert}>{success}</Alert>}
                                         <Button variant="contained" 
                                             style={{backgroundColor: "#FEC109"}}
-                                             className={classes.loginButton} type="submit">
+                                             className={classes.loginButton} type="submit" disabled={loading}>
                                             Sign Up
                                         </Button>
                                         <Typography variant="subtitle2" className={classes.orText}>Or</Typography>
                                         <Button variant="outlined" fullWidth={true}
                                             className={classes.googleBtn} 
                                             startIcon={ <img src="Images/googleIcon.png" style={{width: "100%"}} alt="google icon"/>}  
-                                            type="button" onClick={handleGoogleSubmit}>
+                                            type="button" onClick={handleGoogleSubmit} disabled={loading}>
                                             Continue With Google
                                         </Button>
                                     </form>
@@ -608,14 +632,14 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                             {success && <Alert variant="filled" severity="success" className={classes.alert}>{success}</Alert>}
                             <Button variant="contained" 
                                 style={{backgroundColor: "#FEC109"}}
-                                className={classes.loginButtonMobile} type="submit">
+                                className={classes.loginButtonMobile} type="submit" disabled={loading}>
                                 Sign Up
                             </Button>
                             <Typography variant="subtitle2" className={classes.orTextMobile}>Or</Typography>
                             <Button variant="outlined" fullWidth={true}
                             className={classes.googleBtnMobile} 
                             startIcon={ <img src="Images/googleIcon.png" style={{width: "100%"}} alt="google icon"/>}  
-                            type="button" onClick={handleGoogleSubmit}>
+                            type="button" onClick={handleGoogleSubmit} disabled={loading}>
                                 Continue With Google
                             </Button>
                         </form>
