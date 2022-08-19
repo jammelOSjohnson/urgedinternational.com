@@ -378,7 +378,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                   index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                   index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
                                   index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                  index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> :
+                                  index === 5 ? <HistoryRounded style={{width: "36px", height: "38px",marginRight: "24px"}}  /> :
                                   index === 5 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                 }
                                 </ListItemIcon>
@@ -485,7 +485,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                       index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                       index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
                                       index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> :
+                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px", marginRight: "24px"}}  /> :
                                       index === 5 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                     }
                                     </ListItemIcon>
@@ -506,8 +506,8 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                       index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                       index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
                                       index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> :
-                                      index === 5 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                      index === 5 ? <HistoryRounded style={{width: "38px", height: "38px", marginRight: "24px"}}  /> :
+                                      index === 5 ? <PersonRounded style={{width: "38px", height: "38px", marginRight: "24px"}}  /> : <MailIcon />
                                     }
                                     </ListItemIcon>
                                     <ListItemText className="link-fontH" primary={text} />
@@ -534,7 +534,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                       </List>
                       <Divider />
                       <List>
-                          {userInfo.fullName !== null && userInfo.fullName !== "" && userInfo.fullName !== undefined?
+                          {userInfo.email !== null && userInfo.email !== "" && userInfo.email !== undefined?
                           ['Settings', 'Logout'].map((text, index) => (
                               text === 'Logout'?
                               <a href="/" onClick={handleLogout} className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
@@ -786,7 +786,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                       index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                       index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
                                       index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> :
+                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px", marginRight: "24px"}}  /> :
                                       index === 6 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                     }
                                 </ListItemIcon>
@@ -823,7 +823,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                         index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                         index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
                                         index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                        index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> :
+                                        index === 5 ? <HistoryRounded style={{width: "36px", height: "38px", marginRight: "24px"}}  /> :
                                         index === 6 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                       }
                                     </ListItemIcon>
@@ -844,8 +844,8 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                         index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                         index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
                                         index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                        index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> :
-                                        index === 6 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                        index === 5 ? <HistoryRounded style={{width: "36px", height: "38px", marginRight: "24px"}}  /> :
+                                        index === 6 ? <PersonRounded style={{width: "38px", height: "38px", marginRight: "24px"}}  /> : <MailIcon />
                                       }
                                     </ListItemIcon>
                                     <ListItemText className="link-font" primary={text} />
@@ -958,7 +958,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                       </List>
                       <Divider />
                       <List>
-                          {userInfo.fullName !== null && userInfo.fullName !== "" && userInfo.fullName !== undefined?
+                          {userInfo.email !== null && userInfo.email !== "" && userInfo.email !== undefined?
                               ['Settings', 'Logout'].map((text, index) => (
                                   text === 'Logout'?
                                   <a href="/" onClick={handleLogout} className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>

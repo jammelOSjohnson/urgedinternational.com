@@ -2,7 +2,7 @@ import { useAppData } from '../../../Context/AppDataContext';
 import { IconButton, makeStyles, createStyles, Typography, Theme, useMediaQuery, useTheme, Modal, Backdrop, Fade, Grid, FormControl, InputLabel, OutlinedInput, InputAdornment } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import { HistoryRounded } from "@material-ui/icons/";
+import { HistoryRounded, PersonRounded } from "@material-ui/icons/";
 import clsx from 'clsx';
 
 import Drawer from '@material-ui/core/Drawer';
@@ -214,71 +214,10 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
             >
                 <CloseRounded className={classes.closeIcon}/>
             </IconButton>
-          <List style={{marginTop: "15%"}}>
-          {['Overview', 'Food Delivery', 'Errands Solution', 'Uship', "Sally's Pantry", 'Orders'].map((text, index) => (
-                        referralPath === "/Dashboard" && text === "Overview" ?
-                          <ListItem button key={text} className={classes.activeItem}>
-                            <ListItemIcon>
-                                    {
-                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
-                                      index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
-                                      index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
-                                      index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
-                                    }
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                          </ListItem>
-                        :
-                        (referralPath === "/FoodDelivery" || referralPath === "/Restaurants" || referralPath === "/Menu") && text === "Food Delivery" ?
-                          <ListItem button key={text} className={classes.activeItem2}>
-                            <ListItemIcon className={classes.activeIcon2}>
-                                    {
-                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
-                                      index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
-                                      index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
-                                      index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
-                                    }
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                          </ListItem>
-                        :
-                        referralPath === "/PackageDelivery" && text === "Errands Solution" ?
-                          <ListItem button key={text} className={classes.activeItem}>
-                            <ListItemIcon>
-                                    {
-                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
-                                      index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
-                                      index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
-                                      index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
-                                    }
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                          </ListItem>
-                        :
-                        (referralPath === "/Uship" || referralPath === "/Rates") && text === "Uship" ?
-                          <ListItem button key={text} className={classes.activeItem}>
-                            <ListItemIcon>
-                                    {
-                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
-                                      index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
-                                      index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
-                                      index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
-                                    }
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                          </ListItem>
-                        :
-                        referralPath === "/Orders" && text === "Orders" ?
-                          <Link to="/OrdersHistory" className={classes.activeItem}>
-                            <ListItem button key={text}>
+            <List>
+                      {['Overview', 'Food Delivery', 'Errands Solution', 'Uship', "Sally's Pantry", 'Orders', "Profile"].map((text, index) => (
+                          referralPath === "/Dashboard" && text === "Overview" ?
+                            <ListItem button key={text} className={clsx(classes.activeItem, "activeLinkHover")}>
                               <ListItemIcon>
                                     {
                                       index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
@@ -286,49 +225,31 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                                       index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                       index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
                                       index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> :
+                                      index === 6 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                     }
                               </ListItemIcon>
-                              <ListItemText primary={text} />
+                              <ListItemText className="link-font" primary={text} />
                             </ListItem>
-                          </Link>
-                        :
-                        text === "Overview" ?
-                          <Link to="/Dashboard" className={classes.inactiveItemLink}>
-                            <ListItem button key={text}>
-                                <ListItemIcon>
+                          :
+                          (referralPath === "/FoodDelivery" || referralPath === "/Restaurants" || referralPath === "/Menu" || referralPath === "/RestaurantItem")  && text === "Food Delivery" ?
+                            <ListItem button key={text} className={classes.activeItem2}>
+                              <ListItemIcon className={classes.activeIcon2}>
                                     {
                                       index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
                                       index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
                                       index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                       index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
                                       index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> :
+                                      index === 6 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                     }
-                                </ListItemIcon>
-                                <ListItemText primary={text} />
+                              </ListItemIcon>
+                              <ListItemText className="link-font" primary={text} />
                             </ListItem>
-                          </Link>
-                        :
-                        text === "Food Delivery" ?
-                          <Link to="/Restaurants" className={classes.inactiveItemLink}>
-                            <ListItem button key={text}>
-                                <ListItemIcon>
-                                    {
-                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
-                                      index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
-                                      index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
-                                      index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
-                                    }
-                                </ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                          </Link>
-                        :
-                        text === "Errands Solution" ?
-                          <ListItem button key={text} onClick={handleOpen2}>
+                          :
+                          referralPath === "/PackageDelivery" && text === "Errands Solution" ?
+                            <ListItem button key={text} className={classes.activeItem}>
                               <ListItemIcon>
                                     {
                                       index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
@@ -336,49 +257,32 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                                       index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                       index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
                                       index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> :
+                                      index === 6 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                     }
                               </ListItemIcon>
-                              <ListItemText className="link-fontH" primary={text} />
-                          </ListItem>
-                        :
-                        text === "Uship" ?
-                          <Link to="/Uship" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
-                            <ListItem button key={text} >
-                                <ListItemIcon>
-                                  {
-                                    index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
-                                    index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                    index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
-                                    index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
-                                    index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                    index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
-                                  }
-                                </ListItemIcon>
-                                <ListItemText className="link-fontH" primary={text} />
+                              <ListItemText className="link-font" primary={text} />
                             </ListItem>
-                          </Link>
-                        :
-                        text === "Sally's Pantry" ?
-                        <a href='https://sallyspantry.com/' target="_blank" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")} title="Sally's Pantry">
-                            <ListItem button key={text} >
-                                <ListItemIcon>
-                                  {
-                                    index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
-                                    index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
-                                    index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
-                                    index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
-                                    index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                    index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
-                                  }
-                                </ListItemIcon>
-                                <ListItemText className="link-fontH" primary={text} />
+                          :
+                          (referralPath === "/Uship" || referralPath === "/Rates") && text === "Uship" ?
+                            <ListItem button key={text} className={classes.activeItem}>
+                              <ListItemIcon>
+                                    {
+                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                      index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
+                                      index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
+                                      index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> :
+                                      index === 6 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                    }
+                              </ListItemIcon>
+                              <ListItemText className="link-font" primary={text} />
                             </ListItem>
-                          </a>
-                        :
-                        text === "Orders" ?
-                          <Link to="/OrderHistory" className={classes.inactiveItemLink}>
-                            <ListItem button key={text}>
+                          :
+                          referralPath === "/OrderHistory" && text === "Orders" ?
+                            <Link to="/OrdersHistory" className={classes.inactiveItemLink}>
+                              <ListItem button key={text} className={classes.activeItem}>
                                 <ListItemIcon>
                                     {
                                       index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
@@ -386,80 +290,228 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                                       index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                       index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
                                       index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> :
+                                      index === 6 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                     }
                                 </ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                          </Link>
-                        :
-                        <ListItem button key={text} style={{paddingLeft: "12px"}}>
-                            <ListItemIcon>
+                                <ListItemText className="link-fontH" primary={text} />
+                              </ListItem>
+                            </Link>
+                          :
+                          text === "Overview" ?
+                            <Link to="/Dashboard" style={{color: "#5D6467"}} className={classes.inactiveItemLink}>
+                              <ListItem button key={text}>
+                                  <ListItemIcon>
                                     {
                                       index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
                                       index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
                                       index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                       index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
                                       index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
-                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> :
+                                      index === 6 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                                     }
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
-          </List>
-          <Divider />
-                    <List>
-                        {userInfo.fullName !== null && userInfo.fullName !== "" && userInfo.fullName !== undefined?
-                        ['Settings', 'Logout'].map((text, index) => (
-                            text === 'Logout'?
-                            <a href="/" onClick={handleLogout} className={classes.inactiveItemLink}>
+                                  </ListItemIcon>
+                                  <ListItemText className="link-font" primary={text} />
+                              </ListItem>
+                            </Link>
+                          :
+                          text === "Orders" ?
+                            userInfo.email !== null && userInfo.email !== "" && userInfo.email !== undefined?
+                              <Link to="/OrderHistory" className={classes.inactiveItemLink}>
+                                <ListItem button key={text} style={{paddingLeft: "12px"}}>
+                                    <ListItemIcon>
+                                      {
+                                        index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                        index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                        index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
+                                        index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
+                                        index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                        index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> :
+                                        index === 6 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                      }
+                                    </ListItemIcon>
+                                    <ListItemText className="link-font" primary={text} />
+                                </ListItem>
+                              </Link>
+                              :
+                              <></>
+                          :
+                          text === "Profile" ?
+                            userInfo.email !== null && userInfo.email !== "" && userInfo.email !== undefined?
+                              <Link to="/Profile" className={classes.inactiveItemLink}>
+                                <ListItem button key={text} style={{paddingLeft: "12px"}}>
+                                    <ListItemIcon>
+                                      {
+                                        index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                        index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                        index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
+                                        index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
+                                        index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                        index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> :
+                                        index === 6 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                      }
+                                    </ListItemIcon>
+                                    <ListItemText className="link-font" primary={text} />
+                                </ListItem>
+                              </Link>
+                              :
+                              <></>
+                          :
+                          text === "Food Delivery" ?
+                            <Link to="/Restaurants" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
+                              <ListItem button key={text}>
+                                  <ListItemIcon>
+                                    {
+                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                      index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
+                                      index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
+                                      index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> :
+                                      index === 6 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                    }
+                                  </ListItemIcon>
+                                  <ListItemText className="link-font" primary={text} />
+                              </ListItem>
+                            </Link>
+                          :
+                          text === "Errands Solution" ?
+                            <ListItem button key={text} onClick={handleOpen2}>
+                                <ListItemIcon>
+                                    {
+                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                      index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
+                                      index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
+                                      index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> :
+                                      index === 6 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                    }
+                                </ListItemIcon>
+                                <ListItemText className="link-fontH" primary={text} />
+                            </ListItem>
+                          :
+                          text === "Uship" ?
+                            <Link to="/Uship" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
                               <ListItem button key={text} >
+                                  <ListItemIcon>
+                                    {
+                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                      index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
+                                      index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
+                                      index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> :
+                                      index === 6 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                    }
+                                  </ListItemIcon>
+                                  <ListItemText className="link-fontH" primary={text} />
+                              </ListItem>
+                            </Link>
+                          :
+                          text === "Sally's Pantry" ?
+                          <a href='https://sallyspantry.com/' target="_blank" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")} title="Sally's Pantry">
+                              <ListItem button key={text} >
+                                  <ListItemIcon>
+                                    {
+                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                      index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
+                                      index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
+                                      index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> :
+                                      index === 6 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                    }
+                                  </ListItemIcon>
+                                  <ListItemText className="link-fontH" primary={text} />
+                              </ListItem>
+                            </a>
+                          :
+                          text !== "Overview"?
+                            <ListItem button key={text} style={{marginTop: "5%"}}>
+                                <ListItemIcon>
+                                    {
+                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                      index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
+                                      index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
+                                      index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> :
+                                      index === 6 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                    }
+                                </ListItemIcon>
+                                <ListItemText className="link-font" primary={text} />
+                            </ListItem>
+                        :
+                          <ListItem button key={text} style={{paddingLeft: "12px"}}>
+                            <ListItemIcon>
+                                    {
+                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                      index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                                      index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
+                                      index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
+                                      index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                                      index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> :
+                                      index === 6 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                                    }
+                            </ListItemIcon>
+                            <ListItemText className="link-font" primary={text} />
+                          </ListItem>
+                      ))}
+                      </List>
+                      <Divider />
+                      <List>
+                          {userInfo.email !== null && userInfo.email !== "" && userInfo.email !== undefined?
+                              ['Settings', 'Logout'].map((text, index) => (
+                                  text === 'Logout'?
+                                  <a href="/" onClick={handleLogout} className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
+                                    <ListItem button key={text} >
+                                      <ListItemIcon>
+                                        {
+                                          index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                          index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
+                                        }
+                                      </ListItemIcon>
+                                      <ListItemText className="link-fontH" primary={text} />
+                                    </ListItem>
+                                  </a>
+                                  :
+                                  <ListItem button key={text}>
+                                  <ListItemIcon>
+                                    {
+                                      index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                      index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
+                                    }
+                                  </ListItemIcon>
+                                  <ListItemText className="link-font" primary={text} />
+                                  </ListItem>
+                              )) :
+                              ['Settings', 'Login'].map((text, index) => (
+                                text === 'Login'?
+                                <a href="/Login" onClick={handleLogin} className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
+                                  <ListItem button key={text}>
+                                    <ListItemIcon>
+                                      {
+                                        index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                        index === 1 ? <img src="Images/Logout.png" className={classes.loginIconStyle} alt="BlackMarket icon"/> : <MailIcon />
+                                      }
+                                    </ListItemIcon>
+                                    <ListItemText className="link-fontH" primary={text} />
+                                    </ListItem>
+                                </a>
+                                :
+                                <ListItem button key={text}>
                                 <ListItemIcon>
                                   {
                                     index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
                                     index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
                                   }
                                 </ListItemIcon>
-                                <ListItemText primary={text} />
-                              </ListItem>
-                            </a>
-                            :
-                            <ListItem button key={text}>
-                            <ListItemIcon>
-                              {
-                                index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
-                                index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
-                              }
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                            </ListItem>
-                        )) :
-                        ['Settings', 'Login'].map((text, index) => (
-                          text === 'Login'?
-                          <a href="/Login" onClick={handleLogin} className={classes.inactiveItemLink}>
-                            <ListItem button key={text}>
-                              <ListItemIcon>
-                                {
-                                  index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
-                                  index === 1 ? <img src="Images/Logout.png" className={classes.loginIconStyle} alt="BlackMarket icon"/> : <MailIcon />
-                                }
-                              </ListItemIcon>
-                              <ListItemText primary={text} />
-                              </ListItem>
-                          </a>
-                          :
-                          <ListItem button key={text}>
-                          <ListItemIcon>
-                            {
-                              index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
-                              index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
-                            }
-                          </ListItemIcon>
-                          <ListItemText primary={text} />
-                          </ListItem>
-                      ))
-                      }
+                                <ListItemText className="link-font" primary={text} />
+                                </ListItem>
+                            ))
+                          }
                         {/* <IconButton
                             color="inherit"
                             aria-label="open drawer"

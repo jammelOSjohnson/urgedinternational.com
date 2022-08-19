@@ -335,7 +335,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
         setLoading(false);
     }
 
-    var handleGoogleSubmit = async function handleGoogleSubmit(event) {
+    var handleGoogleSubmit = function handleGoogleSubmit(event) {
         event.preventDefault();
         //prevents default form refresh
         ////console.log("I am inside Google Submit fuction");
@@ -343,9 +343,9 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
             setSuccess('');
             setError('');
             setLoading(true);
-            await gLogin(value).then(async function(res1){
+            gLogin(value).then(function(res1){
                 if(res1 != null){
-                    await fetchUserDetails(res1).then(function (res){
+                     fetchUserDetails(res1).then(function (res){
                         if(res){
                             ////console.log("About to navigate to dashboard.");
                             // setLoading(false);
@@ -516,6 +516,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                                                 labelWidth={70}
                                                 required={true}
                                                 notched={true}
+                                                autoComplete={"off"}
                                             />
                                         </FormControl>
                                         <Typography variant="subtitle2" className={classes.forgotPassText}>Forgot Password?</Typography>
@@ -625,6 +626,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                                     labelWidth={70}
                                     required={true}
                                     notched={true}
+                                    autoComplete={"off"}
                                 />
                             </FormControl>
                             <Typography variant="subtitle2" className={classes.forgotPassTextMobile}>Forgot Password?</Typography>

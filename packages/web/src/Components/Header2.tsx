@@ -237,9 +237,11 @@ export const Header2: React.FC = function Header2() {
         }
 
       auth.onAuthStateChanged(function (user){
-        if(referralPath !== "/Register" && referralPath !== "/Login"){
+        // console.log(referralPath);
+        // console.log(history.location.state);
+        if(referralPath !== "/Register" && referralPath !== "/Login" && history.location.state === undefined){
           //update the state for current user to the user logged in
-          console.log("about to set current user");
+          //console.log("about to set current user");
           ////console.log(user);
           //var userInfo = fetchUserInfo();
           //const payload = {currentUser : user, loading: false, userInfo: userInfo}

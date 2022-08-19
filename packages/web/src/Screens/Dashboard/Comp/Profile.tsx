@@ -4,6 +4,7 @@ import { Alert } from "@material-ui/lab";
 import clsx from "clsx"
 import React,{ useEffect, useState } from "react";
 import { useAppData } from "../../../Context/AppDataContext";
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -216,8 +217,9 @@ export const Profile: React.FC = function Profile(){
     const classes = useStyles();
 
     var {value} = useAppData();
+    var history = useHistory();
 
-    var {userInfo, UpdateUserInfo} = value;
+    var {userInfo, UpdateUserInfo, userRolef} = value;
 
     const [values, setValues] = React.useState<State>({
         ContactNumber: userInfo.contactNumber,
@@ -244,11 +246,15 @@ export const Profile: React.FC = function Profile(){
                     AddressLine2: userInfo.addressLine2,
                     City: userInfo.city
                 });
+
+                if(userRolef !== "Customer"){
+                    history.push("Dashboard")
+                }
             }
         }catch(e){
             console.log(e)
         }
-    },[userInfo])
+    },[userInfo, userRolef])
 
     var handleSubmit = async function handleSubmit(event) {
         event.preventDefault();
