@@ -173,8 +173,8 @@ export const Header: React.FC = function Header() {
         ////console.log("auth");
         if(referralPath !== "/Register" && referralPath !== "/Login"){
           //update the state for current user to the user logged in
-          ////console.log("about to set current user");
-          ////console.log(user);
+          //console.log("about to set current user");
+          //console.log(user);
           //var userInfo = fetchUserInfo();
           //const payload = {currentUser : user, loading: false, userInfo: userInfo}
           var signonStatus = false;

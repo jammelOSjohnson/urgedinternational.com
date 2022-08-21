@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import { LockRounded, EmailOutlined, PlayArrowRounded, PersonRounded } from "@material-ui/icons/";
 import Alert from '@material-ui/lab/Alert';
+import { auth } from '../../firebase';
 
 interface State {
     fullname: string;
@@ -255,12 +256,14 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
         showPassword: false,
       });
 
+    var history = useHistory();
+    var location = history.location;
+    var referralPath = location.pathname;
+
     var [error, setError] = useState('');
     var [success, setSuccess] = useState('');
     // eslint-disable-next-line
     var [loading, setLoading] = useState(false);
-    
-    var history = useHistory();
 
     
     const handleChange = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -335,7 +338,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
         setLoading(false);
     }
 
-    var handleGoogleSubmit = function handleGoogleSubmit(event) {
+    var handleGoogleSubmit = async function handleGoogleSubmit(event) {
         event.preventDefault();
         //prevents default form refresh
         ////console.log("I am inside Google Submit fuction");
@@ -343,37 +346,30 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
             setSuccess('');
             setError('');
             setLoading(true);
-            gLogin(value).then(function(res1){
+            let aftergLogin =await gLogin(value).then(async function(res1){
                 if(res1 != null){
-                     fetchUserDetails(res1).then(function (res){
-                        if(res){
-                            ////console.log("About to navigate to dashboard.");
-                            // setLoading(false);
-                            // setSuccess('Sign Up Successful.');
-                            // setTimeout(() => {
-                            //     setSuccess('');
-                            //     //console.log("about to go to dashboard");
-                            //     if(history.location.state === undefined){
-                            //         history.push("/Dashboard");
-                            //     }else{
-                            //         history.push(history.location.state.from)
-                            //     }
-                            //     //history.push("/");
-                            // }, 1500);
-                        }else{
-                            setError('Unable to login at this time'); 
-                        }
-                    });
+                     return res1;
                 }else{
-                    setLoading(false);
-                    setError('Unable to Sign Up at this time.'); 
+                    return null;
                 }
             });
+
+            if(aftergLogin !== null){
+                await fetchUserDetails(aftergLogin);
+            }else{
+                setLoading(false);
+                setError('Unable to Sign Up at this time.');
+            }
         }catch{
             setError('Failed to Sign Up');
         }
         setLoading(false);
     }
+
+    // auth.onAuthStateChanged(function (user){
+    //     console.log(referralPath);
+    //     console.log(history.location.state);
+    // });
 
     var fetchUserDetailsSignUp = async function fetchUserDetailsSignUp(payload) {
         //console.log("signup");
@@ -398,7 +394,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
             if(payload.currentUser.uid !== null && payload.currentUser.uid !== undefined){
                 ////console.log("Fetching user info");
                 ////console.log(state);
-                fetchUserInfo(payload.currentUser.uid, payload);
+                await fetchUserInfo(payload.currentUser.uid, payload);
                 return true;
             }
         }
@@ -415,11 +411,11 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                 setSuccess('');
                 
                 if(history.location.state !== undefined){
-                    console.log("about to go to from address");
-                    console.log(history.location.state.from)
+                    //console.log("about to go to from address");
+                    //console.log(history.location.state.from)
                     history.push(history.location.state.from);
                 }else{
-                    console.log("about to go to food dashboard");
+                    //console.log("about to go to food dashboard");
                     history.push("/Dashboard");
                 }
             }, 1500);

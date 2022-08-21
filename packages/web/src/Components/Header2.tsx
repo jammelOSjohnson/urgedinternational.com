@@ -223,7 +223,7 @@ export const Header2: React.FC = function Header2() {
         if(value.userRolef !== undefined){
           if(value.userRolef === "Admin"){
             if(data !== undefined){
-              console.log(data)
+              //console.log(data)
               var OrdersNew = []  as Object[];
               orders.map((item) => (
                 OrdersNew.push(item)
@@ -242,7 +242,7 @@ export const Header2: React.FC = function Header2() {
         if(referralPath !== "/Register" && referralPath !== "/Login" && history.location.state === undefined){
           //update the state for current user to the user logged in
           //console.log("about to set current user");
-          ////console.log(user);
+          //console.log(user);
           //var userInfo = fetchUserInfo();
           //const payload = {currentUser : user, loading: false, userInfo: userInfo}
           var signonStatus = false;
@@ -266,7 +266,7 @@ export const Header2: React.FC = function Header2() {
         }
       });
     }catch(err){
-      console.log(err);
+      //console.log(err);
     }
     // react-hooks/exhaustive-deps
   },[value.userRolef, data])

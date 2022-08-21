@@ -326,52 +326,11 @@ export const LoginScreen: React.FC = function LoginScreen() {
                 if(res1 != null){
                     await fetchUserDetails(res1).then(function(res){
                         if(res){
-                            ////console.log("About to close login modal.");
-                            //closeModal();
-                            //setLoggedIn(true);
-                            ////console.log("About to navigate to dashboard.");
-                            //history.push("/Dashboard");
-                            // //console.log("role is:")
-                            // //console.log(userRolef);
-                            // if(userRolef !== undefined && userRolef === "Admin"){
-                            //     setLoading(false);
-                            //     setSuccess('Sign In Successful.');
-                            //     setTimeout(() => {
-                            //         setSuccess('');
-                            //         ////console.log("about to go to dashboard");
-                            //         history.push("/AdminOrders");
-                            //         //history.push("/");
-                            //     }, 1500);
-                                
-                            // }else if(userRolef !== undefined && userRolef === "Rider"){
-                            //     setLoading(false);
-                            //     setSuccess('Sign In Successful.');
-                            //     setTimeout(() => {
-                            //         setSuccess('');
-                            //         //console.log("about to go to rider dashboard");
-                            //         history.push("/DeliveryOrders");
-                            //         //history.push("/");
-                            //     }, 1500);
-                                
-                            // }else{
-                            //     setLoading(false);
-                            //     setSuccess('Sign In Successful.');
-                            //     setTimeout(() => {
-                            //         setSuccess('');
-                            //         //console.log("about to go to dashboard");
-                            //         //console.log(history.location.state)
-                            //         if(history.location.state !== undefined){
-                            //             history.push(history.location.state.from);
-                            //         }else{
-                            //             //console.log(history.location.state)
-                            //             history.push("/FoodDelivery");
-                            //         }
-                                    
-                            //         //history.push("/");
-                            //     }, 1500);
-                            // }
+                            return res;
                         }else{
+                            setLoading(false);
                             setError('Unable to login at this time'); 
+                            return;
                         }
                     });
                     
@@ -386,33 +345,35 @@ export const LoginScreen: React.FC = function LoginScreen() {
     }
 
     //Auth Change
-    auth.onAuthStateChanged(function (user){
-        if(referralPath === "/Login"){
-          //update the state for current user to the user logged in
-          ////console.log("about to set current user");
-          ////console.log(user);
-          //var userInfo = fetchUserInfo();
-          //const payload = {currentUser : user, loading: false, userInfo: userInfo}
-          var signonStatus = false;
-          if(user !== null){
-            //console.log("auth");
-            signonStatus = user.uid !== null && user.uid !== undefined? true : false
+    //auth.onAuthStateChanged(function (user){
+        //console.log(referralPath);
+        //console.log(history.location.state);
+        // if(referralPath === "/Login" && history.location.state === undefined){
+        //   //update the state for current user to the user logged in
+        //   //console.log("about to set current user");
+        //   //console.log(user);
+        //   //var userInfo = fetchUserInfo();
+        //   //const payload = {currentUser : user, loading: false, userInfo: userInfo}
+        //   var signonStatus = false;
+        //   if(user !== null){
+        //     //console.log("auth");
+        //     signonStatus = user.uid !== null && user.uid !== undefined? true : false
           
           
-              var payload = {...value,currentUser : user, loading: false, loggedIn: signonStatus}
-              if(value.userInfo.email === "" ){
-                //console.log("about to fetch user details")
-                  fetchUserDetails(payload);
-                  //  .then(function(res){
-                  //     if(!res){
-                  //         ////console.log('Unable to fetch user data at this time'); 
-                  //     }
-                  // });
-              }
-          } 
+        //       var payload = {...value,currentUser : user, loading: false, loggedIn: signonStatus}
+        //       if(value.userInfo.email === "" ){
+        //         //console.log("about to fetch user details")
+        //           fetchUserDetails(payload);
+        //           //  .then(function(res){
+        //           //     if(!res){
+        //           //         ////console.log('Unable to fetch user data at this time'); 
+        //           //     }
+        //           // });
+        //       }
+        //   } 
           // eslint-disable-next-line
-        }
-      });
+        //}
+    //});
 
     var handleGoogleSubmit = async function handleGoogleSubmit(event) {
         event.preventDefault();
@@ -421,49 +382,22 @@ export const LoginScreen: React.FC = function LoginScreen() {
         try{
             setError('');
             setLoading(true);
-            await gLogin(value).then(async function(res1){
+            let aftergLogin = await gLogin(value).then(async function(res1){
                 if(res1 != null){
-                    // if(userRolef !== undefined && userRolef === "Admin"){
-                    //     setLoading(false);
-                    //     setSuccess('Sign In Successful.');
-                    //     setTimeout(() => {
-                    //         setSuccess('');
-                    //         ////console.log("about to go to dashboard");
-                    //         history.push("/AdminOrders");
-                    //         //history.push("/");
-                    //     }, 1500);
-                        
-                    // }
-                    // else if(userRolef !== undefined && userRolef === "Rider"){
-                    //     setLoading(false);
-                    //     setSuccess('Sign In Successful.');
-                    //     setTimeout(() => {
-                    //         setSuccess('');
-                    //         ////console.log("about to go to dashboard");
-                    //         history.push("/DeliveryOrders");
-                    //         //history.push("/");
-                    //     }, 1500);
-                        
-                    // }else{
-                    //     setLoading(false);
-                    //     setSuccess('Sign In Successful.');
-                    //     setTimeout(() => {
-                    //         setSuccess('');
-                    //         //console.log(history.location.state)
-                    //         if(history.location.state !== undefined){
-                    //             history.push(history.location.state.from);
-                    //         }else{
-                    //             //console.log(history.location.state)
-                    //             history.push("/FoodDelivery");
-                    //         }
-                    //         //history.push("/");
-                    //     }, 1500);
-                    // }
+                    return res1;
                 }else{
                     setLoading(false);
                     setError('Unable to login at this time.'); 
+                    return null;
                 }
             });
+
+            if(aftergLogin !== null){
+                await fetchUserDetails(aftergLogin);
+            }else{
+                setLoading(false);
+                setError('Unable to Sign Up at this time.');
+            }
         }catch(err){
             setError('Failed to login');
         }
@@ -556,11 +490,11 @@ export const LoginScreen: React.FC = function LoginScreen() {
                 setSuccess('');
                 
                 if(history.location.state !== undefined){
-                    console.log("about to go to from address");
-                    console.log(history.location.state.from)
+                    //console.log("about to go to from address");
+                    //console.log(history.location.state.from)
                     history.push(history.location.state.from);
                 }else{
-                    console.log("about to go to food dashboard");
+                    //console.log("about to go to food dashboard");
                     history.push("/Dashboard");
                 }
             }, 1500);

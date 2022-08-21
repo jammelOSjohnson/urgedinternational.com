@@ -461,11 +461,11 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var gLogin = async function gLogin(payload) {
         //retuns a promise
         //////console.log("about to log the user in using google.")
-        var result = socialAuth.signInWithPopup(googleAuthProvider).then(async function (result) {
+        var result = await socialAuth.signInWithPopup(googleAuthProvider).then(function (result) {
           // This gives you a Google Access Token. You can use it to access the Google API.
           //var token = result.credential.accessToken;
           // The signed-in user info.
-          console.log(result.user);
+          //console.log(result.user);
           var user = result.user;
           var payloadf = { ...payload,
             currentUser: user,
@@ -528,68 +528,75 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       return resultf;
     };
     
-    var userHasRole = function userHasRole(uid, payload, userType) {
+    var userHasRole = async function userHasRole(uid, payload, userType) {
       //console.log("User id is: ");
       //console.log(uid);
-      //console.log("fetching user role");
-      getUserInRole({variables: {UserID: uid}}).then(function(response) {
-        //console.log("Checking userRole result");
-        if (response.data.getUserInRole !== null) {
-          //console.log("user role exist");
-          //console.log(response);
-          //console.log("what is inside payload");
-          //console.log(payload);
-          // Convert to City object
-           var userRoleID = response.data.getUserInRole.RoleID;
-          //console.log("user in role res:");
-          //console.log(userRoleID);
-          if (userRoleID !== null) {
-              getRole({variables: {_id:userRoleID}}).then(function (response2) {
+      console.log("fetching user role");
+      let result =  await getUserInRole({variables: {UserID: uid}}).then(async function(response) {
+        console.log("Checking userRole result");
+        console.log(response);
+        return response.data.getUserInRole;
+      });
+
+      if (result !== null) {
+        console.log("user role exist");
+        //console.log(response);
+        //console.log("what is inside payload");
+        //console.log(payload);
+        // Convert to City object
+         var userRoleID = result.RoleID;
+        //console.log("user in role res:");
+        //console.log(userRoleID);
+        if (userRoleID !== null) {
+          let afterGetRole = await getRole({variables: {_id:userRoleID}}).then(function (response2) {
               if (response2.data.getRole !== null) {
                 var res = response2.data.getRole;
-                //console.log("Role Exists is?");
+                console.log("Role Exists is?");
                 //console.log(res);
                 payload.userRolef = res.description;
-                return res.description;
+                return payload;
+                //return res.description;
               }
-            });
-          }
-    
-          return payload;
-        } else {
-          //console.log("No such user role!")
-          //console.log("creating new userinrole");
-          let rID = process.env.REACT_APP_CUSTOMER_ROLE_ID;
-          if(userType !== undefined && userType !== null){
-            rID = userType === 'restaurant' ? 
-              process.env.REACT_APP_RESTAURANT_ROLE_ID
-              : process.env.REACT_APP_CUSTOMER_ROLE_ID;
-          }
-          var userInRole = {
-            UserID: uid,
-            RoleID: rID
-          };
-          addUserToRole({variables: {UserID: userInRole.UserID, RoleID: userInRole.RoleID}}).then(function (response3) {
-            if (response3.data.addUserToRole !== null) {
-              //console.log("User successfully added to role!");  
-              payload.userRolef = "Customer";
-              return true;
-            }else{
-              return false;
-            }
-          }).catch(function (error) {
-            console.error("Error adding user to role: ", error);
-            return false;
           });
-          ////console.log("What is in payload after creating role: ");
-          ////console.log(payload);
-    
-          
+          console.log("about to return role result");
+          return afterGetRole;
+        }else{
+          console.log("about to return role result");
           return payload;
         }
-      });
-      console.log(payload)
-      return payload; //dispatch({type: "fetch_userinfo", payload: userRef});
+      } else {
+        console.log("No such user role!")
+        console.log("creating new userinrole");
+        let rID = process.env.REACT_APP_CUSTOMER_ROLE_ID;
+        if(userType !== undefined && userType !== null){
+          rID = userType === 'restaurant' ? 
+            process.env.REACT_APP_RESTAURANT_ROLE_ID
+            : process.env.REACT_APP_CUSTOMER_ROLE_ID;
+        }
+        var userInRole = {
+          UserID: uid,
+          RoleID: rID
+        };
+        let afterAddUserToRole = await addUserToRole({variables: {UserID: userInRole.UserID, RoleID: userInRole.RoleID}}).then(function (response3) {
+          if (response3.data.addUserToRole !== null) {
+            console.log("User successfully added to role!");  
+            payload.userRolef = "Customer";
+            console.log("What is in payload after creating role: ");
+            console.log(payload);
+            return payload;
+            //return true;
+          }else{
+            return payload;
+            //return false;
+          }
+        }).catch(function (error) {
+          console.error("Error adding user to role: ", error);
+          return payload;
+          //return false;
+        });
+        console.log("about to return role result");
+        return afterAddUserToRole;
+      }
     };
 
     var fetchUserInfoForSignUp = async function fetchUserInfoForSignUp(uid, payload, currentState) {
@@ -812,104 +819,119 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       
     };
 
-    var fetchUserInfo = function fetchUserInfo(uid, payloadf) {
-      console.log("User id is: ");
-      console.log(uid);
-      console.log("fetching user");
+    var fetchUserInfo = async function fetchUserInfo(uid, payloadf) {
+      // console.log("User id is: ");
+      // console.log(uid);
+      // console.log("fetching user");
 
-       getUser({variables: { Id: uid}}).then(function(response) {
-          console.log("Checking user result for fetch user info");
-          console.log("user exist");
-          console.log(response);
+      let userFetch = await getUser({variables: { Id: uid}}).then(async function(response) {
+          //console.log("Checking user result for fetch user info");
+          
+          
           //console.log("what is inside payload for fetch user info");
           //console.log(payloadf);
 
           var user = response.data.getUser;
-          console.log(user);
-          console.log("firstname is:");
+          // console.log(user);
+          // console.log("firstname is:");
           //console.log(user.FirstName);
-          if (user !== null) {
-            payloadf.userInfo._id = user._id;
-            payloadf.userInfo.contactNumber = user.ContactNumber !== null && user.ContactNumber !== undefined ? user.ContactNumber : "";
-            payloadf.userInfo.email = user.Email !== null && user.Email !== undefined ? user.Email : "";
-            payloadf.userInfo.fullName = user.FirstName !== null && user.FirstName !== undefined? user.FirstName : "";
-            payloadf.userInfo._id = user._id !== null && user._id !== undefined && user._id !== ""? user._id : "";
-            payloadf.loggedIn = true;
-            payloadf.userInfo.addressLine1 = user.AddressLine1 !== null && user.AddressLine1 !== undefined ? user.AddressLine1 : "";
-            payloadf.userInfo.addressLine2 = user.AddressLine2 !== null && user.AddressLine2 !== undefined ? user.AddressLine2 : "";
-            payloadf.userInfo.city = user.City !== null && user.City !== undefined ? user.City : "";
-
-            var userRoleResf = undefined;
-             userHasRole(uid, payloadf, undefined).then(function (userRoleRes) {
-              console.log("Final user ref is: ");
-              console.log(userRoleRes);
-              userRoleResf = userRoleRes;
-              payloadf = userRoleRes;
-              dispatch({
-                  type: "fetch_userinfo",
-                  payload: userRoleResf
-              });
-              return true;
-            });
-          } else {
-            console.log("No such user!")
-            console.log(response);
-            console.log("creating new user");
-            var user2 = {
-              Id: uid,
-              FirstName: payloadf.userInfo.fullName !== null ? payloadf.userInfo.fullName.toLowerCase() : "",
-              LastName: payloadf.userInfo.fullName !== null ? payloadf.userInfo.fullName.toLowerCase() : "",
-              Email: payloadf.currentUser.email !== null ? payloadf.currentUser.email : "",
-              AddressLine1: "",
-              AddressLine2: "",
-              City: "",
-              ContactNumber: ""
-            };
-             createUser({variables: {...user2}}).then( function (response2) {
-              if(response2.data.createUser !== null){
-                console.log("User info  successfully written!");
-                console.log(response2.data);
-                var getUserResult = response2.data.createUser;
-                payloadf.userInfo.contactNumber = user2.ContactNumber;
-                payloadf.userInfo.email = user2.Email;
-                payloadf.userInfo.fullName = user2.FirstName;
-                payloadf.loggedIn = true;
-                payloadf.userInfo.addressLine1 = user2.AddressLine1 !== null && user2.AddressLine1 !== undefined ? user2.AddressLine1 : "";
-                payloadf.userInfo.addressLine2 = user2.AddressLine2 !== null && user2.AddressLine2 !== undefined ? user2.AddressLine2 : "";
-                payloadf.userInfo.city = user2.City !== null && user2.City !== undefined ? user2.City : "";  
-                payloadf.userInfo._id = getUserResult._id !== null && getUserResult._id !== undefined && getUserResult._id !== ""? getUserResult._id : "";
-                var userRoleResf = undefined;
-                userHasRole(uid, payloadf, undefined).then(function (userRoleRes) {
-                  console.log("Final user ref is: ");
-                  console.log(userRoleRes);
-                  userRoleResf = userRoleRes;
-
-                  var RequestParams = {
-                    from_name: payloadf.userInfo.fullName,
-                    user_email: payloadf.userInfo.email,
-                  }
-    
-                  sendEmail(emailServiceId, emailNewCustomerTemplate, RequestParams, emailUserId).then(function (res) {
-                    dispatch({
-                      type: "fetch_userinfo",
-                      payload: userRoleResf
-                    });
-                    return true;
-                  })
-                }).catch(function (err) {
-                  console.error("Error with user Role: ", err);
-                  return false;
-                });
-              }
-            }).catch(function (error) {
-              console.error("Error writing user info: ", error);
-              return false;
-            });
-          }
+          return user
+          
       }).catch(function(err){
-        console.log(err);
-        return false;
+        //console.log(err);
+        return null;
       });
+
+      let afterUserHasRole = false;
+      if (userFetch !== null) {
+        // console.log("user exist");
+        // console.log(userFetch);
+        payloadf.userInfo._id = userFetch._id;
+        payloadf.userInfo.contactNumber = userFetch.ContactNumber !== null && userFetch.ContactNumber !== undefined ? userFetch.ContactNumber : "";
+        payloadf.userInfo.email = userFetch.Email !== null && userFetch.Email !== undefined ? userFetch.Email : "";
+        payloadf.userInfo.fullName = userFetch.FirstName !== null && userFetch.FirstName !== undefined? userFetch.FirstName : "";
+        payloadf.userInfo._id = userFetch._id !== null && userFetch._id !== undefined && userFetch._id !== ""? userFetch._id : "";
+        payloadf.loggedIn = true;
+        payloadf.userInfo.addressLine1 = userFetch.AddressLine1 !== null && userFetch.AddressLine1 !== undefined ? userFetch.AddressLine1 : "";
+        payloadf.userInfo.addressLine2 = userFetch.AddressLine2 !== null && userFetch.AddressLine2 !== undefined ? userFetch.AddressLine2 : "";
+        payloadf.userInfo.city = userFetch.City !== null && userFetch.City !== undefined ? userFetch.City : "";
+
+        //var userRoleResf = undefined;
+        afterUserHasRole = await userHasRole(uid, payloadf, undefined).then(function (userRoleRes) {
+          // console.log("Final user ref is: ");
+          // console.log(userRoleRes);
+          dispatch({
+              type: "fetch_userinfo",
+              payload: userRoleRes
+          });
+          return true;
+        });
+
+        //console.log("after user has role")
+        return afterUserHasRole;
+      } else {
+        // console.log("No such user!")
+        // console.log(userFetch);
+        // console.log("creating new user");
+        var user2 = {
+          Id: uid,
+          FirstName: payloadf.userInfo.fullName !== null ? payloadf.userInfo.fullName.toLowerCase() : "",
+          LastName: payloadf.userInfo.fullName !== null ? payloadf.userInfo.fullName.toLowerCase() : "",
+          Email: payloadf.currentUser.email !== null ? payloadf.currentUser.email : "",
+          AddressLine1: "",
+          AddressLine2: "",
+          City: "",
+          ContactNumber: ""
+        };
+        let afterCreateUser = await createUser({variables: {...user2}}).then(async function (response2) {
+          if(response2.data.createUser !== null){
+            // console.log("User info  successfully written!");
+            // console.log(response2.data);
+            var getUserResult = response2.data.createUser;
+            payloadf.userInfo.contactNumber = user2.ContactNumber;
+            payloadf.userInfo.email = user2.Email;
+            payloadf.userInfo.fullName = user2.FirstName;
+            payloadf.loggedIn = true;
+            payloadf.userInfo.addressLine1 = user2.AddressLine1 !== null && user2.AddressLine1 !== undefined ? user2.AddressLine1 : "";
+            payloadf.userInfo.addressLine2 = user2.AddressLine2 !== null && user2.AddressLine2 !== undefined ? user2.AddressLine2 : "";
+            payloadf.userInfo.city = user2.City !== null && user2.City !== undefined ? user2.City : "";  
+            payloadf.userInfo._id = getUserResult._id !== null && getUserResult._id !== undefined && getUserResult._id !== ""? getUserResult._id : "";
+            
+          }
+
+          return payloadf;
+        }).catch(function (error) {
+          //console.error("Error writing user info: ", error);
+          return false;
+        });
+
+        //console.log("afterCreateUser:", afterCreateUser);
+        let afterUserHasRole = await userHasRole(uid, payloadf, undefined).then(async function (userRoleRes) {
+          // console.log("Final user ref is: ");
+          // console.log(userRoleRes);
+          return userRoleRes;
+        }).catch(function (err) {
+          //console.error("Error with user Role: ", err);
+          return false;
+        });
+        //console.log("after user has role", afterUserHasRole);
+
+        var RequestParams = {
+          from_name: payloadf.userInfo.fullName,
+          user_email: payloadf.userInfo.email,
+        }
+
+        let afterSendMail = await sendEmail(emailServiceId, emailNewCustomerTemplate, RequestParams, emailUserId).then(function (res) {
+          dispatch({
+            type: "fetch_userinfo",
+            payload: afterUserHasRole
+          });
+          return true;
+        })
+
+        //console.log("afterSendMail:", afterSendMail)
+        return afterSendMail;
+      }
     };
 
     //Get Address TO BE DELETED
