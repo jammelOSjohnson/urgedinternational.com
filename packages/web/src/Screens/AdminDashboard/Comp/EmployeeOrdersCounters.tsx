@@ -117,6 +117,8 @@ export const EmployeeOrdersCounters: React.FC = function EmployeeOrdersCounters(
     const [Food, setFood] = useState(0);
     const [Errand, setErrand] = useState(0);
     const [Express, setExpress] = useState(0);
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
     //const [Total, setTotal] = useState(0);
     //const [startDate, setStartDate] = useState("");
     //const [endDate, setEndDate] = useState("");
@@ -249,7 +251,7 @@ export const EmployeeOrdersCounters: React.FC = function EmployeeOrdersCounters(
             </Grid>
             <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                 <Grid item xs={12} style={{textAlign: "right"}}>
-                    <Calendar />
+                    <Calendar type="" setStartDate={setStartDate} setEndDate={setEndDate} />
                 </Grid>
             </Grid>
             <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">

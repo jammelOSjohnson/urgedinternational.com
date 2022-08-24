@@ -18,6 +18,7 @@ import {
     Legend,
   } from 'chart.js';
   import { Line } from 'react-chartjs-2';
+import { Calendar } from './Calendar';
 
   ChartJS.register(
     CategoryScale,
@@ -130,8 +131,16 @@ export const OrdersCounters: React.FC = function OrdersCounters() {
             console.log("useEffect start")
             let start = moment().startOf('month').format('YYYY-MM-DD[T00:00:00.000Z]');
             let end =  moment().endOf('month').format('YYYY-MM-DD[T00:00:00.000Z]');
-            setStartDate(start);
-            setEndDate(end);
+            if(startDate === ""){
+                setStartDate(start);
+            }
+            
+            if(endDate === ""){
+                setEndDate(end);
+            }
+            console.log(startDate);
+            console.log(endDate);
+
             console.log(orders.length);
             console.log(data);
             if(data !== undefined){
@@ -151,7 +160,7 @@ export const OrdersCounters: React.FC = function OrdersCounters() {
                             const now = new Date(parseInt(data.getOrdersByDateAndTime[j].OrderDate, 10));
                             const estTime = moment.tz(now, "America/Jamaica").format("DD-MM-YYYY");
                             if(labels[i] === estTime){
-                                if(labelVals[i] === undefined){
+                                if(j === 0){
                                     labelVals[i] = 1;
                                 }else{
                                     labelVals[i] = labelVals[i] + 1;
@@ -169,13 +178,15 @@ export const OrdersCounters: React.FC = function OrdersCounters() {
                     console.log("no orders yet");
                 }
 
+                console.log(data.getOrdersByDateAndTime);
                 if(data.getOrdersByDateAndTime !== null){
-                    console.log("Id is" + data.getOrdersByDateAndTime[0]._id);
-                    if(data.getOrdersByDateAndTime[0]._id !== null) {
-                      var Orders = data.getOrdersByDateAndTime;
-                      refreshOrders(Orders);
+                    if(data.getOrdersByDateAndTime.length > 0){
+                        console.log("Id is" + data.getOrdersByDateAndTime[0]._id);
+                        if(data.getOrdersByDateAndTime[0]._id !== null) {
+                        var Orders = data.getOrdersByDateAndTime;
+                        refreshOrders(Orders);
+                        }
                     }
-                    
                   }
             }else{
                 console.log("data is undefined");
@@ -206,6 +217,16 @@ export const OrdersCounters: React.FC = function OrdersCounters() {
     return (
         <>
             <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                <Grid item xs={12}>
+                    <Card className={classes.card}>
+                        {/* <Typography gutterBottom className={classes.cardTitle0}>
+                            Total Food Orders
+                         </Typography> */}
+                        <CardContent className={classes.cardContent}>
+                            <Calendar type="general" setStartDate={setStartDate} setEndDate={setEndDate} />
+                        </CardContent>
+                    </Card>
+                </Grid>
                 <Grid item xs={10} md={3}>
                     <Card className={classes.card}>
                         <Typography gutterBottom className={classes.cardTitle0}>

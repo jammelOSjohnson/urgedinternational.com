@@ -72,39 +72,69 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
+type Props = {
+  type: string,
+  setStartDate: React.Dispatch<React.SetStateAction<string>>,
+  setEndDate: React.Dispatch<React.SetStateAction<string>>
+}
 
-export const Calendar: React.FC =  function Calendar ()  {
+
+export const Calendar: React.FC<Props> =  function Calendar ({type, setStartDate, setEndDate})  {
   var { value }  = useAppData();
   var { riders, selectedRider, fetchOrdersForRider2 } = value;
   const Year = new Date().getFullYear();
   const month = new Date().getMonth() + 1;
   const [date, changeDate] = useState( Year + "-" + month.toString().padStart(2,"0") + "-01T00:00");
   const [searchdate, changeSearchDate] = useState();
+  const [searchEnddate, changeSearchEndDate] = useState();
   const classes = useStyles();
 
   useEffect(() => {
     try{
-      if(searchdate !== undefined && riders.length !== 0 && selectedRider !== undefined){
+      if(searchEnddate != undefined &&
+        searchdate !== undefined && 
+        riders.length !== 0 && selectedRider !== undefined){
         console.log(selectedRider);
         let riderId = riders[selectedRider]._id;
         let start = searchdate;
-        let end =  moment().endOf('month').format('YYYY-MM-DD[T00:00:00.000Z]');
+        let end = searchEnddate; 
+        //moment().endOf('month').format('YYYY-MM-DD[T00:00:00.000Z]');
         //console.log("fetching");
-        fetchOrdersForRider2(value, riderId, start, end).then(()=>{
-        
-        });
+        if(type != "general"){
+          fetchOrdersForRider2(value, riderId, start, end).then(()=>{
+            return;
+          });
+        }else{
+
+        }
       }
     }catch(err) {
       console.log(err);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedRider, searchdate])
+  }, [selectedRider, searchdate, searchEnddate])
 
   const handleDateChange = (date) => {
     let form  = document.getElementById("#dateform");
-    changeSearchDate(date.target.value);
+    if(type === "general"){
+      setStartDate(date.target.value);
+    }else{
+      changeSearchDate(date.target.value);
+    }
     changeDate(date.target.value);
-    console.log("Date is: ", date.target.value);
+    console.log("Start Date is: ", date.target.value);
+    form?.click();
+  };
+
+  const handleEndDateChange = (date) => {
+    let form  = document.getElementById("#dateform");
+    if(type === "general"){
+      setEndDate(date.target.value);
+    }else{
+      changeSearchEndDate(date.target.value);
+    }
+    changeDate(date.target.value);
+    console.log("End Date is: ", date.target.value);
     form?.click();
   };
 
@@ -127,7 +157,7 @@ export const Calendar: React.FC =  function Calendar ()  {
     <form className={classes.container} noValidate >
       <TextField
         id="datetime-local"
-        label="Select Date"
+        label="Select Start Date"
         type="datetime-local"
         defaultValue={date}
         className={classes.textField}
@@ -135,6 +165,17 @@ export const Calendar: React.FC =  function Calendar ()  {
           shrink: true,
         }}
         onChange={handleDateChange}
+      />&nbsp;&nbsp;&nbsp;&nbsp;
+      <TextField
+        id="datetime-local"
+        label="Select End Date"
+        type="datetime-local"
+        defaultValue={date}
+        className={classes.textField}
+        InputLabelProps={{
+          shrink: true,
+        }}
+        onChange={handleEndDateChange}
       />
     </form>
   </>

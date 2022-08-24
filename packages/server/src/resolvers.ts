@@ -116,8 +116,13 @@ const resolvers = {
             let endConverted = new Date(EndDate);
             // console.log(startConverted.toISOString());
             // console.log(endConverted.toISOString());
-            let res = await Order.find({"OrderDate": {"$gte": startConverted}});
-            //console.log(res);
+            let res = await Order
+            .find({"OrderDate": {"$gte": startConverted}})
+            .populate("Rider")
+            .populate("Restaurant")
+            .where("OrderDate")
+            .lte(endConverted);
+            console.log(res.length);
             return res;
         },
 
@@ -230,14 +235,17 @@ const resolvers = {
         },
 
         getOrdersByRiderIdAnDate: async (_,{Rider, StartDate, EndDate}) => {
-            // console.log(StartDate);
-            // console.log(EndDate);
+            //console.log(StartDate);
+            //console.log(EndDate);
             // console.log(Rider);
             let startConverted = new Date(StartDate);
             let endConverted = new Date(EndDate);
 
-            let res = await Order.find({"OrderDate": {"$gte": startConverted}}).where("Rider").equals(Rider)
-            .where("OrderStatus").equals("Delivered"); 
+            let res = 
+            await Order.find({"OrderDate": {"$gte": startConverted}})
+            .where("Rider").equals(Rider)
+            .where("OrderStatus").equals("Delivered")
+            .where("OrderDate").lte(endConverted); 
             //console.log(res);
             return res;
         },
