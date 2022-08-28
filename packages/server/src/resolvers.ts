@@ -122,7 +122,7 @@ const resolvers = {
             .populate("Restaurant")
             .where("OrderDate")
             .lte(endConverted);
-            console.log(res.length);
+            //console.log(res.length);
             return res;
         },
 
