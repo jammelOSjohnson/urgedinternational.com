@@ -48,7 +48,6 @@ export const AdminDashboard: React.FC = () => {
             <Sidebar>
                 <Container maxWidth="xl" style={{ paddingLeft: "8px", paddingRight: "8px" }} className={classes.main}>
                     <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
-                        <Grid container direction="row" xs={12} spacing={0}>
                             <Grid item xs={8} style={{ marginBottom: "2%", marginTop: "1%", background: "transparent" }}>
                                 <HeaderLeft />
                             </Grid>
@@ -62,7 +61,6 @@ export const AdminDashboard: React.FC = () => {
                                 Order Statistics
                             </Grid> */}
                         </Grid>
-                    </Grid>
                 </Container>
             </Sidebar>
         </>

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import 'date-fns';
-import { TextField } from "@material-ui/core";
+import { Grid, TextField } from "@material-ui/core";
 import { createStyles, makeStyles , Theme} from "@material-ui/core/styles";
 import { useAppData } from '../../../Context/AppDataContext';
 import moment from "moment";
+import { getDate } from "date-fns";
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -84,17 +85,20 @@ export const Calendar: React.FC<Props> =  function Calendar ({type, setStartDate
   var { riders, selectedRider, fetchOrdersForRider2 } = value;
   const Year = new Date().getFullYear();
   const month = new Date().getMonth() + 1;
-  const [date, changeDate] = useState( Year + "-" + month.toString().padStart(2,"0") + "-01T00:00");
+  const day = new Date().getDate();
+  const [date, changeDate] = useState(Year + "-" + month.toString().padStart(2,"0") + "-01T00:00");
+  const [date2, changeDate2] = useState(Year + "-" + month.toString().padStart(2,"0") + "-" + day.toString().padStart(2,"0") + "T00:00");
   const [searchdate, changeSearchDate] = useState();
   const [searchEnddate, changeSearchEndDate] = useState();
   const classes = useStyles();
 
   useEffect(() => {
     try{
+      //console.log("inside useEffect");
       if(searchEnddate != undefined &&
         searchdate !== undefined && 
         riders.length !== 0 && selectedRider !== undefined){
-        console.log(selectedRider);
+        //console.log(selectedRider);
         let riderId = riders[selectedRider]._id;
         let start = searchdate;
         let end = searchEnddate; 
@@ -109,7 +113,7 @@ export const Calendar: React.FC<Props> =  function Calendar ({type, setStartDate
         }
       }
     }catch(err) {
-      console.log(err);
+      //console.log(err);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedRider, searchdate, searchEnddate])
@@ -122,7 +126,7 @@ export const Calendar: React.FC<Props> =  function Calendar ({type, setStartDate
       changeSearchDate(date.target.value);
     }
     changeDate(date.target.value);
-    console.log("Start Date is: ", date.target.value);
+    //console.log("Start Date is: ", date.target.value);
     form?.click();
   };
 
@@ -133,13 +137,14 @@ export const Calendar: React.FC<Props> =  function Calendar ({type, setStartDate
     }else{
       changeSearchEndDate(date.target.value);
     }
-    changeDate(date.target.value);
-    console.log("End Date is: ", date.target.value);
+    changeDate2(date.target.value);
+    //console.log("End Date is: ", date.target.value);
     form?.click();
   };
 
-  console.log(date)
-  console.log(new Date().getMonth())
+  //console.log(date)
+  //console.log(new Date().getMonth())
+  //console.log(date2);
 
   return (
     <>
@@ -155,28 +160,34 @@ export const Calendar: React.FC<Props> =  function Calendar ({type, setStartDate
       </Paper>
     </MuiPickersUtilsProvider> */}
     <form className={classes.container} noValidate >
-      <TextField
-        id="datetime-local"
-        label="Select Start Date"
-        type="datetime-local"
-        defaultValue={date}
-        className={classes.textField}
-        InputLabelProps={{
-          shrink: true,
-        }}
-        onChange={handleDateChange}
-      />&nbsp;&nbsp;&nbsp;&nbsp;
-      <TextField
-        id="datetime-local"
-        label="Select End Date"
-        type="datetime-local"
-        defaultValue={date}
-        className={classes.textField}
-        InputLabelProps={{
-          shrink: true,
-        }}
-        onChange={handleEndDateChange}
-      />
+    <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+      <Grid item xs={10} md={4}>
+        <TextField
+          id="datetime-local"
+          label="Select Start Date"
+          type="datetime-local"
+          defaultValue={date}
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          onChange={handleDateChange}
+        />
+      </Grid>
+      <Grid item xs={10} md={4}>
+        <TextField
+          id="datetime-local"
+          label="Select End Date"
+          type="datetime-local"
+          defaultValue={date2}
+          className={classes.textField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          onChange={handleEndDateChange}
+        />
+      </Grid>
+    </Grid>
     </form>
   </>
   );

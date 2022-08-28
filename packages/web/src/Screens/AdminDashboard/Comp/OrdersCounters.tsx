@@ -33,11 +33,10 @@ import { Calendar } from './Calendar';
     
 // }
 
-// interface State {
-//     email: string;
-//     password: string;
-//     showPassword: boolean;
-// }
+interface chartData {
+    estTime: string;
+    count: number;
+}
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -118,7 +117,7 @@ export const OrdersCounters: React.FC = function OrdersCounters() {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [labels, setLabels] = useState<string[]>([]);
-    const [labelVals, setLabelVals] = useState<number[]>([]);
+    const [labelVals, setLabelVals] = useState<chartData[]>([]);
     // console.log(startDate);
     // console.log(endDate);
     const {data} = useQuery(GET_ORDERS_BY_DATE_AND_TYPE,{
@@ -128,7 +127,7 @@ export const OrdersCounters: React.FC = function OrdersCounters() {
     //ksd
     useEffect(()=> {
         try{
-            console.log("useEffect start")
+            //console.log("useEffect start")
             let start = moment().startOf('month').format('YYYY-MM-DD[T00:00:00.000Z]');
             let end =  moment().endOf('month').format('YYYY-MM-DD[T00:00:00.000Z]');
             if(startDate === ""){
@@ -138,32 +137,43 @@ export const OrdersCounters: React.FC = function OrdersCounters() {
             if(endDate === ""){
                 setEndDate(end);
             }
-            console.log(startDate);
-            console.log(endDate);
+            //console.log(startDate);
+            //console.log(endDate);
 
-            console.log(orders.length);
-            console.log(data);
+            //console.log(orders.length);
+            //console.log(data);
             if(data !== undefined){
                 if(data.getOrdersByDateAndTime.length > 0) {
-                    console.log("orders avalable");
+                    //console.log("orders avalable");
+                    let tempLabels = [] as string[];
                     data.getOrdersByDateAndTime.map((item, index) => {
                         const now = new Date(parseInt(item.OrderDate, 10));
                         const estTime = moment.tz(now, "America/Jamaica").format("DD-MM-YYYY");
-                        if(!labels.includes(estTime)){
-                            labels.push(estTime);
+                        if(!tempLabels.includes(estTime)){
+                            tempLabels.push(estTime);
                         }
                     })
-                    console.log(labels);
-                    for(var i = 0; i < labels.length;){
+                    //console.log(tempLabels);
+                    let tempLabelVals = [] as chartData[];
+                    for(var i = 0; i < tempLabels.length;){
                         for(var j = 0; j < data.getOrdersByDateAndTime.length;){
-                            console.log(data.getOrdersByDateAndTime[j]);
+                            //console.log(data.getOrdersByDateAndTime[j].OrderDate);
                             const now = new Date(parseInt(data.getOrdersByDateAndTime[j].OrderDate, 10));
                             const estTime = moment.tz(now, "America/Jamaica").format("DD-MM-YYYY");
-                            if(labels[i] === estTime){
-                                if(j === 0){
-                                    labelVals[i] = 1;
+                            if(tempLabels[i] === estTime){
+                                if(tempLabelVals.length === 0){
+                                    //console.log(estTime);
+                                    tempLabelVals[i] = {estTime: estTime, count: 1};
+                                }else if(tempLabelVals[i] === undefined){
+                                    //console.log(estTime);
+                                    tempLabelVals[i] = {estTime: estTime, count: 1};
                                 }else{
-                                    labelVals[i] = labelVals[i] + 1;
+                                    // console.log(tempLabelVals[i]);
+                                    // console.log(estTime);
+                                    // console.log(i);
+                                    // console.log(tempLabelVals[i].count);
+                                    // console.log(tempLabelVals);
+                                    tempLabelVals[i].count = tempLabelVals[i].count + 1;
                                 }
                                 
                             }
@@ -171,17 +181,20 @@ export const OrdersCounters: React.FC = function OrdersCounters() {
                         }
                         i= i+1;
                     }
+                    
+                    setLabels(tempLabels);
+                    setLabelVals(tempLabelVals)
     
-                    console.log(labelVals)
+                    //console.log(labelVals)
                     setFood(data.getOrdersByDateAndTime.length);
                 }else{
-                    console.log("no orders yet");
+                    //console.log("no orders yet");
                 }
 
-                console.log(data.getOrdersByDateAndTime);
+                //console.log(data.getOrdersByDateAndTime);
                 if(data.getOrdersByDateAndTime !== null){
                     if(data.getOrdersByDateAndTime.length > 0){
-                        console.log("Id is" + data.getOrdersByDateAndTime[0]._id);
+                        //console.log("Id is" + data.getOrdersByDateAndTime[0]._id);
                         if(data.getOrdersByDateAndTime[0]._id !== null) {
                         var Orders = data.getOrdersByDateAndTime;
                         refreshOrders(Orders);
@@ -189,7 +202,7 @@ export const OrdersCounters: React.FC = function OrdersCounters() {
                     }
                   }
             }else{
-                console.log("data is undefined");
+                //console.log("data is undefined");
             }
             
             // fetchOrders(value).then(()=>{
@@ -197,7 +210,7 @@ export const OrdersCounters: React.FC = function OrdersCounters() {
             // });
       
           }catch(e){
-            console.log(e)
+            //console.log(e)
           }
           // eslint-disable-next-line
     },[orders, data])
@@ -205,7 +218,7 @@ export const OrdersCounters: React.FC = function OrdersCounters() {
     const refreshOrders = async (Orders) => {
         try{
             await refreshingOrderTables(value, Orders).then(()=>{
-                console.log("completed updating orders")
+                //console.log("completed updating orders")
                 setTotal(Food + Errand + Express);
             });
         }catch(err){
@@ -217,7 +230,7 @@ export const OrdersCounters: React.FC = function OrdersCounters() {
     return (
         <>
             <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                <Grid item xs={12}>
+                <Grid item xs={10} md={12}>
                     <Card className={classes.card}>
                         {/* <Typography gutterBottom className={classes.cardTitle0}>
                             Total Food Orders
@@ -296,7 +309,7 @@ export const OrdersCounters: React.FC = function OrdersCounters() {
                         labels: labels.map((item, index) => {return item}),
                         datasets: [{
                             label: '# of Orders',
-                            data: labelVals.map((item, index) => {return item}),
+                            data: labelVals.map((item, index) => {return item.count}),
                             borderWidth: 1,
                             borderColor: 'rgb(255, 99, 132)',
                             backgroundColor: 'rgba(255, 99, 132, 0.5)',
