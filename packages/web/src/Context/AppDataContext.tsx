@@ -531,15 +531,15 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     var userHasRole = async function userHasRole(uid, payload, userType) {
       //console.log("User id is: ");
       //console.log(uid);
-      console.log("fetching user role");
+      //console.log("fetching user role");
       let result =  await getUserInRole({variables: {UserID: uid}}).then(async function(response) {
-        console.log("Checking userRole result");
-        console.log(response);
+        //console.log("Checking userRole result");
+        //console.log(response);
         return response.data.getUserInRole;
       });
 
       if (result !== null) {
-        console.log("user role exist");
+        //console.log("user role exist");
         //console.log(response);
         //console.log("what is inside payload");
         //console.log(payload);
@@ -551,22 +551,22 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           let afterGetRole = await getRole({variables: {_id:userRoleID}}).then(function (response2) {
               if (response2.data.getRole !== null) {
                 var res = response2.data.getRole;
-                console.log("Role Exists is?");
+                //console.log("Role Exists is?");
                 //console.log(res);
                 payload.userRolef = res.description;
                 return payload;
                 //return res.description;
               }
           });
-          console.log("about to return role result");
+          //console.log("about to return role result");
           return afterGetRole;
         }else{
-          console.log("about to return role result");
+          //console.log("about to return role result");
           return payload;
         }
       } else {
-        console.log("No such user role!")
-        console.log("creating new userinrole");
+        //console.log("No such user role!")
+        //console.log("creating new userinrole");
         let rID = process.env.REACT_APP_CUSTOMER_ROLE_ID;
         if(userType !== undefined && userType !== null){
           rID = userType === 'restaurant' ? 
@@ -579,10 +579,10 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         };
         let afterAddUserToRole = await addUserToRole({variables: {UserID: userInRole.UserID, RoleID: userInRole.RoleID}}).then(function (response3) {
           if (response3.data.addUserToRole !== null) {
-            console.log("User successfully added to role!");  
+            //console.log("User successfully added to role!");  
             payload.userRolef = "Customer";
-            console.log("What is in payload after creating role: ");
-            console.log(payload);
+            //console.log("What is in payload after creating role: ");
+            //console.log(payload);
             return payload;
             //return true;
           }else{
@@ -590,11 +590,11 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             //return false;
           }
         }).catch(function (error) {
-          console.error("Error adding user to role: ", error);
+          //console.error("Error adding user to role: ", error);
           return payload;
           //return false;
         });
-        console.log("about to return role result");
+        //console.log("about to return role result");
         return afterAddUserToRole;
       }
     };
