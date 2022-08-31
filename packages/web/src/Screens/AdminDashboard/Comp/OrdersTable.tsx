@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { useAppData } from '../../../Context/AppDataContext';
 //import { DataGrid, GridColDef } from '@material-ui/data-grid';
 import MUIDataTable from "mui-datatables";
@@ -7,8 +7,9 @@ import moment from 'moment';
 import { EditRounded } from "@material-ui/icons/";
 import { createStyles, FormControl, makeStyles, MenuItem, Select, Snackbar, Theme } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
-import { GET_ORDERS } from '../../../GraphQL/Queries';
+import { GET_ORDERS, GET_ORDERS_BY_DATE_AND_TYPE } from '../../../GraphQL/Queries';
 import { Alert } from '@material-ui/lab';
+import { Calendar } from './Calendar';
   
 
   const columns = [
@@ -121,17 +122,34 @@ import { Alert } from '@material-ui/lab';
     var { orders, UpdateOrder, currentUser, userRolef, refreshingOrderTables } = value;
     var history = useHistory();
 
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
     const [open, setOpen] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
 
-    const {data} = useQuery(GET_ORDERS);
+    //const {data} = useQuery(GET_ORDERS);
+    const {data} = useQuery(GET_ORDERS_BY_DATE_AND_TYPE,{
+      variables: {StartDate: startDate, EndDate: endDate },
+      pollInterval: 3000,
+    })
 
     const rows = [] as Object[];
     useEffect(() => {
       try{
-        if(data.getOrders !== null){
-          var Orders = data.getOrders;
-          //console.log(Orders)
+        let start = moment().startOf('month').format('YYYY-MM-DD[T00:00:00.000Z]');
+        let end =  moment().endOf('month').format('YYYY-MM-DD[T00:00:00.000Z]');
+
+        if(startDate === ""){
+          setStartDate(start);
+        }
+      
+        if(endDate === ""){
+            setEndDate(end);
+        }
+
+        if(data.getOrdersByDateAndTime !== null){
+          var Orders = data.getOrdersByDateAndTime;
+          console.log(Orders)
           let filteredOrders = Orders.filter((item) => item.OrderStatus !== "Delivered");
           let deliveredOrders = Orders.filter((item) => item.OrderStatus === "Delivered");
           if(deliveredOrders.length > 0) 
@@ -141,7 +159,8 @@ import { Alert } from '@material-ui/lab';
             })
           }
 
-          if(filteredOrders.length > orders.length){
+          //if(filteredOrders.length > orders.length){
+          if(filteredOrders.length > orders.length || filteredOrders.length < orders.length){
             refreshingOrderTables(value, filteredOrders).then(()=>{
           
             });
@@ -281,13 +300,8 @@ import { Alert } from '@material-ui/lab';
     
     return(
       <div style={{ height: 400, width: '100%' }}>
-        {/* <DataGrid
-          rows={rows}
-          columns={columns}
-          pageSize={5}
-          checkboxSelection={false}
-          disableSelectionOnClick
-        /> */}
+        
+        <Calendar type={'general'} setStartDate={setStartDate} setEndDate={setStartDate}  />
         <MUIDataTable
           title={"Orders"}
           data={rows}

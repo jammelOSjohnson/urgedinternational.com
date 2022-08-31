@@ -4,7 +4,7 @@ import React from 'react';
 import { Sidebar } from './Comp/Sidebar';
 import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
-import { OrdersTable} from './Comp/OrdersTable'
+import { OrdersTable} from './Comp/OrdersTable';
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
