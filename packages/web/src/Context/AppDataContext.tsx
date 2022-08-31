@@ -1159,11 +1159,35 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         })
         await fetchRidersForOrder().then(async (res) => {
           //Generate rand number
+          //console.log("res is: ", res);
+          type riderObj = {
+            _id: string,
+            Id: string,
+            FirstName: string,
+            LastName: string,
+            Email: string,
+            AddressLine1: string,
+            AddressLine2: string,
+            City: string,
+            ContactNumber: string,
+            isAvailable: boolean,
+            disabled: boolean,
+            ImageName: string
+          }
+
+          let RiderRes = [] as riderObj[];
+          try{
+            RiderRes = res.filter((item) => item.isAvailable === true && item.disabled === false)
+          }catch(e){
+            //console.log(e);
+          }
+          
+          //console.log("sorted rider res is: ", RiderRes);
           const min = 0;
-          const max = res.length;
+          const max = RiderRes.length;
           //console.log(max);
-          const rand = min + Math.random() * (max + 1);
-          const randRider = parseInt(rand.toString());
+          const randRider = Math.floor((Math.random() * max) + min);
+          //const randRider = parseInt(rand.toString());
           //console.log(randRider);
           var orderBody = {
             Id: payload.currentUser.uid,
@@ -1171,7 +1195,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             OrderStatus: "Pending",
             OrderTotal: Number(Total.Cost),
             OrderDate: estTime,
-            Rider: res[randRider]._id,
+            Rider: RiderRes[randRider]._id !== undefined? RiderRes[randRider]._id: '',
             DeliveryAddress: state.Street + "," + state.Town + ",Clarendon",
             PaymentMethod: state.PaymentMethod,
             AdditionalInfo: state.ContactNum + " " + payload.userInfo.email + " " + payload.userInfo.fullName,
@@ -1184,9 +1208,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           }
   
           await createOrder({variables: orderBody}).then(async function(response) {
-            ////console.log("create orer result");
+            //console.log("create orer result");
             if (response.data.createOrder !== null) {
-              ////console.log("Order Exist");
+              //console.log("Order Exist");
               ////console.log(response.data.createOrder);
               payload.cartItems = [];
               payload.selectedRestaurant = undefined;
