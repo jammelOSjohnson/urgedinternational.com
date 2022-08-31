@@ -222,7 +222,7 @@ export const HistoryTable: React.FC = function HistoryTable () {
                         <>
                           <Typography 
                           style={{backgroundColor: "#FF5E14", color:"#FFF", textAlign:"center"}}>
-                            {item.OrderStatus.toUpperCase()}
+                            {"PROCESSING"}
                           </Typography>
                         </>
                         :item.OrderStatus === "Picked Up"?
