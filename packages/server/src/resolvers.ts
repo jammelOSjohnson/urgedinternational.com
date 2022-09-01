@@ -114,8 +114,11 @@ const resolvers = {
             // console.log(EndDate);
             let startConverted = new Date(StartDate);
             let endConverted = new Date(EndDate);
-            // console.log(startConverted.toISOString());
-            // console.log(endConverted.toISOString());
+            //console.log("StartDate", StartDate)
+            //console.log("EndDate",EndDate)
+            //console.log("endConverted", endConverted)
+            //console.log("start",startConverted.toISOString());
+            //console.log("End",endConverted.toISOString());
             let res = await Order
             .find({"OrderDate": {"$gte": startConverted}})
             .populate("Rider")

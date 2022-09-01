@@ -86,8 +86,9 @@ export const Calendar: React.FC<Props> =  function Calendar ({type, setStartDate
   const Year = new Date().getFullYear();
   const month = new Date().getMonth() + 1;
   const day = new Date().getDate();
-  const [date, changeDate] = useState(Year + "-" + month.toString().padStart(2,"0") + "-01T00:00");
-  const [date2, changeDate2] = useState(Year + "-" + month.toString().padStart(2,"0") + "-" + day.toString().padStart(2,"0") + "T00:00");
+  const [date, changeDate] = useState(Year + "-" + month.toString().padStart(2,"0") +  "-" + day.toString().padStart(2,"0") + "T00:00");
+  //const [date2, changeDate2] = useState(new Date().toString());
+  const [date2, changeDate2] = useState(Year + "-" + month.toString().padStart(2,"0") + "-" + day.toString().padStart(2,"0") +"T23:59");
   const [searchdate, changeSearchDate] = useState();
   const [searchEnddate, changeSearchEndDate] = useState();
   const classes = useStyles();
@@ -95,6 +96,7 @@ export const Calendar: React.FC<Props> =  function Calendar ({type, setStartDate
   useEffect(() => {
     try{
       //console.log("inside useEffect");
+      //console.log(date2);
       if(searchEnddate != undefined &&
         searchdate !== undefined && 
         riders.length !== 0 && selectedRider !== undefined){
@@ -102,6 +104,8 @@ export const Calendar: React.FC<Props> =  function Calendar ({type, setStartDate
         let riderId = riders[selectedRider]._id;
         let start = searchdate;
         let end = searchEnddate; 
+        console.log("start date is: ",start);
+        console.log("end date is: ",end);
         //moment().endOf('month').format('YYYY-MM-DD[T00:00:00.000Z]');
         //console.log("fetching");
         if(type != "general"){
@@ -119,7 +123,8 @@ export const Calendar: React.FC<Props> =  function Calendar ({type, setStartDate
   }, [selectedRider, searchdate, searchEnddate])
 
   const handleDateChange = (date) => {
-    let form  = document.getElementById("#dateform");
+    //console.log("here1")
+    let form  = document.getElementById("#clicktable");
     if(type === "general"){
       setStartDate(date.target.value);
     }else{
@@ -131,7 +136,8 @@ export const Calendar: React.FC<Props> =  function Calendar ({type, setStartDate
   };
 
   const handleEndDateChange = (date) => {
-    let form  = document.getElementById("#dateform");
+    //console.log("here2")
+    let form  = document.getElementById("#clicktable");
     if(type === "general"){
       setEndDate(date.target.value);
     }else{
@@ -176,7 +182,7 @@ export const Calendar: React.FC<Props> =  function Calendar ({type, setStartDate
       </Grid>
       <Grid item xs={10} md={4}>
         <TextField
-          id="datetime-local"
+          id="datetime-local2"
           label="Select End Date"
           type="datetime-local"
           defaultValue={date2}

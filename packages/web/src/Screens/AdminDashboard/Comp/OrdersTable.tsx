@@ -136,20 +136,27 @@ import { Calendar } from './Calendar';
     const rows = [] as Object[];
     useEffect(() => {
       try{
-        let start = moment().startOf('month').format('YYYY-MM-DD[T00:00:00.000Z]');
-        let end =  moment().endOf('month').format('YYYY-MM-DD[T00:00:00.000Z]');
+        //console.log("startDate", startDate)
+        //console.log("endDate",endDate)
 
+        //console.log(end)
         if(startDate === ""){
+          //console.log("setting start date")
+          let start = moment().startOf('month').format('YYYY-MM-DD[T00:00:00.000Z]');
           setStartDate(start);
         }
       
         if(endDate === ""){
-            setEndDate(end);
+          //console.log("setting end date")
+          let end =  moment().endOf('month').format('YYYY-MM-DDT23:59');
+          setEndDate(end);
         }
 
         if(data.getOrdersByDateAndTime !== null){
           var Orders = data.getOrdersByDateAndTime;
-          console.log(Orders)
+        // if(data.getOrders !== null){
+        //   var Orders = data.getOrders;
+          //console.log(Orders)
           let filteredOrders = Orders.filter((item) => item.OrderStatus !== "Delivered");
           let deliveredOrders = Orders.filter((item) => item.OrderStatus === "Delivered");
           if(deliveredOrders.length > 0) 
@@ -186,10 +193,10 @@ import { Calendar } from './Calendar';
       try{
           setOpen(false);
           setOpen2(false);
-          console.log(status);
-          console.log(orders[orderIndex].OrderStatus);
+          //console.log(status);
+          //console.log(orders[orderIndex].OrderStatus);
           let order = {...orders[orderIndex], OrderStatus: status, Rider: orders[orderIndex].Rider._id };
-          console.log(order);
+          //console.log(order);
           await UpdateOrder(value, order).then((res) => {
               if(res){
                   setOpen(true);
@@ -301,7 +308,7 @@ import { Calendar } from './Calendar';
     return(
       <div style={{ height: 400, width: '100%' }}>
         
-        <Calendar type={'general'} setStartDate={setStartDate} setEndDate={setStartDate}  />
+        <Calendar type={'general'} setStartDate={setStartDate} setEndDate={setEndDate}  />
         <MUIDataTable
           title={"Orders"}
           data={rows}
