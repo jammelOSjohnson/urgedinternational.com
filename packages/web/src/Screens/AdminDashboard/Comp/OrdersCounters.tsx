@@ -128,13 +128,21 @@ export const OrdersCounters: React.FC = function OrdersCounters() {
     useEffect(()=> {
         try{
             //console.log("useEffect start")
-            let start = moment().startOf('month').format('YYYY-MM-DD[T00:00:00.000Z]');
-            let end =  moment().endOf('month').format('YYYY-MM-DD[T00:00:00.000Z]');
+            
+            
             if(startDate === ""){
+                const Year = new Date().getFullYear();
+                const month = new Date().getMonth() + 1;
+                const day = new Date().getDate();
+                let start = Year + "-" + month.toString().padStart(2,"0") +  "-" + day.toString().padStart(2,"0") + "T00:00";
                 setStartDate(start);
             }
             
             if(endDate === ""){
+                const Year = new Date().getFullYear();
+                const month = new Date().getMonth() + 1;
+                const day = new Date().getDate();
+                let end =  Year + "-" + month.toString().padStart(2,"0") + "-" + day.toString().padStart(2,"0") +"T23:59"
                 setEndDate(end);
             }
             //console.log(startDate);
