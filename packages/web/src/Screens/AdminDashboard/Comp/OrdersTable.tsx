@@ -140,11 +140,12 @@ import { Calendar } from './Calendar';
         //console.log("endDate",endDate)
 
         //console.log(end)
-        const Year = new Date().getFullYear();
-        const month = new Date().getMonth() + 1;
-        const day = new Date().getDate();
+        
         if(startDate === ""){
           //console.log("setting start date")
+          const Year = new Date().getFullYear();
+          const month = new Date().getMonth() + 1;
+          const day = new Date().getDate();
           let start = Year + "-" + month.toString().padStart(2,"0") +  "-" + day.toString().padStart(2,"0") + "T00:00";
           setStartDate(start);
         }
