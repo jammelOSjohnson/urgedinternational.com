@@ -101,7 +101,14 @@ export const OrderFullDetails: React.FC = () => {
     var history = useHistory();
     var { value }  = useAppData();
     var { orders, riders, fetchRiders, UpdateOrder } = value;
-    const orderIndex = parseInt(history.location.state.from);
+    if(history.location.state === undefined || history.location.state === null){
+        //history.push("/AdminOrders");
+        let url = process.env.NODE_ENV === 'development'? 
+            "http://localhost:3000/DeliveryOrders" :
+            "https://urgedservices.com/DeliveryOrders";
+        window.location.href = url;
+    }
+    const orderIndex = parseInt(history.location.state !== undefined? history.location.state.from : 0);
     const [rider, setRider] = useState("");
     const [selectedRider, setSelectedRider] = useState();
     const [open, setOpen] = React.useState(false);
@@ -221,12 +228,12 @@ export const OrderFullDetails: React.FC = () => {
                                     <Card style={{marginBottom: "12px"}} className={clsx(classes.card, "mobile-display")}>
                                         <CardMedia >
                                             {/* eslint-disable-next-line */}
-                                            <img className={"main-image"} src={orders[orderIndex].OrderItems[0].imageName} alt="ordered"></img>
+                                            <img className={"main-image imageMobile"} src={orders[orderIndex].OrderItems[0].imageName} alt="ordered"></img>
                                             <Grid container direction="row" spacing={1} style={{paddingTop: "7px"}}>
                                                 {orders[orderIndex].OrderItems.map((item, index) => (
                                                     index !== 0?
                                                         <Grid item xs={4}>
-                                                            <img style={{maxWidth: "73.42px"}} src={item.imageName} alt="ordered"></img>
+                                                            <img style={{maxWidth: "73.42px"}} src={item.imageName} alt="ordered" className='imageMobile'></img>
                                                         </Grid>
                                                         :
                                                         <></>
@@ -258,19 +265,49 @@ export const OrderFullDetails: React.FC = () => {
                                             <Typography>
                                             <Grid container direction="row" spacing={1}>
                                                 <Grid item xs={12} md={2}>
-                                                    <Typography >
+                                                    <Typography style={{fontWeight: 700}}>
                                                         Restaurant:
                                                     </Typography>
                                                 </Grid>
                                                 <Grid item xs={12} md={10}>
-                                                    <Typography>
+                                                    <Typography style={{color: "#FF5E14", fontWeight: 800}}>
                                                         {orders[orderIndex].Restaurant.FirstName}
+                                                    </Typography>
+                                                </Grid>
+                                                <Grid item xs={12} md={4} className="hideDesktop">
+                                                    <Typography className={classes.boldSubtitle}>
+                                                        Order ID
+                                                    </Typography>
+                                                    <Typography>
+                                                        {orders[orderIndex]._id}
+                                                    </Typography>
+                                                </Grid>
+                                                <Grid item xs={12} md={4} className="hideDesktop">
+                                                    <Typography className={classes.boldSubtitle}>
+                                                        Order Date
+                                                    </Typography>
+                                                    <Typography>
+                                                    <img src={"Images/order-details-calendar.png"} alt="calendar" /> 
+                                                    &nbsp;<span style={{verticalAlign: "middle"}}>{estTime}</span>
+                                                    </Typography>
+                                                </Grid>
+                                                <Grid item xs={12} md={4} className="hideDesktop">
+                                                    <Typography className={classes.boldSubtitle}>
+                                                        Status
+                                                    </Typography>
+                                                    <Typography>
+                                                    {orders[orderIndex].OrderStatus === "Not Assigned"
+                                                        ? 
+                                                            <b style={{color: "#f50057"}}>REJECTED</b>
+                                                        :
+                                                        orders[orderIndex].OrderStatus
+                                                    }
                                                     </Typography>
                                                 </Grid>
                                                 {orders[orderIndex].OrderItems.map((item, index) => (
                                                     <>
                                                         <Grid item xs={12} md={6} key={index}>
-                                                            <Typography>
+                                                            <Typography style={{fontWeight: 700}}>
                                                                 Order Item {index + 1}:
                                                             </Typography>
                                                             <Typography>
@@ -288,11 +325,11 @@ export const OrderFullDetails: React.FC = () => {
                                                                 `}
                                                                 <br />
                                                                 {`
-                                                                    ${"Side: "}${item.side !== undefined && item.side !== null? item.side : ""}
+                                                                    ${item.side !== undefined && item.side !== null && item.side !== "Select Side"? "Side: " + item.side : ""}
                                                                 `}
                                                                 <br />
                                                                 {`
-                                                                    ${"Instructions: " + item.otherIntructions}
+                                                                    ${item.otherIntructions !== undefined && item.otherIntructions !== null && item.otherIntructions !== ""? "Instructions: " + item.otherIntructions : ""}
                                                                 `}
                                                             </Typography>
                                                         </Grid>
@@ -301,7 +338,7 @@ export const OrderFullDetails: React.FC = () => {
                                             </Grid>
                                             </Typography><br/>
                                             <Grid container direction="row" spacing={1}>
-                                                <Grid item xs={12} md={4}>
+                                                <Grid item xs={12} md={4} className="hideMobile">
                                                     <Typography className={classes.boldSubtitle}>
                                                         Order ID
                                                     </Typography>
@@ -309,7 +346,7 @@ export const OrderFullDetails: React.FC = () => {
                                                         {orders[orderIndex]._id}
                                                     </Typography>
                                                 </Grid>
-                                                <Grid item xs={12} md={4}>
+                                                <Grid item xs={12} md={4} className="hideMobile">
                                                     <Typography className={classes.boldSubtitle}>
                                                         Order Date
                                                     </Typography>
@@ -318,7 +355,7 @@ export const OrderFullDetails: React.FC = () => {
                                                     &nbsp;<span style={{verticalAlign: "middle"}}>{estTime}</span>
                                                     </Typography>
                                                 </Grid>
-                                                <Grid item xs={12} md={4}>
+                                                <Grid item xs={12} md={4} className="hideMobile">
                                                     <Typography className={classes.boldSubtitle}>
                                                         Status
                                                     </Typography>
@@ -339,7 +376,7 @@ export const OrderFullDetails: React.FC = () => {
                                                         Pick-Up From
                                                     </Typography>
                                                     <Typography>
-                                                        {orders[orderIndex].DeliveryAddress}
+                                                        {orders[orderIndex].Restaurant.AddressLine1}
                                                     </Typography>
                                                 </Grid>
                                                 <Grid item xs={12} md={4}>
@@ -426,6 +463,24 @@ export const OrderFullDetails: React.FC = () => {
                         {`
                             .main-image{
                                 max-width: 244.26px
+                            }
+
+                            @media only screen and (min-width: 960px){
+                                .hideDesktop{
+                                    display: none;
+                                }
+                            }
+
+                            @media only screen and (max-width: 959px){
+                                .hideMobile{
+                                    display: none;
+                                }
+                            }
+
+                            @media only screen and (max-width: 599px){
+                                .imageMobile {
+                                    display: none;
+                                }
                             }
 
                             @media only screen and (max-width: 480px) {

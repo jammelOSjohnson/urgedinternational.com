@@ -45,7 +45,7 @@ export const RiderOrderDetailsScreen: React.FC = () => {
                                 <HeaderRight />
                             </Grid>
                             <Grid item xs={12}>
-                                Order Status
+                                {/* Order Status */}
                             </Grid>
                             <Grid item xs={12}>
                                 <OrderStatuses />
