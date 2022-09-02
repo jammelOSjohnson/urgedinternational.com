@@ -1696,7 +1696,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           msgString = "Your order has been cancelled.";
           break;
         case "Ordered":
-          statString = "Order Accepted";
+          statString = "Order Processed";
           msgString = "Your order has been accepted.";
           break;
         case "Picked Up":
