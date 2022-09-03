@@ -49,6 +49,7 @@ export const DashboardFooter: React.FC = function DashboardFooter() {
     var history = useHistory();
     var location = history.location;
     var referralPath = location.pathname;
+    var year = new Date().getFullYear();
 
     // const [value, setValue] = React.useState('recents');
     // const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
@@ -78,10 +79,10 @@ export const DashboardFooter: React.FC = function DashboardFooter() {
                 referralPath !== "/Dashboard" ?
                     <Typography style={{textAlign: "center", marginTop: "3%", paddingBottom: "3%"}} className="hideOnMobile">
                         <span className={classes.linkStyle}>
-                            Copyright ©2021, Urged. All Rights Reserved. 
+                            {`Copyright ©${year}, Urged. All Rights Reserved.`} 
                         </span>
-                        <Link to="#" className={classes.linkStyle}><Typography>Terms of Use </Typography></Link> 
-                        <Link to="#" className={classes.linkStyle}><Typography>Privacy Policy</Typography></Link>
+                        <Link to="/Tos" className={classes.linkStyle}><Typography>Terms of Use </Typography></Link> 
+                        <Link to="/Privacy" className={classes.linkStyle}><Typography>Privacy Policy</Typography></Link>
                     </Typography>
                 :
                     <></>
