@@ -66,6 +66,8 @@ import "jspdf/dist/polyfills.es.js";
 
 //not found page
 import {NotFound} from './NotFound';
+import { PrivacyPolicyScreen } from '../Screens/Dashboard/PrivacyPolicyScreen';
+import { TermsOfServiceScreen } from '../Screens/Dashboard/TermsOfServiceScreen';
 
 const theme = createTheme({
   typography: {
@@ -246,6 +248,8 @@ const App: React.FC = function App() {
                     <Route path="/OrderHistory" exact component={OrdersHistory} />
                     <Route path="/Errands" exact component={ErrandScreen} />
                     <Route path="/Profile" exact component={UserProfileScreen} />
+                    <Route path="/Privacy" exact component={PrivacyPolicyScreen} />
+                    <Route path="/Tos" exact component={TermsOfServiceScreen} />
                     {/* Restaurant Screens */}
                     <Route path="/RestaurantDashboard" exact component={RestaurantDashboardScreen} />
                     <Route path="/ViewOrdersDetails" exact component={RestaurantOrderDetailsScreen} />
