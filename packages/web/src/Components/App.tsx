@@ -68,6 +68,9 @@ import "jspdf/dist/polyfills.es.js";
 import {NotFound} from './NotFound';
 import { PrivacyPolicyScreen } from '../Screens/Dashboard/PrivacyPolicyScreen';
 import { TermsOfServiceScreen } from '../Screens/Dashboard/TermsOfServiceScreen';
+import { LiveChatWidget } from "@livechat/widget-react"
+
+
 
 const theme = createTheme({
   typography: {
@@ -225,7 +228,7 @@ const App: React.FC = function App() {
           <main>
             <div>
               <Router>
-              <Header2/>
+                <Header2/>
                 <Switch>
                   {/* <Sidebar/> */}
                     {/* <Route path="/" exact component={AboutScreen} /> */}
@@ -276,6 +279,11 @@ const App: React.FC = function App() {
                     <Route path='/404' component={NotFound} />
                     <Redirect from='*' to="/404" />
                 </Switch>
+                {process.env.NODE_ENV !== 'development' ?
+                  <LiveChatWidget license="14486910" />
+                :
+                  <></>
+                }
                 <Footer/>
               </Router>
             </div>
