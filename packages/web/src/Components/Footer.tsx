@@ -114,16 +114,16 @@ export const Footer: React.FC = function Footer() {
                     </Grid>
                     <Grid item xs={12} md={4} >
                         <div style={{textAlign: "center", display: "inline-flex"}}>
-                            <Link to="/TermsOfUse" className={classes.link}>
+                            <a href="/Tos" target="_blank" className={classes.link}>
                                 <Typography variant="body1" color="primary">
                                     Terms of Use
                                 </Typography>
-                            </Link>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <Link to="/Privacy Policy" className={classes.link}>
+                            </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="/Privacy" target="_blank" className={classes.link}>
                                 <Typography variant="body1" color="primary">
                                     Privacy Policy
                                 </Typography>
-                            </Link>
+                            </a>
                         </div>
                     </Grid>
                     <Grid item xs={12} md={4} className={classes.gridLeft}>
