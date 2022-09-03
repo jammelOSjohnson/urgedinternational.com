@@ -367,7 +367,7 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any, me
                             </FormControl>
                         </Grid>
                     </>
-                :props.itemCategory === "Famous Bowl" ?
+                :props.itemCategory === "Famous Bowl" && props.itemName !== "Famous Bowl Only" ?
                     <>
                         <Grid item xs={12} >
                             <FormControl variant="outlined" className={classes.formControl} fullWidth>
@@ -435,6 +435,28 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any, me
                             </FormControl>
                         </Grid>
                     </>
+                :props.itemCategory === "Famous Bowl" && props.itemName === "Famous Bowl Only" ?
+                <>
+                    <Grid item xs={12} >
+                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                            <InputLabel id="demo-simple-select-outlined-label">choice</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-outlined-label"
+                                id="demo-simple-select-outlined"
+                                value={props.chickenFlavour1}
+                                onChange={handleChange}
+                                label="Flavour1"
+                                name="chickenFlavour1"
+                                className={classes.root}
+                                fullWidth
+                            >
+                                <MenuItem value={"Select Flavour"}>Select Flavour</MenuItem>
+                                <MenuItem value={"Barbeque"}>Barbeque</MenuItem>
+                                <MenuItem value={"Spicy"}>Original</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                </>
                 :props.itemCategory === "Buckets"? 
                     <>
                         <Grid item xs={12}>
