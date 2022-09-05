@@ -78,7 +78,7 @@ export const PrivacyPolicyScreen: React.FC = function PrivacyPolicyScreen() {
                                 <Typography>
                                 <span className={classes.parahHead}>I - WHAT DO WE DO WITH YOUR INFORMATION?</span><br /><br />
 
-                                Whenever you purchase something from QuickCart, as part of the buying and selling process, we collect the personal information you give us such as your name, address and email address.<br />
+                                Whenever you purchase something from UrgedInternational, as part of the buying and selling process, we collect the personal information you give us such as your name, address and email address.<br />
 
                                 When you browse our website, we also automatically receive your computer’s internet protocol (IP) address in order to provide us with information that helps us learn about your browser and operating system.<br />
 
