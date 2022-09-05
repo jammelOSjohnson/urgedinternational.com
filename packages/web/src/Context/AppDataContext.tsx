@@ -1686,7 +1686,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       // var entry1 = log.entry(METADATA, data1);
       // log.write(entry1);
       // ////console.log("Wtf is in formVals");
-      console.log(formVals);
+      //console.log(formVals);
       let msgString = "";
       let statString = "";
       
