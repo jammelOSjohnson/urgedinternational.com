@@ -75,9 +75,13 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
             
             //Fetch the correct date time
             if(jaday === '' && today === 0){
+                //let innerJDay = '';
+                //let innerToday = '';
                 fetchCurrentTime.get('/api/timezone/America/Jamaica').then((res) => {
                     if(res.data !== null && res.data !== undefined){
-                        ////console.log(res.data);
+                        //console.log(res.data);
+                        //innerJDay = res.data.datetime;
+                        //innerToday = res.data.day_of_week
                         setjaday(res.data.datetime);
                         settoday(res.data.day_of_week);
                         //console.log(jaday)
@@ -112,9 +116,14 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                         // console.log(isPm);
                         // console.log(closeTimeFinal);
                         // console.log(jaTimeFinal[0]);
-                        let decision = (isPm && (parseInt(closeTimeFinal) > parseInt(jaTimeFinal[0]))) || (isAm && (parseInt(jaTimeFinal[0]) > parseInt(openTimeFinal))) 
+                        let decision = (isPm && (parseInt(closeTimeFinal) > parseInt(jaTimeFinal[0]))) || 
+                        (isAm && (parseInt(jaTimeFinal[0]) >= parseInt(openTimeFinal))) || 
+                        (isPm && parseInt(jaTimeFinal[0]) === 12 && (parseInt(closeTimeFinal) < parseInt(jaTimeFinal[0])))
                         //console.log(decision)
                         setisOpen(decision);
+                        setjaday(res.data.datetime);
+                        settoday(res.data.day_of_week);
+                        
                         //console.log(jaday)
                     }
                 }).catch((err) => {
@@ -145,7 +154,9 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                     // console.log(isPm);
                     // console.log(closeTimeFinal);
                     // console.log(jaTimeFinal[0]);
-                    let decision = (isPm && (parseInt(closeTimeFinal) > parseInt(jaTimeFinal[0]))) || (isAm && (parseInt(jaTimeFinal[0]) > parseInt(openTimeFinal))) 
+                    let decision = (isPm && (parseInt(closeTimeFinal) > parseInt(jaTimeFinal[0]))) || 
+                    (isAm && (parseInt(jaTimeFinal[0]) > parseInt(openTimeFinal))) ||
+                    (isPm && parseInt(jaTimeFinal[0]) === 12 && (parseInt(closeTimeFinal) < parseInt(jaTimeFinal[0])))
                     //console.log(decision)
                     setisOpen(decision);
                     
