@@ -55,7 +55,7 @@ export const Section4: React.FC = function Section4() {
                     {isMatchMedium?
                         <Grid item xs={12} md={6} alignItems="center" alignContent="center">
                             <Typography style={{textAlign: "center"}}>
-                                <img src="Images/Samsung Galaxy A50.png" alt="urged phone" />
+                                <img src="Images/Samsung Galaxy A50.webp" alt="urged phone" />
                             </Typography>
                         </Grid>
                     :
@@ -65,12 +65,12 @@ export const Section4: React.FC = function Section4() {
                     {isMatch?
                         <Grid item xs={12} md={6}>
                             <Typography style={{textAlign: "center"}}>
-                                <img src="Images/Logos.png" alt="restaurants" />
+                                <img src="Images/Logos.webp" alt="restaurants" />
                             </Typography>
                         </Grid>
                     :
                         <Grid item xs={12} md={6}>
-                            <img src="Images/Logos.png" alt="restaurants" />
+                            <img src="Images/Logos.webp" alt="restaurants" />
                         </Grid>
                     }
                     

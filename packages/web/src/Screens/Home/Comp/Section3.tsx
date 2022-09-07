@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
             fontFamily: "Open Sans",
         },
         heroBackground: {
-            backgroundImage: "url(Images/happy-african.png)",
+            backgroundImage: "url(Images/happy-african.webp)",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             padding: 0,
@@ -59,7 +59,7 @@ export const Section3: React.FC = function Section3() {
                             <img src="Images/swiftdistri.png" alt="swiftdistri" />
                         </Grid>
                         <Grid item style={{color: "black", marginLeft: "auto", marginRight: "auto"}}>
-                            <img src="Images/Lleia_Luxe_Events.png" alt="Lleia_Luxe_Events" />
+                            <img src="Images/Lleia_Luxe_Events.webp" alt="Lleia_Luxe_Events" />
                         </Grid>
                         <Grid item style={{color: "black", marginLeft: "auto", marginRight: "auto"}}>
                             <img src="Images/ElebFrontPage.png" alt="ElebFrontPage" />

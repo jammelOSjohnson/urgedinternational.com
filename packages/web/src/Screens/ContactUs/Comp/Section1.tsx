@@ -346,7 +346,7 @@ export const Section1: React.FC = function Section1() {
                         <Carousel.Item >  
                             <img
                             className="d-block"
-                            src="Images/PackageDevHeroImage.jpg"
+                            src="Images/PackageDevHeroImage.webp"
                             alt="Second slide"
                             width="100%"
                             style={{minHeight: "30%"}}
