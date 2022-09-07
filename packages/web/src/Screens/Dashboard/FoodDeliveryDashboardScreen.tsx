@@ -2,14 +2,14 @@ import { Container, Grid, makeStyles, createStyles, Theme } from '@material-ui/c
 import React from 'react';
 
 //Import Components
-import { Sidebar } from './Comp/Sidebar';
 import { Popularcategories } from './Comp/Popularcategories';
 import { AdvertisementSlider2 } from './Comp/AdvertisementSlider2';
 import { PeoplesChoice } from './Comp/PeoplesChoice';
 import { PopularRestaurants } from './Comp/PopularRestaurants';
-import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
 import { DashboardFooter } from './Comp/DashboardFooter';
+const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
+const Sidebar = React.lazy(() => import('./Comp/Sidebar'));
 
 
 

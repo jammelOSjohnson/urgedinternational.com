@@ -653,3 +653,5 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
         </>
     )
 }
+
+export default RegisterScreen;

@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
 import { Header } from '../../Components/Header';
 import { Header2 } from '../../Components/Header2';
-import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
-import { Sidebar } from './Comp/Sidebar';
+const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
+const Sidebar = React.lazy(() => import('./Comp/Sidebar'));
 //Import Components
 
 

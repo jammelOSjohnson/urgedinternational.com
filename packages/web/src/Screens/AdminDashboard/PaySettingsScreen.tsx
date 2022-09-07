@@ -2,14 +2,14 @@ import { useAppData } from '../../Context/AppDataContext';
 import { Container, Grid, makeStyles, createStyles, Typography, Theme, FormGroup, TextField, Card, Button, Snackbar } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 //Import Components
-import { Sidebar } from './Comp/Sidebar';
-import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
 import { FormControlLabel } from '@material-ui/core'
 import Switch from '@material-ui/core/Switch';
 import { GET_PAY_SETTINGS } from '../../GraphQL/Queries';
 import { useQuery } from '@apollo/client';
 import { Alert } from '@material-ui/lab';
+const Sidebar = React.lazy(() => import('./Comp/Sidebar'));
+const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
 
 interface State {
     checkedA: boolean;

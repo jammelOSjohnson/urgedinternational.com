@@ -464,3 +464,5 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
         </>
     )
 }
+
+export default PaymentOptionsForm;

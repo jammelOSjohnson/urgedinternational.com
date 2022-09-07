@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 // import clsx from 'clsx';
 //Import Components
-import { Sidebar } from './Comp/Sidebar';
-import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
 import { useAppData } from '../../Context/AppDataContext';
 import { Link } from "react-router-dom";
@@ -18,6 +16,8 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import Alert from '@material-ui/lab/Alert';
 import { MailBoxNumber } from './Comp/MailBoxNumber';
 import { ShippingAddress } from './Comp/ShippingAddress';
+const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
+const Sidebar = React.lazy(() => import('./Comp/Sidebar'));
 
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -961,3 +961,5 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
         </>
     );
 }
+
+export default CargoAndFreight;

@@ -1,12 +1,12 @@
 import { Container, Grid, makeStyles, createStyles, Theme } from '@material-ui/core';
 import React from 'react';
 //Import Components
-import { Sidebar } from './Comp/Sidebar';
 import { ShoppingCartItems } from './Comp/ShoppingCartItems';
-import { PaymentOptionsForm } from './Comp/PaymentOptionsForm';
-import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
 import { DashboardFooter } from './Comp/DashboardFooter';
+const PaymentOptionsForm = React.lazy(() => import('./Comp/PaymentOptionsForm'));
+const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
+const Sidebar = React.lazy(() => import('./Comp/Sidebar'));
 
 
 

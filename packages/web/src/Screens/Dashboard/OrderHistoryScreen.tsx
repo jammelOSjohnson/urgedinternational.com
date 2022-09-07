@@ -3,12 +3,12 @@ import React from 'react';
 // import { useHistory } from 'react-router-dom';
 // import clsx from 'clsx';
 //Import Components
-import { Sidebar } from './Comp/Sidebar';
-import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
 //import { ErrandCards } from './Comp/ErrandCards';
 import { HistoryHeaderBar } from './Comp/HistoryHeaderBar';
 import { HistoryTable } from './Comp/HistoryTable';
+const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
+const Sidebar = React.lazy(() => import('./Comp/Sidebar'));
 
 
 

@@ -3201,3 +3201,5 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
         </>
     )
 }
+
+export default OrderCompleted;

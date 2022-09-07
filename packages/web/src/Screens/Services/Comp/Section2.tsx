@@ -397,7 +397,7 @@ export const Section2: React.FC = function Section2() {
                                             </Typography>
                                         </Grid>
                                         <Grid item xs={6}>
-                                            <img src="Images/ServicesP1.png" alt="ServicesP1" />
+                                            <img src="Images/ServicesP1.webp" alt="ServicesP1" />
                                         </Grid>
                                         <Grid item xs={6}>
                                             <Typography>
@@ -436,18 +436,20 @@ export const Section2: React.FC = function Section2() {
                                                 You stay home and let the grocery come to you.<br />
                                                 We got you covered.
                                             </Typography>
-                                            <a className={classes.links} href="https://sallyspantry.com/" target="_blank" rel="noreferrer" title="Sally's Pantry">
+                                            {/* UNDO */}
+                                            {/* <a className={classes.links} href="https://sallyspantry.com/" target="_blank" rel="noreferrer" title="Sally's Pantry"> */}
                                                 <Button
                                                     className={classes.pOrderBtn}
+                                                    type='button'
                                                     variant="outlined"
                                                     endIcon={<img src="Images/PlaceOrderBtnEnd.png" alt="place order btn3" />}
                                                 >
                                                     Shop Sallyspantry 
                                                 </Button>
-                                            </a>
+                                            {/* </a> */}
                                         </Grid>
                                         <Grid item xs={6}>
-                                            <img src="Images/ServicesP2.png" alt="ServicesP2" />
+                                            <img src="Images/ServicesP2.webp" alt="ServicesP2" />
                                         </Grid>
                                         <Grid item xs={6}>
                                             <img src="Images/PackageDeliveryServiceAlt2.jpg" width={"90%"} alt="PackageDeliveryServiceAlt2" />
@@ -749,7 +751,7 @@ export const Section2: React.FC = function Section2() {
                                             </Typography>
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <img width="100%" src="Images/ServicesP1.png" alt="ServicesP1" />
+                                            <img width="100%" src="Images/ServicesP1.webp" alt="ServicesP1" />
                                             <a className={classes.links} href="/Restaurants" title="Restaurants">
                                                 <Button
                                                     style={{
@@ -784,8 +786,9 @@ export const Section2: React.FC = function Section2() {
                                             </Typography>
                                         </Grid>
                                         <Grid item xs={12}>
-                                            <img width="100%" src="Images/ServicesP2.png" alt="ServicesP2" />
-                                            <a className={classes.links} href="https://sallyspantry.com/" target="_blank" rel="noreferrer" title="Sally's Pantry">
+                                            <img width="100%" src="Images/ServicesP2.webp" alt="ServicesP2" />
+                                            {/* UNDO */}
+                                            {/* <a className={classes.links} href="https://sallyspantry.com/" target="_blank" rel="noreferrer" title="Sally's Pantry"> */}
                                                 <Button
                                                     style={{
                                                         borderRadius: "47px",
@@ -800,7 +803,7 @@ export const Section2: React.FC = function Section2() {
                                                 >
                                                     Shop Sallyspantry 
                                                 </Button>
-                                            </a>
+                                            {/* </a> */}
                                         </Grid>
                                         <Grid item xs={12}>
                                             <Typography>
@@ -1109,5 +1112,7 @@ export const Section2: React.FC = function Section2() {
         </>
     )
 }
+
+export default Section2;
 
 

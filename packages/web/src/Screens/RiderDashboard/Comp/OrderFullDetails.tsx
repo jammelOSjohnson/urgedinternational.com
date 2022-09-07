@@ -511,3 +511,5 @@ export const OrderFullDetails: React.FC = () => {
         return history.push("/DeliveryOrders")
     }
 }
+
+export default OrderFullDetails;

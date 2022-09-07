@@ -84,8 +84,12 @@ export const Footer: React.FC = function Footer() {
                     </Grid>
                     <Grid item xs={12} sm={6} lg={3} >
                         <Typography variant="h6">WHAT WE DO</Typography>
-                        <Typography>Food Delivery</Typography>
-                        <Typography>Package Delivery</Typography>
+                        <a href="/Restaurants" className={classes.linkDisabled}>
+                            <Typography>Food Delivery</Typography>
+                        </a>
+                        <a href="/Uship" className={classes.linkDisabled}>
+                            <Typography>Package Delivery</Typography>
+                        </a>
                         <Typography>Market Place</Typography>    
                     </Grid>
                     <Grid item xs={12} sm={6} lg={3} >
@@ -128,7 +132,7 @@ export const Footer: React.FC = function Footer() {
                     </Grid>
                     <Grid item xs={12} md={4} className={classes.gridLeft}>
                         <div style={{textAlign: "center"}}>
-                            <Typography>Created by Creators in Cocoons</Typography>
+                            <Typography>Created by J.O.S.J</Typography>
                         </div>        
                     </Grid>
                 </Grid>

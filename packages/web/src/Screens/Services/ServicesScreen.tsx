@@ -2,8 +2,6 @@ import { Container } from '@material-ui/core';
 import React from 'react'
 
 //Import Sections
-import { Section1 } from "../Services/Comp/Section1";
-import { Section2 } from "../Services/Comp/Section2";
 // import { Section3 } from "../Services/Comp/Section3";
 // import { Section4 } from "../Services/Comp/Section4";
 // import { Section5 } from "../Services/Comp/Section5";
@@ -11,6 +9,8 @@ import { Section6 } from "../Services/Comp/Section6";
 import { Section7 } from "../Services/Comp/Section7";
 //import { Section8 } from "./Comp/Section8";
 // import {ExternalApp} from "../Services/Comp/ExternalApp";
+const Section1 = React.lazy(() => import("../Services/Comp/Section1"));
+const Section2 = React.lazy(() => import("../Services/Comp/Section2"));
 
 
 

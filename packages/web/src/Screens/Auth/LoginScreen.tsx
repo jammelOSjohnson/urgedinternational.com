@@ -771,3 +771,5 @@ export const LoginScreen: React.FC = function LoginScreen() {
         </>
     )
 }
+
+export default LoginScreen;

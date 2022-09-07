@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "#F7B614",
         },
         heroBackground: {
-            backgroundImage: "url(Images/AboutUsHeroImage.jpg)",
+            backgroundImage: "url(Images/AboutUsHeroImage.webp)",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             padding: 0,

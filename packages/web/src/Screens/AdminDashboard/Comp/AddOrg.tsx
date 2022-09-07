@@ -619,3 +619,5 @@ export const AddOrg: React.FC = () => {
         </>
     );
 }
+
+export default AddOrg;

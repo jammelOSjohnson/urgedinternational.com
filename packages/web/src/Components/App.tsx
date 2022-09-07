@@ -11,8 +11,6 @@ import { HomeScreen } from '../Screens/Home/HomeScreen';
 import { ServicesScreen } from '../Screens/Services/ServicesScreen';
 import { ContactUsScreen } from '../Screens/ContactUs/ContactUsScreen';
 //import { AboutScreen } from '../Screens/About/AboutScreen';
-import { LoginScreen } from '../Screens/Auth/LoginScreen';
-import { RegisterScreen } from '../Screens/Auth/RegisterScreen';
 import { CustomerDashboardScreen } from '../Screens/Dashboard/CustomerDashboard';
 import { FoodDeliveryDashboardScreen } from '../Screens/Dashboard/FoodDeliveryDashboardScreen';
 import { RestaurantsScreen } from '../Screens/Dashboard/RestaurantsScreen';
@@ -21,7 +19,6 @@ import { ViewRestaurantItem } from '../Screens/Dashboard/ViewRestaurantItem';
 import { ShoppingCartScreen } from '../Screens/Dashboard/ShoppingCartScreen';
 import { OrdersHistory } from '../Screens/Dashboard/OrderHistoryScreen';
 import { ErrandScreen } from '../Screens/Dashboard/ErrandScreen';
-import { CargoAndFreight } from '../Screens/Dashboard/CargoAndFreight';
 import { RatesScreen } from '../Screens/Dashboard/RatesScreen';
 import { UserProfileScreen } from '../Screens/Dashboard/UserProfileScreen';
 //Admin
@@ -38,7 +35,7 @@ import { OrgDetailsScreen } from '../Screens/AdminDashboard/OrgDetailsScreen';
 //Restaurant
 import { RestaurantDashboardScreen } from '../Screens/RestaurantDashboard/RestaurantDashboardScreen';
 import { RestaurantOrderDetailsScreen } from '../Screens/RestaurantDashboard/RestaurantOrderDetailsScreen';
-import { RestaurantProfileDetailsScreen } from '../Screens/RestaurantDashboard/RestaurantProfileDetailsScreen';
+
 //Rider
 import { RiderOrderDetailsScreen } from '../Screens/RiderDashboard/RiderOrderDetailsScreen';
 import { RiderOrdersScreen } from '../Screens/RiderDashboard/RiderOrdersScreen';
@@ -46,10 +43,9 @@ import { testmap } from '../Screens/Dashboard/testmap';
 //import { RiderDashboard } from '../Screens/RiderDashboard/RiderDashboard';
 //import { Sidebar } from '../Screens/Dashboard/Comp/Sidebar';
 import { CheckoutScreen } from '../Screens/Checkout/CheckoutScreen';
-import { OrderCompleted } from '../Screens/Checkout/OrderCompleted'
+
 
 //Import provider
-import AppDataProvider from '../Context/AppDataContext';
 //import { useAppData } from '../Context/AppDataContext';
 //Graphql Client
 import { ApolloClient, InMemoryCache, ApolloProvider, HttpLink, from, split } from '@apollo/client';
@@ -59,17 +55,24 @@ import { getMainDefinition } from '@apollo/client/utilities';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { createTheme, ThemeProvider } from '@material-ui/core';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import "../css/custom.css";
 import "jspdf/dist/polyfills.es.js";
 
 
 //not found page
-import {NotFound} from './NotFound';
 import { PrivacyPolicyScreen } from '../Screens/Dashboard/PrivacyPolicyScreen';
-import { TermsOfServiceScreen } from '../Screens/Dashboard/TermsOfServiceScreen';
 import { LiveChatWidget } from "@livechat/widget-react"
-
+import React from 'react';
+import { Spinner } from './spinner';
+const NotFound = React.lazy(() => import('./NotFound'));
+const RegisterScreen = React.lazy(() => import('../Screens/Auth/RegisterScreen'));
+const LoginScreen = React.lazy(() => import('../Screens/Auth/LoginScreen'))
+const AppDataProvider = React.lazy(() => import('../Context/AppDataContext'));
+const TermsOfServiceScreen = React.lazy(() => import('../Screens/Dashboard/TermsOfServiceScreen'));
+const CargoAndFreight = React.lazy(() => import('../Screens/Dashboard/CargoAndFreight'));
+const OrderCompleted = React.lazy(() => import('../Screens/Checkout/OrderCompleted'));
+const RestaurantProfileDetailsScreen = React.lazy(() => import('../Screens/RestaurantDashboard/RestaurantProfileDetailsScreen'));
 
 
 const theme = createTheme({
@@ -297,10 +300,12 @@ const App: React.FC = function App() {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function(){
   return (
-    <ApolloProvider client={client}>
-      <AppDataProvider>
-        <App />
-      </AppDataProvider>
-    </ApolloProvider>
+    <Suspense fallback={<Spinner />}>
+      <ApolloProvider client={client}>
+        <AppDataProvider>
+          <App />
+        </AppDataProvider>
+      </ApolloProvider>
+    </Suspense>
   );
 };

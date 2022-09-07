@@ -409,9 +409,27 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                                   <ListItemText className="link-fontH" primary={text} />
                               </ListItem>
                             </Link>
+                          // :
+                          // text === "Sally's Pantry" ?
+                          // <a href='https://sallyspantry.com/' target="_blank" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")} title="Sally's Pantry">
+                          //     <ListItem button key={text} >
+                          //         <ListItemIcon>
+                          //           {
+                          //             index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                          //             index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
+                          //             index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
+                          //             index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
+                          //             index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                          //             index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> :
+                          //             index === 6 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
+                          //           }
+                          //         </ListItemIcon>
+                          //         <ListItemText className="link-fontH" primary={text} />
+                          //     </ListItem>
+                          //   </a>
                           :
                           text === "Sally's Pantry" ?
-                          <a href='https://sallyspantry.com/' target="_blank" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")} title="Sally's Pantry">
+                            <Typography>
                               <ListItem button key={text} >
                                   <ListItemIcon>
                                     {
@@ -426,7 +444,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                                   </ListItemIcon>
                                   <ListItemText className="link-fontH" primary={text} />
                               </ListItem>
-                            </a>
+                            </Typography>
                           :
                           text !== "Overview"?
                             <ListItem button key={text} style={{marginTop: "5%"}}>
@@ -683,3 +701,5 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
         </>
     )
 }
+
+export default HeaderLeft;

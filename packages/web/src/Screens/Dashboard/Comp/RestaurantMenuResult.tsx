@@ -2663,3 +2663,5 @@ export const RestaurantMenuResult: React.FC = function RestaurantMenuResult(prop
         )
     }
 }
+
+export default RestaurantMenuResult;

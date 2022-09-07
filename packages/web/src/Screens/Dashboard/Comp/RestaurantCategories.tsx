@@ -361,3 +361,5 @@ export const RestaurantCategories: React.FC = function RestaurantCategories() {
         </>
     )
 }
+
+export default RestaurantCategories;

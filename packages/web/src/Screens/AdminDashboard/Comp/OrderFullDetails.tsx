@@ -500,3 +500,5 @@ export const OrderFullDetails: React.FC = () => {
         return history.push("/AdminOrders")
     }
 }
+
+export default OrderFullDetails;

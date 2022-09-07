@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "#FF5E14",
         },
         heroBackground: {
-            backgroundImage: "url(Images/AboutUsHeroImage.jpg)",
+            backgroundImage: "url(Images/AboutUsHeroImage.webp)",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
             padding: 0,
@@ -180,13 +180,13 @@ export const Section1: React.FC = function Section1() {
                         <Carousel.Item >  
                             <img
                             className="d-block"
-                            src="Images/AboutUsHeroImage.jpg"
+                            src="Images/AboutUsHeroImage.webp"
                             alt="First slide"
                             width="100%"
                             style={{minHeight: "30%"}}
                             id="slideimage"
                             />
-                            <img src="Images/FoodDHomeSlide.png" className={clsx(classes.image, "mobileCaroselImage")} alt="KFC Bucket"/>
+                            <img src="Images/FoodDHomeSlide.wepb" className={clsx(classes.image, "mobileCaroselImage")} alt="KFC Bucket"/>
                             <Carousel.Caption style={{top: "5%"}}>
                                 <Grid container spacing={0} alignContent="flex-start"  alignItems="flex-start">
                                     <Grid item xs={11} sm={6} md={5} lg={6} xl={3} className={classes.heroTextMargin}>
@@ -502,7 +502,7 @@ export const Section1: React.FC = function Section1() {
                         <Carousel.Item >  
                             <img
                             className="d-block"
-                            src="Images/AboutUsHeroImage.jpg"
+                            src="Images/AboutUsHeroImage.webp"
                             alt="First slide"
                             width="100%"
                             style={{minHeight: "30%"}}

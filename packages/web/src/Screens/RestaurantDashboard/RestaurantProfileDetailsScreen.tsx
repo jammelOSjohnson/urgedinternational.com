@@ -10,10 +10,10 @@ import { Link } from "react-router-dom";
 import { Alert } from '@material-ui/lab';
 import { EditRounded, DeleteOutlineRounded } from '@material-ui/icons';
 import clsx from 'clsx';
-import { Sidebar } from './Comp/Sidebar';
-import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
 import { Spinner } from '../../Components/spinner';
+const Sidebar = React.lazy(() => import('./Comp/Sidebar'));
+const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
 
 
 
@@ -1300,3 +1300,5 @@ export const RestaurantProfileDetailsScreen: React.FC = function RestaurantProfi
     //     )
     // }
 }
+
+export default RestaurantProfileDetailsScreen;

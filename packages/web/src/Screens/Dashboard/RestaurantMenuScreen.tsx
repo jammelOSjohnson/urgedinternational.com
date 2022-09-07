@@ -3,13 +3,14 @@ import React from 'react';
 // import { useHistory } from 'react-router-dom';
 // import clsx from 'clsx';
 //Import Components
-import { Sidebar } from './Comp/Sidebar';
-import { HeaderLeft } from './Comp/HeaderLeft';
+
 import { HeaderRight } from './Comp/HeaderRight';
 import { RestaurantMenuHeader } from './Comp/RestaurantMenuHeader';
-import { RestaurantMenuCategories } from './Comp/RestaurantMenuCategories';
-import { RestaurantMenu } from './Comp/RestaurantMenu';
-import { DashboardFooter } from './Comp/DashboardFooter';
+const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
+const Sidebar = React.lazy(() => import('./Comp/Sidebar'));
+const RestaurantMenuCategories = React.lazy(() => import('./Comp/RestaurantMenuCategories'));
+const RestaurantMenu = React.lazy(() => import('./Comp/RestaurantMenu'));
+const  DashboardFooter = React.lazy(() => import('./Comp/DashboardFooter'));
 
 
 

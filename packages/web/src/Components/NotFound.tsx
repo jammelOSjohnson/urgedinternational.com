@@ -214,3 +214,5 @@ export const NotFound: React.FC = function NotFound() {
         </>
     )
 }
+
+export default NotFound;

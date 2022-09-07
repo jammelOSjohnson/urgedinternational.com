@@ -1,11 +1,11 @@
 import { Container, Grid, makeStyles, createStyles, Theme } from '@material-ui/core';
 import React from 'react';
 //Import Components
-import { Sidebar } from './Comp/Sidebar';
-import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
-import {OrderStatuses} from './Comp/OrderStatuses';
-import {OrderFullDetails} from './Comp/OrderFullDetails';
+const Sidebar = React.lazy(() => import('./Comp/Sidebar'));
+const OrderFullDetails = React.lazy(() => import('./Comp/OrderFullDetails'));
+const OrderStatuses = React.lazy(() => import('./Comp/OrderStatuses'));
+const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
 
 
 const useStyles = makeStyles((theme: Theme) => 

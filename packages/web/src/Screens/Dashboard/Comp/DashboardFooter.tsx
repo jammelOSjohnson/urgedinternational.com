@@ -108,3 +108,5 @@ export const DashboardFooter: React.FC = function DashboardFooter() {
         </>
     )
 }
+
+export default DashboardFooter;

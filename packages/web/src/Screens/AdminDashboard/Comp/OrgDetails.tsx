@@ -1160,3 +1160,5 @@ export const OrgDetails: React.FC = function OrgDetails() {
     //     )
     // }
 }
+
+export default OrgDetails;

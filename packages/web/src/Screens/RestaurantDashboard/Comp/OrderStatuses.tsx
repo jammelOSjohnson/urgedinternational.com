@@ -411,3 +411,5 @@ export const OrderStatuses: React.FC = () => {
         return <></>
     }
 }
+
+export default OrderStatuses;

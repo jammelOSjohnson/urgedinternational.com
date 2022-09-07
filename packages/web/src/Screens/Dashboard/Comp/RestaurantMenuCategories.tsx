@@ -373,3 +373,5 @@ export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategor
     }
 
 }
+
+export default RestaurantMenuCategories;

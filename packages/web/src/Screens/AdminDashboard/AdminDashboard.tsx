@@ -3,10 +3,10 @@ import React from 'react';
 //import { useHistory } from 'react-router-dom';
 //import clsx from 'clsx';
 //Import Components
-import { Sidebar } from './Comp/Sidebar';
-import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
 import { OrdersCounters } from './Comp/OrdersCounters';
+const Sidebar = React.lazy(() => import('./Comp/Sidebar'));
+const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
 
 
 // interface Props {

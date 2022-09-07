@@ -520,3 +520,5 @@ export const Sidebar: React.FC = function Sidebar({children}) {
         </>
     )
 }
+
+export default Sidebar;

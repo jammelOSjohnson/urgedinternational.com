@@ -118,7 +118,7 @@ export const Section6: React.FC = function Section6() {
                                 </Grid>
                             </Grid>
                             <Grid item md={6}>
-                                <img src="Images/Errand Services.png" alt="" />
+                                <img src="Images/Errand Services.webp" alt="" />
                             </Grid>
                         </Grid>
                     :
@@ -128,7 +128,7 @@ export const Section6: React.FC = function Section6() {
                     {isMatch? 
                         <Grid container spacing={0} className={classes.root}>
                             <Grid item xs={12} md={6}>
-                                <img src="Images/Errand Services.png" width="100%" style={{marginLeft: "auto", marginRight: "auto"}} alt="" />
+                                <img src="Images/Errand Services.webp" width="100%" style={{marginLeft: "auto", marginRight: "auto"}} alt="" />
                             </Grid>
                             <Grid item xs={12} md={6}>
                                 <Grid container spacing={0}>

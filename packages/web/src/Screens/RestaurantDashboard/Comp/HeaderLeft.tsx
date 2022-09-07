@@ -420,3 +420,5 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
         </>
     )
 }
+
+export default HeaderLeft;

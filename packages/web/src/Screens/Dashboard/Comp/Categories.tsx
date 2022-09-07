@@ -95,6 +95,12 @@ const useStyles = makeStyles((theme: Theme) =>
               position: "absolute",
               top: 18,
               right: 10
+          },
+          isDisabled: {
+            color: "currentColor",
+            cursor: "not-allowed",
+            opacity: 0.5,
+            textDecoration: "none"
           }
     }),
 );
@@ -380,7 +386,8 @@ export const Categories: React.FC = function Categories() {
                     </Link>
                 </Grid>
                 <Grid item xs={12} md={3}>
-                    <a href='https://sallyspantry.com/' target="_blank" className={classes.links} onClick={handleOpen2} title="Sally's Pantry">
+                    {/* UNDO */}
+                    {/* <a href='https://sallyspantry.com/' target="_blank" className={classes.links} title="Sally's Pantry"> */}
                         <Card className={classes.card}>
                             <CardMedia className={classes.cardImage}>
                                 <img src="Images/GreenMarketPlace.png" alt="yellowtruckIconImageSM"></img>
@@ -391,7 +398,7 @@ export const Categories: React.FC = function Categories() {
                                 </Typography>
                             </CardContent>
                         </Card>
-                    </a>
+                    {/* </a> */}
                 </Grid>
             </Grid>
             <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>

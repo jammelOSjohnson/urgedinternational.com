@@ -1,11 +1,11 @@
 import { Container, Grid, makeStyles, createStyles, Theme } from '@material-ui/core';
 import React from 'react';
 //Import Components
-import { Sidebar } from './Comp/Sidebar';
-import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
-import { OrganisationsCardList } from './Comp/OrganisationsCardList'
-import { AddOrg } from './Comp/AddOrg';
+import { OrganisationsCardList } from './Comp/OrganisationsCardList';
+const AddOrg = React.lazy(() => import('./Comp/AddOrg'));
+const Sidebar = React.lazy(() => import('./Comp/Sidebar'));
+const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({

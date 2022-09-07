@@ -3023,3 +3023,5 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
         )
     }
 }
+
+export default RestaurantMenu;

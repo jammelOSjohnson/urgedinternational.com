@@ -3,11 +3,11 @@ import { Container, Grid, makeStyles, createStyles, Typography, Theme, FormContr
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 //Import Components
-import { Sidebar } from '../Dashboard/Comp/Sidebar';
-import { HeaderLeft } from '../Dashboard/Comp/HeaderLeft';
 import { HeaderRight } from '../Dashboard/Comp/HeaderRight';
 import Alert from '@material-ui/lab/Alert';
 import { DashboardFooter } from '../Dashboard/Comp/DashboardFooter';
+const Sidebar = React.lazy(() => import('../Dashboard/Comp/Sidebar'));
+const HeaderLeft = React.lazy(() => import('../Dashboard/Comp/HeaderLeft'));
 
 
 

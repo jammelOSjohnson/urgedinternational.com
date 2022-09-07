@@ -2,9 +2,9 @@ import { makeStyles, createStyles, Typography, Theme, Container, Grid } from '@m
 import React from 'react';
 import { Link } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
-import { HeaderLeft } from './Comp/HeaderLeft';
 import { HeaderRight } from './Comp/HeaderRight';
-import { Sidebar } from './Comp/Sidebar';
+const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
+const Sidebar = React.lazy(() => import('./Comp/Sidebar'));
 //Import Components
 
 
@@ -546,3 +546,5 @@ export const TermsOfServiceScreen: React.FC = function TermsOfServiceScreen() {
         </>
     )
 }
+
+export default TermsOfServiceScreen;

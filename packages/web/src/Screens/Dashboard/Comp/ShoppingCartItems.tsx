@@ -1,10 +1,10 @@
 import { Avatar, Grid, makeStyles, createStyles, Typography, Theme, CardMedia, Card, CardContent, CardHeader, IconButton } from '@material-ui/core';
 import { useAppData } from '../../../Context/AppDataContext';
-import { PaymentOptionsForm } from './PaymentOptionsForm';
 import React from 'react';
 import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
 import {CloseRounded} from '@material-ui/icons';
+const PaymentOptionsForm = React.lazy(() => import('./PaymentOptionsForm'));
 
 
 
