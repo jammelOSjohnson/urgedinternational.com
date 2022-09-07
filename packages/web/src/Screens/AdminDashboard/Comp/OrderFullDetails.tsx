@@ -262,6 +262,27 @@ export const OrderFullDetails: React.FC = () => {
                                             <Typography className={classes.cardHeading}>
                                                 Order Details
                                             </Typography>
+                                            <Typography className="hideDesktop">
+                                                <Grid container direction="row" spacing={1}>
+                                                    <Grid item xs={12} md={4} >
+                                                        <Typography>
+                                                            <span className={classes.boldSubtitle}>Order ID: </span>&nbsp;
+                                                            {orders[orderIndex]._id}&nbsp; 
+                                                            <span className={classes.boldSubtitle}>Status: </span>&nbsp;
+                                                            {orders[orderIndex].OrderStatus}
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item xs={12} md={4}>
+                                                        <Typography className={classes.boldSubtitle}>
+                                                            Order Date
+                                                        </Typography>
+                                                        <Typography>
+                                                        <img src={"Images/order-details-calendar.png"} alt="calendar" /> 
+                                                        &nbsp;<span style={{verticalAlign: "middle"}}>{estTime}</span>
+                                                        </Typography>
+                                                    </Grid>
+                                                </Grid>
+                                            </Typography>
                                             <Typography>
                                             <Grid container direction="row" spacing={1}>
                                                 <Grid item xs={12} md={2}>
@@ -276,27 +297,10 @@ export const OrderFullDetails: React.FC = () => {
                                                 </Grid>
                                                 <Grid item xs={12} md={4} className="hideDesktop">
                                                     <Typography className={classes.boldSubtitle}>
-                                                        Order ID
+                                                        Pick-Up From
                                                     </Typography>
                                                     <Typography>
-                                                        {orders[orderIndex]._id}
-                                                    </Typography>
-                                                </Grid>
-                                                <Grid item xs={12} md={4} className="hideDesktop">
-                                                    <Typography className={classes.boldSubtitle}>
-                                                        Order Date
-                                                    </Typography>
-                                                    <Typography>
-                                                    <img src={"Images/order-details-calendar.png"} alt="calendar" /> 
-                                                    &nbsp;<span style={{verticalAlign: "middle"}}>{estTime}</span>
-                                                    </Typography>
-                                                </Grid>
-                                                <Grid item xs={12} md={4} className="hideDesktop">
-                                                    <Typography className={classes.boldSubtitle}>
-                                                        Status
-                                                    </Typography>
-                                                    <Typography>
-                                                    {orders[orderIndex].OrderStatus}
+                                                        <a href={`https://maps.google.com/?q=${orders[orderIndex].Restaurant.AddressLine1}`} style={{color: "#F7B614"}} target="_blank">{orders[orderIndex].Restaurant.AddressLine1}</a>
                                                     </Typography>
                                                 </Grid>
                                                 {orders[orderIndex].OrderItems.map((item, index) => (
@@ -361,12 +365,12 @@ export const OrderFullDetails: React.FC = () => {
                                             </Grid>
                                             <br />
                                             <Grid container direction="row" spacing={1}>
-                                                <Grid item xs={12} md={4} >
+                                                <Grid item xs={12} md={4} className="hideMobile">
                                                     <Typography className={classes.boldSubtitle}>
                                                         Pick-Up From
                                                     </Typography>
                                                     <Typography>
-                                                        {orders[orderIndex].Restaurant.AddressLine1}
+                                                        <a href={`https://www.google.com/maps/place/${orders[orderIndex].Restaurant.AddressLine1}`} style={{color: "#F7B614"}} target="_blank">{orders[orderIndex].Restaurant.AddressLine1}</a>
                                                     </Typography>
                                                 </Grid>
                                                 <Grid item xs={12} md={4}>
@@ -426,12 +430,19 @@ export const OrderFullDetails: React.FC = () => {
                                             </Typography>
                                             <br />
                                             <Typography>
-                                            + {contactnum}
+                                            <a style={{color: "#F7B614"}} href={`tel:${contactnum}`} target="_blank">+ {contactnum}</a>
                                             </Typography>
                                             <br />
-                                            <Typography>
-                                            {region[0] + ', ' +region[1]}
+                                            <Typography className='hideDesktop'>
+                                                <a href={`https://maps.google.com/?q=${orders[orderIndex].DeliveryAddress}`} style={{color: "#F7B614"}} target="_blank">{orders[orderIndex].DeliveryAddress}</a>
                                             </Typography>
+                                            <Typography className='hideMobile'>
+                                                <a href={`https://www.google.com/maps/place/${orders[orderIndex].DeliveryAddress}`} style={{color: "#F7B614"}} target="_blank">{orders[orderIndex].DeliveryAddress}</a>
+                                            </Typography>
+                                            {/* <Typography>
+                                                <a href={`https://www.google.com/?q=${orders[orderIndex].DeliveryAddress}`} style={{color: "#F7B614"}} target="_blank">{orders[orderIndex].DeliveryAddress}</a>
+                                            {region[0] + ', ' +region[1]}
+                                            </Typography> */}
                                         </CardContent>
                                     </Card>
                                 </Grid>
