@@ -456,6 +456,13 @@ const resolvers = {
             }
         },
 
+        getMailboxByMbox: async(_,{MailboxNum}) => {
+            let mBoxFound = await Mailbox.findOne({MailboxNum}).populate('Uid'); 
+            // console.log('mailbox found is')  
+            // console.log(mBoxFound);
+            return mBoxFound;
+        },
+
         updateRestaurantById: async(_, {
             _id, Id, FirstName, LastName, Email, AddressLine1, 
             AddressLine2, City, ContactNumber, OpeningHrs, 

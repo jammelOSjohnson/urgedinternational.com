@@ -433,6 +433,10 @@ const typeDefs = /* GraphQL */`
             MailboxNum: String
         ): Mailbox
 
+        getMailboxByMbox(
+            MailboxNum: String
+        ): Mailbox
+
         updateRestaurantById (
             _id: ID, Id: String! , FirstName: String!, 
             LastName: String!, Email: String!, 
