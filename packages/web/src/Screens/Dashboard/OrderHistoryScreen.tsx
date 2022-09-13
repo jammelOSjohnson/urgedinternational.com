@@ -9,6 +9,7 @@ import { HistoryHeaderBar } from './Comp/HistoryHeaderBar';
 import { HistoryTable } from './Comp/HistoryTable';
 const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
 const Sidebar = React.lazy(() => import('./Comp/Sidebar'));
+const DashboardFooter = React.lazy(() => import('./Comp/DashboardFooter'));
 
 
 
@@ -52,6 +53,9 @@ export const OrdersHistory: React.FC = function OrdersHistory () {
                             <Grid item xs={12}>
                                 {/* <HistoryHeaderBar /> */}
                                 <HistoryTable />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <DashboardFooter />
                             </Grid>
                         </Grid>
                     </Grid>

@@ -14,10 +14,11 @@ import GpsFixedIcon from '@material-ui/icons/GpsFixed';
 import { Field } from './Comp/Field';
 import DescriptionIcon from '@material-ui/icons/Description';
 import Alert from '@material-ui/lab/Alert';
-import { MailBoxNumber } from './Comp/MailBoxNumber';
 import { ShippingAddress } from './Comp/ShippingAddress';
+const MailBoxNumber = React.lazy(() => import('./Comp/MailBoxNumber'));
 const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
 const Sidebar = React.lazy(() => import('./Comp/Sidebar'));
+const DashboardFooter = React.lazy(() => import('./Comp/DashboardFooter'));
 
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -548,11 +549,11 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                                 </Grid>
                             </Grid>
                             <Grid item xs={12} md={4}>
-                                <Grid container direction="row" xs={12} spacing={1}>
+                                <Grid container direction="row" spacing={1}>
                                     <Grid item xs={12}>
                                         <Card className={classes.card}>
                                             <CardContent className={classes.cardContent}>
-                                            <Grid container direction="row" xs={12} spacing={1}>
+                                            <Grid container direction="row" spacing={1}>
                                                     <Grid item xs={12} sm={10}>
                                                         <ShippingAddress />
                                                         <br />
@@ -598,6 +599,9 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                                         </Card>
                                     </Grid>
                                 </Grid>
+                            </Grid>
+                            <Grid item xs={12}>
+                                    <DashboardFooter />
                             </Grid>
                             <Modal
                                 aria-labelledby="transition-modal-title"

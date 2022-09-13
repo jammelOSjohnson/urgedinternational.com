@@ -2,6 +2,7 @@ import { makeStyles, createStyles, Typography, Theme } from '@material-ui/core';
 import React from 'react';
 import { Link } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
+import FooterTop from '../../../Components/FooterTop';
 //Import Components
 
 
@@ -77,13 +78,16 @@ export const DashboardFooter: React.FC = function DashboardFooter() {
             </BottomNavigation> */}
             {
                 referralPath !== "/Dashboard" ?
-                    <Typography style={{textAlign: "center", marginTop: "3%", paddingBottom: "3%"}} className="hideOnMobile">
-                        <span className={classes.linkStyle}>
-                            {`Copyright ©${year}, Urged. All Rights Reserved.`} 
-                        </span>
-                        <Link to="/Tos" className={classes.linkStyle}><Typography>Terms of Use </Typography></Link> 
-                        <Link to="/Privacy" className={classes.linkStyle}><Typography>Privacy Policy</Typography></Link>
-                    </Typography>
+                    <>
+                        <FooterTop />
+                        <Typography style={{textAlign: "center", marginTop: "3%", paddingBottom: "3%"}} className="hideOnMobile">
+                            <span className={classes.linkStyle}>
+                                {`Copyright ©${year}, Urged. All Rights Reserved.`} 
+                            </span>
+                            <Link to="/Tos" className={classes.linkStyle}><Typography>Terms of Use </Typography></Link> 
+                            <Link to="/Privacy" className={classes.linkStyle}><Typography>Privacy Policy</Typography></Link>
+                        </Typography>
+                    </>
                 :
                     <></>
             }   

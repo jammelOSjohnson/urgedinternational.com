@@ -6,6 +6,8 @@ import Twitter from '@material-ui/icons/Twitter';
 import Facebook from '@material-ui/icons/Facebook';
 import Instagram from "@material-ui/icons/Instagram";
 import { Link } from "react-router-dom";
+import clsx from 'clsx';
+import FooterTop from './FooterTop';
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -15,6 +17,10 @@ const useStyles = makeStyles((theme: Theme) =>
             color: "#FFFFFF",
             borderTop: "5px solid #F7B614",
             textAlign: "center"
+        },
+        Background2: {
+            backgroundColor: "#F9FAFB" ,
+            color: "#000"
         },
         root: {
             padding: "0% 0px 1% 0px"
@@ -57,8 +63,9 @@ export const Footer: React.FC = function Footer() {
       }
     return (
         <>
+            <FooterTop />
             <Container maxWidth="xl" className={classes.Background}>
-                <Grid container direction="row" spacing={2} className={classes.root} alignItems="center">
+                <Grid container direction="row" className={classes.root} alignItems="center">
                     <Grid item xs={12} sm={6} lg={3}>
                         <div>
                             <img src="Images/UrgedFooterLogo.png" alt="footerlogo" />

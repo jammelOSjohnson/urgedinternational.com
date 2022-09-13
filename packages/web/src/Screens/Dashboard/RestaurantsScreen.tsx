@@ -5,7 +5,7 @@ import React from 'react';
 //Import Components
 import { HeaderRight } from './Comp/HeaderRight';
 import { RestaurantList } from './Comp/RestaurantList';
-import { DashboardFooter } from './Comp/DashboardFooter';
+const DashboardFooter = React.lazy(() => import('./Comp/DashboardFooter'));
 const RestaurantCategories = React.lazy(() => import('./Comp/RestaurantCategories'));
 const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
 const Sidebar = React.lazy(() => import('./Comp/Sidebar'));

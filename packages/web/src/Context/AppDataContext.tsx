@@ -1931,8 +1931,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         try{
           await fetchShippingAddress().then((response) => {
             if (response.data.fetchShippingAddress !== null) {
-              //console.log("got shipping address");
-              //console.log(response);
+              console.log("got shipping address");
+              console.log(response);
   
               var shippingAdd = response.data.fetchShippingAddress;
               //console.log(paySet);
@@ -2161,7 +2161,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     
       let finalRes = await getMailboxByMbox({variables: {MailboxNum: number}}).then(function (response) {
         if (response.data.getMailboxByMbox !== null && response.data.getMailboxByMbox !== undefined) {
-          //console.log("Document data:", response.data.getMailboxByMbox);
+          console.log("Document data:", response.data.getMailboxByMbox);
           return true;
         } else {
           // response.data.getMailboxByMbox will be undefined in this case
