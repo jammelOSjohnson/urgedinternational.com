@@ -27,8 +27,9 @@ export const FooterTop: React.FC = function FooterTop(){
     var history = useHistory();
     var location = history.location;
     var referralPath = location.pathname;
+    console.log(referralPath)
 
-    if(referralPath === "/" &&  referralPath === "Services" &&  referralPath === "ContactUs"){
+    if(referralPath === "/" ||  referralPath === "Services" ||  referralPath === "ContactUs"){
         return (
             <>
                 <Container maxWidth="xl" className={classes.Background}>
