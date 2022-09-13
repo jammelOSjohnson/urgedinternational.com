@@ -358,12 +358,35 @@ export const TermsOfServiceScreen: React.FC = function TermsOfServiceScreen() {
                                 the Participating Restaurant.<br />
                                 </Typography><br />
                                 <Typography>
-                                <span className={classes.parahHead}>7: Information</span> <br /><br />
+                                <span className={classes.parahHead}>7: Refund policy</span> <br /><br />
 
-                                7.1. Where we have requested information from you to provide Food Delivery, 
+                                7.1. You as a customer can cancel your order  up to the cut-off 
+                                time of 10 minutes from which you have placed an order. To do 
+                                this : <br /><br />
+                                
+                                - Login to your Urged Account<br />
+                                - Go to order history package<br />
+                                - Click on Cancel Order for the order you wish to cancel<br /><br /> 
+
+                                In such a case we will refund any payments already made 
+                                by you for the order.<br /><br />
+
+                                7.2. Customers are also refunded for the reasons below:<br /><br />
+
+                                If a purchased item is missing, we’ll refund the customer 
+                                the sales price of the item (including tax) at the time of 
+                                the order.<br /> 
+                                If an entire order is incorrect, the customer is 
+                                refunded for the sales price of the entire order (including tax) 
+                                and the delivery fee. <br />
+                                </Typography><br />
+                                <Typography>
+                                <span className={classes.parahHead}>8: Information</span> <br /><br />
+
+                                8.1. Where we have requested information from you to provide Food Delivery, 
                                 Goods or Services you agree to provide us with accurate and complete information.<br /><br />
 
-                                7.2. You authorize us to use, store or otherwise process your personal information 
+                                8.2. You authorize us to use, store or otherwise process your personal information 
                                 in order to provide the Food Delivery, Goods or Services to you and for marketing 
                                 and credit control purposes (the "Purpose"). The Purpose may include the disclosure 
                                 of your personal information to selected third parties from time to time where we 
@@ -371,11 +394,11 @@ export const TermsOfServiceScreen: React.FC = function TermsOfServiceScreen() {
                                 or where this is required by law or in order to provide the Food Delivery, Goods or 
                                 Service to you. More information can be found in our Privacy Policy.<br /><br />
 
-                                7.3. You are entitled to request a copy of the personal information we hold on you. 
+                                8.3. You are entitled to request a copy of the personal information we hold on you. 
                                 Please contact us if you wish to request this information.<br />
                                 </Typography><br />
                                 <Typography>
-                                <span className={classes.parahHead}>8: Linked Sites</span> <br /><br />
+                                <span className={classes.parahHead}>9: Linked Sites</span> <br /><br />
 
                                 There may be a number of links on our Website to third party 
                                 Websites which we believe may be of interest to you. We do not 
@@ -387,15 +410,15 @@ export const TermsOfServiceScreen: React.FC = function TermsOfServiceScreen() {
 
                                 </Typography><br />
                                 <Typography>
-                                <span className={classes.parahHead}>9: Complaints</span> <br /><br />
+                                <span className={classes.parahHead}>10: Complaints</span> <br /><br />
 
                                 We take complaints very seriously and aim to respond to 
                                 your complaints within 5 business days. All complaints 
                                 should be addressed to wecare@urgedinternational.com.<br />
                                 </Typography><br />
                                 <Typography>
-                                <span className={classes.parahHead}>10: Limitation of Liability</span><br /><br /> 
-                                10.1. Great care has been taken to ensure that the information 
+                                <span className={classes.parahHead}>11: Limitation of Liability</span><br /><br /> 
+                                11.1. Great care has been taken to ensure that the information 
                                 available on this Website is correct and error free. We apologize 
                                 for any errors or omissions that may have occurred. We cannot 
                                 warrant that use of the Website will be error free or fit for 
@@ -405,13 +428,13 @@ export const TermsOfServiceScreen: React.FC = function TermsOfServiceScreen() {
                                 Website and we do not make any warranty whatsoever, whether express 
                                 or implied, relating to fitness for purpose, or accuracy.<br /><br />
 
-                                10.2. By accepting these terms of use you agree to relieve us from any 
+                                11.2. By accepting these terms of use you agree to relieve us from any 
                                 liability whatsoever arising from your use of information from any 
                                 third party, or your use of any third party website, or your 
                                 consumption of any food or beverages from a Participating 
                                 Restaurant.<br /><br />
 
-                                10.3. We disclaim any and all liability to you for the supply of 
+                                11.3. We disclaim any and all liability to you for the supply of 
                                 the Food Delivery, Goods and Services to the fullest extent 
                                 permissible under applicable law. This does not affect your 
                                 statutory rights as a consumer. If we are found liable for any 
@@ -422,12 +445,12 @@ export const TermsOfServiceScreen: React.FC = function TermsOfServiceScreen() {
                                 liability does not apply to personal injury or death arising as a 
                                 direct result of our negligence.<br /><br />
 
-                                10.4. We do not accept any liability for any delays, failures, errors 
+                                11.4. We do not accept any liability for any delays, failures, errors 
                                 or omissions or loss of transmitted information, viruses or other 
                                 contamination or destructive properties transmitted to you or your 
                                 computer system via our Website.<br /><br />
 
-                                10.5. We shall not be held liable for any failure or delay in 
+                                11.5. We shall not be held liable for any failure or delay in 
                                 performing Services or delivering Goods where such failure arises as a 
                                 result of any act or omission, which is outside our reasonable control 
                                 such as all overwhelming and unpreventable events caused directly and 
@@ -437,26 +460,26 @@ export const TermsOfServiceScreen: React.FC = function TermsOfServiceScreen() {
                                 compliance with any law or governmental order, rule, regulation or 
                                 direction and acts of third parties.<br /><br />
 
-                                10.6. If we have contracted to provide identical or similar order to 
+                                11.6. If we have contracted to provide identical or similar order to 
                                 more than one Customer and are prevented from fully meeting our 
                                 obligations to you by reason of an Event of Force Majeure, we may 
                                 decide at our absolute discretion which orders we will fill and to 
                                 what extent.<br /><br />
 
-                                10.7. The products sold by us are provided for private domestic and 
+                                11.7. The products sold by us are provided for private domestic and 
                                 consumer use only. Accordingly, we do not accept liability for any 
                                 indirect loss, consequential loss, loss of data, loss of income or 
                                 profit, loss of damage to property and/or loss from claims of third 
                                 parties arising out of the use of the Website or for any products or 
                                 services purchased from us.<br /><br />
 
-                                10.8. We have taken all reasonable steps to prevent Internet fraud and 
+                                11.8. We have taken all reasonable steps to prevent Internet fraud and 
                                 ensure any data collected from you is stored as securely and safely as 
                                 possible. However, we cannot be held liable in the extremely unlikely 
                                 event of a breach in our secure computer servers or those of third 
                                 parties.<br /><br />
 
-                                10.9. In the event UrgedInternational has a reasonable belief that there exists 
+                                11.9. In the event UrgedInternational has a reasonable belief that there exists 
                                 an abuse of vouchers and/or discount codes or in suspected instances 
                                 of fraud, UrgedInternational may cause the shopper (or customer) to be blocked 
                                 immediately and reserves the right to refuse future service. 
@@ -464,56 +487,56 @@ export const TermsOfServiceScreen: React.FC = function TermsOfServiceScreen() {
                                 codes, UrgedInternational reserves the right to seek compensation from any and 
                                 all violators.<br /><br />
 
-                                10.10. Offers are subject to UrgedInternational's discretion and may be 
+                                11.10. Offers are subject to UrgedInternational's discretion and may be 
                                 withdrawn at any time and without notice.<br />
                                 </Typography><br />
                                 <Typography>
-                                <span className={classes.parahHead}>11: General</span><br /><br />
+                                <span className={classes.parahHead}>12: General</span><br /><br />
 
-                                11.1. All prices are in India Rupees. GST is included where indicated<br /><br />
-                                11.2. We may subcontract any part or parts of the Services or Goods that we provide 
+                                12.1. All prices are in India Rupees. GST is included where indicated<br /><br />
+                                12.2. We may subcontract any part or parts of the Services or Goods that we provide 
                                 to you from time to time and we may assign or novate any part or parts of our rights 
                                 under these Terms and Conditions without your consent or any requirement to notify 
                                 you.<br /><br />
 
-                                11.3. We may alter or vary the Terms and Conditions at any time without notice to you.<br /><br />
-                                11.4. Payment must be made either at the time of ordering the Food 
+                                12.3. We may alter or vary the Terms and Conditions at any time without notice to you.<br /><br />
+                                12.4. Payment must be made either at the time of ordering the Food 
                                 Delivery, Goods or Services from us by credit card or at the time 
                                 of delivery by cash. Failure to pay on time will result in the 
                                 cancellation of your order.<br /><br />
 
-                                11.5. Do not use or launch any automated system or program in 
+                                12.5. Do not use or launch any automated system or program in 
                                 connection with our website or its online ordering functionality;<br /><br />
 
-                                11.6. Do not collect or harvest any personally identifiable information 
+                                12.6. Do not collect or harvest any personally identifiable information 
                                 from the website, use communication systems provided by the website 
                                 for any commercial solicitation purposes, solicit for any reason 
                                 whatsoever any users of the website with respect to their submissions 
                                 to the website, or publish or distribute any vouchers or codes in 
                                 connection with the website, or scrape or hack the website.<br /><br />
 
-                                11.7. The Terms and Conditions together with the Privacy Policy, any 
+                                12.7. The Terms and Conditions together with the Privacy Policy, any 
                                 order form and payment instructions constitute the entire agreement 
                                 between you and us. No other terms whether expressed or implied shall 
                                 form part of this Agreement. In the event of any conflict between 
                                 these Terms and Conditions and any other term or provision on the 
                                 Website, these Terms and Conditions shall prevail.<br /><br />
 
-                                11.8. If any term or condition of our Agreement shall be deemed 
+                                12.8. If any term or condition of our Agreement shall be deemed 
                                 invalid, illegal or unenforceable, the parties hereby agree that such 
                                 term or condition shall be deemed to be deleted and the remainder of 
                                 the Agreement shall continue in force without such term or condition.<br /><br />
 
-                                11.9. These Terms and Conditions and our Agreement shall be governed 
+                                12.9. These Terms and Conditions and our Agreement shall be governed 
                                 by and construed in accordance with the laws of India. The parties 
                                 hereto submit to the exclusive jurisdiction of the courts of India.<br /><br />
 
-                                11.10. No delay or failure on our part to enforce our rights or 
+                                12.10. No delay or failure on our part to enforce our rights or 
                                 remedies under the Agreement shall constitute a waiver on our part 
                                 of such rights or remedies unless such waiver is confirmed in 
                                 writing.<br /><br />
 
-                                11.11. These Terms and Conditions and a contract (and all 
+                                12.11. These Terms and Conditions and a contract (and all 
                                 non-contractual obligations arising out of or connected to them) 
                                 shall be governed and construed in accordance with India Laws. 
                                 Both we and you hereby submit to the non-exclusive jurisdiction of 
