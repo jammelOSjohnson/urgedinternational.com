@@ -435,20 +435,25 @@ const resolvers = {
         },
         
         addMailbox: async(_,{Status, Uid, MailboxNum}) => {
-            //console.log('im here');
-            let id = new mongoose.Types.ObjectId(Uid);
-            //console.log(id)
-            const mBox = new Mailbox({Status, Uid: id, MailboxNum});
-            const newmBox =  await mBox.save();
+            let mBoxFound = await Mailbox.findOne({Uid}).populate('Uid');
+            if(mBoxFound === null){
+                //console.log('im here');
+                let id = new mongoose.Types.ObjectId(Uid);
+                //console.log(id)
+                const mBox = new Mailbox({Status, Uid: id, MailboxNum});
+                const newmBox =  await mBox.save();
 
-            const mBoxId = newmBox._id;
-            //console.log(newmBox)
-            //console.log(mBoxId);
-            
-            const finalMBox = await Mailbox.find().where("_id").equals(mBoxId).populate("Uid");
-            //console.log(finalMBox);
-            
-            return finalMBox[0];
+                const mBoxId = newmBox._id;
+                //console.log(newmBox)
+                //console.log(mBoxId);
+                
+                const finalMBox = await Mailbox.find().where("_id").equals(mBoxId).populate("Uid");
+                //console.log(finalMBox);
+                
+                return finalMBox[0];
+            }else{
+                return mBoxFound;
+            }
         },
 
         updateRestaurantById: async(_, {
