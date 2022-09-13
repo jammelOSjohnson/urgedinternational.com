@@ -5,11 +5,13 @@ import MUIDataTable from "mui-datatables";
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { EditRounded } from "@material-ui/icons/";
-import { createStyles, FormControl, makeStyles, MenuItem, Select, Snackbar, Theme } from '@material-ui/core';
+import { Backdrop, Button, createStyles, Fade, FormControl, Grid, makeStyles, MenuItem, Modal, Select, Snackbar, Theme } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
 import { GET_ORDERS, GET_ORDERS_BY_DATE_AND_TYPE } from '../../../GraphQL/Queries';
 import { Alert } from '@material-ui/lab';
 import { Calendar } from './Calendar';
+import clsx from 'clsx';
+import { Link } from "react-router-dom";
   
 
   const columns = [
@@ -111,6 +113,42 @@ import { Calendar } from './Calendar';
         minWidth: 120,
         marginLeft: "0px"
     },
+    modal: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    paper: {
+        backgroundColor: theme.palette.primary.contrastText,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+        minWidth: "34%",
+        maxWidth: "400px",
+        borderRadius: "20px",
+        borderColor: theme.palette.primary.light,
+        position: "relative"
+    },
+    cartIcon: {
+        position: "absolute",
+        top: 18,
+        right: 10
+    },
+    Button: {
+      backgroundColor: "#FF5E14",
+      border: "1.21951px solid #FFFFFF",
+      height: "41px",
+      width: "113px",
+      borderRadius: 36,
+    },
+    btnfonts: {
+      fontFamily: "PT Sans",
+      fontSize: "13px",
+      lineHeight: "16.82px",
+      fontWeight: "bolder",
+      color: "#FAFAFA",
+      textTransform: "none"
+    },
     }),
   );
   
@@ -120,12 +158,17 @@ import { Calendar } from './Calendar';
     const classes = useStyles();
     var { value }  = useAppData();
     var { orders, UpdateOrder, currentUser, userRolef, refreshingOrderTables } = value;
-    var history = useHistory();
 
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [open, setOpen] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
+    const [open3, setOpen3] = React.useState(false);
+    const [selorderIndex, setSelectedOrderIndex] = React.useState(null);
+    const [selorderStatus, setSelectedOrderStatus] = React.useState('');
+    var history = useHistory();
+    var location = history.location;
+    var referralPath = location.pathname;
 
     //const {data} = useQuery(GET_ORDERS);
     const {data} = useQuery(GET_ORDERS_BY_DATE_AND_TYPE,{
@@ -216,11 +259,34 @@ import { Calendar } from './Calendar';
       // setValues({...values,[event.target.name]:event.target.value, itemName: selectedItem.ItemName, itemCost: selectedItem.ItemCost, itemDescription: selectedItem.ItemDescription});
       try{
         let status = event.target.value;
-        handleSubmit(status,index);
+        if(status !== "Cancelled"){
+          handleSubmit(status,index);
+        }else{
+          handleOpen3(index, status);
+        }
       }catch(err){
         console.log(err);
         setOpen2(true);
       }
+    };
+
+    const handleOpen3 = (index, Status: React.SetStateAction<string>) => {
+      try
+      {
+        setSelectedOrderIndex(index);
+        setSelectedOrderStatus(Status);
+        setOpen3(true);
+      }catch(err){
+
+      }
+      
+    };
+
+    const handleClose3 = () => {
+      let status = selorderStatus;
+      let index = selorderIndex;
+      handleSubmit(status,index);
+      setOpen3(false);
     };
 
     const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
@@ -237,6 +303,10 @@ import { Calendar } from './Calendar';
       }
 
       setOpen2(false);
+    };
+
+    const handleCloseX2 = () => {
+      setOpen3(false);
     };
 
 
@@ -285,6 +355,9 @@ import { Calendar } from './Calendar';
                           <MenuItem value={"Pending"} style={{color: "red"}}>
                             Pending
                           </MenuItem>
+                          <MenuItem value={"Cancelled"} style={{color: "red"}}>
+                            Cancelled
+                          </MenuItem>
                           <MenuItem value={"Ordered"}>Ordered</MenuItem>
                           <MenuItem value={"Picked Up"}>Picked Up</MenuItem>
                           <MenuItem value={"In Transit"}>In Transit</MenuItem>
@@ -329,6 +402,39 @@ import { Calendar } from './Calendar';
                 Unable to update order at this time.
             </Alert>
         </Snackbar>
+        {/*DELETE MODAL */}
+        <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            className={classes.modal}
+            open={open3}
+            onClose={handleCloseX2}
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+            timeout: 500,
+            }}
+        >
+            <Fade in={open3}>
+                <div className={clsx(classes.paper, 'modalMobile')}>
+                    <h3 id="transition-modal-title" style={{textAlign: "center", color: "#F7B614"}}>Are You Sure?</h3>
+                    <Link to={referralPath} className={classes.cartIcon} onClick={handleCloseX2}>
+                            <img src="Images/CartCloseIcon.png" alt="closemodal" />
+                    </Link>
+                    <br />
+                    <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                        <Grid item xs={12} style={{textAlign: "center"}}>
+                            <Button variant="contained" 
+                                style={{backgroundColor: "red", fontFamily: "PT Sans"}} onClick={handleClose3}
+                                color="secondary" size="small" className={`${classes.Button} ${classes.btnfonts}`}
+                                fullWidth>
+                                Cancel
+                            </Button>
+                            </Grid>
+                        </Grid>
+                </div>
+            </Fade>
+        </Modal>
         <style>
         {
           `
