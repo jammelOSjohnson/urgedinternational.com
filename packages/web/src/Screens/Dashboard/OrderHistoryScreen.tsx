@@ -54,9 +54,9 @@ export const OrdersHistory: React.FC = function OrdersHistory () {
                                 {/* <HistoryHeaderBar /> */}
                                 <HistoryTable />
                             </Grid>
-                            <Grid item xs={12}>
+                            {/* <Grid item xs={12}>
                                 <DashboardFooter />
-                            </Grid>
+                            </Grid> */}
                         </Grid>
                     </Grid>
                 </Container>

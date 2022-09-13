@@ -121,7 +121,6 @@ export const Cart: React.FC = function Cart() {
                 aria-haspopup="true"
                 onClick={handleToggle}
                 id='cart-icon-header-right'
-                to={''}
             >
                 <Badge badgeContent={cartItems.length} color="primary">
                     <ShoppingCartRounded className={classes.noti} />
@@ -184,7 +183,7 @@ export const Cart: React.FC = function Cart() {
                             </Grid>
                             {cartItems.length > 0 ?
                                 <Grid item xs={12} style={{textAlign: "center"}}>
-                                    <Link onClick={handleCheckout} className={classes.link} to={''}>
+                                    <Link onClick={handleCheckout} className={classes.link}>
                                         <Button size="large"  fullWidth={true} className={clsx(classes.Button,classes.btnfonts)}   type="button">
                                                 Checkout 
                                         </Button>
