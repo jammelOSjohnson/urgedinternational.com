@@ -71,13 +71,15 @@ export const HeaderRight: React.FC = function HeaderRight() {
             <>
                 <Container id='right-container' maxWidth="xl" className={clsx(classes.main, classes.notScrolled)} onScroll={handleScroll}>
                     <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
-                        <Grid item xs={6} spacing={1}>
+                        <Grid item xs={6}>
                             <User />
                         </Grid>
-                        <Grid container direction="row" xs={6} spacing={1}>
-                            <Grid item xs={12} spacing={0} style={{marginTop: "10%"}}>
-                                <Notification /> <span style={{marginRight: "10%"}}></span>
-                                <Cart />
+                        <Grid item xs={6}>
+                            <Grid container direction="row" spacing={0}>
+                                <Grid item xs={12} style={{marginTop: "10%"}}>
+                                    <Notification /> <span style={{marginRight: "10%"}}></span>
+                                    <Cart />
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -103,13 +105,15 @@ export const HeaderRight: React.FC = function HeaderRight() {
             <>
                 <Container id='right-container' maxWidth="xl" className={clsx(classes.main, classes.notScrolled)} onScroll={handleScroll}>
                     <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
-                        <Grid item xs={6} spacing={1}>
+                        <Grid item xs={6}>
                             <User />
                         </Grid>
-                        <Grid container direction="row" xs={6} spacing={1}>
-                            <Grid item xs={12} spacing={0} style={{marginTop: "10%"}}>
-                                <Notification /> <span style={{marginRight: "10%"}}></span>
-                                <Cart />
+                        <Grid item xs={6}>
+                            <Grid container direction="row" spacing={1}>
+                                <Grid item xs={12} style={{marginTop: "10%"}}>
+                                    <Notification /> <span style={{marginRight: "10%"}}></span>
+                                    <Cart />
+                                </Grid>
                             </Grid>
                         </Grid>
                     </Grid>

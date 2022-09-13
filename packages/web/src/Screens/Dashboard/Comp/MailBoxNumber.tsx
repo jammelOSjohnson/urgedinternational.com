@@ -40,3 +40,5 @@ export const MailBoxNumber: React.FC = function MailBoxNumber() {
     }
     
 }
+
+export default MailBoxNumber;

@@ -2,8 +2,8 @@ import { Container, Grid, makeStyles, createStyles, Theme } from '@material-ui/c
 import React from 'react';
 //Import Components
 import { HeaderRight } from './Comp/HeaderRight';
-import { DashboardFooter } from './Comp/DashboardFooter';
 import { Rates } from './Comp/Rates';
+const DashboardFooter = React.lazy(() => import('./Comp/DashboardFooter'));
 const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
 const Sidebar = React.lazy(() => import('./Comp/Sidebar'));
 
