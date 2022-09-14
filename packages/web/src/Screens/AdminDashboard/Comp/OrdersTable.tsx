@@ -164,7 +164,7 @@ import { Link } from "react-router-dom";
     const [open, setOpen] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
     const [open3, setOpen3] = React.useState(false);
-    const [selorderIndex, setSelectedOrderIndex] = React.useState(null);
+    const [selorderIndex, setSelectedOrderIndex] = React.useState(0);
     const [selorderStatus, setSelectedOrderStatus] = React.useState('');
     var history = useHistory();
     var location = history.location;
@@ -428,7 +428,7 @@ import { Link } from "react-router-dom";
                                 style={{backgroundColor: "red", fontFamily: "PT Sans"}} onClick={handleClose3}
                                 color="secondary" size="small" className={`${classes.Button} ${classes.btnfonts}`}
                                 fullWidth>
-                                Cancel
+                                Cancel Order #{orders[selorderIndex]?._id}
                             </Button>
                             </Grid>
                         </Grid>
