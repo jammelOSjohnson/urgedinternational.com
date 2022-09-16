@@ -205,14 +205,48 @@ export const HistoryTable: React.FC = function HistoryTable () {
         const estTime = moment.tz(now, "America/Jamaica").format("YYYY-MM-DD h:mm a");
         //console.log(item);
         var orderItems = "";
-        orderItems = orderItems + item.OrderItems.map((item,index) => {
-          return(
-            item.chickenFlavour1 !== "" && item.chickenFlavour1 !== "Select Flavour" && item.chickenFlavour1 !== null && item.chickenFlavour1 !== undefined?
-          `${item.itemName + ": "}\n${item.chickenFlavour1 + " | "}\n${item.chickenFlavour2 + " | "}
-          \n${item.drink !== "Select Drink"? item.drink + " | ": "" + " | "}\n${item.otherIntructions + " | "}\n${'Not Available? ' + item.ifnotAvailable}` :
-          `${item.itemName + ": "}\n${item.drink !== "Select Drink"? item.drink + " | ": "" + " | "}\n${item.otherIntructions + " | "}\n${item.side!== undefined && item.side!== "Select Side"?'Side:' + item.side + " | ": ""}\n${'Not Available? ' + item.ifnotAvailable}`
+        orderItems =  item.OrderItems.map((item,index) => {
+          let IName = `Item Name: ${item.itemName}`;
+          let IFlavor1 = item.chickenFlavour1 !== "" && 
+                        item.chickenFlavour1 !== "Select Flavour" &&
+                        item.chickenFlavour1 !== null 
+                        && item.chickenFlavour1 !== undefined?
+                        `1st Flavor Choice: ${item.chickenFlavour1 }`: "";
+
+          let IFlavor2 = item.chickenFlavour2 !== "" && 
+                        item.chickenFlavour2 !== "Select Flavour" &&
+                        item.chickenFlavour2 !== null && 
+                        item.chickenFlavour2 !== undefined?
+                        `2nd Flavor Choice: ${item.chickenFlavour2}`: "";
+
+          let Drink = item.drink !== "Select Drink"? 
+                      `Drink: ${item.drink}` : "";
+
+          let fianlDecision = item.otherIntructions != ""?
+              `If not available: ${item.otherIntructions}`: "";
+          
+          return (
+            <>
+              <Typography style={{fontWeight: 900}}>
+                {IName}
+              </Typography>
+              <Typography>
+                {IFlavor1}
+              </Typography>
+              <Typography>
+                {IFlavor2}
+              </Typography>
+              <Typography>
+                {Drink}
+              </Typography>
+              <Typography>
+                {fianlDecision}
+              </Typography>
+            </>
           )
         })
+
+        console.log(orderItems);
 
         let row = {
           id: `#${item._id}`,
