@@ -305,7 +305,7 @@ import clsx from 'clsx';
     
     if(userRolef !== undefined && orders.length !== 0){
        if(userRolef === "Rider"){
-        let filteredOrders = orders.filter((item) => item.OrderStatus !== "Delivered");
+        let filteredOrders = orders.filter((item) => item.OrderStatus !== "Delivered" && item.OrderStatus !== "Cancelled" && item.OrderStatus !== "Not Assigned");
         filteredOrders.map((item, index) => {
           const now = new Date(parseInt(item.OrderDate, 10));
           const estTime = moment.tz(now, "America/Jamaica").format("YYYY-MM-DD h:mm a");
