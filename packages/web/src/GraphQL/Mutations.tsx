@@ -138,6 +138,42 @@ export const CREATE_RESTAURANT_MUTATION = gql`
     }
 `
 
+export const CREATE_STAFF_MUTATION = gql`
+    mutation createStaff(
+        $MenuItems: JSONObject,
+        $Id: String! ,$FirstName: String!, 
+        $LastName: String!, $Email: String!, 
+        $AddressLine1: String, $AddressLine2: String, 
+        $City: String, $ContactNumber: String, $isAvailable: Boolean, 
+        $disabled: Boolean, $ImageName: String) {
+        createStaff(
+            MenuItems: $MenuItems, Id: $Id ,FirstName: $FirstName, LastName: $LastName, Email: $Email, 
+            AddressLine1: $AddressLine1, AddressLine2: $AddressLine2, City: $City,
+            ContactNumber: $ContactNumber, isAvailable: $isAvailable, disabled: $disabled, ImageName: $ImageName
+        ){
+            _id
+            Id
+            FirstName
+            LastName
+            Email
+            AddressLine1
+            AddressLine2
+            City
+            ContactNumber
+            MenuItems{
+                MenuCategory
+                ItemName
+                ItemCost
+                ItemDescription
+                ImageName
+            }
+            isAvailable
+            disabled
+            ImageName
+        }
+    }
+`
+
 export const GET_RESTAURANTS = gql`
     mutation getRestaurants {
         getRestaurants{

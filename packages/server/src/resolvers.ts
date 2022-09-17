@@ -188,6 +188,17 @@ const resolvers = {
             return user.save();
         },
 
+        createStaff: async(_, {Id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, MenuItems, isAvailable, disabled, ImageName}) => {
+            const checkUser =  await User.findOne({Id});
+            if(checkUser === null){
+                const user = new User({Id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, MenuItems, isAvailable, disabled, ImageName});
+                return user.save();
+            }else{
+                return checkUser;
+            }
+            
+        },
+
         getUser: async (_,{Id}) => {
             return await User.findOne({Id}).populate({path: "categories", model: "category"}); 
         },

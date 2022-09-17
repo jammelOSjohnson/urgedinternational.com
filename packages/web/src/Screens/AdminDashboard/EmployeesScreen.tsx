@@ -3,6 +3,7 @@ import React from 'react';
 //Import Components
 import { HeaderRight } from './Comp/HeaderRight';
 import { EmployeeCardList } from './Comp/EmployeeCardList';
+import AddStaff from './Comp/AddStaff';
 const Sidebar = React.lazy(() => import('./Comp/Sidebar'));
 const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
 
@@ -44,6 +45,7 @@ export const EmployeesScreen: React.FC = () => {
                             </Grid>
                             <Grid item xs={12}>
                                 {/* <FilterBar /> */}
+                                <AddStaff /><br /><br />
                                 <EmployeeCardList />
                             </Grid>
                         </Grid>

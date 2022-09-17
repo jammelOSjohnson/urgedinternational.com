@@ -32,7 +32,8 @@ import {
         GET_ORDER_REJECTLIST_BY_ORDERID,
         CREATE_ORDER_REJECTLIST,
         UPDATE_ORDER_REJECTLIST,
-        UPDATE_USER_MUTATION
+        UPDATE_USER_MUTATION,
+        CREATE_STAFF_MUTATION
       } from '../GraphQL/Mutations';
 import { useMutation } from '@apollo/client';
 import sendEmail from "../email.js";
@@ -258,6 +259,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const [createUser] = useMutation(CREATE_USER_MUTATION);
     const [updateUser] = useMutation(UPDATE_USER_MUTATION);
     const [createRestaurant] = useMutation(CREATE_RESTAURANT_MUTATION);
+    const [createStaff] = useMutation(CREATE_STAFF_MUTATION);
     const [getUser] = useMutation(GET_USER_MUTATION);
     const [getUserInRole] = useMutation(GET_USER_IN_ROLE);
     const [getRole] = useMutation(GET_ROLE);
@@ -571,7 +573,14 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         if(userType !== undefined && userType !== null){
           rID = userType === 'restaurant' ? 
             process.env.REACT_APP_RESTAURANT_ROLE_ID
-            : process.env.REACT_APP_CUSTOMER_ROLE_ID;
+            : userType === 'Admin'?
+              process.env.REACT_APP_ADMIN_ROLE_ID
+            : userType === 'Urged_Staff'?
+              process.env.REACT_APP_URGEDSTAFF_ROLE_ID
+            : userType === 'Rider'?
+              process.env.REACT_APP_RIDER_ROLE_ID
+            : 
+              process.env.REACT_APP_CUSTOMER_ROLE_ID;
         }
         var userInRole = {
           UserID: uid,
@@ -580,7 +589,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         let afterAddUserToRole = await addUserToRole({variables: {UserID: userInRole.UserID, RoleID: userInRole.RoleID}}).then(function (response3) {
           if (response3.data.addUserToRole !== null) {
             //console.log("User successfully added to role!");  
-            payload.userRolef = "Customer";
+            payload.userRolef = userType;
             //console.log("What is in payload after creating role: ");
             //console.log(payload);
             return payload;
@@ -719,7 +728,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       
 
       
-       await getUser({variables: { Id: uid}}).then(function(response) {
+      await getUser({variables: { Id: uid}}).then(function(response) {
         ////console.log("Checking user result");
         if (response.data.getUser !== null) {
           ////console.log("user exist");
@@ -798,6 +807,117 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
                   //get updated restaurant list
                   console.log('get updated restaurant list');
                   fetchRestaurants(currentState);
+                  return userRoleRes;
+                });
+
+                return true;
+              }
+            
+          }).catch(function (error) {
+            console.error("Error writing restaurant info: ", error);
+            return false;
+          });
+    
+          return payload;
+        }
+      }).catch(function(err){
+        ////console.log(err);
+      }); 
+      ////console.log("user ref b4 fetch role is: ");
+      ////console.log(userRef);
+      
+    };
+
+    var staffSignUp = async function staffSignUp(uid, payload, currentState, newStaff) {
+      ////console.log("User id is: ");
+      ////console.log(uid);
+      ////console.log("the currentState is: ");
+      ////console.log(currentState);
+      ////console.log("fetching user");
+      
+
+      
+      await getUser({variables: { Id: uid}}).then(function(response) {
+        ////console.log("Checking user result");
+        if (response.data.getUser !== null) {
+          ////console.log("user exist");
+          ////console.log(response);
+          ////console.log("what is inside payload");
+          ////console.log(payload);
+          // Convert to City object
+          var user = response.data.getUser;
+    
+          if (user !== null) {
+            payload.userInfo._id = user._id;
+            payload.userInfo.contactNumber = user.ContactNumber;
+            payload.userInfo.email = user.Email;
+            payload.userInfo.fullName = user.FirstName;
+            payload.loggedIn = true;
+            payload.userInfo.addressLine1 = user.AddressLine1 !== null && user.AddressLine1 !== undefined ? user.AddressLine1 : "";
+            payload.userInfo.addressLine2 = user.AddressLine2 !== null && user.AddressLine2 !== undefined ? user.AddressLine2 : "";
+            payload.userInfo.disabled = user.disabled !== null && user.disabled !== undefined ? user.disabled : "";
+            payload.userInfo.isAvailable = user.isAvailable !== null && user.isAvailable !== undefined ? user.isAvailable : "";
+            payload.userInfo.city = user.City !== null && user.City !== undefined ? user.City : "";
+          }
+    
+          return payload;
+        } else {
+          ////console.log("No such user!")
+          ////console.log("creating new user");
+          //////console.log("contact number is: " + currentState.contact);
+          var user2 = {
+            MenuItems: newStaff.Menu,
+            Id: uid,
+            FirstName: payload.userInfo.fullName !== null ? payload.userInfo.fullName : "",
+            LastName: payload.userInfo.fullName !== null ? payload.userInfo.fullName : "",
+            Email: payload.userInfo.email !== null ? payload.userInfo.email : "",
+            AddressLine1: newStaff.StreetAddress,
+            AddressLine2: newStaff.StreetAddress2,
+            City: newStaff.City,
+            ContactNumber: newStaff.Contact,
+            isAvailable: newStaff.isAvailable,
+            disabled: newStaff.disabled,
+            ImageName: newStaff.ImageName
+          };
+          //verified: false,
+          //verifiedemailsent: false,
+          //postalCode: "",
+          //stateOrparish: ""
+          
+          createStaff({variables: {...user2}}).then(async function (response2) {
+              if(response2.data.createStaff !== null){
+                ////console.log("User info  successfully written!");
+                ////console.log(response2.data);
+                // payload.userInfo._id = user._id;  
+                // payload.userInfo.contactNumber = user2.ContactNumber;
+                // payload.userInfo.email = user2.Email;
+                // payload.userInfo.fullName = user2.FirstName;
+                // payload.loggedIn = true;
+                // payload.userInfo.addressLine1 = user2.AddressLine1 !== null && user2.AddressLine1 !== undefined ? user2.AddressLine1 : "";
+                // payload.userInfo.addressLine2 = user2.AddressLine2 !== null && user2.AddressLine2 !== undefined ? user2.AddressLine2 : "";
+                // payload.userInfo.city = user2.City !== null && user2.City !== undefined ? user2.City : "";
+                
+                //var userRoleResf = undefined;
+                await userHasRole(uid, payload, 'restaurant').then(function (userRoleRes) {
+                  ////console.log("Final user ref after fetch role is: ");
+                  ////console.log(userRoleRes);
+                  //userRoleResf = userRoleRes;
+                  //Send Welcome Email
+                  // var RequestParams = {
+                  //   from_name: payload.userInfo.fullName,
+                  //   user_email: payload.userInfo.email,
+                  // }
+                  
+                  // sendEmail(emailServiceId, emailNewCustomerTemplate, RequestParams, emailUserId).then(function (res) {
+                  //   dispatch({
+                  //     type: "fetch_userinfo",
+                  //     payload: userRoleResf
+                  //   });
+                  // })
+
+                  //get updated restaurant list
+                  console.log('get updated restaurant list');
+                  fetchRiders(currentState);
                   return userRoleRes;
                 });
 
@@ -2457,6 +2577,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         UpdateRestaurantBy_ID,
         fetchCategories,
         restaurantSignUp,
+        staffSignUp,
         signup2,
         getShippingAddress,
         UpdateShippingAddress,
