@@ -898,7 +898,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
                 // payload.userInfo.city = user2.City !== null && user2.City !== undefined ? user2.City : "";
                 
                 //var userRoleResf = undefined;
-                await userHasRole(uid, payload, 'restaurant').then(function (userRoleRes) {
+                await userHasRole(uid, payload, newStaff.Role).then(function (userRoleRes) {
                   ////console.log("Final user ref after fetch role is: ");
                   ////console.log(userRoleRes);
                   //userRoleResf = userRoleRes;
