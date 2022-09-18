@@ -858,6 +858,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             payload.userInfo.disabled = user.disabled !== null && user.disabled !== undefined ? user.disabled : "";
             payload.userInfo.isAvailable = user.isAvailable !== null && user.isAvailable !== undefined ? user.isAvailable : "";
             payload.userInfo.city = user.City !== null && user.City !== undefined ? user.City : "";
+            payload.userInfo.Position = user.Position !== null && user.Position !== undefined ? user.Position : "";
           }
     
           return payload;
@@ -877,7 +878,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             ContactNumber: newStaff.Contact,
             isAvailable: newStaff.isAvailable,
             disabled: newStaff.disabled,
-            ImageName: newStaff.ImageName
+            ImageName: newStaff.ImageName,
+            Position: newStaff.Role
           };
           //verified: false,
           //verifiedemailsent: false,

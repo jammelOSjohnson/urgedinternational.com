@@ -58,6 +58,10 @@ const UserSchema = new Schema({
     disabled: {
         type: Boolean,
         required: false
+    },
+    Position: {
+        type: String,
+        required: false
     }
 
 });

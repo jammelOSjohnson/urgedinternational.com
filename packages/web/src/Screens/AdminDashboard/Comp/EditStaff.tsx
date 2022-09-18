@@ -1,5 +1,5 @@
 import {  Grid, makeStyles, createStyles, Theme, Button, Modal, Fade, Backdrop, TextField, FormControl, MenuItem, InputLabel, Select } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { Link, useHistory } from "react-router-dom";
 import { ArrowForwardRounded } from "@material-ui/icons/";
@@ -129,7 +129,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const AddStaff: React.FC = () => {
     const classes = useStyles();
     var { value }  = useAppData();
-    var { signup2, staffSignUp } = value;
+    var { signup2, staffSignUp, selectedRider, riders } = value;
     const [open, setOpen] = React.useState(false);
     const [values, setValues] = React.useState<State>({
         Name: '',
@@ -254,6 +254,22 @@ export const AddStaff: React.FC = () => {
         }
     };
 
+    useEffect(() => {
+        if(riders.length > 0 && selectedRider !== undefined){
+            setValues({...values,
+                Name: riders[selectedRider].FirstName,
+                Email: riders[selectedRider].Email,
+                StreetAddress: riders[selectedRider].AddressLine1,
+                StreetAddress2: riders[selectedRider].AddressLine2,
+                City: riders[selectedRider].City,
+                Contact: riders[selectedRider].ContactNumber,
+                disabled: riders[selectedRider].disabled,
+                isAvailable: riders[selectedRider].isAvailable,
+                Role: riders[selectedRider].Position !== null && riders[selectedRider].Position !== undefined? riders[selectedRider].Position : "Select Staff Role"
+            });
+        }
+    }, [selectedRider])
+
     
 
     return (
@@ -261,7 +277,7 @@ export const AddStaff: React.FC = () => {
             <Button 
                 onClick={handleOpen}
                 className={classes.addOrgBtn}>
-                Add Staff
+                Edit Staff
             </Button>
             {/*Add USER Details Modal */}
             <Modal
@@ -278,7 +294,7 @@ export const AddStaff: React.FC = () => {
             >
                 <Fade in={open}>
                     <div className={clsx(classes.paper, 'modalMobile')}>
-                        <h3 id="transition-modal-title" style={{textAlign: "center", color: "#F7B614"}}>Member Details</h3>
+                        <h3 id="transition-modal-title" style={{textAlign: "center", color: "#F7B614"}}>Edit Member Details</h3>
                         <Link to={referralPath} className={classes.cartIcon} onClick={handleCloseX}>
                                 <img src="Images/CartCloseIcon.png" alt="closemodal" />
                         </Link>
@@ -313,6 +329,7 @@ export const AddStaff: React.FC = () => {
                                                         variant="outlined"
                                                         placeholder="Enter Email"
                                                         fullWidth
+                                                        disabled
                                                     />
                                                 </FormControl>
                                             </Grid>

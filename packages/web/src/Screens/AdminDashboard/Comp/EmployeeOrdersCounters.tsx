@@ -22,6 +22,7 @@ import {
 //import { GET_ORDERS_BY_DATE_AND_TYPE } from '../../../GraphQL/Queries';
 import { EmployeeDetailsRight } from './EmployeeDetailsRight';
 import { Calendar } from './Calendar';
+import EditStaff from './EditStaff';
 
   ChartJS.register(
     CategoryScale,
@@ -250,15 +251,18 @@ export const EmployeeOrdersCounters: React.FC = function EmployeeOrdersCounters(
                 <CardTotal />
             </Grid>
             <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                <Grid item xs={12} style={{textAlign: "right"}}>
+                <Grid item xs={12} md={9}>
                     <Calendar type="" setStartDate={setStartDate} setEndDate={setEndDate} />
+                </Grid>
+                <Grid item xs={12} md={3}>
+                    <EditStaff />
                 </Grid>
             </Grid>
             <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                <Grid item xs={9}>
+                <Grid item xs={12} sm={9}>
                     <EmployeeOrdersTable />
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={12} sm={3}>
                     <EmployeeDetailsRight />
                 </Grid>
             </Grid>

@@ -227,6 +227,7 @@ export  const GET_RIDERS = gql`
             isAvailable
             disabled
             ImageName
+            Position
         }
     }
 `

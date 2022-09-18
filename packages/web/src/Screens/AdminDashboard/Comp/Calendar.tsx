@@ -166,8 +166,8 @@ export const Calendar: React.FC<Props> =  function Calendar ({type, setStartDate
       </Paper>
     </MuiPickersUtilsProvider> */}
     <form className={classes.container} noValidate >
-    <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-      <Grid item xs={10} md={4}>
+    <Grid container direction="row" spacing={1} className={classes.root} alignItems="flex-start">
+      <Grid item xs={12} sm={4}>
         <TextField
           id="datetime-local"
           label="Select Start Date"
@@ -180,7 +180,7 @@ export const Calendar: React.FC<Props> =  function Calendar ({type, setStartDate
           onChange={handleDateChange}
         />
       </Grid>
-      <Grid item xs={10} md={4}>
+      <Grid item xs={12} sm={4}>
         <TextField
           id="datetime-local2"
           label="Select End Date"

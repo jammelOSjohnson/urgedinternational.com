@@ -108,6 +108,25 @@ const typeDefs = /* GraphQL */`
         disabled: Boolean
     }
 
+    type User2 {
+        _id: ID,
+        Id: String! 
+        FirstName: String 
+        LastName: String 
+        Email: String! 
+        AddressLine1: String 
+        AddressLine2: String 
+        City: String 
+        ContactNumber: String
+        OpeningHrs: OpeningHrs
+        category: Category
+        MenuItems: [MenuItem]
+        ImageName: String
+        isAvailable: Boolean
+        disabled: Boolean
+        Position: String
+    }
+
     type OrderRejection {
         _id: ID,
         OrderId: Float!,
@@ -313,7 +332,7 @@ const typeDefs = /* GraphQL */`
 
         getRestaurants: [User!]!
 
-        getRiders: [User!]!
+        getRiders: [User2!]!
 
         getRider(_id: String): User!
 
