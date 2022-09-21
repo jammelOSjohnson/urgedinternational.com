@@ -9,6 +9,7 @@ import { LockRounded, EmailOutlined, PlayArrowRounded } from "@material-ui/icons
 import Alert from '@material-ui/lab/Alert';
 import { Link } from "react-router-dom";
 import  { auth } from '../../firebase';
+import { LiveChatWidget } from '@livechat/widget-react';
 
 interface State {
     email: string;
@@ -768,6 +769,11 @@ export const LoginScreen: React.FC = function LoginScreen() {
                     </div>
                 </Container>
             ): (<></>)}
+            {process.env.NODE_ENV !== 'development' ?
+                <LiveChatWidget license={process.env.REACT_LIVECHAT_LICENSE !== undefined? process.env.REACT_LIVECHAT_LICENSE : ""} />
+            :
+                <></>
+            }
         </>
     )
 }

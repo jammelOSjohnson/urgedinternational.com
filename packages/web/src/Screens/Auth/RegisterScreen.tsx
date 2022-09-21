@@ -8,6 +8,7 @@ import clsx from 'clsx';
 import { LockRounded, EmailOutlined, PlayArrowRounded, PersonRounded } from "@material-ui/icons/";
 import Alert from '@material-ui/lab/Alert';
 import { auth } from '../../firebase';
+import { LiveChatWidget } from '@livechat/widget-react';
 
 interface State {
     fullname: string;
@@ -650,6 +651,12 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                     </div>
                 </Container>
             ): (<></>)}
+
+            {process.env.NODE_ENV !== 'development' ?
+                <LiveChatWidget license={process.env.REACT_LIVECHAT_LICENSE !== undefined? process.env.REACT_LIVECHAT_LICENSE : ""} />
+            :
+                <></>
+            }
         </>
     )
 }
