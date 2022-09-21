@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { HeaderRight } from '../Dashboard/Comp/HeaderRight';
 import Alert from '@material-ui/lab/Alert';
 import { DashboardFooter } from '../Dashboard/Comp/DashboardFooter';
+import { LiveChatWidget } from '@livechat/widget-react';
 const Sidebar = React.lazy(() => import('../Dashboard/Comp/Sidebar'));
 const HeaderLeft = React.lazy(() => import('../Dashboard/Comp/HeaderLeft'));
 
@@ -199,6 +200,11 @@ export const CheckoutScreen: React.FC = function CheckoutScreen() {
                 </Container>
             </Container>
         </Sidebar>
+        {process.env.NODE_ENV !== 'development' ?
+                <LiveChatWidget license={process.env.REACT_LIVECHAT_LICENSE !== undefined? process.env.REACT_LIVECHAT_LICENSE : ""} />
+            :
+                <></>
+            }
         </>
     )
 }

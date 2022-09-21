@@ -8,6 +8,7 @@ import { PeoplesChoice } from './Comp/PeoplesChoice';
 import { PopularRestaurants } from './Comp/PopularRestaurants';
 import { HeaderRight } from './Comp/HeaderRight';
 import { DashboardFooter } from './Comp/DashboardFooter';
+import { LiveChatWidget } from '@livechat/widget-react';
 const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
 const Sidebar = React.lazy(() => import('./Comp/Sidebar'));
 
@@ -68,6 +69,11 @@ export const FoodDeliveryDashboardScreen: React.FC = function FoodDeliveryDashbo
                 </Grid>
             </Container>
         </Sidebar>
+        {process.env.NODE_ENV !== 'development' ?
+                <LiveChatWidget license={process.env.REACT_LIVECHAT_LICENSE !== undefined? process.env.REACT_LIVECHAT_LICENSE : ""} />
+            :
+                <></>
+            }
         </>
     )
 }

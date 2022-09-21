@@ -1,3 +1,4 @@
+import { LiveChatWidget } from '@livechat/widget-react';
 import { Container, Grid, makeStyles, createStyles, Typography, Theme } from '@material-ui/core';
 import React from 'react';
 // import { useHistory } from 'react-router-dom';
@@ -65,6 +66,11 @@ export const RestaurantsScreen: React.FC = function RestaurantsScreen() {
                 </Grid>
             </Container>
         </Sidebar>
+        {process.env.NODE_ENV !== 'development' ?
+                <LiveChatWidget license={process.env.REACT_LIVECHAT_LICENSE !== undefined? process.env.REACT_LIVECHAT_LICENSE : ""} />
+            :
+                <></>
+            }
         </>
     )
 }

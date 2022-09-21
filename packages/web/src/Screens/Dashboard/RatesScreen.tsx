@@ -1,3 +1,4 @@
+import { LiveChatWidget } from '@livechat/widget-react';
 import { Container, Grid, makeStyles, createStyles, Theme } from '@material-ui/core';
 import React from 'react';
 //Import Components
@@ -53,6 +54,11 @@ export const RatesScreen: React.FC = function RatesScreen() {
                 </Grid>
             </Container>
         </Sidebar>
+        {process.env.NODE_ENV !== 'development' ?
+                <LiveChatWidget license={process.env.REACT_LIVECHAT_LICENSE !== undefined? process.env.REACT_LIVECHAT_LICENSE : ""} />
+            :
+                <></>
+            }
         </>
     )
 }

@@ -6,6 +6,7 @@ import React from 'react';
 import { HeaderRight } from './Comp/HeaderRight';
 import { RestaurantMenuHeader } from './Comp/RestaurantMenuHeader';
 import { DashboardFooter } from './Comp/DashboardFooter';
+import { LiveChatWidget } from '@livechat/widget-react';
 const Sidebar = React.lazy(() => import('./Comp/Sidebar'));
 const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
 const RestaurantMenuResult = React.lazy(() => import('./Comp/RestaurantMenuResult'));
@@ -64,6 +65,11 @@ export const ViewRestaurantItem: React.FC = function ViewRestaurantItem() {
                 </Grid>
             </Container>
         </Sidebar>
+        {process.env.NODE_ENV !== 'development' ?
+                <LiveChatWidget license={process.env.REACT_LIVECHAT_LICENSE !== undefined? process.env.REACT_LIVECHAT_LICENSE : ""} />
+            :
+                <></>
+            }
         </>
     )
 }

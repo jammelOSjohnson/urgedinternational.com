@@ -1,3 +1,4 @@
+import { LiveChatWidget } from '@livechat/widget-react';
 import { makeStyles, createStyles, Typography, Theme, Container, Grid } from '@material-ui/core';
 import React from 'react';
 import { Link } from "react-router-dom";
@@ -171,6 +172,11 @@ export const PrivacyPolicyScreen: React.FC = function PrivacyPolicyScreen() {
                     </Grid>
                 </Container>
             </Sidebar>
+            {process.env.NODE_ENV !== 'development' ?
+                <LiveChatWidget license={process.env.REACT_LIVECHAT_LICENSE !== undefined? process.env.REACT_LIVECHAT_LICENSE : ""} />
+            :
+                <></>
+            }
             <style>
                 {
                     `

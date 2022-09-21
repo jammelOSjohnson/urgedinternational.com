@@ -5,6 +5,7 @@ import { HeaderRight } from './Comp/HeaderRight';
 import { ErrandCards } from './Comp/ErrandCards';
 import { HistoryHeaderBar } from './Comp/HistoryHeaderBar';
 import { HistoryTable } from './Comp/HistoryTable';
+import { LiveChatWidget } from '@livechat/widget-react';
 const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
 const Sidebar = React.lazy(() => import('./Comp/Sidebar'));
 
@@ -57,6 +58,11 @@ export const ErrandScreen: React.FC = function ErrandScreen () {
                     </Grid>
                 </Container>
             </Sidebar>
+            {process.env.NODE_ENV !== 'development' ?
+                <LiveChatWidget license={process.env.REACT_LIVECHAT_LICENSE !== undefined? process.env.REACT_LIVECHAT_LICENSE : ""} />
+            :
+                <></>
+            }
         </>
     );
 }

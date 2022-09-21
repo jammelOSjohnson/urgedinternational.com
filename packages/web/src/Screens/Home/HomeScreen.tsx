@@ -1,5 +1,6 @@
 import { Container } from '@material-ui/core';
 import React from 'react'
+import { LiveChatWidget } from "@livechat/widget-react"
 
 //Import Sections
 import { Section1 } from "./Comp/Section1";
@@ -16,6 +17,7 @@ import { Section7 } from "./Comp/Section7";
 
 
 export const HomeScreen: React.FC = function HomeScreen() {
+
     return (
         <>
             <Container maxWidth="xl" style={{padding: 0, overflowX: "hidden"}}>
@@ -28,6 +30,11 @@ export const HomeScreen: React.FC = function HomeScreen() {
                 <Section6 />
                 <Section7 />
             </Container>
+            {process.env.NODE_ENV !== 'development' ?
+                <LiveChatWidget license={process.env.REACT_LIVECHAT_LICENSE !== undefined? process.env.REACT_LIVECHAT_LICENSE : ""} />
+            :
+                <></>
+            }
         </>
     )
 }

@@ -8,6 +8,7 @@ import { Categories } from './Comp/Categories';
 import { AdvertisementSlider } from './Comp/AdvertisementSlider';
 import { HeaderRight } from './Comp/HeaderRight';
 import { DashboardFooter } from './Comp/DashboardFooter';
+import { LiveChatWidget } from '@livechat/widget-react';
 const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
 const Sidebar = React.lazy(() => import('./Comp/Sidebar'));
 
@@ -67,6 +68,11 @@ export const CustomerDashboardScreen: React.FC = function CustomerDashboardScree
                 </Grid>
             </Container>
         </Sidebar>
+        {process.env.NODE_ENV !== 'development' ?
+                <LiveChatWidget license={process.env.REACT_LIVECHAT_LICENSE !== undefined? process.env.REACT_LIVECHAT_LICENSE : ""} />
+            :
+                <></>
+            }
         </>
     )
 }

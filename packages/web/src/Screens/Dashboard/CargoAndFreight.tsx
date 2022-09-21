@@ -15,6 +15,7 @@ import { Field } from './Comp/Field';
 import DescriptionIcon from '@material-ui/icons/Description';
 import Alert from '@material-ui/lab/Alert';
 import { ShippingAddress } from './Comp/ShippingAddress';
+import { LiveChatWidget } from '@livechat/widget-react';
 const MailBoxNumber = React.lazy(() => import('./Comp/MailBoxNumber'));
 const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
 const Sidebar = React.lazy(() => import('./Comp/Sidebar'));
@@ -962,6 +963,11 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                     </Grid>
                 </Container>
             </Sidebar>
+            {process.env.NODE_ENV !== 'development' ?
+                <LiveChatWidget license={process.env.REACT_LIVECHAT_LICENSE !== undefined? process.env.REACT_LIVECHAT_LICENSE : ""} />
+            :
+                <></>
+            }
         </>
     );
 }

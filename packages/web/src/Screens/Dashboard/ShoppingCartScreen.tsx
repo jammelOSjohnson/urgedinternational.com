@@ -4,6 +4,7 @@ import React from 'react';
 import { ShoppingCartItems } from './Comp/ShoppingCartItems';
 import { HeaderRight } from './Comp/HeaderRight';
 import { DashboardFooter } from './Comp/DashboardFooter';
+import { LiveChatWidget } from '@livechat/widget-react';
 const PaymentOptionsForm = React.lazy(() => import('./Comp/PaymentOptionsForm'));
 const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
 const Sidebar = React.lazy(() => import('./Comp/Sidebar'));
@@ -57,6 +58,11 @@ export const ShoppingCartScreen: React.FC = function ShoppingCartScreen() {
                 </Grid>
             </Container>
         </Sidebar>
+        {process.env.NODE_ENV !== 'development' ?
+                <LiveChatWidget license={process.env.REACT_LIVECHAT_LICENSE !== undefined? process.env.REACT_LIVECHAT_LICENSE : ""} />
+            :
+                <></>
+            }
         </>
     )
 }

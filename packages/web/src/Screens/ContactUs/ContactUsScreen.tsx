@@ -1,3 +1,4 @@
+import { LiveChatWidget } from '@livechat/widget-react';
 import { Container } from '@material-ui/core';
 import React from 'react'
 
@@ -27,6 +28,11 @@ export const ContactUsScreen: React.FC = function ContactUsScreen() {
                 {/* <Section6 /> */}
                 {/* <Section7 /> */}
             </Container>
+            {process.env.NODE_ENV !== 'development' ?
+                <LiveChatWidget license={process.env.REACT_LIVECHAT_LICENSE !== undefined? process.env.REACT_LIVECHAT_LICENSE : ""} />
+            :
+                <></>
+            }
         </>
     )
 }

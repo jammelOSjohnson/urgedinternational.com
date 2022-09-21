@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import moment from 'moment';
 import jsPDF from 'jspdf';
 import { useHistory } from 'react-router-dom';
+import { LiveChatWidget } from '@livechat/widget-react';
 //Import Components
 //import { Link } from "react-router-dom";
 
@@ -3198,6 +3199,11 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
                     </tbody>
                 </table>
             </Container>
+            {process.env.NODE_ENV !== 'development' ?
+                <LiveChatWidget license={process.env.REACT_LIVECHAT_LICENSE !== undefined? process.env.REACT_LIVECHAT_LICENSE : ""} />
+            :
+                <></>
+            }
         </>
     )
 }

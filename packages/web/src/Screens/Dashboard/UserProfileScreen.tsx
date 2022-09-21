@@ -1,3 +1,4 @@
+import { LiveChatWidget } from '@livechat/widget-react';
 import { Container, Grid, makeStyles, createStyles, Theme } from '@material-ui/core';
 import React from 'react';
 import { HeaderRight } from './Comp/HeaderRight';
@@ -49,6 +50,11 @@ export const UserProfileScreen: React.FC = function UserProfileScreen () {
                     </Grid>
                 </Container>
             </Sidebar>
+            {process.env.NODE_ENV !== 'development' ?
+                <LiveChatWidget license={process.env.REACT_LIVECHAT_LICENSE !== undefined? process.env.REACT_LIVECHAT_LICENSE : ""} />
+            :
+                <></>
+            }
         </>
     )
 }
