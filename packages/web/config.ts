@@ -46,6 +46,7 @@ interface ENV {
     REACT_APP_GCT: string|undefined;
     REACT_APP_DEFAULT_RESTAURANT_LOGO: string|undefined;
     REACT_APP_RESTAURANT_ROLE_ID: string|undefined;
+    REACT_LIVECHAT_LICENSE: string|undefined
 }
 
 interface Config {
@@ -86,6 +87,7 @@ interface Config {
     REACT_APP_GCT: string;
     REACT_APP_DEFAULT_RESTAURANT_LOGO: string;
     REACT_APP_RESTAURANT_ROLE_ID: string;
+    REACT_LIVECHAT_LICENSE: string;
 }
 
 // Loading process.env as ENV interface
@@ -128,7 +130,8 @@ const getConfig = (): ENV => {
     REACT_APP_FEE_FogaRoad:process.env.REACT_APP_FEE_FogaRoad,
     REACT_APP_GCT:process.env.REACT_APP_GCT,
     REACT_APP_DEFAULT_RESTAURANT_LOGO:process.env.REACT_APP_DEFAULT_RESTAURANT_LOGO,
-    REACT_APP_RESTAURANT_ROLE_ID:process.env.REACT_APP_RESTAURANT_ROLE_ID
+    REACT_APP_RESTAURANT_ROLE_ID:process.env.REACT_APP_RESTAURANT_ROLE_ID,
+    REACT_LIVECHAT_LICENSE: process.env.REACT_LIVECHAT_LICENSE 
   };
 };
 
