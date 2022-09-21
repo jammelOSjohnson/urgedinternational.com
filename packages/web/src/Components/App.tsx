@@ -62,7 +62,6 @@ import "jspdf/dist/polyfills.es.js";
 
 //not found page
 import { PrivacyPolicyScreen } from '../Screens/Dashboard/PrivacyPolicyScreen';
-import { LiveChatWidget } from "@livechat/widget-react"
 import React from 'react';
 import { Spinner } from './spinner';
 const NotFound = React.lazy(() => import('./NotFound'));
@@ -282,11 +281,6 @@ const App: React.FC = function App() {
                     <Route path='/404' component={NotFound} />
                     <Redirect from='*' to="/404" />
                 </Switch>
-                {process.env.NODE_ENV !== 'development' ?
-                  <LiveChatWidget license="14486910" />
-                :
-                  <></>
-                }
                 <Footer/>
               </Router>
             </div>
