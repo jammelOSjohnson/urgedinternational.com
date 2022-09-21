@@ -258,7 +258,7 @@ export const Section2: React.FC = function Section2() {
                                             Phone
                                         </Typography>
                                         <Typography className={classes.cardBody}>
-                                            Mon-Fri from 8am to 5pm.
+                                            Mon-Fri from 8am to 6:30pm.
                                         </Typography>
                                     </CardContent>
                                 </Card>  
