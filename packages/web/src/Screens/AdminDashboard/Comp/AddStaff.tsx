@@ -404,6 +404,14 @@ export const AddStaff: React.FC = () => {
                                             </Grid>
                                         </Grid>
                                     </form>
+                                    <style>
+                                    {`
+                                        .MuiButton-root:hover {
+                                            background-color: #F7B614;
+                                        }
+                                    
+                                    `}
+                                    </style>
                                 </Grid>
                             </Grid>
                         </Grid>
