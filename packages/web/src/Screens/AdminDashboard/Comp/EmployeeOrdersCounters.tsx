@@ -255,7 +255,7 @@ export const EmployeeOrdersCounters: React.FC = function EmployeeOrdersCounters(
                     <Calendar type="" setStartDate={setStartDate} setEndDate={setEndDate} />
                 </Grid>
                 <Grid item xs={12} md={3}>
-                    <EditStaff />
+                    {/* <EditStaff /> */}
                 </Grid>
             </Grid>
             <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
