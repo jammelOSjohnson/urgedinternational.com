@@ -770,7 +770,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
                 </Container>
             ): (<></>)}
             {process.env.NODE_ENV !== 'development' ?
-                <LiveChatWidget license={process.env.REACT_LIVECHAT_LICENSE !== undefined? process.env.REACT_LIVECHAT_LICENSE : ""} />
+                <LiveChatWidget license={process.env.REACT_APP_LIVECHAT_LICENSE !== undefined? process.env.REACT_APP_LIVECHAT_LICENSE : ""} />
             :
                 <></>
             }
