@@ -3,18 +3,18 @@
   "name": "UrgedServices",
   "icons": [
     {
-      "src": "Images/urged logo64x23.png",
+      "src": "Images/64x23.jpg",
       "sizes": "64x23",
       "type": "image/x-icon",
       "purpose": "maskable"
     },
     {
-      "src": "Images/urged logo.svg",
+      "src": "Images/147x51.jpg",
       "type": "image/svg",
       "sizes": "147x51"
     },
     {
-      "src": "Images/urged512x512.png",
+      "src": "Images/512x512.jpg",
       "type": "image/png",
       "sizes": "512x512"
     }
