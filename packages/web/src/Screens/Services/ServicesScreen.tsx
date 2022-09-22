@@ -28,6 +28,11 @@ export const ServicesScreen: React.FC = function ServicesScreen() {
                 <Section6 />
                 <Section7 />
             </Container>
+            {process.env.NODE_ENV !== 'development' ?
+                <LiveChatWidget license={process.env.REACT_APP_LIVECHAT_LICENSE !== undefined? process.env.REACT_APP_LIVECHAT_LICENSE : ""} />
+            :
+                <></>
+            }
         </>
     )
 }
