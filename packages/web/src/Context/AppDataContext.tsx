@@ -1929,7 +1929,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       ////console.log("about to fetch restaurants");
         await getRider({variables: {_id: id}}).then(async function(response) {
           if (response.data.getRider !== null) {
-            ////console.log("got list of restaurants");
+            console.log("got list of restaurants");
             ////console.log(response);
 
             var result = response.data.getRider;
