@@ -4,7 +4,7 @@ import 'firebase/firestore';
 import 'firebase/analytics';
 import "firebase/functions";
 import "firebase/storage";
-import "firebase/messaging";
+//import "firebase/messaging";
 //import { getAnalytics } from "firebase/analytics";
 
 const app = firebase.initializeApp({
@@ -27,5 +27,5 @@ export const analytics2 = firebase.analytics();
 export const functions = firebase.functions();
 export const storage = firebase.storage();
 export const ref = firebase.storage().ref(); 
-export const messaging = firebase.messaging();
+//export const messaging = firebase.messaging();
 export default app
