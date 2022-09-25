@@ -372,6 +372,13 @@ const resolvers = {
 
         //Riders
         getRiders: async () => {
+            return await User.find().where('isAvailable').ne(null).where('disabled').ne(null).where('Position').equals('Rider');
+            //console.log(res);
+            //return res;
+        },
+
+        //Staff
+        getStaff: async () => {
             return await User.find().where('isAvailable').ne(null).where('disabled').ne(null);
             //console.log(res);
             //return res;

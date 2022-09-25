@@ -232,6 +232,26 @@ export  const GET_RIDERS = gql`
     }
 `
 
+export  const GET_STAFF = gql`
+     mutation getStaff {
+        getStaff{
+            _id
+            Id
+            FirstName
+            LastName
+            Email
+            AddressLine1
+            AddressLine2
+            City
+            ContactNumber
+            isAvailable
+            disabled
+            ImageName
+            Position
+        }
+    }
+`
+
 export  const GET_RIDER = gql`
      mutation getRider($_id: String!) {
         getRider(_id: $_id){

@@ -334,6 +334,8 @@ const typeDefs = /* GraphQL */`
 
         getRiders: [User2!]!
 
+        getStaff: [User2!]!
+
         getRider(_id: String): User!
 
         getRestaurant(_id: String): User!
