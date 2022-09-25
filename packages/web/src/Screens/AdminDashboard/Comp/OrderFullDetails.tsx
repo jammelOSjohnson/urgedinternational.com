@@ -395,9 +395,12 @@ export const OrderFullDetails: React.FC = () => {
                                                         >
                                                             <MenuItem value={"Assigned To"} className={classes.boldSubtitle}>Assigned To</MenuItem>
                                                             {
-                                                                riders.map((item, index) => (
-                                                                    <MenuItem key={index} value={index}>{item.FirstName}</MenuItem>
-                                                                ))
+                                                                riders.map((item, index) => {
+                                                                    if(!item.isAvailable)
+                                                                        return <MenuItem style={{background:"red", color: "#FFF"}} key={index} value={index}>{item.FirstName}</MenuItem>
+                                                                    else
+                                                                        return <MenuItem key={index} value={index}>{item.FirstName}</MenuItem>
+                                                                })
                                                             }
                                                         </Select>
                                                     </FormControl>

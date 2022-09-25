@@ -137,13 +137,13 @@ export const EmployeeCardList: React.FC = function EmployeeCardList(props) {
     const classes = useStyles();
     
     var { value }  = useAppData();
-    var { fetchRiders, riders, viewRiderDetails } = value;
+    var { fetchStaff, riders, viewRiderDetails } = value;
     
     useEffect(() => {
         //console.log("inside use effect");
         //console.log(restaurants);
         if(riders.length === 0){
-            fetchRiders(value);
+            fetchStaff(value);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])

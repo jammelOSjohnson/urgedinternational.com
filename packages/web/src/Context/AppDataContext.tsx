@@ -33,7 +33,8 @@ import {
         CREATE_ORDER_REJECTLIST,
         UPDATE_ORDER_REJECTLIST,
         UPDATE_USER_MUTATION,
-        CREATE_STAFF_MUTATION
+        CREATE_STAFF_MUTATION,
+        GET_STAFF
       } from '../GraphQL/Mutations';
 import { useMutation } from '@apollo/client';
 import sendEmail from "../email.js";
@@ -266,6 +267,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     const [addUserToRole] = useMutation(CREATE_ROLE);
     const [getRestaurants] = useMutation(GET_RESTAURANTS);
     const [getRiders] = useMutation(GET_RIDERS);
+    const [getStaff] = useMutation(GET_STAFF);
     const [getRider] = useMutation(GET_RIDER);
     //const {data} = useQuery(GET_PAY_SETTINGS);
     const [getPaySettings] = useMutation(GET_PAY_SETTINGS);
@@ -1902,6 +1904,30 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         });
     }
 
+    var fetchStaff = async function fetchStaff(payload){
+      ////console.log("about to fetch restaurants");
+        await getStaff().then(async function(response) {
+          if (response.data.getStaff !== null) {
+            ////console.log("got list of restaurants");
+            ////console.log(response);
+
+            var restList = response.data.getStaff;
+
+            if (restList !== null) {
+              payload.riders = restList !== undefined && restList !== null? restList : [];
+              return payload;
+            }
+          }
+        }).catch(function(err){
+          ////console.log(err);
+        });
+
+        dispatch({
+          type: "fetch_riders",
+          payload: payload
+        });
+    }
+
     var fetchRestaurantInfo = async function fetchRestaurantInfo(payload, id){
       ////console.log("about to fetch restaurants");
         await getRestaurant({variables: {_id: id}}).then(async function(response) {
@@ -2587,7 +2613,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         udateRiderStatusInfo,
         fetchRestaurantInfo,
         uploadToFirebaseCloud,
-        UpdateUserInfo
+        UpdateUserInfo,
+        fetchStaff
     });
     
      
