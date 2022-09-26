@@ -2,7 +2,7 @@ import { useAppData } from '../Context/AppDataContext';
 import { HeaderLogo } from './HeaderLogo';
 import React, { useEffect } from 'react'
 import { useHistory, Link as RouterLink } from 'react-router-dom';
-import { useMediaQuery , useTheme,Typography, AppBar, Toolbar, makeStyles, Theme, createStyles, Button, Drawer, List, ListItem, ListItemIcon, Divider, ListItemText } from '@material-ui/core';
+import { useMediaQuery , useTheme,Typography, AppBar, Toolbar, makeStyles, Theme, createStyles, Button, Drawer, List, ListItem, ListItemIcon, Divider, ListItemText, Grid, Fade, Backdrop, Modal } from '@material-ui/core';
 // eslint-disable-next-line
 import  { auth } from '../firebase';
 import clsx from 'clsx';
@@ -11,6 +11,7 @@ import {HomeRounded, InfoRounded, ContactMailRounded, HelpRounded, RoomServiceRo
 import MailIcon from '@material-ui/icons/Mail';
 import { useSubscription } from '@apollo/client';
 import { ORDERS_SUBSCRIPTION } from '../GraphQL/Subscriptions';
+import {Link} from 'react-router-dom'
 
 // interface State {
 //   genralLocation: string;
@@ -148,6 +149,10 @@ const useStyles = makeStyles((theme: Theme) =>
     linkBtn: {
       textDecoration: "none",
       color: "#1D2635"
+    },cartIcon: {
+      position: "absolute",
+      top: 18,
+      right: 10
     }
   }),
 );
@@ -182,7 +187,8 @@ export const Header2: React.FC = function Header2() {
     var location = history.location;
     var referralPath = location.pathname;
     var { value }  = useAppData();
-    var { orders, refreshingOrderTables , fetchUserInfo } = value;
+    var { orders, refreshingOrderTables , fetchUserInfo, fetchPaySettings, paySettings } = value;
+    const [open, setOpen] = React.useState(false);
     // AddGeneralLocation, serviceWorkerUpdated, serviceWorkerRegistration
 
     //Subscriptions
@@ -219,6 +225,16 @@ export const Header2: React.FC = function Header2() {
       //   setOpen(false);
       // }
       try{
+        if(paySettings !== undefined){
+          console.log(paySettings.badWeather);
+          if(paySettings.badWeather){
+            setOpen(true);
+          }
+        }else{
+          fetchPaySettings(value).then(() =>{
+            return;
+          })
+        }
         //Subscribe to order data
         if(value.userRolef !== undefined){
           if(value.userRolef === "Admin"){
@@ -234,6 +250,17 @@ export const Header2: React.FC = function Header2() {
               });
               }
           }
+        }
+
+        if(paySettings !== undefined){
+          console.log(paySettings.badWeather);
+          if(paySettings.badWeather){
+            setOpen(true);
+          }
+        }else{
+          fetchPaySettings(value).then(() =>{
+            return;
+          })
         }
 
       auth.onAuthStateChanged(function (user){
@@ -269,7 +296,7 @@ export const Header2: React.FC = function Header2() {
       //console.log(err);
     }
     // react-hooks/exhaustive-deps
-  },[value.userRolef, data])
+  },[value.userRolef, data, paySettings])
 
     var fetchUserDetails = function  fetchUserDetails (payload) {
       ////console.log("Is current user null");
@@ -314,13 +341,48 @@ export const Header2: React.FC = function Header2() {
     //   //setOpen(true);
     // };
 
-    // const handleClose = () => {
-    //     //setOpen(false);
-    // };
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     if(referralPath !== '/' && referralPath.toLowerCase() !== '/services' && referralPath.toLowerCase() !== '/contactus'){
       return(
         <>
+          <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                className={classes.modal}
+                open={open}
+                onClose={handleClose}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                timeout: 500,
+                }}
+            >
+                <Fade in={open}>
+                    <div className={clsx(classes.paper, 'modalMobile')}>
+                        <h3 id="transition-modal-title" style={{textAlign: "center", color: "#F7B614"}}></h3>
+                        <Link to={referralPath} className={classes.cartIcon} onClick={handleClose}>
+                                <img src="Images/CartCloseIcon.png" alt="closeweather" />
+                        </Link>
+                        <br />
+                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                            <Grid item xs={12}>
+                                <Grid item xs={12} >
+                                    <form autoComplete="off">
+                                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                            <Grid item xs={12}>
+                                              <img src="Images/ClosedWeather.webp" alt="closeweather" width={"100%"} />
+                                            </Grid>
+                                        </Grid>
+                                    </form>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </div>
+                </Fade>
+            </Modal>
         </>
       )
     }
@@ -524,6 +586,41 @@ export const Header2: React.FC = function Header2() {
                   )}
                 </Toolbar>
             </AppBar>
+            <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                className={classes.modal}
+                open={open}
+                onClose={handleClose}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                timeout: 500,
+                }}
+            >
+                <Fade in={open}>
+                    <div className={clsx(classes.paper, 'modalMobile')} style={{position: "relative"}}>
+                        <h3 id="transition-modal-title" style={{textAlign: "center", color: "#F7B614"}}></h3>
+                        <Link to={referralPath} className={classes.cartIcon} onClick={handleClose}>
+                                <img src="Images/CartCloseIcon.png" alt="closemodal" />
+                        </Link>
+                        <br />
+                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                            <Grid item xs={12}>
+                                <Grid item xs={12} >
+                                    <form autoComplete="off">
+                                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                            <Grid item xs={12}>
+                                              <img src="Images/ClosedWeather.webp" alt="closeweather" width={"100%"} />
+                                            </Grid>
+                                        </Grid>
+                                    </form>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </div>
+                </Fade>
+            </Modal>
             {/* {isServiceWorkerUpdated && (
               <Alert
                 severity="info"
