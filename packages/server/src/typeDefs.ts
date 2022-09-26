@@ -225,7 +225,10 @@ const typeDefs = /* GraphQL */`
         _id: ID,
         perDeliveryEnabled: Boolean,
         percentagePerOrderTotal: Boolean,
-        value: Float
+        value: Float,
+        closed: Boolean,
+        badWeather: Boolean,
+        message: String
     }
 
     type Package {

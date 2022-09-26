@@ -12,6 +12,18 @@ const PaySettingSchema = new mongoose.Schema({
     value: {
         type: Number,
         required: true
+    },
+    closed: {
+        type: Boolean,
+        required: true
+    },
+    badWeather: {
+        type: Boolean,
+        required: true
+    },
+    message: {
+        type: String,
+        required: true
     }
 
 });
