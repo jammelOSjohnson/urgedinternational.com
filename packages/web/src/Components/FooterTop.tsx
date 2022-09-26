@@ -27,14 +27,14 @@ export const FooterTop: React.FC = function FooterTop(){
     var history = useHistory();
     var location = history.location;
     var referralPath = location.pathname;
-    console.log(referralPath)
+    //console.log(referralPath)
 
     if(referralPath === "/" ||  referralPath === "Services" ||  referralPath === "ContactUs"){
         return (
             <>
                 <Container maxWidth="xl" className={classes.Background}>
                     <Grid container direction="row"  className={clsx(classes.root)} alignItems="center">
-                        <Grid xs={12}>
+                        <Grid item xs={12}>
                             <Typography variant="h6" style={{fontWeight: 800}}>
                                 We Accept:
                             </Typography>
@@ -58,7 +58,7 @@ export const FooterTop: React.FC = function FooterTop(){
             <>
                 <Container maxWidth="xl" className={classes.Background2}>
                     <Grid container direction="row" spacing={2} className={clsx(classes.root)} alignItems="center">
-                        <Grid xs={12}>
+                        <Grid item xs={12}>
                             <Typography variant="h6" style={{fontWeight: 800}}>
                                 We Accept:
                             </Typography>
