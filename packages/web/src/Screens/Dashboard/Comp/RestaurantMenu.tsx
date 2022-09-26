@@ -1,6 +1,6 @@
 import { useAppData } from '../../../Context/AppDataContext';
 import { Select, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, InputLabel, FormControl, Card, CardActionArea, CardMedia, CardContent, CardActions, MenuItem, useMediaQuery, useTheme } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 //Import Components
 import { ItemRating } from '../../../Components/ItemRating';
@@ -195,7 +195,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
     const classes = useStyles();
     
     var { value }  = useAppData();
-    var { cartItems ,restaurants, selectedRestaurantName, selectedRestaurant, addItemToCart, userInfo, filteredMenuItems, clearCartItems } = value;
+    var { cartItems ,restaurants, selectedRestaurantName, selectedRestaurant, addItemToCart, userInfo, filteredMenuItems, clearCartItems, paySettings } = value;
     var restaurant = restaurants[selectedRestaurant];
     // //console.log("Menu Screen Menu");
     // //console.log(selectedRestaurant);
@@ -235,6 +235,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
 
     const [open, setOpen] = React.useState(false);
     const [open2, setOpen2] = React.useState(false);
+
+    const [disabled, setDisabled] = React.useState(false);
     
 
     const handleOpen = (item) => {
@@ -298,182 +300,205 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
       }
 
     var AddToCart = async function(e,item){
-        ////console.log("item selected");
-        ////console.log(item);
-        e.preventDefault();
-        setError('');
-        var payload = value;
-        item.restaurantName = selectedRestaurantName;
-        await addItemToCart(payload, item).then(() => {
-            ////console.log("item should be successfully added");
-            setValues(
-                {
-                    chickenFlavour1: 'Select Flavour',
-                    chickenFlavour2: 'Select Flavour',
-                    drink: 'Select Drink',
-                    otherIntructions: '',
-                    itemName: '',
-                    itemCost: 0.00,
-                    imageName: "",
-                    orderStatus: "New",
-                    deliveredBy: "No one",
-                    itemCategory: "",
-                    ifnotAvailable: "Contact me",
-                    itemDescription: "",
-                    quantity: 1,
-                    restaurantName: "",
-                    side: "Select Side"
-                }
-            );
-            setOpen(false);
-        })
+        if(!disabled){
+            ////console.log("item selected");
+            ////console.log(item);
+            e.preventDefault();
+            setError('');
+            var payload = value;
+            item.restaurantName = selectedRestaurantName;
+            await addItemToCart(payload, item).then(() => {
+                ////console.log("item should be successfully added");
+                setValues(
+                    {
+                        chickenFlavour1: 'Select Flavour',
+                        chickenFlavour2: 'Select Flavour',
+                        drink: 'Select Drink',
+                        otherIntructions: '',
+                        itemName: '',
+                        itemCost: 0.00,
+                        imageName: "",
+                        orderStatus: "New",
+                        deliveredBy: "No one",
+                        itemCategory: "",
+                        ifnotAvailable: "Contact me",
+                        itemDescription: "",
+                        quantity: 1,
+                        restaurantName: "",
+                        side: "Select Side"
+                    }
+                );
+                setOpen(false);
+            })
+        }
     }
 
     var AddToCart2 = async function(e,item){
-        console.log("item selected");
-        ////console.log(item);
-        e.preventDefault();
-        setError('');
-        var payload = value;
-        item.restaurantName = selectedRestaurantName;
+        if(!disabled){
+            console.log("item selected");
+            ////console.log(item);
+            e.preventDefault();
+            setError('');
+            var payload = value;
+            item.restaurantName = selectedRestaurantName;
 
-        item.chickenFlavour1 === 'Select Flavour'?
-            setError('Please Select Flavor')
-        :item.chickenFlavour2 === 'Select Flavour'?
-            setError('Please Select Flavor')
-        :item.drink === 'Select Drink'?
-            setError('Please Select Drink')
-        :await addItemToCart(payload, item).then(() => {
-            ////console.log("item should be successfully added");
-            setValues(
-                {
-                    chickenFlavour1: 'Select Flavour',
-                    chickenFlavour2: 'Select Flavour',
-                    drink: 'Select Drink',
-                    otherIntructions: '',
-                    itemName: '',
-                    itemCost: 0.00,
-                    imageName: "",
-                    orderStatus: "New",
-                    deliveredBy: "No one",
-                    itemCategory: "",
-                    ifnotAvailable: "Contact me",
-                    itemDescription: "",
-                    quantity: 1,
-                    restaurantName: "",
-                    side: "Select Side"
-                }
-            );
-            setOpen(false);
-        })
+            item.chickenFlavour1 === 'Select Flavour'?
+                setError('Please Select Flavor')
+            :item.chickenFlavour2 === 'Select Flavour'?
+                setError('Please Select Flavor')
+            :item.drink === 'Select Drink'?
+                setError('Please Select Drink')
+            :await addItemToCart(payload, item).then(() => {
+                ////console.log("item should be successfully added");
+                setValues(
+                    {
+                        chickenFlavour1: 'Select Flavour',
+                        chickenFlavour2: 'Select Flavour',
+                        drink: 'Select Drink',
+                        otherIntructions: '',
+                        itemName: '',
+                        itemCost: 0.00,
+                        imageName: "",
+                        orderStatus: "New",
+                        deliveredBy: "No one",
+                        itemCategory: "",
+                        ifnotAvailable: "Contact me",
+                        itemDescription: "",
+                        quantity: 1,
+                        restaurantName: "",
+                        side: "Select Side"
+                    }
+                );
+                setOpen(false);
+            })
+        }
     }
 
     var AddToCart3 = async function(e,item){
-        ////console.log("item selected");
-        ////console.log(item);
-        e.preventDefault();
-        setError('');
-        var payload = value;
-        item.restaurantName = selectedRestaurantName;
+        if(!disabled){
+            ////console.log("item selected");
+            ////console.log(item);
+            e.preventDefault();
+            setError('');
+            var payload = value;
+            item.restaurantName = selectedRestaurantName;
 
-        item.drink === 'Select Drink'?
-            setError('Please Select Drink')
-        :await addItemToCart(payload, item).then(() => {
-            ////console.log("item should be successfully added");
-            setValues(
-                {
-                    chickenFlavour1: 'Select Flavour',
-                    chickenFlavour2: 'Select Flavour',
-                    drink: 'Select Drink',
-                    otherIntructions: '',
-                    itemName: '',
-                    itemCost: 0.00,
-                    imageName: "",
-                    orderStatus: "New",
-                    deliveredBy: "No one",
-                    itemCategory: "",
-                    ifnotAvailable: "Contact me",
-                    itemDescription: "",
-                    quantity: 1,
-                    restaurantName: "",
-                    side: "Select Side"
-                }
-            );
-            setOpen(false);
-        })
+            item.drink === 'Select Drink'?
+                setError('Please Select Drink')
+            :await addItemToCart(payload, item).then(() => {
+                ////console.log("item should be successfully added");
+                setValues(
+                    {
+                        chickenFlavour1: 'Select Flavour',
+                        chickenFlavour2: 'Select Flavour',
+                        drink: 'Select Drink',
+                        otherIntructions: '',
+                        itemName: '',
+                        itemCost: 0.00,
+                        imageName: "",
+                        orderStatus: "New",
+                        deliveredBy: "No one",
+                        itemCategory: "",
+                        ifnotAvailable: "Contact me",
+                        itemDescription: "",
+                        quantity: 1,
+                        restaurantName: "",
+                        side: "Select Side"
+                    }
+                );
+                setOpen(false);
+            })
+        }
     }
 
     var AddToCart4 = async function(e,item){
-        console.log("item selected");
-        ////console.log(item);
-        e.preventDefault();
-        setError('');
-        var payload = value;
-        item.restaurantName = selectedRestaurantName;
+        if(!disabled){
+            console.log("item selected");
+            ////console.log(item);
+            e.preventDefault();
+            setError('');
+            var payload = value;
+            item.restaurantName = selectedRestaurantName;
 
-        item.chickenFlavour1 === 'Select Flavour'?
-            setError('Please Select Flavor')
-        :item.drink === 'Select Drink'?
-            setError('Please Select Drink')
-        :await addItemToCart(payload, item).then(() => {
-            ////console.log("item should be successfully added");
-            setValues(
-                {
-                    chickenFlavour1: 'Select Flavour',
-                    chickenFlavour2: 'Select Flavour',
-                    drink: 'Select Drink',
-                    otherIntructions: '',
-                    itemName: '',
-                    itemCost: 0.00,
-                    imageName: "",
-                    orderStatus: "New",
-                    deliveredBy: "No one",
-                    itemCategory: "",
-                    ifnotAvailable: "Contact me",
-                    itemDescription: "",
-                    quantity: 1,
-                    restaurantName: "",
-                    side: "Select Side"
-                }
-            );
-            setOpen(false);
-        })
+            item.chickenFlavour1 === 'Select Flavour'?
+                setError('Please Select Flavor')
+            :item.drink === 'Select Drink'?
+                setError('Please Select Drink')
+            :await addItemToCart(payload, item).then(() => {
+                ////console.log("item should be successfully added");
+                setValues(
+                    {
+                        chickenFlavour1: 'Select Flavour',
+                        chickenFlavour2: 'Select Flavour',
+                        drink: 'Select Drink',
+                        otherIntructions: '',
+                        itemName: '',
+                        itemCost: 0.00,
+                        imageName: "",
+                        orderStatus: "New",
+                        deliveredBy: "No one",
+                        itemCategory: "",
+                        ifnotAvailable: "Contact me",
+                        itemDescription: "",
+                        quantity: 1,
+                        restaurantName: "",
+                        side: "Select Side"
+                    }
+                );
+                setOpen(false);
+            })
+        }
     }
 
     var AddToCart5 = async function(e,item){
-        console.log("item selected");
-        ////console.log(item);
-        e.preventDefault();
-        setError('');
-        var payload = value;
-        item.restaurantName = selectedRestaurantName;
+        if(!disabled){
+            console.log("item selected");
+            ////console.log(item);
+            e.preventDefault();
+            setError('');
+            var payload = value;
+            item.restaurantName = selectedRestaurantName;
 
-        item.chickenFlavour1 === 'Select Flavour'?
-            setError('Please Select Flavor')
-        :await addItemToCart(payload, item).then(() => {
-            ////console.log("item should be successfully added");
-            setValues(
-                {
-                    chickenFlavour1: 'Select Flavour',
-                    chickenFlavour2: 'Select Flavour',
-                    drink: 'Select Drink',
-                    otherIntructions: '',
-                    itemName: '',
-                    itemCost: 0.00,
-                    imageName: "",
-                    orderStatus: "New",
-                    deliveredBy: "No one",
-                    itemCategory: "",
-                    ifnotAvailable: "Contact me",
-                    itemDescription: "",
-                    quantity: 1,
-                    restaurantName: "",
-                    side: "Select Side"
-                }
-            );
-            setOpen(false);
-        })
+            item.chickenFlavour1 === 'Select Flavour'?
+                setError('Please Select Flavor')
+            :await addItemToCart(payload, item).then(() => {
+                ////console.log("item should be successfully added");
+                setValues(
+                    {
+                        chickenFlavour1: 'Select Flavour',
+                        chickenFlavour2: 'Select Flavour',
+                        drink: 'Select Drink',
+                        otherIntructions: '',
+                        itemName: '',
+                        itemCost: 0.00,
+                        imageName: "",
+                        orderStatus: "New",
+                        deliveredBy: "No one",
+                        itemCategory: "",
+                        ifnotAvailable: "Contact me",
+                        itemDescription: "",
+                        quantity: 1,
+                        restaurantName: "",
+                        side: "Select Side"
+                    }
+                );
+                setOpen(false);
+            })
+        }
     }
+
+    useEffect(() => {
+      try{
+        if(paySettings !== undefined){
+            console.log(paySettings.badWeather);
+            if(paySettings.badWeather){
+              setDisabled(true);
+            }
+          }
+      }catch(err) {
+        
+      }
+    }, [paySettings])
 
     if(restaurant === undefined){
         ////console.log("restaurant is undefined");
@@ -551,8 +576,12 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         </FormControl>
                                                     </Grid><br />
                                                     {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
-                                                    <Grid item xs={10} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                    <Grid item xs={10} sm={12}>
+                                                        <Button size="small"   
+                                                            fullWidth={true} 
+                                                            className={`${classes.ButtonMobile} ${classes.btnfonts}`} 
+                                                            disabled={disabled !== undefined? disabled : false}
+                                                            type="submit">
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -597,7 +626,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid><br />
                                                     {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
                                                     <Grid item xs={10} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -642,7 +672,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid><br />
                                                     {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
                                                     <Grid item xs={10} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                            disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -687,7 +718,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid><br />
                                                     {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
                                                     <Grid item xs={10} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -732,7 +764,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid><br />
                                                     {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
                                                     <Grid item xs={10} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -777,7 +810,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid><br />
                                                     {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
                                                     <Grid item xs={10} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -822,7 +856,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid><br />
                                                     {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
                                                     <Grid item xs={10} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -866,7 +901,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid><br />
                                                     {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
                                                     <Grid item xs={10} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -909,7 +945,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             </FormControl>
                                                     </Grid>
                                                     <Grid item xs={10} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -980,7 +1017,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             </FormControl>
                                                     </Grid>
                                                     <Grid item xs={10} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -1051,7 +1089,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             </FormControl>
                                                     </Grid>
                                                     <Grid item xs={10} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -1095,7 +1134,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             </FormControl>
                                                     </Grid>
                                                     <Grid item xs={10} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -1166,7 +1206,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             </FormControl>
                                                     </Grid>
                                                     <Grid item xs={10} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -1209,7 +1250,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             </FormControl>
                                                     </Grid>
                                                     <Grid item xs={10} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -1252,7 +1294,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                 </FormControl>
                                                         </Grid>
                                                         <Grid item xs={12} sm={12} >
-                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                                 Add To Cart 
                                                             </Button>
                                                         </Grid>
@@ -1295,7 +1338,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                 </FormControl>
                                                         </Grid>
                                                         <Grid item xs={12} sm={12} >
-                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                                 Add To Cart 
                                                             </Button>
                                                         </Grid>
@@ -1338,7 +1382,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                 </FormControl>
                                                         </Grid>
                                                         <Grid item xs={12} sm={12} >
-                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                                 Add To Cart 
                                                             </Button>
                                                         </Grid>
@@ -1381,7 +1426,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                 </FormControl>
                                                         </Grid>
                                                         <Grid item xs={12} sm={12} >
-                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                                 Add To Cart 
                                                             </Button>
                                                         </Grid>
@@ -1424,7 +1470,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                 </FormControl>
                                                         </Grid>
                                                         <Grid item xs={12} sm={12} >
-                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                                 Add To Cart 
                                                             </Button>
                                                         </Grid>
@@ -1467,7 +1514,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                 </FormControl>
                                                         </Grid>
                                                         <Grid item xs={12} sm={12} >
-                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                                 Add To Cart 
                                                             </Button>
                                                         </Grid>
@@ -1510,7 +1558,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                 </FormControl>
                                                         </Grid>
                                                         <Grid item xs={12} sm={12} >
-                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                                 Add To Cart 
                                                             </Button>
                                                         </Grid>
@@ -1768,7 +1817,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid><br />
                                                     {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
                                                     <Grid item xs={12} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -1813,7 +1863,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid><br />
                                                     {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
                                                     <Grid item xs={12} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -1858,7 +1909,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid><br />
                                                     {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
                                                     <Grid item xs={12} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -1903,7 +1955,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid><br />
                                                     {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
                                                     <Grid item xs={12} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -1948,7 +2001,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid><br />
                                                     {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
                                                     <Grid item xs={12} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -1993,7 +2047,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid><br />
                                                     {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
                                                     <Grid item xs={10} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -2038,7 +2093,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid><br />
                                                     {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
                                                     <Grid item xs={10} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -2082,7 +2138,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid><br />
                                                     {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
                                                     <Grid item xs={10} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -2125,7 +2182,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             </FormControl>
                                                     </Grid>
                                                     <Grid item xs={12} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -2196,7 +2254,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             </FormControl>
                                                     </Grid>
                                                     <Grid item xs={12} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -2267,7 +2326,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             </FormControl>
                                                     </Grid>
                                                     <Grid item xs={12} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -2311,7 +2371,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             </FormControl>
                                                     </Grid>
                                                     <Grid item xs={12} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -2354,7 +2415,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             </FormControl>
                                                     </Grid>
                                                     <Grid item xs={12} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -2397,7 +2459,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             </FormControl>
                                                     </Grid>
                                                     <Grid item xs={12} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                             Add To Cart 
                                                         </Button>
                                                     </Grid>
@@ -2440,7 +2503,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                 </FormControl>
                                                         </Grid>
                                                         <Grid item xs={12} sm={12} >
-                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                                 Add To Cart 
                                                             </Button>
                                                         </Grid>
@@ -2483,7 +2547,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                 </FormControl>
                                                         </Grid>
                                                         <Grid item xs={12} sm={12} >
-                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                                 Add To Cart 
                                                             </Button>
                                                         </Grid>
@@ -2526,7 +2591,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                 </FormControl>
                                                         </Grid>
                                                         <Grid item xs={12} sm={12} >
-                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                                 Add To Cart 
                                                             </Button>
                                                         </Grid>
@@ -2569,7 +2635,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                 </FormControl>
                                                         </Grid>
                                                         <Grid item xs={12} sm={12} >
-                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                                 Add To Cart 
                                                             </Button>
                                                         </Grid>
@@ -2612,7 +2679,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                 </FormControl>
                                                         </Grid>
                                                         <Grid item xs={12} sm={12} >
-                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                                 Add To Cart 
                                                             </Button>
                                                         </Grid>
@@ -2655,7 +2723,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                 </FormControl>
                                                         </Grid>
                                                         <Grid item xs={12} sm={12} >
-                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                                 Add To Cart 
                                                             </Button>
                                                         </Grid>
@@ -2698,7 +2767,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                 </FormControl>
                                                         </Grid>
                                                         <Grid item xs={12} sm={12} >
-                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit">
+                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                        disabled={disabled !== undefined? disabled : false}>
                                                                 Add To Cart 
                                                             </Button>
                                                         </Grid>

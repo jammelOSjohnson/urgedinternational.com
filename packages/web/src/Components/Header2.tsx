@@ -188,7 +188,7 @@ export const Header2: React.FC = function Header2() {
     var referralPath = location.pathname;
     var { value }  = useAppData();
     var { orders, refreshingOrderTables , fetchUserInfo, fetchPaySettings, paySettings } = value;
-    const [open, setOpen] = React.useState(false);
+    const [open2, setOpen2] = React.useState(false);
     // AddGeneralLocation, serviceWorkerUpdated, serviceWorkerRegistration
 
     //Subscriptions
@@ -225,16 +225,6 @@ export const Header2: React.FC = function Header2() {
       //   setOpen(false);
       // }
       try{
-        if(paySettings !== undefined){
-          console.log(paySettings.badWeather);
-          if(paySettings.badWeather){
-            setOpen(true);
-          }
-        }else{
-          fetchPaySettings(value).then(() =>{
-            return;
-          })
-        }
         //Subscribe to order data
         if(value.userRolef !== undefined){
           if(value.userRolef === "Admin"){
@@ -255,7 +245,15 @@ export const Header2: React.FC = function Header2() {
         if(paySettings !== undefined){
           console.log(paySettings.badWeather);
           if(paySettings.badWeather){
-            setOpen(true);
+            if(value.userRolef === "" || value.userRolef === "Customer"){
+              setTimeout(() => {
+                setOpen2(true);
+              }, 2000) 
+            }
+            else{
+              setOpen2(false);
+            }
+              
           }
         }else{
           fetchPaySettings(value).then(() =>{
@@ -342,7 +340,7 @@ export const Header2: React.FC = function Header2() {
     // };
 
     const handleClose = () => {
-        setOpen(false);
+        setOpen2(false);
     };
 
     if(referralPath !== '/' && referralPath.toLowerCase() !== '/services' && referralPath.toLowerCase() !== '/contactus'){
@@ -352,7 +350,7 @@ export const Header2: React.FC = function Header2() {
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
                 className={classes.modal}
-                open={open}
+                open={open2}
                 onClose={handleClose}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
@@ -360,8 +358,8 @@ export const Header2: React.FC = function Header2() {
                 timeout: 500,
                 }}
             >
-                <Fade in={open}>
-                    <div className={clsx(classes.paper, 'modalMobile')}>
+                <Fade in={open2}>
+                    <div className={clsx(classes.paper, 'modalMobile')} style={{position: "relative"}}>
                         <h3 id="transition-modal-title" style={{textAlign: "center", color: "#F7B614"}}></h3>
                         <Link to={referralPath} className={classes.cartIcon} onClick={handleClose}>
                                 <img src="Images/CartCloseIcon.png" alt="closeweather" />
@@ -590,7 +588,7 @@ export const Header2: React.FC = function Header2() {
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
                 className={classes.modal}
-                open={open}
+                open={open2}
                 onClose={handleClose}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
@@ -598,7 +596,7 @@ export const Header2: React.FC = function Header2() {
                 timeout: 500,
                 }}
             >
-                <Fade in={open}>
+                <Fade in={open2}>
                     <div className={clsx(classes.paper, 'modalMobile')} style={{position: "relative"}}>
                         <h3 id="transition-modal-title" style={{textAlign: "center", color: "#F7B614"}}></h3>
                         <Link to={referralPath} className={classes.cartIcon} onClick={handleClose}>

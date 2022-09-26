@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
     const classes = useStyles();
     var { value }  = useAppData();
-    var { restaurants, selectedRestaurant } = value;
+    var { restaurants, selectedRestaurant, paySettings } = value;
     var restaurant = restaurants[selectedRestaurant];
     const [isOpen, setisOpen] = useState(false);
     const [TodayOpeningHrs, setTodayOpeningHrs] = useState('');
@@ -120,6 +120,9 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                         (isAm && (parseInt(jaTimeFinal[0]) >= parseInt(openTimeFinal))) || 
                         (isPm && parseInt(jaTimeFinal[0]) === 12 && (parseInt(closeTimeFinal) < parseInt(jaTimeFinal[0])))
                         //console.log(decision)
+                        if(paySettings !== undefined){
+                            decision = paySettings.closed === true || paySettings.badWeather === true ? false : decision;
+                        }
                         setisOpen(decision);
                         setjaday(res.data.datetime);
                         settoday(res.data.day_of_week);
@@ -158,6 +161,9 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                     (isAm && (parseInt(jaTimeFinal[0]) > parseInt(openTimeFinal))) ||
                     (isPm && parseInt(jaTimeFinal[0]) === 12 && (parseInt(closeTimeFinal) < parseInt(jaTimeFinal[0])))
                     //console.log(decision)
+                    if(paySettings !== undefined){
+                        decision = paySettings.closed === true || paySettings.badWeather === true ? false : decision;
+                    }
                     setisOpen(decision);
                     
                     //console.log(jaday)
