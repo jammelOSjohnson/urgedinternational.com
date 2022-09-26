@@ -126,10 +126,12 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
     const handleLogout = async (event) => {
         try{
           event.preventDefault();
-          logout(value);
-          setTimeout(() => {
-            history.push('/Login');
-          }, 3000);
+          logout(value).then(()=> {
+            setTimeout(() => {
+              history.push('/Login');
+            }, 1000);
+          });
+          
         }catch{
           ////////console.log('Failed to logout.');
         }
