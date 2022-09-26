@@ -175,10 +175,10 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
         try{
             setError('');
             setSuccess('');
-            values.Street === '' || values.ContactNum === undefined?
+            values.Street === ''?
                 setError('Please enter Street Address')
             :
-            values.ContactNum === '' || values.Street === undefined?
+            values.ContactNum.length < 7 ?
                 setError('Please enter Contact number')
             :
             await checkoutOrder(value, cartItems, values, checkoutVals.deliveryFee, 
