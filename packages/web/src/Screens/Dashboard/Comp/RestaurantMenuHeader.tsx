@@ -5,6 +5,7 @@ import { LocationOnRounded, ScheduleRounded } from "@material-ui/icons/";
 import moment from 'moment-timezone';
 import { useHistory } from 'react-router-dom';
 import fetchCurrentTime from '../../../Apis/timePI';
+import { DateTime } from 'luxon'
 
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -66,9 +67,11 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
     const [today, settoday] = useState(0);
     ////console.log(restaurants)
     var history = useHistory();
+    
 
     useEffect(() => {
         if(restaurants.length !== 0){
+            let currentTime = DateTime.now().setZone('America/Jamaica').toISO();
             const now = new Date();
             ////console.log("server time is:");
             ////console.log(now);
@@ -77,29 +80,35 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
             if(jaday === '' && today === 0){
                 //let innerJDay = '';
                 //let innerToday = '';
-                fetchCurrentTime.get('/api/timezone/America/Jamaica').then((res) => {
-                    if(res.data !== null && res.data !== undefined){
+                //fetchCurrentTime.get('/api/timezone/America/Jamaica').then((res) => {
+                try{
+                    if(currentTime !== null && currentTime !== undefined){
                         //console.log(res.data);
-                        //innerJDay = res.data.datetime;
+                        //innerJDay = currentTime;
                         //innerToday = res.data.day_of_week
-                        setjaday(res.data.datetime);
-                        settoday(res.data.day_of_week);
+                        let day_of_week = DateTime.fromISO(currentTime).toFormat('c');
+                        //console.log(day_of_week)
+                        //console.log(1)
+                        setjaday(currentTime);
+                        settoday(day_of_week);
                         //console.log(jaday)
-                        let innerDay = res.data.day_of_week;
+                        let innerDay = parseInt(day_of_week);
 
                         let OpeningHrs = restaurant.OpeningHrs;
-                        setTodayOpeningHrs (innerDay === 0 ? OpeningHrs.Sunday : innerDay === 1 ? OpeningHrs.Monday :
+                        setTodayOpeningHrs (innerDay === 7 ? OpeningHrs.Sunday : innerDay === 1 ? OpeningHrs.Monday :
                                             innerDay === 2 ? OpeningHrs.Tuesday : innerDay === 3 ? OpeningHrs.Wednesday :
                                             innerDay === 4 ? OpeningHrs.Thursday : innerDay === 5 ? OpeningHrs.Friday :
                                             innerDay === 6 ? OpeningHrs.Saturday : "");
                         
-                        let innerOpeningHrs =  innerDay === 0 ? OpeningHrs.Sunday : innerDay === 1 ? OpeningHrs.Monday :
+                        let innerOpeningHrs =  innerDay === 7 ? OpeningHrs.Sunday : innerDay === 1 ? OpeningHrs.Monday :
                         innerDay === 2 ? OpeningHrs.Tuesday : innerDay === 3 ? OpeningHrs.Wednesday :
                         innerDay === 4 ? OpeningHrs.Thursday : innerDay === 5 ? OpeningHrs.Friday :
                         innerDay === 6 ? OpeningHrs.Saturday : "";
-
-                        //console.log(res.data.datetime);
-                        let initTime = new Date(res.data.datetime);
+                        //console.log(OpeningHrs);
+                        //console.log(innerOpeningHrs)
+                        //console.log(currentTime);
+                        //let initTime = new Date(currentTime);
+                        let initTime = new Date(currentTime);
                         //console.log(initTime);
                         let jaTime = moment.tz(initTime, "America/Jamaica").format("h:mm a");
                         //console.log(jaTime);
@@ -116,6 +125,7 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                         // console.log(isPm);
                         // console.log(closeTimeFinal);
                         // console.log(jaTimeFinal[0]);
+                        // console.log(openTimeFinal);
                         let decision = (isPm && (parseInt(closeTimeFinal) > parseInt(jaTimeFinal[0]))) || 
                         (isAm && (parseInt(jaTimeFinal[0]) >= parseInt(openTimeFinal))) || 
                         (isPm && parseInt(jaTimeFinal[0]) === 12 && (parseInt(closeTimeFinal) < parseInt(jaTimeFinal[0])))
@@ -124,13 +134,13 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                             decision = paySettings.closed === true || paySettings.badWeather === true ? false : decision;
                         }
                         setisOpen(decision);
-                        setjaday(res.data.datetime);
-                        settoday(res.data.day_of_week);
+                        //setjaday(currentTime);
+                        //settoday(day_of_week);
                         
                         //console.log(jaday)
                     }
-                }).catch((err) => {
-                    console.log(err);
+                }catch(err){
+                    //console.log(err);
                     setjaday(moment.tz(now, "America/Jamaica").format());
                     settoday(new Date(jaday).getDay());
 
@@ -167,7 +177,7 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                     setisOpen(decision);
                     
                     //console.log(jaday)
-                })
+                }
             }
 
             //console.log(jaday)
