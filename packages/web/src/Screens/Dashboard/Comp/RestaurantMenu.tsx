@@ -490,7 +490,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
     useEffect(() => {
       try{
         if(paySettings !== undefined){
-            console.log(paySettings.badWeather);
+            //console.log(paySettings.badWeather);
             if(paySettings.badWeather){
               setDisabled(true);
             }
