@@ -243,7 +243,7 @@ export const Header2: React.FC = function Header2() {
         }
 
         if(paySettings !== undefined){
-          console.log(paySettings.badWeather);
+          //console.log(paySettings.badWeather);
           if(paySettings.badWeather){
             if(value.userRolef === "" || value.userRolef === "Customer"){
               setTimeout(() => {
