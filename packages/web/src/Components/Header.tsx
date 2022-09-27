@@ -376,7 +376,7 @@ export const Header: React.FC = function Header() {
                         <>
                             <Grid item xs={12} sm={12} md={7} style={{textAlign: "center", marginTop: "10%"}}>
                               <Typography className={classes.logoArea} style={{textAlign: "center"}}>
-                                  <img className={classes.logo} src="Images/urged logo.svg" alt="Urged Logo"></img>
+                                  <img className={classes.logo} src="Images/urged logo.jpg" alt="Urged Logo"></img>
                               </Typography>
                             </Grid>
                         </>
@@ -384,7 +384,7 @@ export const Header: React.FC = function Header() {
                         <>
                             <Grid item xs={12} sm={12} md={7} style={{textAlign: "center"}}>
                               <Typography className={classes.logoArea} style={{textAlign: "left"}}>
-                                  <img className={classes.logo} src="Images/urged logo.svg" alt="Urged Logo"></img>
+                                  <img className={classes.logo} src="Images/urged logo.jpg" alt="Urged Logo"></img>
                               </Typography>
                             </Grid>
                         </>

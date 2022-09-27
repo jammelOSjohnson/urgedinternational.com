@@ -300,8 +300,8 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                           </IconButton>
                       </div> */}
                       
-                      {open && <img className={classes.logo} src="Images/urged logo.svg" alt="Urged Logo"></img>}
-                      {!open && <img className={classes.logosmall} src="Images/SmallSidebarLogo.png" alt="Urged Logo"></img>}
+                      {open && <img className={classes.logo} src="Images/urged logo.jpg" alt="Urged Logo"></img>}
+                      {!open && <img className={classes.logosmall} src="Images/urged logoR.png" alt="Urged Logo"></img>}
                       <List style={{marginTop: "20%"}}>
                       {['Overview', 'Food Delivery', 'Errands Solution', 'Uship', "Sally's Pantry", 'Orders', "Profile"].map((text, index) => (
                           referralPath === "/Dashboard" && text === "Overview" ?
@@ -728,8 +728,8 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                           </IconButton>
                       </div> */}
                       
-                      {open1 && <img className={classes.logo} src="Images/urged logo.svg" alt="Urged Logo"></img>}
-                      {!open1 && <img className={classes.logosmall} src="Images/SmallSidebarLogo.png" alt="Urged Logo"></img>}
+                      {open1 && <img className={classes.logo} src="Images/urged logo.jpg" alt="Urged Logo"></img>}
+                      {!open1 && <img className={classes.logosmall} src="Images/urged logoR.png" alt="Urged Logo"></img>}
                       <List>
                       {['Overview', 'Food Delivery', 'Errands Solution', 'Uship', "Sally's Pantry", 'Orders', "Profile"].map((text, index) => (
                           referralPath === "/Dashboard" && text === "Overview" ?

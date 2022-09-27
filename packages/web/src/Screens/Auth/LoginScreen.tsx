@@ -573,7 +573,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
                         <Grid container spacing={2} className={classes.gridRoot} alignItems="center">
                             <Grid item xs={12} container spacing={1}>
                                 <Grid item xs={6} md={6} lg={6}>
-                                    <img className={classes.logo} src="Images/urged logo.svg" alt="Urged Logo"></img>
+                                    <img className={classes.logo} src="Images/urged logo.jpg" alt="Urged Logo"></img>
                                     <Typography style={{paddingTop: "0%"}}>
                                         <Typography className={classes.section1H1} >
                                             On Time
@@ -690,7 +690,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
                      className={clsx(classes.signUpBtnMobile, mobClasses.root)} onClick={handleClickSignUp}  >
                             Sign Up
                     </Button>
-                    <img className={classes.logoMobile} src="Images/urged logo.svg" alt="Urged Logo"></img>
+                    <img className={classes.logoMobile} src="Images/urged logo.jpg" alt="Urged Logo"></img>
                     <div className={classes.formSectionMobile}>
                         <Typography variant="h5" className={classes.helloStyleMobile}>Hello,</Typography>
                         <Typography variant="subtitle1" className={classes.welcomeStyle}>Welcome Back</Typography>

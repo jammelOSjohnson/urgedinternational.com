@@ -551,7 +551,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                      className={clsx(classes.signUpBtnMobile, mobClasses.root)} onClick={handleClickSignIn}  >
                             Sign In
                     </Button>
-                    <img className={classes.logoMobile} src="Images/urged logo.svg" alt="Urged Logo"></img>
+                    <img className={classes.logoMobile} src="Images/urged logo.jpg" alt="Urged Logo"></img>
                     <div className={classes.formSectionMobile}>
                         <Typography variant="h5" className={classes.helloStyleMobile}>Hello,</Typography>
                         <Typography variant="subtitle1" className={classes.welcomeStyle}>Welcome Back</Typography>

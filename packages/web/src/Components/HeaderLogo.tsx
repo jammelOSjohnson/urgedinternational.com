@@ -129,14 +129,14 @@ export const HeaderLogo: React.FC = function HeaderLogo() {
               <>
                   <Grid item xs={12} sm={12} md={12} style={{textAlign: "center", marginTop: "2.5%", marginBottom: "2.5%"}}>
                     <Typography className={classes.logoArea} style={{textAlign: "center"}}>
-                        <img className={classes.logo} src="Images/urged logo.svg" alt="Urged Logo"></img>
+                        <img className={classes.logo} src="Images/urged logo.jpg" alt="Urged Logo"></img>
                     </Typography>
                   </Grid>
               </>
             ): (
               <>
                     <Typography className={classes.logoArea} style={{textAlign: "left"}}>
-                        <img className={classes.logo} src="Images/urged logo.svg" alt="Urged Logo"></img>
+                        <img className={classes.logo} src="Images/urged logo.jpg" alt="Urged Logo"></img>
                     </Typography>
               </>
             )}
