@@ -361,7 +361,7 @@ export const Section1: React.FC = function Section1() {
                                             <span className={classes.heroSubText2}> Package</span>  Delivery.
                                         </Typography>
                                         <Typography className={clsx(classes.heroText2, "mobileheroText2")} align="left">
-                                            We deliver Pacakges of all shapes and sizes. Schedule a pick-up and we will drop them off wherever you like.
+                                            We deliver Packages of all shapes and sizes. Schedule a pick-up and we will drop them off wherever you like.
                                         </Typography>
                                     </Grid>
                                 </Grid>
