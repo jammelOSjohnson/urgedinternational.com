@@ -279,7 +279,7 @@ export const Profile: React.FC = function Profile(){
             });
             
         }catch(e){
-            console.log(e);
+            //console.log(e);
             setError('Unable to update profile at this time.');
         }
         setLoading(false);
