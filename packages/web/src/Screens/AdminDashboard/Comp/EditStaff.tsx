@@ -248,7 +248,8 @@ export const EditStaff: React.FC = () => {
         <>
             <Button 
                 onClick={handleOpen}
-                className={classes.addOrgBtn}>
+                className={classes.addOrgBtn}
+                style={{backgroundColor: "#FF5E14"}}>
                 Edit Staff
             </Button>
             {/*Add USER Details Modal */}
