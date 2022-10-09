@@ -330,7 +330,15 @@ const typeDefs = /* GraphQL */`
             Id: String, FirstName: String, LastName: String, 
             Email: String, AddressLine1: String, AddressLine2: String, 
             City: String, ContactNumber: String, MenuItems: JSONObject, 
-            isAvailable: Boolean, disabled: Boolean, ImageName: String
+            isAvailable: Boolean, disabled: Boolean, ImageName: String,
+            Position: String
+            ): User!
+
+        updateStaff(
+            _id: String, MenuItems: JSONObject, FirstName: String, LastName: String, 
+            Email: String, AddressLine1: String, AddressLine2: String, 
+            City: String, ContactNumber: String, isAvailable: Boolean,
+            disabled: Boolean, ImageName: String, Position: String
             ): User!
 
         getRestaurants: [User!]!

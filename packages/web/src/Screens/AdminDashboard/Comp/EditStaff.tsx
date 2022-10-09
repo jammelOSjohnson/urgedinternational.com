@@ -1,9 +1,8 @@
-import {  Grid, makeStyles, createStyles, Theme, Button, Modal, Fade, Backdrop, TextField, FormControl, MenuItem, InputLabel, Select } from '@material-ui/core';
+import {  Grid, makeStyles, createStyles, Theme, Button, Modal, Fade, Backdrop, TextField, FormControl, MenuItem, InputLabel, Select, FormGroup, FormControlLabel, Switch } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { Link, useHistory } from "react-router-dom";
 import { ArrowForwardRounded } from "@material-ui/icons/";
-import {Categories} from "./Categories";
 import { useAppData } from '../../../Context/AppDataContext';
 import { Alert } from '@material-ui/lab';
 
@@ -17,9 +16,9 @@ interface State {
     Role: string;
     Menu: MenuItem[];
     ImageName: String;
-    isAvailable: Boolean;
-    disabled: Boolean;
-    password: string;
+    isAvailable: boolean;
+    disabled: boolean;
+    _id: string;
 }
 
 interface MenuItem {
@@ -126,10 +125,10 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const AddStaff: React.FC = () => {
+export const EditStaff: React.FC = () => {
     const classes = useStyles();
     var { value }  = useAppData();
-    var { signup2, staffSignUp, selectedRider, riders } = value;
+    var { selectedRider, riders, editStaff } = value;
     const [open, setOpen] = React.useState(false);
     const [values, setValues] = React.useState<State>({
         Name: '',
@@ -143,7 +142,7 @@ export const AddStaff: React.FC = () => {
         ImageName: process.env.REACT_APP_DEFAULT_RIDER_LOGO !== undefined ? process.env.REACT_APP_DEFAULT_RIDER_LOGO : '',
         isAvailable: false,
         disabled: false,
-        password: process.env.REACT_APP_DEFAULT_USER_PSW !== undefined ? process.env.REACT_APP_DEFAULT_USER_PSW : '',
+        _id: ''
     });
 
     var [error, setError] = useState('');
@@ -168,43 +167,14 @@ export const AddStaff: React.FC = () => {
                 setError('Please enter a valid Email')
             :values.Role === 'Select Staff Role'?
                 setError('Please select user postition')
-            :await signup2(values, value).then(async function(res1){
-                if(res1 != null){
-                    if(res1 !== "The email address is already in use by another account."){
-                        await fetchUserDetailsSignUp(res1).then(function(res){
-                            if(res){
-                                ////console.log("About to navigate to dashboard.");
-                                ////console.log(userRolef);
-                                setSuccess('Member Created Successfully');
-                                setTimeout(() => {
-                                    setSuccess('');
-                                    setOpen(false);
-                                    //console.log("about to go to dashboard");
-                                    setValues({
-                                        Name: '',
-                                        Email: '',
-                                        StreetAddress: '',
-                                        StreetAddress2: '',
-                                        City: '',
-                                        Contact: '',
-                                        Role: 'Select Staff Role',
-                                        Menu: [],
-                                        ImageName: process.env.REACT_APP_DEFAULT_RESTAURANT_LOGO !== undefined ? process.env.REACT_APP_DEFAULT_RESTAURANT_LOGO : '',
-                                        isAvailable: false,
-                                        disabled: false,
-                                        password: '12345678'
-                                    });
-                                }, 1500);
-                            }else{
-                                setError('Unable to Create Restaurant at this time'); 
-                            } 
-                        });
-                        console.log(res1,"user account created");
-                    }else{
-                        setError('The email address is already in use by another account.')
-                    }
+            :await editStaff(value, values).then(async function(res1){
+                if(res1){
+                    setSuccess('Member updated successfully.')
+                    setTimeout(() => {
+                        setSuccess('')
+                    },3000)
                 }else{
-                    setError('Unable to Sign Up at this time.'); 
+                    setError('Unable to update info at this time.'); 
                 }
             });
             
@@ -213,20 +183,6 @@ export const AddStaff: React.FC = () => {
             setError('Failed to create restaurant');
         }
         setLoading(false);
-    }
-
-    var fetchUserDetailsSignUp = async function fetchUserDetailsSignUp(payload) {
-        ////console.log("Is current user null");
-        ////console.log(value);
-        if(payload.currentUser !== null && payload.currentUser !== undefined){
-            if(payload.currentUser.uid !== null && payload.currentUser.uid !== undefined){
-                ////console.log("Fetching user info");
-                ////console.log(state);
-                staffSignUp(payload.currentUser.uid, payload, value , values);
-                return true;
-            }
-        }
-        return false;
     }
 
     const handleClose = () => {
@@ -243,6 +199,21 @@ export const AddStaff: React.FC = () => {
 
     const handleChange = (event) => {
         setValues({...values,[event.target.name]:event.target.value});
+    };
+
+    const handleChange2 = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if(event.target.name === "disabled" && event.target.checked){
+            setValues({ ...values, [event.target.name]: event.target.checked });
+        }else if(event.target.name === "disabled" && !event.target.checked){
+            setValues({ ...values, [event.target.name]: event.target.checked });
+        }
+
+        if(event.target.name === "isAvailable" && event.target.checked){
+            setValues({ ...values, [event.target.name]: event.target.checked });
+        }else if(event.target.name === "isAvailable" && !event.target.checked){
+            setValues({ ...values, [event.target.name]: event.target.checked });
+        }
+        // setState({ ...state, [event.target.name]: event.target.checked });
     };
 
     const handleOpen = () => {
@@ -265,7 +236,8 @@ export const AddStaff: React.FC = () => {
                 Contact: riders[selectedRider].ContactNumber,
                 disabled: riders[selectedRider].disabled,
                 isAvailable: riders[selectedRider].isAvailable,
-                Role: riders[selectedRider].Position !== null && riders[selectedRider].Position !== undefined? riders[selectedRider].Position : "Select Staff Role"
+                Role: riders[selectedRider].Position !== null && riders[selectedRider].Position !== undefined? riders[selectedRider].Position : "Select Staff Role",
+                _id: riders[selectedRider]._id != null && riders[selectedRider]._id != undefined? riders[selectedRider]._id : ''
             });
         }
     }, [selectedRider])
@@ -387,6 +359,39 @@ export const AddStaff: React.FC = () => {
                                                     fullWidth
                                                 />
                                             </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                <FormGroup row>
+                                                    <FormControlLabel
+                                                        control={
+                                                        <Switch
+                                                            checked={values.disabled}
+                                                            onChange={handleChange2}
+                                                            name="disabled"
+                                                            color="primary"
+                                                        />
+                                                        }
+                                                        label="Disabled Account?"
+                                                    />
+                                                </FormGroup>
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                <FormGroup row>
+                                                    <FormControlLabel
+                                                        control={
+                                                        <Switch
+                                                            checked={values.isAvailable}
+                                                            onChange={handleChange2}
+                                                            name="isAvailable"
+                                                            color="primary"
+                                                        />
+                                                        }
+                                                        label="Available ?"
+                                                    />
+                                                </FormGroup>
+                                            </Grid>
+                                            <Grid item xs={12} sm={6}>
+                                                
+                                            </Grid>
                                             <Grid item xs={12}>
                                                 <FormControl variant="outlined" className={classes.formControl} fullWidth required>
                                                     <InputLabel id="demo-simple-select-outlined-label">Position</InputLabel>
@@ -398,6 +403,7 @@ export const AddStaff: React.FC = () => {
                                                         label="Position"
                                                         name="Role"
                                                         className={classes.root}
+                                                        disabled={true}
                                                         required
                                                     >
                                                         <MenuItem value={"Select Staff Role"}key={0}>Select Staff Role</MenuItem>
@@ -411,8 +417,9 @@ export const AddStaff: React.FC = () => {
                                                 <Button variant="contained" 
                                                     style={{backgroundColor: "#F7B614", fontFamily: "PT Sans"}} onClick={handleSubmit}
                                                     color="secondary" size="small" className={`${classes.Button} ${classes.btnfonts}`}
-                                                    fullWidth>
-                                                    Create New Member <ArrowForwardRounded />
+                                                    fullWidth
+                                                    disabled={loading}>
+                                                    Update Member <ArrowForwardRounded />
                                                 </Button>
                                             </Grid>
                                             <Grid item xs={12} >
@@ -431,4 +438,4 @@ export const AddStaff: React.FC = () => {
     );
 }
 
-export default AddStaff;
+export default EditStaff;

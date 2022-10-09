@@ -114,7 +114,7 @@ export const EmployeeOrdersCounters: React.FC = function EmployeeOrdersCounters(
     
     //   var history = useHistory();
     var { value }  = useAppData();
-    var { rider_orders } = value;
+    var { rider_orders, userRolef } = value;
     const [Food, setFood] = useState(0);
     const [Errand, setErrand] = useState(0);
     const [Express, setExpress] = useState(0);
@@ -255,7 +255,12 @@ export const EmployeeOrdersCounters: React.FC = function EmployeeOrdersCounters(
                     <Calendar type="" setStartDate={setStartDate} setEndDate={setEndDate} />
                 </Grid>
                 <Grid item xs={12} md={3}>
-                    {/* <EditStaff /> */}
+                    {
+                        userRolef !== undefined && userRolef === "Admin"?
+                            <EditStaff />
+                        :
+                            <></>
+                    }
                 </Grid>
             </Grid>
             <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">

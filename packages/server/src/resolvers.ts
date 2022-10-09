@@ -188,15 +188,22 @@ const resolvers = {
             return user.save();
         },
 
-        createStaff: async(_, {Id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, MenuItems, isAvailable, disabled, ImageName}) => {
+        createStaff: async(_, {Id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, MenuItems, isAvailable, disabled, ImageName, Position}) => {
             const checkUser =  await User.findOne({Id});
             if(checkUser === null){
-                const user = new User({Id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, MenuItems, isAvailable, disabled, ImageName});
+                const user = new User({Id, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, MenuItems, isAvailable, disabled, ImageName, Position});
                 return user.save();
             }else{
                 return checkUser;
             }
             
+        },
+
+        updateStaff: async (_, {_id, MenuItems, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, isAvailable, disabled, ImageName, Position}) => {
+            const newUser = {_id, MenuItems, FirstName, LastName, Email, AddressLine1, AddressLine2, City, ContactNumber, isAvailable, disabled, ImageName, Position};
+            const user = await User.findOne({_id});
+            Object.assign(user, newUser);
+            return user.save();
         },
 
         getUser: async (_,{Id}) => {

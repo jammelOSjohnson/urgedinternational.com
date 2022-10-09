@@ -34,7 +34,8 @@ import {
         UPDATE_ORDER_REJECTLIST,
         UPDATE_USER_MUTATION,
         CREATE_STAFF_MUTATION,
-        GET_STAFF
+        GET_STAFF,
+        UPDATE_STAFF_MUTATION
       } from '../GraphQL/Mutations';
 import { useMutation } from '@apollo/client';
 import sendEmail from "../email.js";
@@ -259,6 +260,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
     //Declare necessary variables
     const [createUser] = useMutation(CREATE_USER_MUTATION);
     const [updateUser] = useMutation(UPDATE_USER_MUTATION);
+    const [updateStaff] = useMutation(UPDATE_STAFF_MUTATION);
     const [createRestaurant] = useMutation(CREATE_RESTAURANT_MUTATION);
     const [createStaff] = useMutation(CREATE_STAFF_MUTATION);
     const [getUser] = useMutation(GET_USER_MUTATION);
@@ -942,6 +944,40 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       ////console.log(userRef);
       
     };
+
+    var editStaff  = async function editStaff(payload, StaffInfo){
+      if(StaffInfo !== null && StaffInfo !== undefined){
+          let newUpdate = {
+            _id: StaffInfo._id,
+            MenuItems: StaffInfo.Menu,
+            FirstName: StaffInfo.Name,
+            LastName: "",
+            Email: StaffInfo.Email,
+            AddressLine1: StaffInfo.StreetAddress,
+            AddressLine2: StaffInfo.StreetAddress2,
+            City: StaffInfo.City,
+            ContactNumber: StaffInfo.Contact,
+            isAvailable: StaffInfo.isAvailable,
+            disabled: StaffInfo.disabled,
+            ImageName: StaffInfo.ImageName,
+            Position: StaffInfo.Role
+          }
+          return await updateStaff({variables: newUpdate}).then(async function(response) {
+            ////console.log("update user result");
+            if (response.data.updateStaff !== null) {
+              //console.log(response.data.updateOrder);
+              
+              await fetchStaff(payload);
+              return true;
+            }else{
+              //console.log("not same")
+              return false;
+            }
+          });
+      }else{
+        return false
+      }
+    }
 
     var fetchUserInfo = async function fetchUserInfo(uid, payloadf) {
       // console.log("User id is: ");
@@ -2614,7 +2650,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         fetchRestaurantInfo,
         uploadToFirebaseCloud,
         UpdateUserInfo,
-        fetchStaff
+        fetchStaff,
+        editStaff
     });
     
      

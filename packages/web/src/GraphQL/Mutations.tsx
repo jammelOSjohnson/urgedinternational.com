@@ -145,11 +145,12 @@ export const CREATE_STAFF_MUTATION = gql`
         $LastName: String!, $Email: String!, 
         $AddressLine1: String, $AddressLine2: String, 
         $City: String, $ContactNumber: String, $isAvailable: Boolean, 
-        $disabled: Boolean, $ImageName: String) {
+        $disabled: Boolean, $ImageName: String, $Position: String!) {
         createStaff(
             MenuItems: $MenuItems, Id: $Id ,FirstName: $FirstName, LastName: $LastName, Email: $Email, 
             AddressLine1: $AddressLine1, AddressLine2: $AddressLine2, City: $City,
-            ContactNumber: $ContactNumber, isAvailable: $isAvailable, disabled: $disabled, ImageName: $ImageName
+            ContactNumber: $ContactNumber, isAvailable: $isAvailable, disabled: $disabled, ImageName: $ImageName,
+            Position: $Position
         ){
             _id
             Id
@@ -170,6 +171,33 @@ export const CREATE_STAFF_MUTATION = gql`
             isAvailable
             disabled
             ImageName
+            Position
+        }
+    }
+`
+
+export const UPDATE_STAFF_MUTATION = gql`
+    mutation updateStaff(
+        $_id: String! , $MenuItems: JSONObject,$FirstName: String!, 
+        $LastName: String!, $Email: String!, 
+        $AddressLine1: String, $AddressLine2: String, 
+        $City: String, $ContactNumber: String,
+        $isAvailable: Boolean, $disabled: Boolean,
+        $ImageName: String, $Position: String) {
+            updateStaff(
+            _id: $_id , MenuItems: $MenuItems, FirstName: $FirstName, LastName: $LastName, Email: $Email, 
+            AddressLine1: $AddressLine1, AddressLine2: $AddressLine2, City: $City,
+            ContactNumber: $ContactNumber, isAvailable: $isAvailable, disabled: $disabled,
+            ImageName: $ImageName, Position: $Position
+        ){
+            _id
+            FirstName 
+            LastName
+            Email
+            AddressLine1
+            AddressLine2
+            City
+            ContactNumber
         }
     }
 `
