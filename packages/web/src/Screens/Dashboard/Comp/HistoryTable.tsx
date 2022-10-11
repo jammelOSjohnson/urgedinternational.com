@@ -138,7 +138,7 @@ export const HistoryTable: React.FC = function HistoryTable () {
       //console.log(e)
     }
     // eslint-disable-next-line
-  }, [currentUser]);
+  }, []);//currentUser
 
   const options = {
     filterType: 'dropdown',

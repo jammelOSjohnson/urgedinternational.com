@@ -218,11 +218,18 @@ export const EmployeeCardList: React.FC = function EmployeeCardList(props) {
                                             </Grid>
                                             <Grid item xs={12}>
                                                 <Typography variant="body2"  component="p" align="center">
-                                                {!rider.disabled?
-                                                    <span><span className={classes.statusDot}></span> Active</span>
-                                                    :
-                                                    <span><span className={classes.statusDotI}></span> In-active</span>
-                                                }
+                                                    {!rider.disabled?
+                                                        <span><span className={classes.statusDot}></span> Active</span>
+                                                        :
+                                                        <span><span className={classes.statusDotI}></span> In-active</span>
+                                                    }
+                                                </Typography>
+                                                <Typography variant="body2"  component="p" align="center">
+                                                    {rider.isAvailable?
+                                                        <span><span className={classes.statusDot}></span> Available</span>
+                                                        :
+                                                        <span><span className={classes.statusDotI}></span> Not Available</span>
+                                                    }
                                                 </Typography>
                                             </Grid>
                                         </Grid>

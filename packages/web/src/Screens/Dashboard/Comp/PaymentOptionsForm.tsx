@@ -1,6 +1,6 @@
 import { useAppData } from '../../../Context/AppDataContext';
 import {GeoMap } from './GeoMap';
-import { makeStyles, createStyles, Typography, Theme, Grid, Paper, Divider, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, TextField, Button } from '@material-ui/core';
+import { makeStyles, createStyles, Typography, Theme, Grid, Paper, Divider, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, TextField, Button, Box, CircularProgress } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
@@ -170,43 +170,64 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
     var history = useHistory();
     var [error, setError] = useState('');
     var [success, setSuccess] = useState('');
+    var [loading, setLoading] = useState(false);
 
     const handleSubmit = async () => {
         try{
+            setLoading(true);
             setError('');
             setSuccess('');
-            values.Street === ''?
+
+            if(values.Street === ''){
                 setError('Please enter Street Address')
-            :
-            values.ContactNum.length < 7 ?
-                setError('Please enter Contact number')
-            :
-            await checkoutOrder(value, cartItems, values, checkoutVals.deliveryFee, 
-                checkoutVals.GCT, checkoutVals.serviceFee, checkoutVals.cartItemsSum,
-                checkoutVals.Total, restaurants[selectedRestaurant]._id).then(() => {
-                setValues({
-                    Street: '',
-                    Town: 'Select Town',
-                    ContactNum: '',
-                    PaymentMethod: "Cash on Delivery",
-                    Parish: 'Clarendon',
-                    lat: null,
-                    long: null
+                setLoading(false)
+            }else if(values.ContactNum.length < 7 ){
+                setError('Please enter Contact number') 
+                setLoading(false)
+            }else{
+                await checkoutOrder(value, cartItems, values, checkoutVals.deliveryFee, 
+                    checkoutVals.GCT, checkoutVals.serviceFee, checkoutVals.cartItemsSum,
+                    checkoutVals.Total, restaurants[selectedRestaurant]._id).then((res) => {
+                    
+                    if(res === null || res === undefined){
+                        setValues({
+                            Street: '',
+                            Town: 'Select Town',
+                            ContactNum: '',
+                            PaymentMethod: "Cash on Delivery",
+                            Parish: 'Clarendon',
+                            lat: null,
+                            long: null
+                        });
+                        setLoading(false);
+                        setCheckoutVals({
+                            deliveryFee: {Cost: "0.00"},
+                            cartItemsSum: {Cost: "0.00"},
+                            serviceFee: {Cost: "0.00"},
+                            GCT: {Cost: "0.00"},
+                            Total: {Cost: "0.00"}
+                        });
+                        history.push("/OrderCompleted");
+                    }else if(res === "no rider"){
+                        setError('We are unable to take your order at this time. Please try again in a few minutes.');
+                        setLoading(false);
+                    }
                 });
-                setCheckoutVals({
-                    deliveryFee: {Cost: "0.00"},
-                    cartItemsSum: {Cost: "0.00"},
-                    serviceFee: {Cost: "0.00"},
-                    GCT: {Cost: "0.00"},
-                    Total: {Cost: "0.00"}
-                });
-                history.push("/OrderCompleted");
-            });
+            }
         }catch(e: any) { 
             //console.log(e.message)
             let path = e.message
+            //console.log(path)
             let result = path.split("Path")
-            setError(result[1]);
+            //console.log(result)
+            if(result.length > 1){
+                setError(result[1]);
+            }else{
+                setError('Unable to process your order at this time.');
+                //setError(result[0]); //DEBUG ON DEV
+            }
+            
+            setLoading(false);
         }
     }
 
@@ -439,9 +460,12 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                                     <Grid item xs={12}>
                                         {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
                                         {success && <Alert variant="filled" severity="success" className={classes.alert}>{success}</Alert>}
-                                        <Button variant="contained" size="large" className={classes.button} onClick={handleSubmit}>
-                                            Checkout
+                                        <Button variant="contained" size="large" className={classes.button} onClick={handleSubmit}
+                                        disabled={loading}>
+                                            {!loading ? "Checkout" : <></>}
+                                            {loading && <Box sx={{  textAlign:'center' }}><CircularProgress /></Box>}
                                         </Button> 
+                                        
                                     </Grid>
                                 </Grid>
                             </Grid>
