@@ -39,7 +39,7 @@ import { RestaurantOrderDetailsScreen } from '../Screens/RestaurantDashboard/Res
 //Rider
 import { RiderOrderDetailsScreen } from '../Screens/RiderDashboard/RiderOrderDetailsScreen';
 import { RiderOrdersScreen } from '../Screens/RiderDashboard/RiderOrdersScreen';
-import { testmap } from '../Screens/Dashboard/testmap';
+import Testmap from '../Screens/Dashboard/Testmap';
 //import { RiderDashboard } from '../Screens/RiderDashboard/RiderDashboard';
 //import { Sidebar } from '../Screens/Dashboard/Comp/Sidebar';
 import { CheckoutScreen } from '../Screens/Checkout/CheckoutScreen';
@@ -235,7 +235,7 @@ const App: React.FC = function App() {
                   {/* <Sidebar/> */}
                     {/* <Route path="/" exact component={AboutScreen} /> */}
                     <Route path="/" exact component={HomeScreen} />
-                    <Route path="/testmap" exact component={testmap} />
+                    <Route path="/testmap" exact component={Testmap} />
                     {/* Customer Screens */}
                     <Route path="/Services" exact component={ServicesScreen} />
                     <Route path="/ContactUs" exact component={ContactUsScreen} />
