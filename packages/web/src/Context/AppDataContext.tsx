@@ -1317,7 +1317,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           orderItems.push(body);
           return null;
         })
-        await fetchRidersForOrder().then(async (res) => {
+        return  await fetchRidersForOrder().then(async (res) => {
           //Generate rand number
           //console.log("res is: ", res);
           type riderObj = {
@@ -1339,7 +1339,11 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           try{
             RiderRes = res.filter((item) => item.isAvailable === true && item.disabled === false)
           }catch(e){
-            //console.log(e);
+            console.log(e);
+          }
+
+          if(RiderRes.length === 0){
+            return "no rider";
           }
           
           //console.log("sorted rider res is: ", RiderRes);
@@ -1366,7 +1370,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
             OrderType: "Food",
             Restaurant: restaurantID
           }
-  
+
           await createOrder({variables: orderBody}).then(async function(response) {
             //console.log("create orer result");
             if (response.data.createOrder !== null) {
@@ -1376,16 +1380,15 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
               payload.selectedRestaurant = undefined;
               payload.receiptDetails = response.data.createOrder;
   
-              await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
-                if (response.data.getOrdersByUserId !== null) {
-                  payload.orders = response.data.getOrdersByUserId;
-                  dispatch({
-                    type: "checkout",
-                    payload: payload
-                  })
-                }
-              });
-              return payload;
+              // await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
+              //   if (response.data.getOrdersByUserId !== null) {
+              //     payload.orders = response.data.getOrdersByUserId;
+              //     dispatch({
+              //       type: "checkout",
+              //       payload: payload
+              //     })
+              //   }
+              // });
             }
           });
         })
