@@ -318,7 +318,7 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any, me
                             </FormControl>
                         </Grid>
                     </>
-                :props.itemCategory === "Zingers"?
+                :props.itemCategory === "Zingers" && props.itemName !==  "Spicy Zinger Only" && props.itemName !==  "BBQ Zinger Only"?
                     <>
                         <Grid item xs={12} sm={12} >
                             <FormControl variant="outlined" className={classes.formControl} fullWidth>

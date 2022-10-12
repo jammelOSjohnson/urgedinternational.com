@@ -241,6 +241,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
 
     const handleOpen = (item) => {
         if(cartItems.length > 0){
+            console.log(cartItems[0].restaurantName)
+            console.log(restaurant.FirstName)
             if(cartItems[0].restaurantName === restaurant.FirstName){
                 setItem(item);
                 setValues({...values, itemName: item.ItemName ,itemCost: item.ItemCost ,imageName: item.ImageName, itemCategory: item.MenuCategory, restaurantName: item.FirstName});
@@ -587,7 +589,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid>
                                                 </Grid>
                                             </form>
-                                        :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Zingers"?
+                                        :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Zingers" && values.itemName !== "BBQ Zinger Only" && values.itemName !== "Spicy Zinger Only"?
                                             <form onSubmit={(e) => AddToCart3(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                     <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
@@ -1824,7 +1826,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid>
                                                 </Grid>
                                             </form>
-                                        :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Zingers"?
+                                        :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Zingers" && values.itemName !== "BBQ Zinger Only" && values.itemName !== "Spicy Zinger Only"?
                                             <form onSubmit={(e) => AddToCart3(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                     <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
