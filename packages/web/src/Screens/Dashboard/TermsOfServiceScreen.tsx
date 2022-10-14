@@ -108,9 +108,10 @@ export const TermsOfServiceScreen: React.FC = function TermsOfServiceScreen() {
 
                                 2.6. "Service" or "Services" is a reference to any service which we may supply and which you may request via our Website;<br/><br/>
 
-                                2.7. "Participating Restaurant" is a third party, which has agreed to 
-                                co-operate with the Company to prepare and/or deliver the Goods or 
-                                Services.<br/><br/>
+                                2.7. "Participating Restaurant" We may have no affiliation or prior restaurant delivery service agreement with some restaurants listed on this website. 
+                                A list of our partnering restaurants is available for viewing on this site. Click <a href="/Restaurants" title='Restaurants' >Restaurants</a> to view. 
+                                The images displayed on our website are for representational purposes only and actual meals may differ. We only provide the service 
+                                of a meal courier service and do not prepare any of the meals delivered and all prices are subject to change without notice.<br/><br/>
 
                                 2.8. "Food Delivery" is a reference to perishable goods and to any 
                                 form of delivery service, which both are provided by our 
