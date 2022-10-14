@@ -295,6 +295,10 @@ const resolvers = {
             }
             //console.log(newOrder);
             const order = await Order.findOne({_id});
+            if(order.OrderStatus === "Cancelled"){
+                console.log("Already Cancelled")
+                return order;
+            }
             const user = await User.findOne({Id});
             Object.assign(order, newOrder);
             order.save();
