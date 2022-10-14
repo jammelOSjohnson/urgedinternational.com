@@ -6,11 +6,11 @@ import React from 'react';
 //Import Components
 import { HeaderRight } from './Comp/HeaderRight';
 //import { ErrandCards } from './Comp/ErrandCards';
-import { HistoryHeaderBar } from './Comp/HistoryHeaderBar';
+//import { HistoryHeaderBar } from './Comp/HistoryHeaderBar';
 import { HistoryTable } from './Comp/HistoryTable';
 const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
 const Sidebar = React.lazy(() => import('./Comp/Sidebar'));
-const DashboardFooter = React.lazy(() => import('./Comp/DashboardFooter'));
+//const DashboardFooter = React.lazy(() => import('./Comp/DashboardFooter'));
 
 
 

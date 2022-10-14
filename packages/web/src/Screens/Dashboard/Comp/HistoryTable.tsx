@@ -118,7 +118,7 @@ export const HistoryTable: React.FC = function HistoryTable () {
   var location = history.location;
   var referralPath = location.pathname;
 
-  var { orders, fetchOrdersByUser, currentUser, userRolef, UpdateOrder } = value;
+  var { orders, fetchOrdersByUser, userRolef, UpdateOrder } = value;
   const [open, setOpen] = React.useState(false);
   const [open1, setOpen1] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
@@ -178,11 +178,11 @@ export const HistoryTable: React.FC = function HistoryTable () {
     try{
         setOpen(false);
         setOpen2(false);
-        console.log(status);
-        console.log(selectedOrderNumber);
-        console.log(orders);
+        //console.log(status);
+        //console.log(selectedOrderNumber);
+        //console.log(orders);
         let filteredOrder = orders.filter((item) => item._id.toString() === selectedOrderNumber);
-        console.log(filteredOrder);
+        //console.log(filteredOrder);
         let order = {...filteredOrder[0], OrderStatus: status, Rider: filteredOrder[0].Rider._id };
         console.log(order);
         await UpdateOrder(value, order).then((res) => {
