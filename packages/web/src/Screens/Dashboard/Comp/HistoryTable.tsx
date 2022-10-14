@@ -246,7 +246,7 @@ export const HistoryTable: React.FC = function HistoryTable () {
           )
         })
 
-        console.log(orderItems);
+        //console.log(orderItems);
 
         let row = {
           id: `#${item._id}`,

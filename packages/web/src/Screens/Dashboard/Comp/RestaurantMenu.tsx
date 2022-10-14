@@ -241,8 +241,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
 
     const handleOpen = (item) => {
         if(cartItems.length > 0){
-            console.log(cartItems[0].restaurantName)
-            console.log(restaurant.FirstName)
+            //console.log(cartItems[0].restaurantName)
+            //console.log(restaurant.FirstName)
             if(cartItems[0].restaurantName === restaurant.FirstName){
                 setItem(item);
                 setValues({...values, itemName: item.ItemName ,itemCost: item.ItemCost ,imageName: item.ImageName, itemCategory: item.MenuCategory, restaurantName: item.FirstName});
@@ -1780,697 +1780,10 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         <Typography>{selectedItem.ItemDescription}</Typography>
                                     </Grid>
                                     <Grid item xs={12}>
-                                    {restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory !== "Zingers" && values.itemCategory !== "Famous Bowl" && values.itemCategory !== "Buckets" && values.itemCategory !== "Hot Wings" && values.itemCategory !== "Popcorn Chicken" && values.itemCategory !== "Sides"?
-                                            <form onSubmit={(e) => AddToCart2(e, values)}>
-                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
-                                                    <Grid item xs={12} sm={12} >
-                                                        <TextField
-                                                            id="outlined-multiline-static"
-                                                            label="Special Intructions"
-                                                            multiline
-                                                            rows={4}
-                                                            defaultValue={values.otherIntructions}
-                                                            onChange={handleChange2('otherIntructions')}
-                                                            variant="outlined"
-                                                            placeholder="Enter Instructions Here"
-                                                            fullWidth
-                                                        />
-                                                    </Grid>
-                                                    <Grid item xs={12} >
-                                                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                            <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
-                                                            <Select
-                                                                labelId="demo-simple-select-outlined-label"
-                                                                id="demo-simple-select-outlined"
-                                                                value={values.ifnotAvailable}
-                                                                onChange={handleChange}
-                                                                label="ifnotAvailable"
-                                                                name="ifnotAvailable"
-                                                                className={classes.root}
-                                                                fullWidth
-                                                            >
-                                                                <MenuItem value={"Contact me"}>Contact me</MenuItem>
-                                                                <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
-                                                                <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                                <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
-                                                            </Select>
-                                                        </FormControl>
-                                                    </Grid><br />
-                                                    {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
-                                                    <Grid item xs={12} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
-                                                        disabled={disabled !== undefined? disabled : false}>
-                                                            Add To Cart 
-                                                        </Button>
-                                                    </Grid>
-                                                </Grid>
-                                            </form>
-                                        :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Zingers" && values.itemName !== "BBQ Zinger Only" && values.itemName !== "Spicy Zinger Only"?
-                                            <form onSubmit={(e) => AddToCart3(e, values)}>
-                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
-                                                    <Grid item xs={12} sm={12} >
-                                                        <TextField
-                                                            id="outlined-multiline-static"
-                                                            label="Special Intructions"
-                                                            multiline
-                                                            rows={4}
-                                                            defaultValue={values.otherIntructions}
-                                                            onChange={handleChange2('otherIntructions')}
-                                                            variant="outlined"
-                                                            placeholder="Enter Instructions Here"
-                                                            fullWidth
-                                                        />
-                                                    </Grid>
-                                                    <Grid item xs={12} >
-                                                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                            <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
-                                                            <Select
-                                                                labelId="demo-simple-select-outlined-label"
-                                                                id="demo-simple-select-outlined"
-                                                                value={values.ifnotAvailable}
-                                                                onChange={handleChange}
-                                                                label="ifnotAvailable"
-                                                                name="ifnotAvailable"
-                                                                className={classes.root}
-                                                                fullWidth
-                                                            >
-                                                                <MenuItem value={"Contact me"}>Contact me</MenuItem>
-                                                                <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
-                                                                <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                                <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
-                                                            </Select>
-                                                        </FormControl>
-                                                    </Grid><br />
-                                                    {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
-                                                    <Grid item xs={12} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
-                                                        disabled={disabled !== undefined? disabled : false}>
-                                                            Add To Cart 
-                                                        </Button>
-                                                    </Grid>
-                                                </Grid>
-                                            </form>
-                                        :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Famous Bowl" && values.itemName !== "Famous Bowl Only"?
-                                            <form onSubmit={(e) => AddToCart4(e, values)}>
-                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
-                                                    <Grid item xs={12} sm={12} >
-                                                        <TextField
-                                                            id="outlined-multiline-static"
-                                                            label="Special Intructions"
-                                                            multiline
-                                                            rows={4}
-                                                            defaultValue={values.otherIntructions}
-                                                            onChange={handleChange2('otherIntructions')}
-                                                            variant="outlined"
-                                                            placeholder="Enter Instructions Here"
-                                                            fullWidth
-                                                        />
-                                                    </Grid>
-                                                    <Grid item xs={12} >
-                                                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                            <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
-                                                            <Select
-                                                                labelId="demo-simple-select-outlined-label"
-                                                                id="demo-simple-select-outlined"
-                                                                value={values.ifnotAvailable}
-                                                                onChange={handleChange}
-                                                                label="ifnotAvailable"
-                                                                name="ifnotAvailable"
-                                                                className={classes.root}
-                                                                fullWidth
-                                                            >
-                                                                <MenuItem value={"Contact me"}>Contact me</MenuItem>
-                                                                <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
-                                                                <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                                <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
-                                                            </Select>
-                                                        </FormControl>
-                                                    </Grid><br />
-                                                    {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
-                                                    <Grid item xs={12} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
-                                                        disabled={disabled !== undefined? disabled : false}>
-                                                            Add To Cart 
-                                                        </Button>
-                                                    </Grid>
-                                                </Grid>
-                                            </form>
-                                        :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Famous Bowl" && values.itemName === "Famous Bowl Only"?
-                                            <form onSubmit={(e) => AddToCart5(e, values)}>
-                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
-                                                    <Grid item xs={12} sm={12} >
-                                                        <TextField
-                                                            id="outlined-multiline-static"
-                                                            label="Special Intructions"
-                                                            multiline
-                                                            rows={4}
-                                                            defaultValue={values.otherIntructions}
-                                                            onChange={handleChange2('otherIntructions')}
-                                                            variant="outlined"
-                                                            placeholder="Enter Instructions Here"
-                                                            fullWidth
-                                                        />
-                                                    </Grid>
-                                                    <Grid item xs={12} >
-                                                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                            <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
-                                                            <Select
-                                                                labelId="demo-simple-select-outlined-label"
-                                                                id="demo-simple-select-outlined"
-                                                                value={values.ifnotAvailable}
-                                                                onChange={handleChange}
-                                                                label="ifnotAvailable"
-                                                                name="ifnotAvailable"
-                                                                className={classes.root}
-                                                                fullWidth
-                                                            >
-                                                                <MenuItem value={"Contact me"}>Contact me</MenuItem>
-                                                                <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
-                                                                <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                                <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
-                                                            </Select>
-                                                        </FormControl>
-                                                    </Grid><br />
-                                                    {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
-                                                    <Grid item xs={12} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
-                                                        disabled={disabled !== undefined? disabled : false}>
-                                                            Add To Cart 
-                                                        </Button>
-                                                    </Grid>
-                                                </Grid>
-                                            </form>
-                                        :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Buckets"?
-                                            <form onSubmit={(e) => AddToCart4(e, values)}>
-                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
-                                                    <Grid item xs={12} sm={12} >
-                                                        <TextField
-                                                            id="outlined-multiline-static"
-                                                            label="Special Intructions"
-                                                            multiline
-                                                            rows={4}
-                                                            defaultValue={values.otherIntructions}
-                                                            onChange={handleChange2('otherIntructions')}
-                                                            variant="outlined"
-                                                            placeholder="Enter Instructions Here"
-                                                            fullWidth
-                                                        />
-                                                    </Grid>
-                                                    <Grid item xs={12} >
-                                                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                            <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
-                                                            <Select
-                                                                labelId="demo-simple-select-outlined-label"
-                                                                id="demo-simple-select-outlined"
-                                                                value={values.ifnotAvailable}
-                                                                onChange={handleChange}
-                                                                label="ifnotAvailable"
-                                                                name="ifnotAvailable"
-                                                                className={classes.root}
-                                                                fullWidth
-                                                            >
-                                                                <MenuItem value={"Contact me"}>Contact me</MenuItem>
-                                                                <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
-                                                                <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                                <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
-                                                            </Select>
-                                                        </FormControl>
-                                                    </Grid><br />
-                                                    {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
-                                                    <Grid item xs={12} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
-                                                        disabled={disabled !== undefined? disabled : false}>
-                                                            Add To Cart 
-                                                        </Button>
-                                                    </Grid>
-                                                </Grid>
-                                            </form>
-                                        :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Hot Wings"?
-                                            <form onSubmit={(e) => AddToCart4(e, values)}>
-                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
-                                                    <Grid item xs={12} sm={12} >
-                                                        <TextField
-                                                            id="outlined-multiline-static"
-                                                            label="Special Intructions"
-                                                            multiline
-                                                            rows={4}
-                                                            defaultValue={values.otherIntructions}
-                                                            onChange={handleChange2('otherIntructions')}
-                                                            variant="outlined"
-                                                            placeholder="Enter Instructions Here"
-                                                            fullWidth
-                                                        />
-                                                    </Grid>
-                                                    <Grid item xs={12} >
-                                                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                            <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
-                                                            <Select
-                                                                labelId="demo-simple-select-outlined-label"
-                                                                id="demo-simple-select-outlined"
-                                                                value={values.ifnotAvailable}
-                                                                onChange={handleChange}
-                                                                label="ifnotAvailable"
-                                                                name="ifnotAvailable"
-                                                                className={classes.root}
-                                                                fullWidth
-                                                            >
-                                                                <MenuItem value={"Contact me"}>Contact me</MenuItem>
-                                                                <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
-                                                                <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                                <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
-                                                            </Select>
-                                                        </FormControl>
-                                                    </Grid><br />
-                                                    {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
-                                                    <Grid item xs={10} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
-                                                        disabled={disabled !== undefined? disabled : false}>
-                                                            Add To Cart 
-                                                        </Button>
-                                                    </Grid>
-                                                </Grid>
-                                            </form>
-                                        :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Popcorn Chicken"?
-                                            <form onSubmit={(e) => AddToCart3(e, values)}>
-                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
-                                                    <Grid item xs={12} sm={12} >
-                                                        <TextField
-                                                            id="outlined-multiline-static"
-                                                            label="Special Intructions"
-                                                            multiline
-                                                            rows={4}
-                                                            defaultValue={values.otherIntructions}
-                                                            onChange={handleChange2('otherIntructions')}
-                                                            variant="outlined"
-                                                            placeholder="Enter Instructions Here"
-                                                            fullWidth
-                                                        />
-                                                    </Grid>
-                                                    <Grid item xs={12} >
-                                                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                            <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
-                                                            <Select
-                                                                labelId="demo-simple-select-outlined-label"
-                                                                id="demo-simple-select-outlined"
-                                                                value={values.ifnotAvailable}
-                                                                onChange={handleChange}
-                                                                label="ifnotAvailable"
-                                                                name="ifnotAvailable"
-                                                                className={classes.root}
-                                                                fullWidth
-                                                            >
-                                                                <MenuItem value={"Contact me"}>Contact me</MenuItem>
-                                                                <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
-                                                                <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                                <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
-                                                            </Select>
-                                                        </FormControl>
-                                                    </Grid><br />
-                                                    {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
-                                                    <Grid item xs={10} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
-                                                        disabled={disabled !== undefined? disabled : false}>
-                                                            Add To Cart 
-                                                        </Button>
-                                                    </Grid>
-                                                </Grid>
-                                            </form>
-                                        :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Sides"?
-                                            <form onSubmit={(e) => AddToCart(e, values)}>
-                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <Grid item xs={12} sm={12} >
-                                                        <TextField
-                                                            id="outlined-multiline-static"
-                                                            label="Special Intructions"
-                                                            multiline
-                                                            rows={4}
-                                                            defaultValue={values.otherIntructions}
-                                                            onChange={handleChange2('otherIntructions')}
-                                                            variant="outlined"
-                                                            placeholder="Enter Instructions Here"
-                                                            fullWidth
-                                                        />
-                                                    </Grid>
-                                                    <Grid item xs={12} >
-                                                        <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                            <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
-                                                            <Select
-                                                                labelId="demo-simple-select-outlined-label"
-                                                                id="demo-simple-select-outlined"
-                                                                value={values.ifnotAvailable}
-                                                                onChange={handleChange}
-                                                                label="ifnotAvailable"
-                                                                name="ifnotAvailable"
-                                                                className={classes.root}
-                                                                fullWidth
-                                                            >
-                                                                <MenuItem value={"Contact me"}>Contact me</MenuItem>
-                                                                <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
-                                                                <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                                <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
-                                                            </Select>
-                                                        </FormControl>
-                                                    </Grid><br />
-                                                    {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
-                                                    <Grid item xs={10} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
-                                                        disabled={disabled !== undefined? disabled : false}>
-                                                            Add To Cart 
-                                                        </Button>
-                                                    </Grid>
-                                                </Grid>
-                                            </form>
-                                        :restaurant.FirstName === "Elle B Catering And Events"?
-                                            <form onSubmit={(e) => AddToCart(e, values)}>
-                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <Grid item xs={12} sm={12} >
-                                                        <TextField
-                                                            id="outlined-multiline-static"
-                                                            label="Special Intructions"
-                                                            multiline
-                                                            rows={4}
-                                                            defaultValue={values.otherIntructions}
-                                                            onChange={handleChange2('otherIntructions')}
-                                                            variant="outlined"
-                                                            placeholder="Enter Instructions Here"
-                                                            fullWidth
-                                                        />
-                                                    </Grid>
-                                                    <Grid item xs={12} >
-                                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                                <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
-                                                                <Select
-                                                                    labelId="demo-simple-select-outlined-label"
-                                                                    id="demo-simple-select-outlined"
-                                                                    value={values.ifnotAvailable}
-                                                                    onChange={handleChange}
-                                                                    label="ifnotAvailable"
-                                                                    name="ifnotAvailable"
-                                                                    className={classes.root}
-                                                                    fullWidth
-                                                                >
-                                                                    <MenuItem value={"Contact me"}>Contact me</MenuItem>
-                                                                    <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
-                                                                    <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                                    <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
-                                                                </Select>
-                                                            </FormControl>
-                                                    </Grid>
-                                                    <Grid item xs={12} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
-                                                        disabled={disabled !== undefined? disabled : false}>
-                                                            Add To Cart 
-                                                        </Button>
-                                                    </Grid>
-                                                </Grid>
-                                            </form>
-                                        :restaurant.FirstName === "Juici Patties"?
-                                            <form onSubmit={(e) => AddToCart(e, values)}>
-                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                {
-                                                        values.itemCategory !== "Pastries" && values.itemCategory !== "Beverages" && values.itemCategory !== "Sides" && values.itemCategory !== "Loaves" && values.itemCategory !== "Patties"?
-                                                            <Grid item xs={12} sm={12} >
-                                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                                    <InputLabel id="demo-simple-select-outlined-label">Sides</InputLabel>
-                                                                    <Select
-                                                                        labelId="demo-simple-select-outlined-label"
-                                                                        id="demo-simple-select-outlined"
-                                                                        value={values.side }
-                                                                        onChange={handleChange}
-                                                                        label="side"
-                                                                        name="side"
-                                                                        className={classes.root}
-                                                                    >
-                                                                        <MenuItem value={"Select Side"}>Select Side</MenuItem>
-                                                                        {
-                                                                            restaurant.MenuItems.map((item2, index) => {
-                                                                                if(item2.MenuCategory === "Sides"){
-                                                                                return <MenuItem key={index} value={item2.ItemName}>{`${item2.ItemName} $${parseFloat(item2.ItemCost).toFixed(2)}`}</MenuItem>
-                                                                                }
-                                                                            })
-                                                                        }
-                                                                    </Select>
-                                                                </FormControl>
-                                                            </Grid>
-                                                        :
-                                                            <></>
-                                                    }
-                                                    <Grid item xs={12} sm={12} >
-                                                        <TextField
-                                                            id="outlined-multiline-static"
-                                                            label="Special Intructions"
-                                                            multiline
-                                                            rows={4}
-                                                            defaultValue={values.otherIntructions}
-                                                            onChange={handleChange2('otherIntructions')}
-                                                            variant="outlined"
-                                                            placeholder="Enter Instructions Here"
-                                                            fullWidth
-                                                        />
-                                                    </Grid>
-                                                    <Grid item xs={12} >
-                                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                                <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
-                                                                <Select
-                                                                    labelId="demo-simple-select-outlined-label"
-                                                                    id="demo-simple-select-outlined"
-                                                                    value={values.ifnotAvailable}
-                                                                    onChange={handleChange}
-                                                                    label="ifnotAvailable"
-                                                                    name="ifnotAvailable"
-                                                                    className={classes.root}
-                                                                    fullWidth
-                                                                >
-                                                                    <MenuItem value={"Contact me"}>Contact me</MenuItem>
-                                                                    <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
-                                                                    <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                                    <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
-                                                                </Select>
-                                                            </FormControl>
-                                                    </Grid>
-                                                    <Grid item xs={12} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
-                                                        disabled={disabled !== undefined? disabled : false}>
-                                                            Add To Cart 
-                                                        </Button>
-                                                    </Grid>
-                                                </Grid>
-                                            </form>
-                                        :restaurant.FirstName === "Burger King"?
-                                            <form onSubmit={(e) => AddToCart(e, values)}>
-                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                {
-                                                        values.itemCategory !== "Add Ons" && values.itemCategory !== "Beverages" && values.itemCategory !== "Sides"?
-                                                            <Grid item xs={12} sm={12} >
-                                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                                    <InputLabel id="demo-simple-select-outlined-label">Sides</InputLabel>
-                                                                    <Select
-                                                                        labelId="demo-simple-select-outlined-label"
-                                                                        id="demo-simple-select-outlined"
-                                                                        value={values.side }
-                                                                        onChange={handleChange}
-                                                                        label="side"
-                                                                        name="side"
-                                                                        className={classes.root}
-                                                                    >
-                                                                        <MenuItem value={"Select Side"}>Select Side</MenuItem>
-                                                                        {
-                                                                            restaurant.MenuItems.map((item2, index) => {
-                                                                                if(item2.MenuCategory === "Sides"){
-                                                                                return <MenuItem key={index} value={item2.ItemName}>{item2.ItemName}</MenuItem>
-                                                                                }
-                                                                            })
-                                                                        }
-                                                                    </Select>
-                                                                </FormControl>
-                                                            </Grid>
-                                                        :
-                                                            <></>
-                                                    }
-                                                    <Grid item xs={12} sm={12} >
-                                                        <TextField
-                                                            id="outlined-multiline-static"
-                                                            label="Special Intructions"
-                                                            multiline
-                                                            rows={4}
-                                                            defaultValue={values.otherIntructions}
-                                                            onChange={handleChange2('otherIntructions')}
-                                                            variant="outlined"
-                                                            placeholder="Enter Instructions Here"
-                                                            fullWidth
-                                                        />
-                                                    </Grid>
-                                                    <Grid item xs={12} >
-                                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                                <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
-                                                                <Select
-                                                                    labelId="demo-simple-select-outlined-label"
-                                                                    id="demo-simple-select-outlined"
-                                                                    value={values.ifnotAvailable}
-                                                                    onChange={handleChange}
-                                                                    label="ifnotAvailable"
-                                                                    name="ifnotAvailable"
-                                                                    className={classes.root}
-                                                                    fullWidth
-                                                                >
-                                                                    <MenuItem value={"Contact me"}>Contact me</MenuItem>
-                                                                    <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
-                                                                    <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                                    <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
-                                                                </Select>
-                                                            </FormControl>
-                                                    </Grid>
-                                                    <Grid item xs={12} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
-                                                        disabled={disabled !== undefined? disabled : false}>
-                                                            Add To Cart 
-                                                        </Button>
-                                                    </Grid>
-                                                </Grid>
-                                            </form>
-                                        :restaurant.FirstName === "Popeyes"?
-                                            <form onSubmit={(e) => AddToCart(e, values)}>
-                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
-                                                    <Grid item xs={12} sm={12} >
-                                                        <TextField
-                                                            id="outlined-multiline-static"
-                                                            label="Special Intructions"
-                                                            multiline
-                                                            rows={4}
-                                                            defaultValue={values.otherIntructions}
-                                                            onChange={handleChange2('otherIntructions')}
-                                                            variant="outlined"
-                                                            placeholder="Enter Instructions Here"
-                                                            fullWidth
-                                                        />
-                                                    </Grid>
-                                                    <Grid item xs={12} >
-                                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                                <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
-                                                                <Select
-                                                                    labelId="demo-simple-select-outlined-label"
-                                                                    id="demo-simple-select-outlined"
-                                                                    value={values.ifnotAvailable}
-                                                                    onChange={handleChange}
-                                                                    label="ifnotAvailable"
-                                                                    name="ifnotAvailable"
-                                                                    className={classes.root}
-                                                                    fullWidth
-                                                                >
-                                                                    <MenuItem value={"Contact me"}>Contact me</MenuItem>
-                                                                    <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
-                                                                    <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                                    <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
-                                                                </Select>
-                                                            </FormControl>
-                                                    </Grid>
-                                                    <Grid item xs={12} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
-                                                        disabled={disabled !== undefined? disabled : false}>
-                                                            Add To Cart 
-                                                        </Button>
-                                                    </Grid>
-                                                </Grid>
-                                            </form>
-                                        :restaurant.FirstName === "McKenzie's Bamboo Jerk Centre"?
-                                            <form onSubmit={(e) => AddToCart(e, values)}>
-                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <Grid item xs={12} sm={12} >
-                                                        <TextField
-                                                            id="outlined-multiline-static"
-                                                            label="Special Intructions"
-                                                            multiline
-                                                            rows={4}
-                                                            defaultValue={values.otherIntructions}
-                                                            onChange={handleChange2('otherIntructions')}
-                                                            variant="outlined"
-                                                            placeholder="Enter Instructions Here"
-                                                            fullWidth
-                                                        />
-                                                    </Grid>
-                                                    <Grid item xs={12} >
-                                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                                <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
-                                                                <Select
-                                                                    labelId="demo-simple-select-outlined-label"
-                                                                    id="demo-simple-select-outlined"
-                                                                    value={values.ifnotAvailable}
-                                                                    onChange={handleChange}
-                                                                    label="ifnotAvailable"
-                                                                    name="ifnotAvailable"
-                                                                    className={classes.root}
-                                                                    fullWidth
-                                                                >
-                                                                    <MenuItem value={"Contact me"}>Contact me</MenuItem>
-                                                                    <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
-                                                                    <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                                    <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
-                                                                </Select>
-                                                            </FormControl>
-                                                    </Grid>
-                                                    <Grid item xs={12} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
-                                                        disabled={disabled !== undefined? disabled : false}>
-                                                            Add To Cart 
-                                                        </Button>
-                                                    </Grid>
-                                                </Grid>
-                                            </form>
-                                        :restaurant.FirstName === "Homar's ROTI & Grill"?
-                                            <form onSubmit={(e) => AddToCart(e, values)}>
-                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <Grid item xs={12} sm={12} >
-                                                        <TextField
-                                                            id="outlined-multiline-static"
-                                                            label="Special Intructions"
-                                                            multiline
-                                                            rows={4}
-                                                            defaultValue={values.otherIntructions}
-                                                            onChange={handleChange2('otherIntructions')}
-                                                            variant="outlined"
-                                                            placeholder="Enter Instructions Here"
-                                                            fullWidth
-                                                        />
-                                                    </Grid>
-                                                    <Grid item xs={12} >
-                                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                                <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
-                                                                <Select
-                                                                    labelId="demo-simple-select-outlined-label"
-                                                                    id="demo-simple-select-outlined"
-                                                                    value={values.ifnotAvailable}
-                                                                    onChange={handleChange}
-                                                                    label="ifnotAvailable"
-                                                                    name="ifnotAvailable"
-                                                                    className={classes.root}
-                                                                    fullWidth
-                                                                >
-                                                                    <MenuItem value={"Contact me"}>Contact me</MenuItem>
-                                                                    <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
-                                                                    <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                                    <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
-                                                                </Select>
-                                                            </FormControl>
-                                                    </Grid>
-                                                    <Grid item xs={12} sm={12} >
-                                                        <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
-                                                        disabled={disabled !== undefined? disabled : false}>
-                                                            Add To Cart 
-                                                        </Button>
-                                                    </Grid>
-                                                </Grid>
-                                            </form>
-                                        :restaurant.FirstName === "H & T Restaurant"?
-                                            <form onSubmit={(e) => AddToCart(e, values)}>
+                                        {restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory !== "Zingers" && values.itemCategory !== "Famous Bowl" && values.itemCategory !== "Buckets" && values.itemCategory !== "Hot Wings" && values.itemCategory !== "Popcorn Chicken" && values.itemCategory !== "Sides"?
+                                                <form onSubmit={(e) => AddToCart2(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                        <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
                                                         <Grid item xs={12} sm={12} >
                                                             <TextField
                                                                 id="outlined-multiline-static"
@@ -2485,36 +1798,38 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             />
                                                         </Grid>
                                                         <Grid item xs={12} >
-                                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                                    <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
-                                                                    <Select
-                                                                        labelId="demo-simple-select-outlined-label"
-                                                                        id="demo-simple-select-outlined"
-                                                                        value={values.ifnotAvailable}
-                                                                        onChange={handleChange}
-                                                                        label="ifnotAvailable"
-                                                                        name="ifnotAvailable"
-                                                                        className={classes.root}
-                                                                        fullWidth
-                                                                    >
-                                                                        <MenuItem value={"Contact me"}>Contact me</MenuItem>
-                                                                        <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
-                                                                        <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                                        <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
-                                                                    </Select>
-                                                                </FormControl>
-                                                        </Grid>
+                                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                                <Select
+                                                                    labelId="demo-simple-select-outlined-label"
+                                                                    id="demo-simple-select-outlined"
+                                                                    value={values.ifnotAvailable}
+                                                                    onChange={handleChange}
+                                                                    label="ifnotAvailable"
+                                                                    name="ifnotAvailable"
+                                                                    className={classes.root}
+                                                                    fullWidth
+                                                                >
+                                                                    <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                    <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                    <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                    <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </Grid><br />
+                                                        {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
                                                         <Grid item xs={12} sm={12} >
                                                             <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
-                                                        disabled={disabled !== undefined? disabled : false}>
+                                                            disabled={disabled !== undefined? disabled : false}>
                                                                 Add To Cart 
                                                             </Button>
                                                         </Grid>
                                                     </Grid>
                                                 </form>
-                                        :restaurant.FirstName === "Kick Out Sports Bar & Lounge"?
-                                            <form onSubmit={(e) => AddToCart(e, values)}>
+                                            :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Zingers" && values.itemName !== "BBQ Zinger Only" && values.itemName !== "Spicy Zinger Only"?
+                                                <form onSubmit={(e) => AddToCart3(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                        <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
                                                         <Grid item xs={12} sm={12} >
                                                             <TextField
                                                                 id="outlined-multiline-static"
@@ -2529,35 +1844,311 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             />
                                                         </Grid>
                                                         <Grid item xs={12} >
-                                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                                    <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
-                                                                    <Select
-                                                                        labelId="demo-simple-select-outlined-label"
-                                                                        id="demo-simple-select-outlined"
-                                                                        value={values.ifnotAvailable}
-                                                                        onChange={handleChange}
-                                                                        label="ifnotAvailable"
-                                                                        name="ifnotAvailable"
-                                                                        className={classes.root}
-                                                                        fullWidth
-                                                                    >
-                                                                        <MenuItem value={"Contact me"}>Contact me</MenuItem>
-                                                                        <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
-                                                                        <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                                        <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
-                                                                    </Select>
-                                                                </FormControl>
-                                                        </Grid>
+                                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                                <Select
+                                                                    labelId="demo-simple-select-outlined-label"
+                                                                    id="demo-simple-select-outlined"
+                                                                    value={values.ifnotAvailable}
+                                                                    onChange={handleChange}
+                                                                    label="ifnotAvailable"
+                                                                    name="ifnotAvailable"
+                                                                    className={classes.root}
+                                                                    fullWidth
+                                                                >
+                                                                    <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                    <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                    <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                    <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </Grid><br />
+                                                        {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
                                                         <Grid item xs={12} sm={12} >
                                                             <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
-                                                        disabled={disabled !== undefined? disabled : false}>
+                                                            disabled={disabled !== undefined? disabled : false}>
                                                                 Add To Cart 
                                                             </Button>
                                                         </Grid>
                                                     </Grid>
                                                 </form>
-                                        :restaurant.FirstName === "MOKAFE"?
-                                            <form onSubmit={(e) => AddToCart(e, values)}>
+                                            :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Famous Bowl" && values.itemName !== "Famous Bowl Only"?
+                                                <form onSubmit={(e) => AddToCart4(e, values)}>
+                                                    <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                        <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
+                                                        <Grid item xs={12} sm={12} >
+                                                            <TextField
+                                                                id="outlined-multiline-static"
+                                                                label="Special Intructions"
+                                                                multiline
+                                                                rows={4}
+                                                                defaultValue={values.otherIntructions}
+                                                                onChange={handleChange2('otherIntructions')}
+                                                                variant="outlined"
+                                                                placeholder="Enter Instructions Here"
+                                                                fullWidth
+                                                            />
+                                                        </Grid>
+                                                        <Grid item xs={12} >
+                                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                                <Select
+                                                                    labelId="demo-simple-select-outlined-label"
+                                                                    id="demo-simple-select-outlined"
+                                                                    value={values.ifnotAvailable}
+                                                                    onChange={handleChange}
+                                                                    label="ifnotAvailable"
+                                                                    name="ifnotAvailable"
+                                                                    className={classes.root}
+                                                                    fullWidth
+                                                                >
+                                                                    <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                    <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                    <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                    <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </Grid><br />
+                                                        {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
+                                                        <Grid item xs={12} sm={12} >
+                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                            disabled={disabled !== undefined? disabled : false}>
+                                                                Add To Cart 
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                </form>
+                                            :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Famous Bowl" && values.itemName === "Famous Bowl Only"?
+                                                <form onSubmit={(e) => AddToCart5(e, values)}>
+                                                    <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                        <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
+                                                        <Grid item xs={12} sm={12} >
+                                                            <TextField
+                                                                id="outlined-multiline-static"
+                                                                label="Special Intructions"
+                                                                multiline
+                                                                rows={4}
+                                                                defaultValue={values.otherIntructions}
+                                                                onChange={handleChange2('otherIntructions')}
+                                                                variant="outlined"
+                                                                placeholder="Enter Instructions Here"
+                                                                fullWidth
+                                                            />
+                                                        </Grid>
+                                                        <Grid item xs={12} >
+                                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                                <Select
+                                                                    labelId="demo-simple-select-outlined-label"
+                                                                    id="demo-simple-select-outlined"
+                                                                    value={values.ifnotAvailable}
+                                                                    onChange={handleChange}
+                                                                    label="ifnotAvailable"
+                                                                    name="ifnotAvailable"
+                                                                    className={classes.root}
+                                                                    fullWidth
+                                                                >
+                                                                    <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                    <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                    <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                    <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </Grid><br />
+                                                        {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
+                                                        <Grid item xs={12} sm={12} >
+                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                            disabled={disabled !== undefined? disabled : false}>
+                                                                Add To Cart 
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                </form>
+                                            :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Buckets"?
+                                                <form onSubmit={(e) => AddToCart4(e, values)}>
+                                                    <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                        <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
+                                                        <Grid item xs={12} sm={12} >
+                                                            <TextField
+                                                                id="outlined-multiline-static"
+                                                                label="Special Intructions"
+                                                                multiline
+                                                                rows={4}
+                                                                defaultValue={values.otherIntructions}
+                                                                onChange={handleChange2('otherIntructions')}
+                                                                variant="outlined"
+                                                                placeholder="Enter Instructions Here"
+                                                                fullWidth
+                                                            />
+                                                        </Grid>
+                                                        <Grid item xs={12} >
+                                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                                <Select
+                                                                    labelId="demo-simple-select-outlined-label"
+                                                                    id="demo-simple-select-outlined"
+                                                                    value={values.ifnotAvailable}
+                                                                    onChange={handleChange}
+                                                                    label="ifnotAvailable"
+                                                                    name="ifnotAvailable"
+                                                                    className={classes.root}
+                                                                    fullWidth
+                                                                >
+                                                                    <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                    <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                    <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                    <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </Grid><br />
+                                                        {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
+                                                        <Grid item xs={12} sm={12} >
+                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                            disabled={disabled !== undefined? disabled : false}>
+                                                                Add To Cart 
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                </form>
+                                            :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Hot Wings"?
+                                                <form onSubmit={(e) => AddToCart4(e, values)}>
+                                                    <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                        <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
+                                                        <Grid item xs={12} sm={12} >
+                                                            <TextField
+                                                                id="outlined-multiline-static"
+                                                                label="Special Intructions"
+                                                                multiline
+                                                                rows={4}
+                                                                defaultValue={values.otherIntructions}
+                                                                onChange={handleChange2('otherIntructions')}
+                                                                variant="outlined"
+                                                                placeholder="Enter Instructions Here"
+                                                                fullWidth
+                                                            />
+                                                        </Grid>
+                                                        <Grid item xs={12} >
+                                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                                <Select
+                                                                    labelId="demo-simple-select-outlined-label"
+                                                                    id="demo-simple-select-outlined"
+                                                                    value={values.ifnotAvailable}
+                                                                    onChange={handleChange}
+                                                                    label="ifnotAvailable"
+                                                                    name="ifnotAvailable"
+                                                                    className={classes.root}
+                                                                    fullWidth
+                                                                >
+                                                                    <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                    <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                    <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                    <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </Grid><br />
+                                                        {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
+                                                        <Grid item xs={10} sm={12} >
+                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                            disabled={disabled !== undefined? disabled : false}>
+                                                                Add To Cart 
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                </form>
+                                            :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Popcorn Chicken"?
+                                                <form onSubmit={(e) => AddToCart3(e, values)}>
+                                                    <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                        <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
+                                                        <Grid item xs={12} sm={12} >
+                                                            <TextField
+                                                                id="outlined-multiline-static"
+                                                                label="Special Intructions"
+                                                                multiline
+                                                                rows={4}
+                                                                defaultValue={values.otherIntructions}
+                                                                onChange={handleChange2('otherIntructions')}
+                                                                variant="outlined"
+                                                                placeholder="Enter Instructions Here"
+                                                                fullWidth
+                                                            />
+                                                        </Grid>
+                                                        <Grid item xs={12} >
+                                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                                <Select
+                                                                    labelId="demo-simple-select-outlined-label"
+                                                                    id="demo-simple-select-outlined"
+                                                                    value={values.ifnotAvailable}
+                                                                    onChange={handleChange}
+                                                                    label="ifnotAvailable"
+                                                                    name="ifnotAvailable"
+                                                                    className={classes.root}
+                                                                    fullWidth
+                                                                >
+                                                                    <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                    <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                    <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                    <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </Grid><br />
+                                                        {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
+                                                        <Grid item xs={10} sm={12} >
+                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                            disabled={disabled !== undefined? disabled : false}>
+                                                                Add To Cart 
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                </form>
+                                            :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Sides"?
+                                                <form onSubmit={(e) => AddToCart(e, values)}>
+                                                    <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                        <Grid item xs={12} sm={12} >
+                                                            <TextField
+                                                                id="outlined-multiline-static"
+                                                                label="Special Intructions"
+                                                                multiline
+                                                                rows={4}
+                                                                defaultValue={values.otherIntructions}
+                                                                onChange={handleChange2('otherIntructions')}
+                                                                variant="outlined"
+                                                                placeholder="Enter Instructions Here"
+                                                                fullWidth
+                                                            />
+                                                        </Grid>
+                                                        <Grid item xs={12} >
+                                                            <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                                <Select
+                                                                    labelId="demo-simple-select-outlined-label"
+                                                                    id="demo-simple-select-outlined"
+                                                                    value={values.ifnotAvailable}
+                                                                    onChange={handleChange}
+                                                                    label="ifnotAvailable"
+                                                                    name="ifnotAvailable"
+                                                                    className={classes.root}
+                                                                    fullWidth
+                                                                >
+                                                                    <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                    <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                    <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                    <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                                </Select>
+                                                            </FormControl>
+                                                        </Grid><br />
+                                                        {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
+                                                        <Grid item xs={10} sm={12} >
+                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                            disabled={disabled !== undefined? disabled : false}>
+                                                                Add To Cart 
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                </form>
+                                            :restaurant.FirstName === "Elle B Catering And Events"?
+                                                <form onSubmit={(e) => AddToCart(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                         <Grid item xs={12} sm={12} >
                                                             <TextField
@@ -2594,14 +2185,203 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         </Grid>
                                                         <Grid item xs={12} sm={12} >
                                                             <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
-                                                        disabled={disabled !== undefined? disabled : false}>
+                                                            disabled={disabled !== undefined? disabled : false}>
                                                                 Add To Cart 
                                                             </Button>
                                                         </Grid>
                                                     </Grid>
-                                            </form>
-                                        :restaurant.FirstName === "Lucky Chinese"?
-                                            <form onSubmit={(e) => AddToCart(e, values)}>
+                                                </form>
+                                            :restaurant.FirstName === "Juici Patties"?
+                                                <form onSubmit={(e) => AddToCart(e, values)}>
+                                                    <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                    {
+                                                            values.itemCategory !== "Pastries" && values.itemCategory !== "Beverages" && values.itemCategory !== "Sides" && values.itemCategory !== "Loaves" && values.itemCategory !== "Patties"?
+                                                                <Grid item xs={12} sm={12} >
+                                                                    <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                        <InputLabel id="demo-simple-select-outlined-label">Sides</InputLabel>
+                                                                        <Select
+                                                                            labelId="demo-simple-select-outlined-label"
+                                                                            id="demo-simple-select-outlined"
+                                                                            value={values.side }
+                                                                            onChange={handleChange}
+                                                                            label="side"
+                                                                            name="side"
+                                                                            className={classes.root}
+                                                                        >
+                                                                            <MenuItem value={"Select Side"}>Select Side</MenuItem>
+                                                                            {
+                                                                                restaurant.MenuItems.map((item2, index) => {
+                                                                                    if(item2.MenuCategory === "Sides"){
+                                                                                    return <MenuItem key={index} value={item2.ItemName}>{`${item2.ItemName} $${parseFloat(item2.ItemCost).toFixed(2)}`}</MenuItem>
+                                                                                    }
+                                                                                })
+                                                                            }
+                                                                        </Select>
+                                                                    </FormControl>
+                                                                </Grid>
+                                                            :
+                                                                <></>
+                                                        }
+                                                        <Grid item xs={12} sm={12} >
+                                                            <TextField
+                                                                id="outlined-multiline-static"
+                                                                label="Special Intructions"
+                                                                multiline
+                                                                rows={4}
+                                                                defaultValue={values.otherIntructions}
+                                                                onChange={handleChange2('otherIntructions')}
+                                                                variant="outlined"
+                                                                placeholder="Enter Instructions Here"
+                                                                fullWidth
+                                                            />
+                                                        </Grid>
+                                                        <Grid item xs={12} >
+                                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                    <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                                    <Select
+                                                                        labelId="demo-simple-select-outlined-label"
+                                                                        id="demo-simple-select-outlined"
+                                                                        value={values.ifnotAvailable}
+                                                                        onChange={handleChange}
+                                                                        label="ifnotAvailable"
+                                                                        name="ifnotAvailable"
+                                                                        className={classes.root}
+                                                                        fullWidth
+                                                                    >
+                                                                        <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                        <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                        <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                        <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                                    </Select>
+                                                                </FormControl>
+                                                        </Grid>
+                                                        <Grid item xs={12} sm={12} >
+                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                            disabled={disabled !== undefined? disabled : false}>
+                                                                Add To Cart 
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                </form>
+                                            :restaurant.FirstName === "Burger King"?
+                                                <form onSubmit={(e) => AddToCart(e, values)}>
+                                                    <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                    {
+                                                            values.itemCategory !== "Add Ons" && values.itemCategory !== "Beverages" && values.itemCategory !== "Sides"?
+                                                                <Grid item xs={12} sm={12} >
+                                                                    <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                        <InputLabel id="demo-simple-select-outlined-label">Sides</InputLabel>
+                                                                        <Select
+                                                                            labelId="demo-simple-select-outlined-label"
+                                                                            id="demo-simple-select-outlined"
+                                                                            value={values.side }
+                                                                            onChange={handleChange}
+                                                                            label="side"
+                                                                            name="side"
+                                                                            className={classes.root}
+                                                                        >
+                                                                            <MenuItem value={"Select Side"}>Select Side</MenuItem>
+                                                                            {
+                                                                                restaurant.MenuItems.map((item2, index) => {
+                                                                                    if(item2.MenuCategory === "Sides"){
+                                                                                    return <MenuItem key={index} value={item2.ItemName}>{item2.ItemName}</MenuItem>
+                                                                                    }
+                                                                                })
+                                                                            }
+                                                                        </Select>
+                                                                    </FormControl>
+                                                                </Grid>
+                                                            :
+                                                                <></>
+                                                        }
+                                                        <Grid item xs={12} sm={12} >
+                                                            <TextField
+                                                                id="outlined-multiline-static"
+                                                                label="Special Intructions"
+                                                                multiline
+                                                                rows={4}
+                                                                defaultValue={values.otherIntructions}
+                                                                onChange={handleChange2('otherIntructions')}
+                                                                variant="outlined"
+                                                                placeholder="Enter Instructions Here"
+                                                                fullWidth
+                                                            />
+                                                        </Grid>
+                                                        <Grid item xs={12} >
+                                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                    <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                                    <Select
+                                                                        labelId="demo-simple-select-outlined-label"
+                                                                        id="demo-simple-select-outlined"
+                                                                        value={values.ifnotAvailable}
+                                                                        onChange={handleChange}
+                                                                        label="ifnotAvailable"
+                                                                        name="ifnotAvailable"
+                                                                        className={classes.root}
+                                                                        fullWidth
+                                                                    >
+                                                                        <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                        <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                        <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                        <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                                    </Select>
+                                                                </FormControl>
+                                                        </Grid>
+                                                        <Grid item xs={12} sm={12} >
+                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                            disabled={disabled !== undefined? disabled : false}>
+                                                                Add To Cart 
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                </form>
+                                            :restaurant.FirstName === "Popeyes"?
+                                                <form onSubmit={(e) => AddToCart(e, values)}>
+                                                    <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                        <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
+                                                        <Grid item xs={12} sm={12} >
+                                                            <TextField
+                                                                id="outlined-multiline-static"
+                                                                label="Special Intructions"
+                                                                multiline
+                                                                rows={4}
+                                                                defaultValue={values.otherIntructions}
+                                                                onChange={handleChange2('otherIntructions')}
+                                                                variant="outlined"
+                                                                placeholder="Enter Instructions Here"
+                                                                fullWidth
+                                                            />
+                                                        </Grid>
+                                                        <Grid item xs={12} >
+                                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                    <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                                    <Select
+                                                                        labelId="demo-simple-select-outlined-label"
+                                                                        id="demo-simple-select-outlined"
+                                                                        value={values.ifnotAvailable}
+                                                                        onChange={handleChange}
+                                                                        label="ifnotAvailable"
+                                                                        name="ifnotAvailable"
+                                                                        className={classes.root}
+                                                                        fullWidth
+                                                                    >
+                                                                        <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                        <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                        <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                        <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                                    </Select>
+                                                                </FormControl>
+                                                        </Grid>
+                                                        <Grid item xs={12} sm={12} >
+                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                            disabled={disabled !== undefined? disabled : false}>
+                                                                Add To Cart 
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                </form>
+                                            :restaurant.FirstName === "McKenzie's Bamboo Jerk Centre"?
+                                                <form onSubmit={(e) => AddToCart(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                         <Grid item xs={12} sm={12} >
                                                             <TextField
@@ -2638,14 +2418,14 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         </Grid>
                                                         <Grid item xs={12} sm={12} >
                                                             <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
-                                                        disabled={disabled !== undefined? disabled : false}>
+                                                            disabled={disabled !== undefined? disabled : false}>
                                                                 Add To Cart 
                                                             </Button>
                                                         </Grid>
                                                     </Grid>
-                                            </form>
-                                        :restaurant.FirstName === "Murray’s Fish & Jerk Hut"?
-                                            <form onSubmit={(e) => AddToCart(e, values)}>
+                                                </form>
+                                            :restaurant.FirstName === "Homar's ROTI & Grill"?
+                                                <form onSubmit={(e) => AddToCart(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                         <Grid item xs={12} sm={12} >
                                                             <TextField
@@ -2682,101 +2462,321 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         </Grid>
                                                         <Grid item xs={12} sm={12} >
                                                             <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
-                                                        disabled={disabled !== undefined? disabled : false}>
+                                                            disabled={disabled !== undefined? disabled : false}>
                                                                 Add To Cart 
                                                             </Button>
                                                         </Grid>
                                                     </Grid>
-                                            </form>
-                                        :restaurant.FirstName === "Fyahside"?
-                                            <form onSubmit={(e) => AddToCart(e, values)}>
-                                                    <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                        <Grid item xs={12} sm={12} >
-                                                            <TextField
-                                                                id="outlined-multiline-static"
-                                                                label="Special Intructions"
-                                                                multiline
-                                                                rows={4}
-                                                                defaultValue={values.otherIntructions}
-                                                                onChange={handleChange2('otherIntructions')}
-                                                                variant="outlined"
-                                                                placeholder="Enter Instructions Here"
-                                                                fullWidth
-                                                            />
+                                                </form>
+                                            :restaurant.FirstName === "H & T Restaurant"?
+                                                <form onSubmit={(e) => AddToCart(e, values)}>
+                                                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                            <Grid item xs={12} sm={12} >
+                                                                <TextField
+                                                                    id="outlined-multiline-static"
+                                                                    label="Special Intructions"
+                                                                    multiline
+                                                                    rows={4}
+                                                                    defaultValue={values.otherIntructions}
+                                                                    onChange={handleChange2('otherIntructions')}
+                                                                    variant="outlined"
+                                                                    placeholder="Enter Instructions Here"
+                                                                    fullWidth
+                                                                />
+                                                            </Grid>
+                                                            <Grid item xs={12} >
+                                                                    <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                        <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                                        <Select
+                                                                            labelId="demo-simple-select-outlined-label"
+                                                                            id="demo-simple-select-outlined"
+                                                                            value={values.ifnotAvailable}
+                                                                            onChange={handleChange}
+                                                                            label="ifnotAvailable"
+                                                                            name="ifnotAvailable"
+                                                                            className={classes.root}
+                                                                            fullWidth
+                                                                        >
+                                                                            <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                            <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                            <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                            <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                                        </Select>
+                                                                    </FormControl>
+                                                            </Grid>
+                                                            <Grid item xs={12} sm={12} >
+                                                                <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                            disabled={disabled !== undefined? disabled : false}>
+                                                                    Add To Cart 
+                                                                </Button>
+                                                            </Grid>
                                                         </Grid>
-                                                        <Grid item xs={12} >
-                                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                                    <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
-                                                                    <Select
-                                                                        labelId="demo-simple-select-outlined-label"
-                                                                        id="demo-simple-select-outlined"
-                                                                        value={values.ifnotAvailable}
-                                                                        onChange={handleChange}
-                                                                        label="ifnotAvailable"
-                                                                        name="ifnotAvailable"
-                                                                        className={classes.root}
-                                                                        fullWidth
-                                                                    >
-                                                                        <MenuItem value={"Contact me"}>Contact me</MenuItem>
-                                                                        <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
-                                                                        <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                                        <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
-                                                                    </Select>
-                                                                </FormControl>
+                                                    </form>
+                                            :restaurant.FirstName === "Kick Out Sports Bar & Lounge"?
+                                                <form onSubmit={(e) => AddToCart(e, values)}>
+                                                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                            <Grid item xs={12} sm={12} >
+                                                                <TextField
+                                                                    id="outlined-multiline-static"
+                                                                    label="Special Intructions"
+                                                                    multiline
+                                                                    rows={4}
+                                                                    defaultValue={values.otherIntructions}
+                                                                    onChange={handleChange2('otherIntructions')}
+                                                                    variant="outlined"
+                                                                    placeholder="Enter Instructions Here"
+                                                                    fullWidth
+                                                                />
+                                                            </Grid>
+                                                            <Grid item xs={12} >
+                                                                    <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                        <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                                        <Select
+                                                                            labelId="demo-simple-select-outlined-label"
+                                                                            id="demo-simple-select-outlined"
+                                                                            value={values.ifnotAvailable}
+                                                                            onChange={handleChange}
+                                                                            label="ifnotAvailable"
+                                                                            name="ifnotAvailable"
+                                                                            className={classes.root}
+                                                                            fullWidth
+                                                                        >
+                                                                            <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                            <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                            <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                            <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                                        </Select>
+                                                                    </FormControl>
+                                                            </Grid>
+                                                            <Grid item xs={12} sm={12} >
+                                                                <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                            disabled={disabled !== undefined? disabled : false}>
+                                                                    Add To Cart 
+                                                                </Button>
+                                                            </Grid>
                                                         </Grid>
-                                                        <Grid item xs={12} sm={12} >
-                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
-                                                        disabled={disabled !== undefined? disabled : false}>
-                                                                Add To Cart 
-                                                            </Button>
+                                                    </form>
+                                            :restaurant.FirstName === "MOKAFE"?
+                                                <form onSubmit={(e) => AddToCart(e, values)}>
+                                                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                            <Grid item xs={12} sm={12} >
+                                                                <TextField
+                                                                    id="outlined-multiline-static"
+                                                                    label="Special Intructions"
+                                                                    multiline
+                                                                    rows={4}
+                                                                    defaultValue={values.otherIntructions}
+                                                                    onChange={handleChange2('otherIntructions')}
+                                                                    variant="outlined"
+                                                                    placeholder="Enter Instructions Here"
+                                                                    fullWidth
+                                                                />
+                                                            </Grid>
+                                                            <Grid item xs={12} >
+                                                                    <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                        <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                                        <Select
+                                                                            labelId="demo-simple-select-outlined-label"
+                                                                            id="demo-simple-select-outlined"
+                                                                            value={values.ifnotAvailable}
+                                                                            onChange={handleChange}
+                                                                            label="ifnotAvailable"
+                                                                            name="ifnotAvailable"
+                                                                            className={classes.root}
+                                                                            fullWidth
+                                                                        >
+                                                                            <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                            <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                            <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                            <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                                        </Select>
+                                                                    </FormControl>
+                                                            </Grid>
+                                                            <Grid item xs={12} sm={12} >
+                                                                <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                            disabled={disabled !== undefined? disabled : false}>
+                                                                    Add To Cart 
+                                                                </Button>
+                                                            </Grid>
                                                         </Grid>
-                                                    </Grid>
-                                            </form>
-                                        :
-                                            <form onSubmit={(e) => AddToCart(e, values)}>
-                                                    <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                        <Grid item xs={12} sm={12} >
-                                                            <TextField
-                                                                id="outlined-multiline-static"
-                                                                label="Special Intructions"
-                                                                multiline
-                                                                rows={4}
-                                                                defaultValue={values.otherIntructions}
-                                                                onChange={handleChange2('otherIntructions')}
-                                                                variant="outlined"
-                                                                placeholder="Enter Instructions Here"
-                                                                fullWidth
-                                                            />
+                                                </form>
+                                            :restaurant.FirstName === "Lucky Chinese"?
+                                                <form onSubmit={(e) => AddToCart(e, values)}>
+                                                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                            <Grid item xs={12} sm={12} >
+                                                                <TextField
+                                                                    id="outlined-multiline-static"
+                                                                    label="Special Intructions"
+                                                                    multiline
+                                                                    rows={4}
+                                                                    defaultValue={values.otherIntructions}
+                                                                    onChange={handleChange2('otherIntructions')}
+                                                                    variant="outlined"
+                                                                    placeholder="Enter Instructions Here"
+                                                                    fullWidth
+                                                                />
+                                                            </Grid>
+                                                            <Grid item xs={12} >
+                                                                    <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                        <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                                        <Select
+                                                                            labelId="demo-simple-select-outlined-label"
+                                                                            id="demo-simple-select-outlined"
+                                                                            value={values.ifnotAvailable}
+                                                                            onChange={handleChange}
+                                                                            label="ifnotAvailable"
+                                                                            name="ifnotAvailable"
+                                                                            className={classes.root}
+                                                                            fullWidth
+                                                                        >
+                                                                            <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                            <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                            <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                            <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                                        </Select>
+                                                                    </FormControl>
+                                                            </Grid>
+                                                            <Grid item xs={12} sm={12} >
+                                                                <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                            disabled={disabled !== undefined? disabled : false}>
+                                                                    Add To Cart 
+                                                                </Button>
+                                                            </Grid>
                                                         </Grid>
-                                                        <Grid item xs={12} >
-                                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                                    <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
-                                                                    <Select
-                                                                        labelId="demo-simple-select-outlined-label"
-                                                                        id="demo-simple-select-outlined"
-                                                                        value={values.ifnotAvailable}
-                                                                        onChange={handleChange}
-                                                                        label="ifnotAvailable"
-                                                                        name="ifnotAvailable"
-                                                                        className={classes.root}
-                                                                        fullWidth
-                                                                    >
-                                                                        <MenuItem value={"Contact me"}>Contact me</MenuItem>
-                                                                        <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
-                                                                        <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                                        <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
-                                                                    </Select>
-                                                                </FormControl>
+                                                </form>
+                                            :restaurant.FirstName === "Murray’s Fish & Jerk Hut"?
+                                                <form onSubmit={(e) => AddToCart(e, values)}>
+                                                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                            <Grid item xs={12} sm={12} >
+                                                                <TextField
+                                                                    id="outlined-multiline-static"
+                                                                    label="Special Intructions"
+                                                                    multiline
+                                                                    rows={4}
+                                                                    defaultValue={values.otherIntructions}
+                                                                    onChange={handleChange2('otherIntructions')}
+                                                                    variant="outlined"
+                                                                    placeholder="Enter Instructions Here"
+                                                                    fullWidth
+                                                                />
+                                                            </Grid>
+                                                            <Grid item xs={12} >
+                                                                    <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                        <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                                        <Select
+                                                                            labelId="demo-simple-select-outlined-label"
+                                                                            id="demo-simple-select-outlined"
+                                                                            value={values.ifnotAvailable}
+                                                                            onChange={handleChange}
+                                                                            label="ifnotAvailable"
+                                                                            name="ifnotAvailable"
+                                                                            className={classes.root}
+                                                                            fullWidth
+                                                                        >
+                                                                            <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                            <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                            <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                            <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                                        </Select>
+                                                                    </FormControl>
+                                                            </Grid>
+                                                            <Grid item xs={12} sm={12} >
+                                                                <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                            disabled={disabled !== undefined? disabled : false}>
+                                                                    Add To Cart 
+                                                                </Button>
+                                                            </Grid>
                                                         </Grid>
-                                                        <Grid item xs={12} sm={12} >
-                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
-                                                        disabled={disabled !== undefined? disabled : false}>
-                                                                Add To Cart 
-                                                            </Button>
+                                                </form>
+                                            :restaurant.FirstName === "Fyahside"?
+                                                <form onSubmit={(e) => AddToCart(e, values)}>
+                                                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                            <Grid item xs={12} sm={12} >
+                                                                <TextField
+                                                                    id="outlined-multiline-static"
+                                                                    label="Special Intructions"
+                                                                    multiline
+                                                                    rows={4}
+                                                                    defaultValue={values.otherIntructions}
+                                                                    onChange={handleChange2('otherIntructions')}
+                                                                    variant="outlined"
+                                                                    placeholder="Enter Instructions Here"
+                                                                    fullWidth
+                                                                />
+                                                            </Grid>
+                                                            <Grid item xs={12} >
+                                                                    <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                        <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                                        <Select
+                                                                            labelId="demo-simple-select-outlined-label"
+                                                                            id="demo-simple-select-outlined"
+                                                                            value={values.ifnotAvailable}
+                                                                            onChange={handleChange}
+                                                                            label="ifnotAvailable"
+                                                                            name="ifnotAvailable"
+                                                                            className={classes.root}
+                                                                            fullWidth
+                                                                        >
+                                                                            <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                            <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                            <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                            <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                                        </Select>
+                                                                    </FormControl>
+                                                            </Grid>
+                                                            <Grid item xs={12} sm={12} >
+                                                                <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                            disabled={disabled !== undefined? disabled : false}>
+                                                                    Add To Cart 
+                                                                </Button>
+                                                            </Grid>
                                                         </Grid>
-                                                    </Grid>
-                                            </form>
-                                        }
+                                                </form>
+                                            :
+                                                <form onSubmit={(e) => AddToCart(e, values)}>
+                                                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                            <Grid item xs={12} sm={12} >
+                                                                <TextField
+                                                                    id="outlined-multiline-static"
+                                                                    label="Special Intructions"
+                                                                    multiline
+                                                                    rows={4}
+                                                                    defaultValue={values.otherIntructions}
+                                                                    onChange={handleChange2('otherIntructions')}
+                                                                    variant="outlined"
+                                                                    placeholder="Enter Instructions Here"
+                                                                    fullWidth
+                                                                />
+                                                            </Grid>
+                                                            <Grid item xs={12} >
+                                                                    <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                        <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                                        <Select
+                                                                            labelId="demo-simple-select-outlined-label"
+                                                                            id="demo-simple-select-outlined"
+                                                                            value={values.ifnotAvailable}
+                                                                            onChange={handleChange}
+                                                                            label="ifnotAvailable"
+                                                                            name="ifnotAvailable"
+                                                                            className={classes.root}
+                                                                            fullWidth
+                                                                        >
+                                                                            <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                            <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                            <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                            <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                                        </Select>
+                                                                    </FormControl>
+                                                            </Grid>
+                                                            <Grid item xs={12} sm={12} >
+                                                                <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                            disabled={disabled !== undefined? disabled : false}>
+                                                                    Add To Cart 
+                                                                </Button>
+                                                            </Grid>
+                                                        </Grid>
+                                                </form>
+                                            }
                                     </Grid>
                                 </Grid>
                             </div>
