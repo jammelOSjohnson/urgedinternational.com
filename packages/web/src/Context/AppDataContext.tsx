@@ -1379,6 +1379,11 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
               payload.cartItems = [];
               payload.selectedRestaurant = undefined;
               payload.receiptDetails = response.data.createOrder;
+
+              dispatch({
+                  type: "checkout",
+                  payload: payload
+              })
   
               // await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
               //   if (response.data.getOrdersByUserId !== null) {
@@ -1668,13 +1673,23 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         order_date: receiptInfo.OrderDate,
         payment_type: receiptInfo.PaymentMethod,
         order_total: receiptInfo.OrderTotal,
+        order_pfee: receiptInfo.ServiceCharge.toString(),
+        del_fee: receiptInfo.DeliveryFee.toString(),
+        order_gct: receiptInfo.GCT.toString(),
         item1: buildTableItem(1, cartItems),
+        quant1: cartItems.length >=1 ? cartItems[0].quantity: "",
         item2: buildTableItem(2, cartItems),
+        quant2: cartItems.length >= 2 ? cartItems[1].quantity: "",
         item3: buildTableItem(3, cartItems),
+        quant3: cartItems.length >= 3 ? cartItems[2].quantity: "",
         item4: buildTableItem(4, cartItems),
+        quant4: cartItems.length >= 4 ? cartItems[3].quantity: "",
         item5: buildTableItem(5, cartItems),
+        quant5: cartItems.length >= 5 ? cartItems[4].quantity: "",
         item6: buildTableItem(6, cartItems),
+        quant6: cartItems.length >= 6 ? cartItems[5].quantity: "",
         item7: buildTableItem(7, cartItems),
+        quant7: cartItems.length >= 7 ? cartItems[6].quantity: "",
         itemcost1: buildTableItemCost(1, cartItems),
         itemcost2: buildTableItemCost(2, cartItems),
         itemcost3: buildTableItemCost(3, cartItems),
@@ -1723,13 +1738,23 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
         order_date: moment.tz(now, "America/Jamaica").format("YYYY-MM-DD h:mm a"),
         payment_type: formVals.payment_type,
         order_total: formVals.order_total,
+        order_pfee: formVals.order_pfee,
+        del_fee: formVals.del_fee,
+        order_gct: formVals.order_gct,
         item1: formVals.item1,
+        quant1: formVals.quant1,
         item2: formVals.item2,
+        quant2: formVals.quant2,
         item3: formVals.item3,
+        quant3: formVals.quant3,
         item4: formVals.item4,
+        quant4: formVals.quant4,
         item5: formVals.item5,
+        quant5: formVals.quant5,
         item6: formVals.item6,
+        quant6: formVals.quant6,
         item7: formVals.item7,
+        quant7: formVals.quant7,
         itemcost1: formVals.itemcost1,
         itemcost2: formVals.itemcost2,
         itemcost3: formVals.itemcost3,
