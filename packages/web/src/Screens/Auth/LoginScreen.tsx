@@ -324,7 +324,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
             setError('');
             setLoading(true);
             await login(values.email.trim(), values.password.trim(), value).then(async function(res1){
-                if(res1 != null){
+                if(res1 !== "Username / Password Incorrect" && res1 !== "Unable to login at this time" && res1.currentUser !== undefined){
                     await fetchUserDetails(res1).then(function(res){
                         if(res){
                             return res;
@@ -337,7 +337,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
                     
                 }else{
                     setLoading(false);
-                    setError('Unable to login at this time.'); 
+                    setError(res1); 
                 }
             });
         }catch(err) {

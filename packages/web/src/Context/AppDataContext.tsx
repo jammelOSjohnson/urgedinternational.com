@@ -448,18 +448,25 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           return payloadf;
         }).catch(function (error) {
           // Handle Errors here.
-          //var errorCode = error.code;
-          ////console.log(error.code);
+          var errorCode = error.code;
+          //console.log(error.code);
+          if(errorCode === "auth/user-not-found" || "auth/wrong-password" || "auth/invalid-email"){
+            return "Username / Password Incorrect"
+          }
+
+          if(errorCode === "auth/network-request-failed" || "auth/internal-error"){
+            return "Unable to login at this time"
+          }
           //var errorMessage = error.message;
-          ////console.log(error.message);
+          //console.log(error.message);
           // The email of the user's account used.
           //var email = error.email;
-          ////console.log(error.email);
+          //console.log(error.email);
           //The firebase.auth.AuthCredential type that was used.
           //var credential = error.credential;
-          ////console.log(error.credential);
+          //console.log(error.credential);
           // ...
-          return null;
+          return "success";
         });
         return result;
     };
