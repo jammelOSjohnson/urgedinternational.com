@@ -166,7 +166,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
     //const [isgeoAllowed, setIsGeoAllowed] = useState(false);
 
     var { value }  = useAppData();
-    var { cartItems, checkoutOrder, restaurants, selectedRestaurant } = value;
+    var { cartItems, checkoutOrder, restaurants, selectedRestaurant, userInfo } = value;
     var history = useHistory();
     var [error, setError] = useState('');
     var [success, setSuccess] = useState('');
@@ -343,6 +343,9 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
         //setTotal(newTotal);
 
         setCheckoutVals({deliveryFee: newFee, cartItemsSum: newcartTotal, GCT: newGCT, serviceFee: newserviceCharge, Total: newTotal })
+        if(userInfo.addressLine1 !== "" && userInfo.city !== ""){
+            setValues({...values, Street: userInfo.addressLine1, Town: userInfo.city, ContactNum: userInfo.contactNumber})
+        }
     },[cartItems, value])
     // generalLocation, values.Town
       
@@ -406,7 +409,13 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                                         <Divider variant="middle" className={classes.divider}/>
                                         
                                     </Grid>
-                                    <GeoMap setValues={setValues} values={values} />
+                                    {
+                                        userInfo.addressLine1 == "" && userInfo.city == ""?
+                                            <GeoMap setValues={setValues} values={values} />
+                                        :
+                                            <></>
+                                    }
+                                    
                                     <Grid item xs={12}>
                                         <Typography className={classes.formSubheading}>Please enter delivery address below.</Typography>
                                     </Grid>
