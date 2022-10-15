@@ -1386,11 +1386,36 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
               payload.cartItems = [];
               payload.selectedRestaurant = undefined;
               payload.receiptDetails = response.data.createOrder;
-
-              dispatch({
+              if(state.ContactNum !== payload.userInfo.contactNumber ||
+                state.Street !== payload.userInfo.addressLine1 ||
+                state.Town !== payload.userInfo.city){
+                  let user = {
+                    ContactNumber: state.ContactNum,
+                    Email: payload.userInfo.email,
+                    FullName: payload.userInfo.fullName,
+                    AddressLine1: state.Street,
+                    AddressLine2: "",
+                    City: state.Town,
+                  }
+    
+                  await UpdateUserInfo(payload, user).then(() => {
+                    dispatch({
+                      type: "checkout",
+                      payload: payload
+                    })
+                  }).catch(() => {
+                    dispatch({
+                      type: "checkout",
+                      payload: payload
+                    })
+                  })
+              }else{
+                //console.log("address up to date");
+                dispatch({
                   type: "checkout",
                   payload: payload
-              })
+                })
+              }
   
               // await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
               //   if (response.data.getOrdersByUserId !== null) {
