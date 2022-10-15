@@ -451,7 +451,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           var errorCode = error.code;
           //console.log(error.code);
           if(errorCode === "auth/user-not-found" || "auth/wrong-password" || "auth/invalid-email"){
-            return "Username / Password Incorrect"
+            return "Email / Password Incorrect"
           }
 
           if(errorCode === "auth/network-request-failed" || "auth/internal-error"){
