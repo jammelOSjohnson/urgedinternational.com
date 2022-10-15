@@ -155,7 +155,7 @@ class MapContainer extends  Component<MyProps> {
   }
 }
 
-let key = "AIzaSyCdGYYItNjtckVmTw3pMYSEF_7HueDxjW4";
+let key = process.env.REACT_APP_GEO_API3 !== undefined? process.env.REACT_APP_GEO_API3 : "";
 export default GoogleApiWrapper({
   apiKey: key,
 })(MapContainer)
