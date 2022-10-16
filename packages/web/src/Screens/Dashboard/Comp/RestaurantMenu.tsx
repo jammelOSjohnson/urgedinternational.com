@@ -8,9 +8,9 @@ import {FastFoodChickenFlavor} from './FastFoodChickenFlavor';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import { Link } from "react-router-dom";
 import clsx from 'clsx';
 import { Alert } from '@material-ui/lab';
+import MapContainer from '../Testmap';
 
 
 interface State {
@@ -1611,11 +1611,12 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                         <Typography variant="body1" style={{ paddingBottom: "3%"}}>
                             Please select item from the list of meals listed below. 
                         </Typography>
+                        <MapContainer setLoading={"none"} />
                         <Grid container direction="row" spacing={2} className={classes.root} alignItems="center">
                             {
                                 filteredMenuItems.length !== 0?
                                     filteredMenuItems.map((item, index) => (
-                                        <Grid item xs={6} sm={6} md={6} lg={4} xl={4} className={clsx(classes.gridSpacing, "cardMobile")}>
+                                        <Grid item xs={6} sm={6} md={6} lg={3} xl={3} className={clsx(classes.gridSpacing, "cardMobile")}>
                                             <Card className={clsx(classes.root, "cardMobile")} style={{minHeight: "446.99px"}}>
                                                 <CardActionArea>
                                                 <CardMedia
@@ -1628,7 +1629,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
                                                             <Grid item xs={6}>
                                                                     <Typography variant="h6" component="p" style={{height: "64px"}}>
-                                                                        {item.ItemName}
+                                                                        {item.ItemName.length < 15 ? item.ItemName : item.ItemName.substring(0, 15)}
                                                                     </Typography>
                                                             </Grid>
                                                             <Grid item xs={6}>
@@ -1679,7 +1680,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                     ))
                                 :
                                 restaurant.MenuItems.map((item, index) => (
-                                    <Grid item xs={6} sm={6} md={6} lg={4} xl={4} className={clsx(classes.gridSpacing, "cardMobile")}>
+                                    <Grid item xs={6} sm={6} md={6} lg={3} xl={3} className={clsx(classes.gridSpacing, "cardMobile")}>
                                         <Card className={clsx(classes.root, "cardMobile")} style={{minHeight: "446.99px"}}>
                                             <CardActionArea>
                                             <CardMedia
@@ -1692,7 +1693,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
                                                         <Grid item xs={6}>
                                                                 <Typography variant="h6"  component="p" style={{height: "64px"}}>
-                                                                    {item.ItemName}
+                                                                    {item.ItemName.length < 15 ? item.ItemName : item.ItemName.substring(0, 15)}
                                                                 </Typography>
                                                         </Grid>
                                                         <Grid item xs={6}>
@@ -2818,11 +2819,12 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                         <Typography variant="body1" style={{ paddingBottom: "3%"}}>
                             Please select item from the list of meals listed below. 
                         </Typography>
+                        <MapContainer setLoading={"none"} />
                         <Grid container direction="row" spacing={2} className={classes.root} alignItems="center">
                             {
                                 filteredMenuItems.length !== 0?
                                     filteredMenuItems.map((item, index) => (
-                                        <Grid item xs={6} sm={6} md={6} lg={4} xl={4} className={clsx(classes.gridSpacing, "cardMobile")}>
+                                        <Grid item xs={6} sm={6} md={6} lg={3} xl={3} className={clsx(classes.gridSpacing, "cardMobile")}>
                                             <Card className={clsx(classes.root, "cardMobile")} style={{minHeight: "300px"}}>
                                                 <CardActionArea>
                                                 <CardMedia
@@ -2835,7 +2837,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
                                                             <Grid item xs={12}>
                                                                     <Typography variant="h6" className="itemNameMobile" component="p" style={{height: "30px"}}>
-                                                                        {item.ItemName}
+                                                                        {item.ItemName.length < 15 ? item.ItemName : item.ItemName.substring(0, 15)}
                                                                     </Typography>
                                                             </Grid>
                                                             <Grid item xs={12} className="itemDescMobile">
@@ -2993,7 +2995,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                     ))
                                 :
                                 restaurant.MenuItems.map((item, index) => (
-                                    <Grid item xs={6} sm={6} md={6} lg={4} xl={4} className={clsx(classes.gridSpacing, "cardMobile")}>
+                                    <Grid item xs={6} sm={6} md={6} lg={3} xl={3} className={clsx(classes.gridSpacing, "cardMobile")}>
                                         <Card className={clsx(classes.root, "cardMobile")} style={{minHeight: "300px"}}>
                                             <CardActionArea>
                                             <CardMedia
@@ -3006,7 +3008,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
                                                         <Grid item xs={12}>
                                                                 <Typography variant="h6" className="itemNameMobile" component="p" style={{height: "30px"}}>
-                                                                    {item.ItemName}
+                                                                    {item.ItemName.length < 15 ? item.ItemName : item.ItemName.substring(0, 15)}
                                                                 </Typography>
                                                         </Grid>
                                                         <Grid item xs={12} className="itemDescMobile">

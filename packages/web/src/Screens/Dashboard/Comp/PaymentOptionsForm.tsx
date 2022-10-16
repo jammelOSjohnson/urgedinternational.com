@@ -4,6 +4,7 @@ import { makeStyles, createStyles, Typography, Theme, Grid, Paper, Divider, Form
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
+import MapContainer from '../Testmap'
 
 interface State {
     Street: string;
@@ -171,6 +172,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
     var [error, setError] = useState('');
     var [success, setSuccess] = useState('');
     var [loading, setLoading] = useState(false);
+    
 
     const handleSubmit = async () => {
         try{
@@ -360,6 +362,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                                 <Grid item xs={12}>
                                     <Typography className={classes.formHeading}>Payment Options</Typography>
                                     <Divider variant="middle" className={classes.divider}/>
+                                    <MapContainer setLoading={setLoading} />
                                 </Grid>
                                 <Grid item xs={12}>
                                     <FormControl component="fieldset" style={{width: "100%"}}>

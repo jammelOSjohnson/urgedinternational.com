@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 //Import Components
 import { ItemRating } from '../../../Components/ItemRating';
 import { Link } from "react-router-dom";
-
+import MapContainer from '../Testmap';
 
 
 
@@ -142,8 +142,9 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
         return (
             <>
                 <Typography variant="body1" style={{paddingTop: "3%", paddingBottom: "3%"}}>
-                    Please select reataurants listed below to see their menu.
+                    Please select restaurants listed below to see their menu.
                 </Typography>
+                <MapContainer setLoading={"none"} />
                 <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
                     {
                         filteredRestItems.length !== 0?

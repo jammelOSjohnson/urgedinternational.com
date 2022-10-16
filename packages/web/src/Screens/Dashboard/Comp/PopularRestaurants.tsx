@@ -4,6 +4,7 @@ import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
+import MapContainer from '../Testmap';
 
 
 
@@ -146,13 +147,16 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
     if(restaurants.legth !== 0){
         return (
             <>
-            <Grid container direction="row" spacing={2} className={classes.root} alignItems="center">
+                <Grid container direction="row" spacing={2} className={classes.root} alignItems="center">
                     <Grid item xs={12} md={6} lg={3} container spacing={1}>
                         <Grid item xs={10} md={10}>
                             <Typography variant="subtitle1" className={classes.category}>
                                 Popular Restaurants
                             </Typography>
                         </Grid>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <MapContainer setLoading={"none"} />
                     </Grid>
                 </Grid>
                 <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
