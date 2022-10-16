@@ -121,6 +121,10 @@ class MapContainer extends  Component<MyProps> {
       {lat: 17.862443059126143,  lng: -77.23643775812562},
       {lat: 17.862452783274218,  lng: -77.23639526977539}
     ],
+    compCoords: {
+      lat: null,
+      lng: null
+    },
     open2: false,
     errorMessage: "Sorry we do not offer our service in your area as yet."
   };
@@ -154,24 +158,67 @@ class MapContainer extends  Component<MyProps> {
   handleClose(){
     this.setState({...this.state, open2: false});
   };
+
+  getLocation = () => {
+    try{
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(this.getCoordinates, this.handleLocationError);
+          } else {
+            //alert("Geolocation is not supported by this browser.");
+        }
+        var location = "";
+
+        // AddGeneralLocation(value, )
+    }catch(err){
+
+    }
+}
+
+getCoordinates = (position) => {
+    //console.log("position", position);
+    this.setState({...this.state,compCoords:{lat: position.coords.latitude, lng: position.coords.longitude}});
+}
+
+handleLocationError = (error) => {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+          console.log("User denied the request for Geolocation.");
+          break;
+        case error.POSITION_UNAVAILABLE:
+          console.log("Location information is unavailable.");
+          break;
+        case error.TIMEOUT:
+          console.log("The request to get user location timed out.");
+          break;
+        case error.UNKNOWN_ERROR:
+          console.log("An unknown error occurred.");
+          break;
+        default:
+            break;    
+    }
+}
   
   
   componentDidMount() {
     //console.log("Mounted")
     setTimeout(() => {
-      this.checkFence(this.state.coords, 17.59, 77.15)
+      if(this.state.compCoords.lat === null && this.state.compCoords.lng === null){
+        this.getLocation();
+      }
+      
     }, 2000);
   }
 
-  // componentDidUpdate(prevProps: Readonly<MyProps>, prevState: Readonly<{}>, snapshot?: any): void {
-  //   console.log(prevState)
-  //   console.log(prevProps)
-  // }
-
-  // componentDidUpdate(prevProps: Readonly<MyProps>, prevState: Readonly<{}>, snapshot?: any): void {
-  //   console.log("updated")
-  //   console.log(this.state)
-  // }
+  componentDidUpdate(prevProps: Readonly<MyProps>, prevState: Readonly<{}>, snapshot?: any): void {
+    //console.log("updated",this.state.compCoords.lat)
+    //console.log(prevState);
+    if(this.state.compCoords.lat !== null && this.state.compCoords.lat !== undefined && 
+       this.state.compCoords.lng !== null && this.state.compCoords.lng !== undefined){
+        console.log(this.state.compCoords.lat)
+        console.log(this.state.compCoords.lng)
+       this.checkFence(this.state.coords, this.state.compCoords.lat, this.state.compCoords.lng)
+    }
+  }
 
   render(){
     
