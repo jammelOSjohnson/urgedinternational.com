@@ -1616,7 +1616,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                             {
                                 filteredMenuItems.length !== 0?
                                     filteredMenuItems.map((item, index) => (
-                                        <Grid item xs={6} sm={6} md={6} lg={3} xl={3} className={clsx(classes.gridSpacing, "cardMobile")}>
+                                        <Grid item xs={6} sm={6} md={6} lg={3} xl={3} className={clsx(classes.gridSpacing, "cardMobile")} key={index}>
                                             <Card className={clsx(classes.root, "cardMobile")} style={{minHeight: "446.99px"}}>
                                                 <CardActionArea>
                                                 <CardMedia
@@ -1680,7 +1680,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                     ))
                                 :
                                 restaurant.MenuItems.map((item, index) => (
-                                    <Grid item xs={6} sm={6} md={6} lg={3} xl={3} className={clsx(classes.gridSpacing, "cardMobile")}>
+                                    <Grid item xs={6} sm={6} md={6} lg={3} xl={3} className={clsx(classes.gridSpacing, "cardMobile")} key={index}>
                                         <Card className={clsx(classes.root, "cardMobile")} style={{minHeight: "446.99px"}}>
                                             <CardActionArea>
                                             <CardMedia
@@ -2824,7 +2824,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                             {
                                 filteredMenuItems.length !== 0?
                                     filteredMenuItems.map((item, index) => (
-                                        <Grid item xs={6} sm={6} md={6} lg={3} xl={3} className={clsx(classes.gridSpacing, "cardMobile")}>
+                                        <Grid item xs={6} sm={6} md={6} lg={3} xl={3} className={clsx(classes.gridSpacing, "cardMobile")} key={index}>
                                             <Card className={clsx(classes.root, "cardMobile")} style={{minHeight: "300px"}}>
                                                 <CardActionArea>
                                                 <CardMedia
@@ -2995,7 +2995,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                     ))
                                 :
                                 restaurant.MenuItems.map((item, index) => (
-                                    <Grid item xs={6} sm={6} md={6} lg={3} xl={3} className={clsx(classes.gridSpacing, "cardMobile")}>
+                                    <Grid item xs={6} sm={6} md={6} lg={3} xl={3} className={clsx(classes.gridSpacing, "cardMobile")} key={index}>
                                         <Card className={clsx(classes.root, "cardMobile")} style={{minHeight: "300px"}}>
                                             <CardActionArea>
                                             <CardMedia
