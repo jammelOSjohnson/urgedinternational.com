@@ -189,6 +189,7 @@ export const Header2: React.FC = function Header2() {
     var { value }  = useAppData();
     var { orders, refreshingOrderTables , fetchUserInfo, fetchPaySettings, paySettings } = value;
     const [open2, setOpen2] = React.useState(false);
+    const [open3, setOpen3] = React.useState(false);
     // AddGeneralLocation, serviceWorkerUpdated, serviceWorkerRegistration
 
     //Subscriptions
@@ -252,6 +253,17 @@ export const Header2: React.FC = function Header2() {
             }
             else{
               setOpen2(false);
+            }
+              
+          }
+          if(paySettings.holiday){
+            if(value.userRolef === "" || value.userRolef === "Customer"){
+              setTimeout(() => {
+                setOpen3(true);
+              }, 2000) 
+            }
+            else{
+              setOpen3(false);
             }
               
           }
@@ -343,6 +355,10 @@ export const Header2: React.FC = function Header2() {
         setOpen2(false);
     };
 
+    const handleClose3 = () => {
+      setOpen3(false);
+  };
+
     if(referralPath !== '/' && referralPath.toLowerCase() !== '/services' && referralPath.toLowerCase() !== '/contactus'){
       return(
         <>
@@ -380,7 +396,42 @@ export const Header2: React.FC = function Header2() {
                         </Grid>
                     </div>
                 </Fade>
-            </Modal>
+          </Modal>
+          <Modal
+                aria-labelledby="transition-modal-title"
+                aria-describedby="transition-modal-description"
+                className={classes.modal}
+                open={open3}
+                onClose={handleClose3}
+                closeAfterTransition
+                BackdropComponent={Backdrop}
+                BackdropProps={{
+                timeout: 500,
+                }}
+            >
+                <Fade in={open3}>
+                    <div className={clsx(classes.paper, 'modalMobile')} style={{position: "relative"}}>
+                        <h3 id="transition-modal-title" style={{textAlign: "center", color: "#F7B614"}}></h3>
+                        <Link to={referralPath} className={classes.cartIcon} onClick={handleClose3}>
+                                <img src="Images/CartCloseIcon.png" alt="closeweather" />
+                        </Link>
+                        <br />
+                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                            <Grid item xs={12}>
+                                <Grid item xs={12} >
+                                    <form autoComplete="off">
+                                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                            <Grid item xs={12}>
+                                              <img src="Images/ClosedHoliday.jpg" alt="closeholiday" width={"100%"} />
+                                            </Grid>
+                                        </Grid>
+                                    </form>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </div>
+                </Fade>
+          </Modal>
         </>
       )
     }
