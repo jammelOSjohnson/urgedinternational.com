@@ -751,6 +751,7 @@ export const GET_PAY_SETTINGS = gql`
             value
             closed
             badWeather
+            holiday
             message
         }
     }

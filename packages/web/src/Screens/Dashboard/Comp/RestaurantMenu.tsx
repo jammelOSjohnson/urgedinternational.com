@@ -503,7 +503,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
       try{
         if(paySettings !== undefined){
             //console.log(paySettings.badWeather);
-            if(paySettings.badWeather){
+            if(paySettings.badWeather === true || paySettings.holiday === true){
               setDisabled(true);
             }
           }

@@ -131,7 +131,7 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                         (isPm && parseInt(jaTimeFinal[0]) === 12 && (parseInt(closeTimeFinal) < parseInt(jaTimeFinal[0])))
                         //console.log(decision)
                         if(paySettings !== undefined){
-                            decision = paySettings.closed === true || paySettings.badWeather === true ? false : decision;
+                            decision = paySettings.closed === true || paySettings.badWeather === true || paySettings.holiday === true ? false : decision;
                         }
                         setisOpen(decision);
                         //setjaday(currentTime);
@@ -172,7 +172,7 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                     (isPm && parseInt(jaTimeFinal[0]) === 12 && (parseInt(closeTimeFinal) < parseInt(jaTimeFinal[0])))
                     //console.log(decision)
                     if(paySettings !== undefined){
-                        decision = paySettings.closed === true || paySettings.badWeather === true ? false : decision;
+                        decision = paySettings.closed === true || paySettings.badWeather === true || paySettings.holiday === true ? false : decision;
                     }
                     setisOpen(decision);
                     

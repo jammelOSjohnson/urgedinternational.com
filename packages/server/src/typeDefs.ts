@@ -228,6 +228,7 @@ const typeDefs = /* GraphQL */`
         value: Float,
         closed: Boolean,
         badWeather: Boolean,
+        holiday: Boolean,
         message: String
     }
 

@@ -21,6 +21,10 @@ const PaySettingSchema = new mongoose.Schema({
         type: Boolean,
         required: true
     },
+    holiday: {
+        type: Boolean,
+        required: true
+    },
     message: {
         type: String,
         required: true
