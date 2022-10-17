@@ -107,12 +107,23 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
+interface NoGps {
+    open2 : boolean,
+    errorMessage: string
+}
+
 export const RestaurantList: React.FC = function RestaurantList(props) {
     const classes = useStyles();
     
     var { value }  = useAppData();
     var { fetchRestaurants, restaurants, viewMenuItems, filteredRestItems } = value;
     
+
+    const [gpsCheck, setgpsCheck] = React.useState<NoGps>({
+        open2: false,
+        errorMessage: "Please turn on GPS to use Urged Food Delivery."
+    });
+
     useEffect(() => {
         ////console.log("inside use effect");
         ////console.log(restaurants);
@@ -144,7 +155,20 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                 <Typography variant="body1" style={{paddingTop: "3%", paddingBottom: "3%"}}>
                     Please select restaurants listed below to see their menu.
                 </Typography>
-                <MapContainer setLoading={"none"} />
+                {gpsCheck.open2 && 
+                                        <Typography 
+                                        variant="h5" 
+                                        style={{
+                                            backgroundColor: "#ff0000",
+                                            color: "#FFF",
+                                            fontWeight: "bolder",
+                                            padding: 5,
+                                            textAlign: "center"
+                                        }}>
+                                        {gpsCheck.errorMessage}
+                                        </Typography>
+                                    }
+                <MapContainer setLoading={"none"} setgpsCheck={setgpsCheck} gpsCheck={gpsCheck} />
                 <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
                     {
                         filteredRestItems.length !== 0?

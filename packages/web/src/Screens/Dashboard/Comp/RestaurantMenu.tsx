@@ -38,6 +38,11 @@ interface Props {
     chickenFlavour2: string;
 }
 
+interface NoGps {
+    open2 : boolean,
+    errorMessage: string
+}
+
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
         root: {
@@ -207,6 +212,11 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
         ItemName: "",
         MenuCategory: "",
         ImageName: ""
+    });
+
+    const [gpsCheck, setgpsCheck] = React.useState<NoGps>({
+        open2: false,
+        errorMessage: "Please turn on GPS to use Urged Food Delivery."
     });
 
     const theme = useTheme();
@@ -1611,7 +1621,20 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                         <Typography variant="body1" style={{ paddingBottom: "3%"}}>
                             Please select item from the list of meals listed below. 
                         </Typography>
-                        <MapContainer setLoading={"none"} />
+                        {gpsCheck.open2 && 
+                                        <Typography 
+                                        variant="h5" 
+                                        style={{
+                                            backgroundColor: "#ff0000",
+                                            color: "#FFF",
+                                            fontWeight: "bolder",
+                                            padding: 5,
+                                            textAlign: "center"
+                                        }}>
+                                        {gpsCheck.errorMessage}
+                                        </Typography>
+                                    }
+                        <MapContainer setLoading={"none"} setgpsCheck={setgpsCheck} gpsCheck={gpsCheck} />
                         <Grid container direction="row" spacing={2} className={classes.root} alignItems="center">
                             {
                                 filteredMenuItems.length !== 0?
@@ -2819,7 +2842,20 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                         <Typography variant="body1" style={{ paddingBottom: "3%"}}>
                             Please select item from the list of meals listed below. 
                         </Typography>
-                        <MapContainer setLoading={"none"} />
+                        {gpsCheck.open2 && 
+                                        <Typography 
+                                        variant="h5" 
+                                        style={{
+                                            backgroundColor: "#ff0000",
+                                            color: "#FFF",
+                                            fontWeight: "bolder",
+                                            padding: 5,
+                                            textAlign: "center"
+                                        }}>
+                                        {gpsCheck.errorMessage}
+                                        </Typography>
+                                    }
+                        <MapContainer setLoading={"none"} setgpsCheck={setgpsCheck} gpsCheck={gpsCheck} />
                         <Grid container direction="row" spacing={2} className={classes.root} alignItems="center">
                             {
                                 filteredMenuItems.length !== 0?

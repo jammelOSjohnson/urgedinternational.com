@@ -16,7 +16,9 @@ import { Typography } from "@material-ui/core";
 
 type MyProps = {
   google: any,
-  setLoading: any
+  setLoading: any,
+  setgpsCheck: any,
+  gpsCheck: any
 }
 
 
@@ -144,7 +146,9 @@ class MapContainer extends  Component<MyProps> {
       );
 
       if (!contains){
-        if(this.props.setLoading !== "none"){
+        console.log(document.location.pathname);
+        console.log(this.props.setLoading);
+        if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
           this.props.setLoading(true);
         }
         if(!this.state.open2){
@@ -183,15 +187,31 @@ handleLocationError = (error) => {
     switch(error.code) {
         case error.PERMISSION_DENIED:
           console.log("User denied the request for Geolocation.");
+          if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+            this.props.setLoading(true);
+          }
+          this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
           break;
         case error.POSITION_UNAVAILABLE:
           console.log("Location information is unavailable.");
+          if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+            this.props.setLoading(true);
+          }
+          this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
           break;
         case error.TIMEOUT:
           console.log("The request to get user location timed out.");
+          if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+            this.props.setLoading(true);
+          }
+          this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
           break;
         case error.UNKNOWN_ERROR:
           console.log("An unknown error occurred.");
+          if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+            this.props.setLoading(true);
+          }
+          this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
           break;
         default:
             break;    
@@ -214,19 +234,19 @@ handleLocationError = (error) => {
     //console.log(prevState);
     if(this.state.compCoords.lat !== null && this.state.compCoords.lat !== undefined && 
        this.state.compCoords.lng !== null && this.state.compCoords.lng !== undefined){
-        console.log(this.state.compCoords.lat)
-        console.log(this.state.compCoords.lng)
+        //console.log(this.state.compCoords.lat)
+        //console.log(this.state.compCoords.lng)
        this.checkFence(this.state.coords, this.state.compCoords.lat, this.state.compCoords.lng)
     }
   }
-
+  
   render(){
     
     return (
         <div id="generated">
           <Map
             google={this.props.google}
-            style= {{width: "0%", height: "0%"}}
+            style= {{width: document.location.pathname !== "/testmap"? "0%": "100%", height: document.location.pathname !== "/testmap"? "0%": "100%"}}
             zoom= {12}
             initialCenter = {
               {
@@ -256,15 +276,29 @@ handleLocationError = (error) => {
               {this.state.errorMessage}
             </Typography>
           }
-          <style>
-            {
-              `
-                  #generated > div {
-                    width: 0% !important;
-                  }
-              `
-            }
-          </style>
+          {
+            document.location.pathname !== "/testmap"? 
+              <style>
+                {
+                  `
+                      #generated > div {
+                        width: 0% !important;
+                      }
+                  `
+                }
+             </style> 
+             :
+             <style>
+              {
+                `
+                    #generated > div {
+                      width: 100% !important;
+                    }
+                `
+              }
+            </style>
+          }
+          
         </div>
     )
   }

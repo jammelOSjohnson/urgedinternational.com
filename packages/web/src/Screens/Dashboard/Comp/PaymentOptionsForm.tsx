@@ -28,6 +28,11 @@ interface checkoutCalc {
     Total: Fee;
 }
 
+interface NoGps {
+    open2 : boolean,
+    errorMessage: string
+}
+
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
         root: {
@@ -154,6 +159,11 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
         Parish: 'Clarendon',
         lat: null,
         long: null
+    });
+
+    const [gpsCheck, setgpsCheck] = React.useState<NoGps>({
+        open2: false,
+        errorMessage: "Please turn on GPS to use Urged Food Delivery."
     });
 
     const [checkoutVals, setCheckoutVals] = React.useState<checkoutCalc>({
@@ -362,7 +372,20 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                                 <Grid item xs={12}>
                                     <Typography className={classes.formHeading}>Payment Options</Typography>
                                     <Divider variant="middle" className={classes.divider}/>
-                                    <MapContainer setLoading={setLoading} />
+                                    {gpsCheck.open2 && 
+                                        <Typography 
+                                        variant="h5" 
+                                        style={{
+                                            backgroundColor: "#ff0000",
+                                            color: "#FFF",
+                                            fontWeight: "bolder",
+                                            padding: 5,
+                                            textAlign: "center"
+                                        }}>
+                                        {gpsCheck.errorMessage}
+                                        </Typography>
+                                    }
+                                    <MapContainer setLoading={setLoading} setgpsCheck={setgpsCheck} gpsCheck={gpsCheck} />
                                 </Grid>
                                 <Grid item xs={12}>
                                     <FormControl component="fieldset" style={{width: "100%"}}>
