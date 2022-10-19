@@ -5,7 +5,7 @@ import MUIDataTable from "mui-datatables";
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { SearchRounded } from "@material-ui/icons/";
-import { Snackbar } from '@material-ui/core';
+import { Snackbar, Typography } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
 //import { GET_ORDERS_BY_RIDERID } from '../../../GraphQL/Queries';
 import { GET_ORDERS_BY_RESTAURANTID } from '../../../GraphQL/Queries';
@@ -234,7 +234,7 @@ import { Alert } from '@material-ui/lab';
             OrderTotal: `$ ${item.OrderTotal}`, 
             PaymentMethod: item.PaymentMethod,
             Rider: item.Rider.FirstName,
-            Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); history.push('/ViewOrdersDetails', { from: index});}}><SearchRounded color="primary" /></a></>
+            Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); history.push('/ViewOrdersDetails', { from: index});}}><Typography style={{width: "100%"}}><SearchRounded color="primary" /></Typography></a></>
           };
     
           rows.push(row)

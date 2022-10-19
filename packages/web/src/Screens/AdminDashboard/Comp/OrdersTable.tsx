@@ -5,7 +5,7 @@ import MUIDataTable from "mui-datatables";
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
 import { EditRounded } from "@material-ui/icons/";
-import { Backdrop, Button, createStyles, Fade, FormControl, Grid, makeStyles, MenuItem, Modal, Select, Snackbar, Theme } from '@material-ui/core';
+import { Backdrop, Button, createStyles, Fade, FormControl, Grid, makeStyles, MenuItem, Modal, Select, Snackbar, Theme, Typography } from '@material-ui/core';
 import { useQuery } from '@apollo/client';
 import { GET_ORDERS, GET_ORDERS_BY_DATE_AND_TYPE } from '../../../GraphQL/Queries';
 import { Alert } from '@material-ui/lab';
@@ -370,7 +370,7 @@ import { Link } from "react-router-dom";
               OrderTotal: `$ ${item.OrderTotal}`,
               PaymentMethod: item.PaymentMethod, 
               Rider: item.Rider.FirstName,
-              Actions: <><a href="/AdminOrderSDetails" title="edit" onClick={(e) => {e.preventDefault(); history.push('/AdminOrderSDetails', { from: index});}}><EditRounded color="primary" /></a></>
+              Actions: <><a href="/AdminOrderSDetails" title="edit" onClick={(e) => {e.preventDefault(); history.push('/AdminOrderSDetails', { from: index});}}><Typography style={{width: "100%"}}><EditRounded color="primary" /></Typography></a></>
             };
     
             rows.push(row)

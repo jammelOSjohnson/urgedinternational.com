@@ -377,7 +377,7 @@ import clsx from 'clsx';
             OrderTotal: `$ ${item.OrderTotal}`, 
             PaymentMethod: item.PaymentMethod,
             Rider: item.Rider.FirstName,
-            Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); history.push('/DeliveryOrdersDetails', { from: index});}}><EditRounded color="primary" /></a></>
+            Actions: <><a href="javascript()" title="edit" onClick={(e) => {e.preventDefault(); history.push('/DeliveryOrdersDetails', { from: index});}}><Typography style={{width: "100%"}}><EditRounded color="primary" /></Typography></a></>
           };
     
           rows.push(row)
