@@ -130,7 +130,7 @@ export const CurrentPackage: React.FC = function CurrentPackage() {
     }
 
     function getSteps() {
-      return ['Pick-Up Time', 'In Transit', 'Delivered'];
+      return ['Processing', 'In Transit', 'Delivered'];
       }  
 
       // eslint-disable-next-line
