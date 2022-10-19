@@ -229,7 +229,7 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                                                 Today
                                                 </>
                                             : 
-                                                <span>Closed For Today</span>
+                                                <span>Closed</span>
                                             }
                                         </Typography>
                                     </Grid>
