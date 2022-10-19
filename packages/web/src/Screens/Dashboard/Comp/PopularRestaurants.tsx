@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { Link } from "react-router-dom";
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
-import MapContainer from '../Testmap';
+import CheckGps from './CheckGps';
 
 
 
@@ -114,10 +114,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-interface NoGps {
-    open2 : boolean,
-    errorMessage: string
-}
+
 
 export const PopularRestaurants: React.FC = function PopularRestaurants() {
     const classes = useStyles();
@@ -127,10 +124,7 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
 
     var history = useHistory();
 
-    const [gpsCheck, setgpsCheck] = React.useState<NoGps>({
-        open2: false,
-        errorMessage: "Please turn on GPS to use Urged Food Delivery."
-    });
+    
 
     useEffect(() => {
         ////console.log("inside use effect");
@@ -165,22 +159,7 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
                             </Typography>
                         </Grid>
                     </Grid>
-                    <Grid item xs={12}>
-                    {gpsCheck.open2 && 
-                                        <Typography 
-                                        variant="h5" 
-                                        style={{
-                                            backgroundColor: "#ff0000",
-                                            color: "#FFF",
-                                            fontWeight: "bolder",
-                                            padding: 5,
-                                            textAlign: "center"
-                                        }}>
-                                        {gpsCheck.errorMessage}
-                                        </Typography>
-                                    }
-                        <MapContainer setLoading={"none"} setgpsCheck={setgpsCheck} gpsCheck={gpsCheck} />
-                    </Grid>
+                    <CheckGps />
                 </Grid>
                 <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
                     {restaurants.map((item, index) => {

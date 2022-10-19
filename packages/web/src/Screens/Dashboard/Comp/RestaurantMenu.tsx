@@ -1634,7 +1634,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         {gpsCheck.errorMessage}
                                         </Typography>
                                     }
-                        <MapContainer setLoading={"none"} setgpsCheck={setgpsCheck} gpsCheck={gpsCheck} />
+                        {/* <MapContainer setLoading={"none"} setgpsCheck={setgpsCheck} gpsCheck={gpsCheck} /> */}
                         <Grid container direction="row" spacing={2} className={classes.root} alignItems="center">
                             {
                                 filteredMenuItems.length !== 0?
@@ -2855,7 +2855,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         {gpsCheck.errorMessage}
                                         </Typography>
                                     }
-                        <MapContainer setLoading={"none"} setgpsCheck={setgpsCheck} gpsCheck={gpsCheck} />
+                        {/* <MapContainer setLoading={"none"} setgpsCheck={setgpsCheck} gpsCheck={gpsCheck} /> */}
                         <Grid container direction="row" spacing={2} className={classes.root} alignItems="center">
                             {
                                 filteredMenuItems.length !== 0?

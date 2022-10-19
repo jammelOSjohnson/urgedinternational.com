@@ -176,47 +176,48 @@ class MapContainer extends  Component<MyProps> {
     }catch(err){
 
     }
-}
+  }
 
-getCoordinates = (position) => {
-    //console.log("position", position);
-    this.setState({...this.state,compCoords:{lat: position.coords.latitude, lng: position.coords.longitude}});
-}
+  getCoordinates = (position) => {
+      //console.log("position", position);
+      this.setState({...this.state,compCoords:{lat: position.coords.latitude, lng: position.coords.longitude}});
+  }
 
-handleLocationError = (error) => {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-          console.log("User denied the request for Geolocation.");
-          if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
-            this.props.setLoading(true);
-          }
-          this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
-          break;
-        case error.POSITION_UNAVAILABLE:
-          console.log("Location information is unavailable.");
-          if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
-            this.props.setLoading(true);
-          }
-          this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
-          break;
-        case error.TIMEOUT:
-          console.log("The request to get user location timed out.");
-          if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
-            this.props.setLoading(true);
-          }
-          this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
-          break;
-        case error.UNKNOWN_ERROR:
-          console.log("An unknown error occurred.");
-          if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
-            this.props.setLoading(true);
-          }
-          this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
-          break;
-        default:
-            break;    
-    }
-}
+  handleLocationError = (error) => {
+      switch(error.code) {
+          case error.PERMISSION_DENIED:
+            console.log("User denied the request for Geolocation.");
+            if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+              this.props.setLoading(true);
+            }
+            this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+            break;
+          case error.POSITION_UNAVAILABLE:
+            console.log("Location information is unavailable.");
+            if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+              this.props.setLoading(true);
+            }
+            this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+            break;
+          case error.TIMEOUT:
+            console.log("The request to get user location timed out.");
+            if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+              this.props.setLoading(true);
+            }
+            this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+            break;
+          case error.UNKNOWN_ERROR:
+            console.log("An unknown error occurred.");
+            if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+              this.props.setLoading(true);
+            }
+            this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+            break;
+          default:
+              this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+              break;    
+      }
+  }
   
   
   componentDidMount() {

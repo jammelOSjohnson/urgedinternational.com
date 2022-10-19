@@ -168,7 +168,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                                         {gpsCheck.errorMessage}
                                         </Typography>
                                     }
-                <MapContainer setLoading={"none"} setgpsCheck={setgpsCheck} gpsCheck={gpsCheck} />
+                {/* <MapContainer setLoading={"none"} setgpsCheck={setgpsCheck} gpsCheck={gpsCheck} /> */}
                 <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
                     {
                         filteredRestItems.length !== 0?

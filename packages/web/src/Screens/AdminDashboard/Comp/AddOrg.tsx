@@ -190,7 +190,7 @@ export const AddOrg: React.FC = () => {
     var handleSubmit = async function handleSubmit(event) {
         event.preventDefault();
         //prevents default form refresh
-        console.log("I am inside fuction");
+        //console.log("I am inside fuction");
         try{
             setSuccess('');
             setError('');
