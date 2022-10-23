@@ -153,6 +153,7 @@ class MapContainer extends  Component<MyProps> {
         }
         if(!this.state.open2){
           this.setState({...this.state, open2: true});
+          this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
         }
         
       }
@@ -223,7 +224,7 @@ class MapContainer extends  Component<MyProps> {
   componentDidMount() {
     //console.log("Mounted")
     setTimeout(() => {
-      if(this.state.compCoords.lat === null && this.state.compCoords.lng === null){
+      if(this.state.compCoords.lat === null && this.state.compCoords.lng === null && !this.state.open2){
         this.getLocation();
       }
       
@@ -234,9 +235,10 @@ class MapContainer extends  Component<MyProps> {
     //console.log("updated",this.state.compCoords.lat)
     //console.log(prevState);
     if(this.state.compCoords.lat !== null && this.state.compCoords.lat !== undefined && 
-       this.state.compCoords.lng !== null && this.state.compCoords.lng !== undefined){
-        //console.log(this.state.compCoords.lat)
-        //console.log(this.state.compCoords.lng)
+       this.state.compCoords.lng !== null && this.state.compCoords.lng !== undefined 
+       && !this.state.open2){
+        console.log(this.state.compCoords.lat)
+        console.log(this.state.compCoords.lng)
        this.checkFence(this.state.coords, this.state.compCoords.lat, this.state.compCoords.lng)
     }
   }

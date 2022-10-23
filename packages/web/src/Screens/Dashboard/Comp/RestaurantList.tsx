@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { ItemRating } from '../../../Components/ItemRating';
 import { Link } from "react-router-dom";
 import MapContainer from '../Testmap';
+import CheckGps from './CheckGps';
 
 
 
@@ -169,6 +170,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                                         </Typography>
                                     }
                 {/* <MapContainer setLoading={"none"} setgpsCheck={setgpsCheck} gpsCheck={gpsCheck} /> */}
+                <CheckGps setLoading={"none"} />
                 <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
                     {
                         filteredRestItems.length !== 0?

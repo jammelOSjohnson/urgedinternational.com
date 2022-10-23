@@ -16,6 +16,10 @@ interface State {
     Address: string;
 }
 
+interface Props {
+    setLoading: any
+}
+
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
         root: {
@@ -112,7 +116,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export const CheckGps: React.FC = function CheckGps(){
+export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
     const classes = useStyles();
     
     var history = useHistory();
@@ -237,7 +241,7 @@ export const CheckGps: React.FC = function CheckGps(){
 
     var [error, setError] = useState('');
     var [success, setSuccess] = useState('');
-    var [loading, setLoading] = useState(false);
+    var [loading, setLoading2] = useState(false);
 
     const [values, setValues] = React.useState<State>({
         Address: '',
@@ -250,14 +254,14 @@ export const CheckGps: React.FC = function CheckGps(){
         try{
             setSuccess('');
             setError('');
-            setLoading(true);
+            setLoading2(true);
             if(values.Address === ''){
                 setError('Please enter delivery address')
-                setLoading(false);
+                setLoading2(false);
             }else{
                 console.log(values.Address);
                 getCoords(values.Address);
-                setLoading(false);
+                setLoading2(false);
             }
 
         }catch(err){
@@ -275,35 +279,42 @@ export const CheckGps: React.FC = function CheckGps(){
                 var longitude = results !== null? results[0].geometry.location.lng(): 0;
                 console.log(`${latitude},${longitude}`);
                 checkFence(coords,latitude, longitude)
+            }else{
+                console.log(status);
+                setError("We can't deliver to this address.")
             } 
         }); 
     }
 
     var checkFence = function checkFence(polygonCoords, lat, lng){
-        if(!gpsCheck.open3){
-          var polygon = new window.google.maps.Polygon({
-            paths: polygonCoords,
-          });
-      
-          const contains = window.google.maps.geometry.poly.containsLocation(
-              new window.google.maps.LatLng(lat, lng),
-              polygon
-          );
-    
-          if (!contains){
-            console.log(document.location.pathname);
-            //console.log(setLoading);
-            setSuccess('We can deliver to this address.')
-            // if(setLoading !== "none" && setLoading !== undefined){
-            //   setLoading(true);
-            // }
             if(!gpsCheck.open3){
-              setgpsCheck({...gpsCheck, open3: true});
-            }
+                console.log("here")
+            var polygon = new window.google.maps.Polygon({
+                paths: polygonCoords,
+            });
             
-          }else{
-            setError("We can't deliver to this address.")
-          }
+            const contains = window.google.maps.geometry.poly.containsLocation(
+                new window.google.maps.LatLng(lat, lng)
+                ,
+                polygon
+            )
+
+            console.log(contains)
+    
+            if (contains){
+                console.log(document.location.pathname);
+                console.log(setLoading);
+                setSuccess('We can deliver to this address.')
+                if(setLoading !== "none" && setLoading !== undefined){
+                  setLoading(false);
+                }
+                if(!gpsCheck.open3){
+                setgpsCheck({...gpsCheck, open3: true});
+                }
+                
+            }else{
+                setError("We can't deliver to this address.")
+            }
         }
       }
 
@@ -319,7 +330,7 @@ export const CheckGps: React.FC = function CheckGps(){
     return(
         <>
             <Grid item xs={12}>
-                <MapContainer setLoading={"none"} setgpsCheck={setgpsCheck} gpsCheck={gpsCheck} />
+                <MapContainer setLoading={setLoading} setgpsCheck={setgpsCheck} gpsCheck={gpsCheck} />
             </Grid>
             <Modal
                 aria-labelledby="transition-modal-title"

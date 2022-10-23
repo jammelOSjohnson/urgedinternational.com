@@ -159,7 +159,7 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
                             </Typography>
                         </Grid>
                     </Grid>
-                    {/* <CheckGps /> */}
+                    <CheckGps setLoading={"none"} />
                 </Grid>
                 <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
                     {restaurants.map((item, index) => {

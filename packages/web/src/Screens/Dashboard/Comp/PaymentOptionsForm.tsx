@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
 import MapContainer from '../Testmap'
+import CheckGps from './CheckGps';
 
 interface State {
     Street: string;
@@ -386,6 +387,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                                         </Typography>
                                     }
                                     {/* <MapContainer setLoading={setLoading} setgpsCheck={setgpsCheck} gpsCheck={gpsCheck} /> */}
+                                    <CheckGps setLoading={setLoading} />
                                 </Grid>
                                 <Grid item xs={12}>
                                     <FormControl component="fieldset" style={{width: "100%"}}>
