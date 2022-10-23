@@ -221,7 +221,6 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any, me
                                     <MenuItem value={"Flavour Splash"}>Flavour Splash</MenuItem>
                                     <MenuItem value={"Tropics Orangeade"}>Tropics Orangeade</MenuItem>
                                     <MenuItem value={"Topics Fruit Punch"}>Topics Fruit Punch</MenuItem>
-                                    <MenuItem value={"Tropics Grape"}>Tropics Grape</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -290,7 +289,6 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any, me
                                     <MenuItem value={"Flavour Splash"}>Flavour Splash</MenuItem>
                                     <MenuItem value={"Tropics Orangeade"}>Tropics Orangeade</MenuItem>
                                     <MenuItem value={"Topics Fruit Punch"}>Topics Fruit Punch</MenuItem>
-                                    <MenuItem value={"Tropics Grape"}>Tropics Grape</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -339,7 +337,6 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any, me
                                     <MenuItem value={"Flavour Splash"}>Flavour Splash</MenuItem>
                                     <MenuItem value={"Tropics Orangeade"}>Tropics Orangeade</MenuItem>
                                     <MenuItem value={"Topics Fruit Punch"}>Topics Fruit Punch</MenuItem>
-                                    <MenuItem value={"Tropics Grape"}>Tropics Grape</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -407,7 +404,6 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any, me
                                     <MenuItem value={"Flavour Splash"}>Flavour Splash</MenuItem>
                                     <MenuItem value={"Tropics Orangeade"}>Tropics Orangeade</MenuItem>
                                     <MenuItem value={"Topics Fruit Punch"}>Topics Fruit Punch</MenuItem>
-                                    <MenuItem value={"Tropics Grape"}>Tropics Grape</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -544,7 +540,6 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any, me
                                     <MenuItem value={"Flavour Splash"}>Flavour Splash</MenuItem>
                                     <MenuItem value={"Tropics Orangeade"}>Tropics Orangeade</MenuItem>
                                     <MenuItem value={"Topics Fruit Punch"}>Topics Fruit Punch</MenuItem>
-                                    <MenuItem value={"Tropics Grape"}>Tropics Grape</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>
@@ -630,7 +625,6 @@ export const FastFoodChickenFlavor: React.FC<{props:State, handleChange: any, me
                                     <MenuItem value={"Flavour Splash"}>Flavour Splash</MenuItem>
                                     <MenuItem value={"Tropics Orangeade"}>Tropics Orangeade</MenuItem>
                                     <MenuItem value={"Topics Fruit Punch"}>Topics Fruit Punch</MenuItem>
-                                    <MenuItem value={"Tropics Grape"}>Tropics Grape</MenuItem>
                                 </Select>
                             </FormControl>
                         </Grid>
