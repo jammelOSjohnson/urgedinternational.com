@@ -456,6 +456,8 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
 
           if(errorCode === "auth/network-request-failed" || "auth/internal-error"){
             return "Unable to login at this time"
+          }else{
+            return "Unable to login at this time";
           }
           //var errorMessage = error.message;
           //console.log(error.message);
