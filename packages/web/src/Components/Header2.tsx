@@ -462,61 +462,61 @@ export const Header2: React.FC = function Header2() {
         <List>
           {headersData.map(({label, href}, index) => {
             return referralPath === "/" && href === "/"?
-              <ListItem button key={label}>
+              <ListItem button key={index}>
                 <ListItemIcon><HomeRounded color="primary" /></ListItemIcon>
                 <ListItemText style={{color: "#F7B614"}} primary={label} />
               </ListItem>
             :referralPath === "/Services" && href === "/Services"?
-              <ListItem button key={label}>
+              <ListItem button key={index}>
                 <ListItemIcon><RoomServiceRounded color="primary" /></ListItemIcon>
                 <ListItemText style={{color: "#F7B614"}} primary={label} />
               </ListItem>
             :referralPath === "/HowItWorks" && href === "/HowItWorks"?
-              <ListItem button key={label}>
+              <ListItem button key={index}>
                 <ListItemIcon><HelpRounded color="primary" /></ListItemIcon>
                 <ListItemText style={{color: "#F7B614"}} primary={label} />
               </ListItem>
             :referralPath === "/HowItWorks" && href === "/HowItWorks"?
-              <ListItem button key={label}>
+              <ListItem button key={index}>
                 <ListItemIcon><InfoRounded color="primary" /></ListItemIcon>
                 <ListItemText style={{color: "#F7B614"}} primary={label} />
               </ListItem>
             :referralPath === "/ContactUs" && href === "/ContactUs"?
-              <ListItem button key={label}>
+              <ListItem button key={index}>
                 <ListItemIcon><ContactMailRounded color="primary" /></ListItemIcon>
                 <ListItemText style={{color: "#F7B614"}} primary={label} />
               </ListItem>
             :label === "Home"?
-              <a href={href} title="Place Order" className={classes.linkBtn}>
-                <ListItem button key={label}>
+              <a href={href} key={index} title="Place Order" className={classes.linkBtn}>
+                <ListItem button>
                     <ListItemIcon><HomeRounded style={{color: "#5D6467;"}} /></ListItemIcon>
                     <ListItemText primary={label} />
                 </ListItem>
               </a>
             :label === "What We Do"?
-              <a href={href} title="Place Order" className={classes.linkBtn}>
-                <ListItem button key={label}>
+              <a href={href} key={index} title="Place Order" className={classes.linkBtn}>
+                <ListItem button>
                     <ListItemIcon><RoomServiceRounded /></ListItemIcon>
                     <ListItemText primary={label} />
                 </ListItem>
               </a>
             :label === "FAQ'S"?
-              <a href={href} title="Place Order" className={classes.linkBtn}>
-                <ListItem button key={label}>
+              <a href={href} key={index} title="Place Order" className={classes.linkBtn}>
+                <ListItem button>
                     <ListItemIcon><HelpRounded style={{color: "#5D6467;"}} /></ListItemIcon>
                     <ListItemText primary={label} />
                 </ListItem>
               </a>
             :label === "How it works"?
-              <a href={href} title="Place Order" className={classes.linkBtn}>
-                <ListItem button key={label}>
+              <a href={href} key={index} title="Place Order" className={classes.linkBtn}>
+                <ListItem button>
                     <ListItemIcon><InfoRounded style={{color: "#5D6467;"}} /></ListItemIcon>
                     <ListItemText primary={label} />
                 </ListItem>
               </a>
             :label === "Contact Us"?
-              <a href={href} title="Place Order" className={classes.linkBtn}>
-                <ListItem button key={label}>
+              <a href={href} key={index} title="Place Order" className={classes.linkBtn}>
+                <ListItem button>
                     <ListItemIcon><ContactMailRounded style={{color: "#5D6467;"}}/></ListItemIcon>
                     <ListItemText primary={label} />
                 </ListItem>
@@ -531,7 +531,7 @@ export const Header2: React.FC = function Header2() {
         <Divider />
         <List>
           <ListItem button key="Place Order">
-            <a href="/Restaurants" title="Place Order" className={classes.linkBtn}>
+            <a href="/Restaurants" key={"Place Order"} title="Place Order" className={classes.linkBtn}>
               <Button className={classes.btn} variant="contained" color="primary">
                 Place an Order
               </Button>
