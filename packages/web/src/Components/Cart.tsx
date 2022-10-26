@@ -70,6 +70,8 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Cart: React.FC = function Cart() {
     const classes = useStyles();
     var history = useHistory();
+    var location = history.location;
+    var referralPath = location.pathname;
     
     var { value }  = useAppData();
     var { cartItems } = value;
@@ -90,6 +92,7 @@ export const Cart: React.FC = function Cart() {
     };
 
     const handleCheckout =(event) =>{
+        event.preventDefault()
         //setOpen(false);
         history.push("/ShoppingCart");
     }
@@ -121,6 +124,7 @@ export const Cart: React.FC = function Cart() {
                 aria-haspopup="true"
                 onClick={handleToggle}
                 id='cart-icon-header-right'
+                to={referralPath}
             >
                 <Badge badgeContent={cartItems.length} color="primary">
                     <ShoppingCartRounded className={classes.noti} />
@@ -137,7 +141,7 @@ export const Cart: React.FC = function Cart() {
                         <Grid container direction="row" spacing={1}>
                             <Grid item xs={12}>
                                 <Typography variant="h5" className={classes.cartTitle}>Food Cart</Typography>
-                                <Link className={classes.cartIcon} onClick={handleClose}>
+                                <Link to={referralPath} className={classes.cartIcon} onClick={handleClose}>
                                     <img src="Images/CartCloseIcon.png" alt="closecart" />
                                 </Link>
                                 {cartItems.length > 0 ?
@@ -183,7 +187,7 @@ export const Cart: React.FC = function Cart() {
                             </Grid>
                             {cartItems.length > 0 ?
                                 <Grid item xs={12} style={{textAlign: "center"}}>
-                                    <Link onClick={handleCheckout} className={classes.link}>
+                                    <Link to="javascript();" onClick={handleCheckout} className={classes.link}>
                                         <Button size="large"  fullWidth={true} className={clsx(classes.Button,classes.btnfonts)}   type="button">
                                                 Checkout 
                                         </Button>

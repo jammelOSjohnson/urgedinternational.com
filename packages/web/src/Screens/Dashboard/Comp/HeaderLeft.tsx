@@ -233,8 +233,8 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                             </ListItem>
                           :
                           (referralPath === "/FoodDelivery" || referralPath === "/Restaurants" || referralPath === "/Menu" || referralPath === "/RestaurantItem")  && text === "Food Delivery" ?
-                          <Link to="/Restaurants" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
-                            <ListItem button key={text} className={classes.activeItem2}>
+                          <Link to="/Restaurants" key={text} className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
+                            <ListItem button  className={classes.activeItem2}>
                               <ListItemIcon className={classes.activeIcon2}>
                                     {
                                       index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
@@ -283,8 +283,8 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                             </ListItem>
                           :
                           referralPath === "/OrderHistory" && text === "Orders" ?
-                            <Link to="/OrdersHistory" className={classes.inactiveItemLink}>
-                              <ListItem button key={text} className={classes.activeItem}>
+                            <Link to="/OrdersHistory" key={text} className={classes.inactiveItemLink}>
+                              <ListItem button className={classes.activeItem}>
                                 <ListItemIcon>
                                     {
                                       index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
@@ -301,8 +301,8 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                             </Link>
                           :
                           text === "Overview" ?
-                            <Link to="/Dashboard" style={{color: "#5D6467"}} className={classes.inactiveItemLink}>
-                              <ListItem button key={text}>
+                            <Link to="/Dashboard" key={text} style={{color: "#5D6467"}} className={classes.inactiveItemLink}>
+                              <ListItem button>
                                   <ListItemIcon>
                                     {
                                       index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
@@ -320,8 +320,8 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                           :
                           text === "Orders" ?
                             userInfo.email !== null && userInfo.email !== "" && userInfo.email !== undefined?
-                              <Link to="/OrderHistory" className={classes.inactiveItemLink}>
-                                <ListItem button key={text} style={{paddingLeft: "12px"}}>
+                              <Link to="/OrderHistory" key={text} className={classes.inactiveItemLink}>
+                                <ListItem button style={{paddingLeft: "12px"}}>
                                     <ListItemIcon>
                                       {
                                         index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
@@ -341,8 +341,8 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                           :
                           text === "Profile" ?
                             userInfo.email !== null && userInfo.email !== "" && userInfo.email !== undefined?
-                              <Link to="/Profile" className={classes.inactiveItemLink}>
-                                <ListItem button key={text} style={{paddingLeft: "12px"}}>
+                              <Link to="/Profile" key={text} className={classes.inactiveItemLink}>
+                                <ListItem button style={{paddingLeft: "12px"}}>
                                     <ListItemIcon>
                                       {
                                         index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
@@ -361,8 +361,8 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                               <></>
                           :
                           text === "Food Delivery" ?
-                            <Link to="/Restaurants" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
-                              <ListItem button key={text}>
+                            <Link to="/Restaurants" key={text} className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
+                              <ListItem button >
                                   <ListItemIcon>
                                     {
                                       index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
@@ -395,8 +395,8 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                             </ListItem>
                           :
                           text === "Uship" ?
-                            <Link to="/Uship" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
-                              <ListItem button key={text} >
+                            <Link to="/Uship" key={text} className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
+                              <ListItem button >
                                   <ListItemIcon>
                                     {
                                       index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
@@ -431,8 +431,8 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                           //   </a>
                           :
                           text === "Sally's Pantry" ?
-                            <Typography>
-                              <ListItem button key={text} >
+                            <Typography key={text}>
+                              <ListItem button  >
                                   <ListItemIcon>
                                     {
                                       index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
@@ -485,8 +485,8 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                           {userInfo.email !== null && userInfo.email !== "" && userInfo.email !== undefined?
                               ['Settings', 'Logout'].map((text, index) => (
                                   text === 'Logout'?
-                                  <a href="/" onClick={handleLogout} className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
-                                    <ListItem button key={text} >
+                                  <a href="/" key={text} onClick={handleLogout} className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
+                                    <ListItem button >
                                       <ListItemIcon>
                                         {
                                           index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
@@ -498,19 +498,19 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                                   </a>
                                   :
                                   <ListItem button key={text}>
-                                  <ListItemIcon>
-                                    {
-                                      index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
-                                      index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
-                                    }
-                                  </ListItemIcon>
-                                  <ListItemText className="link-font" primary={text} />
+                                    <ListItemIcon>
+                                      {
+                                        index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                        index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
+                                      }
+                                    </ListItemIcon>
+                                    <ListItemText className="link-font" primary={text} />
                                   </ListItem>
                               )) :
                               ['Settings', 'Login'].map((text, index) => (
                                 text === 'Login'?
-                                <a href="/Login" onClick={handleLogin} className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
-                                  <ListItem button key={text}>
+                                <a href="/Login" key={text} onClick={handleLogin} className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
+                                  <ListItem button >
                                     <ListItemIcon>
                                       {
                                         index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
@@ -522,13 +522,13 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                                 </a>
                                 :
                                 <ListItem button key={text}>
-                                <ListItemIcon>
-                                  {
-                                    index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
-                                    index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
-                                  }
-                                </ListItemIcon>
-                                <ListItemText className="link-font" primary={text} />
+                                  <ListItemIcon>
+                                    {
+                                      index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                      index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
+                                    }
+                                  </ListItemIcon>
+                                  <ListItemText className="link-font" primary={text} />
                                 </ListItem>
                             ))
                           }

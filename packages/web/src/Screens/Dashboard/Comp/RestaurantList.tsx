@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 //Import Components
 import { ItemRating } from '../../../Components/ItemRating';
 import { Link } from "react-router-dom";
-import MapContainer from '../Testmap';
+import MapContainer from '../MapContainer';
 import CheckGps from './CheckGps';
 
 
@@ -156,7 +156,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                 <Typography variant="body1" style={{paddingTop: "3%", paddingBottom: "3%"}}>
                     Please select restaurants listed below to see their menu.
                 </Typography>
-                {gpsCheck.open2 && 
+                {/* {gpsCheck.open2 && 
                                         <Typography 
                                         variant="h5" 
                                         style={{
@@ -168,10 +168,10 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                                         }}>
                                         {gpsCheck.errorMessage}
                                         </Typography>
-                                    }
+                                    } */}
                 {/* <MapContainer setLoading={"none"} setgpsCheck={setgpsCheck} gpsCheck={gpsCheck} /> */}
                 <CheckGps setLoading={"none"} />
-                <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
+                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                     {
                         filteredRestItems.length !== 0?
                             filteredRestItems.map((restaurant, index) => {
@@ -179,7 +179,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                                 ////console.log(restaurant);
                                 return(
                                     <Grid item xs={12} sm={6} md={6} lg={3} xl={3} className={classes.gridSpacing} key={index}>
-                                        <Link onClick={(e) => { e.preventDefault(); handleSelectedRestaurant(index, restaurant.FirstName);}} className={classes.link}>
+                                        <Link to={"javascript();"} onClick={(e) => { e.preventDefault(); handleSelectedRestaurant(index, restaurant.FirstName);}} className={classes.link}>
                                         <Card className={classes.root}>
                                             <CardHeader
                                                 avatar={
@@ -198,7 +198,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                                                 subheader={restaurant.City}
                                             />
                                             <CardContent>
-                                                <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                     <Grid item xs={6}>
                                                             <Typography variant="body2"  component="p">
                                                                 Menu
@@ -232,7 +232,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                             ////console.log(restaurant);
                             return(
                                 <Grid item xs={12} sm={6} md={6} lg={3} xl={3} className={classes.gridSpacing} key={index}>
-                                    <Link onClick={(e) => { e.preventDefault(); handleSelectedRestaurant(index, restaurant.FirstName);}} className={classes.link}>
+                                    <Link to={"javascript();"} onClick={(e) => { e.preventDefault(); handleSelectedRestaurant(index, restaurant.FirstName);}} className={classes.link}>
                                     <Card className={classes.root}>
                                         <CardHeader
                                             avatar={
@@ -251,7 +251,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                                             subheader={restaurant.City}
                                         />
                                         <CardContent>
-                                            <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
+                                            <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                 <Grid item xs={6}>
                                                         <Typography variant="body2"  component="p">
                                                             Menu
