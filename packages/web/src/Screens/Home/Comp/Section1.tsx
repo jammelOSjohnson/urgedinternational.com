@@ -1,11 +1,12 @@
 import React from 'react';
 //import CSS
-import { Container, Grid, Typography, makeStyles, createStyles, Theme, Button, Card, CardMedia, CardContent, useMediaQuery, useTheme} from '@material-ui/core';
+import { Container, Grid, Typography, makeStyles, createStyles, Theme, Button, Card, CardMedia, CardContent, useMediaQuery, useTheme, SnackbarContent, IconButton} from '@material-ui/core';
 import { Link } from "react-router-dom";
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "../CSS/slider.css";
 import clsx from 'clsx';
+import {CloseRounded} from '@material-ui/icons';
 
 
 const useStyles = makeStyles((theme: Theme) => 
@@ -164,9 +165,33 @@ export const Section1: React.FC = function Section1() {
     const isMatch = useMediaQuery(theme.breakpoints.down('xs'));
     const isMatchMedium = useMediaQuery(theme.breakpoints.up('sm'));
     
+
+    const close = () => {
+        let infoBar = document.querySelector("#refresh-bar") as HTMLElement | null;
+        if(infoBar) {
+            infoBar.style.display = 'none';
+        }
+     }
+
     return (
         <>
             <div style={{position: "relative"}} id="HomeSlide">
+                    <SnackbarContent
+                        id="refresh-bar"
+                        className="refresh_bar"
+                        style={{display: 'none'}}
+                        message={
+                            <Button id="refresh_btn" key="install" aria-label="close" color="inherit"
+                                    className="refresh_bar_class" onClick={close}>
+                                New Content available. Please restart the application!
+                            </Button>
+                        }
+                        action={[
+                            <IconButton key="close" aria-label="close" color="inherit" onClick={close}>
+                                <CloseRounded fontSize="small"/>
+                            </IconButton>
+                        ]}
+                    />
                     <Carousel nextIcon={false} prevIcon={false} >
                         <Carousel.Item >  
                             <img

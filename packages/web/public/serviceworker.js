@@ -12,6 +12,7 @@ self.addEventListener('install', (event) => {
                 return cache.addAll(urlsToCache);
             })
     )
+    self.skipWaiting();
 });
 
 //Listen for requests
