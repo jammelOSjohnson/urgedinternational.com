@@ -152,6 +152,7 @@ export const CurrentPackage: React.FC = function CurrentPackage() {
       const [latestOrderLength, setLatestOrderLength] = React.useState(0);
       const [latestOrderImage, setLatestOrderImage] = React.useState('');
       const [latestOrderStatus, setLatestOrderStatus] = React.useState('');
+      const [latestOrderNum, setLatestOrderNum] = React.useState('');
 
       useEffect(() => {
         try{
@@ -159,6 +160,7 @@ export const CurrentPackage: React.FC = function CurrentPackage() {
             if(index === orders.length -1){
               setLatestOrderImage(item.OrderItems[0].imageName);
               setLatestOrderStatus(item.OrderStatus);
+              setLatestOrderNum(item._id?.toString());
             }
           })
 
@@ -194,6 +196,7 @@ export const CurrentPackage: React.FC = function CurrentPackage() {
                                           <Grid item xs={12} md={6} lg={6} container spacing={1}>
                                               <Grid item xs={12} md={12}>
                                                   <Typography variant="subtitle1" className={classes.category}>
+                                                      Order#: {latestOrderNum}<br />
                                                       Current Delivery Status
                                                   </Typography>
                                               </Grid>
