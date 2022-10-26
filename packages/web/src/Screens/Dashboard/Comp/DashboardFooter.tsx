@@ -80,7 +80,7 @@ export const DashboardFooter: React.FC = function DashboardFooter() {
                 referralPath !== "/Dashboard" ?
                     <>
                         <FooterTop />
-                        <Typography style={{textAlign: "center", marginTop: "3%", paddingBottom: "3%"}} className="hideOnMobile">
+                        <Typography variant='h6' style={{textAlign: "center", marginTop: "3%", paddingBottom: "3%"}} className="hideOnMobile">
                             <span className={classes.linkStyle}>
                                 {`Copyright ©${year}, Urged. All Rights Reserved.`} 
                             </span>

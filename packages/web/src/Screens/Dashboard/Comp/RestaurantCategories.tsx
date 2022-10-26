@@ -148,18 +148,16 @@ export const RestaurantCategories: React.FC = function RestaurantCategories() {
       
       return (
         <>
-          <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                <Grid item xs={12} md={6} lg={3} container spacing={1}>
+            <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                     <Grid item xs={10} md={10}>
                         <Typography variant="subtitle1" className={classes.category}>
                             Categories
                         </Typography>
                     </Grid>
-                </Grid>
             </Grid>
             {isMatchMedium? (
                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                    <Grid container xs={12} direction="column">
+                    <Grid container direction="column">
                         <Grid container direction="row" spacing={1}>
                             {
                                 filterRestCategory === undefined || filterRestCategory === "All"?

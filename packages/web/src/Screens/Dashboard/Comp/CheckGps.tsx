@@ -3,7 +3,7 @@ import { Alert } from "@material-ui/lab";
 import clsx from "clsx";
 import React, { useState } from "react";
 import {Link, useHistory} from 'react-router-dom';
-import MapContainer from '../Testmap';
+import MapContainer from '../MapContainer';
 
 interface NoGps {
     open : boolean,
@@ -329,8 +329,10 @@ export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
 
     return(
         <>
-            <Grid item xs={12}>
-                <MapContainer setLoading={setLoading} setgpsCheck={setgpsCheck} gpsCheck={gpsCheck} />
+            <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                <Grid item xs={12}>
+                    <MapContainer setLoading={setLoading} setgpsCheck={setgpsCheck} gpsCheck={gpsCheck} />
+                </Grid>
             </Grid>
             <Modal
                 aria-labelledby="transition-modal-title"
@@ -352,48 +354,46 @@ export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
                         </Link>
                         <br />
                         <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                            <Grid item xs={12}>
-                                <Grid item xs={12} >
-                                    <form autoComplete="off">
-                                        <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                            <Grid item xs={12}>
-                                            <Typography variant={'caption'}>
-                                                You are either outiside the areas we deliver to or your GPS is turned off.
-                                                Please turn on GPS or enter the delivery address below.
-                                            </Typography>
-                                            </Grid>
-                                            <Grid item xs={12} >
-                                                <TextField
-                                                    id="outlined-multiline-static1"
-                                                    label="Enter Delivery Address Here"
-                                                    // multiline
-                                                    // rows={4}
-                                                    value={values.Address}
-                                                    onChange={handleChange4('Address')}
-                                                    variant="outlined"
-                                                    placeholder="Enter Address"
-                                                    fullWidth
-                                                />
-                                            </Grid>
-                                            <Grid item xs={6}>
-                                                <Button variant="contained" 
-                                                    style={{backgroundColor: "#F7B614", fontFamily: "PT Sans"}}
-                                                    color="secondary" size="small" 
-                                                    className={`${classes.Button} ${classes.btnfonts}`}
-                                                    onClick={handleSubmit}
-                                                    type="button"
-                                                    fullWidth
-                                                    disabled={loading}>
-                                                    Submit Address
-                                                </Button>
-                                            </Grid>
-                                            <Grid item xs={12} >
-                                                {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
-                                                {success && <Alert variant="filled" severity="success" className={classes.alert}>{success}</Alert>}
-                                            </Grid>
+                            <Grid item xs={12} >
+                                <form autoComplete="off">
+                                    <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                        <Grid item xs={12}>
+                                        <Typography variant={'caption'}>
+                                            You are either outiside the areas we deliver to or your GPS is turned off.
+                                            Please turn on GPS or enter the delivery address below.
+                                        </Typography>
                                         </Grid>
-                                    </form>
-                                </Grid>
+                                        <Grid item xs={12} >
+                                            <TextField
+                                                id="outlined-multiline-static1"
+                                                label="Enter Delivery Address Here"
+                                                // multiline
+                                                // rows={4}
+                                                value={values.Address}
+                                                onChange={handleChange4('Address')}
+                                                variant="outlined"
+                                                placeholder="Enter Address"
+                                                fullWidth
+                                            />
+                                        </Grid>
+                                        <Grid item xs={6}>
+                                            <Button variant="contained" 
+                                                style={{backgroundColor: "#F7B614", fontFamily: "PT Sans"}}
+                                                color="secondary" size="small" 
+                                                className={`${classes.Button} ${classes.btnfonts}`}
+                                                onClick={handleSubmit}
+                                                type="button"
+                                                fullWidth
+                                                disabled={loading}>
+                                                Submit Address
+                                            </Button>
+                                        </Grid>
+                                        <Grid item xs={12} >
+                                            {error && <Alert variant="filled" severity="error" className={classes.alert}>{error}</Alert>}
+                                            {success && <Alert variant="filled" severity="success" className={classes.alert}>{success}</Alert>}
+                                        </Grid>
+                                    </Grid>
+                                </form>
                             </Grid>
                         </Grid>
                     </div>

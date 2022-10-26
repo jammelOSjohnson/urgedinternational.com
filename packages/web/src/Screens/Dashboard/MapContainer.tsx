@@ -153,7 +153,8 @@ class MapContainer extends  Component<MyProps> {
         }
         if(!this.state.open2){
           this.setState({...this.state, open2: true});
-          this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+          if(this.props.setgpsCheck !== undefined)
+            this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
         }
         
       }

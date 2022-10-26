@@ -10,7 +10,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import clsx from 'clsx';
 import { Alert } from '@material-ui/lab';
-import MapContainer from '../Testmap';
+import MapContainer from '../MapContainer';
 import CheckGps from './CheckGps';
 
 

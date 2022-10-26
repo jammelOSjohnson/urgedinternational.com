@@ -4,7 +4,7 @@ import { makeStyles, createStyles, Typography, Theme, Grid, Paper, Divider, Form
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Alert from '@material-ui/lab/Alert';
-import MapContainer from '../Testmap'
+import MapContainer from '../MapContainer'
 import CheckGps from './CheckGps';
 
 interface State {

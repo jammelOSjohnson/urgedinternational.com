@@ -1442,7 +1442,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           if(newOrder.Rider.AddressLine1 !== undefined){
             newOrder.Rider = newOrder.Rider._id;
           }
-          //console.log(newOrder);
+          console.log(newOrder);
           var updateRes = await updateOrder({variables: newOrder}).then(async function(response) {
             ////console.log("create orer result");
             if (response.data.updateOrder !== null) {
@@ -1493,9 +1493,9 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
           }
           //console.log(newOrder);
           var updateRes = await updateOrder({variables: newOrder}).then(async function(response) {
-            console.log("update order result");
+            //console.log("update order result");
             if (response.data.updateOrder !== null) {
-              console.log(response.data.updateOrder);
+              //console.log(response.data.updateOrder);
               let formVals = {
                 user_name: response.data.updateOrder.userName,
                 user_email: response.data.updateOrder.userEmail,
@@ -2053,7 +2053,7 @@ export default function AppDataProvider({ children }: { children: ReactNode}) {
       ////console.log("about to fetch restaurants");
         await getRider({variables: {_id: id}}).then(async function(response) {
           if (response.data.getRider !== null) {
-            console.log("got list of restaurants");
+            //console.log("got list of restaurants");
             ////console.log(response);
 
             var result = response.data.getRider;
