@@ -152,12 +152,18 @@ export const OrderFullDetails: React.FC = () => {
         try{
             setOpen(false);
             setOpen2(false);
-            //console.log("trying to see id");
-            //console.log(finalselectedRider);
-            //console.log(riders[finalselectedRider]);
+            console.log("trying to see id");
+            console.log(finalselectedRider);
+            console.log(riders[finalselectedRider]);
+            console.log(orderIndex);
+            let OrdertoUpdate = 
+            orders.filter((item,index) => orderIndex === index);
+
+            console.log("updatedOrders",OrdertoUpdate)
             if(finalselectedRider !== undefined){
-                orders[orderIndex].Rider = riders[finalselectedRider]._id;
-                await UpdateOrder(value, orders[orderIndex]).then((res) => {
+                let OrdertoUpdateFinal = {...OrdertoUpdate[0], Rider: riders[finalselectedRider]._id}
+                //OrdertoUpdate[0].Rider = riders[finalselectedRider]._id;
+                await UpdateOrder(value, OrdertoUpdateFinal).then((res) => {
                     if(res){
                         setOpen(true);
                         setTimeout(()=> {
@@ -167,8 +173,9 @@ export const OrderFullDetails: React.FC = () => {
                     }
                 })
             }else if(orderIndex !== undefined){
-                orders[orderIndex].Rider = orders[orderIndex].Rider._id;
-                await UpdateOrder(value, orders[orderIndex]).then((res) => {
+                let OrdertoUpdateFinal = {...OrdertoUpdate[0], Rider: OrdertoUpdate[0].Rider._id}
+                //OrdertoUpdate[0].Rider = OrdertoUpdate[0].Rider._id;
+                await UpdateOrder(value, OrdertoUpdateFinal).then((res) => {
                     if(res){
                         setOpen(true);
                         setTimeout(()=> {
@@ -180,7 +187,7 @@ export const OrderFullDetails: React.FC = () => {
             
             
         }catch(err){
-            //console.log(err);
+            console.log(err);
             setOpen2(true);
         }
     }

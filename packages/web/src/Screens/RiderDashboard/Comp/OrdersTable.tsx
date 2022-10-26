@@ -171,14 +171,16 @@ import clsx from 'clsx';
       print: false
     };
 
+    let filteredOrders = orders.filter((item) => item.OrderStatus !== "Delivered" && item.OrderStatus !== "Cancelled" && item.OrderStatus !== "Not Assigned");
+
     const handleSubmit = async(status, orderIndex) => {
       try{
           setOpen(false);
           setOpen2(false);
-          console.log(status);
-          console.log(orders[orderIndex].OrderStatus);
-          let order = {...orders[orderIndex], OrderStatus: status, Rider: orders[orderIndex].Rider._id };
-          console.log(order);
+          //console.log(status);
+          //console.log(filteredOrders[orderIndex].OrderStatus);
+          let order = {...filteredOrders[orderIndex], OrderStatus: status, Rider: filteredOrders[orderIndex].Rider._id };
+          //console.log(order);
           await UpdateOrderRider(value, order).then((res) => {
               if(res){
                   setOpen(true);
@@ -194,25 +196,25 @@ import clsx from 'clsx';
       try{
           setOpen(false);
           setOpen2(false);
-          console.log(status);
-          console.log(orders[orderIndex].OrderStatus);
-          let order = {...orders[orderIndex], Rider: orders[orderIndex].Rider };
-          console.log(order);
-          console.log(riders);
+          //console.log(status);
+          //console.log(filteredOrders[orderIndex].OrderStatus);
+          let order = {...filteredOrders[orderIndex], Rider: filteredOrders[orderIndex].Rider };
+          //console.log(order);
+          //console.log(riders);
           
           await OrderRejectionList(order).then(async(res) => {
               if(res === null){
                 let filteredRiders = 
                   riders.filter(rider => rider.disabled === false 
                   && rider.isAvailable === true &&
-                  rider._id !== orders[orderIndex].Rider._id);
-                console.log(filteredRiders);
+                  rider._id !== filteredOrders[orderIndex].Rider._id);
+                //console.log(filteredRiders);
                 if(filteredRiders.length > 0){ 
                   order.Rider = filteredRiders[0]._id; 
                 }else{
                   order.Status = "Rejected";
                 }
-                console.log('about to update order');
+                //console.log('about to update order');
                 await UpdateOrderRider(value, order).then(async (res) => {
                   if(res){
                       console.log('about to create rejection list')
@@ -233,7 +235,7 @@ import clsx from 'clsx';
                 let filteredRiders = 
                   riders.filter(rider => rider.disabled === false 
                   && rider.isAvailable === true &&
-                  rider._id !== orders[orderIndex].Rider._id);
+                  rider._id !== filteredOrders[orderIndex].Rider._id);
                 console.log(filteredRiders);
                 if(filteredRiders.length > 0){ 
                   let unrestricktedRiders = filteredRiders.filter(rider => !res.RejectionList.includes(rider._id));
@@ -271,7 +273,7 @@ import clsx from 'clsx';
               }
           });
       }catch(err){
-          console.log(err);
+          //console.log(err);
           setOpen2(true);
       }
     }
@@ -282,7 +284,7 @@ import clsx from 'clsx';
         let status = event.target.value;
         handleSubmit(status,index);
       }catch(err){
-        console.log(err);
+        //console.log(err);
         setOpen2(true);
       }
     };
@@ -303,9 +305,9 @@ import clsx from 'clsx';
       setOpen2(false);
     };
     
-    if(userRolef !== undefined && orders.length !== 0){
+    if(userRolef !== undefined && filteredOrders.length !== 0){
        if(userRolef === "Rider"){
-        let filteredOrders = orders.filter((item) => item.OrderStatus !== "Delivered" && item.OrderStatus !== "Cancelled" && item.OrderStatus !== "Not Assigned");
+        //let filteredOrders = orders.filter((item) => item.OrderStatus !== "Delivered" && item.OrderStatus !== "Cancelled" && item.OrderStatus !== "Not Assigned");
         filteredOrders.map((item, index) => {
           const now = new Date(parseInt(item.OrderDate, 10));
           const estTime = moment.tz(now, "America/Jamaica").format("YYYY-MM-DD h:mm a");

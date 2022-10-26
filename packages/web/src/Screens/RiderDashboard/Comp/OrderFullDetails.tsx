@@ -140,6 +140,8 @@ export const OrderFullDetails: React.FC = () => {
         setOpen2(false);
       };
 
+    let filteredOrders = orders.filter((item) => item.OrderStatus !== "Delivered" && item.OrderStatus !== "Cancelled" && item.OrderStatus !== "Not Assigned");
+
     const handleSubmit = async(finalselectedRider, orderIndex) => {
         try{
             setOpen(false);
@@ -148,8 +150,8 @@ export const OrderFullDetails: React.FC = () => {
             //console.log(finalselectedRider);
             //console.log(riders[finalselectedRider]);
             if(finalselectedRider !== undefined){
-                orders[orderIndex].Rider = riders[finalselectedRider]._id;
-                await UpdateOrder(value, orders[orderIndex]).then((res) => {
+                filteredOrders[orderIndex].Rider = riders[finalselectedRider]._id;
+                await UpdateOrder(value, filteredOrders[orderIndex]).then((res) => {
                     if(res){
                         setOpen(true);
                         setTimeout(()=> {
@@ -159,8 +161,8 @@ export const OrderFullDetails: React.FC = () => {
                     }
                 })
             }else if(orderIndex !== undefined){
-                orders[orderIndex].Rider = orders[orderIndex].Rider._id;
-                await UpdateOrder(value, orders[orderIndex]).then((res) => {
+                filteredOrders[orderIndex].Rider = filteredOrders[orderIndex].Rider._id;
+                await UpdateOrder(value, filteredOrders[orderIndex]).then((res) => {
                     if(res){
                         setOpen(true);
                         setTimeout(()=> {
@@ -179,7 +181,9 @@ export const OrderFullDetails: React.FC = () => {
 
     useEffect(() => {
         try{
-            if(rider === "" && orders.length > 0 ) setRider(orders[orderIndex].Rider.FirstName);
+            //console.log(orderIndex);
+            //console.log(filteredOrders);
+            if(rider === "" && filteredOrders.length > 0 ) setRider(filteredOrders[orderIndex].Rider.FirstName);
             
             if(riders.length === 0){
                 fetchRiders(value);
@@ -191,14 +195,15 @@ export const OrderFullDetails: React.FC = () => {
     }, [riders])
     
     ////console.log();
-    if(orders.length !== 0 && orderIndex !== undefined){
-        const now = new Date(parseInt(orders[orderIndex].OrderDate, 10));
+    
+    if(filteredOrders.length !== 0 && orderIndex !== undefined){
+        const now = new Date(parseInt(filteredOrders[orderIndex].OrderDate, 10));
         const estTime = moment.tz(now, "America/Jamaica").format("YYYY-MM-DD h:mm a");
-        //var region = orders[orderIndex].DeliveryAddress.split(',');
+        //var region = filteredOrders[orderIndex].DeliveryAddress.split(',');
         // console.log(orderIndex);
-        // console.log(orders[orderIndex]);
-        // console.log(orders)
-        var personalInfo = orders[orderIndex].AdditionalInfo.split(' ');
+        // console.log(filteredOrders[orderIndex]);
+        // console.log(filteredOrders)
+        var personalInfo = filteredOrders[orderIndex].AdditionalInfo.split(' ');
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         //var email = '';
         var contactnum = '';
@@ -228,9 +233,9 @@ export const OrderFullDetails: React.FC = () => {
                                     <Card style={{marginBottom: "12px"}} className={clsx(classes.card, "mobile-display")}>
                                         <CardMedia >
                                             {/* eslint-disable-next-line */}
-                                            <img className={"main-image imageMobile"} src={orders[orderIndex].OrderItems[0].imageName} alt="ordered"></img>
+                                            <img className={"main-image imageMobile"} src={filteredOrders[orderIndex].OrderItems[0].imageName} alt="ordered"></img>
                                             <Grid container direction="row" spacing={1} style={{paddingTop: "7px"}}>
-                                                {orders[orderIndex].OrderItems.map((item, index) => (
+                                                {filteredOrders[orderIndex].OrderItems.map((item, index) => (
                                                     index !== 0?
                                                         <Grid item xs={4}>
                                                             <img style={{maxWidth: "73.42px"}} src={item.imageName} alt="ordered" className='imageMobile'></img>
@@ -239,7 +244,7 @@ export const OrderFullDetails: React.FC = () => {
                                                         <></>
                                                 ))}
                                                 <Grid item xs={12}>
-                                                { orders[orderIndex].OrderStatus !== "Not Assigned" && orders[orderIndex].OrderStatus !== "Cancelled"?
+                                                { filteredOrders[orderIndex].OrderStatus !== "Not Assigned" && filteredOrders[orderIndex].OrderStatus !== "Cancelled"?
                                                     <form>
                                                     <Button type="button" className={clsx(classes.Button, "update-order")} onClick={(e) => {
                                                         selectedRider !== undefined?
@@ -267,9 +272,9 @@ export const OrderFullDetails: React.FC = () => {
                                                     <Grid item xs={12} md={4} >
                                                         <Typography>
                                                             <span className={classes.boldSubtitle}>Order ID: </span>&nbsp;
-                                                            {orders[orderIndex]._id}&nbsp; 
+                                                            {filteredOrders[orderIndex]._id}&nbsp; 
                                                             <span className={classes.boldSubtitle}>Status: </span>&nbsp;
-                                                            {orders[orderIndex].OrderStatus}
+                                                            {filteredOrders[orderIndex].OrderStatus}
                                                         </Typography>
                                                     </Grid>
                                                     <Grid item xs={12} md={4}>
@@ -292,7 +297,7 @@ export const OrderFullDetails: React.FC = () => {
                                                 </Grid>
                                                 <Grid item xs={12} md={10}>
                                                     <Typography style={{color: "#FF5E14", fontWeight: 800}}>
-                                                        {orders[orderIndex].Restaurant.FirstName}
+                                                        {filteredOrders[orderIndex].Restaurant.FirstName}
                                                     </Typography>
                                                 </Grid>
                                                 <Grid item xs={12} md={4} className="hideDesktop">
@@ -300,10 +305,10 @@ export const OrderFullDetails: React.FC = () => {
                                                         Pick-Up From
                                                     </Typography>
                                                     <Typography>
-                                                        <a href={`https://maps.google.com/?q=${orders[orderIndex].Restaurant.AddressLine1}`} style={{color: "#F7B614"}} target="_blank">{orders[orderIndex].Restaurant.AddressLine1}</a>
+                                                        <a href={`https://maps.google.com/?q=${filteredOrders[orderIndex].Restaurant.AddressLine1}`} style={{color: "#F7B614"}} target="_blank">{filteredOrders[orderIndex].Restaurant.AddressLine1}</a>
                                                     </Typography>
                                                 </Grid>
-                                                {orders[orderIndex].OrderItems.map((item, index) => (
+                                                {filteredOrders[orderIndex].OrderItems.map((item, index) => (
                                                     <>
                                                         <Grid item xs={12} md={6} key={index}>
                                                             <Typography style={{fontWeight: 700}}>
@@ -342,7 +347,7 @@ export const OrderFullDetails: React.FC = () => {
                                                         Order ID
                                                     </Typography>
                                                     <Typography>
-                                                        {orders[orderIndex]._id}
+                                                        {filteredOrders[orderIndex]._id}
                                                     </Typography>
                                                 </Grid>
                                                 <Grid item xs={12} md={4} className="hideMobile">
@@ -359,11 +364,11 @@ export const OrderFullDetails: React.FC = () => {
                                                         Status
                                                     </Typography>
                                                     <Typography>
-                                                    {orders[orderIndex].OrderStatus === "Not Assigned"
+                                                    {filteredOrders[orderIndex].OrderStatus === "Not Assigned"
                                                         ? 
                                                             <b style={{color: "#f50057"}}>REJECTED</b>
                                                         :
-                                                        orders[orderIndex].OrderStatus
+                                                        filteredOrders[orderIndex].OrderStatus
                                                     }
                                                     </Typography>
                                                 </Grid>
@@ -375,7 +380,7 @@ export const OrderFullDetails: React.FC = () => {
                                                         Pick-Up From
                                                     </Typography>
                                                     <Typography>
-                                                        <a href={`https://www.google.com/maps/place/${orders[orderIndex].Restaurant.AddressLine1}`} style={{color: "#F7B614"}} target="_blank">{orders[orderIndex].Restaurant.AddressLine1}</a>
+                                                        <a href={`https://www.google.com/maps/place/${filteredOrders[orderIndex].Restaurant.AddressLine1}`} style={{color: "#F7B614"}} target="_blank">{filteredOrders[orderIndex].Restaurant.AddressLine1}</a>
                                                     </Typography>
                                                 </Grid>
                                                 <Grid item xs={12} md={4}>
@@ -383,7 +388,7 @@ export const OrderFullDetails: React.FC = () => {
                                                         Order Total
                                                     </Typography>
                                                     <Typography>
-                                                    {`$${ parseFloat(orders[orderIndex].OrderTotal).toFixed(2)}`}
+                                                    {`$${ parseFloat(filteredOrders[orderIndex].OrderTotal).toFixed(2)}`}
                                                     </Typography>
                                                 </Grid>
                                                 <Grid item xs={12} md={4}>
@@ -440,10 +445,10 @@ export const OrderFullDetails: React.FC = () => {
                                             </Typography>
                                             <br />
                                             <Typography className='hideDesktop'>
-                                                <a href={`https://maps.google.com/?q=${orders[orderIndex].DeliveryAddress}`} style={{color: "#F7B614"}} target="_blank">{orders[orderIndex].DeliveryAddress}</a>
+                                                <a href={`https://maps.google.com/?q=${filteredOrders[orderIndex].DeliveryAddress}`} style={{color: "#F7B614"}} target="_blank">{filteredOrders[orderIndex].DeliveryAddress}</a>
                                             </Typography>
                                             <Typography className='hideMobile'>
-                                                <a href={`https://www.google.com/maps/place/${orders[orderIndex].DeliveryAddress}`} style={{color: "#F7B614"}} target="_blank">{orders[orderIndex].DeliveryAddress}</a>
+                                                <a href={`https://www.google.com/maps/place/${filteredOrders[orderIndex].DeliveryAddress}`} style={{color: "#F7B614"}} target="_blank">{filteredOrders[orderIndex].DeliveryAddress}</a>
                                             </Typography>
                                         </CardContent>
                                     </Card>
