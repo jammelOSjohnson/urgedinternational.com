@@ -24,9 +24,9 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         btnfonts: {
             fontFamily: "PT Sans",
-            fontSize: "13px",
+            fontSize: "16px",
             lineHeight: "16.82px",
-            fontWeight: "bolder",
+            fontWeight: 900,
             color: "#FF5E14",
             textTransform: "none"
         },
@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme: Theme) =>
             backgroundColor: "#FAFAFA",
             border: "1.21951px solid #FFFFFF",
             height: "41px",
-            width: "113px",
+            width: "140px",
             borderRadius: 36,
         },
         ButtonText: {
@@ -92,6 +92,19 @@ const useStyles = makeStyles((theme: Theme) =>
             position: "relative",
             paddingTop: "3%",
             zIndex: 1
+        },
+        btnLayoutMbl: {
+            //width: "100%",
+            // top: "-108%",
+            //position: "absolute",
+            paddingTop: "3%",
+            zIndex: 1,
+            display: "flex",
+            //flex: 1,
+            alignItems: "end",
+            height: "90%",
+            justifyContent: "center"
+            
         },
         inactiveItemLink: {
             textDecoration: "none",
@@ -314,7 +327,7 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                     <Link to="/Restaurants" title="Restaurants" className={classes.inactiveItemLink}>
                                         <Button className={clsx(classes.Button, "restaurants-btn")}>
                                             <Typography className={clsx(classes.btnfonts, "restaurants-font")}>
-                                                Restaurants
+                                                View Restaurants
                                             </Typography>
                                         </Button>
                                     </Link>
@@ -394,15 +407,15 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
                                     </IconButton> */}
                                 </form>
                                 
-                                {/* <Typography className={classes.btnLayout}>
+                                <Typography className={classes.btnLayoutMbl}>
                                     <Link to="/Restaurants" title="Restaurants" className={classes.inactiveItemLink}>
                                         <Button className={classes.Button}>
                                             <Typography className={`${classes.btnfonts}`}>
-                                                Restaurants
+                                                View Restaurants
                                             </Typography>
                                         </Button>
                                     </Link>
-                                </Typography> */}
+                                </Typography>
                             </Carousel.Caption>
                         </Carousel.Item>
                     </Carousel>
