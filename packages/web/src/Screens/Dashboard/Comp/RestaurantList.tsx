@@ -170,7 +170,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                                         </Typography>
                                     } */}
                 {/* <MapContainer setLoading={"none"} setgpsCheck={setgpsCheck} gpsCheck={gpsCheck} /> */}
-                <CheckGps setLoading={"none"} />
+                {/* <CheckGps setLoading={"none"} /> */}
                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                     {
                         filteredRestItems.length !== 0?
