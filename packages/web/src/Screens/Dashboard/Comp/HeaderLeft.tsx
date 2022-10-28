@@ -305,7 +305,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                               <ListItem button>
                                   <ListItemIcon>
                                     {
-                                      index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                      index === 0 ? <img src="Images/Group 564.png" alt="square icon"/> :
                                       index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> : 
                                       index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> : 
                                       index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
