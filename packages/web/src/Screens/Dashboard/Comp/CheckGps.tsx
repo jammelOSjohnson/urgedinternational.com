@@ -229,11 +229,11 @@ export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
 
     var turnOnGps = function(){
         const successCallback = (position) => {
-            console.log(position);
+            //console.log(position);
         };
           
         const errorCallback = (error) => {
-            console.log(error);
+            //console.log(error);
         };
           
         navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
@@ -272,13 +272,13 @@ export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
                 setError('Please enter delivery address')
                 setLoading2(false);
             }else{
-                console.log(values.AddressLine1);
+                //console.log(values.AddressLine1);
                 getCoords(values.AddressLine1);
                 setLoading2(false);
             }
 
         }catch(err){
-            console.log(err)
+            //console.log(err)
         }
     }
 
@@ -290,7 +290,7 @@ export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
             if (status == google.maps.GeocoderStatus.OK) {
                 var latitude = results !== null? results[0].geometry.location.lat() : 0;
                 var longitude = results !== null? results[0].geometry.location.lng(): 0;
-                console.log(`${latitude},${longitude}`);
+                //console.log(`${latitude},${longitude}`);
                 checkFence(coords,latitude, longitude)
             }else{
                 console.log(status);
@@ -301,7 +301,7 @@ export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
 
     var checkFence = async function checkFence(polygonCoords, lat, lng){
             if(!gpsCheck.open3){
-                console.log("here")
+                //console.log("here")
             var polygon = new window.google.maps.Polygon({
                 paths: polygonCoords,
             });
@@ -312,19 +312,19 @@ export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
                 polygon
             )
 
-            console.log(contains)
+            //console.log(contains)
     
             if (contains){
-                console.log(document.location.pathname);
-                console.log(setLoading);
+                //console.log(document.location.pathname);
+                //console.log(setLoading);
                 if(setLoading !== "none" && setLoading !== undefined){
                   setLoading(false);
                 }
                 if(!gpsCheck.open3){
                     setgpsCheck({...gpsCheck, open3: true});
                 }
-                console.log(userInfo);
-                console.log(values);
+                //console.log(userInfo);
+                //console.log(values);
                 await UpdateUserInfo(value, values).then(async function(res1){
                     if(res1){
                         setSuccess('We can deliver to this address.');
@@ -338,7 +338,7 @@ export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
                         setError('Unable to update address at this time.'); 
                     }
                 }).catch(function(err){
-                    console.log(err);
+                    //console.log(err);
                     setError('Unable to update address at this time.');
                 });
 
@@ -355,8 +355,8 @@ export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
     };
 
     const handleChange4 = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-        console.log(values);
-        console.log(userInfo)
+        //console.log(values);
+        //console.log(userInfo)
         if(values.ContactNumber !== userInfo.contactNumber ||
           values.Email !== userInfo.email ||
           values.FullName !== userInfo.fullName ||
@@ -364,7 +364,7 @@ export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
           values.AddressLine2 !== userInfo.addressLine2 ||
           values.City !== userInfo.city
           ){
-              console.log("updating");
+              //console.log("updating");
               setValues({ 
                 ...values,
                 ContactNumber: userInfo.contactNumber,
@@ -375,7 +375,7 @@ export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
                 City: userInfo.city
             });
           }else{
-            console.log("all is well");
+            //console.log("all is well");
             setValues({ ...values, [prop]: event.target.value });
           }
         
