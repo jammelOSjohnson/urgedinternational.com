@@ -271,7 +271,7 @@ class MapContainer extends  Component<MyProps> {
             // }
             // this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
             this.getCoords(this.props.userInfo.addressLine1).then(() => console.log("hmmm")).catch((err) => {
-              console.log(err);
+              //console.log(err);
               if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
                 this.props.setLoading(true);
               }
