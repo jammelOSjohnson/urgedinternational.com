@@ -387,7 +387,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                                         </Typography>
                                     }
                                     {/* <MapContainer setLoading={setLoading} setgpsCheck={setgpsCheck} gpsCheck={gpsCheck} /> */}
-                                    {/* <CheckGps setLoading={setLoading} /> */}
+                                    <CheckGps setLoading={setLoading} />
                                 </Grid>
                                 <Grid item xs={12}>
                                     <FormControl component="fieldset" style={{width: "100%"}}>

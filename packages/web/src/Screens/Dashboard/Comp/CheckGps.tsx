@@ -1,8 +1,9 @@
 import { Button, Fade, FormControl, Grid, makeStyles, Modal, TextField, Theme, createStyles, Backdrop, Typography } from "@material-ui/core"
 import { Alert } from "@material-ui/lab";
 import clsx from "clsx";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {Link, useHistory} from 'react-router-dom';
+import { useAppData } from "../../../Context/AppDataContext";
 import MapContainer from '../MapContainer';
 
 interface NoGps {
@@ -13,7 +14,12 @@ interface NoGps {
 }
 
 interface State {
-    Address: string;
+    ContactNumber: string;
+    Email: string;
+    FullName: string;
+    AddressLine1: string;
+    AddressLine2: string;
+    City: string;
 }
 
 interface Props {
@@ -118,11 +124,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
     const classes = useStyles();
-    
+    var {value} = useAppData();
     var history = useHistory();
     var location = history.location;
     var referralPath = location.pathname;
 
+    var {userInfo, UpdateUserInfo} = value;
     var coords= [
         {lat: 17.862452783274218,  lng: -77.23639526977539},
         {lat: 17.867027547705508,  lng: -77.22970047607421},
@@ -244,8 +251,14 @@ export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
     var [loading, setLoading2] = useState(false);
 
     const [values, setValues] = React.useState<State>({
-        Address: '',
+        ContactNumber: '',
+        Email: '',
+        FullName: '',
+        AddressLine1: '',
+        AddressLine2: '',
+        City: ''
     });
+    
 
     var handleSubmit = async function handleSubmit(event) {
         event.preventDefault();
@@ -255,12 +268,12 @@ export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
             setSuccess('');
             setError('');
             setLoading2(true);
-            if(values.Address === ''){
+            if(values.AddressLine1 === ''){
                 setError('Please enter delivery address')
                 setLoading2(false);
             }else{
-                console.log(values.Address);
-                getCoords(values.Address);
+                console.log(values.AddressLine1);
+                getCoords(values.AddressLine1);
                 setLoading2(false);
             }
 
@@ -286,7 +299,7 @@ export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
         }); 
     }
 
-    var checkFence = function checkFence(polygonCoords, lat, lng){
+    var checkFence = async function checkFence(polygonCoords, lat, lng){
             if(!gpsCheck.open3){
                 console.log("here")
             var polygon = new window.google.maps.Polygon({
@@ -304,13 +317,32 @@ export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
             if (contains){
                 console.log(document.location.pathname);
                 console.log(setLoading);
-                setSuccess('We can deliver to this address.')
                 if(setLoading !== "none" && setLoading !== undefined){
                   setLoading(false);
                 }
                 if(!gpsCheck.open3){
-                setgpsCheck({...gpsCheck, open3: true});
+                    setgpsCheck({...gpsCheck, open3: true});
                 }
+                console.log(userInfo);
+                console.log(values);
+                await UpdateUserInfo(value, values).then(async function(res1){
+                    if(res1){
+                        setSuccess('We can deliver to this address.');
+                        setTimeout(() => {
+                            setSuccess('');
+                            handleClose();
+                        }, 3000)
+                        
+                        
+                    }else{
+                        setError('Unable to update address at this time.'); 
+                    }
+                }).catch(function(err){
+                    console.log(err);
+                    setError('Unable to update address at this time.');
+                });
+
+
                 
             }else{
                 setError("We can't deliver to this address.")
@@ -323,7 +355,30 @@ export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
     };
 
     const handleChange4 = (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-        setValues({ ...values, [prop]: event.target.value });
+        console.log(values);
+        console.log(userInfo)
+        if(values.ContactNumber !== userInfo.contactNumber ||
+          values.Email !== userInfo.email ||
+          values.FullName !== userInfo.fullName ||
+          values.AddressLine1 !== userInfo.addressLine1 ||
+          values.AddressLine2 !== userInfo.addressLine2 ||
+          values.City !== userInfo.city
+          ){
+              console.log("updating");
+              setValues({ 
+                ...values,
+                ContactNumber: userInfo.contactNumber,
+                Email: userInfo.email,
+                FullName: userInfo.fullName,
+                [prop]: event.target.value,
+                AddressLine2: userInfo.addressLine2,
+                City: userInfo.city
+            });
+          }else{
+            console.log("all is well");
+            setValues({ ...values, [prop]: event.target.value });
+          }
+        
     };
     
 
@@ -331,7 +386,7 @@ export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
         <>
             <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                 <Grid item xs={12}>
-                    <MapContainer setLoading={setLoading} setgpsCheck={setgpsCheck} gpsCheck={gpsCheck} />
+                    <MapContainer setLoading={setLoading} setgpsCheck={setgpsCheck} gpsCheck={gpsCheck} userInfo={userInfo} />
                 </Grid>
             </Grid>
             <Modal
@@ -369,8 +424,8 @@ export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
                                                 label="Enter Delivery Address Here"
                                                 // multiline
                                                 // rows={4}
-                                                value={values.Address}
-                                                onChange={handleChange4('Address')}
+                                                value={values.AddressLine1}
+                                                onChange={handleChange4('AddressLine1')}
                                                 variant="outlined"
                                                 placeholder="Enter Address"
                                                 fullWidth

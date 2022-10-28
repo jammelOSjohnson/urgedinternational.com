@@ -4,6 +4,7 @@ import { Component } from "react";
 import { Map, GoogleApiWrapper, Polygon } from 'google-maps-react'
 import { Alert } from "@material-ui/lab";
 import { Typography } from "@material-ui/core";
+import { userInfo } from "os";
 
 // const useStyles = makeStyles((theme: Theme) => 
 //     createStyles({
@@ -18,7 +19,8 @@ type MyProps = {
   google: any,
   setLoading: any,
   setgpsCheck: any,
-  gpsCheck: any
+  gpsCheck: any,
+  userInfo: any
 }
 
 
@@ -146,8 +148,46 @@ class MapContainer extends  Component<MyProps> {
       );
 
       if (!contains){
-        console.log(document.location.pathname);
-        console.log(this.props.setLoading);
+        // console.log(document.location.pathname);
+        // console.log(this.props.setLoading);
+        // if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+        //   this.props.setLoading(true);
+        // }
+        // if(!this.state.open2){
+        //   this.setState({...this.state, open2: true});
+        //   if(this.props.setgpsCheck !== undefined)
+        //     this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+        // }
+        //console.log("userInfo check", this.props.userInfo);
+        this.getCoords(this.props.userInfo.addressLine1).catch((err) => {
+          console.log(err);
+          if(!this.props.gpsCheck.open2){
+            if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+              this.props.setLoading(true);
+            }
+            this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+          }
+          
+        })
+        
+      }
+    }
+  }
+
+  checkWithAddyFence(polygonCoords, lat, lng){
+    if(!this.state.open2){
+      var polygon = new window.google.maps.Polygon({
+        paths: polygonCoords,
+      });
+  
+      const contains = window.google.maps.geometry.poly.containsLocation(
+          new window.google.maps.LatLng(lat, lng),
+          polygon
+      );
+
+      if (!contains){
+        //console.log(document.location.pathname);
+        //console.log(this.props.setLoading);
         if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
           this.props.setLoading(true);
         }
@@ -157,6 +197,8 @@ class MapContainer extends  Component<MyProps> {
             this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
         }
         
+      }else{
+        //console.log("all is well")
       }
     }
   }
@@ -185,38 +227,109 @@ class MapContainer extends  Component<MyProps> {
       this.setState({...this.state,compCoords:{lat: position.coords.latitude, lng: position.coords.longitude}});
   }
 
+  getCoords = async (Address) => {
+    //console.log(Address)
+    var geocoder = new google.maps.Geocoder();
+
+    var latitude = 0;
+    var longitude = 0;
+
+    await geocoder.geocode( { 'address': Address}, function(results, status) {
+      
+        if (status == google.maps.GeocoderStatus.OK) {
+            latitude = results !== null? results[0].geometry.location.lat() : 0;
+            longitude = results !== null? results[0].geometry.location.lng(): 0;
+            //console.log(`${latitude},${longitude}`);
+            
+        }else{
+            //console.log(status);
+            //setError("We can't deliver to this address.")
+        } 
+    });
+    
+    //console.log("outside")
+
+    if(latitude !== 0 && longitude !== 0){
+      //console.log("here")
+      this.checkWithAddyFence(this.state.coords,latitude, longitude)
+    }else{
+      //console.log("no address")
+      if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+        this.props.setLoading(true);
+      }
+      this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+    }
+    
+}
+
   handleLocationError = (error) => {
       switch(error.code) {
           case error.PERMISSION_DENIED:
-            console.log("User denied the request for Geolocation.");
-            if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
-              this.props.setLoading(true);
-            }
-            this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+            //console.log("User denied the request for Geolocation.");
+            // if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+            //   this.props.setLoading(true);
+            // }
+            // this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+            this.getCoords(this.props.userInfo.addressLine1).then(() => console.log("hmmm")).catch((err) => {
+              console.log(err);
+              if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+                this.props.setLoading(true);
+              }
+              this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+            })
+            
             break;
           case error.POSITION_UNAVAILABLE:
-            console.log("Location information is unavailable.");
-            if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
-              this.props.setLoading(true);
-            }
-            this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+            //console.log("Location information is unavailable.");
+            // if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+            //   this.props.setLoading(true);
+            // }
+            // this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+            this.getCoords(this.props.userInfo.addressLine1).then(() => console.log("hmmm")).catch((err) => {
+              //console.log(err);
+              if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+                this.props.setLoading(true);
+              }
+              this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+            })
             break;
           case error.TIMEOUT:
-            console.log("The request to get user location timed out.");
-            if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
-              this.props.setLoading(true);
-            }
-            this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+            //console.log("The request to get user location timed out.");
+            // if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+            //   this.props.setLoading(true);
+            // }
+            // this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+            this.getCoords(this.props.userInfo.addressLine1).then(() => console.log("hmmm")).catch((err) => {
+              //console.log(err);
+              if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+                this.props.setLoading(true);
+              }
+              this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+            })
             break;
           case error.UNKNOWN_ERROR:
-            console.log("An unknown error occurred.");
-            if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
-              this.props.setLoading(true);
-            }
-            this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+            //console.log("An unknown error occurred.");
+            // if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+            //   this.props.setLoading(true);
+            // }
+            // this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+            this.getCoords(this.props.userInfo.addressLine1).then(() => console.log("hmmm")).catch((err) => {
+              //console.log(err);
+              if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+                this.props.setLoading(true);
+              }
+              this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+            })
             break;
           default:
-              this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+              // this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+              this.getCoords(this.props.userInfo.addressLine1).then(() => console.log("hmmm")).catch((err) => {
+                //console.log(err);
+                if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+                  this.props.setLoading(true);
+                }
+                this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+              })
               break;    
       }
   }
@@ -238,8 +351,8 @@ class MapContainer extends  Component<MyProps> {
     if(this.state.compCoords.lat !== null && this.state.compCoords.lat !== undefined && 
        this.state.compCoords.lng !== null && this.state.compCoords.lng !== undefined 
        && !this.state.open2){
-        console.log(this.state.compCoords.lat)
-        console.log(this.state.compCoords.lng)
+        //console.log(this.state.compCoords.lat)
+        //console.log(this.state.compCoords.lng)
        this.checkFence(this.state.coords, this.state.compCoords.lat, this.state.compCoords.lng)
     }
   }
@@ -267,7 +380,7 @@ class MapContainer extends  Component<MyProps> {
               fillOpacity={0.35}
             />
           </Map>
-          {this.state.open2 && 
+          {this.props.gpsCheck.open2 && 
             <Typography 
               variant="h5" 
               style={{
