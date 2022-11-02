@@ -146,10 +146,11 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
             payload.selectedRestaurantName = restaurantName
             await viewMenuItems(payload).then(() => {
                 //console.log("about to leave page")
-                history.push("/Menu")
+                history.push(`/Menu-${restaurantName}`)
             })
         } 
     }
+
     if (restaurants.length !== 0){  
         return (
             <>

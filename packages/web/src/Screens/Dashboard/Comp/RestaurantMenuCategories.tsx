@@ -2,7 +2,8 @@ import { useAppData } from '../../../Context/AppDataContext';
 import { Grid, makeStyles, createStyles, Typography, Theme, useMediaQuery, Card, CardMedia, CardContent, TableContainer, Table, Paper, TableHead, TableRow, TableCell, TableBody, useTheme } from '@material-ui/core';
 import React, { useEffect } from 'react';
 import clsx from 'clsx';
-import '../CSS/RestaurantCategories.css'
+import '../CSS/RestaurantCategories.css';
+import {useParams} from "react-router-dom";
 //Import Components
 
 
@@ -123,10 +124,13 @@ const useStyles = makeStyles((theme: Theme) =>
 export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategories() {
     const classes = useStyles();
     const theme = useTheme();
-
+    let { id } = useParams();
+    //console.log(id)
+    let restaurantName = id.split('-')[1];
     var { value }  = useAppData();
     var { getMenuCats, selectedRestaurant, restaurants, menuCategories, getMenuBycategory, filterCategory } = value;
-    var restaurant = restaurants[selectedRestaurant];
+    //var restaurant = restaurants[selectedRestaurant];
+    var restaurant = restaurants.filter((item) => item.FirstName === restaurantName);
 
     const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
     const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
@@ -135,17 +139,17 @@ export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategor
         ////console.log("fetching menu cats");
         ////console.log(restaurant);
         try{
-            getMenuCats(value, restaurant.Id);
+            getMenuCats(value, restaurant[0].Id);
         }catch(err){
             //console.log(err);
         }
         // eslint-disable-next-line
-    }, [])
+    }, [restaurants])
 
     var filterCat = function(event, category){
         try{
             event.preventDefault();
-            getMenuBycategory(value, restaurant, category).then(() => {
+            getMenuBycategory(value, restaurant[0], category).then(() => {
                 //setSate
             })
         }catch(err){
@@ -367,7 +371,7 @@ export const RestaurantMenuCategories: React.FC = function RestaurantMenuCategor
     }else{
         return (
             <>
-                <Typography>Loading...</Typography>
+                
             </>
         )
     }

@@ -12,6 +12,8 @@ import clsx from 'clsx';
 import { Alert } from '@material-ui/lab';
 import MapContainer from '../MapContainer';
 import CheckGps from './CheckGps';
+import {useParams} from "react-router-dom";
+import { Spinner } from '../../../Components/spinner';
 
 
 interface State {
@@ -199,10 +201,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
     const classes = useStyles();
-    
     var { value }  = useAppData();
+    let { id } = useParams();
+    //console.log(id)
+    let restaurantName = id.split('-')[1];
+    //console.log(restaurantName);
     var { cartItems ,restaurants, selectedRestaurantName, selectedRestaurant, addItemToCart, userInfo, filteredMenuItems, clearCartItems, paySettings } = value;
-    var restaurant = restaurants[selectedRestaurant];
+    var restaurant = restaurants.filter((item) => item.FirstName === restaurantName);
+    //var restaurant = restaurants[selectedRestaurant];
     // //console.log("Menu Screen Menu");
     // //console.log(selectedRestaurant);
     // //console.log(restaurants[selectedRestaurant]);
@@ -253,8 +259,8 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
     const handleOpen = (item) => {
         if(cartItems.length > 0){
             //console.log(cartItems[0].restaurantName)
-            //console.log(restaurant.FirstName)
-            if(cartItems[0].restaurantName === restaurant.FirstName){
+            //console.log(restaurant[0].FirstName)
+            if(cartItems[0].restaurantName === restaurant[0].FirstName){
                 setItem(item);
                 setValues({...values, itemName: item.ItemName ,itemCost: item.ItemCost ,imageName: item.ImageName, itemCategory: item.MenuCategory, restaurantName: item.FirstName});
                 setOpen(true);
@@ -513,9 +519,12 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
       }
     }, [paySettings])
 
-    if(restaurant === undefined){
+    if(restaurant[0] === undefined){
         ////console.log("restaurant is undefined");
-        return <>{history.push("/Restaurants")}</> 
+        //return <>{history.push("/Restaurants")}</> 
+        return (
+            <><Spinner /></>
+        )
     }else{
 
         return (
@@ -551,10 +560,10 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         <Typography>{selectedItem.ItemDescription}</Typography>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        {restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory !== "Zingers" && values.itemCategory !== "Famous Bowl" && values.itemCategory !== "Buckets" && values.itemCategory !== "Hot Wings" && values.itemCategory !== "Popcorn Chicken" && values.itemCategory !== "Sides"?
+                                        {restaurant[0].FirstName === "Kentucky Fried Chicken" && values.itemCategory !== "Zingers" && values.itemCategory !== "Famous Bowl" && values.itemCategory !== "Buckets" && values.itemCategory !== "Hot Wings" && values.itemCategory !== "Popcorn Chicken" && values.itemCategory !== "Sides"?
                                             <form onSubmit={(e) => AddToCart2(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant[0].MenuItems} />
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
@@ -600,10 +609,10 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid>
                                                 </Grid>
                                             </form>
-                                        :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Zingers" && values.itemName !== "BBQ Zinger Only" && values.itemName !== "Spicy Zinger Only"?
+                                        :restaurant[0].FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Zingers" && values.itemName !== "BBQ Zinger Only" && values.itemName !== "Spicy Zinger Only"?
                                             <form onSubmit={(e) => AddToCart3(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant[0].MenuItems} />
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
@@ -646,10 +655,10 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid>
                                                 </Grid>
                                             </form>
-                                        :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Famous Bowl" && values.itemName !== "Famous Bowl Only"?
+                                        :restaurant[0].FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Famous Bowl" && values.itemName !== "Famous Bowl Only"?
                                             <form onSubmit={(e) => AddToCart4(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant[0].MenuItems} />
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
@@ -692,10 +701,10 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid>
                                                 </Grid>
                                             </form>
-                                        :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Famous Bowl" && values.itemName === "Famous Bowl Only"?
+                                        :restaurant[0].FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Famous Bowl" && values.itemName === "Famous Bowl Only"?
                                             <form onSubmit={(e) => AddToCart5(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant[0].MenuItems} />
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
@@ -738,10 +747,10 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid>
                                                 </Grid>
                                             </form>
-                                        :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Buckets"?
+                                        :restaurant[0].FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Buckets"?
                                             <form onSubmit={(e) => AddToCart4(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant[0].MenuItems} />
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
@@ -784,10 +793,10 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid>
                                                 </Grid>
                                             </form>
-                                        :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Hot Wings"?
+                                        :restaurant[0].FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Hot Wings"?
                                             <form onSubmit={(e) => AddToCart4(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant[0].MenuItems} />
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
@@ -830,10 +839,10 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid>
                                                 </Grid>
                                             </form>
-                                        :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Popcorn Chicken"?
+                                        :restaurant[0].FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Popcorn Chicken"?
                                             <form onSubmit={(e) => AddToCart3(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant[0].MenuItems} />
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
@@ -876,7 +885,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid>
                                                 </Grid>
                                             </form>
-                                        :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Sides"?
+                                        :restaurant[0].FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Sides"?
                                             <form onSubmit={(e) => AddToCart(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                     <Grid item xs={12} sm={12} >
@@ -921,7 +930,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid>
                                                 </Grid>
                                             </form>
-                                        :restaurant.FirstName === "Elle B Catering And Events"?
+                                        :restaurant[0].FirstName === "Elle B Catering And Events"?
                                             <form onSubmit={(e) => AddToCart(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                     <Grid item xs={12} sm={12} >
@@ -965,7 +974,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid>
                                                 </Grid>
                                             </form>
-                                        :restaurant.FirstName === "Juici Patties"?
+                                        :restaurant[0].FirstName === "Juici Patties"?
                                             <form onSubmit={(e) => AddToCart(e, values)}>
                                                 {
                                                         values.itemCategory !== "Pastries" && values.itemCategory !== "Beverages" && values.itemCategory !== "Sides" && values.itemCategory !== "Loaves" && values.itemCategory !== "Patties"?
@@ -983,7 +992,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                     >
                                                                         <MenuItem value={"Select Side"}>Select Side</MenuItem>
                                                                         {
-                                                                            restaurant.MenuItems.map((item2, index) => {
+                                                                            restaurant[0].MenuItems.map((item2, index) => {
                                                                                 if(item2.MenuCategory === "Sides"){
                                                                                 return <MenuItem key={index} value={item2.ItemName}>{`${item2.ItemName} $${parseFloat(item2.ItemCost).toFixed(2)}`}</MenuItem>
                                                                                 }
@@ -1037,7 +1046,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid>
                                                 </Grid>
                                             </form>
-                                        :restaurant.FirstName === "Burger King"?
+                                        :restaurant[0].FirstName === "Burger King"?
                                             <form onSubmit={(e) => AddToCart(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                     {
@@ -1056,7 +1065,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                     >
                                                                         <MenuItem value={"Select Side"}>Select Side</MenuItem>
                                                                         {
-                                                                            restaurant.MenuItems.map((item2, index) => {
+                                                                            restaurant[0].MenuItems.map((item2, index) => {
                                                                                 if(item2.MenuCategory === "Sides"){
                                                                                 return <MenuItem key={index} value={item2.ItemName}>{item2.ItemName}</MenuItem>
                                                                                 }
@@ -1109,10 +1118,10 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid>
                                                 </Grid>
                                             </form>
-                                        :restaurant.FirstName === "Popeyes"?
+                                        :restaurant[0].FirstName === "Popeyes"?
                                             <form onSubmit={(e) => AddToCart(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
+                                                    <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant[0].MenuItems} />
                                                     <Grid item xs={12} sm={12} >
                                                         <TextField
                                                             id="outlined-multiline-static"
@@ -1154,7 +1163,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid>
                                                 </Grid>
                                             </form>
-                                        :restaurant.FirstName === "McKenzie's Bamboo Jerk Centre"?
+                                        :restaurant[0].FirstName === "McKenzie's Bamboo Jerk Centre"?
                                             <form onSubmit={(e) => AddToCart(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                 {
@@ -1173,7 +1182,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                     >
                                                                         <MenuItem value={"Select Side"}>Select Side</MenuItem>
                                                                         {
-                                                                            restaurant.MenuItems.map((item2, index) => {
+                                                                            restaurant[0].MenuItems.map((item2, index) => {
                                                                                 if(item2.MenuCategory === "Sides"){
                                                                                 return <MenuItem key={index} value={item2.ItemName}>{item2.ItemName}</MenuItem>
                                                                                 }
@@ -1226,7 +1235,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid>
                                                 </Grid>
                                             </form>
-                                        :restaurant.FirstName === "Homar's ROTI & Grill"?
+                                        :restaurant[0].FirstName === "Homar's ROTI & Grill"?
                                             <form onSubmit={(e) => AddToCart(e, values)}>
                                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                     <Grid item xs={12} sm={12} >
@@ -1270,7 +1279,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                     </Grid>
                                                 </Grid>
                                             </form>
-                                        :restaurant.FirstName === "H & T Restaurant"?
+                                        :restaurant[0].FirstName === "H & T Restaurant"?
                                             <form onSubmit={(e) => AddToCart(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                         <Grid item xs={12} sm={12} >
@@ -1314,7 +1323,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         </Grid>
                                                     </Grid>
                                             </form>
-                                        :restaurant.FirstName === "Kick Out Sports Bar & Lounge"?
+                                        :restaurant[0].FirstName === "Kick Out Sports Bar & Lounge"?
                                             <form onSubmit={(e) => AddToCart(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                         <Grid item xs={12} sm={12} >
@@ -1358,7 +1367,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         </Grid>
                                                     </Grid>
                                             </form>
-                                        :restaurant.FirstName === "MOKAFE"?
+                                        :restaurant[0].FirstName === "MOKAFE"?
                                             <form onSubmit={(e) => AddToCart(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                         <Grid item xs={12} sm={12} >
@@ -1402,7 +1411,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         </Grid>
                                                     </Grid>
                                             </form>
-                                        :restaurant.FirstName === "Lucky Chinese"?
+                                        :restaurant[0].FirstName === "Lucky Chinese"?
                                             <form onSubmit={(e) => AddToCart(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                         <Grid item xs={12} sm={12} >
@@ -1446,7 +1455,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         </Grid>
                                                     </Grid>
                                             </form>
-                                        :restaurant.FirstName === "Murray’s Fish & Jerk Hut"?
+                                        :restaurant[0].FirstName === "Murray’s Fish & Jerk Hut"?
                                             <form onSubmit={(e) => AddToCart(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                         <Grid item xs={12} sm={12} >
@@ -1490,7 +1499,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         </Grid>
                                                     </Grid>
                                             </form>
-                                        :restaurant.FirstName === "Fyahside"?
+                                        :restaurant[0].FirstName === "Fyahside"?
                                             <form onSubmit={(e) => AddToCart(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                         <Grid item xs={12} sm={12} >
@@ -1603,7 +1612,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                     <Grid item xs={12}>
                                         <Grid item xs={12}>
                                             <Typography>
-                                                Your order contains items from {cartItems.length > 0 ? cartItems[0].restaurantName : ''}. Create a new order to add items from {restaurant.FirstName} Restaurant.
+                                                Your order contains items from {cartItems.length > 0 ? cartItems[0].restaurantName : ''}. Create a new order to add items from {restaurant[0].FirstName} Restaurant.
                                             </Typography>
                                         </Grid>
                                         <Grid item xs={10} sm={12} >
@@ -1704,7 +1713,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         </Grid>
                                     ))
                                 :
-                                restaurant.MenuItems.map((item, index) => (
+                                restaurant[0].MenuItems.map((item, index) => (
                                     <Grid item xs={6} sm={6} md={6} lg={3} xl={3} className={clsx(classes.gridSpacing, "cardMobile")} key={index}>
                                         <Card className={clsx(classes.root, "cardMobile")} style={{minHeight: "446.99px"}}>
                                             <CardActionArea>
@@ -1806,10 +1815,10 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         <Typography>{selectedItem.ItemDescription}</Typography>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        {restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory !== "Zingers" && values.itemCategory !== "Famous Bowl" && values.itemCategory !== "Buckets" && values.itemCategory !== "Hot Wings" && values.itemCategory !== "Popcorn Chicken" && values.itemCategory !== "Sides"?
+                                        {restaurant[0].FirstName === "Kentucky Fried Chicken" && values.itemCategory !== "Zingers" && values.itemCategory !== "Famous Bowl" && values.itemCategory !== "Buckets" && values.itemCategory !== "Hot Wings" && values.itemCategory !== "Popcorn Chicken" && values.itemCategory !== "Sides"?
                                                 <form onSubmit={(e) => AddToCart2(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                        <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
+                                                        <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant[0].MenuItems} />
                                                         <Grid item xs={12} sm={12} >
                                                             <TextField
                                                                 id="outlined-multiline-static"
@@ -1852,10 +1861,10 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         </Grid>
                                                     </Grid>
                                                 </form>
-                                            :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Zingers" && values.itemName !== "BBQ Zinger Only" && values.itemName !== "Spicy Zinger Only"?
+                                            :restaurant[0].FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Zingers" && values.itemName !== "BBQ Zinger Only" && values.itemName !== "Spicy Zinger Only"?
                                                 <form onSubmit={(e) => AddToCart3(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                        <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
+                                                        <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant[0].MenuItems} />
                                                         <Grid item xs={12} sm={12} >
                                                             <TextField
                                                                 id="outlined-multiline-static"
@@ -1898,10 +1907,10 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         </Grid>
                                                     </Grid>
                                                 </form>
-                                            :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Famous Bowl" && values.itemName !== "Famous Bowl Only"?
+                                            :restaurant[0].FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Famous Bowl" && values.itemName !== "Famous Bowl Only"?
                                                 <form onSubmit={(e) => AddToCart4(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                        <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
+                                                        <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant[0].MenuItems} />
                                                         <Grid item xs={12} sm={12} >
                                                             <TextField
                                                                 id="outlined-multiline-static"
@@ -1944,10 +1953,10 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         </Grid>
                                                     </Grid>
                                                 </form>
-                                            :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Famous Bowl" && values.itemName === "Famous Bowl Only"?
+                                            :restaurant[0].FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Famous Bowl" && values.itemName === "Famous Bowl Only"?
                                                 <form onSubmit={(e) => AddToCart5(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                        <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
+                                                        <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant[0].MenuItems} />
                                                         <Grid item xs={12} sm={12} >
                                                             <TextField
                                                                 id="outlined-multiline-static"
@@ -1990,10 +1999,10 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         </Grid>
                                                     </Grid>
                                                 </form>
-                                            :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Buckets"?
+                                            :restaurant[0].FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Buckets"?
                                                 <form onSubmit={(e) => AddToCart4(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                        <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
+                                                        <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant[0].MenuItems} />
                                                         <Grid item xs={12} sm={12} >
                                                             <TextField
                                                                 id="outlined-multiline-static"
@@ -2036,10 +2045,10 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         </Grid>
                                                     </Grid>
                                                 </form>
-                                            :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Hot Wings"?
+                                            :restaurant[0].FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Hot Wings"?
                                                 <form onSubmit={(e) => AddToCart4(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                        <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
+                                                        <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant[0].MenuItems} />
                                                         <Grid item xs={12} sm={12} >
                                                             <TextField
                                                                 id="outlined-multiline-static"
@@ -2082,10 +2091,10 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         </Grid>
                                                     </Grid>
                                                 </form>
-                                            :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Popcorn Chicken"?
+                                            :restaurant[0].FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Popcorn Chicken"?
                                                 <form onSubmit={(e) => AddToCart3(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                        <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
+                                                        <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant[0].MenuItems} />
                                                         <Grid item xs={12} sm={12} >
                                                             <TextField
                                                                 id="outlined-multiline-static"
@@ -2128,7 +2137,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         </Grid>
                                                     </Grid>
                                                 </form>
-                                            :restaurant.FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Sides"?
+                                            :restaurant[0].FirstName === "Kentucky Fried Chicken" && values.itemCategory === "Sides"?
                                                 <form onSubmit={(e) => AddToCart(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                         <Grid item xs={12} sm={12} >
@@ -2173,7 +2182,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         </Grid>
                                                     </Grid>
                                                 </form>
-                                            :restaurant.FirstName === "Elle B Catering And Events"?
+                                            :restaurant[0].FirstName === "Elle B Catering And Events"?
                                                 <form onSubmit={(e) => AddToCart(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                         <Grid item xs={12} sm={12} >
@@ -2217,7 +2226,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         </Grid>
                                                     </Grid>
                                                 </form>
-                                            :restaurant.FirstName === "Juici Patties"?
+                                            :restaurant[0].FirstName === "Juici Patties"?
                                                 <form onSubmit={(e) => AddToCart(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                     {
@@ -2236,7 +2245,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                         >
                                                                             <MenuItem value={"Select Side"}>Select Side</MenuItem>
                                                                             {
-                                                                                restaurant.MenuItems.map((item2, index) => {
+                                                                                restaurant[0].MenuItems.map((item2, index) => {
                                                                                     if(item2.MenuCategory === "Sides"){
                                                                                     return <MenuItem key={index} value={item2.ItemName}>{`${item2.ItemName} $${parseFloat(item2.ItemCost).toFixed(2)}`}</MenuItem>
                                                                                     }
@@ -2289,7 +2298,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         </Grid>
                                                     </Grid>
                                                 </form>
-                                            :restaurant.FirstName === "Burger King"?
+                                            :restaurant[0].FirstName === "Burger King"?
                                                 <form onSubmit={(e) => AddToCart(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                     {
@@ -2308,7 +2317,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                                         >
                                                                             <MenuItem value={"Select Side"}>Select Side</MenuItem>
                                                                             {
-                                                                                restaurant.MenuItems.map((item2, index) => {
+                                                                                restaurant[0].MenuItems.map((item2, index) => {
                                                                                     if(item2.MenuCategory === "Sides"){
                                                                                     return <MenuItem key={index} value={item2.ItemName}>{item2.ItemName}</MenuItem>
                                                                                     }
@@ -2361,10 +2370,10 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         </Grid>
                                                     </Grid>
                                                 </form>
-                                            :restaurant.FirstName === "Popeyes"?
+                                            :restaurant[0].FirstName === "Popeyes"?
                                                 <form onSubmit={(e) => AddToCart(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                        <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant.MenuItems} />
+                                                        <FastFoodChickenFlavor props={values} handleChange={handleChange} menuItems={restaurant[0].MenuItems} />
                                                         <Grid item xs={12} sm={12} >
                                                             <TextField
                                                                 id="outlined-multiline-static"
@@ -2406,51 +2415,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         </Grid>
                                                     </Grid>
                                                 </form>
-                                            :restaurant.FirstName === "McKenzie's Bamboo Jerk Centre"?
-                                                <form onSubmit={(e) => AddToCart(e, values)}>
-                                                    <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
-                                                        <Grid item xs={12} sm={12} >
-                                                            <TextField
-                                                                id="outlined-multiline-static"
-                                                                label="Special Intructions"
-                                                                multiline
-                                                                rows={4}
-                                                                defaultValue={values.otherIntructions}
-                                                                onChange={handleChange2('otherIntructions')}
-                                                                variant="outlined"
-                                                                placeholder="Enter Instructions Here"
-                                                                fullWidth
-                                                            />
-                                                        </Grid>
-                                                        <Grid item xs={12} >
-                                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
-                                                                    <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
-                                                                    <Select
-                                                                        labelId="demo-simple-select-outlined-label"
-                                                                        id="demo-simple-select-outlined"
-                                                                        value={values.ifnotAvailable}
-                                                                        onChange={handleChange}
-                                                                        label="ifnotAvailable"
-                                                                        name="ifnotAvailable"
-                                                                        className={classes.root}
-                                                                        fullWidth
-                                                                    >
-                                                                        <MenuItem value={"Contact me"}>Contact me</MenuItem>
-                                                                        <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
-                                                                        <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
-                                                                        <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
-                                                                    </Select>
-                                                                </FormControl>
-                                                        </Grid>
-                                                        <Grid item xs={12} sm={12} >
-                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
-                                                            disabled={disabled !== undefined? disabled : false}>
-                                                                Add To Cart 
-                                                            </Button>
-                                                        </Grid>
-                                                    </Grid>
-                                                </form>
-                                            :restaurant.FirstName === "Homar's ROTI & Grill"?
+                                            :restaurant[0].FirstName === "McKenzie's Bamboo Jerk Centre"?
                                                 <form onSubmit={(e) => AddToCart(e, values)}>
                                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                         <Grid item xs={12} sm={12} >
@@ -2494,7 +2459,51 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                         </Grid>
                                                     </Grid>
                                                 </form>
-                                            :restaurant.FirstName === "H & T Restaurant"?
+                                            :restaurant[0].FirstName === "Homar's ROTI & Grill"?
+                                                <form onSubmit={(e) => AddToCart(e, values)}>
+                                                    <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
+                                                        <Grid item xs={12} sm={12} >
+                                                            <TextField
+                                                                id="outlined-multiline-static"
+                                                                label="Special Intructions"
+                                                                multiline
+                                                                rows={4}
+                                                                defaultValue={values.otherIntructions}
+                                                                onChange={handleChange2('otherIntructions')}
+                                                                variant="outlined"
+                                                                placeholder="Enter Instructions Here"
+                                                                fullWidth
+                                                            />
+                                                        </Grid>
+                                                        <Grid item xs={12} >
+                                                                <FormControl variant="outlined" className={classes.formControl} fullWidth>
+                                                                    <InputLabel id="demo-simple-select-outlined-label">If not available?</InputLabel>
+                                                                    <Select
+                                                                        labelId="demo-simple-select-outlined-label"
+                                                                        id="demo-simple-select-outlined"
+                                                                        value={values.ifnotAvailable}
+                                                                        onChange={handleChange}
+                                                                        label="ifnotAvailable"
+                                                                        name="ifnotAvailable"
+                                                                        className={classes.root}
+                                                                        fullWidth
+                                                                    >
+                                                                        <MenuItem value={"Contact me"}>Contact me</MenuItem>
+                                                                        <MenuItem value={"Delivery rider can decide"}>Delivery rider can decide</MenuItem>
+                                                                        <MenuItem value={"Refund for this item"}>Refund for this item</MenuItem>
+                                                                        <MenuItem value={"Cancel my entire Order"}>Cancel my entire Order</MenuItem>
+                                                                    </Select>
+                                                                </FormControl>
+                                                        </Grid>
+                                                        <Grid item xs={12} sm={12} >
+                                                            <Button size="small"  fullWidth={true} className={`${classes.ButtonMobile} ${classes.btnfonts}`} type="submit"
+                                                            disabled={disabled !== undefined? disabled : false}>
+                                                                Add To Cart 
+                                                            </Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                </form>
+                                            :restaurant[0].FirstName === "H & T Restaurant"?
                                                 <form onSubmit={(e) => AddToCart(e, values)}>
                                                         <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                             <Grid item xs={12} sm={12} >
@@ -2538,7 +2547,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             </Grid>
                                                         </Grid>
                                                     </form>
-                                            :restaurant.FirstName === "Kick Out Sports Bar & Lounge"?
+                                            :restaurant[0].FirstName === "Kick Out Sports Bar & Lounge"?
                                                 <form onSubmit={(e) => AddToCart(e, values)}>
                                                         <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                             <Grid item xs={12} sm={12} >
@@ -2582,7 +2591,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             </Grid>
                                                         </Grid>
                                                     </form>
-                                            :restaurant.FirstName === "MOKAFE"?
+                                            :restaurant[0].FirstName === "MOKAFE"?
                                                 <form onSubmit={(e) => AddToCart(e, values)}>
                                                         <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                             <Grid item xs={12} sm={12} >
@@ -2626,7 +2635,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             </Grid>
                                                         </Grid>
                                                 </form>
-                                            :restaurant.FirstName === "Lucky Chinese"?
+                                            :restaurant[0].FirstName === "Lucky Chinese"?
                                                 <form onSubmit={(e) => AddToCart(e, values)}>
                                                         <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                             <Grid item xs={12} sm={12} >
@@ -2670,7 +2679,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             </Grid>
                                                         </Grid>
                                                 </form>
-                                            :restaurant.FirstName === "Murray’s Fish & Jerk Hut"?
+                                            :restaurant[0].FirstName === "Murray’s Fish & Jerk Hut"?
                                                 <form onSubmit={(e) => AddToCart(e, values)}>
                                                         <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                             <Grid item xs={12} sm={12} >
@@ -2714,7 +2723,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                                             </Grid>
                                                         </Grid>
                                                 </form>
-                                            :restaurant.FirstName === "Fyahside"?
+                                            :restaurant[0].FirstName === "Fyahside"?
                                                 <form onSubmit={(e) => AddToCart(e, values)}>
                                                         <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                                             <Grid item xs={12} sm={12} >
@@ -2826,7 +2835,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                 <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                     <Grid item xs={12}>
                                         <Typography>
-                                            Your order contains items from {cartItems.length > 0 ? cartItems[0].restaurantName : ''}. Create a new order to add items from {restaurant.FirstName} Restaurant.
+                                            Your order contains items from {cartItems.length > 0 ? cartItems[0].restaurantName : ''}. Create a new order to add items from {restaurant[0].FirstName} Restaurant.
                                         </Typography>
                                     </Grid>
                                     <Grid item xs={12} sm={12} >
@@ -3033,7 +3042,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                         </Grid>
                                     ))
                                 :
-                                restaurant.MenuItems.map((item, index) => (
+                                restaurant[0].MenuItems.map((item, index) => (
                                     <Grid item xs={6} sm={6} md={6} lg={3} xl={3} className={clsx(classes.gridSpacing, "cardMobile")} key={index}>
                                         <Card className={clsx(classes.root, "cardMobile")} style={{minHeight: "300px"}}>
                                             <CardActionArea>

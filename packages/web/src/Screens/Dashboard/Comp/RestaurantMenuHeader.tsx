@@ -6,7 +6,8 @@ import moment from 'moment-timezone';
 import { useHistory } from 'react-router-dom';
 import fetchCurrentTime from '../../../Apis/timePI';
 import { DateTime } from 'luxon'
-
+import {useParams} from "react-router-dom";
+import {Spinner} from  "../../../Components/spinner";
 
 const useStyles = makeStyles((theme: Theme) => 
     createStyles({
@@ -59,8 +60,15 @@ const useStyles = makeStyles((theme: Theme) =>
 export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
     const classes = useStyles();
     var { value }  = useAppData();
-    var { restaurants, selectedRestaurant, paySettings } = value;
-    var restaurant = restaurants[selectedRestaurant];
+    let { id } = useParams();
+    //console.log(id)
+    let restaurantName = id.split('-')[1];
+    //console.log(restaurantName);
+    var { restaurants, selectedRestaurant, fetchRestaurants, paySettings } = value;
+    var restaurant = restaurants.filter((item) => item.FirstName === restaurantName);
+    //console.log(restaurant);
+    //console.log(restaurants);
+    //var restaurant = restaurants[selectedRestaurant];
     const [isOpen, setisOpen] = useState(false);
     const [TodayOpeningHrs, setTodayOpeningHrs] = useState('');
     const [jaday, setjaday] = useState('');
@@ -68,8 +76,12 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
     ////console.log(restaurants)
     var history = useHistory();
     
+    
 
     useEffect(() => {
+        if(restaurants.length === 0){
+            fetchRestaurants(value);
+        }
         if(restaurants.length !== 0){
             let currentTime = DateTime.now().setZone('America/Jamaica').toISO();
             const now = new Date();
@@ -94,7 +106,7 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                         //console.log(jaday)
                         let innerDay = parseInt(day_of_week);
 
-                        let OpeningHrs = restaurant.OpeningHrs;
+                        let OpeningHrs = restaurant[0].OpeningHrs;
                         setTodayOpeningHrs (innerDay === 7 ? OpeningHrs.Sunday : innerDay === 1 ? OpeningHrs.Monday :
                                             innerDay === 2 ? OpeningHrs.Tuesday : innerDay === 3 ? OpeningHrs.Wednesday :
                                             innerDay === 4 ? OpeningHrs.Thursday : innerDay === 5 ? OpeningHrs.Friday :
@@ -145,7 +157,7 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                     settoday(new Date(jaday).getDay());
 
                     let innerDay = new Date(jaday).getDay();
-                    let OpeningHrs = restaurant.OpeningHrs;
+                    let OpeningHrs = restaurant[0].OpeningHrs;
                     setTodayOpeningHrs (innerDay === 0 ? OpeningHrs.Sunday : innerDay === 1 ? OpeningHrs.Monday :
                         innerDay === 2 ? OpeningHrs.Tuesday : innerDay === 3 ? OpeningHrs.Wednesday :
                         innerDay === 4 ? OpeningHrs.Thursday : innerDay === 5 ? OpeningHrs.Friday :
@@ -194,7 +206,7 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                         <Grid container direction="row" spacing={1}>
                             <Grid item xs={6} sm={2}>
                                 <Avatar variant="square" aria-label="restaurant" className={classes.avatar}>     
-                                    <img className={classes.kfcImage} src={restaurant.ImageName} alt="kfcImage"></img>
+                                    <img className={classes.kfcImage} src={restaurant[0].ImageName} alt="kfcImage"></img>
                                 </Avatar>
                             </Grid>
                             <Grid item xs={12} sm={10} >
@@ -202,7 +214,7 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                                     <Grid item xs={12} >
                                         <Grid item direction="row" spacing={1}>
                                             <Grid item xs={12} sm={6}>
-                                                <Typography variant={'h4'}>{restaurant.FirstName}</Typography>
+                                                <Typography variant={'h4'}>{restaurant[0].FirstName}</Typography>
                                             </Grid>
                                             <Grid item xs={12} sm={6} >
                                                 {
@@ -215,7 +227,7 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                                         </Grid>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <Typography variant={'h6'}><LocationOnRounded color="primary" /> Address: {restaurant.City}</Typography>
+                                        <Typography variant={'h6'}><LocationOnRounded color="primary" /> Address: {restaurant[0].City}</Typography>
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Typography variant={'h6'}><ScheduleRounded color="primary" />
@@ -243,9 +255,10 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
     }else{
         return (
             <>
-                <Typography variant="body1" style={{paddingTop: "3%", paddingBottom: "3%"}}>
+                {/* <Typography variant="body1" style={{paddingTop: "3%", paddingBottom: "3%"}}>
                             Loading...{history.push("/FoodDelivery")}
-                </Typography>
+                </Typography> */}
+                <Spinner />
             </>
         )
     } 

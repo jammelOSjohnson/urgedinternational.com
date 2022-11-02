@@ -39,7 +39,7 @@ import { RestaurantOrderDetailsScreen } from '../Screens/RestaurantDashboard/Res
 //Rider
 import { RiderOrderDetailsScreen } from '../Screens/RiderDashboard/RiderOrderDetailsScreen';
 import { RiderOrdersScreen } from '../Screens/RiderDashboard/RiderOrdersScreen';
-import MapContainer from '../Screens/Dashboard/MapContainer';
+import testmap2 from '../Screens/Dashboard/testmap2';
 //import { RiderDashboard } from '../Screens/RiderDashboard/RiderDashboard';
 //import { Sidebar } from '../Screens/Dashboard/Comp/Sidebar';
 import { CheckoutScreen } from '../Screens/Checkout/CheckoutScreen';
@@ -235,7 +235,7 @@ const App: React.FC = function App() {
                   {/* <Sidebar/> */}
                     {/* <Route path="/" exact component={AboutScreen} /> */}
                     <Route path="/" exact component={HomeScreen} />
-                    <Route path="/testmap" exact component={MapContainer} />
+                    <Route path="/testmap" exact component={testmap2} />
                     {/* Customer Screens */}
                     <Route path="/Services" exact component={ServicesScreen} />
                     <Route path="/ContactUs" exact component={ContactUsScreen} />
@@ -274,8 +274,8 @@ const App: React.FC = function App() {
                     <Route path="/DeliveryOrders" exact component={RiderOrdersScreen} />
                     <Route path="/DeliveryOrdersDetails" exact component={RiderOrderDetailsScreen} />
                     <Route path="/OrgDetails" exact component={OrgDetailsScreen} />
-                    {/* <Route path="/Menu/:id" exact component={RestaurantMenuScreen} /> */}
-                    <Route path="/Menu" exact component={RestaurantMenuScreen} />
+                    <Route path="/:id" exact component={RestaurantMenuScreen} />
+                    {/* <Route path="/Menu" exact component={RestaurantMenuScreen} /> */}
                     <Route path="/Checkout" exact component={CheckoutScreen} />
                     <Route path="/OrderCompleted" exact component={OrderCompleted} />
                     <Route path='/404' component={NotFound} />
