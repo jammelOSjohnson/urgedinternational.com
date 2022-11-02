@@ -555,14 +555,15 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                       <Divider />
                       <List>
                           {userInfo.email !== null && userInfo.email !== "" && userInfo.email !== undefined?
-                          ['Settings', 'Logout'].map((text, index) => (
+                          //['Settings', 'Logout'].map((text, index) => (
+                          ['Logout'].map((text, index) => (
                               text === 'Logout'?
                               <a href="/" onClick={handleLogout} className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
                                 <ListItem button key={text} >
                                   <ListItemIcon>
                                     {
-                                      index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
-                                      index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
+                                      //index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                      index === 0 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
                                     }
                                   </ListItemIcon>
                                   <ListItemText className="link-fontH" primary={text} />
@@ -572,21 +573,22 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                               <ListItem button key={text}>
                               <ListItemIcon>
                                 {
-                                  index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
-                                  index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
+                                  //index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                  index === 0 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
                                 }
                               </ListItemIcon>
                               <ListItemText className="link-font" primary={text} />
                               </ListItem>
                           )) :
-                          ['Settings', 'Login'].map((text, index) => (
+                          //['Settings', 'Login'].map((text, index) => (
+                          ['Login'].map((text, index) => (
                             text === 'Login'?
                             <a href="/Login" onClick={handleLogin} className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
                               <ListItem button key={text}>
                                 <ListItemIcon>
                                   {
-                                    index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
-                                    index === 1 ? <img src="Images/Logout.png" className={classes.loginIconStyle} alt="BlackMarket icon"/> : <MailIcon />
+                                    //index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                    index === 0 ? <img src="Images/Logout.png" className={classes.loginIconStyle} alt="BlackMarket icon"/> : <MailIcon />
                                   }
                                 </ListItemIcon>
                                 <ListItemText className="link-fontH" primary={text} />
@@ -596,8 +598,8 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                             <ListItem button key={text}>
                             <ListItemIcon>
                               {
-                                index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
-                                index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
+                                //index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                index === 0 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
                               }
                             </ListItemIcon>
                             <ListItemText className="link-font" primary={text} />
@@ -999,14 +1001,15 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                       <Divider />
                       <List>
                           {userInfo.email !== null && userInfo.email !== "" && userInfo.email !== undefined?
-                              ['Settings', 'Logout'].map((text, index) => (
+                              //['Settings', 'Logout'].map((text, index) => (
+                              ['Logout'].map((text, index) => (
                                   text === 'Logout'?
                                   <a href="/" onClick={handleLogout} className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
                                     <ListItem button key={text} >
                                       <ListItemIcon>
                                         {
-                                          index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
-                                          index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
+                                          //index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                          index === 0 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
                                         }
                                       </ListItemIcon>
                                       <ListItemText className="link-fontH" primary={text} />
@@ -1016,21 +1019,22 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                   <ListItem button key={text}>
                                   <ListItemIcon>
                                     {
-                                      index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
-                                      index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
+                                      //index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                      index === 0 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
                                     }
                                   </ListItemIcon>
                                   <ListItemText className="link-font" primary={text} />
                                   </ListItem>
                               )) :
-                              ['Settings', 'Login'].map((text, index) => (
+                              //['Settings', 'Login'].map((text, index) => (
+                              ['Login'].map((text, index) => (
                                 text === 'Login'?
                                 <a href="/Login" onClick={handleLogin} className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}>
                                   <ListItem button key={text}>
                                     <ListItemIcon>
                                       {
-                                        index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
-                                        index === 1 ? <img src="Images/Logout.png" className={classes.loginIconStyle} alt="BlackMarket icon"/> : <MailIcon />
+                                        //index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                        index === 0 ? <img src="Images/Logout.png" className={classes.loginIconStyle} alt="BlackMarket icon"/> : <MailIcon />
                                       }
                                     </ListItemIcon>
                                     <ListItemText className="link-fontH" primary={text} />
@@ -1040,8 +1044,8 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 <ListItem button key={text}>
                                 <ListItemIcon>
                                   {
-                                    index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
-                                    index === 1 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
+                                    //index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                    index === 0 ? <img src="Images/Logout.png" alt="BlackMarket icon"/> : <MailIcon />
                                   }
                                 </ListItemIcon>
                                 <ListItemText className="link-font" primary={text} />
