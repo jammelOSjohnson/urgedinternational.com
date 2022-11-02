@@ -161,13 +161,16 @@ class MapContainer extends  Component<MyProps> {
         //console.log("userInfo check", this.props.userInfo);
         this.getCoords(this.props.userInfo.addressLine1).catch((err) => {
           //console.log(err);
-          if(!this.props.gpsCheck.open2){
-            if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
-              this.props.setLoading(true);
+          if(this.props.gpsCheck.open2 !== undefined){
+            if(!this.props.gpsCheck.open2){
+              if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+                this.props.setLoading(true);
+              }
+              if(this.props.setgpsCheck !== undefined){
+                this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+              }
             }
-            this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
           }
-          
         })
         
       }
@@ -193,8 +196,9 @@ class MapContainer extends  Component<MyProps> {
         }
         if(!this.state.open2){
           this.setState({...this.state, open2: true});
-          if(this.props.setgpsCheck !== undefined)
+          if(this.props.setgpsCheck !== undefined){
             this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+          }
         }
         
       }else{
@@ -257,7 +261,9 @@ class MapContainer extends  Component<MyProps> {
       if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
         this.props.setLoading(true);
       }
-      this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+      if(this.props.setgpsCheck !== undefined){
+        this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+      }
     }
     
 }
@@ -270,13 +276,18 @@ class MapContainer extends  Component<MyProps> {
             //   this.props.setLoading(true);
             // }
             // this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
-            this.getCoords(this.props.userInfo.addressLine1).then(() => console.log("hmmm")).catch((err) => {
-              //console.log(err);
-              if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
-                this.props.setLoading(true);
-              }
-              this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
-            })
+            if(this.props.userInfo.email !== "" && this.props.userInfo.email !== undefined){
+              this.getCoords(this.props.userInfo.addressLine1).then(() => console.log("hmmm")).catch((err) => {
+                //console.log(err);
+                if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+                  this.props.setLoading(true);
+                }
+                if(this.props.setgpsCheck !== undefined){
+                  this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+                }
+              })
+            }
+            
             
             break;
           case error.POSITION_UNAVAILABLE:
@@ -285,13 +296,17 @@ class MapContainer extends  Component<MyProps> {
             //   this.props.setLoading(true);
             // }
             // this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
-            this.getCoords(this.props.userInfo.addressLine1).then(() => console.log("hmmm")).catch((err) => {
-              //console.log(err);
-              if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
-                this.props.setLoading(true);
-              }
-              this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
-            })
+            if(this.props.userInfo.email !== "" && this.props.userInfo.email !== undefined){
+              this.getCoords(this.props.userInfo.addressLine1).then(() => console.log("hmmm")).catch((err) => {
+                //console.log(err);
+                if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+                  this.props.setLoading(true);
+                }
+                if(this.props.setgpsCheck !== undefined){
+                  this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+                }
+              })
+            }
             break;
           case error.TIMEOUT:
             //console.log("The request to get user location timed out.");
@@ -299,13 +314,17 @@ class MapContainer extends  Component<MyProps> {
             //   this.props.setLoading(true);
             // }
             // this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
-            this.getCoords(this.props.userInfo.addressLine1).then(() => console.log("hmmm")).catch((err) => {
-              //console.log(err);
-              if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
-                this.props.setLoading(true);
-              }
-              this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
-            })
+            if(this.props.userInfo.email !== "" && this.props.userInfo.email !== undefined){
+              this.getCoords(this.props.userInfo.addressLine1).then(() => console.log("hmmm")).catch((err) => {
+                //console.log(err);
+                if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+                  this.props.setLoading(true);
+                }
+                if(this.props.setgpsCheck !== undefined){
+                  this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+                }
+              })
+            }
             break;
           case error.UNKNOWN_ERROR:
             //console.log("An unknown error occurred.");
@@ -313,23 +332,32 @@ class MapContainer extends  Component<MyProps> {
             //   this.props.setLoading(true);
             // }
             // this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
-            this.getCoords(this.props.userInfo.addressLine1).then(() => console.log("hmmm")).catch((err) => {
-              //console.log(err);
-              if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
-                this.props.setLoading(true);
-              }
-              this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
-            })
-            break;
-          default:
-              // this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+            if(this.props.userInfo.email !== "" && this.props.userInfo.email !== undefined){
               this.getCoords(this.props.userInfo.addressLine1).then(() => console.log("hmmm")).catch((err) => {
                 //console.log(err);
                 if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
                   this.props.setLoading(true);
                 }
-                this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+                if(this.props.setgpsCheck !== undefined){
+                  this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+                }
               })
+            }
+            break;
+          default:
+              // this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+              if(this.props.userInfo.email !== "" && this.props.userInfo.email !== undefined){
+                this.getCoords(this.props.userInfo.addressLine1).then(() => console.log("hmmm")).catch((err) => {
+                  //console.log(err);
+                  if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
+                    this.props.setLoading(true);
+                  }
+                  if(this.props.setgpsCheck !== undefined){
+                    this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
+                  }
+                    
+                })
+              }
               break;    
       }
   }
@@ -348,9 +376,11 @@ class MapContainer extends  Component<MyProps> {
   componentDidUpdate(prevProps: Readonly<MyProps>, prevState: Readonly<{}>, snapshot?: any): void {
     //console.log("updated",this.state.compCoords.lat)
     //console.log(prevState);
+    //console.log(this.props.userInfo.email);
     if(this.state.compCoords.lat !== null && this.state.compCoords.lat !== undefined && 
        this.state.compCoords.lng !== null && this.state.compCoords.lng !== undefined 
-       && !this.state.open2){
+       && !this.state.open2 && this.props.userInfo.email !== "" && this.props.userInfo.email !== undefined){
+        //console.log("got in");
         //console.log(this.state.compCoords.lat)
         //console.log(this.state.compCoords.lng)
        this.checkFence(this.state.coords, this.state.compCoords.lat, this.state.compCoords.lng)
@@ -380,18 +410,22 @@ class MapContainer extends  Component<MyProps> {
               fillOpacity={0.35}
             />
           </Map>
-          {this.props.gpsCheck.open2 && 
-            <Typography 
-              variant="h5" 
-              style={{
-                backgroundColor: "#ff0000",
-                color: "#FFF",
-                fontWeight: "bolder",
-                padding: 5,
-                textAlign: "center"
-              }}>
-              {this.state.errorMessage}
-            </Typography>
+          {
+            this.props.gpsCheck.open2 !== undefined?
+            this.props.gpsCheck.open2 && 
+              <Typography 
+                variant="h5" 
+                style={{
+                  backgroundColor: "#ff0000",
+                  color: "#FFF",
+                  fontWeight: "bolder",
+                  padding: 5,
+                  textAlign: "center"
+                }}>
+                {this.state.errorMessage}
+              </Typography>
+            :
+            <></>
           }
           {
             document.location.pathname !== "/testmap"? 

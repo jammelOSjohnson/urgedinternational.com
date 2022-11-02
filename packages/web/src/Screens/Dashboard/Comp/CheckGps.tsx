@@ -274,6 +274,9 @@ export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
             }else{
                 //console.log(values.AddressLine1);
                 getCoords(values.AddressLine1);
+                // .catch((err) => {
+                //     console.log('catch getCoords');
+                // });
                 setLoading2(false);
             }
 
@@ -290,7 +293,7 @@ export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
             if (status == google.maps.GeocoderStatus.OK) {
                 var latitude = results !== null? results[0].geometry.location.lat() : 0;
                 var longitude = results !== null? results[0].geometry.location.lng(): 0;
-                //console.log(`${latitude},${longitude}`);
+                console.log(`${latitude},${longitude}`);
                 checkFence(coords,latitude, longitude)
             }else{
                 console.log(status);
