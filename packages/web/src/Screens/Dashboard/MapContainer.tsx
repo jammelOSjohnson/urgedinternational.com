@@ -410,7 +410,7 @@ class MapContainer extends  Component<MyProps> {
               fillOpacity={0.35}
             />
           </Map>
-          {
+          {/* {
             this.props.gpsCheck.open2 !== undefined?
             this.props.gpsCheck.open2 && 
               <Typography 
@@ -426,7 +426,7 @@ class MapContainer extends  Component<MyProps> {
               </Typography>
             :
             <></>
-          }
+          } */}
           {
             document.location.pathname !== "/testmap"? 
               <style>
