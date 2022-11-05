@@ -98,7 +98,7 @@ const useStyles = makeStyles((theme: Theme) =>
             border: "1.21951px solid #FFFFFF",
             height: "41px",
             width: "130px",
-            borderRadius: 15,
+            borderRadius: 15
         },
         Button2: {
             backgroundColor: theme.palette.primary.main,
@@ -434,7 +434,7 @@ export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
                                                 fullWidth
                                             />
                                         </Grid>
-                                        <Grid item xs={6}>
+                                        <Grid item xs={12} style={{textAlign: "center"}}>
                                             <Button variant="contained" 
                                                 style={{backgroundColor: "#F7B614", fontFamily: "PT Sans"}}
                                                 color="secondary" size="small" 
