@@ -406,7 +406,7 @@ export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
             >
                 <Fade in={gpsCheck.open2}>
                     <div className={clsx(classes.paper, 'modalMobile')}>
-                        <h3 id="transition-modal-title" style={{textAlign: "center", color: "#F7B614"}}>Out Of Range</h3>
+                        <h3 id="transition-modal-title" style={{textAlign: "center", color: "#F7B614"}}>TYPE YOUR LOCATION</h3>
                         <Link to={referralPath} className={classes.cartIcon} onClick={handleClose}>
                                 <img src="Images/CartCloseIcon.png" alt="closemodal" />
                         </Link>
@@ -417,8 +417,7 @@ export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
                                     <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
                                         <Grid item xs={12}>
                                         <Typography variant={'caption'}>
-                                            You are either outiside the areas we deliver to or your GPS is turned off.
-                                            Please turn on GPS or enter the delivery address below.
+                                            Please enter your delivery address to verify that we operate in your area.
                                         </Typography>
                                         </Grid>
                                         <Grid item xs={12} >
@@ -430,7 +429,8 @@ export const CheckGps: React.FC<Props> = function CheckGps({setLoading}){
                                                 value={values.AddressLine1}
                                                 onChange={handleChange4('AddressLine1')}
                                                 variant="outlined"
-                                                placeholder="Enter Address"
+                                                placeholder="Eg. 101 Top Hill, Hayes, Clarendon"
+                                                helperText="Eg. 101 Top Hill, Hayes, Clarendon"
                                                 fullWidth
                                             />
                                         </Grid>
