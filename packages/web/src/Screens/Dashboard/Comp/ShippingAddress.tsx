@@ -33,31 +33,37 @@ export const ShippingAddress: React.FC = function ShippingAddress() {
     if(shippingAddress !== undefined && shippingAddress !== null){
         return (
             <>
-                <Typography style={{fontWeight: "bold"}}>
+                {/* <Typography style={{fontWeight: "bold"}}>
                     My Air Freight Address
+                </Typography> */}
+                <Typography style={{fontWeight: "bold"}}>
+                    Delivery Address
                 </Typography>
-                <Typography >
+                {/* <Typography >
                     Name:&nbsp; 
                     <span style={{color: "#FF5E14"}}>{userInfo.fullName?.toUpperCase()}</span>
-                </Typography>
-                <Typography>
+                </Typography> */}
+                {/* <Typography>
                     Address 1:&nbsp;
                     <span>{shippingAddress.AirFreight.addressLine1}</span> 
-                </Typography>
-                <Typography>
+                </Typography> */}
+                {/* <Typography>
                     Address 2:&nbsp;
                     <span>{shippingAddress.AirFreight.addressLine2}
                         <MailBoxNumber /> -Air
                     </span>
-                </Typography>
-                <Typography>
+                </Typography> */}
+                {/* <Typography>
                     City:&nbsp;
                     <span>{shippingAddress.AirFreight.city}</span> 
-                </Typography>
-                <Typography>
+                </Typography> */}
+                {/* <Typography>
                     State:&nbsp;
                     <span>{shippingAddress.AirFreight.state}</span>&nbsp;&nbsp;ZipCode:&nbsp;
                     <span>{shippingAddress.AirFreight.zipCode}</span>
+                </Typography> */}
+                <Typography>
+                    For more information call or <br />WhatsApp us <a href='tel:8767735015' title='WhatsApp Number'>876-773-5015</a>.
                 </Typography>
             </>
         )
