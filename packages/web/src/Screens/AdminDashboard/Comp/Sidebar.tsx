@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import clsx from 'clsx';
 import "../CSS/sidebar.css";
 import MailIcon from '@material-ui/icons/Mail';
+import { CloudDownloadRounded } from "@material-ui/icons/";
 
 interface State {
     email: string;
@@ -215,7 +216,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                     {open && <img className={classes.logo} src="Images/urged logo.jpg" alt="Urged Logo"></img>}
                     {!open && <img className={classes.logosmall} src="Images/urged logoR.png" alt="Urged Logo"></img>}
                     <List style={{marginTop: "20%"}}>
-                    {['Overview', 'Employees' ,'Admin Orders', 'Organisations'].map((text, index) => (
+                    {['Overview', 'Employees' ,'Admin Orders', 'Organisations', 'Sales Export'].map((text, index) => (
                         referralPath === "/AdminDashboard" && text === "Overview" ?
                           <ListItem button key={text} >
                             <ListItemIcon>
@@ -341,13 +342,30 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                             </ListItem>
                           </Link>
                         :
+                        text === "Sales Export" ?
+                          <Link to={referralPath} className={classes.inactiveItemLink}>
+                            <ListItem button key={text}>
+                                <ListItemIcon>
+                                  {
+                                    index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
+                                    index === 1 ? <img src="Images/EmployeesIActive.png" alt="truck icon"/> : 
+                                    index === 2 ? <img src="Images/OrdersIActive.png" alt="BlackMarket icon"/> :
+                                    index === 3 ? <img src="Images/OrganizationsIActive.png" alt="OrganizationsIActive icon"/> : 
+                                    index === 4 ? <CloudDownloadRounded style={{color: "#D2D3D8", width: "30px", height: "31px"}} /> : <MailIcon />
+                                  }
+                                </ListItemIcon>
+                                <ListItemText primary={text} />
+                            </ListItem>
+                          </Link>
+                        :
                         <ListItem button key={text}>
                             <ListItemIcon>
                               {
                                 index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
                                 index === 1 ? <img src="Images/EmployeesIActive.png" alt="truck icon"/> : 
                                 index === 2 ? <img src="Images/OrdersIActive.png" alt="BlackMarket icon"/> :
-                                index === 3 ? <img src="Images/OrganizationsIActive.png" alt="OrganizationsIActive icon"/> : <MailIcon />
+                                index === 3 ? <img src="Images/OrganizationsIActive.png" alt="OrganizationsIActive icon"/> : 
+                                index === 4 ? <CloudDownloadRounded style={{color: "#D2D3D8", width: "30px", height: "31px"}} /> : <MailIcon />
                               }
                             </ListItemIcon>
                             <ListItemText primary={text} />
@@ -465,7 +483,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                     {open1 && <img className={classes.logo} src="Images/urged logo.jpg" alt="Urged Logo"></img>}
                     {!open1 && <img className={classes.logosmall} src="Images/urged logoR.png" alt="Urged Logo"></img>}
                     <List>
-                    {['Overview', 'Employees' , 'Admin Orders', 'Organisations'].map((text, index) => (
+                    {['Overview', 'Employees' , 'Admin Orders', 'Organisations', 'Sales Export'].map((text, index) => (
                         referralPath === "/AdminDashboard" && text === "Overview" ?
                           <ListItem button key={text}>
                             <ListItemIcon>
@@ -591,6 +609,22 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                             </ListItem>
                           </Link>
                         :
+                        text === "Sales Export" ?
+                          <Link to={referralPath} className={classes.inactiveItemLink}>
+                            <ListItem button key={text}>
+                                <ListItemIcon>
+                                  {
+                                    index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
+                                    index === 1 ? <img src="Images/EmployeesIActive.png" alt="truck icon"/> : 
+                                    index === 2 ? <img src="Images/OrdersIActive.png" alt="BlackMarket icon"/> :
+                                    index === 3 ? <img src="Images/OrganizationsIActive.png" alt="OrganizationsIActive icon"/> : 
+                                    index === 4 ? <CloudDownloadRounded style={{color: "#D2D3D8", width: "30px", height: "31px"}} /> : <MailIcon />
+                                  }
+                                </ListItemIcon>
+                                <ListItemText primary={text} />
+                            </ListItem>
+                          </Link>
+                        :
                         text !== "Overview"?
                           <ListItem button key={text} style={{marginTop: "5%"}}>
                               <ListItemIcon>
@@ -598,24 +632,26 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                   index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
                                   index === 1 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
                                   index === 2 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> : 
-                                  index === 3 ? <img src="Images/OrganizationsIActive.png" alt="OrganizationsIActive icon"/> : <MailIcon />
+                                  index === 3 ? <img src="Images/OrganizationsIActive.png" alt="OrganizationsIActive icon"/> :
+                                  index === 4 ? <CloudDownloadRounded style={{color: "#D2D3D8", width: "30px", height: "31px"}} /> : <MailIcon />
                                 }
                               </ListItemIcon>
                               <ListItemText primary={text} />
                           </ListItem>
-                      :
-                        <ListItem button key={text}>
-                          <ListItemIcon>
-                            {
-                              index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
-                              index === 1 ? <img src="Images/EmployeesIActive.png" alt="truck icon"/> : 
-                              index === 2 ? <img src="Images/OrdersIActive.png" alt="BlackMarket icon"/> : 
-                              index === 3 ? <img src="Images/OrganizationsIActive.png" alt="OrganizationsIActive icon"/> : <MailIcon />
-                            }
-                          </ListItemIcon>
-                          <ListItemText primary={text} />
-                        </ListItem>
-                    ))}
+                        :
+                          <ListItem button key={text}>
+                            <ListItemIcon>
+                              {
+                                index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
+                                index === 1 ? <img src="Images/EmployeesIActive.png" alt="truck icon"/> : 
+                                index === 2 ? <img src="Images/OrdersIActive.png" alt="BlackMarket icon"/> : 
+                                index === 3 ? <img src="Images/OrganizationsIActive.png" alt="OrganizationsIActive icon"/> : 
+                                index === 4 ? <CloudDownloadRounded style={{color: "#D2D3D8", width: "30px", height: "31px"}} /> : <MailIcon />
+                              }
+                            </ListItemIcon>
+                            <ListItemText primary={text} />
+                          </ListItem>
+                      ))}
                     </List>
                     <Divider />
                     <List>

@@ -314,7 +314,9 @@ import { Link } from "react-router-dom";
     const options = {
       filterType: 'dropdown',
       search: true,
-      selectableRows: 'none'
+      selectableRows: 'none',
+      download: false,
+      print: false
     };
     
     if(userRolef !== undefined && orders.length !== 0){

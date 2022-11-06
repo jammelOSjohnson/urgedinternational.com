@@ -12,7 +12,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import MailIcon from '@material-ui/icons/Mail';
-import { HistoryRounded } from "@material-ui/icons/";
+import { CloudDownloadRounded, HistoryRounded } from "@material-ui/icons/";
 import {CloseRounded} from '@material-ui/icons';
 import clsx from 'clsx';
 import { useAppData } from '../../../Context/AppDataContext';
@@ -179,7 +179,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                 <CloseRounded className={classes.closeIcon}/>
             </IconButton>
             <List>
-                    {['Overview', 'Employees' , 'Admin Orders', 'Organisations'].map((text, index) => (
+                    {['Overview', 'Employees' , 'Admin Orders', 'Organisations', 'Sales Export'].map((text, index) => (
                         referralPath === "/AdminDashboard" && text === "Overview" ?
                           <ListItem button key={text}>
                             <ListItemIcon>
@@ -305,6 +305,22 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                             </ListItem>
                           </Link>
                         :
+                        text === "Sales Export" ?
+                          <Link to={referralPath} className={classes.inactiveItemLink}>
+                            <ListItem button key={text}>
+                                <ListItemIcon>
+                                  {
+                                    index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
+                                    index === 1 ? <img src="Images/EmployeesIActive.png" alt="truck icon"/> : 
+                                    index === 2 ? <img src="Images/OrdersIActive.png" alt="BlackMarket icon"/> :
+                                    index === 3 ? <img src="Images/OrganizationsIActive.png" alt="OrganizationsIActive icon"/> : 
+                                    index === 4 ? <CloudDownloadRounded style={{color: "#D2D3D8", width: "30px", height: "31px"}} /> : <MailIcon />
+                                  }
+                                </ListItemIcon>
+                                <ListItemText primary={text} />
+                            </ListItem>
+                          </Link>
+                        :
                         text !== "Overview"?
                           <ListItem button key={text} style={{marginTop: "5%"}}>
                               <ListItemIcon>
@@ -312,7 +328,8 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                                   index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
                                   index === 1 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
                                   index === 2 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> : 
-                                  index === 3 ? <img src="Images/OrganizationsIActive.png" alt="OrganizationsIActive icon"/> : <MailIcon />
+                                  index === 3 ? <img src="Images/OrganizationsIActive.png" alt="OrganizationsIActive icon"/> : 
+                                  index === 4 ? <CloudDownloadRounded style={{color: "#D2D3D8", width: "30px", height: "31px"}} /> : <MailIcon />
                                 }
                               </ListItemIcon>
                               <ListItemText primary={text} />
