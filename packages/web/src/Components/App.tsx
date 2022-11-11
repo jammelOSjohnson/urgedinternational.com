@@ -230,19 +230,19 @@ const App: React.FC = function App() {
           <main>
             <div>
               <Router>
-                <Header2/>
+                {/* <Header2/> */}
                 <Switch>
                   {/* <Sidebar/> */}
                     {/* <Route path="/" exact component={AboutScreen} /> */}
                     <Route path="/" exact component={HomeScreen} />
-                    <Route path="/testmap" exact component={testmap2} />
+                    {/* <Route path="/testmap" exact component={testmap2} /> */}
                     {/* Customer Screens */}
-                    <Route path="/Services" exact component={ServicesScreen} />
+                    {/* <Route path="/Services" exact component={ServicesScreen} />
                     <Route path="/ContactUs" exact component={ContactUsScreen} />
                     <Route path="/Login">
                       <LoginScreen />
-                    </Route>
-                    <Route path="/Register"  component={RegisterScreen} />
+                    </Route> */}
+                    {/* <Route path="/Register"  component={RegisterScreen} />
                     <Route path="/Dashboard" exact component={CustomerDashboardScreen} />
                     <Route path="/FoodDelivery" exact component={FoodDeliveryDashboardScreen} />
                     <Route path="/Restaurants" exact component={RestaurantsScreen} />
@@ -254,13 +254,13 @@ const App: React.FC = function App() {
                     <Route path="/Errands" exact component={ErrandScreen} />
                     <Route path="/Profile" exact component={UserProfileScreen} />
                     <Route path="/Privacy" exact component={PrivacyPolicyScreen} />
-                    <Route path="/Tos" exact component={TermsOfServiceScreen} />
+                    <Route path="/Tos" exact component={TermsOfServiceScreen} /> */}
                     {/* Restaurant Screens */}
-                    <Route path="/RestaurantDashboard" exact component={RestaurantDashboardScreen} />
+                    {/* <Route path="/RestaurantDashboard" exact component={RestaurantDashboardScreen} />
                     <Route path="/ViewOrdersDetails" exact component={RestaurantOrderDetailsScreen} />
-                    <Route path="/RestaurantProfile" exact component={RestaurantProfileDetailsScreen} />
+                    <Route path="/RestaurantProfile" exact component={RestaurantProfileDetailsScreen} /> */}
                     {/* Admin Screens */}
-                    <Route path="/AdminDashboard" exact component={AdminDashboard} />
+                    {/* <Route path="/AdminDashboard" exact component={AdminDashboard} />
                     <Route path="/AdminOrders" exact component={OrdersScreen} />
                     <Route path="/AdminOrderSDetails" exact component={OrdersDetailsScreen} />
                     <Route path="/Employees" exact component={EmployeesScreen} />
@@ -269,19 +269,21 @@ const App: React.FC = function App() {
                     <Route path="/AdminSettings" exact component={SettingsScreen} />
                     <Route path="/PaySettings" exact component={PaySettingsScreen} />
                     <Route path="/OrgDetails" exact component={OrgDetailsScreen} />
-                    <Route path="/ShippingAddressSettings" exact component={ShippingAddressSettingsScreen} />
+                    <Route path="/ShippingAddressSettings" exact component={ShippingAddressSettingsScreen} /> */}
                     {/* Rider Screens */}
-                    <Route path="/DeliveryOrders" exact component={RiderOrdersScreen} />
+                    {/* <Route path="/DeliveryOrders" exact component={RiderOrdersScreen} />
                     <Route path="/DeliveryOrdersDetails" exact component={RiderOrderDetailsScreen} />
                     <Route path="/OrgDetails" exact component={OrgDetailsScreen} />
-                    <Route path="/:id" exact component={RestaurantMenuScreen} />
+                    <Route path="/:id" exact component={RestaurantMenuScreen} /> */}
+
                     {/* <Route path="/Menu" exact component={RestaurantMenuScreen} /> */}
-                    <Route path="/Checkout" exact component={CheckoutScreen} />
+                    
+                    {/* <Route path="/Checkout" exact component={CheckoutScreen} />
                     <Route path="/OrderCompleted" exact component={OrderCompleted} />
                     <Route path='/404' component={NotFound} />
-                    <Redirect from='*' to="/404" />
+                    <Redirect from='*' to="/404" /> */}
                 </Switch>
-                <Footer/>
+                {/* <Footer/> */}
               </Router>
             </div>
           </main>
