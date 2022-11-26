@@ -282,6 +282,20 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                             <ListItemText primary={text} />
                           </ListItem>
                         :
+                        referralPath === "/SalesExport" && text === "Sales Export" ?
+                          <ListItem button key={text}>
+                            <ListItemIcon>
+                              {
+                                index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
+                                index === 1 ? <img src="Images/blacktruckIconImage.png" alt="truck icon"/> : 
+                                index === 2 ? <img src="Images/OrdersActive.png" alt="BlackMarket icon"/> :
+                                index === 3 ? <img src="Images/OrganizationsIActive.png" alt="OrganizationsIActive icon"/> : 
+                                index === 4 ? <CloudDownloadRounded style={{color: "#FF5E14", width: "30px", height: "31px"}} /> : <MailIcon />
+                              }
+                            </ListItemIcon>
+                            <ListItemText primary={text} />
+                          </ListItem>
+                        :
                         text === "Overview" ?
                           <Link to="/AdminDashboard" className={classes.inactiveItemLink}>
                             <ListItem button key={text}>
@@ -343,7 +357,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                           </Link>
                         :
                         text === "Sales Export" ?
-                          <Link to={referralPath} className={classes.inactiveItemLink}>
+                          <Link to='/SalesExport' className={classes.inactiveItemLink}>
                             <ListItem button key={text}>
                                 <ListItemIcon>
                                   {
@@ -549,6 +563,20 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                             <ListItemText primary={text} />
                           </ListItem>
                         :
+                        referralPath === "/SalesExport" && text === "Sales Export" ?
+                          <ListItem button key={text} >
+                            <ListItemIcon>
+                              {
+                                index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
+                                index === 1 ? <img src="Images/EmployeesActive.png" alt="AEmployeees" /> : 
+                                index === 2 ? <img src="Images/OrdersActive.png" alt="BlackMarket icon"/> :
+                                index === 3 ? <img src="Images/OrganizationsIActive.png" alt="OrganizationsIActive icon"/> : 
+                                index === 4 ? <CloudDownloadRounded style={{color: "#FF5E14", width: "30px", height: "31px"}} /> : <MailIcon />
+                              }
+                            </ListItemIcon>
+                            <ListItemText primary={text} />
+                          </ListItem>
+                        :
                         text === "Overview" ?
                           <Link to="/AdminDashboard" className={classes.inactiveItemLink}>
                             <ListItem button key={text}>
@@ -610,7 +638,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                           </Link>
                         :
                         text === "Sales Export" ?
-                          <Link to={referralPath} className={classes.inactiveItemLink}>
+                          <Link to='/SalesExport' className={classes.inactiveItemLink}>
                             <ListItem button key={text}>
                                 <ListItemIcon>
                                   {
