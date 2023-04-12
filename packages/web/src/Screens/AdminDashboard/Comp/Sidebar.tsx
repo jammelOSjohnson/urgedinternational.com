@@ -349,7 +349,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                     index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
                                     index === 1 ? <img src="Images/EmployeesIActive.png" alt="truck icon"/> : 
                                     index === 2 ? <img src="Images/OrdersIActive.png" alt="BlackMarket icon"/> :
-                                    index === 3 ? <img src="Images/OrganizationsIActive.png" alt="OrganizationsIActive icon"/> : <MailIcon />
+                                    index === 3 ? <img src="Images/OrganizationsNActive.png" alt="OrganizationsIActive icon"/> : <MailIcon />
                                   }
                                 </ListItemIcon>
                                 <ListItemText primary={text} />
@@ -395,19 +395,31 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                               <ListItem button key={text} >
                                 <ListItemIcon>
                                   {
-                                    index === 0 ? <img src="Images/SettingIActive.png" alt="BlackMarket icon"/> :
+                                    index === 0 ? <img src="Images/SettingNActive.png" alt="BlackMarket icon"/> :
                                     index === 1 ? <img src="Images/LogoutIActive.png" alt="BlackMarket icon"/> : <MailIcon />
                                   }
                                 </ListItemIcon>
                                 <ListItemText primary={text} />
                               </ListItem>
                             </a>
+                            :referralPath === 'AdminSettings' && text === 'Settings' ?
+                              <Link to="/AdminSettings" className={classes.inactiveItemLink}>
+                                <ListItem button key={text}>
+                                  <ListItemIcon>
+                                    {
+                                      index === 0 ? <img src="Images/SettingIActive.png" alt="BlackMarket icon"/> :
+                                      index === 1 ? <img src="Images/LogoutIActive.png" alt="BlackMarket icon"/> : <MailIcon />
+                                    }
+                                  </ListItemIcon>
+                                  <ListItemText primary={text} />
+                                </ListItem>
+                              </Link>
                             :
                             <Link to="/AdminSettings" className={classes.inactiveItemLink}>
                               <ListItem button key={text}>
                                 <ListItemIcon>
                                   {
-                                    index === 0 ? <img src="Images/SettingIActive.png" alt="BlackMarket icon"/> :
+                                    index === 0 ? <img src="Images/SettingNActive.png" alt="BlackMarket icon"/> :
                                     index === 1 ? <img src="Images/LogoutIActive.png" alt="BlackMarket icon"/> : <MailIcon />
                                   }
                                 </ListItemIcon>
@@ -630,7 +642,7 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                     index === 0 ? <img src="Images/GroupSquareIcon2.png" alt="square icon"/> :
                                     index === 1 ? <img src="Images/EmployeesIActive.png" alt="truck icon"/> : 
                                     index === 2 ? <img src="Images/OrdersIActive.png" alt="BlackMarket icon"/> :
-                                    index === 3 ? <img src="Images/OrganizationsIActive.png" alt="OrganizationsIActive icon"/> : <MailIcon />
+                                    index === 3 ? <img src="Images/OrganizationsNActive.png" alt="OrganizationsIActive icon"/> : <MailIcon />
                                   }
                                 </ListItemIcon>
                                 <ListItemText primary={text} />
@@ -697,12 +709,24 @@ export const Sidebar: React.FC = function Sidebar({children}) {
                                 <ListItemText primary={text} />
                               </ListItem>
                             </a>
-                            :
+                            :referralPath === '/AdminSettings' && text === 'Settings'?
                             <Link to="/AdminSettings" className={classes.inactiveItemLink}>
                               <ListItem button key={text}>
                                 <ListItemIcon>
                                   {
                                     index === 0 ? <img src="Images/SettingIActive.png" alt="BlackMarket icon"/> :
+                                    index === 1 ? <img src="Images/LogoutIActive.png" alt="BlackMarket icon"/> : <MailIcon />
+                                  }
+                                </ListItemIcon>
+                                <ListItemText primary={text} />
+                              </ListItem>
+                            </Link>
+                            :
+                            <Link to="/AdminSettings" className={classes.inactiveItemLink}>
+                              <ListItem button key={text}>
+                                <ListItemIcon>
+                                  {
+                                    index === 0 ? <img src="Images/SettingNActive.png" alt="BlackMarket icon"/> :
                                     index === 1 ? <img src="Images/LogoutIActive.png" alt="BlackMarket icon"/> : <MailIcon />
                                   }
                                 </ListItemIcon>
