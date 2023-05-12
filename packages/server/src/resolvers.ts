@@ -10,6 +10,7 @@ import Package from "./models/Package.model";
 import { json } from "express";
 const { GraphQLScalarType, Kind } = require("graphql");
 const mongoose = require("mongoose");
+const crypto = require("crypto");
 
 //subscriptions test
 import { PubSub } from "graphql-subscriptions";
@@ -21,11 +22,8 @@ import OrderRejection from "./models/OrderRejection.model";
 
 const pubsub = new RedisPubSub({
   connection: {
-    host: process.env.REDIS_DOMAIN_NAME || "127.0.0.1",
-    port: (process.env.PORT_NUMBER as any) || 6379,
-    // password:
-    //   (process.env.REDIS_PASSWORD as any) ||
-    //   "eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81",
+    host: process.env.REDIS_DOMAIN_NAME,
+    port: 6379,
     retryStrategy: (times) => {
       // reconnect after
       return Math.max(times * 100, 3000);
@@ -147,6 +145,73 @@ const resolvers = {
   },
 
   Mutation: {
+    //Hash
+    createHash: (
+      _,
+      {
+        authenticateTransaction,
+        chargetotal,
+        checkoutoption,
+        currency,
+        hash_algorithm,
+        hashExtended,
+        paymentMethod,
+        responseFailURL,
+        responseSuccessURL,
+        sharedsecret,
+        storename,
+        timezone,
+        transactionNotificationURL,
+        txndatetime,
+        txntype,
+      }
+    ) => {
+      // string to be hashed
+      // authenticateTransaction +
+      // "|" +
+      const str =
+        chargetotal +
+        "|" +
+        checkoutoption +
+        "|" +
+        currency +
+        "|" +
+        hash_algorithm +
+        "|" +
+        hashExtended +
+        "|" +
+        paymentMethod +
+        "|" +
+        responseFailURL +
+        "|" +
+        responseSuccessURL +
+        "|" +
+        sharedsecret +
+        "|" +
+        storename +
+        "|" +
+        timezone +
+        "|" +
+        transactionNotificationURL +
+        "|" +
+        txndatetime +
+        "|" +
+        txntype;
+
+      // secret or salt to be hashed with
+      const secret = process.env.SECRET;
+
+      // create a sha-256 hasher
+      const sha256Hasher = crypto.createHmac("sha256", secret);
+
+      // hash the string
+      // and set the output format
+      const hash = sha256Hasher.update(str).digest("base64");
+
+      // A unique sha256 hash 😃
+      return { hash: hash };
+    },
+
     //Roles
     createRole: (_, { description }) => {
       const identification = new Role({ description });
