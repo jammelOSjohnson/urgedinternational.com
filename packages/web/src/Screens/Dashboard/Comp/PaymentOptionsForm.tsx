@@ -1,5 +1,6 @@
 import { useAppData } from "../../../Context/AppDataContext";
 import { GeoMap } from "./GeoMap";
+import Moment from "moment";
 import {
   makeStyles,
   createStyles,
@@ -18,7 +19,7 @@ import {
   Box,
   CircularProgress,
 } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Alert from "@material-ui/lab/Alert";
 import MapContainer from "../MapContainer";
@@ -48,7 +49,7 @@ interface Payment {
   storename: string;
   timezone: string;
   transactionNotificationURL: string;
-  txndatetime: Date;
+  txndatetime: string;
   txntype: string;
 }
 
@@ -166,6 +167,17 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: "22px",
       width: "95%",
     },
+    paymentbutton: {
+      margin: theme.spacing(1),
+      color: "#FFFFFF",
+      backgroundColor: "#FF5E14",
+      borderRadius: "22px",
+      width: "95%",
+      display: "none",
+      "& .MuiButtonBase-root": {
+        display: "none",
+      },
+    },
     alert: {
       marginBottom: "5%",
     },
@@ -207,38 +219,41 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
 
   const [payment, setPayment] = React.useState<Payment>({
     authenticateTransaction:
-      process.env.React_APP_authenticateTransaction === "true" ? true : false,
+      process.env.REACT_APP_authenticateTransaction === "true" ? true : false,
     chargetotal: "",
     checkoutoption:
       process.env.REACT_APP_combinedpage !== undefined
         ? process.env.REACT_APP_combinedpage
         : "",
     currency:
-      process.env.React_APP_currency_code !== undefined
-        ? process.env.React_APP_currency_code
+      process.env.REACT_APP_currency_code !== undefined
+        ? process.env.REACT_APP_currency_code
         : "",
     hash_algorithm:
-      process.env.React_APP_hash_algorithm !== undefined
-        ? process.env.React_APP_hash_algorithm
+      process.env.REACT_APP_hash_algorithm !== undefined
+        ? process.env.REACT_APP_hash_algorithm
         : "",
     hashExtended: "",
     paymentMethod: "",
     responseFailURL: "",
     responseSuccessURL: "",
-    sharedsecret: "",
+    sharedsecret:
+      process.env.REACT_APP_SECRET !== undefined
+        ? process.env.REACT_APP_SECRET
+        : "",
     storename:
       process.env.REACT_APP_StoreID !== undefined
         ? process.env.REACT_APP_StoreID
         : "",
     timezone:
-      process.env.React_APP_timezone !== undefined
-        ? process.env.React_APP_timezone
+      process.env.REACT_APP_timezone !== undefined
+        ? process.env.REACT_APP_timezone
         : "",
     transactionNotificationURL: "",
-    txndatetime: new Date(),
+    txndatetime: Moment().format("YYYY:MM:DD-HH:MM:SS").toString(),
     txntype:
-      process.env.React_APP_txntype !== undefined
-        ? process.env.React_APP_txntype
+      process.env.REACT_APP_txntype !== undefined
+        ? process.env.REACT_APP_txntype
         : "",
   });
 
@@ -250,8 +265,14 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
   //const [isgeoAllowed, setIsGeoAllowed] = useState(false);
 
   var { value } = useAppData();
-  var { cartItems, checkoutOrder, restaurants, selectedRestaurant, userInfo } =
-    value;
+  var {
+    cartItems,
+    checkoutOrder,
+    restaurants,
+    selectedRestaurant,
+    userInfo,
+    createPaymentHash,
+  } = value;
   var history = useHistory();
   var [error, setError] = useState("");
   var [success, setSuccess] = useState("");
@@ -352,6 +373,22 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
       //console.log(event.target.value);
       setPayment({ ...payment, [prop]: event.target.value });
     };
+
+  const hash = () => {
+    console.log("about to start");
+    const button = document.getElementById("makePayment");
+    createPaymentHash(payment).then(function (hashResult) {
+      console.log(hashResult.hash);
+      setPayment({
+        ...payment,
+        hashExtended:
+          hashResult != null && hashResult !== undefined ? hashResult.hash : "",
+      });
+      console.log("about to send payment data");
+      button?.click();
+    });
+    //return hashHex;
+  };
 
   useEffect(() => {
     //Calc Delivery Fee
@@ -594,106 +631,12 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                     }}
                   >
                     <Grid item xs={12}>
-                      <Typography className={classes.formHeading}>
-                        Payment Details
-                      </Typography>
                       <Divider variant="middle" className={classes.divider} />
                       <form
                         method="POST"
                         action={process.env.REACT_APP_payment_url}
                       >
-                        <Grid item xs={5}>
-                          <TextField
-                            id="txntype"
-                            label="txntype"
-                            variant="outlined"
-                            value={payment.txntype}
-                            onChange={handleChange3("txntype")}
-                            fullWidth
-                          />
-                        </Grid>
-                        <Grid item xs={5}>
-                          <TextField
-                            id="timezone"
-                            label="timezone"
-                            variant="outlined"
-                            value={payment.timezone}
-                            onChange={handleChange3("timezone")}
-                            fullWidth
-                          />
-                        </Grid>
-                        <Grid item xs={5}>
-                          <TextField
-                            id="txndatetime"
-                            label="txndatetime"
-                            variant="outlined"
-                            value={payment.txndatetime}
-                            onChange={handleChange3("txndatetime")}
-                            fullWidth
-                          />
-                        </Grid>
-                        <Grid item xs={5}>
-                          <TextField
-                            id="hash_algorithm"
-                            label="Hash Algorithm"
-                            variant="outlined"
-                            value={payment.hash_algorithm}
-                            onChange={handleChange3("hash_algorithm")}
-                            fullWidth
-                          />
-                        </Grid>
-                        <Grid item xs={5}>
-                          <TextField
-                            id="hashextended"
-                            label="Hash Extended"
-                            variant="outlined"
-                            value={payment.hashExtended}
-                            onChange={handleChange3("hashExtended")}
-                            fullWidth
-                          />
-                        </Grid>
-                        <Grid item xs={5}>
-                          <TextField
-                            id="storename"
-                            name="storename"
-                            label="Storename"
-                            variant="outlined"
-                            value={payment.storename}
-                            onChange={handleChange3("storename")}
-                            fullWidth
-                          />
-                        </Grid>
-                        <Grid item xs={5}>
-                          <TextField
-                            id="chargetotal"
-                            label="Charge Total"
-                            variant="outlined"
-                            value={payment.chargetotal}
-                            onChange={handleChange3("chargetotal")}
-                            fullWidth
-                          />
-                        </Grid>
-                        <Grid item xs={5}>
-                          <TextField
-                            id="checkoutoption"
-                            label="Checkout Option"
-                            variant="outlined"
-                            value={payment.checkoutoption}
-                            onChange={handleChange3("checkoutoption")}
-                            fullWidth
-                          />
-                        </Grid>
-                        <Grid item xs={5}>
-                          <TextField
-                            id="currency"
-                            label="currency"
-                            variant="outlined"
-                            value={payment.currency}
-                            onChange={handleChange3("currency")}
-                            fullWidth
-                          />
-                        </Grid>
-                        <Grid item xs={5}>
+                        {/* <Grid item xs={5}>
                           <TextField
                             id="authenticateTransaction"
                             name="authenticateTransaction"
@@ -702,18 +645,133 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                             value={payment.authenticateTransaction}
                             fullWidth
                           />
+                        </Grid> */}
+                        <Grid item xs={5}>
+                          <input
+                            type="hidden"
+                            name="chargetotal"
+                            value={payment.chargetotal}
+                            onChange={handleChange3("chargetotal")}
+                          />
                         </Grid>
-                        <Grid item xs={12}>
+                        <Grid item xs={5}>
+                          <input
+                            name="checkoutoption"
+                            value={payment.checkoutoption}
+                            onChange={handleChange3("checkoutoption")}
+                            type="hidden"
+                          />
+                        </Grid>
+                        <Grid item xs={5}>
+                          <input
+                            name="currency"
+                            value={payment.currency}
+                            onChange={handleChange3("currency")}
+                            type="hidden"
+                          />
+                        </Grid>
+                        <Grid item xs={5}>
+                          <input
+                            name="hash_algorithm"
+                            value={payment.hash_algorithm}
+                            onChange={handleChange3("hash_algorithm")}
+                            type="hidden"
+                          />
+                        </Grid>
+                        <Grid item xs={5}>
+                          <input
+                            name="hashExtended"
+                            value={payment.hashExtended}
+                            onChange={handleChange3("hashExtended")}
+                            type="hidden"
+                          />
+                        </Grid>
+                        <Grid item xs={5}>
+                          <input
+                            name="paymentMethod"
+                            value={payment.paymentMethod}
+                            onChange={handleChange3("paymentMethod")}
+                            type="hidden"
+                          />
+                        </Grid>
+                        <Grid item xs={5}>
+                          <input
+                            name="responseFailURL"
+                            value={payment.responseFailURL}
+                            onChange={handleChange3("responseFailURL")}
+                            type="hidden"
+                          />
+                        </Grid>
+                        <Grid item xs={5}>
+                          <input
+                            name="responseSuccessURL"
+                            value={payment.responseSuccessURL}
+                            onChange={handleChange3("responseSuccessURL")}
+                            type="hidden"
+                          />
+                        </Grid>
+                        <Grid item xs={5}>
+                          <input
+                            name="sharedsecret"
+                            value={payment.sharedsecret}
+                            onChange={handleChange3("sharedsecret")}
+                            type="hidden"
+                          />
+                        </Grid>
+                        <Grid item xs={5}>
+                          <input
+                            name="storename"
+                            value={payment.storename}
+                            onChange={handleChange3("storename")}
+                            type="hidden"
+                          />
+                        </Grid>
+                        <Grid item xs={5}>
+                          <input
+                            name="timezone"
+                            value={payment.timezone}
+                            onChange={handleChange3("timezone")}
+                            type="hidden"
+                          />
+                        </Grid>
+                        <Grid item xs={5}>
+                          <input
+                            name="transactionNotificationURL"
+                            value={payment.transactionNotificationURL}
+                            onChange={handleChange3(
+                              "transactionNotificationURL"
+                            )}
+                            type="hidden"
+                          />
+                        </Grid>
+                        <Grid item xs={5}>
+                          <input
+                            name="txndatetime"
+                            value={payment.txndatetime}
+                            onChange={handleChange3("txndatetime")}
+                            type="hidden"
+                          />
+                        </Grid>
+                        <Grid item xs={5}>
+                          <input
+                            name="txntype"
+                            value={payment.txntype}
+                            onChange={handleChange3("txntype")}
+                            type="hidden"
+                          />
+                        </Grid>
+                        <div style={{ display: "none" }}>
                           <Button
+                            id="makePayment"
                             type="submit"
                             variant="contained"
                             size="large"
-                            className={classes.button}
+                            className={classes.paymentbutton}
                             disabled={loading}
                           >
                             Submit
                           </Button>
-                        </Grid>
+                        </div>
                       </form>
                     </Grid>
                   </Grid>
@@ -882,10 +940,11 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                         </Alert>
                       )}
                       <Button
+                        type="button"
                         variant="contained"
                         size="large"
                         className={classes.button}
-                        onClick={handleSubmit}
+                        onClick={hash}
                         disabled={loading}
                       >
                         {!loading ? "Checkout" : <></>}
