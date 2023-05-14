@@ -169,6 +169,17 @@ const resolvers = {
       // string to be hashed
       // authenticateTransaction +
       // "|" +
+      // "|" +
+      //   sharedsecret +
+      // "|" +
+      //   transactionNotificationURL +
+      // "|" +
+      // hashExtended +
+      //   "|" +
+      // responseFailURL +
+      // "|" +
+      // responseSuccessURL +
+      // "|" +
       const str =
         chargetotal +
         "|" +
@@ -178,28 +189,19 @@ const resolvers = {
         "|" +
         hash_algorithm +
         "|" +
-        hashExtended +
-        "|" +
         paymentMethod +
-        "|" +
-        responseFailURL +
-        "|" +
-        responseSuccessURL +
-        "|" +
-        sharedsecret +
         "|" +
         storename +
         "|" +
         timezone +
         "|" +
-        transactionNotificationURL +
-        "|" +
         txndatetime +
         "|" +
         txntype;
-
+      //console.log(str);
       // secret or salt to be hashed with
       const secret = process.env.SECRET;
+      //console.log(secret);
 
       // create a sha-256 hasher
       const sha256Hasher = crypto.createHmac("sha256", secret);
