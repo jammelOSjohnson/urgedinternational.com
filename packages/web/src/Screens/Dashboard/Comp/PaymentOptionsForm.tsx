@@ -222,8 +222,8 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
       process.env.REACT_APP_authenticateTransaction === "true" ? true : false,
     chargetotal: "",
     checkoutoption:
-      process.env.REACT_APP_combinedpage !== undefined
-        ? process.env.REACT_APP_combinedpage
+      process.env.REACT_APP_checkoutoption !== undefined
+        ? process.env.REACT_APP_checkoutoption
         : "",
     currency:
       process.env.REACT_APP_currency_code !== undefined
@@ -235,8 +235,8 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
         : "",
     hashExtended: "",
     paymentMethod: "",
-    responseFailURL: "",
-    responseSuccessURL: "",
+    responseFailURL: "https://urgedservices.com/ShoppingCart",
+    responseSuccessURL: "https://urgedservices.com/ShoppingCart",
     sharedsecret:
       process.env.REACT_APP_SECRET !== undefined
         ? process.env.REACT_APP_SECRET
@@ -249,8 +249,8 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
       process.env.REACT_APP_timezone !== undefined
         ? process.env.REACT_APP_timezone
         : "",
-    transactionNotificationURL: "",
-    txndatetime: Moment().format("YYYY:MM:DD-HH:MM:SS").toString(),
+    transactionNotificationURL: "https://urgedservices.com/ShoppingCart",
+    txndatetime: Moment().format("YYYY:MM:DD-HH:mm:ss").toString(),
     txntype:
       process.env.REACT_APP_txntype !== undefined
         ? process.env.REACT_APP_txntype
@@ -375,18 +375,23 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
     };
 
   const hash = () => {
+    setError("");
     console.log("about to start");
     const button = document.getElementById("makePayment");
-    createPaymentHash(payment).then(function (hashResult) {
-      console.log(hashResult.hash);
-      setPayment({
-        ...payment,
-        hashExtended:
-          hashResult != null && hashResult !== undefined ? hashResult.hash : "",
-      });
-      console.log("about to send payment data");
-      button?.click();
-    });
+    payment.paymentMethod === ""
+      ? setError("Please select payment method.")
+      : createPaymentHash(payment).then(function (hashResult) {
+          console.log(hashResult.hash);
+          setPayment({
+            ...payment,
+            hashExtended:
+              hashResult != null && hashResult !== undefined
+                ? hashResult.hash
+                : "",
+          });
+          console.log("about to send payment data");
+          button?.click();
+        });
     //return hashHex;
   };
 
@@ -637,13 +642,13 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                         action={process.env.REACT_APP_payment_url}
                       >
                         {/* <Grid item xs={5}>
-                          <TextField
-                            id="authenticateTransaction"
+                          <input
+                            type="hidden"
                             name="authenticateTransaction"
-                            label="authenticateTransaction"
-                            variant="outlined"
-                            value={payment.authenticateTransaction}
-                            fullWidth
+                            value={
+                              payment.authenticateTransaction ? "true" : "false"
+                            }
+                            onChange={handleChange3("authenticateTransaction")}
                           />
                         </Grid> */}
                         <Grid item xs={5}>
@@ -694,30 +699,30 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                             type="hidden"
                           />
                         </Grid>
-                        <Grid item xs={5}>
+                        {/* <Grid item xs={5}>
                           <input
                             name="responseFailURL"
                             value={payment.responseFailURL}
                             onChange={handleChange3("responseFailURL")}
                             type="hidden"
                           />
-                        </Grid>
-                        <Grid item xs={5}>
+                        </Grid> */}
+                        {/* <Grid item xs={5}>
                           <input
                             name="responseSuccessURL"
                             value={payment.responseSuccessURL}
                             onChange={handleChange3("responseSuccessURL")}
                             type="hidden"
                           />
-                        </Grid>
-                        <Grid item xs={5}>
+                        </Grid> */}
+                        {/* <Grid item xs={5}>
                           <input
                             name="sharedsecret"
                             value={payment.sharedsecret}
                             onChange={handleChange3("sharedsecret")}
                             type="hidden"
                           />
-                        </Grid>
+                        </Grid> */}
                         <Grid item xs={5}>
                           <input
                             name="storename"
@@ -734,7 +739,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                             type="hidden"
                           />
                         </Grid>
-                        <Grid item xs={5}>
+                        {/* <Grid item xs={5}>
                           <input
                             name="transactionNotificationURL"
                             value={payment.transactionNotificationURL}
@@ -743,7 +748,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                             )}
                             type="hidden"
                           />
-                        </Grid>
+                        </Grid> */}
                         <Grid item xs={5}>
                           <input
                             name="txndatetime"
