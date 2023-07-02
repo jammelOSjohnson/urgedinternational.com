@@ -1,6 +1,7 @@
 import { useAppData } from "../../../Context/AppDataContext";
 import { GeoMap } from "./GeoMap";
 import Moment from "moment";
+import postPayment from "../../../Apis/payment";
 import {
   makeStyles,
   createStyles,
@@ -37,18 +38,62 @@ interface State {
 
 interface Payment {
   authenticateTransaction: boolean;
+  bname: string;
+  baddr1: string;
+  baddr2: string;
+  bcountry: string;
+  bstate: string;
   chargetotal: string;
   checkoutoption: string;
   currency: string;
+  email: string;
   hash_algorithm: string;
+  language: string;
   hashExtended: string;
   paymentMethod: string;
+  phone;
   responseFailURL: string;
   responseSuccessURL: string;
   sharedsecret: string;
+  sname: string;
+  saddr1: string;
+  saddr2: string;
+  sstate: string;
+  scountry: string;
   storename: string;
   timezone: string;
   transactionNotificationURL: string;
+  txndatetime: string;
+  txntype: string;
+}
+
+interface Payment2 {
+  //authenticateTransaction: boolean;
+  bname: string;
+  baddr1: string;
+  baddr2: string;
+  bcountry: string;
+  bstate: string;
+  chargetotal: string;
+  checkoutoption: string;
+  currency: string;
+  email: string;
+  hash_algorithm: string;
+  language: string;
+  hashExtended: string;
+  paymentMethod: string;
+  phone;
+  responseFailURL: string;
+  responseSuccessURL: string;
+  //sharedsecret: string;
+  sname: string;
+  saddr1: string;
+  saddr2: string;
+  sstate: string;
+  scountry: string;
+  storename: string;
+  timezone: string;
+  //transactionNotificationURL: string;
   txndatetime: string;
   txntype: string;
 }
@@ -220,7 +265,15 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
   const [payment, setPayment] = React.useState<Payment>({
     authenticateTransaction:
       process.env.REACT_APP_authenticateTransaction === "true" ? true : false,
-    chargetotal: "",
+    bname: "",
+    baddr1: "",
+    baddr2: "",
+    bcountry:
+      process.env.REACT_APP_bcountry !== undefined
+        ? process.env.REACT_APP_bcountry
+        : "",
+    bstate: "",
+    chargetotal: "4.00",
     checkoutoption:
       process.env.REACT_APP_checkoutoption !== undefined
         ? process.env.REACT_APP_checkoutoption
@@ -229,18 +282,29 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
       process.env.REACT_APP_currency_code !== undefined
         ? process.env.REACT_APP_currency_code
         : "",
+    email: "",
     hash_algorithm:
       process.env.REACT_APP_hash_algorithm !== undefined
         ? process.env.REACT_APP_hash_algorithm
         : "",
+    language:
+      process.env.REACT_APP_language !== undefined
+        ? process.env.REACT_APP_language
+        : "",
     hashExtended: "",
     paymentMethod: "",
-    responseFailURL: "https://urgedservices.com/ShoppingCart",
-    responseSuccessURL: "https://urgedservices.com/ShoppingCart",
-    sharedsecret:
-      process.env.REACT_APP_SECRET !== undefined
-        ? process.env.REACT_APP_SECRET
+    phone: "",
+    responseFailURL: "http://localhost:8080/processpayment",
+    responseSuccessURL: "http://localhost:8080/processpayment",
+    sname: "",
+    saddr1: "",
+    saddr2: "",
+    sstate: "",
+    scountry:
+      process.env.REACT_APP_bcountry !== undefined
+        ? process.env.REACT_APP_bcountry
         : "",
+    sharedsecret: "",
     storename:
       process.env.REACT_APP_StoreID !== undefined
         ? process.env.REACT_APP_StoreID
@@ -250,7 +314,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
         ? process.env.REACT_APP_timezone
         : "",
     transactionNotificationURL: "https://urgedservices.com/ShoppingCart",
-    txndatetime: Moment().format("YYYY:MM:DD-HH:mm:ss").toString(),
+    txndatetime: Moment().format("YYYY:MM:DD-HH:mm:ss").toString(), //"2023:06:08-17:20:09",
     txntype:
       process.env.REACT_APP_txntype !== undefined
         ? process.env.REACT_APP_txntype
@@ -330,7 +394,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
         });
       }
     } catch (e: any) {
-      //console.log(e.message)
+      console.log(e.message);
       let path = e.message;
       //console.log(path)
       let result = path.split("Path");
@@ -378,6 +442,18 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
     setError("");
     console.log("about to start");
     const button = document.getElementById("makePayment");
+
+    //store important state info
+    const session = {
+      value,
+      cartItems,
+      values,
+      checkoutVals: checkoutVals,
+      restaurants: restaurants,
+      selectedRestaurant: selectedRestaurant,
+    };
+    localStorage.setItem("paymentObject", JSON.stringify(session));
+
     payment.paymentMethod === ""
       ? setError("Please select payment method.")
       : createPaymentHash(payment).then(function (hashResult) {
@@ -396,6 +472,22 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
   };
 
   useEffect(() => {
+    //test sort
+    //const testObj = Object.fromEntries(Object.entries(payment).sort());
+    //console.log(testObj);
+    try {
+      window.addEventListener(
+        "message",
+        (event) => {
+          if (event.origin == "http://localhost:3000") return;
+          console.log(event);
+          // …
+        },
+        false
+      );
+    } catch (e) {
+      console.log(e);
+    }
     //Calc Delivery Fee
     let delFee = "";
     if (cartItems.length !== 0) {
@@ -508,7 +600,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
       Total: newTotal,
     });
 
-    setPayment({ ...payment, chargetotal: finalTotal.toString() });
+    //setPayment({ ...payment, chargetotal: finalTotal.toString() });
     if (userInfo.addressLine1 !== "" && userInfo.city !== "") {
       setValues({
         ...values,
@@ -516,132 +608,149 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
         Town: userInfo.city,
         ContactNum: userInfo.contactNumber,
       });
+      setPayment({
+        ...payment,
+        baddr1: userInfo.addressLine1,
+        baddr2: userInfo.addressLine2,
+        bname: userInfo.fullName,
+        bstate: userInfo.city,
+        saddr1: userInfo.addressLine1,
+        saddr2: userInfo.addressLine2,
+        sname: userInfo.fullName,
+        sstate: userInfo.city,
+        phone: userInfo.contactNumber,
+        email: userInfo.email,
+      });
     }
   }, [cartItems, value]);
   // generalLocation, values.Town
 
-  return (
-    <>
-      <div>
-        <Paper elevation={3} className={classes.paper}>
-          <Grid
-            container
-            direction="row"
-            spacing={2}
-            alignItems="center"
-            className={classes.root}
-          >
-            <Grid item xs={12}>
-              <form className={classes.form}>
-                <Grid container direction="row" alignItems="center">
-                  <Grid item xs={12}>
-                    <Typography className={classes.formHeading}>
-                      Payment Options
-                    </Typography>
-                    <Divider variant="middle" className={classes.divider} />
-                    {gpsCheck.open2 && (
-                      <Typography
-                        variant="h5"
-                        style={{
-                          backgroundColor: "#ff0000",
-                          color: "#FFF",
-                          fontWeight: "bolder",
-                          padding: 5,
-                          textAlign: "center",
-                        }}
-                      >
-                        {gpsCheck.errorMessage}
-                      </Typography>
-                    )}
-                    {/* <MapContainer setLoading={setLoading} setgpsCheck={setgpsCheck} gpsCheck={gpsCheck} /> */}
-                    <CheckGps setLoading={setLoading} />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <FormControl component="fieldset" style={{ width: "100%" }}>
-                      <FormLabel component="legend">
-                        <Typography className={classes.formSubheading}>
-                          Please select payment method from the list below.
-                        </Typography>
-                      </FormLabel>
-                      <RadioGroup
-                        row
-                        id="paymentMethod"
-                        aria-label="paymentMethod"
-                        name="paymentMethod"
-                        defaultValue="top"
-                        value={payment.paymentMethod}
-                        onChange={handleChange}
-                        aria-required={true}
-                      >
-                        <Grid container direction="row">
-                          <Grid item xs={12} lg={4}>
-                            <FormControlLabel
-                              value="V"
-                              control={<Radio color="primary" />}
-                              label="Visa"
-                              labelPlacement="start"
-                              style={{ marginLeft: 0 }}
-                            />
-                            <img
-                              src="Images/visa-logo.png"
-                              width="79.14px"
-                              height="26px"
-                              style={{ marginTop: "1%", marginLeft: "2%" }}
-                              alt="visa"
-                            />
-                          </Grid>
-                          <Grid item xs={12} lg={4}>
-                            <FormControlLabel
-                              value="M"
-                              control={<Radio color="primary" />}
-                              label="Master"
-                              labelPlacement="start"
-                              className="nomarginMobile"
-                            />
-                            <img
-                              src="Images/mastercard-logo.png"
-                              width="42px"
-                              height="32.86px"
-                              style={{ marginTop: "1%", marginLeft: "2%" }}
-                              alt="mastercard"
-                            />
-                          </Grid>
-                          <Grid item xs={12} lg={4}>
-                            <FormControlLabel
-                              value="Cash on Delivery"
-                              control={<Radio color="primary" />}
-                              label="Cash"
-                              labelPlacement="start"
-                              className="nomarginMobile"
-                            />
-                            <img
-                              src="Images/cashOnDelivery-logo.png"
-                              width="66px"
-                              height="33px"
-                              style={{ marginTop: "1%", marginLeft: "2%" }}
-                              alt="cash"
-                            />
-                          </Grid>
-                        </Grid>
-                      </RadioGroup>
-                    </FormControl>
-                  </Grid>
-                  <Grid
-                    container
-                    style={{
-                      display:
-                        payment.paymentMethod !== "Cash on Delivery"
-                          ? "flex"
-                          : "none",
-                    }}
-                  >
+  if (cartItems.length > 0) {
+    return (
+      <>
+        <div>
+          <Paper elevation={3} className={classes.paper}>
+            <Grid
+              container
+              direction="row"
+              spacing={2}
+              alignItems="center"
+              className={classes.root}
+            >
+              <Grid item xs={12}>
+                <form className={classes.form}>
+                  <Grid container direction="row" alignItems="center">
                     <Grid item xs={12}>
+                      <Typography className={classes.formHeading}>
+                        Payment Options
+                      </Typography>
                       <Divider variant="middle" className={classes.divider} />
-                      <form
-                        method="POST"
-                        action={process.env.REACT_APP_payment_url}
+                      {gpsCheck.open2 && (
+                        <Typography
+                          variant="h5"
+                          style={{
+                            backgroundColor: "#ff0000",
+                            color: "#FFF",
+                            fontWeight: "bolder",
+                            padding: 5,
+                            textAlign: "center",
+                          }}
+                        >
+                          {gpsCheck.errorMessage}
+                        </Typography>
+                      )}
+                      {/* <MapContainer setLoading={setLoading} setgpsCheck={setgpsCheck} gpsCheck={gpsCheck} /> */}
+                      <CheckGps setLoading={setLoading} />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormControl
+                        component="fieldset"
+                        style={{ width: "100%" }}
                       >
-                        {/* <Grid item xs={5}>
+                        <FormLabel component="legend">
+                          <Typography className={classes.formSubheading}>
+                            Please select payment method from the list below.
+                          </Typography>
+                        </FormLabel>
+                        <RadioGroup
+                          row
+                          id="paymentMethod"
+                          aria-label="paymentMethod"
+                          name="paymentMethod"
+                          defaultValue="top"
+                          value={payment.paymentMethod}
+                          onChange={handleChange}
+                          aria-required={true}
+                        >
+                          <Grid container direction="row">
+                            <Grid item xs={12} lg={4}>
+                              <FormControlLabel
+                                value="V"
+                                control={<Radio color="primary" />}
+                                label="Visa"
+                                labelPlacement="start"
+                                style={{ marginLeft: 0 }}
+                              />
+                              <img
+                                src="Images/visa-logo.png"
+                                width="79.14px"
+                                height="26px"
+                                style={{ marginTop: "1%", marginLeft: "2%" }}
+                                alt="visa"
+                              />
+                            </Grid>
+                            <Grid item xs={12} lg={4}>
+                              <FormControlLabel
+                                value="M"
+                                control={<Radio color="primary" />}
+                                label="Master"
+                                labelPlacement="start"
+                                className="nomarginMobile"
+                              />
+                              <img
+                                src="Images/mastercard-logo.png"
+                                width="42px"
+                                height="32.86px"
+                                style={{ marginTop: "1%", marginLeft: "2%" }}
+                                alt="mastercard"
+                              />
+                            </Grid>
+                            <Grid item xs={12} lg={4}>
+                              <FormControlLabel
+                                value="Cash on Delivery"
+                                control={<Radio color="primary" />}
+                                label="Cash"
+                                labelPlacement="start"
+                                className="nomarginMobile"
+                              />
+                              <img
+                                src="Images/cashOnDelivery-logo.png"
+                                width="66px"
+                                height="33px"
+                                style={{ marginTop: "1%", marginLeft: "2%" }}
+                                alt="cash"
+                              />
+                            </Grid>
+                          </Grid>
+                        </RadioGroup>
+                      </FormControl>
+                    </Grid>
+                    <Grid
+                      container
+                      style={{
+                        display:
+                          payment.paymentMethod !== "Cash on Delivery"
+                            ? "flex"
+                            : "none",
+                      }}
+                    >
+                      <Grid item xs={12}>
+                        <Divider variant="middle" className={classes.divider} />
+                        <form
+                          method="POST"
+                          action={process.env.REACT_APP_payment_url}
+                        >
+                          {/* <Grid item xs={5}>
                           <input
                             type="hidden"
                             name="authenticateTransaction"
@@ -651,71 +760,135 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                             onChange={handleChange3("authenticateTransaction")}
                           />
                         </Grid> */}
-                        <Grid item xs={5}>
-                          <input
-                            type="hidden"
-                            name="chargetotal"
-                            value={payment.chargetotal}
-                            onChange={handleChange3("chargetotal")}
-                          />
-                        </Grid>
-                        <Grid item xs={5}>
-                          <input
-                            name="checkoutoption"
-                            value={payment.checkoutoption}
-                            onChange={handleChange3("checkoutoption")}
-                            type="hidden"
-                          />
-                        </Grid>
-                        <Grid item xs={5}>
-                          <input
-                            name="currency"
-                            value={payment.currency}
-                            onChange={handleChange3("currency")}
-                            type="hidden"
-                          />
-                        </Grid>
-                        <Grid item xs={5}>
-                          <input
-                            name="hash_algorithm"
-                            value={payment.hash_algorithm}
-                            onChange={handleChange3("hash_algorithm")}
-                            type="hidden"
-                          />
-                        </Grid>
-                        <Grid item xs={5}>
-                          <input
-                            name="hashExtended"
-                            value={payment.hashExtended}
-                            onChange={handleChange3("hashExtended")}
-                            type="hidden"
-                          />
-                        </Grid>
-                        <Grid item xs={5}>
-                          <input
-                            name="paymentMethod"
-                            value={payment.paymentMethod}
-                            onChange={handleChange3("paymentMethod")}
-                            type="hidden"
-                          />
-                        </Grid>
-                        {/* <Grid item xs={5}>
-                          <input
-                            name="responseFailURL"
-                            value={payment.responseFailURL}
-                            onChange={handleChange3("responseFailURL")}
-                            type="hidden"
-                          />
-                        </Grid> */}
-                        {/* <Grid item xs={5}>
-                          <input
-                            name="responseSuccessURL"
-                            value={payment.responseSuccessURL}
-                            onChange={handleChange3("responseSuccessURL")}
-                            type="hidden"
-                          />
-                        </Grid> */}
-                        {/* <Grid item xs={5}>
+                          <Grid item xs={5}>
+                            <input
+                              type="hidden"
+                              name="bname"
+                              value={payment.bname}
+                              onChange={handleChange3("bname")}
+                            />
+                          </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              type="hidden"
+                              name="baddr1"
+                              value={payment.baddr1}
+                              onChange={handleChange3("baddr1")}
+                            />
+                          </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              type="hidden"
+                              name="baddr2"
+                              value={payment.baddr2}
+                              onChange={handleChange3("baddr2")}
+                            />
+                          </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              type="hidden"
+                              name="bcountry"
+                              value={payment.bcountry}
+                              onChange={handleChange3("bcountry")}
+                            />
+                          </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              type="hidden"
+                              name="bstate"
+                              value={payment.bstate}
+                              onChange={handleChange3("bstate")}
+                            />
+                          </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              type="hidden"
+                              name="chargetotal"
+                              value={payment.chargetotal}
+                              onChange={handleChange3("chargetotal")}
+                            />
+                          </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              name="checkoutoption"
+                              value={payment.checkoutoption}
+                              onChange={handleChange3("checkoutoption")}
+                              type="hidden"
+                            />
+                          </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              name="currency"
+                              value={payment.currency}
+                              onChange={handleChange3("currency")}
+                              type="hidden"
+                            />
+                          </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              name="email"
+                              value={payment.email}
+                              onChange={handleChange3("email")}
+                              type="hidden"
+                            />
+                          </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              name="hash_algorithm"
+                              value={payment.hash_algorithm}
+                              onChange={handleChange3("hash_algorithm")}
+                              type="hidden"
+                            />
+                          </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              name="language"
+                              value={payment.language}
+                              onChange={handleChange3("language")}
+                              type="hidden"
+                            />
+                          </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              name="hashExtended"
+                              value={payment.hashExtended}
+                              onChange={handleChange3("hashExtended")}
+                              type="hidden"
+                            />
+                          </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              name="paymentMethod"
+                              value={payment.paymentMethod}
+                              onChange={handleChange3("paymentMethod")}
+                              type="hidden"
+                            />
+                          </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              name="phone"
+                              value={payment.phone}
+                              onChange={handleChange3("phone")}
+                              type="hidden"
+                            />
+                          </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              name="responseFailURL"
+                              value={payment.responseFailURL}
+                              onChange={handleChange3("responseFailURL")}
+                              type="hidden"
+                            />
+                          </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              name="responseSuccessURL"
+                              value={payment.responseSuccessURL}
+                              onChange={handleChange3("responseSuccessURL")}
+                              type="hidden"
+                            />
+                          </Grid>
+                          {/* <Grid item xs={5}>
                           <input
                             name="sharedsecret"
                             value={payment.sharedsecret}
@@ -723,261 +896,296 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                             type="hidden"
                           />
                         </Grid> */}
-                        <Grid item xs={5}>
-                          <input
-                            name="storename"
-                            value={payment.storename}
-                            onChange={handleChange3("storename")}
-                            type="hidden"
-                          />
-                        </Grid>
-                        <Grid item xs={5}>
-                          <input
-                            name="timezone"
-                            value={payment.timezone}
-                            onChange={handleChange3("timezone")}
-                            type="hidden"
-                          />
-                        </Grid>
-                        {/* <Grid item xs={5}>
-                          <input
-                            name="transactionNotificationURL"
-                            value={payment.transactionNotificationURL}
-                            onChange={handleChange3(
-                              "transactionNotificationURL"
-                            )}
-                            type="hidden"
-                          />
-                        </Grid> */}
-                        <Grid item xs={5}>
-                          <input
-                            name="txndatetime"
-                            value={payment.txndatetime}
-                            onChange={handleChange3("txndatetime")}
-                            type="hidden"
-                          />
-                        </Grid>
-                        <Grid item xs={5}>
-                          <input
-                            name="txntype"
-                            value={payment.txntype}
-                            onChange={handleChange3("txntype")}
-                            type="hidden"
-                          />
-                        </Grid>
-                        <div style={{ display: "none" }}>
-                          <Button
-                            id="makePayment"
-                            type="submit"
-                            variant="contained"
-                            size="large"
-                            className={classes.paymentbutton}
-                            disabled={loading}
-                          >
-                            Submit
-                          </Button>
-                        </div>
-                      </form>
-                    </Grid>
-                  </Grid>
-                  <Grid container>
-                    <Grid item xs={12}>
-                      <Typography className={classes.formHeading}>
-                        Delivery Address
-                      </Typography>
-                      <Divider variant="middle" className={classes.divider} />
-                    </Grid>
-                    {userInfo.addressLine1 == "" && userInfo.city == "" ? (
-                      <GeoMap setValues={setValues} values={values} />
-                    ) : (
-                      <></>
-                    )}
-
-                    <Grid item xs={12}>
-                      <Typography className={classes.formSubheading}>
-                        Please enter delivery address below.
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        placeholder="eg. 123 Silver Close"
-                        id="street"
-                        label="Enter Street"
-                        variant="outlined"
-                        value={values.Street}
-                        onChange={handleChange2("Street")}
-                        fullWidth
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        placeholder="Mineral Heights"
-                        id="town"
-                        label="Enter Town"
-                        variant="outlined"
-                        value={values.Town}
-                        onChange={handleChange2("Town")}
-                        fullWidth
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      {/* <TextField id="parish" style={{border: "none", borderColor: "none"}} label="Parish" variant="outlined" value={values.Parish} disabled  fullWidth/> */}
-                      <input
-                        type="text"
-                        id="parish"
-                        style={{
-                          border: "0.1px dotted",
-                          borderColor: "#888888",
-                          borderRadius: "12px",
-                          padding: "18.5px 14px",
-                          width: "100%",
-                          marginBottom: "3%",
-                        }}
-                        value={values.Parish}
-                        disabled
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <TextField
-                        id="contact"
-                        label="Enter Contact #"
-                        variant="outlined"
-                        value={values.ContactNum}
-                        onChange={handleChange2("ContactNum")}
-                        fullWidth
-                      />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Grid container>
-                        <Grid item xs={9}>
-                          <Typography
-                            style={{ fontFamily: "Inter", fontSize: "14px" }}
-                          >
-                            <span className={classes.fees}>Cart Items:</span>{" "}
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={3}>
-                          <Typography>
-                            <span>{`$ ${parseFloat(
-                              checkoutVals.cartItemsSum.Cost
-                            ).toFixed(2)}`}</span>
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={9}>
-                          <Typography
-                            style={{ fontFamily: "Inter", fontSize: "14px" }}
-                          >
-                            <span className={classes.fees}>Delivery Fee:</span>{" "}
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={3}>
-                          <Typography>
-                            <span>{`$ ${parseFloat(
-                              checkoutVals.deliveryFee.Cost
-                            ).toFixed(2)}`}</span>
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={9}>
-                          <Typography
-                            style={{ fontFamily: "Inter", fontSize: "14px" }}
-                          >
-                            <span className={classes.fees}>
-                              Processing Fee:
-                            </span>{" "}
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={3}>
-                          <Typography>
-                            <span>{`$ ${parseFloat(
-                              checkoutVals.serviceFee.Cost
-                            ).toFixed(2)}`}</span>
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={9}>
-                          <Typography
-                            style={{ fontFamily: "Inter", fontSize: "14px" }}
-                          >
-                            <span className={classes.fees}>GCT:</span>{" "}
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={3}>
-                          <Typography>
-                            <span>{`$ ${parseFloat(
-                              checkoutVals.GCT.Cost
-                            ).toFixed(2)}`}</span>
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={9}>
-                          <Typography
-                            style={{ fontFamily: "Inter", fontSize: "14px" }}
-                          >
-                            <span className={classes.fees}>Total:</span>{" "}
-                          </Typography>
-                        </Grid>
-                        <Grid item xs={3}>
-                          <Typography>
-                            <span
-                              style={{ color: "#FF5E14", fontWeight: 600 }}
-                            >{`$ ${parseFloat(checkoutVals.Total.Cost).toFixed(
-                              2
-                            )}`}</span>
-                          </Typography>
-                        </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              name="sname"
+                              value={payment.sname}
+                              onChange={handleChange3("sname")}
+                              type="hidden"
+                            />
+                          </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              name="saddr1"
+                              value={payment.saddr1}
+                              onChange={handleChange3("saddr1")}
+                              type="hidden"
+                            />
+                          </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              name="saddr2"
+                              value={payment.saddr2}
+                              onChange={handleChange3("saddr2")}
+                              type="hidden"
+                            />
+                          </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              name="sstate"
+                              value={payment.sstate}
+                              onChange={handleChange3("sstate")}
+                              type="hidden"
+                            />
+                          </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              name="scountry"
+                              value={payment.scountry}
+                              onChange={handleChange3("scountry")}
+                              type="hidden"
+                            />
+                          </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              name="storename"
+                              value={payment.storename}
+                              onChange={handleChange3("storename")}
+                              type="hidden"
+                            />
+                          </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              name="timezone"
+                              value={payment.timezone}
+                              onChange={handleChange3("timezone")}
+                              type="hidden"
+                            />
+                          </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              name="txndatetime"
+                              value={payment.txndatetime}
+                              onChange={handleChange3("txndatetime")}
+                              type="hidden"
+                            />
+                          </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              name="txntype"
+                              value={payment.txntype}
+                              onChange={handleChange3("txntype")}
+                              type="hidden"
+                            />
+                          </Grid>
+                          <div style={{ display: "none" }}>
+                            <Button
+                              id="makePayment"
+                              type="submit"
+                              variant="contained"
+                              size="large"
+                              className={classes.paymentbutton}
+                              disabled={loading}
+                            >
+                              Submit
+                            </Button>
+                          </div>
+                        </form>
                       </Grid>
                     </Grid>
-                    <Grid item xs={12}>
-                      {error && (
-                        <Alert
-                          variant="filled"
-                          severity="error"
-                          className={classes.alert}
-                        >
-                          {error}
-                        </Alert>
+                    <Grid container>
+                      <Grid item xs={12}>
+                        <Typography className={classes.formHeading}>
+                          Delivery Address
+                        </Typography>
+                        <Divider variant="middle" className={classes.divider} />
+                      </Grid>
+                      {userInfo.addressLine1 == "" && userInfo.city == "" ? (
+                        <GeoMap setValues={setValues} values={values} />
+                      ) : (
+                        <></>
                       )}
-                      {success && (
-                        <Alert
-                          variant="filled"
-                          severity="success"
-                          className={classes.alert}
-                        >
-                          {success}
-                        </Alert>
-                      )}
-                      <Button
-                        type="button"
-                        variant="contained"
-                        size="large"
-                        className={classes.button}
-                        onClick={hash}
-                        disabled={loading}
-                      >
-                        {!loading ? "Checkout" : <></>}
-                        {loading && (
-                          <Box sx={{ textAlign: "center" }}>
-                            <CircularProgress />
-                          </Box>
+
+                      <Grid item xs={12}>
+                        <Typography className={classes.formSubheading}>
+                          Please enter delivery address below.
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          placeholder="eg. 123 Silver Close"
+                          id="street"
+                          label="Enter Street"
+                          variant="outlined"
+                          value={values.Street}
+                          onChange={handleChange2("Street")}
+                          fullWidth
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          placeholder="Mineral Heights"
+                          id="town"
+                          label="Enter Town"
+                          variant="outlined"
+                          value={values.Town}
+                          onChange={handleChange2("Town")}
+                          fullWidth
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        {/* <TextField id="parish" style={{border: "none", borderColor: "none"}} label="Parish" variant="outlined" value={values.Parish} disabled  fullWidth/> */}
+                        <input
+                          type="text"
+                          id="parish"
+                          style={{
+                            border: "0.1px dotted",
+                            borderColor: "#888888",
+                            borderRadius: "12px",
+                            padding: "18.5px 14px",
+                            width: "100%",
+                            marginBottom: "3%",
+                          }}
+                          value={values.Parish}
+                          disabled
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          id="contact"
+                          label="Enter Contact #"
+                          variant="outlined"
+                          value={values.ContactNum}
+                          onChange={handleChange2("ContactNum")}
+                          fullWidth
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Grid container>
+                          <Grid item xs={9}>
+                            <Typography
+                              style={{ fontFamily: "Inter", fontSize: "14px" }}
+                            >
+                              <span className={classes.fees}>Cart Items:</span>{" "}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={3}>
+                            <Typography>
+                              <span>{`$ ${parseFloat(
+                                checkoutVals.cartItemsSum.Cost
+                              ).toFixed(2)}`}</span>
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={9}>
+                            <Typography
+                              style={{ fontFamily: "Inter", fontSize: "14px" }}
+                            >
+                              <span className={classes.fees}>
+                                Delivery Fee:
+                              </span>{" "}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={3}>
+                            <Typography>
+                              <span>{`$ ${parseFloat(
+                                checkoutVals.deliveryFee.Cost
+                              ).toFixed(2)}`}</span>
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={9}>
+                            <Typography
+                              style={{ fontFamily: "Inter", fontSize: "14px" }}
+                            >
+                              <span className={classes.fees}>
+                                Processing Fee:
+                              </span>{" "}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={3}>
+                            <Typography>
+                              <span>{`$ ${parseFloat(
+                                checkoutVals.serviceFee.Cost
+                              ).toFixed(2)}`}</span>
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={9}>
+                            <Typography
+                              style={{ fontFamily: "Inter", fontSize: "14px" }}
+                            >
+                              <span className={classes.fees}>GCT:</span>{" "}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={3}>
+                            <Typography>
+                              <span>{`$ ${parseFloat(
+                                checkoutVals.GCT.Cost
+                              ).toFixed(2)}`}</span>
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={9}>
+                            <Typography
+                              style={{ fontFamily: "Inter", fontSize: "14px" }}
+                            >
+                              <span className={classes.fees}>Total:</span>{" "}
+                            </Typography>
+                          </Grid>
+                          <Grid item xs={3}>
+                            <Typography>
+                              <span
+                                style={{ color: "#FF5E14", fontWeight: 600 }}
+                              >{`$ ${parseFloat(
+                                checkoutVals.Total.Cost
+                              ).toFixed(2)}`}</span>
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={12}>
+                        {error && (
+                          <Alert
+                            variant="filled"
+                            severity="error"
+                            className={classes.alert}
+                          >
+                            {error}
+                          </Alert>
                         )}
-                      </Button>
+                        {success && (
+                          <Alert
+                            variant="filled"
+                            severity="success"
+                            className={classes.alert}
+                          >
+                            {success}
+                          </Alert>
+                        )}
+                        <Button
+                          type="button"
+                          variant="contained"
+                          size="large"
+                          className={classes.button}
+                          onClick={hash}
+                          disabled={loading}
+                          id="checkout-btn"
+                        >
+                          {!loading ? "Checkout" : <></>}
+                          {loading && (
+                            <Box sx={{ textAlign: "center" }}>
+                              <CircularProgress />
+                            </Box>
+                          )}
+                        </Button>
+                      </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-              </form>
+                </form>
+              </Grid>
             </Grid>
-          </Grid>
-        </Paper>
-      </div>
-      <style>
-        {`
+          </Paper>
+        </div>
+        <style>
+          {`
                     @media only screen and (max-width: 1279px) {
                         .nomarginMobile {
                             margin-left: 0px;
                         }
                     }
                     `}
-      </style>
-    </>
-  );
+        </style>
+      </>
+    );
+  }
+  return <></>;
 };
 
 export default PaymentOptionsForm;

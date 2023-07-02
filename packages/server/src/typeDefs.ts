@@ -184,6 +184,7 @@ const typeDefs = /* GraphQL */ `
     OrderTotal: Float
     OrderDate: String
     Rider: Rider
+    BillingInfo: OrderBilling
     DeliveryAddress: String
     PaymentMethod: String
     AdditionalInfo: String
@@ -251,6 +252,50 @@ const typeDefs = /* GraphQL */ `
     hash: String
   }
 
+  type OrderBilling {
+    _id: ID
+    oid: String
+    txndate: String
+    ccbin: String
+    processor: String
+    saddr2: String
+    saddr1: String
+    cccountry: String
+    Expmonth: String
+    hashalgorithm: String
+    endpointTransactionId: String
+    currency: String
+    processorresponsecode: String
+    chargetotal: String
+    email: String
+    terminalid: String
+    associationResponseCode: String
+    approvalcode: String
+    expyear: String
+    responsehash: String
+    responsecode3dsecure: String
+    bstate: String
+    schemeTransactionId: String
+    tdate: String
+    installmentsinterest: String
+    bname: String
+    phone: String
+    ccbrand: String
+    sname: String
+    sstate: String
+    refnumber: String
+    txntype: String
+    paymentMethod: String
+    txndatetime: String
+    cardnumber: String
+    ipgTransactionId: String
+    scountry: String
+    baddr1: String
+    bcountry: String
+    baddr2: String
+    status: String
+  }
+
   type Query {
     hello: String
 
@@ -276,12 +321,25 @@ const typeDefs = /* GraphQL */ `
   type Mutation {
     createHash(
       authenticateTransaction: Boolean
+      bname: String
+      baddr1: String
+      baddr2: String
+      bcountry: String
+      sname: String
+      saddr1: String
+      saddr2: String
+      sstate: String
+      scountry: String
+      bstate: String
       chargetotal: String
       checkoutoption: String
       currency: String
+      email: String
       hash_algorithm: String
+      language: String
       hashExtended: String
       paymentMethod: String
+      phone: String
       responseFailURL: String
       responseSuccessURL: String
       sharedsecret: String
@@ -434,6 +492,49 @@ const typeDefs = /* GraphQL */ `
       OrderType: String
       Restaurant: String
     ): Order
+
+    createOrderBilling(
+      oId: String
+      txndate: String
+      ccbin: String
+      processor: String
+      saddr2: String
+      saddr1: String
+      cccountry: String
+      Expmonth: String
+      hashalgorithm: String
+      endpointTransactionId: String
+      currency: String
+      processorresponsecode: String
+      chargetotal: String
+      email: String
+      terminalid: String
+      associationResponseCode: String
+      approvalcode: String
+      expyear: String
+      responsehash: String
+      responsecode3dsecure: String
+      bstate: String
+      schemeTransactionId: String
+      tdate: String
+      installmentsinterest: String
+      bname: String
+      phone: String
+      ccbrand: String
+      sname: String
+      sstate: String
+      refnumber: String
+      txntype: String
+      paymentMethod: String
+      txndatetime: String
+      cardnumber: String
+      ipgTransactionId: String
+      scountry: String
+      baddr1: String
+      bcountry: String
+      baddr2: String
+      status: String
+    ): OrderBilling
 
     getOrdersByUserId(Id: String): [Order]
 

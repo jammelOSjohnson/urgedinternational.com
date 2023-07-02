@@ -3,12 +3,25 @@ import { gql } from "@apollo/client";
 export const CREATE_HASH_MUTATION = gql`
   mutation createHash(
     $authenticateTransaction: Boolean!
+    $bname: String!
+    $baddr1: String!
+    $baddr2: String!
+    $bcountry: String!
+    $bstate: String!
+    $sname: String!
+    $saddr1: String!
+    $saddr2: String!
+    $sstate: String!
+    $scountry: String!
     $chargetotal: String!
     $checkoutoption: String!
     $currency: String!
+    $email: String!
     $hash_algorithm: String!
+    $language: String!
     $hashExtended: String!
     $paymentMethod: String!
+    $phone: String!
     $responseFailURL: String!
     $responseSuccessURL: String!
     $sharedsecret: String!
@@ -20,12 +33,25 @@ export const CREATE_HASH_MUTATION = gql`
   ) {
     createHash(
       authenticateTransaction: $authenticateTransaction
+      bname: $bname
+      baddr1: $baddr1
+      baddr2: $baddr2
+      bcountry: $bcountry
+      bstate: $bstate
+      sname: $sname
+      saddr1: $saddr1
+      saddr2: $saddr2
+      sstate: $sstate
+      scountry: $scountry
       chargetotal: $chargetotal
       checkoutoption: $checkoutoption
       currency: $currency
+      email: $email
       hash_algorithm: $hash_algorithm
       hashExtended: $hashExtended
+      language: $language
       paymentMethod: $paymentMethod
+      phone: $phone
       responseFailURL: $responseFailURL
       responseSuccessURL: $responseSuccessURL
       sharedsecret: $sharedsecret
@@ -494,6 +520,7 @@ export const CREATE_ORDER = gql`
     $OrderTotal: Float
     $OrderDate: String
     $Rider: String
+    $BillingInfo: String
     $DeliveryAddress: String
     $PaymentMethod: String
     $AdditionalInfo: String
@@ -511,6 +538,7 @@ export const CREATE_ORDER = gql`
       OrderTotal: $OrderTotal
       OrderDate: $OrderDate
       Rider: $Rider
+      BillingInfo: $BillingInfo
       DeliveryAddress: $DeliveryAddress
       PaymentMethod: $PaymentMethod
       AdditionalInfo: $AdditionalInfo
@@ -540,6 +568,48 @@ export const CREATE_ORDER = gql`
         ImageName
         isAvailable
         disabled
+      }
+      BillingInfo {
+        oid
+        txndate
+        ccbin
+        processor
+        saddr2
+        saddr1
+        cccountry
+        Expmonth
+        hashalgorithm
+        endpointTransactionId
+        currency
+        processorresponsecode
+        chargetotal
+        email
+        terminalid
+        associationResponseCode
+        approvalcode
+        expyear
+        responsehash
+        responsecode3dsecure
+        bstate
+        schemeTransactionId
+        tdate
+        installmentsinterest
+        bname
+        phone
+        ccbrand
+        sname
+        sstate
+        refnumber
+        txntype
+        paymentMethod
+        txndatetime
+        cardnumber
+        ipgTransactionId
+        scountry
+        baddr1
+        bcountry
+        baddr2
+        status
       }
       DeliveryAddress
       PaymentMethod
@@ -1123,6 +1193,153 @@ export const GET_CATEGORIES = gql`
       _id
       Id
       Name
+    }
+  }
+`;
+
+export const CREATE_ORDER_Billing = gql`
+  mutation CreateOrderBilling(
+    $oId: String
+    $orderInfo: Float
+    $txndate: String
+    $ccbin: String
+    $processor: String
+    $saddr2: String
+    $saddr1: String
+    $cccountry: String
+    $expmonth: String
+    $hashAlgorithm: String
+    $endpointTransactionId: String
+    $currency: String
+    $processorResponseCode: String
+    $chargetotal: String
+    $email: String
+    $terminalId: String
+    $associationResponseCode: String
+    $approvalCode: String
+    $expyear: String
+    $responseHash: String
+    $responseCode3Dsecure: String
+    $bstate: String
+    $schemeTransactionId: String
+    $tdate: String
+    $installmentsInterest: String
+    $bname: String
+    $phone: String
+    $ccbrand: String
+    $sname: String
+    $sstate: String
+    $refnumber: String
+    $txntype: String
+    $paymentMethod: String
+    $txndatetime: String
+    $cardnumber: String
+    $ipgTransactionId: String
+    $scountry: String
+    $baddr1: String
+    $bcountry: String
+    $baddr2: String
+    $status: String
+  ) {
+    createOrderBilling(
+      oId: $oId
+      OrderInfo: $orderInfo
+      txndate: $txndate
+      ccbin: $ccbin
+      processor: $processor
+      saddr2: $saddr2
+      saddr1: $saddr1
+      cccountry: $cccountry
+      Expmonth: $expmonth
+      hash_algorithm: $hashAlgorithm
+      endpointTransactionId: $endpointTransactionId
+      currency: $currency
+      processor_response_code: $processorResponseCode
+      chargetotal: $chargetotal
+      email: $email
+      terminal_id: $terminalId
+      associationResponseCode: $associationResponseCode
+      approval_code: $approvalCode
+      expyear: $expyear
+      response_hash: $responseHash
+      response_code_3dsecure: $responseCode3Dsecure
+      bstate: $bstate
+      schemeTransactionId: $schemeTransactionId
+      tdate: $tdate
+      installments_interest: $installmentsInterest
+      bname: $bname
+      phone: $phone
+      ccbrand: $ccbrand
+      sname: $sname
+      sstate: $sstate
+      refnumber: $refnumber
+      txntype: $txntype
+      paymentMethod: $paymentMethod
+      txndatetime: $txndatetime
+      cardnumber: $cardnumber
+      ipgTransactionId: $ipgTransactionId
+      scountry: $scountry
+      baddr1: $baddr1
+      bcountry: $bcountry
+      baddr2: $baddr2
+      status: $status
+    ) {
+      oid
+      OrderInfo {
+        _id
+        Id
+        OrderItems
+        OrderStatus
+        OrderTotal
+        OrderDate
+        DeliveryAddress
+        PaymentMethod
+        AdditionalInfo
+        DeliveryFee
+        GCT
+        ServiceCharge
+        CartTotal
+        OrderType
+      }
+      txndate
+      ccbin
+      processor
+      saddr2
+      saddr1
+      cccountry
+      Expmonth
+      hash_algorithm
+      endpointTransactionId
+      currency
+      processor_response_code
+      chargetotal
+      email
+      terminal_id
+      associationResponseCode
+      approval_code
+      expyear
+      response_hash
+      response_code_3dsecure
+      bstate
+      schemeTransactionId
+      tdate
+      installments_interest
+      bname
+      phone
+      ccbrand
+      sname
+      sstate
+      refnumber
+      txntype
+      paymentMethod
+      txndatetime
+      cardnumber
+      ipgTransactionId
+      scountry
+      baddr1
+      bcountry
+      baddr2
+      status
     }
   }
 `;

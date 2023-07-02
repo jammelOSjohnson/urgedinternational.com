@@ -145,6 +145,13 @@ function appDataReducer(state, action) {
         ...state,
         cartItems: action.payload.cartItems,
       };
+    case "add_cart_items":
+      return {
+        ...state,
+        cartItems: action.payload.cartItems,
+        restaurants: action.payload.restaurants,
+        selectedRestaurant: action.payload.selectedRestaurant,
+      };
     case "remove_cart_item":
       return {
         ...state,
@@ -384,15 +391,28 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     let result = await createHash({
       variables: {
         authenticateTransaction: paymentReq.authenticateTransaction,
+        bname: paymentReq.bname,
+        baddr1: paymentReq.baddr1,
+        baddr2: paymentReq.baddr2,
+        bcountry: paymentReq.bcountry,
+        bstate: paymentReq.bstate,
         chargetotal: paymentReq.chargetotal,
         checkoutoption: paymentReq.checkoutoption,
         currency: paymentReq.currency,
+        email: paymentReq.email,
         hash_algorithm: paymentReq.hash_algorithm,
+        language: paymentReq.language,
         hashExtended: paymentReq.hashExtended,
         paymentMethod: paymentReq.paymentMethod,
+        phone: paymentReq.phone,
         responseFailURL: paymentReq.responseFailURL,
         responseSuccessURL: paymentReq.responseSuccessURL,
         sharedsecret: "",
+        sname: paymentReq.sname,
+        saddr1: paymentReq.saddr1,
+        saddr2: paymentReq.saddr2,
+        sstate: paymentReq.sstate,
+        scountry: paymentReq.scountry,
         storename: paymentReq.storename,
         timezone: paymentReq.timezone,
         transactionNotificationURL: paymentReq.transactionNotificationURL,
@@ -1510,6 +1530,24 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       payload.cartItems.push(item);
       dispatch({
         type: "add_cart_item",
+        payload: payload,
+      });
+    }
+  };
+
+  var addItemsToCart = async function addItemsToCart(
+    payload,
+    items,
+    restaurants,
+    checkoutOrder
+  ) {
+    if (items !== null && items !== undefined) {
+      payload.cartItems = items;
+      payload.restaurants = restaurants;
+      payload.selectedRestaurant = selectedRestaurant;
+
+      dispatch({
+        type: "add_cart_items",
         payload: payload,
       });
     }
@@ -3214,6 +3252,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     getMenuBycategory,
     getRestBycategory,
     addItemToCart,
+    addItemsToCart,
     removeCartItem,
     clearCartItems,
     getMenuCats,

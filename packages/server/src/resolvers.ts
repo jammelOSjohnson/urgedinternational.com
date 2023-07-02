@@ -16,9 +16,10 @@ const crypto = require("crypto");
 import { PubSub } from "graphql-subscriptions";
 //import { GooglePubSub } from '@axelspringer/graphql-google-pubsub';// For Production
 import { RedisPubSub } from "graphql-redis-subscriptions"; // For Production
-import Mailbox from "./models/MailBox.model";
+import Mailbox from "./models/Mailbox.model";
 import ShippingAddress from "./models/ShippingAddress";
 import OrderRejection from "./models/OrderRejection.model";
+import OrderBilling from "./models/OrderBilling.model";
 
 const pubsub = new RedisPubSub({
   connection: {
@@ -150,12 +151,25 @@ const resolvers = {
       _,
       {
         authenticateTransaction,
+        bname,
+        baddr1,
+        baddr2,
+        bcountry,
+        bstate,
+        sname,
+        saddr1,
+        saddr2,
+        sstate,
+        scountry,
         chargetotal,
         checkoutoption,
         currency,
+        email,
         hash_algorithm,
+        language,
         hashExtended,
         paymentMethod,
+        phone,
         responseFailURL,
         responseSuccessURL,
         sharedsecret,
@@ -180,16 +194,47 @@ const resolvers = {
       // "|" +
       // responseSuccessURL +
       // "|" +
+
       const str =
+        baddr1 +
+        "|" +
+        baddr2 +
+        "|" +
+        bcountry +
+        "|" +
+        bname +
+        "|" +
+        bstate +
+        "|" +
         chargetotal +
         "|" +
         checkoutoption +
         "|" +
         currency +
         "|" +
+        email +
+        "|" +
         hash_algorithm +
         "|" +
+        language +
+        "|" +
         paymentMethod +
+        "|" +
+        phone +
+        "|" +
+        responseFailURL +
+        "|" +
+        responseSuccessURL +
+        "|" +
+        saddr1 +
+        "|" +
+        saddr2 +
+        "|" +
+        scountry +
+        "|" +
+        sname +
+        "|" +
+        sstate +
         "|" +
         storename +
         "|" +
@@ -209,7 +254,7 @@ const resolvers = {
       // hash the string
       // and set the output format
       const hash = sha256Hasher.update(str).digest("base64");
-
+      console.log(hash);
       // A unique sha256 hash 😃
       return { hash: hash };
     },
@@ -508,6 +553,109 @@ const resolvers = {
       pubsub.publish(ORDER_CREATED, { orderCreated: finalOrder[0] });
 
       return finalOrder[0];
+    },
+
+    //Billing
+    createOrderBilling: async (
+      _,
+      {
+        oId,
+        txndate,
+        ccbin,
+        processor,
+        saddr2,
+        saddr1,
+        cccountry,
+        Expmonth,
+        hashalgorithm,
+        endpointTransactionId,
+        currency,
+        processorresponse_code,
+        chargetotal,
+        email,
+        terminalid,
+        associationResponseCode,
+        approvalcode,
+        expyear,
+        responsehash,
+        responsecode3dsecure,
+        bstate,
+        schemeTransactionId,
+        tdate,
+        installmentsinterest,
+        bname,
+        phone,
+        ccbrand,
+        sname,
+        sstate,
+        refnumber,
+        txntype,
+        paymentMethod,
+        txndatetime,
+        cardnumber,
+        ipgTransactionId,
+        scountry,
+        baddr1,
+        bcountry,
+        baddr2,
+        status,
+      }
+    ) => {
+      console.log("oId is", oId);
+      console.log("order date is ", txndate);
+      const orderBilling = new OrderBilling({
+        oId,
+        txndate,
+        ccbin,
+        processor,
+        saddr2,
+        saddr1,
+        cccountry,
+        Expmonth,
+        hashalgorithm,
+        endpointTransactionId,
+        currency,
+        processorresponse_code,
+        chargetotal,
+        email,
+        terminalid,
+        associationResponseCode,
+        approvalcode,
+        expyear,
+        responsehash,
+        responsecode3dsecure,
+        bstate,
+        schemeTransactionId,
+        tdate,
+        installmentsinterest,
+        bname,
+        phone,
+        ccbrand,
+        sname,
+        sstate,
+        refnumber,
+        txntype,
+        paymentMethod,
+        txndatetime,
+        cardnumber,
+        ipgTransactionId,
+        scountry,
+        baddr1,
+        bcountry,
+        baddr2,
+        status,
+      });
+      const newBilling = await orderBilling.save();
+      const billingId = newBilling._id;
+      // console.log(newOrder)
+      // console.log(orderId);
+
+      const finalBilling = await OrderBilling.find()
+        .where("_id")
+        .equals(billingId)
+        .populate("OrderInfo");
+
+      return finalBilling[0];
     },
 
     getOrdersByUserId: async (_, { Id }) => {
