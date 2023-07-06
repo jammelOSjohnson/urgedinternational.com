@@ -482,6 +482,7 @@ const typeDefs = /* GraphQL */ `
       OrderTotal: Float
       OrderDate: String
       Rider: String
+      BillingInfo: String
       DeliveryAddress: String
       PaymentMethod: String
       AdditionalInfo: String

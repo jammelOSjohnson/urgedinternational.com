@@ -511,6 +511,7 @@ const resolvers = {
         OrderTotal,
         OrderDate,
         Rider,
+        BillingInfo,
         DeliveryAddress,
         PaymentMethod,
         AdditionalInfo,
@@ -529,6 +530,7 @@ const resolvers = {
         OrderTotal,
         OrderDate,
         Rider,
+        BillingInfo,
         DeliveryAddress,
         PaymentMethod,
         AdditionalInfo,
@@ -548,7 +550,8 @@ const resolvers = {
         .where("_id")
         .equals(orderId)
         .populate("Rider")
-        .populate("Restaurant");
+        .populate("Restaurant")
+        .populate("BillingInfo");
       //console.log(finalOrder);
       pubsub.publish(ORDER_CREATED, { orderCreated: finalOrder[0] });
 
