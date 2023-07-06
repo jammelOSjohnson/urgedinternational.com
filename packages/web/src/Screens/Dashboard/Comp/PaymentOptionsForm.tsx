@@ -273,7 +273,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
         ? process.env.REACT_APP_bcountry
         : "",
     bstate: "",
-    chargetotal: "4.00",
+    chargetotal: "",
     checkoutoption:
       process.env.REACT_APP_checkoutoption !== undefined
         ? process.env.REACT_APP_checkoutoption
@@ -453,7 +453,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
       selectedRestaurant: selectedRestaurant,
     };
     localStorage.setItem("paymentObject", JSON.stringify(session));
-
+    console.log(payment);
     payment.paymentMethod === ""
       ? setError("Please select payment method.")
       : createPaymentHash(payment).then(function (hashResult) {
@@ -600,8 +600,8 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
       Total: newTotal,
     });
 
-    //setPayment({ ...payment, chargetotal: finalTotal.toString() });
     if (userInfo.addressLine1 !== "" && userInfo.city !== "") {
+      console.log("setting charge total1", finalTotal.toString());
       setValues({
         ...values,
         Street: userInfo.addressLine1,
@@ -620,7 +620,11 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
         sstate: userInfo.city,
         phone: userInfo.contactNumber,
         email: userInfo.email,
+        chargetotal: finalTotal.toString(),
       });
+    } else {
+      console.log("setting charge total2", finalTotal.toString());
+      setPayment({ ...payment, chargetotal: finalTotal.toString() });
     }
   }, [cartItems, value]);
   // generalLocation, values.Town

@@ -74,6 +74,7 @@ import "jspdf/dist/polyfills.es.js";
 import { PrivacyPolicyScreen } from "../Screens/Dashboard/PrivacyPolicyScreen";
 import React from "react";
 import { Spinner } from "./spinner";
+import { OrderCompleted } from "../Screens/Checkout/OrderCompleted";
 const PaymentProcessScreen = React.lazy(
   () => import("../Screens/Dashboard/PaymentProcessScreen")
 );
@@ -92,9 +93,7 @@ const TermsOfServiceScreen = React.lazy(
 const CargoAndFreight = React.lazy(
   () => import("../Screens/Dashboard/CargoAndFreight")
 );
-const OrderCompleted = React.lazy(
-  () => import("../Screens/Checkout/OrderCompleted")
-);
+
 const RestaurantProfileDetailsScreen = React.lazy(
   () => import("../Screens/RestaurantDashboard/RestaurantProfileDetailsScreen")
 );
@@ -299,6 +298,11 @@ const App: React.FC = function App() {
                     exact
                     component={ShoppingCartScreen}
                   />
+                  <Route
+                    path="/OrderCompleted"
+                    exact
+                    component={OrderCompleted}
+                  />
                   <Route path="/OrderHistory" exact component={OrdersHistory} />
                   <Route path="/Errands" exact component={ErrandScreen} />
                   <Route path="/Profile" exact component={UserProfileScreen} />
@@ -394,11 +398,6 @@ const App: React.FC = function App() {
                   {/* <Route path="/Menu" exact component={RestaurantMenuScreen} /> */}
 
                   <Route path="/Checkout" exact component={CheckoutScreen} />
-                  <Route
-                    path="/OrderCompleted"
-                    exact
-                    component={OrderCompleted}
-                  />
                   <Route path="/404" component={NotFound} />
                   <Redirect from="*" to="/404" />
                 </Switch>

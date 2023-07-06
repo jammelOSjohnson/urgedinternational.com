@@ -78,6 +78,13 @@ function appDataReducer(state, action) {
         userRolef: action.payload.userRolef,
         currentUser: action.payload.currentUser,
       };
+    case "reinitstate":
+      //console.log("dispatching fetch user info action");
+      //console.log(action);
+      return {
+        ...state,
+        ...action.payload,
+      };
     case "get_address":
       ////console.log("dispatching address:");
       ////console.log(action.payload.Address);
@@ -1587,7 +1594,8 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     serviceFee,
     cartItemsSum,
     Total,
-    restaurantID
+    restaurantID,
+    billingID
   ) {
     if (cartItems.length !== 0) {
       var orderItems: object[] = [];
@@ -1660,6 +1668,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
             RiderRes[randRider]._id !== undefined
               ? RiderRes[randRider]._id
               : "",
+          BillingInfo: billingID,
           DeliveryAddress: state.Street + "," + state.Town + ",Clarendon",
           PaymentMethod: state.PaymentMethod,
           AdditionalInfo:
@@ -3198,6 +3207,10 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  const reinitstate = function reinitstate(payload) {
+    dispatch({ type: "reinitstate", payload });
+  };
+
   const [value, dispatch] = useReducer(appDataReducer, {
     currentUser,
     loading,
@@ -3291,6 +3304,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     UpdateUserInfo,
     fetchStaff,
     editStaff,
+    reinitstate,
   });
 
   return (
