@@ -304,7 +304,7 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
         >
           <Grid
             container
-            xs={12}
+            // xs={12}
             direction="row"
             spacing={1}
             className={classes.gridRoot}
