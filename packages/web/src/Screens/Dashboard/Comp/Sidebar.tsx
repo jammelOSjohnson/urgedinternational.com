@@ -273,7 +273,12 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                   className={classes.cartIcon}
                   onClick={handleClose2}
                 >
-                  <img src="Images/CartCloseIcon.png" alt="closemodal" />
+                  <img
+                    src={
+                      window.location.origin + "/" + "Images/CartCloseIcon.png"
+                    }
+                    alt="closemodal"
+                  />
                 </Link>
                 <Grid
                   container
@@ -338,14 +343,14 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
               {open && (
                 <img
                   className={classes.logo}
-                  src="Images/urged logo.jpg"
+                  src={window.location.origin + "/" + "Images/urged logo.jpg"}
                   alt="Urged Logo"
                 ></img>
               )}
               {!open && (
                 <img
                   className={classes.logosmall}
-                  src="Images/urged logoR.png"
+                  src={window.location.origin + "/" + "Images/urged logoR.png"}
                   alt="Urged Logo"
                 ></img>
               )}
@@ -368,24 +373,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                       <ListItemIcon>
                         {index === 0 ? (
                           <img
-                            src="Images/GroupSquareIcon.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/GroupSquareIcon.png"
+                            }
                             alt="square icon"
                           />
                         ) : index === 1 ? (
                           <img
-                            src="Images/BlackFoodDeliveryService.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BlackFoodDeliveryService.png"
+                            }
                             alt="Food icon"
                           />
                         ) : index === 2 ? (
-                          <img src="Images/BlackUShip.png" alt="truck icon" />
+                          <img
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BlackUShip.png"
+                            }
+                            alt="truck icon"
+                          />
                         ) : index === 3 ? (
                           <img
-                            src="Images/blacktruckIconImage.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/blacktruckIconImage.png"
+                            }
                             alt="BlackMarket icon"
                           />
                         ) : index === 4 ? (
                           <img
-                            src="Images/BackMarketPlaceIcon.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BackMarketPlaceIcon.png"
+                            }
                             alt="BlackMarket icon"
                           />
                         ) : index === 5 ? (
@@ -419,24 +447,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                         <ListItemIcon className={classes.activeIcon2}>
                           {index === 0 ? (
                             <img
-                              src="Images/GroupSquareIcon.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/GroupSquareIcon.png"
+                              }
                               alt="square icon"
                             />
                           ) : index === 1 ? (
                             <img
-                              src="Images/BlackFoodDeliveryService.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BlackFoodDeliveryService.png"
+                              }
                               alt="Food icon"
                             />
                           ) : index === 2 ? (
-                            <img src="Images/BlackUShip.png" alt="truck icon" />
+                            <img
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BlackUShip.png"
+                              }
+                              alt="truck icon"
+                            />
                           ) : index === 3 ? (
                             <img
-                              src="Images/blacktruckIconImage.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/blacktruckIconImage.png"
+                              }
                               alt="BlackMarket icon"
                             />
                           ) : index === 4 ? (
                             <img
-                              src="Images/BackMarketPlaceIcon.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BackMarketPlaceIcon.png"
+                              }
                               alt="BlackMarket icon"
                             />
                           ) : index === 5 ? (
@@ -460,24 +511,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                       <ListItemIcon>
                         {index === 0 ? (
                           <img
-                            src="Images/GroupSquareIcon.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/GroupSquareIcon.png"
+                            }
                             alt="square icon"
                           />
                         ) : index === 1 ? (
                           <img
-                            src="Images/BlackFoodDeliveryService.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BlackFoodDeliveryService.png"
+                            }
                             alt="Food icon"
                           />
                         ) : index === 2 ? (
-                          <img src="Images/BlackUShip.png" alt="truck icon" />
+                          <img
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BlackUShip.png"
+                            }
+                            alt="truck icon"
+                          />
                         ) : index === 3 ? (
                           <img
-                            src="Images/blacktruckIconImage.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/blacktruckIconImage.png"
+                            }
                             alt="BlackMarket icon"
                           />
                         ) : index === 4 ? (
                           <img
-                            src="Images/BackMarketPlaceIcon.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BackMarketPlaceIcon.png"
+                            }
                             alt="BlackMarket icon"
                           />
                         ) : index === 5 ? (
@@ -501,24 +575,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                       <ListItemIcon>
                         {index === 0 ? (
                           <img
-                            src="Images/GroupSquareIcon.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/GroupSquareIcon.png"
+                            }
                             alt="square icon"
                           />
                         ) : index === 1 ? (
                           <img
-                            src="Images/BlackFoodDeliveryService.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BlackFoodDeliveryService.png"
+                            }
                             alt="Food icon"
                           />
                         ) : index === 2 ? (
-                          <img src="Images/BlackUShip.png" alt="truck icon" />
+                          <img
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BlackUShip.png"
+                            }
+                            alt="truck icon"
+                          />
                         ) : index === 3 ? (
                           <img
-                            src="Images/blacktruckIconImage.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/blacktruckIconImage.png"
+                            }
                             alt="BlackMarket icon"
                           />
                         ) : index === 4 ? (
                           <img
-                            src="Images/BackMarketPlaceIcon.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BackMarketPlaceIcon.png"
+                            }
                             alt="BlackMarket icon"
                           />
                         ) : index === 5 ? (
@@ -545,24 +642,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                         <ListItemIcon>
                           {index === 0 ? (
                             <img
-                              src="Images/GroupSquareIcon.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/GroupSquareIcon.png"
+                              }
                               alt="square icon"
                             />
                           ) : index === 1 ? (
                             <img
-                              src="Images/BlackFoodDeliveryService.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BlackFoodDeliveryService.png"
+                              }
                               alt="Food icon"
                             />
                           ) : index === 2 ? (
-                            <img src="Images/BlackUShip.png" alt="truck icon" />
+                            <img
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BlackUShip.png"
+                              }
+                              alt="truck icon"
+                            />
                           ) : index === 3 ? (
                             <img
-                              src="Images/blacktruckIconImage.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/blacktruckIconImage.png"
+                              }
                               alt="BlackMarket icon"
                             />
                           ) : index === 4 ? (
                             <img
-                              src="Images/BackMarketPlaceIcon.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BackMarketPlaceIcon.png"
+                              }
                               alt="BlackMarket icon"
                             />
                           ) : index === 5 ? (
@@ -594,22 +714,48 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                       <ListItem button>
                         <ListItemIcon>
                           {index === 0 ? (
-                            <img src="Images/Group 564.png" alt="square icon" />
+                            <img
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/Group 564.png"
+                              }
+                              alt="square icon"
+                            />
                           ) : index === 1 ? (
                             <img
-                              src="Images/BlackFoodDeliveryService.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BlackFoodDeliveryService.png"
+                              }
                               alt="Food icon"
                             />
                           ) : index === 2 ? (
-                            <img src="Images/BlackUShip.png" alt="truck icon" />
+                            <img
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BlackUShip.png"
+                              }
+                              alt="truck icon"
+                            />
                           ) : index === 3 ? (
                             <img
-                              src="Images/blacktruckIconImage.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/blacktruckIconImage.png"
+                              }
                               alt="BlackMarket icon"
                             />
                           ) : index === 4 ? (
                             <img
-                              src="Images/BackMarketPlaceIcon.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BackMarketPlaceIcon.png"
+                              }
                               alt="BlackMarket icon"
                             />
                           ) : index === 5 ? (
@@ -640,24 +786,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                         <ListItemIcon>
                           {index === 0 ? (
                             <img
-                              src="Images/GroupSquareIcon.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/GroupSquareIcon.png"
+                              }
                               alt="square icon"
                             />
                           ) : index === 1 ? (
                             <img
-                              src="Images/BlackFoodDeliveryService.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BlackFoodDeliveryService.png"
+                              }
                               alt="Food icon"
                             />
                           ) : index === 2 ? (
-                            <img src="Images/BlackUShip.png" alt="truck icon" />
+                            <img
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BlackUShip.png"
+                              }
+                              alt="truck icon"
+                            />
                           ) : index === 3 ? (
                             <img
-                              src="Images/blacktruckIconImage.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/blacktruckIconImage.png"
+                              }
                               alt="BlackMarket icon"
                             />
                           ) : index === 4 ? (
                             <img
-                              src="Images/BackMarketPlaceIcon.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BackMarketPlaceIcon.png"
+                              }
                               alt="BlackMarket icon"
                             />
                           ) : index === 5 ? (
@@ -680,24 +849,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                       <ListItemIcon>
                         {index === 0 ? (
                           <img
-                            src="Images/GroupSquareIcon.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/GroupSquareIcon.png"
+                            }
                             alt="square icon"
                           />
                         ) : index === 1 ? (
                           <img
-                            src="Images/BlackFoodDeliveryService.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BlackFoodDeliveryService.png"
+                            }
                             alt="Food icon"
                           />
                         ) : index === 2 ? (
-                          <img src="Images/BlackUShip.png" alt="truck icon" />
+                          <img
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BlackUShip.png"
+                            }
+                            alt="truck icon"
+                          />
                         ) : index === 3 ? (
                           <img
-                            src="Images/blacktruckIconImage.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/blacktruckIconImage.png"
+                            }
                             alt="BlackMarket icon"
                           />
                         ) : index === 4 ? (
                           <img
-                            src="Images/BackMarketPlaceIcon.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BackMarketPlaceIcon.png"
+                            }
                             alt="BlackMarket icon"
                           />
                         ) : index === 5 ? (
@@ -727,24 +919,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                         <ListItemIcon>
                           {index === 0 ? (
                             <img
-                              src="Images/GroupSquareIcon.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/GroupSquareIcon.png"
+                              }
                               alt="square icon"
                             />
                           ) : index === 1 ? (
                             <img
-                              src="Images/BlackFoodDeliveryService.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BlackFoodDeliveryService.png"
+                              }
                               alt="Food icon"
                             />
                           ) : index === 2 ? (
-                            <img src="Images/BlackUShip.png" alt="truck icon" />
+                            <img
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BlackUShip.png"
+                              }
+                              alt="truck icon"
+                            />
                           ) : index === 3 ? (
                             <img
-                              src="Images/blacktruckIconImage.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/blacktruckIconImage.png"
+                              }
                               alt="BlackMarket icon"
                             />
                           ) : index === 4 ? (
                             <img
-                              src="Images/BackMarketPlaceIcon.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BackMarketPlaceIcon.png"
+                              }
                               alt="BlackMarket icon"
                             />
                           ) : index === 5 ? (
@@ -768,11 +983,11 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                   //     <ListItem button  >
                   //         <ListItemIcon>
                   //           {
-                  //             index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
-                  //             index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> :
-                  //             index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> :
-                  //             index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
-                  //             index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                  //             index === 0 ? <img src={window.location.origin + "/" + "Images/GroupSquareIcon.png"} alt="square icon"/> :
+                  //             index === 1 ? <img src={window.location.origin + "/" + "Images/BlackFoodDeliveryService.png"} alt="Food icon"/> :
+                  //             index === 2 ? <img src={window.location.origin + "/" + "Images/BlackUShip.png"} alt="truck icon"/> :
+                  //             index === 3 ? <img src={window.location.origin + "/" + "Images/blacktruckIconImage.png"} alt="BlackMarket icon"/> :
+                  //             index === 4 ? <img src={window.location.origin + "/" + "Images/BackMarketPlaceIcon.png"} alt="BlackMarket icon"/> :
                   //             index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> :
                   //             index === 5 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                   //           }
@@ -786,24 +1001,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                         <ListItemIcon>
                           {index === 0 ? (
                             <img
-                              src="Images/GroupSquareIcon.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/GroupSquareIcon.png"
+                              }
                               alt="square icon"
                             />
                           ) : index === 1 ? (
                             <img
-                              src="Images/BlackFoodDeliveryService.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BlackFoodDeliveryService.png"
+                              }
                               alt="Food icon"
                             />
                           ) : index === 2 ? (
-                            <img src="Images/BlackUShip.png" alt="truck icon" />
+                            <img
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BlackUShip.png"
+                              }
+                              alt="truck icon"
+                            />
                           ) : index === 3 ? (
                             <img
-                              src="Images/blacktruckIconImage.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/blacktruckIconImage.png"
+                              }
                               alt="BlackMarket icon"
                             />
                           ) : index === 4 ? (
                             <img
-                              src="Images/BackMarketPlaceIcon.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BackMarketPlaceIcon.png"
+                              }
                               alt="BlackMarket icon"
                             />
                           ) : index === 5 ? (
@@ -837,27 +1075,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                           <ListItemIcon>
                             {index === 0 ? (
                               <img
-                                src="Images/GroupSquareIcon.png"
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/GroupSquareIcon.png"
+                                }
                                 alt="square icon"
                               />
                             ) : index === 1 ? (
                               <img
-                                src="Images/BlackFoodDeliveryService.png"
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/BlackFoodDeliveryService.png"
+                                }
                                 alt="Food icon"
                               />
                             ) : index === 2 ? (
                               <img
-                                src="Images/BlackUShip.png"
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/BlackUShip.png"
+                                }
                                 alt="truck icon"
                               />
                             ) : index === 3 ? (
                               <img
-                                src="Images/blacktruckIconImage.png"
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/blacktruckIconImage.png"
+                                }
                                 alt="BlackMarket icon"
                               />
                             ) : index === 4 ? (
                               <img
-                                src="Images/BackMarketPlaceIcon.png"
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/BackMarketPlaceIcon.png"
+                                }
                                 alt="BlackMarket icon"
                               />
                             ) : index === 5 ? (
@@ -898,27 +1156,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                           <ListItemIcon>
                             {index === 0 ? (
                               <img
-                                src="Images/GroupSquareIcon.png"
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/GroupSquareIcon.png"
+                                }
                                 alt="square icon"
                               />
                             ) : index === 1 ? (
                               <img
-                                src="Images/BlackFoodDeliveryService.png"
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/BlackFoodDeliveryService.png"
+                                }
                                 alt="Food icon"
                               />
                             ) : index === 2 ? (
                               <img
-                                src="Images/BlackUShip.png"
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/BlackUShip.png"
+                                }
                                 alt="truck icon"
                               />
                             ) : index === 3 ? (
                               <img
-                                src="Images/blacktruckIconImage.png"
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/blacktruckIconImage.png"
+                                }
                                 alt="BlackMarket icon"
                               />
                             ) : index === 4 ? (
                               <img
-                                src="Images/BackMarketPlaceIcon.png"
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/BackMarketPlaceIcon.png"
+                                }
                                 alt="BlackMarket icon"
                               />
                             ) : index === 5 ? (
@@ -952,24 +1230,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                       <ListItemIcon>
                         {index === 0 ? (
                           <img
-                            src="Images/GroupSquareIcon.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/GroupSquareIcon.png"
+                            }
                             alt="square icon"
                           />
                         ) : index === 1 ? (
                           <img
-                            src="Images/BlackFoodDeliveryService.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BlackFoodDeliveryService.png"
+                            }
                             alt="Food icon"
                           />
                         ) : index === 2 ? (
-                          <img src="Images/BlackUShip.png" alt="truck icon" />
+                          <img
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BlackUShip.png"
+                            }
+                            alt="truck icon"
+                          />
                         ) : index === 3 ? (
                           <img
-                            src="Images/blacktruckIconImage.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/blacktruckIconImage.png"
+                            }
                             alt="BlackMarket icon"
                           />
                         ) : index === 4 ? (
                           <img
-                            src="Images/BackMarketPlaceIcon.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BackMarketPlaceIcon.png"
+                            }
                             alt="BlackMarket icon"
                           />
                         ) : index === 5 ? (
@@ -1009,10 +1310,14 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                           <ListItem button>
                             <ListItemIcon>
                               {
-                                //index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                //index === 0 ? <img src={window.location.origin + "/" + "Images/Setting.png"} alt="BlackMarket icon"/> :
                                 index === 0 ? (
                                   <img
-                                    src="Images/Logout.png"
+                                    src={
+                                      window.location.origin +
+                                      "/" +
+                                      "Images/Logout.png"
+                                    }
                                     alt="BlackMarket icon"
                                   />
                                 ) : (
@@ -1030,10 +1335,14 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                         <ListItem button key={text}>
                           <ListItemIcon>
                             {
-                              //index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                              //index === 0 ? <img src={window.location.origin + "/" + "Images/Setting.png"} alt="BlackMarket icon"/> :
                               index === 0 ? (
                                 <img
-                                  src="Images/Logout.png"
+                                  src={
+                                    window.location.origin +
+                                    "/" +
+                                    "Images/Logout.png"
+                                  }
                                   alt="BlackMarket icon"
                                 />
                               ) : (
@@ -1060,10 +1369,14 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                           <ListItem button>
                             <ListItemIcon>
                               {
-                                //index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                //index === 0 ? <img src={window.location.origin + "/" + "Images/Setting.png"} alt="BlackMarket icon"/> :
                                 index === 0 ? (
                                   <img
-                                    src="Images/Logout.png"
+                                    src={
+                                      window.location.origin +
+                                      "/" +
+                                      "Images/Logout.png"
+                                    }
                                     className={classes.loginIconStyle}
                                     alt="BlackMarket icon"
                                   />
@@ -1082,10 +1395,14 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                         <ListItem button key={text}>
                           <ListItemIcon>
                             {
-                              //index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                              //index === 0 ? <img src={window.location.origin + "/" + "Images/Setting.png"} alt="BlackMarket icon"/> :
                               index === 0 ? (
                                 <img
-                                  src="Images/Logout.png"
+                                  src={
+                                    window.location.origin +
+                                    "/" +
+                                    "Images/Logout.png"
+                                  }
                                   alt="BlackMarket icon"
                                 />
                               ) : (
@@ -1108,7 +1425,9 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                   })}
                 >
                   <img
-                    src="Images/collapse_icon1.svg"
+                    src={
+                      window.location.origin + "/" + "Images/collapse_icon1.svg"
+                    }
                     style={{ width: "100%" }}
                     alt="icon"
                   />
@@ -1124,7 +1443,9 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                   })}
                 >
                   <img
-                    src="Images/collapse_icon1.svg"
+                    src={
+                      window.location.origin + "/" + "Images/collapse_icon1.svg"
+                    }
                     style={{ width: "100%" }}
                     alt="icon"
                   />
@@ -1196,7 +1517,12 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                   className={classes.cartIcon}
                   onClick={handleClose2}
                 >
-                  <img src="Images/CartCloseIcon.png" alt="closemodal" />
+                  <img
+                    src={
+                      window.location.origin + "/" + "Images/CartCloseIcon.png"
+                    }
+                    alt="closemodal"
+                  />
                 </Link>
                 <Grid
                   container
@@ -1263,14 +1589,14 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
               {open1 && (
                 <img
                   className={classes.logo}
-                  src="Images/urged logo.jpg"
+                  src={window.location.origin + "/" + "Images/urged logo.jpg"}
                   alt="Urged Logo"
                 ></img>
               )}
               {!open1 && (
                 <img
                   className={classes.logosmall}
-                  src="Images/urged logoR.png"
+                  src={window.location.origin + "/" + "Images/urged logoR.png"}
                   alt="Urged Logo"
                 ></img>
               )}
@@ -1293,24 +1619,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                       <ListItemIcon>
                         {index === 0 ? (
                           <img
-                            src="Images/GroupSquareIcon.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/GroupSquareIcon.png"
+                            }
                             alt="square icon"
                           />
                         ) : index === 1 ? (
                           <img
-                            src="Images/BlackFoodDeliveryService.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BlackFoodDeliveryService.png"
+                            }
                             alt="Food icon"
                           />
                         ) : index === 2 ? (
-                          <img src="Images/BlackUShip.png" alt="truck icon" />
+                          <img
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BlackUShip.png"
+                            }
+                            alt="truck icon"
+                          />
                         ) : index === 3 ? (
                           <img
-                            src="Images/blacktruckIconImage.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/blacktruckIconImage.png"
+                            }
                             alt="BlackMarket icon"
                           />
                         ) : index === 4 ? (
                           <img
-                            src="Images/BackMarketPlaceIcon.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BackMarketPlaceIcon.png"
+                            }
                             alt="BlackMarket icon"
                           />
                         ) : index === 5 ? (
@@ -1344,24 +1693,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                         <ListItemIcon className={classes.activeIcon2}>
                           {index === 0 ? (
                             <img
-                              src="Images/GroupSquareIcon.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/GroupSquareIcon.png"
+                              }
                               alt="square icon"
                             />
                           ) : index === 1 ? (
                             <img
-                              src="Images/BlackFoodDeliveryService.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BlackFoodDeliveryService.png"
+                              }
                               alt="Food icon"
                             />
                           ) : index === 2 ? (
-                            <img src="Images/BlackUShip.png" alt="truck icon" />
+                            <img
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BlackUShip.png"
+                              }
+                              alt="truck icon"
+                            />
                           ) : index === 3 ? (
                             <img
-                              src="Images/blacktruckIconImage.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/blacktruckIconImage.png"
+                              }
                               alt="BlackMarket icon"
                             />
                           ) : index === 4 ? (
                             <img
-                              src="Images/BackMarketPlaceIcon.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BackMarketPlaceIcon.png"
+                              }
                               alt="BlackMarket icon"
                             />
                           ) : index === 5 ? (
@@ -1385,24 +1757,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                       <ListItemIcon>
                         {index === 0 ? (
                           <img
-                            src="Images/GroupSquareIcon.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/GroupSquareIcon.png"
+                            }
                             alt="square icon"
                           />
                         ) : index === 1 ? (
                           <img
-                            src="Images/BlackFoodDeliveryService.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BlackFoodDeliveryService.png"
+                            }
                             alt="Food icon"
                           />
                         ) : index === 2 ? (
-                          <img src="Images/BlackUShip.png" alt="truck icon" />
+                          <img
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BlackUShip.png"
+                            }
+                            alt="truck icon"
+                          />
                         ) : index === 3 ? (
                           <img
-                            src="Images/blacktruckIconImage.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/blacktruckIconImage.png"
+                            }
                             alt="BlackMarket icon"
                           />
                         ) : index === 4 ? (
                           <img
-                            src="Images/BackMarketPlaceIcon.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BackMarketPlaceIcon.png"
+                            }
                             alt="BlackMarket icon"
                           />
                         ) : index === 5 ? (
@@ -1426,24 +1821,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                       <ListItemIcon>
                         {index === 0 ? (
                           <img
-                            src="Images/GroupSquareIcon.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/GroupSquareIcon.png"
+                            }
                             alt="square icon"
                           />
                         ) : index === 1 ? (
                           <img
-                            src="Images/BlackFoodDeliveryService.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BlackFoodDeliveryService.png"
+                            }
                             alt="Food icon"
                           />
                         ) : index === 2 ? (
-                          <img src="Images/BlackUShip.png" alt="truck icon" />
+                          <img
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BlackUShip.png"
+                            }
+                            alt="truck icon"
+                          />
                         ) : index === 3 ? (
                           <img
-                            src="Images/blacktruckIconImage.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/blacktruckIconImage.png"
+                            }
                             alt="BlackMarket icon"
                           />
                         ) : index === 4 ? (
                           <img
-                            src="Images/BackMarketPlaceIcon.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BackMarketPlaceIcon.png"
+                            }
                             alt="BlackMarket icon"
                           />
                         ) : index === 5 ? (
@@ -1470,24 +1888,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                         <ListItemIcon>
                           {index === 0 ? (
                             <img
-                              src="Images/GroupSquareIcon.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/GroupSquareIcon.png"
+                              }
                               alt="square icon"
                             />
                           ) : index === 1 ? (
                             <img
-                              src="Images/BlackFoodDeliveryService.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BlackFoodDeliveryService.png"
+                              }
                               alt="Food icon"
                             />
                           ) : index === 2 ? (
-                            <img src="Images/BlackUShip.png" alt="truck icon" />
+                            <img
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BlackUShip.png"
+                              }
+                              alt="truck icon"
+                            />
                           ) : index === 3 ? (
                             <img
-                              src="Images/blacktruckIconImage.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/blacktruckIconImage.png"
+                              }
                               alt="BlackMarket icon"
                             />
                           ) : index === 4 ? (
                             <img
-                              src="Images/BackMarketPlaceIcon.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BackMarketPlaceIcon.png"
+                              }
                               alt="BlackMarket icon"
                             />
                           ) : index === 5 ? (
@@ -1519,22 +1960,48 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                       <ListItem button>
                         <ListItemIcon>
                           {index === 0 ? (
-                            <img src="Images/Group 564.png" alt="square icon" />
+                            <img
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/Group 564.png"
+                              }
+                              alt="square icon"
+                            />
                           ) : index === 1 ? (
                             <img
-                              src="Images/BlackFoodDeliveryService.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BlackFoodDeliveryService.png"
+                              }
                               alt="Food icon"
                             />
                           ) : index === 2 ? (
-                            <img src="Images/BlackUShip.png" alt="truck icon" />
+                            <img
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BlackUShip.png"
+                              }
+                              alt="truck icon"
+                            />
                           ) : index === 3 ? (
                             <img
-                              src="Images/blacktruckIconImage.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/blacktruckIconImage.png"
+                              }
                               alt="BlackMarket icon"
                             />
                           ) : index === 4 ? (
                             <img
-                              src="Images/BackMarketPlaceIcon.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BackMarketPlaceIcon.png"
+                              }
                               alt="BlackMarket icon"
                             />
                           ) : index === 5 ? (
@@ -1565,27 +2032,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                           <ListItemIcon>
                             {index === 0 ? (
                               <img
-                                src="Images/GroupSquareIcon.png"
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/GroupSquareIcon.png"
+                                }
                                 alt="square icon"
                               />
                             ) : index === 1 ? (
                               <img
-                                src="Images/BlackFoodDeliveryService.png"
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/BlackFoodDeliveryService.png"
+                                }
                                 alt="Food icon"
                               />
                             ) : index === 2 ? (
                               <img
-                                src="Images/BlackUShip.png"
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/BlackUShip.png"
+                                }
                                 alt="truck icon"
                               />
                             ) : index === 3 ? (
                               <img
-                                src="Images/blacktruckIconImage.png"
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/blacktruckIconImage.png"
+                                }
                                 alt="BlackMarket icon"
                               />
                             ) : index === 4 ? (
                               <img
-                                src="Images/BackMarketPlaceIcon.png"
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/BackMarketPlaceIcon.png"
+                                }
                                 alt="BlackMarket icon"
                               />
                             ) : index === 5 ? (
@@ -1623,27 +2110,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                           <ListItemIcon>
                             {index === 0 ? (
                               <img
-                                src="Images/GroupSquareIcon.png"
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/GroupSquareIcon.png"
+                                }
                                 alt="square icon"
                               />
                             ) : index === 1 ? (
                               <img
-                                src="Images/BlackFoodDeliveryService.png"
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/BlackFoodDeliveryService.png"
+                                }
                                 alt="Food icon"
                               />
                             ) : index === 2 ? (
                               <img
-                                src="Images/BlackUShip.png"
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/BlackUShip.png"
+                                }
                                 alt="truck icon"
                               />
                             ) : index === 3 ? (
                               <img
-                                src="Images/blacktruckIconImage.png"
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/blacktruckIconImage.png"
+                                }
                                 alt="BlackMarket icon"
                               />
                             ) : index === 4 ? (
                               <img
-                                src="Images/BackMarketPlaceIcon.png"
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/BackMarketPlaceIcon.png"
+                                }
                                 alt="BlackMarket icon"
                               />
                             ) : index === 5 ? (
@@ -1685,24 +2192,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                         <ListItemIcon>
                           {index === 0 ? (
                             <img
-                              src="Images/GroupSquareIcon.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/GroupSquareIcon.png"
+                              }
                               alt="square icon"
                             />
                           ) : index === 1 ? (
                             <img
-                              src="Images/BlackFoodDeliveryService.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BlackFoodDeliveryService.png"
+                              }
                               alt="Food icon"
                             />
                           ) : index === 2 ? (
-                            <img src="Images/BlackUShip.png" alt="truck icon" />
+                            <img
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BlackUShip.png"
+                              }
+                              alt="truck icon"
+                            />
                           ) : index === 3 ? (
                             <img
-                              src="Images/blacktruckIconImage.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/blacktruckIconImage.png"
+                              }
                               alt="BlackMarket icon"
                             />
                           ) : index === 4 ? (
                             <img
-                              src="Images/BackMarketPlaceIcon.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BackMarketPlaceIcon.png"
+                              }
                               alt="BlackMarket icon"
                             />
                           ) : index === 5 ? (
@@ -1725,24 +2255,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                       <ListItemIcon>
                         {index === 0 ? (
                           <img
-                            src="Images/GroupSquareIcon.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/GroupSquareIcon.png"
+                            }
                             alt="square icon"
                           />
                         ) : index === 1 ? (
                           <img
-                            src="Images/BlackFoodDeliveryService.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BlackFoodDeliveryService.png"
+                            }
                             alt="Food icon"
                           />
                         ) : index === 2 ? (
-                          <img src="Images/BlackUShip.png" alt="truck icon" />
+                          <img
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BlackUShip.png"
+                            }
+                            alt="truck icon"
+                          />
                         ) : index === 3 ? (
                           <img
-                            src="Images/blacktruckIconImage.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/blacktruckIconImage.png"
+                            }
                             alt="BlackMarket icon"
                           />
                         ) : index === 4 ? (
                           <img
-                            src="Images/BackMarketPlaceIcon.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BackMarketPlaceIcon.png"
+                            }
                             alt="BlackMarket icon"
                           />
                         ) : index === 5 ? (
@@ -1772,24 +2325,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                         <ListItemIcon>
                           {index === 0 ? (
                             <img
-                              src="Images/GroupSquareIcon.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/GroupSquareIcon.png"
+                              }
                               alt="square icon"
                             />
                           ) : index === 1 ? (
                             <img
-                              src="Images/BlackFoodDeliveryService.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BlackFoodDeliveryService.png"
+                              }
                               alt="Food icon"
                             />
                           ) : index === 2 ? (
-                            <img src="Images/BlackUShip.png" alt="truck icon" />
+                            <img
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BlackUShip.png"
+                              }
+                              alt="truck icon"
+                            />
                           ) : index === 3 ? (
                             <img
-                              src="Images/blacktruckIconImage.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/blacktruckIconImage.png"
+                              }
                               alt="BlackMarket icon"
                             />
                           ) : index === 4 ? (
                             <img
-                              src="Images/BackMarketPlaceIcon.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BackMarketPlaceIcon.png"
+                              }
                               alt="BlackMarket icon"
                             />
                           ) : index === 5 ? (
@@ -1813,11 +2389,11 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                   //     <ListItem button key={text} >
                   //         <ListItemIcon>
                   //           {
-                  //             index === 0 ? <img src="Images/GroupSquareIcon.png" alt="square icon"/> :
-                  //             index === 1 ? <img src="Images/BlackFoodDeliveryService.png" alt="Food icon"/> :
-                  //             index === 2 ? <img src="Images/BlackUShip.png" alt="truck icon"/> :
-                  //             index === 3 ? <img src="Images/blacktruckIconImage.png" alt="BlackMarket icon"/> :
-                  //             index === 4 ? <img src="Images/BackMarketPlaceIcon.png" alt="BlackMarket icon"/> :
+                  //             index === 0 ? <img src={window.location.origin + "/" + "Images/GroupSquareIcon.png"} alt="square icon"/> :
+                  //             index === 1 ? <img src={window.location.origin + "/" + "Images/BlackFoodDeliveryService.png"} alt="Food icon"/> :
+                  //             index === 2 ? <img src={window.location.origin + "/" + "Images/BlackUShip.png"} alt="truck icon"/> :
+                  //             index === 3 ? <img src={window.location.origin + "/" + "Images/blacktruckIconImage.png"} alt="BlackMarket icon"/> :
+                  //             index === 4 ? <img src={window.location.origin + "/" + "Images/BackMarketPlaceIcon.png"} alt="BlackMarket icon"/> :
                   //             index === 5 ? <HistoryRounded style={{width: "36px", height: "38px"}}  /> :
                   //             index === 6 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                   //           }
@@ -1831,24 +2407,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                         <ListItemIcon>
                           {index === 0 ? (
                             <img
-                              src="Images/GroupSquareIcon.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/GroupSquareIcon.png"
+                              }
                               alt="square icon"
                             />
                           ) : index === 1 ? (
                             <img
-                              src="Images/BlackFoodDeliveryService.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BlackFoodDeliveryService.png"
+                              }
                               alt="Food icon"
                             />
                           ) : index === 2 ? (
-                            <img src="Images/BlackUShip.png" alt="truck icon" />
+                            <img
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BlackUShip.png"
+                              }
+                              alt="truck icon"
+                            />
                           ) : index === 3 ? (
                             <img
-                              src="Images/blacktruckIconImage.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/blacktruckIconImage.png"
+                              }
                               alt="BlackMarket icon"
                             />
                           ) : index === 4 ? (
                             <img
-                              src="Images/BackMarketPlaceIcon.png"
+                              src={
+                                window.location.origin +
+                                "/" +
+                                "Images/BackMarketPlaceIcon.png"
+                              }
                               alt="BlackMarket icon"
                             />
                           ) : index === 5 ? (
@@ -1871,24 +2470,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                       <ListItemIcon>
                         {index === 0 ? (
                           <img
-                            src="Images/GroupSquareIcon.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/GroupSquareIcon.png"
+                            }
                             alt="square icon"
                           />
                         ) : index === 1 ? (
                           <img
-                            src="Images/BlackFoodDeliveryService.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BlackFoodDeliveryService.png"
+                            }
                             alt="Food icon"
                           />
                         ) : index === 2 ? (
-                          <img src="Images/BlackUShip.png" alt="truck icon" />
+                          <img
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BlackUShip.png"
+                            }
+                            alt="truck icon"
+                          />
                         ) : index === 3 ? (
                           <img
-                            src="Images/blacktruckIconImage.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/blacktruckIconImage.png"
+                            }
                             alt="BlackMarket icon"
                           />
                         ) : index === 4 ? (
                           <img
-                            src="Images/BackMarketPlaceIcon.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BackMarketPlaceIcon.png"
+                            }
                             alt="BlackMarket icon"
                           />
                         ) : index === 5 ? (
@@ -1910,24 +2532,47 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                       <ListItemIcon>
                         {index === 0 ? (
                           <img
-                            src="Images/GroupSquareIcon.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/GroupSquareIcon.png"
+                            }
                             alt="square icon"
                           />
                         ) : index === 1 ? (
                           <img
-                            src="Images/BlackFoodDeliveryService.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BlackFoodDeliveryService.png"
+                            }
                             alt="Food icon"
                           />
                         ) : index === 2 ? (
-                          <img src="Images/BlackUShip.png" alt="truck icon" />
+                          <img
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BlackUShip.png"
+                            }
+                            alt="truck icon"
+                          />
                         ) : index === 3 ? (
                           <img
-                            src="Images/blacktruckIconImage.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/blacktruckIconImage.png"
+                            }
                             alt="BlackMarket icon"
                           />
                         ) : index === 4 ? (
                           <img
-                            src="Images/BackMarketPlaceIcon.png"
+                            src={
+                              window.location.origin +
+                              "/" +
+                              "Images/BackMarketPlaceIcon.png"
+                            }
                             alt="BlackMarket icon"
                           />
                         ) : index === 5 ? (
@@ -1967,10 +2612,14 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                           <ListItem button>
                             <ListItemIcon>
                               {
-                                //index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                //index === 0 ? <img src={window.location.origin + "/" + "Images/Setting.png"} alt="BlackMarket icon"/> :
                                 index === 0 ? (
                                   <img
-                                    src="Images/Logout.png"
+                                    src={
+                                      window.location.origin +
+                                      "/" +
+                                      "Images/Logout.png"
+                                    }
                                     alt="BlackMarket icon"
                                   />
                                 ) : (
@@ -1988,10 +2637,14 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                         <ListItem button key={text}>
                           <ListItemIcon>
                             {
-                              //index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                              //index === 0 ? <img src={window.location.origin + "/" + "Images/Setting.png"} alt="BlackMarket icon"/> :
                               index === 0 ? (
                                 <img
-                                  src="Images/Logout.png"
+                                  src={
+                                    window.location.origin +
+                                    "/" +
+                                    "Images/Logout.png"
+                                  }
                                   alt="BlackMarket icon"
                                 />
                               ) : (
@@ -2018,10 +2671,14 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                           <ListItem button>
                             <ListItemIcon>
                               {
-                                //index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                                //index === 0 ? <img src={window.location.origin + "/" + "Images/Setting.png"} alt="BlackMarket icon"/> :
                                 index === 0 ? (
                                   <img
-                                    src="Images/Logout.png"
+                                    src={
+                                      window.location.origin +
+                                      "/" +
+                                      "Images/Logout.png"
+                                    }
                                     className={classes.loginIconStyle}
                                     alt="BlackMarket icon"
                                   />
@@ -2040,10 +2697,14 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                         <ListItem button key={text}>
                           <ListItemIcon>
                             {
-                              //index === 0 ? <img src="Images/Setting.png" alt="BlackMarket icon"/> :
+                              //index === 0 ? <img src={window.location.origin + "/" + "Images/Setting.png"} alt="BlackMarket icon"/> :
                               index === 0 ? (
                                 <img
-                                  src="Images/Logout.png"
+                                  src={
+                                    window.location.origin +
+                                    "/" +
+                                    "Images/Logout.png"
+                                  }
                                   alt="BlackMarket icon"
                                 />
                               ) : (
@@ -2066,7 +2727,9 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                   })}
                 >
                   <img
-                    src="Images/collapse_icon1.svg"
+                    src={
+                      window.location.origin + "/" + "Images/collapse_icon1.svg"
+                    }
                     style={{ width: "100%" }}
                     alt="icon"
                   />
@@ -2082,7 +2745,9 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                   })}
                 >
                   <img
-                    src="Images/collapse_icon1.svg"
+                    src={
+                      window.location.origin + "/" + "Images/collapse_icon1.svg"
+                    }
                     style={{ width: "100%" }}
                     alt="icon"
                   />
