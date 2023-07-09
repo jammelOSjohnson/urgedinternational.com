@@ -1,7 +1,21 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useAppData } from "../../Context/AppDataContext";
 import { Spinner } from "../../Components/spinner";
+import {
+  Card,
+  Container,
+  Grid,
+  Theme,
+  createStyles,
+  makeStyles,
+} from "@material-ui/core";
+import { ShoppingCartItems } from "./Comp/ShoppingCartItems";
+import DashboardFooter from "./Comp/DashboardFooter";
+import { HeaderRight } from "./Comp/HeaderRight";
+import { LiveChatWidget } from "@livechat/widget-react";
+const HeaderLeft = React.lazy(() => import("./Comp/HeaderLeft"));
+const Sidebar = React.lazy(() => import("./Comp/Sidebar"));
 
 interface State {
   Street: string;
@@ -25,8 +39,22 @@ interface checkoutCalc {
   Total: Fee;
 }
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    gridRoot: {
+      padding: "0px",
+    },
+    main: {
+      padding: 0,
+      backgroundImage: "url(Images/FoodPortalBackground.png)",
+      height: "100vh",
+    },
+  })
+);
+
 export const PaymentProcessScreen: React.FC = function PaymentProcessScreen() {
   let { id } = useParams();
+  const classes = useStyles();
   const [paymentObject, setPaymentObject] = useState();
   const [billingID, setBillingID] = useState();
   var [error, setError] = useState("");
@@ -38,8 +66,6 @@ export const PaymentProcessScreen: React.FC = function PaymentProcessScreen() {
     checkoutOrder,
     restaurants,
     selectedRestaurant,
-    userInfo,
-    createPaymentHash,
     reinitstate,
   } = value;
   const history = useHistory();
@@ -92,7 +118,8 @@ export const PaymentProcessScreen: React.FC = function PaymentProcessScreen() {
     if (
       restaurants.length > 0 &&
       billingID !== null &&
-      billingID !== undefined
+      billingID !== undefined &&
+      billingID !== "Fail"
     ) {
       handleSubmit();
     }
@@ -167,6 +194,77 @@ export const PaymentProcessScreen: React.FC = function PaymentProcessScreen() {
     }
   };
 
+  if (billingID === "Fail") {
+    return (
+      <>
+        <Sidebar>
+          <Container maxWidth="xl">
+            <Grid
+              container
+              direction="row"
+              spacing={0}
+              className={classes.gridRoot}
+              alignItems="center"
+            >
+              {/* <Grid item xs={2} spacing={1}>
+                        <Sidebar />
+                    </Grid> */}
+              <Grid
+                container
+                direction="row"
+                spacing={1}
+                className={classes.main}
+              >
+                <Grid
+                  item
+                  xs={8}
+                  style={{
+                    marginBottom: "1%",
+                    marginTop: "1%",
+                    background: "transparent",
+                  }}
+                >
+                  <HeaderLeft />
+                </Grid>
+                <Grid
+                  item
+                  xs={4}
+                  style={{
+                    marginBottom: "1%",
+                    marginTop: "1%",
+                    background: "transparent",
+                  }}
+                >
+                  <HeaderRight />
+                </Grid>
+                {/*Row 1*/}
+                <Grid item xs={12}>
+                  <ShoppingCartItems Fail={true} />
+                </Grid>
+                <Grid item xs={12}>
+                  <DashboardFooter />
+                </Grid>
+                {/* <Grid item xs={4}>
+                            <PaymentOptionsForm />
+                        </Grid> */}
+              </Grid>
+            </Grid>
+          </Container>
+        </Sidebar>
+        {process.env.NODE_ENV !== "development" ? (
+          <LiveChatWidget
+            license={
+              process.env.REACT_APP_LIVECHAT_LICENSE !== undefined
+                ? process.env.REACT_APP_LIVECHAT_LICENSE
+                : ""
+            }
+          />
+        ) : (
+          <></>
+        )}
+      </>
+    );
+  }
   return <Spinner />;
 };
 

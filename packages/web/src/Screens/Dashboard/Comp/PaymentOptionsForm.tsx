@@ -115,6 +115,10 @@ interface NoGps {
   errorMessage: string;
 }
 
+type Props = {
+  Fail: boolean;
+};
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -241,7 +245,9 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
+export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
+  Fail,
+}) {
   const classes = useStyles();
 
   const [values, setValues] = React.useState<State>({
@@ -476,15 +482,9 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
     //const testObj = Object.fromEntries(Object.entries(payment).sort());
     //console.log(testObj);
     try {
-      window.addEventListener(
-        "message",
-        (event) => {
-          if (event.origin == "http://localhost:3000") return;
-          console.log(event);
-          // …
-        },
-        false
-      );
+      if (Fail) {
+        setError("Unable to process payment at this time.");
+      }
     } catch (e) {
       console.log(e);
     }
@@ -696,7 +696,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                                 style={{ marginLeft: 0 }}
                               />
                               <img
-                                src="Images/visa-logo.png"
+                                src="../Images/visa-logo.png"
                                 width="79.14px"
                                 height="26px"
                                 style={{ marginTop: "1%", marginLeft: "2%" }}
@@ -712,7 +712,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                                 className="nomarginMobile"
                               />
                               <img
-                                src="Images/mastercard-logo.png"
+                                src="../Images/mastercard-logo.png"
                                 width="42px"
                                 height="32.86px"
                                 style={{ marginTop: "1%", marginLeft: "2%" }}
@@ -728,7 +728,7 @@ export const PaymentOptionsForm: React.FC = function PaymentOptionsForm() {
                                 className="nomarginMobile"
                               />
                               <img
-                                src="Images/cashOnDelivery-logo.png"
+                                src="../Images/cashOnDelivery-logo.png"
                                 width="66px"
                                 height="33px"
                                 style={{ marginTop: "1%", marginLeft: "2%" }}

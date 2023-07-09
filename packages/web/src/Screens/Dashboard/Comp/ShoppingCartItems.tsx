@@ -101,7 +101,13 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const ShoppingCartItems: React.FC = function ShoppingCartItems() {
+type Props = {
+  Fail: boolean;
+};
+
+export const ShoppingCartItems: React.FC<Props> = function ShoppingCartItems({
+  Fail,
+}) {
   const classes = useStyles();
   var { value } = useAppData();
   var { cartItems, removeCartItem, addItemToCart } = value;
@@ -247,7 +253,7 @@ export const ShoppingCartItems: React.FC = function ShoppingCartItems() {
                         <CardMedia>
                           {/* eslint-disable-next-line */}
                           <img
-                            src={order.imageName}
+                            src={window.location.origin + "/" + order.imageName}
                             className={classes.image}
                             alt="Package Image"
                           ></img>
@@ -329,7 +335,7 @@ export const ShoppingCartItems: React.FC = function ShoppingCartItems() {
                         <CardMedia>
                           {/* eslint-disable-next-line */}
                           <img
-                            src={order.imageName}
+                            src={window.location.origin + "/" + order.imageName}
                             className={classes.image}
                             alt="Package Image"
                           ></img>
@@ -352,13 +358,13 @@ export const ShoppingCartItems: React.FC = function ShoppingCartItems() {
               )}
             </Grid>
             <Grid item xs={12} md={5}>
-              <PaymentOptionsForm />
+              <PaymentOptionsForm Fail={Fail} />
             </Grid>
           </>
         ) : (
           <>
             <Typography>No Items In Cart</Typography>
-            <PaymentOptionsForm />
+            <PaymentOptionsForm Fail={Fail} />
           </>
         )}
       </Grid>
