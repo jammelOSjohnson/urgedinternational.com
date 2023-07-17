@@ -1200,7 +1200,6 @@ export const GET_CATEGORIES = gql`
 export const CREATE_ORDER_Billing = gql`
   mutation CreateOrderBilling(
     $oId: String
-    $orderInfo: Float
     $txndate: String
     $ccbin: String
     $processor: String
@@ -1208,22 +1207,22 @@ export const CREATE_ORDER_Billing = gql`
     $saddr1: String
     $cccountry: String
     $expmonth: String
-    $hashAlgorithm: String
+    $hashalgorithm: String
     $endpointTransactionId: String
     $currency: String
-    $processorResponseCode: String
+    $processorresponsecode: String
     $chargetotal: String
     $email: String
-    $terminalId: String
+    $terminalid: String
     $associationResponseCode: String
-    $approvalCode: String
+    $approvalcode: String
     $expyear: String
-    $responseHash: String
-    $responseCode3Dsecure: String
+    $responsehash: String
+    $responsecode3Dsecure: String
     $bstate: String
     $schemeTransactionId: String
     $tdate: String
-    $installmentsInterest: String
+    $installmentsinterest: String
     $bname: String
     $phone: String
     $ccbrand: String
@@ -1243,7 +1242,6 @@ export const CREATE_ORDER_Billing = gql`
   ) {
     createOrderBilling(
       oId: $oId
-      OrderInfo: $orderInfo
       txndate: $txndate
       ccbin: $ccbin
       processor: $processor
@@ -1251,22 +1249,22 @@ export const CREATE_ORDER_Billing = gql`
       saddr1: $saddr1
       cccountry: $cccountry
       Expmonth: $expmonth
-      hash_algorithm: $hashAlgorithm
+      hashalgorithm: $hashalgorithm
       endpointTransactionId: $endpointTransactionId
       currency: $currency
-      processor_response_code: $processorResponseCode
+      processorresponsecode: $processorresponsecode
       chargetotal: $chargetotal
       email: $email
-      terminal_id: $terminalId
+      terminalid: $terminalid
       associationResponseCode: $associationResponseCode
-      approval_code: $approvalCode
+      approvalcode: $approvalcode
       expyear: $expyear
-      response_hash: $responseHash
-      response_code_3dsecure: $responseCode3Dsecure
+      responsehash: $responsehash
+      responsecode3dsecure: $responsecode3Dsecure
       bstate: $bstate
       schemeTransactionId: $schemeTransactionId
       tdate: $tdate
-      installments_interest: $installmentsInterest
+      installmentsinterest: $installmentsinterest
       bname: $bname
       phone: $phone
       ccbrand: $ccbrand
@@ -1284,62 +1282,46 @@ export const CREATE_ORDER_Billing = gql`
       baddr2: $baddr2
       status: $status
     ) {
-      oid
-      OrderInfo {
-        _id
-        Id
-        OrderItems
-        OrderStatus
-        OrderTotal
-        OrderDate
-        DeliveryAddress
-        PaymentMethod
-        AdditionalInfo
-        DeliveryFee
-        GCT
-        ServiceCharge
-        CartTotal
-        OrderType
-      }
-      txndate
-      ccbin
-      processor
-      saddr2
-      saddr1
-      cccountry
-      Expmonth
-      hash_algorithm
-      endpointTransactionId
-      currency
-      processor_response_code
-      chargetotal
-      email
-      terminal_id
+      _id
+      approvalcode
       associationResponseCode
-      approval_code
-      expyear
-      response_hash
-      response_code_3dsecure
-      bstate
-      schemeTransactionId
-      tdate
-      installments_interest
-      bname
-      phone
-      ccbrand
-      sname
-      sstate
-      refnumber
-      txntype
-      paymentMethod
-      txndatetime
-      cardnumber
-      ipgTransactionId
-      scountry
       baddr1
-      bcountry
       baddr2
+      bcountry
+      bname
+      bstate
+      cardnumber
+      ccbin
+      ccbrand
+      cccountry
+      chargetotal
+      currency
+      email
+      endpointTransactionId
+      expyear
+      hashalgorithm
+      ipgTransactionId
+      installmentsinterest
+      oid
+      paymentMethod
+      phone
+      processor
+      processorresponsecode
+      refnumber
+      responsecode3dsecure
+      responsehash
+      saddr1
+      schemeTransactionId
+      saddr2
+      scountry
+      sstate
+      sname
       status
+      tdate
+      terminalid
+      txndate
+      txndatetime
+      txntype
     }
   }
 `;
