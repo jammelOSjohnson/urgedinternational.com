@@ -46,6 +46,7 @@ import {
   GET_STAFF,
   UPDATE_STAFF_MUTATION,
   CREATE_HASH_MUTATION,
+  CREATE_ORDER_Billing,
 } from "../GraphQL/Mutations";
 import { useMutation } from "@apollo/client";
 import sendEmail from "../email.js";
@@ -304,6 +305,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   // });
 
   const [getOrders] = useMutation(GET_ORDERS);
+  const [createOrderBilling] = useMutation(CREATE_ORDER_Billing);
   const [getOrdersByUserId] = useMutation(GET_ORDERS_BY_USERID);
   const [createOrder] = useMutation(CREATE_ORDER);
   const [updateOrder] = useMutation(UPDATE_ORDER);
@@ -1658,7 +1660,8 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
         const randRider = Math.floor(Math.random() * max + min);
         //const randRider = parseInt(rand.toString());
         //console.log(randRider);
-        var orderBody = {
+
+        const orderBody = {
           Id: payload.currentUser.uid,
           OrderItems: orderItems,
           OrderStatus: "Pending",
@@ -1668,7 +1671,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
             RiderRes[randRider]._id !== undefined
               ? RiderRes[randRider]._id
               : "",
-          BillingInfo: billingID,
+          BillingInfo: "",
           DeliveryAddress: state.Street + "," + state.Town + ",Clarendon",
           PaymentMethod: state.PaymentMethod,
           AdditionalInfo:
@@ -1685,62 +1688,172 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
           Restaurant: restaurantID,
         };
 
-        await createOrder({ variables: orderBody }).then(async function (
-          response
-        ) {
-          //console.log("create orer result");
-          if (response.data.createOrder !== null) {
-            //console.log("Order Exist");
-            ////console.log(response.data.createOrder);
-            payload.cartItems = [];
-            payload.selectedRestaurant = undefined;
-            payload.receiptDetails = response.data.createOrder;
-            if (
-              state.ContactNum !== payload.userInfo.contactNumber ||
-              state.Street !== payload.userInfo.addressLine1 ||
-              state.Town !== payload.userInfo.city
-            ) {
-              let user = {
-                ContactNumber: state.ContactNum,
-                Email: payload.userInfo.email,
-                FullName: payload.userInfo.fullName,
-                AddressLine1: state.Street,
-                AddressLine2: "",
-                City: state.Town,
-              };
+        if (billingID === null) {
+          const orderBillingBody = {
+            oId: "",
+            txndate: estTime,
+            ccbin: "",
+            processor: "",
+            saddr2: state.Town,
+            saddr1: state.Street,
+            cccountry: "",
+            Expmonth: "",
+            hashalgorithm: "",
+            endpointTransactionId: "",
+            currency: "JMD",
+            processorresponse_code: "",
+            chargetotal: cartItemsSum.Cost,
+            email: payload.userInfo.email,
+            terminalid: "",
+            associationResponseCode: "",
+            approvalcode: "",
+            expyear: "",
+            responsehash: "",
+            responsecode3dsecure: "",
+            bstate: "",
+            schemeTransactionId: "",
+            tdate: estTime,
+            installmentsinterest: "",
+            bname: payload.userInfo.fullName,
+            phone: state.ContactNum,
+            ccbrand: "CASH",
+            sname: payload.userInfo.fullName,
+            sstate: "",
+            refnumber: "",
+            txntype: state.PaymentMethod,
+            paymentMethod: state.PaymentMethod,
+            txndatetime: estTime,
+            cardnumber: "",
+            ipgTransactionId: "",
+            scountry: "JA",
+            baddr1: state.Street,
+            bcountry: "JA",
+            baddr2: state.Town,
+            status: "APPROVED",
+          };
 
-              await UpdateUserInfo(payload, user)
-                .then(() => {
-                  dispatch({
-                    type: "checkout",
-                    payload: payload,
-                  });
-                })
-                .catch(() => {
-                  dispatch({
-                    type: "checkout",
-                    payload: payload,
-                  });
-                });
-            } else {
-              //console.log("address up to date");
-              dispatch({
-                type: "checkout",
-                payload: payload,
-              });
+          await createOrderBilling({ variables: orderBillingBody }).then(
+            async function (response) {
+              if (response.data.createOrderBilling !== null) {
+                orderBody.BillingInfo = response.data.createOrderBilling._id;
+                await createOrder({ variables: orderBody }).then(
+                  async function (response) {
+                    //console.log("create orer result");
+                    if (response.data.createOrder !== null) {
+                      //console.log("Order Exist");
+                      ////console.log(response.data.createOrder);
+                      payload.cartItems = [];
+                      payload.selectedRestaurant = undefined;
+                      payload.receiptDetails = response.data.createOrder;
+                      if (
+                        state.ContactNum !== payload.userInfo.contactNumber ||
+                        state.Street !== payload.userInfo.addressLine1 ||
+                        state.Town !== payload.userInfo.city
+                      ) {
+                        let user = {
+                          ContactNumber: state.ContactNum,
+                          Email: payload.userInfo.email,
+                          FullName: payload.userInfo.fullName,
+                          AddressLine1: state.Street,
+                          AddressLine2: "",
+                          City: state.Town,
+                        };
+
+                        await UpdateUserInfo(payload, user)
+                          .then(() => {
+                            dispatch({
+                              type: "checkout",
+                              payload: payload,
+                            });
+                          })
+                          .catch(() => {
+                            dispatch({
+                              type: "checkout",
+                              payload: payload,
+                            });
+                          });
+                      } else {
+                        //console.log("address up to date");
+                        dispatch({
+                          type: "checkout",
+                          payload: payload,
+                        });
+                      }
+
+                      // await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
+                      //   if (response.data.getOrdersByUserId !== null) {
+                      //     payload.orders = response.data.getOrdersByUserId;
+                      //     dispatch({
+                      //       type: "checkout",
+                      //       payload: payload
+                      //     })
+                      //   }
+                      // });
+                    }
+                  }
+                );
+              }
             }
+          );
+        } else {
+          orderBody.BillingInfo = billingID;
+          await createOrder({ variables: orderBody }).then(async function (
+            response
+          ) {
+            //console.log("create orer result");
+            if (response.data.createOrder !== null) {
+              //console.log("Order Exist");
+              ////console.log(response.data.createOrder);
+              payload.cartItems = [];
+              payload.selectedRestaurant = undefined;
+              payload.receiptDetails = response.data.createOrder;
+              if (
+                state.ContactNum !== payload.userInfo.contactNumber ||
+                state.Street !== payload.userInfo.addressLine1 ||
+                state.Town !== payload.userInfo.city
+              ) {
+                let user = {
+                  ContactNumber: state.ContactNum,
+                  Email: payload.userInfo.email,
+                  FullName: payload.userInfo.fullName,
+                  AddressLine1: state.Street,
+                  AddressLine2: "",
+                  City: state.Town,
+                };
 
-            // await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
-            //   if (response.data.getOrdersByUserId !== null) {
-            //     payload.orders = response.data.getOrdersByUserId;
-            //     dispatch({
-            //       type: "checkout",
-            //       payload: payload
-            //     })
-            //   }
-            // });
-          }
-        });
+                await UpdateUserInfo(payload, user)
+                  .then(() => {
+                    dispatch({
+                      type: "checkout",
+                      payload: payload,
+                    });
+                  })
+                  .catch(() => {
+                    dispatch({
+                      type: "checkout",
+                      payload: payload,
+                    });
+                  });
+              } else {
+                //console.log("address up to date");
+                dispatch({
+                  type: "checkout",
+                  payload: payload,
+                });
+              }
+
+              // await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
+              //   if (response.data.getOrdersByUserId !== null) {
+              //     payload.orders = response.data.getOrdersByUserId;
+              //     dispatch({
+              //       type: "checkout",
+              //       payload: payload
+              //     })
+              //   }
+              // });
+            }
+          });
+        }
       });
     }
   };
