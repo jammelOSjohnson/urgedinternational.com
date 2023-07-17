@@ -370,7 +370,8 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
           checkoutVals.serviceFee,
           checkoutVals.cartItemsSum,
           checkoutVals.Total,
-          restaurants[selectedRestaurant]._id
+          restaurants[selectedRestaurant]._id,
+          null
         ).then((res) => {
           if (res === null || res === undefined) {
             setValues({
@@ -400,7 +401,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
         });
       }
     } catch (e: any) {
-      console.log(e.message);
+      // console.log(e.message);
       let path = e.message;
       //console.log(path)
       let result = path.split("Path");
@@ -417,17 +418,22 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    //console.log(event.target.name);
-    console.log((event.target as HTMLInputElement).name);
-    console.log((event.target as HTMLInputElement).value);
-    console.log(event.target.value);
+    // console.log(event.target.name);
+    // console.log((event.target as HTMLInputElement).name);
+    // console.log((event.target as HTMLInputElement).value);
+    // console.log(event.target.value);
     setPayment({
       ...payment,
       [(event.target as HTMLInputElement).name]: (
         event.target as HTMLInputElement
       ).value,
     });
-    console.log(payment);
+
+    setValues({
+      ...values,
+      PaymentMethod: (event.target as HTMLInputElement).value,
+    });
+    // console.log(payment);
   };
 
   const handleChange2 =
@@ -1158,7 +1164,11 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
                           variant="contained"
                           size="large"
                           className={classes.button}
-                          onClick={hash}
+                          onClick={
+                            values.PaymentMethod !== "Cash on Delivery"
+                              ? hash
+                              : handleSubmit
+                          }
                           disabled={loading}
                           id="checkout-btn"
                         >
