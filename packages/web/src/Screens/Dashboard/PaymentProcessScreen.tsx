@@ -178,7 +178,7 @@ export const PaymentProcessScreen: React.FC = function PaymentProcessScreen() {
         });
       }
     } catch (e: any) {
-      console.log(e.message);
+      // console.log(e.message);
       let path = e.message;
       //console.log(path)
       let result = path.split("Path");
