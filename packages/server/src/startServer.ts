@@ -113,7 +113,7 @@ export async function startServer() {
           hashalgorithm
           ipgTransactionId
           installmentsinterest
-          oid
+          oId
           paymentMethod
           phone
           processor
