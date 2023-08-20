@@ -2162,16 +2162,19 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
         \n${
           cartItems[length - 1].drink !== "Select Drink"
             ? cartItems[length - 1].drink + " | "
-            : "" + " | "
+            : " "
         }\n${cartItems[length - 1].otherIntructions + " | "}\n${
               "Not Available? " + cartItems[length - 1].ifnotAvailable
             }`
           : `${cartItems[length - 1].itemName + ": "}\n${
               cartItems[length - 1].drink !== "Select Drink"
                 ? cartItems[length - 1].drink + " | "
-                : "" + " | "
+                : " "
             }\n${cartItems[length - 1].otherIntructions + " | "}\n${
-              "Side:" + cartItems[length - 1].side + " | "
+              cartItems[length - 1].side !== "Select Side" &&
+              cartItems[length - 1].side !== ""
+                ? "Side:" + cartItems[length - 1].side + " | "
+                : ""
             }\n${"Not Available? " + cartItems[length - 1].ifnotAvailable}`;
 
       return result;
@@ -2200,15 +2203,26 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     receiptInfo
   ) {
     //var fileType = fileType;
+    console.log(receiptInfo);
     let cartItems = receiptInfo.OrderItems;
+    const FSERVE_OID = receiptInfo.BillingInfo.oId;
+    const approval_code = receiptInfo.BillingInfo.approvalcode;
     var RequestParams = {
       user_email: "",
       user_name: "",
+      FSERVE_OID,
+      approval_code,
       content: file,
       order_number: orderNum,
       delivery_add: receiptInfo.DeliveryAddress,
       order_date: receiptInfo.OrderDate,
-      payment_type: receiptInfo.PaymentMethod,
+      payment_type:
+        receiptInfo.PaymentMethod === "M"
+          ? "MASTERCARD"
+          : receiptInfo.PaymentMethod === "V"
+          ? "VISA"
+          : receiptInfo.PaymentMethod,
+      currency: "JMD",
       order_total: receiptInfo.OrderTotal,
       order_pfee: receiptInfo.ServiceCharge.toString(),
       del_fee: receiptInfo.DeliveryFee.toString(),
@@ -2270,11 +2284,14 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     var RequestParams = {
       to_name: formVals.user_name,
       user_email: formVals.user_email,
+      currency: formVals.currency,
+      foid: formVals.FSERVE_OID,
+      approval_code: formVals.approval_code,
       message: `Thank you for choosing Urged Internationals food delivery service.\n Please see receipt attatched.`,
-      content_pdf: undefined,
-      content_svg: undefined,
-      content_jpeg: undefined,
-      content_png: undefined,
+      // content_pdf: undefined,
+      // content_svg: undefined,
+      // content_jpeg: undefined,
+      // content_png: undefined,
       order_id: formVals.order_number,
       delivery_add: formVals.delivery_add,
       order_date: moment.tz(now, "America/Jamaica").format("YYYY-MM-DD h:mm a"),
@@ -2306,15 +2323,16 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       itemcost7: formVals.itemcost7,
     };
 
-    if (filetype.toLowerCase() === "application/pdf") {
-      RequestParams.content_pdf = formVals.content;
-    } else if (filetype.toLowerCase() === "image/png") {
-      RequestParams.content_png = formVals.content;
-    } else if (filetype.toLowerCase() === "image/svg+xml") {
-      RequestParams.content_svg = formVals.content;
-    } else if (filetype.toLowerCase() === "image/jpeg") {
-      RequestParams.content_jpeg = formVals.content;
-    } ////console.log("What is in this package b4 emails sent");
+    // if (filetype.toLowerCase() === "application/pdf") {
+    //   RequestParams.content_pdf = formVals.content;
+    // } else if (filetype.toLowerCase() === "image/png") {
+    //   RequestParams.content_png = formVals.content;
+    // } else if (filetype.toLowerCase() === "image/svg+xml") {
+    //   RequestParams.content_svg = formVals.content;
+    // } else if (filetype.toLowerCase() === "image/jpeg") {
+    //   RequestParams.content_jpeg = formVals.content;
+    // }
+    ////console.log("What is in this package b4 emails sent");
     ////console.log(RequestParams);
 
     var fianlRes = await sendEmail(

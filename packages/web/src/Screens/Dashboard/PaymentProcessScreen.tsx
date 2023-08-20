@@ -88,14 +88,14 @@ export const PaymentProcessScreen: React.FC = function PaymentProcessScreen() {
     Total: { Cost: "0.00" },
   });
 
-  //console.log(id);
+  // console.log(id);
   useEffect(() => {
     const retrievedObject = localStorage.getItem("paymentObject");
 
-    console.log(
-      "retrievedObject: ",
-      retrievedObject !== null ? JSON.parse(retrievedObject) : "none"
-    );
+    // console.log(
+    //   "retrievedObject: ",
+    //   retrievedObject !== null ? JSON.parse(retrievedObject) : "none"
+    // );
     const finalRetObj =
       retrievedObject !== null ? JSON.parse(retrievedObject) : null;
     setValues(finalRetObj.values);
@@ -105,13 +105,13 @@ export const PaymentProcessScreen: React.FC = function PaymentProcessScreen() {
       reinitstate(finalRetObj.value);
     }
 
-    console.log(billingID);
+    // console.log(billingID);
     if (
       (billingID === null || billingID === undefined) &&
       id !== null &&
       id !== undefined
     ) {
-      console.log(id);
+      // console.log(id);
       setBillingID(id);
     }
 

@@ -465,7 +465,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
       selectedRestaurant: selectedRestaurant,
     };
     localStorage.setItem("paymentObject", JSON.stringify(session));
-    console.log(payment);
+    // console.log(payment);
     payment.paymentMethod === ""
       ? setError("Please select payment method.")
       : createPaymentHash(payment).then(function (hashResult) {
@@ -478,6 +478,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
                 : "",
           });
           console.log("about to send payment data");
+          // console.log(payment);
           button?.click();
         });
     //return hashHex;
@@ -487,6 +488,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
     //test sort
     //const testObj = Object.fromEntries(Object.entries(payment).sort());
     //console.log(testObj);
+    console.log(payment);
     try {
       if (Fail) {
         setError("Unable to process payment at this time.");

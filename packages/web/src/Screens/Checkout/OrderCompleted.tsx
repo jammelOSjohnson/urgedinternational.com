@@ -47,11 +47,11 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 export const OrderCompleted: React.FC = function OrderCompleted() {
-  console.log("start");
+  // console.log("start");
   const classes = useStyles();
   var { value } = useAppData();
   var { receiptDetails, userInfo, sendOrderCompletedEmail } = value;
-  console.log(receiptDetails);
+  // console.log(receiptDetails);
   const [estTime, setEstTime] = useState("");
   var history = useHistory();
 
@@ -85,7 +85,7 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
 
   useEffect(() => {
     try {
-      console.log("here", receiptDetails);
+      // console.log("here", receiptDetails);
       if (
         estTime === "" &&
         receiptDetails !== null &&
@@ -98,11 +98,11 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
         setEstTime(tempEstTime);
       }
       if (receiptDetails !== null && receiptDetails !== undefined) {
-        console.log("here");
+        // console.log("here");
         generatePDF();
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
     }
   }, [receiptDetails, estTime]);
 
