@@ -134,6 +134,7 @@ const resolvers = {
       let res = await Order.find({ OrderDate: { $gte: startConverted } })
         .populate("Rider")
         .populate("Restaurant")
+        .populate("BillingInfo")
         .where("OrderDate")
         .lte(endConverted);
       //console.log(res.length);

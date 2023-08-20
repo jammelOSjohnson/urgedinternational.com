@@ -570,7 +570,7 @@ export const CREATE_ORDER = gql`
         disabled
       }
       BillingInfo {
-        oid
+        oId
         txndate
         ccbin
         processor

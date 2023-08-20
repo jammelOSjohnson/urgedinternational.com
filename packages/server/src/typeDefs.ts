@@ -254,7 +254,7 @@ const typeDefs = /* GraphQL */ `
 
   type OrderBilling {
     _id: ID
-    oid: String
+    oId: String
     txndate: String
     ccbin: String
     processor: String
