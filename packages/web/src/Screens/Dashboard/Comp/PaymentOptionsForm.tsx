@@ -300,8 +300,22 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
     hashExtended: "",
     paymentMethod: "",
     phone: "",
-    responseFailURL: "http://localhost:8080/processpayment",
-    responseSuccessURL: "http://localhost:8080/processpayment",
+    responseFailURL:
+      process.env.NODE_ENV === "development"
+        ? process.env.REACT_APP_responseSuccess_OR_FAIL_URL !== undefined
+          ? process.env.REACT_APP_responseSuccess_OR_FAIL_URL
+          : ""
+        : process.env.REACT_APP_responseSuccess_OR_FAIL_URL_LIVE !== undefined
+        ? process.env.REACT_APP_responseSuccess_OR_FAIL_URL_LIVE
+        : "",
+    responseSuccessURL:
+      process.env.NODE_ENV === "development"
+        ? process.env.REACT_APP_responseSuccess_OR_FAIL_URL !== undefined
+          ? process.env.REACT_APP_responseSuccess_OR_FAIL_URL
+          : ""
+        : process.env.REACT_APP_responseSuccess_OR_FAIL_URL_LIVE !== undefined
+        ? process.env.REACT_APP_responseSuccess_OR_FAIL_URL_LIVE
+        : "",
     sname: "",
     saddr1: "",
     saddr2: "",
@@ -312,8 +326,12 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
         : "",
     sharedsecret: "",
     storename:
-      process.env.REACT_APP_StoreID !== undefined
-        ? process.env.REACT_APP_StoreID
+      process.env.NODE_ENV === "development"
+        ? process.env.REACT_APP_StoreID !== undefined
+          ? process.env.REACT_APP_StoreID
+          : ""
+        : process.env.REACT_APP_StoreID_LIVE !== undefined
+        ? process.env.REACT_APP_StoreID_LIVE
         : "",
     timezone:
       process.env.REACT_APP_timezone !== undefined
@@ -760,7 +778,11 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
                         <Divider variant="middle" className={classes.divider} />
                         <form
                           method="POST"
-                          action={process.env.REACT_APP_payment_url}
+                          action={
+                            process.env.NODE_ENV === "development"
+                              ? process.env.REACT_APP_payment_url
+                              : process.env.REACT_APP_payment_url_LIVE
+                          }
                         >
                           {/* <Grid item xs={5}>
                           <input
