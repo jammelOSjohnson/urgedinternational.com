@@ -246,7 +246,10 @@ const resolvers = {
         txntype;
       //console.log(str);
       // secret or salt to be hashed with
-      const secret = process.env.SECRET;
+      const secret =
+        process.env.NODE_ENV === "development"
+          ? process.env.SECRET
+          : process.env.SECRET_LIVE;
       //console.log(secret);
 
       // create a sha-256 hasher
