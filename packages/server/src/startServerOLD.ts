@@ -22,7 +22,7 @@ export async function startServer() {
           typeDefs: typeDefs,
           resolvers: resolvers,
           introspection: true,
-          playground: true,
+          //playground: true,
           cors: {
             origin: process.env.FRONTEND_HOST, // <- allow request from all domains
             credentials: true,
@@ -74,10 +74,10 @@ export async function startServer() {
     console.log(err);
   }
 
-  server.listen({ port: 8080 }).then(({ url, subscriptionsUrl }) => {
-    console.log(`Server ready at ${url}`);
-    console.log(`Subscriptions ready at ${subscriptionsUrl}`);
-  });
+  // server.listen({ port: 8080 }).then(({ url, subscriptionsUrl }) => {
+  //   console.log(`Server ready at ${url}`);
+  //   console.log(`Subscriptions ready at ${subscriptionsUrl}`);
+  // });
 
   // console.log('Mongoose connected...');
   const PORT = process.env.PORT || 8080;

@@ -11,6 +11,7 @@ import { ApolloServer, ApolloServerExpressConfig } from "apollo-server-express";
 import {
   ApolloServerPluginDrainHttpServer,
   ApolloServerPluginLandingPageLocalDefault,
+  ApolloServerPluginLandingPageProductionDefault,
 } from "apollo-server-core";
 // NEW FLOW
 import typeDefs from "./typeDefs";
@@ -43,6 +44,15 @@ export async function startServer() {
           plugins: [
             ApolloServerPluginDrainHttpServer({ httpServer }),
             ApolloServerPluginLandingPageLocalDefault({ embed: true }),
+            {
+              async serverWillStart() {
+                return {
+                  async drainServer() {
+                    subscriptionServer.close();
+                  },
+                };
+              },
+            },
           ],
           // introspection: true,
           // playground: true,
@@ -54,7 +64,16 @@ export async function startServer() {
           cache: "bounded",
           plugins: [
             ApolloServerPluginDrainHttpServer({ httpServer }),
-            ApolloServerPluginLandingPageLocalDefault({ embed: true }),
+            ApolloServerPluginLandingPageProductionDefault({ footer: false }),
+            {
+              async serverWillStart() {
+                return {
+                  async drainServer() {
+                    subscriptionServer.close();
+                  },
+                };
+              },
+            },
           ],
         });
 
@@ -89,7 +108,10 @@ export async function startServer() {
     app.post("/processpayment", (req, res) => {
       // prepare query
       // console.log("result is", req.body);
-      const url = `http://localhost:${PORT}/`;
+      const url =
+        process.env.NODE_ENV === "development"
+          ? `http://localhost:${PORT}/graphql`
+          : `${process.env.LIVE_BACKEND}/graphql`;
       const query = `
       mutation CreateOrderBilling($oId: String, $txndate: String, $ccbin: String, $processor: String, $saddr2: String, $saddr1: String, $cccountry: String, $expmonth: String, $hashalgorithm: String, $endpointTransactionId: String, $currency: String, $processorresponsecode: String, $chargetotal: String, $email: String, $terminalid: String, $associationResponseCode: String, $approvalcode: String, $expyear: String, $responsehash: String, $responsecode3Dsecure: String, $bstate: String, $schemeTransactionId: String, $tdate: String, $installmentsinterest: String, $bname: String, $phone: String, $ccbrand: String, $sname: String, $sstate: String, $refnumber: String, $txntype: String, $paymentMethod: String, $txndatetime: String, $cardnumber: String, $ipgTransactionId: String, $scountry: String, $baddr1: String, $bcountry: String, $baddr2: String, $status: String) {
         createOrderBilling(oId: $oId, txndate: $txndate, ccbin: $ccbin, processor: $processor, saddr2: $saddr2, saddr1: $saddr1, cccountry: $cccountry, Expmonth: $expmonth, hashalgorithm: $hashalgorithm, endpointTransactionId: $endpointTransactionId, currency: $currency, processorresponsecode: $processorresponsecode, chargetotal: $chargetotal, email: $email, terminalid: $terminalid, associationResponseCode: $associationResponseCode, approvalcode: $approvalcode, expyear: $expyear, responsehash: $responsehash, responsecode3dsecure: $responsecode3Dsecure, bstate: $bstate, schemeTransactionId: $schemeTransactionId, tdate: $tdate, installmentsinterest: $installmentsinterest, bname: $bname, phone: $phone, ccbrand: $ccbrand, sname: $sname, sstate: $sstate, refnumber: $refnumber, txntype: $txntype, paymentMethod: $paymentMethod, txndatetime: $txndatetime, cardnumber: $cardnumber, ipgTransactionId: $ipgTransactionId, scountry: $scountry, baddr1: $baddr1, bcountry: $bcountry, baddr2: $baddr2, status: $status) {
@@ -181,7 +203,7 @@ export async function startServer() {
       axios
         .post(url, { query: query, variables: variables })
         .then((response) => {
-          console.log(response.data);
+          //console.log(response.data);
           let result = response.data;
           let orderOID = undefined;
           let orderStatus = "";
@@ -195,15 +217,19 @@ export async function startServer() {
 
           if (orderStatus === "APPROVED") {
             res.redirect(
-              `http://localhost:3000/ProcessPaymentResult/${orderOID}`
+              `${process.env.FRONTEND_HOST}/ProcessPaymentResult/${orderOID}`
             );
           } else {
-            res.redirect("http://localhost:3000/ProcessPaymentResult/Fail");
+            res.redirect(
+              `${process.env.FRONTEND_HOST}/ProcessPaymentResult/Fail`
+            );
           }
         })
         .catch((error) => {
           console.log(error);
-          res.redirect("http://localhost:3000/ProcessPaymentResult/Fail");
+          res.redirect(
+            `${process.env.FRONTEND_HOST}/ProcessPaymentResult/Fail`
+          );
         });
     });
 
@@ -235,7 +261,7 @@ export async function startServer() {
   }
 
   await server.start();
-  server.applyMiddleware({ app, path: "/", cors: corsOptions });
+  server.applyMiddleware({ app, path: "/graphql", cors: corsOptions });
 
   const PORT = 8080;
   await new Promise<void>((resolve) =>
@@ -244,4 +270,9 @@ export async function startServer() {
   console.log(
     `🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`
   );
+
+  console.log(
+    `cors settings are: \n\t-credentials: ${corsOptions.credentials} \n\t-origin: ${corsOptions.origin}`
+  );
+  //console.log(process.env.SECRET_LIVE);
 }
