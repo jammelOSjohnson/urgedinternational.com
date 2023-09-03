@@ -63,6 +63,7 @@ import {
 import { onError } from "@apollo/client/link/error";
 import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";
+import { SubscriptionClient } from "subscriptions-transport-ws";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createTheme, ThemeProvider } from "@material-ui/core";
@@ -187,13 +188,20 @@ var ws_db_server =
     ? process.env.REACT_APP_DEV_WS_DB_URL
     : process.env.REACT_APP_PROD_WS_DB_URL;
 
-const wsLink = new WebSocketLink({
-  uri: ws_db_server !== undefined ? ws_db_server : "",
-  options: {
-    reconnect: true,
-  },
-});
+const wsLink = new WebSocketLink(
+  new SubscriptionClient(ws_db_server !== undefined ? ws_db_server : "", {
+    connectionParams: {
+      reconnect: true,
+    },
+  })
+);
 
+//{
+// uri: ws_db_server !== undefined ? ws_db_server : "",
+// options: {
+//   reconnect: true,
+// },
+//}
 const httpLink = from([
   errorLink,
   new HttpLink({ uri: db_server, credentials: "include" }),
