@@ -285,8 +285,12 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
         ? process.env.REACT_APP_checkoutoption
         : "",
     currency:
-      process.env.REACT_APP_currency_code !== undefined
-        ? process.env.REACT_APP_currency_code
+      process.env.NODE_ENV === "development"
+        ? process.env.REACT_APP_currency_code !== undefined
+          ? process.env.REACT_APP_currency_code
+          : ""
+        : process.env.REACT_APP_currency_code_LIVE !== undefined
+        ? process.env.REACT_APP_currency_code_LIVE
         : "",
     email: "",
     hash_algorithm:

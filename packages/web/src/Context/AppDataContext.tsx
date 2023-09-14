@@ -1599,6 +1599,8 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     restaurantID,
     billingID
   ) {
+    //console.log("inside checkout. \n cart item length is: ");
+    //console.log(cartItems.length);
     if (cartItems.length !== 0) {
       var orderItems: object[] = [];
       const now = new Date();
@@ -1624,7 +1626,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       });
       return await fetchRidersForOrder().then(async (res) => {
         //Generate rand number
-        //console.log("res is: ", res);
+        // console.log("res is: ", res);
         type riderObj = {
           _id: string;
           Id: string;
@@ -1649,8 +1651,9 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
           console.log(e);
         }
 
+        //console.log("riders length is: " + RiderRes.length);
         if (RiderRes.length === 0) {
-          return "no rider";
+          RiderRes.push(res[0]);
         }
 
         //console.log("sorted rider res is: ", RiderRes);
@@ -1659,7 +1662,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
         //console.log(max);
         const randRider = Math.floor(Math.random() * max + min);
         //const randRider = parseInt(rand.toString());
-        //console.log(randRider);
+        // console.log(randRider);
 
         const orderBody = {
           Id: payload.currentUser.uid,
@@ -1688,6 +1691,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
           Restaurant: restaurantID,
         };
 
+        //console.log("billing id is: " + billingID);
         if (billingID === null) {
           const orderBillingBody = {
             oId: "",
@@ -1796,11 +1800,13 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
             }
           );
         } else {
+          //console.log("billing id is not null");
           orderBody.BillingInfo = billingID;
           await createOrder({ variables: orderBody }).then(async function (
             response
           ) {
-            //console.log("create orer result");
+            //console.log("create orer result: ");
+            //console.log(response.data.createOrder);
             if (response.data.createOrder !== null) {
               //console.log("Order Exist");
               ////console.log(response.data.createOrder);
@@ -2203,7 +2209,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     receiptInfo
   ) {
     //var fileType = fileType;
-    console.log(receiptInfo);
+    //console.log(receiptInfo);
     let cartItems = receiptInfo.OrderItems;
     const FSERVE_OID = receiptInfo.BillingInfo.oId;
     const approval_code = receiptInfo.BillingInfo.approvalcode;

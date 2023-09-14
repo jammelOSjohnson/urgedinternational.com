@@ -115,12 +115,14 @@ export const PaymentProcessScreen: React.FC = function PaymentProcessScreen() {
       setBillingID(id);
     }
 
+    //console.log("restaurant length is " + restaurants.length);
     if (
       restaurants.length > 0 &&
       billingID !== null &&
       billingID !== undefined &&
       billingID !== "Fail"
     ) {
+      //console.log("here");
       handleSubmit();
     }
   }, [paymentObject, billingID]);
