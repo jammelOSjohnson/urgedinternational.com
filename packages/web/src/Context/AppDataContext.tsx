@@ -3312,9 +3312,10 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
         LastName: "",
         Email: user.Email,
         AddressLine1: user.AddressLine1,
-        AddressLine2: user.AddressLine2,
+        AddressLine2:
+          user.AddressLine2 !== "" ? user.AddressLine2 : "Maypen, Clarendon",
         ContactNumber: user.ContactNumber,
-        City: user.City,
+        City: user.City !== "" ? user.City : "Maypen",
         _id: payload.userInfo._id,
       };
       return await updateUser({ variables: newUser }).then(async function (
@@ -3327,9 +3328,9 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
             fullName: user.FullName,
             email: user.Email,
             addressLine1: user.AddressLine1,
-            addressLine2: user.AddressLine2,
+            addressLine2: newUser.AddressLine2,
             contactNumber: user.ContactNumber,
-            city: user.City,
+            city: newUser.City,
             _id: payload.userInfo._id,
           };
           dispatch({ type: "fetch_userinfo", payload: payload });

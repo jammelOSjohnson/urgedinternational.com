@@ -372,6 +372,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
 
   const handleSubmit = async () => {
     try {
+      // console.log(payment.paymentMethod);
       setLoading(true);
       setError("");
       setSuccess("");
@@ -381,6 +382,9 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
         setLoading(false);
       } else if (values.ContactNum.length < 7) {
         setError("Please enter Contact number");
+        setLoading(false);
+      } else if (payment.paymentMethod === "") {
+        setError("Please select a payment method.");
         setLoading(false);
       } else {
         await checkoutOrder(
@@ -474,7 +478,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
 
   const hash = () => {
     setError("");
-    console.log("about to start");
+    // console.log("about to start");
     const button = document.getElementById("makePayment");
 
     //store important state info
@@ -487,11 +491,12 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
       selectedRestaurant: selectedRestaurant,
     };
     localStorage.setItem("paymentObject", JSON.stringify(session));
-    // console.log(payment);
+    // console.log(payment.paymentMethod);
+
     payment.paymentMethod === ""
       ? setError("Please select payment method.")
       : createPaymentHash(payment).then(function (hashResult) {
-          console.log(hashResult.hash);
+          // console.log(hashResult.hash);
           setPayment({
             ...payment,
             hashExtended:
@@ -499,7 +504,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
                 ? hashResult.hash
                 : "",
           });
-          console.log("about to send payment data");
+          // console.log("about to send payment data");
           // console.log(payment);
           button?.click();
         });
@@ -510,7 +515,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
     //test sort
     //const testObj = Object.fromEntries(Object.entries(payment).sort());
     //console.log(testObj);
-    console.log(payment);
+    // console.log(payment);
     try {
       if (Fail) {
         setError("Unable to process payment at this time.");
@@ -631,7 +636,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
     });
 
     if (userInfo.addressLine1 !== "" && userInfo.city !== "") {
-      console.log("setting charge total1", finalTotal.toString());
+      // console.log("setting charge total1", finalTotal.toString());
       setValues({
         ...values,
         Street: userInfo.addressLine1,
@@ -653,7 +658,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
         chargetotal: finalTotal.toString(),
       });
     } else {
-      console.log("setting charge total2", finalTotal.toString());
+      // console.log("setting charge total2", finalTotal.toString());
       setPayment({ ...payment, chargetotal: finalTotal.toString() });
     }
   }, [cartItems, value]);
