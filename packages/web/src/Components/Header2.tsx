@@ -322,15 +322,17 @@ export const Header2: React.FC = function Header2() {
                 loading: false,
                 loggedIn: signonStatus,
               };
-              if (value.userInfo.email !== undefined) {
-                if (value.userInfo.email === "") {
-                  //console.log("about to fetch user details")
-                  fetchUserDetails(payload);
-                  //  .then(function(res){
-                  //     if(!res){
-                  //         ////console.log('Unable to fetch user data at this time');
-                  //     }
-                  // });
+              if (value.userInfo !== undefined) {
+                if (value.userInfo.email !== undefined) {
+                  if (value.userInfo.email === "") {
+                    //console.log("about to fetch user details")
+                    fetchUserDetails(payload);
+                    //  .then(function(res){
+                    //     if(!res){
+                    //         ////console.log('Unable to fetch user data at this time');
+                    //     }
+                    // });
+                  }
                 }
               }
             }
