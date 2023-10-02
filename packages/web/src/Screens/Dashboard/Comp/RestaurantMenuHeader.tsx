@@ -355,7 +355,7 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                   <Grid item xs={12}>
                     <Typography variant={"h6"}>
                       <ScheduleRounded color="primary" />
-                      Hours:
+                      Delivery Hours:
                       {isOpen ? (
                         <>
                           <span>Open</span>
@@ -365,8 +365,14 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                           Today
                         </>
                       ) : (
-                        <span>Closed</span>
+                        <span> Closed</span>
                       )}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Typography variant={"h6"}>
+                      <ScheduleRounded color="primary" />
+                      Estimated Deliery Time: 30 Min - 1 Hr
                     </Typography>
                   </Grid>
                 </Grid>
