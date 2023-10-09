@@ -372,6 +372,8 @@ export const GET_RESTAURANTS = gql`
         ImageName
       }
       ImageName
+      disabled
+      isAvailable
     }
   }
 `;
@@ -469,6 +471,33 @@ export const GET_RESTAURANT = gql`
         Id
       }
       ImageName
+    }
+  }
+`;
+
+export const UPDATE_RESTAURANT_STATUS = gql`
+  mutation updateRestaurantStatus(
+    $_id: String!
+    $isAvailable: Boolean
+    $disabled: Boolean
+  ) {
+    updateRestaurantStatus(
+      _id: $_id
+      isAvailable: $isAvailable
+      disabled: $disabled
+    ) {
+      _id
+      Id
+      FirstName
+      LastName
+      Email
+      AddressLine1
+      AddressLine2
+      City
+      ContactNumber
+      ImageName
+      disabled
+      isAvailable
     }
   }
 `;

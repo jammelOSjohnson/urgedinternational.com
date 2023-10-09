@@ -37,6 +37,7 @@ import {
   UPDATE_SHIPPING_ADDRESS,
   GET_RIDER,
   UPDATE_RIDER_STATUS,
+  UPDATE_RESTAURANT_STATUS,
   GET_RESTAURANT,
   GET_ORDER_REJECTLIST_BY_ORDERID,
   CREATE_ORDER_REJECTLIST,
@@ -215,6 +216,11 @@ function appDataReducer(state, action) {
         ...state,
         restaurantInfo: action.payload.restaurantInfo,
       };
+    case "update_restaurant_status":
+      return {
+        ...state,
+        restaurants: action.payload.restaurants,
+      };
     case "update_rider_status":
       return {
         ...state,
@@ -297,6 +303,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   const [getMenucategories] = useMutation(GET_MENU_CATEGORIES);
   const [updateRestaurantById] = useMutation(UPDATE_RESTAURANT_BYID);
   const [updateRiderStatus] = useMutation(UPDATE_RIDER_STATUS);
+  const [updateRestaurantStatus] = useMutation(UPDATE_RESTAURANT_STATUS);
   const [getOrderRejection] = useMutation(GET_ORDER_REJECTLIST_BY_ORDERID);
   const [createOrderRejection] = useMutation(CREATE_ORDER_REJECTLIST);
   // eslint-disable-next-line
@@ -2656,6 +2663,39 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       });
   };
 
+  var udateRestaurantStatusInfo = async function udateRestaurantStatusInfo(
+    payload,
+    id: string,
+    isAvailable: boolean,
+    disabled: boolean,
+    restIndex: number
+  ) {
+    ////console.log("about to fetch restaurants");
+    await updateRestaurantStatus({
+      variables: { _id: id, isAvailable: isAvailable, disabled: disabled },
+    })
+      .then(async function (response) {
+        if (response.data.updateRestaurantStatus !== null) {
+          ////console.log("got list of restaurants");
+          ////console.log(response);
+
+          var result = response.data.updateRestaurantStatus;
+
+          if (result !== null) {
+            payload.restaurants[restIndex].isAvailable = result.isAvailable;
+            dispatch({
+              type: "update_restaurant_status",
+              payload: payload,
+            });
+            return payload;
+          }
+        }
+      })
+      .catch(function (err) {
+        ////console.log(err);
+      });
+  };
+
   var udateRiderStatusInfo = async function udateRiderStatusInfo(
     payload,
     id: string,
@@ -3437,6 +3477,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     UpdateShippingAddress,
     fetchRiderInfo,
     udateRiderStatusInfo,
+    udateRestaurantStatusInfo,
     fetchRestaurantInfo,
     uploadToFirebaseCloud,
     UpdateUserInfo,

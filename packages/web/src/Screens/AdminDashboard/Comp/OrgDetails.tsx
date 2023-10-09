@@ -18,6 +18,9 @@ import {
   Modal,
   Backdrop,
   Fade,
+  FormGroup,
+  FormControlLabel,
+  Switch,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -164,6 +167,33 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       "& .MuiInputLabel-root.Mui-focused": {
         color: "#9B9B9B",
+      },
+    },
+    root4: {
+      "& .MuiInputBase-root": {
+        color: "#9B9B9B ",
+        borderColor: "#888888",
+        border: "0.1px dotted",
+      },
+      "& .MuiSelect-select:$focus": {
+        backgroundColor: "inherit",
+        color: "#9B9B9B",
+      },
+      "& .MuiFormLabel-root": {
+        fontWeight: 700,
+        fontSize: "1.2rem",
+      },
+      "& .MuiInputLabel-root.Mui-focused": {
+        color: "#9B9B9B",
+      },
+      "& .MuiSwitch-colorSecondary.Mui-checked": {
+        color: "#FFF",
+      },
+      "& .MuiSwitch-colorSecondary.Mui-checked + .MuiSwitch-track": {
+        backgroundColor: "#76ff03",
+      },
+      "& .MuiSwitch-colorSecondary + .MuiSwitch-track": {
+        backgroundColor: "#b2102f",
       },
     },
     category: {
@@ -382,7 +412,12 @@ export const OrgDetails: React.FC = function OrgDetails() {
   });
   const [tab, setTab] = React.useState(0);
   var { value } = useAppData();
-  var { selectedRestaurant, restaurants, UpdateRestaurantBy_ID } = value;
+  var {
+    selectedRestaurant,
+    restaurants,
+    UpdateRestaurantBy_ID,
+    udateRestaurantStatusInfo,
+  } = value;
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [open, setOpen] = React.useState(false);
@@ -402,6 +437,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
 
   //Define table attributes
   const [rows, setRows] = useState([] as Object[]);
+  const [availability, setAvailability] = React.useState(false);
   const options = {
     filterType: "dropdown",
     search: true,
@@ -414,6 +450,9 @@ export const OrgDetails: React.FC = function OrgDetails() {
     //console.log("inside use effect");
     //console.log(restaurants);
     try {
+      if (restaurants.length > 0 && selectedRestaurant !== undefined) {
+        setAvailability(restaurants[selectedRestaurant].isAvailable);
+      }
       if (
         restaurants.length > 0 &&
         selectedRestaurant !== undefined &&
@@ -559,7 +598,12 @@ export const OrgDetails: React.FC = function OrgDetails() {
     } catch (err) {
       console.log(err);
     }
-  }, [restaurants, selectedRestaurant, values]);
+  }, [
+    restaurants,
+    selectedRestaurant,
+    values,
+    restaurants[selectedRestaurant].isAvailable,
+  ]);
 
   const handleSubmit = async () => {
     try {
@@ -629,9 +673,16 @@ export const OrgDetails: React.FC = function OrgDetails() {
       setValues({ ...values, [prop]: event.target.value });
     };
 
-  // const handleChange = (event) => {
-  //     setValues({...values,[event.target.name]:event.target.value});
-  // };
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //setAvailability(event.target.checked);
+    udateRestaurantStatusInfo(
+      value,
+      restaurants[selectedRestaurant]._id,
+      event.target.checked,
+      restaurants[selectedRestaurant].disabled,
+      selectedRestaurant
+    );
+  };
 
   const handleClose2 = () => {
     let newMenu = values.Menu;
@@ -727,7 +778,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
       <Typography
         variant="h5"
         style={{
-          paddingTop: "3%",
+          paddingTop: "2%",
           paddingBottom: "0%",
           fontWeight: "bold",
           textAlign: "center",
@@ -743,6 +794,35 @@ export const OrgDetails: React.FC = function OrgDetails() {
         className={classes.root}
         alignItems="center"
       >
+        <Grid item xs={12}>
+          <Card>
+            <CardContent>
+              <Typography
+                variant="h6"
+                style={{ fontWeight: "bold", background: "transparent" }}
+              >
+                <form>
+                  <FormGroup row className={classes.root4}>
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={availability}
+                          onChange={handleChange}
+                          name="availability"
+                        />
+                      }
+                      label={
+                        availability
+                          ? "Restaurant Enabled"
+                          : "Restaurant Disabled"
+                      }
+                    />
+                  </FormGroup>
+                </form>
+              </Typography>
+            </CardContent>
+          </Card>
+        </Grid>
         <Grid item xs={12}>
           <Card>
             <CardContent>

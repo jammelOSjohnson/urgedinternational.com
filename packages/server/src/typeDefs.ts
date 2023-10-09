@@ -457,6 +457,12 @@ const typeDefs = /* GraphQL */ `
 
     getRestaurant(_id: String): User!
 
+    updateRestaurantStatus(
+      _id: String
+      isAvailable: Boolean
+      disabled: Boolean
+    ): User!
+
     updateRiderStatus(
       _id: String
       isAvailable: Boolean

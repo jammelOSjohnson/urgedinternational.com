@@ -124,12 +124,52 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+interface defMenuItem {
+  MenuCategory: string;
+  ItemName: string;
+  ItemCost: number;
+  ItemDescription: string;
+  ImageName: string;
+}
+
+interface deCat {
+  _id: string;
+  Id: string;
+  Name: string;
+}
+
+interface defOpeningHrs {
+  Sunday: string;
+  Monday: string;
+  Tuesday: string;
+  Wednesday: string;
+  Thursday: string;
+  Friday: string;
+  Saturday: string;
+}
+interface defRestaurant {
+  _id: string;
+  Id: string;
+  FirstName: string;
+  LastName: string;
+  Email: string;
+  AddressLine1: string;
+  AddressLine2: string;
+  City: string;
+  ContactNumber: string;
+  OpeningHrs: defOpeningHrs;
+  category: deCat;
+  MenuItems: [defMenuItem];
+  ImageName: string;
+  isAvailable: Boolean;
+  disabled: Boolean;
+}
+
 export const PopularRestaurants: React.FC = function PopularRestaurants() {
   const classes = useStyles();
-
   var { value } = useAppData();
   var { restaurants, fetchRestaurants, viewMenuItems } = value;
-
+  const [filteredRests, setFilteredRests] = React.useState<defRestaurant[]>([]);
   var history = useHistory();
 
   useEffect(() => {
@@ -137,6 +177,9 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
     ////console.log(restaurants);
     if (restaurants.length === 0) {
       fetchRestaurants(value);
+    } else {
+      let filtered = restaurants.filter((rest) => rest.isAvailable !== false);
+      setFilteredRests(filtered);
     }
     // eslint-disable-next-line
   }, [restaurants]);
@@ -154,7 +197,7 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
     }
   };
 
-  if (restaurants.legth !== 0) {
+  if (filteredRests.length !== 0) {
     return (
       <>
         <Grid
@@ -181,7 +224,7 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
           className={classes.root}
           alignItems="center"
         >
-          {restaurants.map((item, index) => {
+          {filteredRests.map((item, index) => {
             if (index < 4) {
               return (
                 <Grid

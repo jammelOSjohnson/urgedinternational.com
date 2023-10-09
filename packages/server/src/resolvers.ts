@@ -385,6 +385,8 @@ const resolvers = {
         category,
         MenuItems,
         ImageName,
+        disabled: false,
+        isAvailable: false,
       });
       return user.save();
     },
@@ -878,11 +880,22 @@ const resolvers = {
       //return res;
     },
 
+    updateRestaurantStatus: async (_, { _id, isAvailable, disabled }) => {
+      const user = await User.findOne({ _id });
+      user.isAvailable =
+        isAvailable !== null && isAvailable !== undefined ? isAvailable : true;
+      user.disabled =
+        disabled !== null && disabled !== undefined ? disabled : false;
+      return user.save();
+    },
+
     updateRiderStatus: async (_, { _id, isAvailable, disabled }) => {
       //console.log(newPaySetting);
       const user = await User.findOne({ _id });
-      user.isAvailable = isAvailable;
-      user.disabled = disabled;
+      user.isAvailable =
+        isAvailable !== null && isAvailable !== undefined ? isAvailable : true;
+      user.disabled =
+        disabled !== null && disabled !== undefined ? disabled : false;
       return user.save();
     },
 
