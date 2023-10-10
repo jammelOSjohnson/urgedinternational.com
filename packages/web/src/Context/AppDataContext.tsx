@@ -1745,6 +1745,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
 
           await createOrderBilling({ variables: orderBillingBody }).then(
             async function (response) {
+              //console.log(response.data.createOrderBilling);
               if (response.data.createOrderBilling !== null) {
                 orderBody.BillingInfo = response.data.createOrderBilling._id;
                 await createOrder({ variables: orderBody }).then(

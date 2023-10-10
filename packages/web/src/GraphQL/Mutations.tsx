@@ -1331,7 +1331,7 @@ export const CREATE_ORDER_Billing = gql`
       hashalgorithm
       ipgTransactionId
       installmentsinterest
-      oid
+      oId
       paymentMethod
       phone
       processor

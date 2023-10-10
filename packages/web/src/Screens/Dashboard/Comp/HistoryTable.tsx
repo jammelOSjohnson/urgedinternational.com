@@ -219,10 +219,17 @@ export const HistoryTable: React.FC = function HistoryTable() {
       userRolef === "Customer"
     ) {
       orders.map((item, index) => {
-        const now = new Date(parseInt(item.OrderDate, 10));
+        const ndate = new Date(parseInt(item.OrderDate, 10));
+        const now = new Date();
+        // Calculate the difference in milliseconds
+        const differenceInMilliseconds = +now - +ndate;
+        // Convert milliseconds to minutes
+        const differenceInMinutes = differenceInMilliseconds / (1000 * 60);
+
         const estTime = moment
-          .tz(now, "America/Jamaica")
+          .tz(ndate, "America/Jamaica")
           .format("YYYY-MM-DD h:mm a");
+        //console.log(differenceInMinutes, estTime);
         //console.log(item);
         var orderItems = "";
         orderItems = item.OrderItems.map((item, index) => {
@@ -318,7 +325,7 @@ export const HistoryTable: React.FC = function HistoryTable() {
                 </Typography>
               </>
             ) : item.OrderStatus === "Not Assigned" ||
-              item.OrderStatus === "Pending" ? (
+              (item.OrderStatus === "Pending" && differenceInMinutes < 5) ? (
               <>
                 <Button
                   onClick={() => handleOpen(item._id.toString())}
@@ -330,6 +337,19 @@ export const HistoryTable: React.FC = function HistoryTable() {
                 >
                   Cancel Order ?
                 </Button>
+              </>
+            ) : item.OrderStatus === "Not Assigned" ||
+              (item.OrderStatus === "Pending" && differenceInMinutes > 5) ? (
+              <>
+                <Typography
+                  style={{
+                    backgroundColor: "red",
+                    color: "#FFF",
+                    textAlign: "center",
+                  }}
+                >
+                  {item.OrderStatus.toUpperCase()}
+                </Typography>
               </>
             ) : item.OrderStatus === "Cancelled" ? (
               <>
