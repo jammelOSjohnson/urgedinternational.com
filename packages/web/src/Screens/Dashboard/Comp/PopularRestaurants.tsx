@@ -11,6 +11,7 @@ import {
   CardContent,
   CardHeader,
   Avatar,
+  CircularProgress,
 } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -366,12 +367,16 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
   } else {
     return (
       <>
-        <Typography
+        {/* <Typography
           variant="body1"
           style={{ paddingTop: "3%", paddingBottom: "3%" }}
         >
           Loading...
-        </Typography>
+        </Typography> */}
+        <br />
+        <div style={{ margin: "auto", width: "200px", textAlign: "center" }}>
+          <CircularProgress color="primary" />
+        </div>
       </>
     );
   }

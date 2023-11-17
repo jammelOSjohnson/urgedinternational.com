@@ -549,9 +549,9 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
               </ListItem>
             </Link>
           ) : text === "Orders" ? (
-            userInfo.email !== null &&
-            userInfo.email !== "" &&
-            userInfo.email !== undefined ? (
+            userInfo?.email !== null &&
+            userInfo?.email !== "" &&
+            userInfo?.email !== undefined ? (
               <Link
                 to="/OrderHistory"
                 key={text}
@@ -614,9 +614,9 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
               <></>
             )
           ) : text === "Profile" ? (
-            userInfo.email !== null &&
-            userInfo.email !== "" &&
-            userInfo.email !== undefined ? (
+            userInfo?.email !== null &&
+            userInfo?.email !== "" &&
+            userInfo?.email !== undefined ? (
               <Link
                 to="/Profile"
                 key={text}
@@ -997,9 +997,9 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
       </List>
       <Divider />
       <List>
-        {userInfo.email !== null &&
-        userInfo.email !== "" &&
-        userInfo.email !== undefined
+        {userInfo?.email !== null &&
+        userInfo?.email !== "" &&
+        userInfo?.email !== undefined
           ? ["Settings", "Logout"].map((text, index) =>
               text === "Logout" ? (
                 <a

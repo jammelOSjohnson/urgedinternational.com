@@ -1060,9 +1060,9 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                       </ListItem>
                     </Typography>
                   ) : text === "Orders" ? (
-                    userInfo.email !== null &&
-                    userInfo.email !== "" &&
-                    userInfo.email !== undefined ? (
+                    userInfo?.email !== null &&
+                    userInfo?.email !== "" &&
+                    userInfo?.email !== undefined ? (
                       <Link
                         to="/OrderHistory"
                         key={text}
@@ -1141,9 +1141,9 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                       <></>
                     )
                   ) : text === "Profile" ? (
-                    userInfo.email !== null &&
-                    userInfo.email !== "" &&
-                    userInfo.email !== undefined ? (
+                    userInfo?.email !== null &&
+                    userInfo?.email !== "" &&
+                    userInfo?.email !== undefined ? (
                       <Link
                         to="/Profile"
                         key={text}
@@ -1292,9 +1292,9 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
               </List>
               <Divider />
               <List>
-                {userInfo.email !== null &&
-                userInfo.email !== "" &&
-                userInfo.email !== undefined
+                {userInfo?.email !== null &&
+                userInfo?.email !== "" &&
+                userInfo?.email !== undefined
                   ? //['Settings', 'Logout'].map((text, index) => (
                     ["Logout"].map((text, index) =>
                       text === "Logout" ? (
@@ -2020,9 +2020,9 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                       </ListItem>
                     </Link>
                   ) : text === "Orders" ? (
-                    userInfo.email !== null &&
-                    userInfo.email !== "" &&
-                    userInfo.email !== undefined ? (
+                    userInfo?.email !== null &&
+                    userInfo?.email !== "" &&
+                    userInfo?.email !== undefined ? (
                       <Link
                         to="/OrderHistory"
                         key={text}
@@ -2098,9 +2098,9 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                       <></>
                     )
                   ) : text === "Profile" ? (
-                    userInfo.email !== null &&
-                    userInfo.email !== "" &&
-                    userInfo.email !== undefined ? (
+                    userInfo?.email !== null &&
+                    userInfo?.email !== "" &&
+                    userInfo?.email !== undefined ? (
                       <Link
                         to="/Profile"
                         key={text}
@@ -2594,9 +2594,9 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
               </List>
               <Divider />
               <List>
-                {userInfo.email !== null &&
-                userInfo.email !== "" &&
-                userInfo.email !== undefined
+                {userInfo?.email !== null &&
+                userInfo?.email !== "" &&
+                userInfo?.email !== undefined
                   ? //['Settings', 'Logout'].map((text, index) => (
                     ["Logout"].map((text, index) =>
                       text === "Logout" ? (

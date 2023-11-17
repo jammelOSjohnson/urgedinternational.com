@@ -11,6 +11,7 @@ import {
   Avatar,
   CardMedia,
   CardContent,
+  CircularProgress,
 } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
@@ -581,12 +582,16 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
   } else {
     return (
       <>
-        <Typography
+        {/* <Typography
           variant="body1"
           style={{ paddingTop: "3%", paddingBottom: "3%" }}
         >
           Loading...
-        </Typography>
+        </Typography> */}
+        <br />
+        <div style={{ margin: "auto", width: "200px", textAlign: "center" }}>
+          <CircularProgress color="primary" />
+        </div>
       </>
     );
   }
