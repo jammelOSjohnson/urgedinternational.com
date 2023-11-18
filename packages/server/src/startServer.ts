@@ -243,10 +243,10 @@ export async function startServer() {
     //test docker locally
     //conn_string = `${process.env.DBCONN_BASEURL}://${process.env.DBCONN_USR_NAME}:${process.env.DBCONN_USR_PSW}@${process.env.DBCONN_AT}/${process.env.DBCONN_DBNAME}?${process.env.DBCONN_END}`;
 
-    console.log(conn_string);
-    console.log(process.env.NODE_ENV);
-    console.log("host is: " + process.env.FRONTEND_HOST);
-    console.log("redis domain name is: " + process.env.REDIS_DOMAIN_NAME);
+    // console.log(conn_string);
+    // console.log(process.env.NODE_ENV);
+    // console.log("host is: " + process.env.FRONTEND_HOST);
+    // console.log("redis domain name is: " + process.env.REDIS_DOMAIN_NAME);
     await mongoose
       .connect(conn_string, {
         useUnifiedTopology: true,
@@ -271,8 +271,8 @@ export async function startServer() {
     `🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`
   );
 
-  console.log(
-    `cors settings are: \n\t-credentials: ${corsOptions.credentials} \n\t-origin: ${corsOptions.origin}`
-  );
+  // console.log(
+  //   `cors settings are: \n\t-credentials: ${corsOptions.credentials} \n\t-origin: ${corsOptions.origin}`
+  // );
   //console.log(process.env.SECRET_LIVE);
 }
