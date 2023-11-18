@@ -407,7 +407,7 @@ class MapContainer extends Component<MyProps> {
   };
 
   componentDidMount() {
-    //console.log("Mounted")
+    //console.log("Mounted");
     setTimeout(() => {
       if (
         this.state.compCoords.lat === null &&

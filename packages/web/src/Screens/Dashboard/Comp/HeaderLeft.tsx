@@ -186,8 +186,15 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
   const isMatchMedium = useMediaQuery(theme.breakpoints.up("md"));
 
   var { value } = useAppData();
-  var { logout, userInfo, restaurants, viewMenuItems, AddGeneralLocation } =
-    value;
+  var {
+    logout,
+    userInfo,
+    restaurants,
+    viewMenuItems,
+    AddGeneralLocation,
+    generalLocation,
+    targetLocation,
+  } = value;
 
   var history = useHistory();
   var location = history.location;
@@ -233,7 +240,9 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
       });
     }
 
-    setOpen3(true);
+    if (generalLocation === undefined || targetLocation === undefined) {
+      setOpen3(true);
+    }
   }, [restaurants]);
 
   const list = (anchor: Anchor) => (
@@ -1202,7 +1211,10 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
   const handleClose3 = () => {
     if (values.genralLocation === "Select Parish") {
       return setError("Please Select Parish");
-    } else if (values.targetLocation === "Select Town") {
+    } else if (
+      values.genralLocation !== "Clarendon" &&
+      values.targetLocation === "Select Town"
+    ) {
       return setError("Please Select Town");
     } else {
       AddGeneralLocation(value, values.genralLocation, values.targetLocation);

@@ -2759,7 +2759,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     target
   ) {
     payload.generalLocation = location;
-    payload.targetLocation = location;
+    payload.targetLocation = target;
     dispatch({
       type: "set_general_location",
       payload: payload,

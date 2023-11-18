@@ -164,12 +164,13 @@ interface defRestaurant {
   ImageName: string;
   isAvailable: Boolean;
   disabled: Boolean;
+  Parish: string;
 }
 
 export const PopularRestaurants: React.FC = function PopularRestaurants() {
   const classes = useStyles();
   var { value } = useAppData();
-  var { restaurants, fetchRestaurants, viewMenuItems } = value;
+  var { restaurants, fetchRestaurants, viewMenuItems, generalLocation } = value;
   const [filteredRests, setFilteredRests] = React.useState<defRestaurant[]>([]);
   var history = useHistory();
 
@@ -179,16 +180,20 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
     if (restaurants.length === 0) {
       fetchRestaurants(value);
     } else {
-      let filtered = restaurants.filter((rest) => rest.isAvailable !== false);
+      let filtered = restaurants.filter(
+        (rest) => rest.isAvailable !== false && rest.Parish === generalLocation
+      );
+      // console.log(filtered);
+      // console.log(generalLocation);
       setFilteredRests(filtered);
     }
     // eslint-disable-next-line
-  }, [restaurants]);
+  }, [restaurants, generalLocation]);
 
   var handleSelectedRestaurant = async function (index, restaurantName) {
     if (index !== undefined || index !== null) {
-      console.log("Index is");
-      console.log(index, restaurantName);
+      // console.log("Index is");
+      // console.log(index, restaurantName);
       var payload = value;
       payload.selectedRestaurant = index;
       payload.selectedRestaurantName = restaurantName;

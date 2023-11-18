@@ -72,10 +72,16 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
   //console.log(id)
   let restaurantName = id.split("-")[1];
   //console.log(restaurantName);
-  var { restaurants, selectedRestaurant, fetchRestaurants, paySettings } =
-    value;
+  var {
+    restaurants,
+    selectedRestaurant,
+    fetchRestaurants,
+    paySettings,
+    generalLocation,
+  } = value;
   var restaurant = restaurants.filter(
-    (item) => item.FirstName === restaurantName
+    (item) =>
+      item.FirstName === restaurantName && item.Parish === generalLocation
   );
   //console.log(restaurant);
   //console.log(restaurants);

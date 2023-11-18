@@ -401,16 +401,26 @@ export const CheckGps: React.FC<Props> = function CheckGps({ setLoading }) {
         alignItems="center"
       >
         <Grid item xs={12}>
-          {generalLocation !== undefined &&
+          {(generalLocation !== undefined &&
             targetLocation !== undefined &&
-            generalLocation === "Clarendon" && (
+            generalLocation !== "Clarendon" && (
               <MapContainer
                 setLoading={setLoading}
                 setgpsCheck={setgpsCheck}
                 gpsCheck={gpsCheck}
                 userInfo={userInfo}
               />
-            )}
+            )) ||
+            (generalLocation !== undefined &&
+              targetLocation === "Select Town" &&
+              generalLocation === "Clarendon" && (
+                <MapContainer
+                  setLoading={setLoading}
+                  setgpsCheck={setgpsCheck}
+                  gpsCheck={gpsCheck}
+                  userInfo={userInfo}
+                />
+              ))}
         </Grid>
       </Grid>
       <Modal

@@ -249,13 +249,23 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
   Fail,
 }) {
   const classes = useStyles();
-
+  var { value } = useAppData();
+  var {
+    cartItems,
+    checkoutOrder,
+    restaurants,
+    selectedRestaurant,
+    userInfo,
+    createPaymentHash,
+    generalLocation,
+    targetLocation,
+  } = value;
   const [values, setValues] = React.useState<State>({
     Street: "",
-    Town: "",
+    Town: targetLocation ?? "",
     ContactNum: "",
     PaymentMethod: "Cash on Delivery",
-    Parish: "Clarendon",
+    Parish: generalLocation ?? "Clarendon",
     lat: null,
     long: null,
   });
@@ -356,15 +366,6 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
 
   //const [isgeoAllowed, setIsGeoAllowed] = useState(false);
 
-  var { value } = useAppData();
-  var {
-    cartItems,
-    checkoutOrder,
-    restaurants,
-    selectedRestaurant,
-    userInfo,
-    createPaymentHash,
-  } = value;
   var history = useHistory();
   var [error, setError] = useState("");
   var [success, setSuccess] = useState("");
@@ -495,6 +496,12 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
 
     payment.paymentMethod === ""
       ? setError("Please select payment method.")
+      : values.Street === ""
+      ? setError("Please enter street address")
+      : values.Town === ""
+      ? setError("Please enter Town")
+      : values.Parish === ""
+      ? setError("Please select Parish")
       : createPaymentHash(payment).then(function (hashResult) {
           // console.log(hashResult.hash);
           setPayment({
@@ -640,7 +647,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
       setValues({
         ...values,
         Street: userInfo.addressLine1,
-        Town: userInfo.city,
+        Town: targetLocation ?? userInfo.city,
         ContactNum: userInfo.contactNumber,
       });
       setPayment({
