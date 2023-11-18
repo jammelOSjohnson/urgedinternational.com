@@ -127,8 +127,13 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
   const classes = useStyles();
 
   var { value } = useAppData();
-  var { fetchRestaurants, restaurants, viewMenuItems, filteredRestItems } =
-    value;
+  var {
+    fetchRestaurants,
+    restaurants,
+    viewMenuItems,
+    filteredRestItems,
+    generalLocation,
+  } = value;
 
   const [gpsCheck, setgpsCheck] = React.useState<NoGps>({
     open2: false,
@@ -200,7 +205,10 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                   restaurant.isAvailable !== null &&
                   restaurant.isAvailable !== undefined
                 ) {
-                  if (restaurant.isAvailable) {
+                  if (
+                    restaurant.isAvailable &&
+                    restaurant.Parish === generalLocation
+                  ) {
                     return (
                       <Grid
                         item
@@ -392,7 +400,10 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                   restaurant.isAvailable !== null &&
                   restaurant.isAvailable !== undefined
                 ) {
-                  if (restaurant.isAvailable) {
+                  if (
+                    restaurant.isAvailable &&
+                    restaurant.Parish === generalLocation
+                  ) {
                     return (
                       <Grid
                         item

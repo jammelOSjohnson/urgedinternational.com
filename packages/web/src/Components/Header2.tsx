@@ -368,7 +368,7 @@ export const Header2: React.FC = function Header2() {
   //     //setError('');
   //     if(event.target.value !== "Select Location"){
   //       setValues({...values,[event.target.name]:event.target.value});
-  //       //AddGeneralLocation(value, event.target.value);
+  //       //AddGeneralLocation(value, event.target.value, "");
   //     }else{
   //       //setError('Please Select Location');
   //     }

@@ -195,6 +195,7 @@ function appDataReducer(state, action) {
       return {
         ...state,
         generalLocation: action.payload.generalLocation,
+        targetLocation: action.payload.targetLocation,
       };
     case "status_change":
       return {
@@ -348,6 +349,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   var filterCategory = undefined;
   var filterRestCategory = undefined;
   var generalLocation = undefined;
+  var targetLocation = undefined;
   var prevSelectedrestaurant = undefined;
   var loading = true;
   var loggedIn = false;
@@ -954,6 +956,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
             OpeningHrs: newRestaurant.OpeningHrs,
             category: newRestaurant.Category,
             ImageName: newRestaurant.ImageName,
+            Parish: newRestaurant.Parish,
           };
           //verified: false,
           //verifiedemailsent: false,
@@ -2752,9 +2755,11 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
 
   var AddGeneralLocation = async function AddGeneralLocation(
     payload,
-    location
+    location,
+    target
   ) {
     payload.generalLocation = location;
+    payload.targetLocation = location;
     dispatch({
       type: "set_general_location",
       payload: payload,
@@ -3252,6 +3257,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
           category: { _id: any };
           MenuItems: any;
           ImageName: any;
+          Parish: any;
         }
       | null
       | undefined
@@ -3273,6 +3279,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
           category: restaurant.category._id,
           MenuItems: restaurant.MenuItems,
           ImageName: restaurant.ImageName,
+          Parish: restaurant.Parish,
         },
       }).then(async function (response) {
         ////console.log("create orer result");
@@ -3413,6 +3420,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     filteredRestItems,
     filterRestCategory,
     generalLocation,
+    targetLocation,
     longitude,
     latitude,
     receiptDetails,

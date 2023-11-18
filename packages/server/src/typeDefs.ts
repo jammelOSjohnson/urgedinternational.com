@@ -105,6 +105,7 @@ const typeDefs = /* GraphQL */ `
     ImageName: String
     isAvailable: Boolean
     disabled: Boolean
+    Parish: String
   }
 
   type User2 {
@@ -149,6 +150,7 @@ const typeDefs = /* GraphQL */ `
     ContactNumber: String
     OpeningHrs: OpeningHrs
     category: ID
+    Parish: String
   }
 
   type RestaurantsByCategories {
@@ -408,6 +410,7 @@ const typeDefs = /* GraphQL */ `
       AddressLine1: String
       AddressLine2: String
       City: String
+      Parish: String
       ContactNumber: String
       OpeningHrs: JSONObject
       category: ID
@@ -630,6 +633,7 @@ const typeDefs = /* GraphQL */ `
       category: ID
       MenuItems: JSONObject
       ImageName: String
+      Parish: String
     ): User
 
     getCategories: [Category!]!

@@ -141,7 +141,7 @@ export const CheckGps: React.FC<Props> = function CheckGps({ setLoading }) {
   var location = history.location;
   var referralPath = location.pathname;
 
-  var { userInfo, UpdateUserInfo } = value;
+  var { userInfo, UpdateUserInfo, generalLocation, targetLocation } = value;
   var coords = [
     { lat: 17.862452783274218, lng: -77.23639526977539 },
     { lat: 17.867027547705508, lng: -77.22970047607421 },
@@ -401,12 +401,16 @@ export const CheckGps: React.FC<Props> = function CheckGps({ setLoading }) {
         alignItems="center"
       >
         <Grid item xs={12}>
-          <MapContainer
-            setLoading={setLoading}
-            setgpsCheck={setgpsCheck}
-            gpsCheck={gpsCheck}
-            userInfo={userInfo}
-          />
+          {generalLocation !== undefined &&
+            targetLocation !== undefined &&
+            generalLocation === "Clarendon" && (
+              <MapContainer
+                setLoading={setLoading}
+                setgpsCheck={setgpsCheck}
+                gpsCheck={gpsCheck}
+                userInfo={userInfo}
+              />
+            )}
         </Grid>
       </Grid>
       <Modal

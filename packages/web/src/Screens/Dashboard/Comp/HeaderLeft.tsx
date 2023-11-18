@@ -15,6 +15,8 @@ import {
   InputLabel,
   OutlinedInput,
   InputAdornment,
+  Select,
+  MenuItem,
 } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { useHistory, Link } from "react-router-dom";
@@ -29,6 +31,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import MailIcon from "@material-ui/icons/Mail";
+import { Alert } from "@material-ui/lab";
 import { CloseRounded } from "@material-ui/icons";
 import { DashboardBreadCrumbs } from "./DashboardBreadCrumbs";
 import PortalSearch from "./PortalSrearch";
@@ -40,6 +43,11 @@ interface restItemsArr {
   ItemCost: number;
   MenuCategory: string;
   rest: Object[];
+}
+
+interface State {
+  genralLocation: string;
+  targetLocation: string;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -158,6 +166,14 @@ const useStyles = makeStyles((theme: Theme) =>
       maxHeight: "400px",
       overflowY: "scroll",
     },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 120,
+      marginLeft: "0px",
+    },
+    alert: {
+      marginBottom: "5%",
+    },
   })
 );
 type Anchor = "top" | "left" | "bottom" | "right";
@@ -170,7 +186,8 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
   const isMatchMedium = useMediaQuery(theme.breakpoints.up("md"));
 
   var { value } = useAppData();
-  var { logout, userInfo, restaurants, viewMenuItems } = value;
+  var { logout, userInfo, restaurants, viewMenuItems, AddGeneralLocation } =
+    value;
 
   var history = useHistory();
   var location = history.location;
@@ -183,7 +200,13 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
     right: false,
   });
   const [open2, setOpen2] = React.useState(false);
+  const [open3, setOpen3] = React.useState(false);
+  var [error, setError] = React.useState("");
   const [restItems, setRestItems] = React.useState<restItemsArr[]>([]);
+  const [values, setValues] = React.useState<State>({
+    genralLocation: "Select Parish",
+    targetLocation: "Select Town",
+  });
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) =>
@@ -209,6 +232,8 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
         });
       });
     }
+
+    setOpen3(true);
   }, [restaurants]);
 
   const list = (anchor: Anchor) => (
@@ -1149,8 +1174,41 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
     }
   };
 
+  const handleChange = (event) => {
+    try {
+      setError("");
+      if (
+        event.target.value !== "Select Parish" &&
+        event.target.name === "genralLocation"
+      ) {
+        setValues({ ...values, [event.target.name]: event.target.value });
+      }
+
+      if (
+        event.target.value !== "Select Town" &&
+        event.target.name === "targetLocation"
+      ) {
+        setValues({ ...values, [event.target.name]: event.target.value });
+      }
+    } catch (err) {
+      //console.log(err);
+    }
+  };
+
   const handleClose2 = () => {
     setOpen2(false);
+  };
+
+  const handleClose3 = () => {
+    if (values.genralLocation === "Select Parish") {
+      return setError("Please Select Parish");
+    } else if (values.targetLocation === "Select Town") {
+      return setError("Please Select Town");
+    } else {
+      AddGeneralLocation(value, values.genralLocation, values.targetLocation);
+      setOpen3(false);
+    }
+    console.log(values);
   };
 
   const handleOpen2 = () => {
@@ -1320,6 +1378,188 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
       ) : (
         <></>
       )}
+
+      <>
+        <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          className={clsx(classes.modal)}
+          open={open3}
+          onClose={handleClose3}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
+        >
+          <Fade in={open3}>
+            <div className={clsx(classes.paper, "modalMobile")}>
+              <h2 id="transition-modal-title" style={{ textAlign: "center" }}>
+                Region Info
+              </h2>
+              <Link
+                to={`${referralPath}`}
+                className={classes.cartIcon}
+                onClick={handleClose3}
+              >
+                <img
+                  src={window.location.origin + "/Images/CartCloseIcon.png"}
+                  alt="closemodal"
+                />
+              </Link>
+              <Grid
+                container
+                direction="row"
+                spacing={1}
+                className={classes.root}
+                alignItems="center"
+              >
+                <Grid item xs={12}>
+                  <form>
+                    {error && (
+                      <Alert severity="error" className={classes.alert}>
+                        {error}
+                      </Alert>
+                    )}
+                    <Grid
+                      container
+                      direction="row"
+                      spacing={1}
+                      className={classes.root}
+                      alignItems="center"
+                    >
+                      <Grid item xs={12}>
+                        <FormControl
+                          variant="outlined"
+                          className={classes.formControl}
+                          fullWidth
+                        >
+                          <InputLabel id="demo-simple-select-outlined-label">
+                            Parish
+                          </InputLabel>
+                          <Select
+                            labelId="demo-simple-select-outlined-label"
+                            id="demo-simple-select-outlined"
+                            value={values.genralLocation}
+                            onChange={handleChange}
+                            label="genralLocation"
+                            name="genralLocation"
+                            className={classes.root}
+                            fullWidth={true}
+                          >
+                            <MenuItem value={"Select Parish"}>
+                              Select Parish
+                            </MenuItem>
+                            <MenuItem value={"Kingston"}>Kingston</MenuItem>
+                            <MenuItem value={"St. Catherine"}>
+                              St. Catherine
+                            </MenuItem>
+                            <MenuItem value={"Clarendon"}>Clarendon</MenuItem>
+                          </Select>
+                        </FormControl>
+                        {values.genralLocation !== "Select Parish" &&
+                          values.genralLocation !== "Clarendon" &&
+                          values.genralLocation !== "St. Catherine" && (
+                            <FormControl
+                              variant="outlined"
+                              className={classes.formControl}
+                              fullWidth
+                            >
+                              <InputLabel id="demo-simple-select-outlined-label2">
+                                Select Town
+                              </InputLabel>
+                              <Select
+                                labelId="demo-simple-select-outlined-label2"
+                                id="demo-simple-select-outlined"
+                                value={values.targetLocation}
+                                onChange={handleChange}
+                                label="targetLocation"
+                                name="targetLocation"
+                                className={classes.root}
+                                fullWidth={true}
+                              >
+                                <MenuItem value={"Select Town"}>
+                                  Select Town
+                                </MenuItem>
+                                <MenuItem value={"Liguanea"}>Liguanea</MenuItem>
+                                <MenuItem value={"Beverly Hills"}>
+                                  Beverly Hills
+                                </MenuItem>
+                                <MenuItem value={"Barbican"}>Barbican</MenuItem>
+                                <MenuItem value={"Jack's Hill"}>
+                                  Jack's Hill
+                                </MenuItem>
+                                <MenuItem value={"Mona"}>Mona</MenuItem>
+                                <MenuItem value={"Cherry Gardens"}>
+                                  Cherry Gardens
+                                </MenuItem>
+                                <MenuItem value={"New Kingston"}>
+                                  New Kingston
+                                </MenuItem>
+                                <MenuItem value={"Manor Park"}>
+                                  Manor Park
+                                </MenuItem>
+                                <MenuItem value={"Red Hills"}>
+                                  Red Hills
+                                </MenuItem>
+                                <MenuItem value={"Cross Roads"}>
+                                  Cross Roads
+                                </MenuItem>
+                              </Select>
+                            </FormControl>
+                          )}
+
+                        {values.genralLocation !== "Select Parish" &&
+                          values.genralLocation !== "Clarendon" &&
+                          values.genralLocation !== "Kingston" && (
+                            <FormControl
+                              variant="outlined"
+                              className={classes.formControl}
+                              fullWidth
+                            >
+                              <InputLabel id="demo-simple-select-outlined-label2">
+                                Select Town
+                              </InputLabel>
+                              <Select
+                                labelId="demo-simple-select-outlined-label2"
+                                id="demo-simple-select-outlined"
+                                value={values.targetLocation}
+                                onChange={handleChange}
+                                label="targetLocation"
+                                name="targetLocation"
+                                className={classes.root}
+                                fullWidth={true}
+                              >
+                                <MenuItem value={"Select Town"}>
+                                  Select Town
+                                </MenuItem>
+                                <MenuItem value={"Old Harbour"}>
+                                  Old Harbour
+                                </MenuItem>
+                              </Select>
+                            </FormControl>
+                          )}
+                      </Grid>
+                    </Grid>
+                  </form>
+                </Grid>
+                <br />
+                <Grid item xs={12} sm={12}>
+                  <Button
+                    size="small"
+                    fullWidth={true}
+                    className={`${classes.ButtonMobile} ${classes.btnfonts}`}
+                    onClick={() => handleClose3()}
+                    type="button"
+                  >
+                    Continue
+                  </Button>
+                </Grid>
+              </Grid>
+            </div>
+          </Fade>
+        </Modal>
+      </>
     </>
   );
 };

@@ -190,6 +190,7 @@ export const CREATE_RESTAURANT_MUTATION = gql`
     $OpeningHrs: JSONObject
     $category: ID
     $ImageName: String
+    $Parish: String
   ) {
     createRestaurant(
       MenuItems: $MenuItems
@@ -204,6 +205,7 @@ export const CREATE_RESTAURANT_MUTATION = gql`
       OpeningHrs: $OpeningHrs
       category: $category
       ImageName: $ImageName
+      Parish: $Parish
     ) {
       _id
       Id
@@ -236,6 +238,7 @@ export const CREATE_RESTAURANT_MUTATION = gql`
         ImageName
       }
       ImageName
+      Parish
     }
   }
 `;
@@ -374,6 +377,7 @@ export const GET_RESTAURANTS = gql`
       ImageName
       disabled
       isAvailable
+      Parish
     }
   }
 `;
@@ -471,6 +475,7 @@ export const GET_RESTAURANT = gql`
         Id
       }
       ImageName
+      Parish
     }
   }
 `;
@@ -498,6 +503,7 @@ export const UPDATE_RESTAURANT_STATUS = gql`
       ImageName
       disabled
       isAvailable
+      Parish
     }
   }
 `;
@@ -1166,6 +1172,7 @@ export const UPDATE_RESTAURANT_BYID = gql`
     $category: ID
     $MenuItems: JSONObject
     $ImageName: String
+    $Parish: String
   ) {
     updateRestaurantById(
       _id: $_id
@@ -1181,6 +1188,7 @@ export const UPDATE_RESTAURANT_BYID = gql`
       category: $category
       MenuItems: $MenuItems
       ImageName: $ImageName
+      Parish: $Parish
     ) {
       Id
       FirstName
@@ -1212,6 +1220,7 @@ export const UPDATE_RESTAURANT_BYID = gql`
         ImageName
       }
       ImageName
+      Parish
     }
   }
 `;

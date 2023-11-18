@@ -1,30 +1,28 @@
-import { makeStyles, createStyles, Theme } from '@material-ui/core';
-import React, { useEffect } from 'react';
-import addressPI from '../../../Apis/addressPI';
+import { makeStyles, createStyles, Theme } from "@material-ui/core";
+import React, { useEffect } from "react";
+import addressPI from "../../../Apis/addressPI";
 
 interface State {
-    lat: any;
-    long: any;
+  lat: any;
+  long: any;
 }
 
 interface ParentState {
-    Street: string;
-    Town: string;
-    ContactNum: string;
-    PaymentMethod: string;
-    Parish: string;
-    lat: any;
-    long: any;
+  Street: string;
+  Town: string;
+  ContactNum: string;
+  PaymentMethod: string;
+  Parish: string;
+  lat: any;
+  long: any;
 }
 
 interface Props {
-    setValues: (ParentState: ParentState) => void;
-    values: ParentState;
+  setValues: (ParentState: ParentState) => void;
+  values: ParentState;
 }
 
-
-
-// const useStyles = makeStyles((theme: Theme) => 
+// const useStyles = makeStyles((theme: Theme) =>
 //     createStyles({
 //         root: {
 //             borderRadius: "33px",
@@ -139,102 +137,108 @@ interface Props {
 //     }),
 // );
 
-export const GeoMap: React.FC<Props> = function GeoMap({setValues, values}) {
-    //const classes = useStyles();
+export const GeoMap: React.FC<Props> = function GeoMap({ setValues, values }) {
+  //const classes = useStyles();
 
-    const [compCoords, setcompCoords] = React.useState<State>({
-        lat: null,
-        long: null
+  const [compCoords, setcompCoords] = React.useState<State>({
+    lat: null,
+    long: null,
+  });
+
+  //const [isgeoAllowed, setIsGeoAllowed] = useState(false);
+
+  const getLocation = () => {
+    try {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          getCoordinates,
+          handleLocationError
+        );
+      } else {
+        //alert("Geolocation is not supported by this browser.");
+      }
+      var location = "";
+
+      // AddGeneralLocation(value, "", "")
+    } catch (err) {}
+  };
+
+  const getCoordinates = (position) => {
+    // console.log(position);
+    setcompCoords({
+      lat: position.coords.latitude,
+      long: position.coords.longitude,
     });
+  };
 
-    //const [isgeoAllowed, setIsGeoAllowed] = useState(false);
-
-    
-
-
-
-    const getLocation = () => {
-        try{
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(getCoordinates, handleLocationError);
-              } else {
-                //alert("Geolocation is not supported by this browser.");
-            }
-            var location = "";
-
-            // AddGeneralLocation(value, )
-        }catch(err){
-
-        }
-    }
-
-    const getCoordinates = (position) => {
-        // console.log(position);
-        setcompCoords({lat: position.coords.latitude, long: position.coords.longitude});
-    }
-
-    const reverseGeoCodeCoordinates = () => {
-        try{
-            addressPI.get(`/json?latlng=${compCoords.lat},${compCoords.long}&key=${process.env.REACT_APP_GEO_API2}`).then((response) => {
-                if(response.data !== null){
-                    if(response.data.results !== undefined){
-                        let resArr = response.data.results;
-                        let addressArr = "";
-                        resArr.map((item,index) => {
-                            if(item.types[0] === "route"){
-                                addressArr = item.formatted_address.split(',')
-                            }
-                        })
-                        // resArr[0].formatted_address.split(',');
-                        setValues({...values, Street: addressArr[0], Town: addressArr[1]});
-                    }
+  const reverseGeoCodeCoordinates = () => {
+    try {
+      addressPI
+        .get(
+          `/json?latlng=${compCoords.lat},${compCoords.long}&key=${process.env.REACT_APP_GEO_API2}`
+        )
+        .then((response) => {
+          if (response.data !== null) {
+            if (response.data.results !== undefined) {
+              let resArr = response.data.results;
+              let addressArr = "";
+              resArr.map((item, index) => {
+                if (item.types[0] === "route") {
+                  addressArr = item.formatted_address.split(",");
                 }
-            }).catch((err) => {
-    
-            });
-        }catch(err){
+              });
+              // resArr[0].formatted_address.split(',');
+              setValues({
+                ...values,
+                Street: addressArr[0],
+                Town: addressArr[1],
+              });
+            }
+          }
+        })
+        .catch((err) => {});
+    } catch (err) {}
+  };
 
-        }
-        
+  const handleLocationError = (error) => {
+    switch (error.code) {
+      case error.PERMISSION_DENIED:
+        console.log("User denied the request for Geolocation.");
+        break;
+      case error.POSITION_UNAVAILABLE:
+        console.log("Location information is unavailable.");
+        break;
+      case error.TIMEOUT:
+        console.log("The request to get user location timed out.");
+        break;
+      case error.UNKNOWN_ERROR:
+        console.log("An unknown error occurred.");
+        break;
+      default:
+        break;
     }
+  };
 
-    const handleLocationError = (error) => {
-        switch(error.code) {
-            case error.PERMISSION_DENIED:
-              console.log("User denied the request for Geolocation.");
-              break;
-            case error.POSITION_UNAVAILABLE:
-              console.log("Location information is unavailable.");
-              break;
-            case error.TIMEOUT:
-              console.log("The request to get user location timed out.");
-              break;
-            case error.UNKNOWN_ERROR:
-              console.log("An unknown error occurred.");
-              break;
-            default:
-                break;    
-        }
+  useEffect(() => {
+    if (compCoords.lat === null && compCoords.long === null) {
+      getLocation();
+    } else {
+      reverseGeoCodeCoordinates();
     }
+  }, [compCoords.lat, compCoords.long]);
+  // generalLocation, values.Town
 
-    useEffect(() =>{
-
-        if(compCoords.lat === null && compCoords.long === null){
-            getLocation();
-        }else{
-            reverseGeoCodeCoordinates();
-        }
-    },[compCoords.lat, compCoords.long])
-    // generalLocation, values.Town
-      
-    return (
-        <>
-            {
-                compCoords.lat && compCoords.long ?
-                <img src={`https://maps.googleapis.com/maps/api/staticmap?center=${compCoords.lat},${compCoords.long}&zoom=14&size=600x300&sensor=false&markers=color:orange%7C${compCoords.lat},${compCoords.long}&key=${process.env.REACT_APP_GEO_API}`} style={{width: "100%"}} alt='' />
-                :
-                <></>
-            }    
-        </>
-    )
-}
+  return (
+    <>
+      {compCoords.lat && compCoords.long ? (
+        <img
+          src={`https://maps.googleapis.com/maps/api/staticmap?center=${compCoords.lat},${compCoords.long}&zoom=14&size=600x300&sensor=false&markers=color:orange%7C${compCoords.lat},${compCoords.long}&key=${process.env.REACT_APP_GEO_API}`}
+          style={{ width: "100%" }}
+          alt=""
+        />
+      ) : (
+        <></>
+      )}
+    </>
+  );
+};

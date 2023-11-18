@@ -21,6 +21,8 @@ import {
   FormGroup,
   FormControlLabel,
   Switch,
+  InputLabel,
+  Select,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -51,6 +53,7 @@ interface State {
   Category: string;
   Menu: MenuItem[];
   OpeningHrs: OpenHrs;
+  Parish: string;
 }
 
 interface MenuItem {
@@ -400,6 +403,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
       Friday: "",
       Saturday: "",
     },
+    Parish: "",
   });
   const [ohrs, setOhrs] = React.useState<OpenHrs>({
     Sunday: "",
@@ -470,6 +474,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
           Category: restaurant.category.Name,
           Menu: restaurant.MenuItems,
           OpeningHrs: restaurant.OpeningHrs,
+          Parish: restaurant.Parish,
         });
 
         //console.log(restaurant.MenuItems.length);
@@ -602,7 +607,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
     restaurants,
     selectedRestaurant,
     values,
-    restaurants[selectedRestaurant].isAvailable,
+    restaurants[selectedRestaurant]?.isAvailable,
   ]);
 
   const handleSubmit = async () => {
@@ -615,6 +620,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
       final_restaurant.AddressLine1 = values.StreetAddress;
       final_restaurant.AddressLine2 = values.StreetAddress2;
       final_restaurant.City = values.City;
+      final_restaurant.Parish = values.Parish;
       final_restaurant.ContactNumber = values.Contact;
       //final_restaurant.category = values.Category;
       final_restaurant.MenuItems = values.Menu;
@@ -632,6 +638,10 @@ export const OrgDetails: React.FC = function OrgDetails() {
       let result = path.split("Path");
       setError(result[1]);
     }
+  };
+
+  const handleChange6 = (event) => {
+    setValues({ ...values, [event.target.name]: event.target.value });
   };
 
   const handleChange5 =
@@ -899,6 +909,36 @@ export const OrgDetails: React.FC = function OrgDetails() {
                           placeholder="Enter City"
                           fullWidth
                         />
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <FormControl
+                        variant="outlined"
+                        className={classes.formControl}
+                        fullWidth
+                      >
+                        <InputLabel id="demo-simple-select-outlined-label">
+                          Parish
+                        </InputLabel>
+                        <Select
+                          labelId="demo-simple-select-outlined-label"
+                          id="demo-simple-select-outlined"
+                          value={values.Parish}
+                          onChange={handleChange6}
+                          label="Parish"
+                          name="Parish"
+                          className={classes.root}
+                          fullWidth={true}
+                        >
+                          <MenuItem value={"Select Parish"}>
+                            Select Parish
+                          </MenuItem>
+                          <MenuItem value={"Kingston"}>Kingston</MenuItem>
+                          <MenuItem value={"St. Catherine"}>
+                            St. Catherine
+                          </MenuItem>
+                          <MenuItem value={"Clarendon"}>Clarendon</MenuItem>
+                        </Select>
                       </FormControl>
                     </Grid>
                     <Grid item xs={12} sm={6}>

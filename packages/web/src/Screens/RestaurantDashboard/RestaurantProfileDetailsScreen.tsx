@@ -20,6 +20,9 @@ import {
   FormControl,
   Button,
   Box,
+  MenuItem,
+  InputLabel,
+  Select,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -55,6 +58,7 @@ interface State {
   Menu: MenuItem[];
   OpeningHrs: OpenHrs;
   ImageName: string;
+  Parish: string;
 }
 
 interface MenuItem {
@@ -416,6 +420,7 @@ export const RestaurantProfileDetailsScreen: React.FC =
         Saturday: "",
       },
       ImageName: "",
+      Parish: "",
     });
     const [ohrs, setOhrs] = React.useState<OpenHrs>({
       Sunday: "",
@@ -482,6 +487,7 @@ export const RestaurantProfileDetailsScreen: React.FC =
             Menu: restaurantInfo.MenuItems,
             OpeningHrs: restaurant.OpeningHrs,
             ImageName: restaurant.ImageName,
+            Parish: restaurant.Parish,
           });
 
           setOhrs(restaurant.OpeningHrs);
@@ -565,6 +571,7 @@ export const RestaurantProfileDetailsScreen: React.FC =
         final_restaurant.AddressLine1 = values.StreetAddress;
         final_restaurant.AddressLine2 = values.StreetAddress2;
         final_restaurant.City = values.City;
+        final_restaurant.Parish = values.Parish;
         final_restaurant.ContactNumber = values.Contact;
         //final_restaurant.category = values.Category;
         final_restaurant.MenuItems = values.Menu;
@@ -610,6 +617,10 @@ export const RestaurantProfileDetailsScreen: React.FC =
       (prop: keyof OpenHrs) => (event: React.ChangeEvent<HTMLInputElement>) => {
         setOhrs({ ...ohrs, [prop]: event.target.value });
       };
+
+    const handleChange = (event) => {
+      setValues({ ...values, [event.target.name]: event.target.value });
+    };
 
     const handleChange4 =
       (prop: keyof MenuItem) =>
@@ -908,6 +919,40 @@ export const RestaurantProfileDetailsScreen: React.FC =
                                       placeholder="Enter City"
                                       fullWidth
                                     />
+                                  </FormControl>
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                  <FormControl
+                                    variant="outlined"
+                                    className={classes.formControl}
+                                    fullWidth
+                                  >
+                                    <InputLabel id="demo-simple-select-outlined-label">
+                                      Parish
+                                    </InputLabel>
+                                    <Select
+                                      labelId="demo-simple-select-outlined-label"
+                                      id="demo-simple-select-outlined"
+                                      value={values.Parish}
+                                      onChange={handleChange}
+                                      label="Parish"
+                                      name="Parish"
+                                      className={classes.root}
+                                      fullWidth={true}
+                                    >
+                                      <MenuItem value={"Select Parish"}>
+                                        Select Parish
+                                      </MenuItem>
+                                      <MenuItem value={"Kingston"}>
+                                        Kingston
+                                      </MenuItem>
+                                      <MenuItem value={"St. Catherine"}>
+                                        St. Catherine
+                                      </MenuItem>
+                                      <MenuItem value={"Clarendon"}>
+                                        Clarendon
+                                      </MenuItem>
+                                    </Select>
                                   </FormControl>
                                 </Grid>
                                 <Grid item xs={12} sm={6}>

@@ -370,6 +370,7 @@ const resolvers = {
         category,
         MenuItems,
         ImageName,
+        Parish,
       }
     ) => {
       const user = new User({
@@ -387,6 +388,7 @@ const resolvers = {
         ImageName,
         disabled: false,
         isAvailable: false,
+        Parish,
       });
       return user.save();
     },
@@ -1017,6 +1019,7 @@ const resolvers = {
         category,
         MenuItems,
         ImageName,
+        Parish,
       }
     ) => {
       let newRestaurantUser = {
@@ -1033,6 +1036,7 @@ const resolvers = {
         category,
         MenuItems,
         ImageName,
+        Parish,
       };
       //console.log(newRestaurantUser);
       const user = await User.findOne({ _id });
