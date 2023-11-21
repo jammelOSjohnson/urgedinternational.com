@@ -403,7 +403,7 @@ export const CheckGps: React.FC<Props> = function CheckGps({ setLoading }) {
         <Grid item xs={12}>
           {(generalLocation !== undefined &&
             targetLocation !== undefined &&
-            generalLocation !== "Clarendon" && (
+            generalLocation === "Clarendon" && (
               <MapContainer
                 setLoading={setLoading}
                 setgpsCheck={setgpsCheck}
