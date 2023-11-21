@@ -14,6 +14,10 @@ import {
   FormControl,
   useTheme,
   useMediaQuery,
+  withStyles,
+  Checkbox,
+  FormControlLabel,
+  CheckboxProps,
 } from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
@@ -81,6 +85,9 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: "44.6667px",
       textAlign: "left",
     },
+    link: {
+      color: theme.palette.primary.main,
+    },
     section1H2: {
       fontSize: "75.3333px",
       textAlign: "left",
@@ -137,7 +144,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: "7%",
     },
     helloStyle: {
-      paddingTop: "50%",
+      paddingTop: "37%",
     },
     welcomeStyle: {
       marginBottom: "6%",
@@ -235,6 +242,16 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+const GreenCheckbox = withStyles({
+  root: {
+    color: "#FEC109",
+    "&$checked": {
+      color: "green",
+    },
+  },
+  checked: {},
+})((props: CheckboxProps) => <Checkbox color="default" {...props} />);
+
 const mobileStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -278,6 +295,8 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
     showPassword: false,
   });
 
+  const [iAgree, setIAgree] = React.useState(false);
+
   var history = useHistory();
   var location = history.location;
   var referralPath = location.pathname;
@@ -292,6 +311,9 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
       setValues({ ...values, [prop]: event.target.value });
     };
 
+  const handleChange2 = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setIAgree(event.target.checked);
+  };
   const handleClickShowPassword = () => {
     setValues({ ...values, showPassword: !values.showPassword });
   };
@@ -320,7 +342,9 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
       setSuccess("");
       setError("");
       setLoading(true);
-      values.fullname === ""
+      !iAgree
+        ? setError("Please agree to our Terms of Use and Privacy Policy")
+        : values.fullname === ""
         ? setError("Please enter your Full Name")
         : values.email === "" ||
           !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.email)
@@ -475,7 +499,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
             className={classes.gridRoot}
             alignItems="center"
           >
-            <Grid item xs={12} container spacing={1}>
+            <Grid container spacing={1}>
               <Grid item xs={7} md={7} lg={7}>
                 <img
                   className={classes.logo}
@@ -602,6 +626,47 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                         autoComplete={"off"}
                       />
                     </FormControl>
+                    <Grid container>
+                      <Grid item xs={1}>
+                        <FormControl fullWidth>
+                          <FormControlLabel
+                            control={
+                              <GreenCheckbox
+                                checked={iAgree}
+                                onChange={handleChange2}
+                                name="checkedG"
+                              />
+                            }
+                            label={""}
+                          />
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={11}>
+                        <Typography>I agree to the</Typography>
+                        <Typography style={{ display: "inline-flex" }}>
+                          <a
+                            href="/Tos"
+                            target="_blank"
+                            className={classes.link}
+                          >
+                            <Typography variant="body1" color="textPrimary">
+                              Terms of Use
+                            </Typography>
+                          </a>
+                          &nbsp;and&nbsp;
+                          <a
+                            href="/Privacy"
+                            target="_blank"
+                            className={classes.link}
+                          >
+                            <Typography variant="body1" color="textPrimary">
+                              Privacy Policy
+                            </Typography>
+                          </a>
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                    <br />
                     <Typography
                       variant="subtitle2"
                       className={classes.forgotPassText}
@@ -807,6 +872,39 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                   autoComplete={"off"}
                 />
               </FormControl>
+              <Grid container>
+                <Grid item xs={1}>
+                  <FormControl fullWidth>
+                    <FormControlLabel
+                      control={
+                        <GreenCheckbox
+                          checked={iAgree}
+                          onChange={handleChange2}
+                          name="checkedG"
+                        />
+                      }
+                      label={""}
+                    />
+                  </FormControl>
+                </Grid>
+                <Grid item xs={11}>
+                  <Typography>I agree to the</Typography>
+                  <Typography style={{ display: "inline-flex" }}>
+                    <a href="/Tos" target="_blank" className={classes.link}>
+                      <Typography variant="body1" color="textPrimary">
+                        Terms of Use
+                      </Typography>
+                    </a>
+                    &nbsp;and&nbsp;
+                    <a href="/Privacy" target="_blank" className={classes.link}>
+                      <Typography variant="body1" color="textPrimary">
+                        Privacy Policy
+                      </Typography>
+                    </a>
+                  </Typography>
+                </Grid>
+              </Grid>
+              <br />
               <Typography
                 variant="subtitle2"
                 className={classes.forgotPassTextMobile}
