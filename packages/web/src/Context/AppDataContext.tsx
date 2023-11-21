@@ -2830,8 +2830,8 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       await fetchShippingAddress()
         .then((response) => {
           if (response.data.fetchShippingAddress !== null) {
-            console.log("got shipping address");
-            console.log(response);
+            //console.log("got shipping address");
+            //console.log(response);
 
             var shippingAdd = response.data.fetchShippingAddress;
             //console.log(paySet);
