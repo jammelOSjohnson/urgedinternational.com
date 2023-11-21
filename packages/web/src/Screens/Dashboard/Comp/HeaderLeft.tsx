@@ -240,7 +240,15 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
       });
     }
 
-    if (generalLocation === undefined || targetLocation === undefined) {
+    //console.log(referralPath);
+    if (
+      (generalLocation === undefined &&
+        referralPath !== "/Tos" &&
+        referralPath !== "/Privacy") ||
+      (targetLocation === undefined &&
+        referralPath !== "/Tos" &&
+        referralPath !== "/Privacy")
+    ) {
       setOpen3(true);
     }
   }, [restaurants]);
@@ -1220,7 +1228,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
       AddGeneralLocation(value, values.genralLocation, values.targetLocation);
       setOpen3(false);
     }
-    console.log(values);
+    //console.log(values);
   };
 
   const handleOpen2 = () => {
@@ -1463,9 +1471,9 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                               Select Parish
                             </MenuItem>
                             <MenuItem value={"Kingston"}>Kingston</MenuItem>
-                            <MenuItem value={"St. Catherine"}>
+                            {/* <MenuItem value={"St. Catherine"}>
                               St. Catherine
-                            </MenuItem>
+                            </MenuItem> */}
                             <MenuItem value={"Clarendon"}>Clarendon</MenuItem>
                           </Select>
                         </FormControl>
