@@ -113,7 +113,7 @@ export const Favourites: React.FC = function Favourites() {
       let filteredR = restaurants.filter(
         (item) => item?.Parish === generalLocation
       );
-      console.log(filteredR);
+      //console.log(filteredR);
       setfilteredRest(filteredR);
     }
   }, [restaurants, generalLocation]);
