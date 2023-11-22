@@ -337,7 +337,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
   var handleSubmit = async function handleSubmit(event) {
     event.preventDefault();
     //prevents default form refresh
-    ////console.log("I am inside fuction");
+    console.log("I am inside the handleSubmit fuction");
     try {
       setSuccess("");
       setError("");
@@ -426,16 +426,16 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
 
   var fetchUserDetailsSignUp = async function fetchUserDetailsSignUp(payload) {
     //console.log("signup");
-    ////console.log("Is current user null");
-    ////console.log(value);
+    console.log("Is current user null");
     if (payload.currentUser !== null && payload.currentUser !== undefined) {
       if (
         payload.currentUser.uid !== null &&
         payload.currentUser.uid !== undefined
       ) {
-        ////console.log("Fetching user info");
-        ////console.log(state);
+        console.log("Fetching user info");
+        console.log(payload);
         fetchUserInfoForSignUp(payload.currentUser.uid, payload, value);
+        console.log("back");
         return true;
       }
     }

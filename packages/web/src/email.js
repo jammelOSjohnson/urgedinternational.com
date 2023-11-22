@@ -1,15 +1,29 @@
-import emailjs from 'emailjs-com';
+import emailjs from "emailjs-com";
 
-var sendEmail = async function sendEmail (SERVICE_ID,TEMPLATE_ID, RequestParams, USER_ID){
-    var res = await emailjs.send(SERVICE_ID, TEMPLATE_ID, RequestParams , USER_ID).then(function(result){
+var sendEmail = async function sendEmail(
+  SERVICE_ID,
+  TEMPLATE_ID,
+  RequestParams,
+  USER_ID
+) {
+  var res = await emailjs
+    .send(SERVICE_ID, TEMPLATE_ID, RequestParams, USER_ID)
+    .then(
+      function (result) {
         ////console.log(result.text);
         return true;
-    }, function(error){
-        ////console.log(error.text);
+      },
+      function (error) {
+        console.log(error.text);
         return false;
+      }
+    )
+    .catch((err) => {
+      console.log(err);
+      return false;
     });
 
-    return res;
-}
+  return res;
+};
 
 export default sendEmail;
