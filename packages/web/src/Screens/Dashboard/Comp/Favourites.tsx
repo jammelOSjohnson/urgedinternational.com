@@ -10,8 +10,51 @@ import {
   CardContent,
   CircularProgress,
 } from "@material-ui/core";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
+interface defMenuItem {
+  MenuCategory: string;
+  ItemName: string;
+  ItemCost: number;
+  ItemDescription: string;
+  ImageName: string;
+}
+
+interface deCat {
+  _id: string;
+  Id: string;
+  Name: string;
+}
+
+interface defOpeningHrs {
+  Sunday: string;
+  Monday: string;
+  Tuesday: string;
+  Wednesday: string;
+  Thursday: string;
+  Friday: string;
+  Saturday: string;
+}
+
+interface defRestaurant {
+  _id: string;
+  Id: string;
+  FirstName: string;
+  LastName: string;
+  Email: string;
+  AddressLine1: string;
+  AddressLine2: string;
+  City: string;
+  ContactNumber: string;
+  OpeningHrs: defOpeningHrs;
+  category: deCat;
+  MenuItems: [defMenuItem];
+  ImageName: string;
+  isAvailable: Boolean;
+  disabled: Boolean;
+  Parish: string;
+}
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -60,15 +103,22 @@ const useStyles = makeStyles((theme: Theme) =>
 export const Favourites: React.FC = function Favourites() {
   const classes = useStyles();
   var { value } = useAppData();
-  var { restaurants, fetchRestaurants } = value;
+  var { restaurants, fetchRestaurants, generalLocation } = value;
+  const [filteredRest, setfilteredRest] = useState<defRestaurant[]>([]);
 
   useEffect(() => {
     if (restaurants.length === 0) {
       fetchRestaurants(value);
+    } else if (restaurants.length !== 0 && generalLocation !== undefined) {
+      let filteredR = restaurants.filter(
+        (item) => item?.Parish === generalLocation
+      );
+      console.log(filteredR);
+      setfilteredRest(filteredR);
     }
-  }, [restaurants]);
+  }, [restaurants, generalLocation]);
 
-  if (restaurants.length === 0) {
+  if (filteredRest.length === 0 || generalLocation === undefined) {
     return (
       <>
         <Card className={classes.card}>
@@ -155,29 +205,31 @@ export const Favourites: React.FC = function Favourites() {
                     </Typography>
                   </Link>
                 </Grid>
-                {restaurants.slice(0, 6).map((item, index) => {
-                  return (
-                    <Grid item xs={6}>
-                      <Card className={classes.card}>
-                        <CardMedia className={classes.cardImage}>
-                          <img
-                            src={restaurants[index].MenuItems[0].ImageName}
-                            alt="ExampleBigDeal1"
-                            width={149}
-                            height={121}
-                          ></img>
-                        </CardMedia>
-                        <CardContent className={classes.cardContent}>
-                          <Typography
-                            gutterBottom
-                            className={classes.cardTitle}
-                          >
-                            {restaurants[index].MenuItems[0].ItemName}
-                          </Typography>
-                        </CardContent>
-                      </Card>
-                    </Grid>
-                  );
+                {filteredRest.slice(0, 6).map((item, index) => {
+                  if (item?.Parish === generalLocation) {
+                    return (
+                      <Grid item xs={6}>
+                        <Card className={classes.card}>
+                          <CardMedia className={classes.cardImage}>
+                            <img
+                              src={filteredRest[index].MenuItems[0].ImageName}
+                              alt="ExampleBigDeal1"
+                              width={149}
+                              height={121}
+                            ></img>
+                          </CardMedia>
+                          <CardContent className={classes.cardContent}>
+                            <Typography
+                              gutterBottom
+                              className={classes.cardTitle}
+                            >
+                              {filteredRest[index].MenuItems[0].ItemName}
+                            </Typography>
+                          </CardContent>
+                        </Card>
+                      </Grid>
+                    );
+                  }
                 })}
               </Grid>
             </Grid>
