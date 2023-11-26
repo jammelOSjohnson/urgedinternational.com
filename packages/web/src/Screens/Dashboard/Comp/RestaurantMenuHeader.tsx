@@ -378,7 +378,7 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
                   <Grid item xs={12}>
                     <Typography variant={"h6"}>
                       <ScheduleRounded color="primary" />
-                      Estimated Deliery Time: 30 Min - 1 Hr
+                      Estimated Delivery Time: 30 Min - 1 Hr
                     </Typography>
                   </Grid>
                 </Grid>
