@@ -867,7 +867,9 @@ const resolvers = {
         .where("isAvailable")
         .ne(null)
         .where("disabled")
-        .ne(null);
+        .ne(null)
+        .where("Parish")
+        .eq(null);
       //console.log(res);
       //return res;
     },
