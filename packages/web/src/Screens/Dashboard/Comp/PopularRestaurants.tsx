@@ -231,7 +231,7 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
           alignItems="center"
         >
           {filteredRests.map((item, index) => {
-            if (index < 4) {
+            if (index < 6) {
               return (
                 <Grid
                   item
