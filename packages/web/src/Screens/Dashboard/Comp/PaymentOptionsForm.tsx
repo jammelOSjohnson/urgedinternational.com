@@ -560,6 +560,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
       ) {
         //Add || for the other restaurants and add side to the receipt
         let sidePrice = 0;
+        console.log(restaurants[selectedRestaurant]);
         restaurants[selectedRestaurant].MenuItems.map((item2, index) => {
           //console.log("item name is : " + item2.ItemName + " and item side is " + item1.side);
           if (item2.ItemName === item1.side) {

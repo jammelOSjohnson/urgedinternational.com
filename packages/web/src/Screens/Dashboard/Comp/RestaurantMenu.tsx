@@ -1740,7 +1740,9 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                               key={index}
                                               value={item2.ItemName}
                                             >
-                                              {item2.ItemName}
+                                              {`${item2.ItemName} $${parseFloat(
+                                                item2.ItemCost
+                                              ).toFixed(2)}`}
                                             </MenuItem>
                                           );
                                         }
@@ -2180,6 +2182,50 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                             className={classes.root}
                             alignItems="center"
                           >
+                            {values.itemCategory !== "Sides" ? (
+                              <Grid item xs={12} sm={12}>
+                                <FormControl
+                                  variant="outlined"
+                                  className={classes.formControl}
+                                  fullWidth
+                                >
+                                  <InputLabel id="demo-simple-select-outlined-label">
+                                    Sides
+                                  </InputLabel>
+                                  <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={values.side}
+                                    onChange={handleChange}
+                                    label="side"
+                                    name="side"
+                                    className={classes.root}
+                                  >
+                                    <MenuItem value={"Select Side"}>
+                                      Select Side
+                                    </MenuItem>
+                                    {restaurant[0].MenuItems.map(
+                                      (item2, index) => {
+                                        if (item2.MenuCategory === "Sides") {
+                                          return (
+                                            <MenuItem
+                                              key={index}
+                                              value={item2.ItemName}
+                                            >
+                                              {`${item2.ItemName} $${parseFloat(
+                                                item2.ItemCost
+                                              ).toFixed(2)}`}
+                                            </MenuItem>
+                                          );
+                                        }
+                                      }
+                                    )}
+                                  </Select>
+                                </FormControl>
+                              </Grid>
+                            ) : (
+                              <></>
+                            )}
                             <Grid item xs={12} sm={12}>
                               <TextField
                                 id="outlined-multiline-static"
@@ -2251,6 +2297,50 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                             className={classes.root}
                             alignItems="center"
                           >
+                            {values.itemCategory !== "Sides" ? (
+                              <Grid item xs={12} sm={12}>
+                                <FormControl
+                                  variant="outlined"
+                                  className={classes.formControl}
+                                  fullWidth
+                                >
+                                  <InputLabel id="demo-simple-select-outlined-label">
+                                    Sides
+                                  </InputLabel>
+                                  <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={values.side}
+                                    onChange={handleChange}
+                                    label="side"
+                                    name="side"
+                                    className={classes.root}
+                                  >
+                                    <MenuItem value={"Select Side"}>
+                                      Select Side
+                                    </MenuItem>
+                                    {restaurant[0].MenuItems.map(
+                                      (item2, index) => {
+                                        if (item2.MenuCategory === "Sides") {
+                                          return (
+                                            <MenuItem
+                                              key={index}
+                                              value={item2.ItemName}
+                                            >
+                                              {`${item2.ItemName} $${parseFloat(
+                                                item2.ItemCost
+                                              ).toFixed(2)}`}
+                                            </MenuItem>
+                                          );
+                                        }
+                                      }
+                                    )}
+                                  </Select>
+                                </FormControl>
+                              </Grid>
+                            ) : (
+                              <></>
+                            )}
                             <Grid item xs={12} sm={12}>
                               <TextField
                                 id="outlined-multiline-static"
@@ -2322,6 +2412,50 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                             className={classes.root}
                             alignItems="center"
                           >
+                            {values.itemCategory !== "Sides" ? (
+                              <Grid item xs={12} sm={12}>
+                                <FormControl
+                                  variant="outlined"
+                                  className={classes.formControl}
+                                  fullWidth
+                                >
+                                  <InputLabel id="demo-simple-select-outlined-label">
+                                    Sides
+                                  </InputLabel>
+                                  <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={values.side}
+                                    onChange={handleChange}
+                                    label="side"
+                                    name="side"
+                                    className={classes.root}
+                                  >
+                                    <MenuItem value={"Select Side"}>
+                                      Select Side
+                                    </MenuItem>
+                                    {restaurant[0].MenuItems.map(
+                                      (item2, index) => {
+                                        if (item2.MenuCategory === "Sides") {
+                                          return (
+                                            <MenuItem
+                                              key={index}
+                                              value={item2.ItemName}
+                                            >
+                                              {`${item2.ItemName} $${parseFloat(
+                                                item2.ItemCost
+                                              ).toFixed(2)}`}
+                                            </MenuItem>
+                                          );
+                                        }
+                                      }
+                                    )}
+                                  </Select>
+                                </FormControl>
+                              </Grid>
+                            ) : (
+                              <></>
+                            )}
                             <Grid item xs={12} sm={12}>
                               <TextField
                                 id="outlined-multiline-static"
@@ -3839,6 +3973,50 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                             className={classes.root}
                             alignItems="center"
                           >
+                            {values.itemCategory !== "Sides" ? (
+                              <Grid item xs={12} sm={12}>
+                                <FormControl
+                                  variant="outlined"
+                                  className={classes.formControl}
+                                  fullWidth
+                                >
+                                  <InputLabel id="demo-simple-select-outlined-label">
+                                    Sides
+                                  </InputLabel>
+                                  <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={values.side}
+                                    onChange={handleChange}
+                                    label="side"
+                                    name="side"
+                                    className={classes.root}
+                                  >
+                                    <MenuItem value={"Select Side"}>
+                                      Select Side
+                                    </MenuItem>
+                                    {restaurant[0].MenuItems.map(
+                                      (item2, index) => {
+                                        if (item2.MenuCategory === "Sides") {
+                                          return (
+                                            <MenuItem
+                                              key={index}
+                                              value={item2.ItemName}
+                                            >
+                                              {`${item2.ItemName} $${parseFloat(
+                                                item2.ItemCost
+                                              ).toFixed(2)}`}
+                                            </MenuItem>
+                                          );
+                                        }
+                                      }
+                                    )}
+                                  </Select>
+                                </FormControl>
+                              </Grid>
+                            ) : (
+                              <></>
+                            )}
                             <Grid item xs={12} sm={12}>
                               <TextField
                                 id="outlined-multiline-static"
@@ -4267,6 +4445,50 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                             className={classes.root}
                             alignItems="center"
                           >
+                            {values.itemCategory !== "Sides" ? (
+                              <Grid item xs={12} sm={12}>
+                                <FormControl
+                                  variant="outlined"
+                                  className={classes.formControl}
+                                  fullWidth
+                                >
+                                  <InputLabel id="demo-simple-select-outlined-label">
+                                    Sides
+                                  </InputLabel>
+                                  <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={values.side}
+                                    onChange={handleChange}
+                                    label="side"
+                                    name="side"
+                                    className={classes.root}
+                                  >
+                                    <MenuItem value={"Select Side"}>
+                                      Select Side
+                                    </MenuItem>
+                                    {restaurant[0].MenuItems.map(
+                                      (item2, index) => {
+                                        if (item2.MenuCategory === "Sides") {
+                                          return (
+                                            <MenuItem
+                                              key={index}
+                                              value={item2.ItemName}
+                                            >
+                                              {`${item2.ItemName} $${parseFloat(
+                                                item2.ItemCost
+                                              ).toFixed(2)}`}
+                                            </MenuItem>
+                                          );
+                                        }
+                                      }
+                                    )}
+                                  </Select>
+                                </FormControl>
+                              </Grid>
+                            ) : (
+                              <></>
+                            )}
                             <Grid item xs={12} sm={12}>
                               <TextField
                                 id="outlined-multiline-static"
@@ -4338,6 +4560,50 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                             className={classes.root}
                             alignItems="center"
                           >
+                            {values.itemCategory !== "Sides" ? (
+                              <Grid item xs={12} sm={12}>
+                                <FormControl
+                                  variant="outlined"
+                                  className={classes.formControl}
+                                  fullWidth
+                                >
+                                  <InputLabel id="demo-simple-select-outlined-label">
+                                    Sides
+                                  </InputLabel>
+                                  <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={values.side}
+                                    onChange={handleChange}
+                                    label="side"
+                                    name="side"
+                                    className={classes.root}
+                                  >
+                                    <MenuItem value={"Select Side"}>
+                                      Select Side
+                                    </MenuItem>
+                                    {restaurant[0].MenuItems.map(
+                                      (item2, index) => {
+                                        if (item2.MenuCategory === "Sides") {
+                                          return (
+                                            <MenuItem
+                                              key={index}
+                                              value={item2.ItemName}
+                                            >
+                                              {`${item2.ItemName} $${parseFloat(
+                                                item2.ItemCost
+                                              ).toFixed(2)}`}
+                                            </MenuItem>
+                                          );
+                                        }
+                                      }
+                                    )}
+                                  </Select>
+                                </FormControl>
+                              </Grid>
+                            ) : (
+                              <></>
+                            )}
                             <Grid item xs={12} sm={12}>
                               <TextField
                                 id="outlined-multiline-static"
@@ -4409,6 +4675,50 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                             className={classes.root}
                             alignItems="center"
                           >
+                            {values.itemCategory !== "Sides" ? (
+                              <Grid item xs={12} sm={12}>
+                                <FormControl
+                                  variant="outlined"
+                                  className={classes.formControl}
+                                  fullWidth
+                                >
+                                  <InputLabel id="demo-simple-select-outlined-label">
+                                    Sides
+                                  </InputLabel>
+                                  <Select
+                                    labelId="demo-simple-select-outlined-label"
+                                    id="demo-simple-select-outlined"
+                                    value={values.side}
+                                    onChange={handleChange}
+                                    label="side"
+                                    name="side"
+                                    className={classes.root}
+                                  >
+                                    <MenuItem value={"Select Side"}>
+                                      Select Side
+                                    </MenuItem>
+                                    {restaurant[0].MenuItems.map(
+                                      (item2, index) => {
+                                        if (item2.MenuCategory === "Sides") {
+                                          return (
+                                            <MenuItem
+                                              key={index}
+                                              value={item2.ItemName}
+                                            >
+                                              {`${item2.ItemName} $${parseFloat(
+                                                item2.ItemCost
+                                              ).toFixed(2)}`}
+                                            </MenuItem>
+                                          );
+                                        }
+                                      }
+                                    )}
+                                  </Select>
+                                </FormControl>
+                              </Grid>
+                            ) : (
+                              <></>
+                            )}
                             <Grid item xs={12} sm={12}>
                               <TextField
                                 id="outlined-multiline-static"
