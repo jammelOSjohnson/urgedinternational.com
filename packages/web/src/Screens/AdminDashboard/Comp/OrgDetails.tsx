@@ -599,6 +599,57 @@ export const OrgDetails: React.FC = function OrgDetails() {
         });
 
         setRows(currentRows);
+      } else {
+        let currentRows = [] as object[];
+        values.Menu.map((item, index) => {
+          let row = {
+            MenuCategory: item.MenuCategory,
+            ItemName: item.ItemName,
+            ItemCost: `$ ${parseFloat(item.ItemCost.toString()).toFixed(2)}`,
+            ItemDescription: item.ItemDescription,
+            Actions: (
+              <>
+                <Grid
+                  container
+                  direction="row"
+                  spacing={1}
+                  className={classes.root}
+                  alignItems="center"
+                >
+                  <Grid item xs={6} style={{ textAlign: "center" }}>
+                    <a
+                      href="javascript()"
+                      title="Edit"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleOpen2(index);
+                      }}
+                    >
+                      <EditRounded color="primary" />
+                    </a>
+                  </Grid>
+                  <Grid item xs={6} style={{ textAlign: "center" }}>
+                    <a
+                      href="javascript()"
+                      title="Delete"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleOpen3(index);
+                      }}
+                    >
+                      <DeleteOutlineRounded color="primary" />
+                    </a>
+                  </Grid>
+                </Grid>
+              </>
+            ),
+          };
+
+          currentRows.push(row);
+          return true;
+        });
+
+        setRows(currentRows);
       }
     } catch (err) {
       console.log(err);
@@ -608,6 +659,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
     selectedRestaurant,
     values,
     restaurants[selectedRestaurant]?.isAvailable,
+    restaurants[selectedRestaurant]?.MenuItems,
   ]);
 
   const handleSubmit = async () => {
