@@ -700,18 +700,18 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     } else {
       // console.log("No such user role!");
       // console.log("creating new userinrole");
-      let rID = process.env.REACT_APP_CUSTOMER_ROLE_ID;
+      let rID = import.meta.env.REACT_APP_CUSTOMER_ROLE_ID;
       if (userType !== undefined && userType !== null) {
         rID =
           userType === "restaurant"
-            ? process.env.REACT_APP_RESTAURANT_ROLE_ID
+            ? import.meta.env.REACT_APP_RESTAURANT_ROLE_ID
             : userType === "Admin"
-            ? process.env.REACT_APP_ADMIN_ROLE_ID
+            ? import.meta.env.REACT_APP_ADMIN_ROLE_ID
             : userType === "Urged_Staff"
-            ? process.env.REACT_APP_URGEDSTAFF_ROLE_ID
+            ? import.meta.env.REACT_APP_URGEDSTAFF_ROLE_ID
             : userType === "Rider"
-            ? process.env.REACT_APP_RIDER_ROLE_ID
-            : process.env.REACT_APP_CUSTOMER_ROLE_ID;
+            ? import.meta.env.REACT_APP_RIDER_ROLE_ID
+            : import.meta.env.REACT_APP_CUSTOMER_ROLE_ID;
       }
       var userInRole = {
         UserID: uid,
@@ -1432,8 +1432,8 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     await getRestaurants()
       .then(async function (response) {
         if (response.data.getRestaurants !== null) {
-          //console.log("got list of restaurants");
-          //console.log(response);
+          console.log("got list of restaurants");
+          console.log(response);
 
           var restList = response.data.getRestaurants;
 

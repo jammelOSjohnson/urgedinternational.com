@@ -175,7 +175,9 @@ export const GeoMap: React.FC<Props> = function GeoMap({ setValues, values }) {
     try {
       addressPI
         .get(
-          `/json?latlng=${compCoords.lat},${compCoords.long}&key=${process.env.REACT_APP_GEO_API2}`
+          `/json?latlng=${compCoords.lat},${compCoords.long}&key=${
+            import.meta.env.REACT_APP_GEO_API2
+          }`
         )
         .then((response) => {
           if (response.data !== null) {
@@ -232,7 +234,13 @@ export const GeoMap: React.FC<Props> = function GeoMap({ setValues, values }) {
     <>
       {compCoords.lat && compCoords.long ? (
         <img
-          src={`https://maps.googleapis.com/maps/api/staticmap?center=${compCoords.lat},${compCoords.long}&zoom=14&size=600x300&sensor=false&markers=color:orange%7C${compCoords.lat},${compCoords.long}&key=${process.env.REACT_APP_GEO_API}`}
+          src={`https://maps.googleapis.com/maps/api/staticmap?center=${
+            compCoords.lat
+          },${
+            compCoords.long
+          }&zoom=14&size=600x300&sensor=false&markers=color:orange%7C${
+            compCoords.lat
+          },${compCoords.long}&key=${import.meta.env.REACT_APP_GEO_API}`}
           style={{ width: "100%" }}
           alt=""
         />

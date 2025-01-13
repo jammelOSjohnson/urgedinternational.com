@@ -119,7 +119,7 @@ export const OrderFullDetails: React.FC = () => {
   if (history.location.state === undefined || history.location.state === null) {
     //history.push("/AdminOrders");
     let url =
-      process.env.NODE_ENV === "development"
+      import.meta.env.MODE === "development"
         ? "http://localhost:3000/DeliveryOrders"
         : "https://urgedservices.com/DeliveryOrders";
     window.location.href = url;

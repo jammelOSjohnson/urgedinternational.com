@@ -171,7 +171,7 @@ const theme = createTheme({
 const errorLink = onError(({ graphQLErrors, networkError }) => {
   if (graphQLErrors) {
     graphQLErrors.map(({ message, locations, path }) => {
-      if (process.env.NODE_ENV === "development") {
+      if (import.meta.env.MODE === "development") {
         console.log(`Graphql error ${message}`);
       }
       return message;
@@ -179,14 +179,15 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
   }
 });
 
+console.log(import.meta.env.MODE);
 var db_server =
-  process.env.NODE_ENV === "development"
-    ? process.env.REACT_APP_DEV_DB_URL
-    : process.env.REACT_APP_PROD_DB_URL;
+  import.meta.env.MODE === "development"
+    ? import.meta.env.REACT_APP_DEV_DB_URL
+    : import.meta.env.REACT_APP_PROD_DB_URL;
 var ws_db_server =
-  process.env.NODE_ENV === "development"
-    ? process.env.REACT_APP_DEV_WS_DB_URL
-    : process.env.REACT_APP_PROD_WS_DB_URL;
+  import.meta.env.MODE === "development"
+    ? import.meta.env.REACT_APP_DEV_WS_DB_URL
+    : import.meta.env.REACT_APP_PROD_WS_DB_URL;
 
 const wsLink = new WebSocketLink(
   new SubscriptionClient(ws_db_server !== undefined ? ws_db_server : "", {
@@ -236,12 +237,12 @@ const App: React.FC = function App() {
 
   useEffect(() => {
     document.body.style.backgroundColor = "#fff";
-    if (process.env.NODE_ENV !== "development") {
+    if (import.meta.env.MODE !== "development") {
       ReactGa.initialize("UA-228459826-1");
     }
 
     // try{
-    //   var db_server_socket = process.env.NODE_ENV === 'development'? process.env.REACT_APP_SocketURL : process.env.REACT_APP_SocketProd_URL;
+    //   var db_server_socket = import.meta.env.MODE  === 'development'? import.meta.env.REACT_APP_SocketURL : import.meta.env.REACT_APP_SocketProd_URL;
     //   const socket = io(`${db_server_socket}/socket`);
     //   socket.on("newOrder", (Order) => {
     //     console.log("new order deteted");

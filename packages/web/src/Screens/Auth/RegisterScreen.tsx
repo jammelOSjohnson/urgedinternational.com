@@ -980,11 +980,11 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
         <></>
       )}
 
-      {process.env.NODE_ENV !== "development" ? (
+      {import.meta.env.MODE !== "development" ? (
         <LiveChatWidget
           license={
-            process.env.REACT_APP_LIVECHAT_LICENSE !== undefined
-              ? process.env.REACT_APP_LIVECHAT_LICENSE
+            import.meta.env.REACT_APP_LIVECHAT_LICENSE !== undefined
+              ? import.meta.env.REACT_APP_LIVECHAT_LICENSE
               : ""
           }
         />

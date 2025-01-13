@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: process.env.REACT_APP_payment_url,
+  baseURL: import.meta.env.REACT_APP_payment_url,
 });

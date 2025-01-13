@@ -280,82 +280,86 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
 
   const [payment, setPayment] = React.useState<Payment>({
     authenticateTransaction:
-      process.env.REACT_APP_authenticateTransaction === "true" ? true : false,
+      import.meta.env.REACT_APP_authenticateTransaction === "true"
+        ? true
+        : false,
     bname: "",
     baddr1: "",
     baddr2: "",
     bcountry:
-      process.env.REACT_APP_bcountry !== undefined
-        ? process.env.REACT_APP_bcountry
+      import.meta.env.REACT_APP_bcountry !== undefined
+        ? import.meta.env.REACT_APP_bcountry
         : "",
     bstate: "",
     chargetotal: "",
     checkoutoption:
-      process.env.REACT_APP_checkoutoption !== undefined
-        ? process.env.REACT_APP_checkoutoption
+      import.meta.env.REACT_APP_checkoutoption !== undefined
+        ? import.meta.env.REACT_APP_checkoutoption
         : "",
     currency:
-      process.env.NODE_ENV === "development"
-        ? process.env.REACT_APP_currency_code !== undefined
-          ? process.env.REACT_APP_currency_code
+      import.meta.env.MODE === "development"
+        ? import.meta.env.REACT_APP_currency_code !== undefined
+          ? import.meta.env.REACT_APP_currency_code
           : ""
-        : process.env.REACT_APP_currency_code_LIVE !== undefined
-        ? process.env.REACT_APP_currency_code_LIVE
+        : import.meta.env.REACT_APP_currency_code_LIVE !== undefined
+        ? import.meta.env.REACT_APP_currency_code_LIVE
         : "",
     email: "",
     hash_algorithm:
-      process.env.REACT_APP_hash_algorithm !== undefined
-        ? process.env.REACT_APP_hash_algorithm
+      import.meta.env.REACT_APP_hash_algorithm !== undefined
+        ? import.meta.env.REACT_APP_hash_algorithm
         : "",
     language:
-      process.env.REACT_APP_language !== undefined
-        ? process.env.REACT_APP_language
+      import.meta.env.REACT_APP_language !== undefined
+        ? import.meta.env.REACT_APP_language
         : "",
     hashExtended: "",
     paymentMethod: "",
     phone: "",
     responseFailURL:
-      process.env.NODE_ENV === "development"
-        ? process.env.REACT_APP_responseSuccess_OR_FAIL_URL !== undefined
-          ? process.env.REACT_APP_responseSuccess_OR_FAIL_URL
+      import.meta.env.MODE === "development"
+        ? import.meta.env.REACT_APP_responseSuccess_OR_FAIL_URL !== undefined
+          ? import.meta.env.REACT_APP_responseSuccess_OR_FAIL_URL
           : ""
-        : process.env.REACT_APP_responseSuccess_OR_FAIL_URL_LIVE !== undefined
-        ? process.env.REACT_APP_responseSuccess_OR_FAIL_URL_LIVE
+        : import.meta.env.REACT_APP_responseSuccess_OR_FAIL_URL_LIVE !==
+          undefined
+        ? import.meta.env.REACT_APP_responseSuccess_OR_FAIL_URL_LIVE
         : "",
     responseSuccessURL:
-      process.env.NODE_ENV === "development"
-        ? process.env.REACT_APP_responseSuccess_OR_FAIL_URL !== undefined
-          ? process.env.REACT_APP_responseSuccess_OR_FAIL_URL
+      import.meta.env.MODE === "development"
+        ? import.meta.env.REACT_APP_responseSuccess_OR_FAIL_URL !== undefined
+          ? import.meta.env.REACT_APP_responseSuccess_OR_FAIL_URL
           : ""
-        : process.env.REACT_APP_responseSuccess_OR_FAIL_URL_LIVE !== undefined
-        ? process.env.REACT_APP_responseSuccess_OR_FAIL_URL_LIVE
+        : import.meta.env.REACT_APP_responseSuccess_OR_FAIL_URL_LIVE !==
+          undefined
+        ? import.meta.env.REACT_APP_responseSuccess_OR_FAIL_URL_LIVE
         : "",
     sname: "",
     saddr1: "",
     saddr2: "",
     sstate: "",
     scountry:
-      process.env.REACT_APP_bcountry !== undefined
-        ? process.env.REACT_APP_bcountry
+      import.meta.env.REACT_APP_bcountry !== undefined
+        ? import.meta.env.REACT_APP_bcountry
         : "",
     sharedsecret: "",
     storename:
-      process.env.NODE_ENV === "development"
-        ? process.env.REACT_APP_StoreID !== undefined
-          ? process.env.REACT_APP_StoreID
+      import.meta.env.MODE === "development"
+        ? import.meta.env.REACT_APP_StoreID !== undefined
+          ? import.meta.env.REACT_APP_StoreID
           : ""
-        : process.env.REACT_APP_StoreID_LIVE !== undefined
-        ? process.env.REACT_APP_StoreID_LIVE
+        : import.meta.env.REACT_APP_StoreID_LIVE !== undefined
+        ? import.meta.env.REACT_APP_StoreID_LIVE
         : "",
     timezone:
-      process.env.REACT_APP_timezone !== undefined
-        ? process.env.REACT_APP_timezone
+      import.meta.env.REACT_APP_timezone !== undefined
+        ? import.meta.env.REACT_APP_timezone
         : "",
     transactionNotificationURL: "https://urgedservices.com/ShoppingCart",
     txndatetime: Moment().format("YYYY:MM:DD-HH:mm:ss").toString(), //"2023:06:08-17:20:09",
     txntype:
-      process.env.REACT_APP_txntype !== undefined
-        ? process.env.REACT_APP_txntype
+      import.meta.env.REACT_APP_txntype !== undefined
+        ? import.meta.env.REACT_APP_txntype
         : "",
   });
 
@@ -573,7 +577,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
     });
 
     //Calc gct
-    let gct = process.env.REACT_APP_GCT?.toString();
+    let gct = import.meta.env.REACT_APP_GCT?.toString();
     let finalgct = 0;
     if (gct !== undefined) {
       var fetchGCT: number = Number(gct);
@@ -584,7 +588,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
     }
 
     //Calc service Fee
-    let serviceCharge = process.env.REACT_APP_ServiceFee?.toString();
+    let serviceCharge = import.meta.env.REACT_APP_ServiceFee?.toString();
     let finalserviceCharge = 0;
     if (serviceCharge !== undefined) {
       var fetchserviceCharge: number = Number(serviceCharge);
@@ -796,9 +800,9 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
                         <form
                           method="POST"
                           action={
-                            process.env.NODE_ENV === "development"
-                              ? process.env.REACT_APP_payment_url
-                              : process.env.REACT_APP_payment_url_LIVE
+                            import.meta.env.MODE === "development"
+                              ? import.meta.env.REACT_APP_payment_url
+                              : import.meta.env.REACT_APP_payment_url_LIVE
                           }
                         >
                           {/* <Grid item xs={5}>

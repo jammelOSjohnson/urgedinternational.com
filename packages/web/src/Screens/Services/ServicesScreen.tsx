@@ -1,6 +1,6 @@
-import { LiveChatWidget } from '@livechat/widget-react';
-import { Container } from '@material-ui/core';
-import React from 'react'
+import { LiveChatWidget } from "@livechat/widget-react";
+import { Container } from "@material-ui/core";
+import React from "react";
 
 //Import Sections
 // import { Section3 } from "../Services/Comp/Section3";
@@ -13,27 +13,30 @@ import { Section7 } from "../Services/Comp/Section7";
 const Section1 = React.lazy(() => import("../Services/Comp/Section1"));
 const Section2 = React.lazy(() => import("../Services/Comp/Section2"));
 
-
-
-
 export const ServicesScreen: React.FC = function ServicesScreen() {
-    return (
-        <>
-            <Container maxWidth="xl" style={{padding: 0, overflowX: "hidden"}}>
-                <Section1 />
-                {/* <ExternalApp /> */}
-                <Section2 />
-                {/* <Section3 /> */}
-                {/* <Section4 /> */}
-                {/* <Section5 /> */}
-                <Section6 />
-                <Section7 />
-            </Container>
-            {process.env.NODE_ENV !== 'development' ?
-                <LiveChatWidget license={process.env.REACT_APP_LIVECHAT_LICENSE !== undefined? process.env.REACT_APP_LIVECHAT_LICENSE : ""} />
-            :
-                <></>
-            }
-        </>
-    )
-}
+  return (
+    <>
+      <Container maxWidth="xl" style={{ padding: 0, overflowX: "hidden" }}>
+        <Section1 />
+        {/* <ExternalApp /> */}
+        <Section2 />
+        {/* <Section3 /> */}
+        {/* <Section4 /> */}
+        {/* <Section5 /> */}
+        <Section6 />
+        <Section7 />
+      </Container>
+      {import.meta.env.MODE !== "development" ? (
+        <LiveChatWidget
+          license={
+            import.meta.env.REACT_APP_LIVECHAT_LICENSE !== undefined
+              ? import.meta.env.REACT_APP_LIVECHAT_LICENSE
+              : ""
+          }
+        />
+      ) : (
+        <></>
+      )}
+    </>
+  );
+};

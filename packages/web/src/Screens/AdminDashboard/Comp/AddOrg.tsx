@@ -177,8 +177,8 @@ export const AddOrg: React.FC = () => {
       Saturday: "",
     },
     ImageName:
-      process.env.REACT_APP_DEFAULT_RESTAURANT_LOGO !== undefined
-        ? process.env.REACT_APP_DEFAULT_RESTAURANT_LOGO
+      import.meta.env.REACT_APP_DEFAULT_RESTAURANT_LOGO !== undefined
+        ? import.meta.env.REACT_APP_DEFAULT_RESTAURANT_LOGO
         : "",
     isAvailable: true,
     disabled: false,
@@ -250,9 +250,9 @@ export const AddOrg: React.FC = () => {
                           Saturday: "",
                         },
                         ImageName:
-                          process.env.REACT_APP_DEFAULT_RESTAURANT_LOGO !==
+                          import.meta.env.REACT_APP_DEFAULT_RESTAURANT_LOGO !==
                           undefined
-                            ? process.env.REACT_APP_DEFAULT_RESTAURANT_LOGO
+                            ? import.meta.env.REACT_APP_DEFAULT_RESTAURANT_LOGO
                             : "",
                         isAvailable: true,
                         disabled: false,
