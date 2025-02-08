@@ -191,6 +191,7 @@ export const CREATE_RESTAURANT_MUTATION = gql`
     $category: ID
     $ImageName: String
     $Parish: String
+    $deliveryFee: Float
   ) {
     createRestaurant(
       MenuItems: $MenuItems
@@ -206,6 +207,7 @@ export const CREATE_RESTAURANT_MUTATION = gql`
       category: $category
       ImageName: $ImageName
       Parish: $Parish
+      deliveryFee: $deliveryFee
     ) {
       _id
       Id
@@ -239,6 +241,7 @@ export const CREATE_RESTAURANT_MUTATION = gql`
       }
       ImageName
       Parish
+      deliveryFee
     }
   }
 `;
@@ -378,6 +381,7 @@ export const GET_RESTAURANTS = gql`
       disabled
       isAvailable
       Parish
+      deliveryFee
     }
   }
 `;
@@ -504,6 +508,7 @@ export const UPDATE_RESTAURANT_STATUS = gql`
       disabled
       isAvailable
       Parish
+      deliveryFee
     }
   }
 `;
@@ -955,24 +960,23 @@ export const UPDATE_PAY_SETTING = gql`
     $perDeliveryEnabled: Boolean!
     $percentagePerOrderTotal: Boolean!
     $value: Float!
+    $deliveryFee: Float!
+    $closed: Boolean
+    $badWeather: Boolean
+    $holiday: Boolean
+    $message: String
   ) {
     updatePaySetting(
       _id: $_id
       perDeliveryEnabled: $perDeliveryEnabled
       percentagePerOrderTotal: $percentagePerOrderTotal
       value: $value
+      deliveryFee: $deliveryFee
+      closed: $closed
+      badWeather: $badWeather
+      holiday: $holiday
+      message: $message
     ) {
-      _id
-      perDeliveryEnabled
-      percentagePerOrderTotal
-      value
-    }
-  }
-`;
-
-export const GET_PAY_SETTINGS = gql`
-  mutation getPaySettings {
-    getPaySettings {
       _id
       perDeliveryEnabled
       percentagePerOrderTotal
@@ -981,6 +985,23 @@ export const GET_PAY_SETTINGS = gql`
       badWeather
       holiday
       message
+      deliveryFee
+    }
+  }
+`;
+
+export const FETCH_PAY_SETTINGS = gql`
+  mutation fetchPaySettings {
+    fetchPaySettings {
+      _id
+      perDeliveryEnabled
+      percentagePerOrderTotal
+      value
+      closed
+      badWeather
+      holiday
+      message
+      deliveryFee
     }
   }
 `;
@@ -1173,6 +1194,7 @@ export const UPDATE_RESTAURANT_BYID = gql`
     $MenuItems: JSONObject
     $ImageName: String
     $Parish: String
+    $deliveryFee: Float
   ) {
     updateRestaurantById(
       _id: $_id
@@ -1189,6 +1211,7 @@ export const UPDATE_RESTAURANT_BYID = gql`
       MenuItems: $MenuItems
       ImageName: $ImageName
       Parish: $Parish
+      deliveryFee: $deliveryFee
     ) {
       Id
       FirstName
@@ -1221,6 +1244,7 @@ export const UPDATE_RESTAURANT_BYID = gql`
       }
       ImageName
       Parish
+      deliveryFee
     }
   }
 `;

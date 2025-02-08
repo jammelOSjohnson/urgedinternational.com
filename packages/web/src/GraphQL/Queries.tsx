@@ -251,6 +251,11 @@ export const GET_PAY_SETTINGS = gql`
       perDeliveryEnabled
       percentagePerOrderTotal
       value
+      closed
+      badWeather
+      holiday
+      message
+      deliveryFee
     }
   }
 `;
