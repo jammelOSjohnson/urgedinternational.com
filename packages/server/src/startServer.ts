@@ -14,8 +14,8 @@ import {
   ApolloServerPluginLandingPageProductionDefault,
 } from "apollo-server-core";
 // NEW FLOW
-import typeDefs from "./typeDefs";
-import resolvers from "./resolvers";
+import typeDefs from "./typeDefs.js";
+import resolvers from "./resolvers.js";
 import mongoose from "mongoose";
 import axios from "axios";
 import moment from "moment-timezone";

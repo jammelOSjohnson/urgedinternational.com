@@ -1,8 +1,8 @@
 //import express from 'express';
 import { ApolloServer, gql } from "apollo-server";
 //import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
-import typeDefs from "./typeDefs";
-import resolvers from "./resolvers";
+import typeDefs from "./typeDefs.js";
+import resolvers from "./resolvers.js";
 import mongoose from "mongoose";
 import express from "express";
 var cors = require("cors");

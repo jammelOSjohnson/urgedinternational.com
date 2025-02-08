@@ -220,14 +220,15 @@ const typeDefs = /* GraphQL */ `
   }
 
   type PaySetting {
-    _id: ID
-    perDeliveryEnabled: Boolean
-    percentagePerOrderTotal: Boolean
-    value: Float
+    _id: ID!
+    perDeliveryEnabled: Boolean!
+    percentagePerOrderTotal: Boolean!
+    value: Float!
     closed: Boolean
     badWeather: Boolean
     holiday: Boolean
     message: String
+    deliveryFee: Float!
   }
 
   type Package {
@@ -576,13 +577,16 @@ const typeDefs = /* GraphQL */ `
       OrderType: String
     ): OrderUpdated
 
-    getPaySettings: [PaySetting!]!
-
     updatePaySetting(
-      _id: ID
-      perDeliveryEnabled: Boolean
-      percentagePerOrderTotal: Boolean
-      value: Float
+      _id: ID!
+      perDeliveryEnabled: Boolean!
+      percentagePerOrderTotal: Boolean!
+      value: Float!
+      deliveryFee: Float!
+      closed: Boolean
+      badWeather: Boolean
+      holiday: Boolean
+      message: String
     ): PaySetting
 
     fetchRestaurantsByCategory(categoryID: String): RestaurantsByCategories
@@ -637,6 +641,8 @@ const typeDefs = /* GraphQL */ `
     ): User
 
     getCategories: [Category!]!
+
+    fetchPaySettings: [PaySetting!]!
   }
 `;
 

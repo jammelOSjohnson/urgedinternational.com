@@ -1,8 +1,7 @@
-const mongoose = require("mongoose");
-const { model, Schema } = require("mongoose");
-const autoIncrement = require("mongoose-sequence")(mongoose);
+import mongoose from "mongoose";
+import autoIncrement from "mongoose-sequence";
 
-const OrderSchema = new Schema({
+const OrderSchema = new mongoose.Schema({
   _id: Number,
   Id: {
     type: String,
@@ -21,16 +20,16 @@ const OrderSchema = new Schema({
     required: true,
   },
   OrderDate: {
-    type: Schema.Types.Date,
+    type: mongoose.Schema.Types.Date,
     required: true,
   },
   Rider: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "user",
     required: false,
   },
   BillingInfo: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "orderbilling",
     required: false,
   },
@@ -67,13 +66,12 @@ const OrderSchema = new Schema({
     required: false,
   },
   Restaurant: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "user",
     required: true,
   },
 });
 
-OrderSchema.plugin(autoIncrement);
-
-const Order = model("order", OrderSchema);
+OrderSchema.plugin(autoIncrement(mongoose));
+const Order = mongoose.model("order", OrderSchema);
 export default Order;

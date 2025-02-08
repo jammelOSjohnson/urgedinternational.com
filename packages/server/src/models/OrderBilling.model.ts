@@ -1,13 +1,12 @@
-const mongoose = require("mongoose");
-const { model, Schema } = require("mongoose");
+import mongoose from "mongoose";
 
-const OrderBillingSchema = new Schema({
+const OrderBillingSchema = new mongoose.Schema({
   oId: {
     type: String,
     required: false,
   },
   txndate: {
-    type: Schema.Types.Date,
+    type: mongoose.Schema.Types.Date,
     required: false,
   },
   ccbin: {
@@ -164,5 +163,5 @@ const OrderBillingSchema = new Schema({
   },
 });
 
-const OrderBilling = model("orderbilling", OrderBillingSchema);
+const OrderBilling = mongoose.model("orderbilling", OrderBillingSchema);
 export default OrderBilling;

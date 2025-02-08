@@ -1,21 +1,20 @@
-const mongoose = require('mongoose');
-const { model, Schema } = require('mongoose');
+import mongoose from "mongoose";
 
-const MailboxSchema = new Schema({
-    Status: {
-        type: String,
-        required: true
-    },
-    Uid: {
-        type: Schema.Types.ObjectId, 
-        ref: 'user',
-        required: false
-    },
-    MailboxNum: {
-        type: String,
-        required: true
-    },
+const MailboxSchema = new mongoose.Schema({
+  Status: {
+    type: String,
+    required: true,
+  },
+  Uid: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "user",
+    required: false,
+  },
+  MailboxNum: {
+    type: String,
+    required: true,
+  },
 });
 
-const Mailbox = model('mailbox', MailboxSchema);
+const Mailbox = mongoose.model("mailbox", MailboxSchema);
 export default Mailbox;

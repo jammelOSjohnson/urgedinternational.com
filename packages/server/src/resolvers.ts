@@ -1,25 +1,25 @@
-import Role from "./models/Role.model";
-import User from "./models/User.model";
-import UserInRole from "./models/UserInRole.model";
-import MenuItem from "./models/MenuItem.model";
-import Category from "./models/Category.model";
-import MenuCategory from "./models/MenuCategory.model";
-import Order from "./models/Order.model";
-import PaySetting from "./models/PaySetting.model";
-import Package from "./models/Package.model";
+import Role from "./models/Role.model.js";
+import User from "./models/User.model.js";
+import UserInRole from "./models/UserInRole.model.js";
+import MenuItem from "./models/MenuItem.model.js";
+import Category from "./models/Category.model.js";
+import MenuCategory from "./models/MenuCategory.model.js";
+import Order from "./models/Order.model.js";
+import PaySetting from "./models/PaySetting.model.js";
+import Package from "./models/Package.model.js";
 import { json } from "express";
-const { GraphQLScalarType, Kind } = require("graphql");
-const mongoose = require("mongoose");
-const crypto = require("crypto");
+import { GraphQLScalarType, Kind } from "graphql";
+import mongoose from "mongoose";
+import crypto from "crypto";
 
 //subscriptions test
 import { PubSub } from "graphql-subscriptions";
 //import { GooglePubSub } from '@axelspringer/graphql-google-pubsub';// For Production
 import { RedisPubSub } from "graphql-redis-subscriptions"; // For Production
-import Mailbox from "./models/Mailbox.model";
-import ShippingAddress from "./models/ShippingAddress";
-import OrderRejection from "./models/OrderRejection.model";
-import OrderBilling from "./models/OrderBilling.model";
+import Mailbox from "./models/Mailbox.model.js";
+import ShippingAddress from "./models/ShippingAddress.js";
+import OrderRejection from "./models/OrderRejection.model.js";
+import OrderBilling from "./models/OrderBilling.model.js";
 
 const pubsub = new RedisPubSub({
   connection: {
@@ -253,6 +253,11 @@ const resolvers = {
       //console.log(secret);
 
       // create a sha-256 hasher
+      if (!sharedsecret || !secret) {
+        throw new Error(
+          "sharedsecret and secret is required for HMAC creation"
+        );
+      }
       const sha256Hasher = crypto.createHmac("sha256", secret);
 
       // hash the string
@@ -810,24 +815,36 @@ const resolvers = {
       }
     },
 
-    getPaySettings: async () => {
-      return await PaySetting.find();
-    },
-
     updatePaySetting: async (
       _,
-      { _id, perDeliveryEnabled, percentagePerOrderTotal, value }
-    ) => {
-      let newPaySetting = {
+      {
         _id,
         perDeliveryEnabled,
         percentagePerOrderTotal,
         value,
-      };
-      //console.log(newPaySetting);
-      const paySetting = await PaySetting.findOne({ _id });
-      Object.assign(paySetting, newPaySetting);
-      return paySetting.save();
+        deliveryFee,
+        closed,
+        badWeather,
+        holiday,
+        message,
+      }
+    ) => {
+      try {
+        console.log("Updating pay settings");
+        let newPaySetting = {
+          _id,
+          perDeliveryEnabled,
+          percentagePerOrderTotal,
+          value,
+          deliveryFee,
+        };
+        //console.log(newPaySetting);
+        const paySetting = await PaySetting.findOne({ _id });
+        Object.assign(paySetting, newPaySetting);
+        return paySetting.save();
+      } catch (err) {
+        console.log(err);
+      }
     },
 
     //Reastaurants
@@ -1022,6 +1039,7 @@ const resolvers = {
         MenuItems,
         ImageName,
         Parish,
+        deliveryFee,
       }
     ) => {
       let newRestaurantUser = {
@@ -1039,8 +1057,9 @@ const resolvers = {
         MenuItems,
         ImageName,
         Parish,
+        deliveryFee,
       };
-      //console.log(newRestaurantUser);
+
       const user = await User.findOne({ _id });
       Object.assign(user, newRestaurantUser);
       return user.save();
@@ -1090,6 +1109,10 @@ const resolvers = {
 
     getOrderRejection: async (_, { OrderId }) => {
       return await OrderRejection.findOne({ OrderId });
+    },
+
+    fetchPaySettings: async () => {
+      return await PaySetting.find();
     },
   },
 };

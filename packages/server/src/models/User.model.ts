@@ -1,7 +1,6 @@
-const mongoose = require("mongoose");
-const { model, Schema } = require("mongoose");
+import mongoose from "mongoose";
 
-const UserSchema = new Schema({
+const userSchema = new mongoose.Schema({
   Id: {
     type: String,
     required: true,
@@ -39,7 +38,7 @@ const UserSchema = new Schema({
     required: false,
   },
   category: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "category",
     required: false,
   },
@@ -67,7 +66,12 @@ const UserSchema = new Schema({
     type: String,
     required: false,
   },
+  deliveryFee: {
+    type: Number,
+    default: 500, // Default delivery fee
+    required: false,
+  },
 });
 
-const User = model("user", UserSchema);
+const User = mongoose.model("User", userSchema);
 export default User;
