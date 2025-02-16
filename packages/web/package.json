@@ -60,13 +60,15 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "tsc && vite build",
+    "clean": "rimraf build",
+    "build": "yarn clean && tsc && vite build",
     "serve": "vite preview",
     "test": "vitest",
     "test:coverage": "vitest run --coverage --watch=false",
     "OLDstart": "set NODE_OPTIONS=--openssl-legacy-provider && react-scripts start",
     "OLDbuild": "set NODE_OPTIONS=--openssl-legacy-provider && react-scripts build",
-    "deploy": "npm run build && firebase deploy --only hosting",
+    "deploy": "yarn build && firebase deploy --only hosting",
+    "OLDdeploy": "npm run build && firebase deploy --only hosting",
     "OLDtest": "react-scripts test",
     "eject": "react-scripts eject",
     "live": "http-server --push-state"
@@ -90,7 +92,7 @@
     ]
   },
   "devDependencies": {
-    "@types/google.maps": "^3.49.2",
+    "@types/google.maps": "^3.58.1",
     "@vitest/coverage-v8": "^2.1.8",
     "eslint-plugin-googlemaps": "^1.4.14",
     "jsdom": "^26.0.0",

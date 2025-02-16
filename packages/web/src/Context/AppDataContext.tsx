@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { useContext, useReducer, createContext } from "react";
+import { useContext, useReducer, createContext, useMemo } from "react";
 //import fetchAddressApi from '../Apis/fetchAddressApi';
 import {
   auth,
@@ -12,6 +12,7 @@ import {
   GET_ORDERS_BY_RIDERID,
   UPDATE_ORDER,
   GET_RIDERS,
+  GET_RIDERS_BY_PARISH,
   CREATE_ORDER,
   GET_ORDERS_BY_USERID,
   GET_ORDERS,
@@ -48,11 +49,11 @@ import {
   UPDATE_STAFF_MUTATION,
   CREATE_HASH_MUTATION,
   CREATE_ORDER_Billing,
+  FETCH_PAY_SETTINGS,
 } from "../GraphQL/Mutations";
-import { useMutation } from "@apollo/client";
+import { useMutation, useApolloClient } from "@apollo/client";
 import sendEmail from "../email.js";
 import moment from "moment-timezone";
-import { GET_PAY_SETTINGS } from "../GraphQL/Mutations";
 
 //import serverPI from '../Apis/serverPI';
 
@@ -275,6 +276,9 @@ function appDataReducer(state, action) {
 
 //create provider
 export default function AppDataProvider({ children }: { children: ReactNode }) {
+  // Add this near the top of the component, with other hooks
+  const client = useApolloClient();
+
   //Email variables
   const emailServiceId = "service_9xw19wc";
   const emailNewJobAppTemplate = "template_vt5fmwm";
@@ -297,10 +301,11 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   const [addUserToRole] = useMutation(CREATE_ROLE);
   const [getRestaurants] = useMutation(GET_RESTAURANTS);
   const [getRiders] = useMutation(GET_RIDERS);
+  const [getRidersByParish] = useMutation(GET_RIDERS_BY_PARISH);
   const [getStaff] = useMutation(GET_STAFF);
   const [getRider] = useMutation(GET_RIDER);
   //const {data} = useQuery(GET_PAY_SETTINGS);
-  const [getPaySettings] = useMutation(GET_PAY_SETTINGS);
+  const [fetchPaySettings] = useMutation(FETCH_PAY_SETTINGS);
   const [getMenucategories] = useMutation(GET_MENU_CATEGORIES);
   const [updateRestaurantById] = useMutation(UPDATE_RESTAURANT_BYID);
   const [updateRiderStatus] = useMutation(UPDATE_RIDER_STATUS);
@@ -948,6 +953,14 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
                 : "";
             payload.userInfo.city =
               user.City !== null && user.City !== undefined ? user.City : "";
+            payload.userInfo.deliveryFee =
+              user.deliveryFee !== null && user.deliveryFee !== undefined
+                ? user.deliveryFee
+                : 0;
+            payload.userInfo.Parish =
+              user.Parish !== null && user.Parish !== undefined
+                ? user.Parish
+                : "Select Parish";
           }
 
           return payload;
@@ -976,6 +989,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
             category: newRestaurant.Category,
             ImageName: newRestaurant.ImageName,
             Parish: newRestaurant.Parish,
+            deliveryFee: parseFloat(newRestaurant.deliveryFee),
           };
           //verified: false,
           //verifiedemailsent: false,
@@ -1091,6 +1105,10 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
               user.Position !== null && user.Position !== undefined
                 ? user.Position
                 : "";
+            payload.userInfo.Parish =
+              user.Parish !== null && user.Parish !== undefined
+                ? user.Parish
+                : "Select Parish";
           }
 
           return payload;
@@ -1119,6 +1137,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
             disabled: newStaff.disabled,
             ImageName: newStaff.ImageName,
             Position: newStaff.Role,
+            Parish: newStaff.Parish,
           };
           //verified: false,
           //verifiedemailsent: false,
@@ -1199,6 +1218,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
         disabled: StaffInfo.disabled,
         ImageName: StaffInfo.ImageName,
         Position: StaffInfo.Role,
+        Parish: StaffInfo.Parish,
       };
       return await updateStaff({ variables: newUpdate }).then(async function (
         response
@@ -1671,244 +1691,246 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
         orderItems.push(body);
         return null;
       });
-      return await fetchRidersForOrder().then(async (res) => {
-        //Generate rand number
-        // console.log("res is: ", res);
-        type riderObj = {
-          _id: string;
-          Id: string;
-          FirstName: string;
-          LastName: string;
-          Email: string;
-          AddressLine1: string;
-          AddressLine2: string;
-          City: string;
-          ContactNumber: string;
-          isAvailable: boolean;
-          disabled: boolean;
-          ImageName: string;
-        };
-
-        let RiderRes = [] as riderObj[];
-        try {
-          RiderRes = res.filter(
-            (item) => item.isAvailable === true && item.disabled === false
-          );
-        } catch (e) {
-          console.log(e);
-        }
-
-        //console.log("riders length is: " + RiderRes.length);
-        if (RiderRes.length === 0) {
-          RiderRes.push(res[0]);
-        }
-
-        //console.log("sorted rider res is: ", RiderRes);
-        const min = 0;
-        const max = RiderRes.length;
-        //console.log(max);
-        const randRider = Math.floor(Math.random() * max + min);
-        //const randRider = parseInt(rand.toString());
-        // console.log(randRider);
-
-        const orderBody = {
-          Id: payload.currentUser.uid,
-          OrderItems: orderItems,
-          OrderStatus: "Pending",
-          OrderTotal: Number(Total.Cost),
-          OrderDate: estTime,
-          Rider:
-            RiderRes[randRider]._id !== undefined
-              ? RiderRes[randRider]._id
-              : "",
-          BillingInfo: "",
-          DeliveryAddress: state.Street + "," + state.Town + ",Clarendon",
-          PaymentMethod: state.PaymentMethod,
-          AdditionalInfo:
-            state.ContactNum +
-            " " +
-            payload.userInfo.email +
-            " " +
-            payload.userInfo.fullName,
-          DeliveryFee: Number(deliveryFee.Cost),
-          GCT: Number(GCT.Cost),
-          ServiceCharge: Number(serviceFee.Cost),
-          CartTotal: Number(cartItemsSum.Cost),
-          OrderType: "Food",
-          Restaurant: restaurantID,
-        };
-
-        //console.log("billing id is: " + billingID);
-        if (billingID === null) {
-          const orderBillingBody = {
-            oId: "",
-            txndate: estTime,
-            ccbin: "",
-            processor: "",
-            saddr2: state.Town,
-            saddr1: state.Street,
-            cccountry: "",
-            Expmonth: "",
-            hashalgorithm: "",
-            endpointTransactionId: "",
-            currency: "JMD",
-            processorresponse_code: "",
-            chargetotal: cartItemsSum.Cost,
-            email: payload.userInfo.email,
-            terminalid: "",
-            associationResponseCode: "",
-            approvalcode: "",
-            expyear: "",
-            responsehash: "",
-            responsecode3dsecure: "",
-            bstate: "",
-            schemeTransactionId: "",
-            tdate: estTime,
-            installmentsinterest: "",
-            bname: payload.userInfo.fullName,
-            phone: state.ContactNum,
-            ccbrand: "CASH",
-            sname: payload.userInfo.fullName,
-            sstate: "",
-            refnumber: "",
-            txntype: state.PaymentMethod,
-            paymentMethod: state.PaymentMethod,
-            txndatetime: estTime,
-            cardnumber: "",
-            ipgTransactionId: "",
-            scountry: "JA",
-            baddr1: state.Street,
-            bcountry: "JA",
-            baddr2: state.Town,
-            status: "APPROVED",
+      return await fetchRidersForOrder(payload.generalLocation).then(
+        async (res) => {
+          //Generate rand number
+          // console.log("res is: ", res);
+          type riderObj = {
+            _id: string;
+            Id: string;
+            FirstName: string;
+            LastName: string;
+            Email: string;
+            AddressLine1: string;
+            AddressLine2: string;
+            City: string;
+            ContactNumber: string;
+            isAvailable: boolean;
+            disabled: boolean;
+            ImageName: string;
           };
 
-          await createOrderBilling({ variables: orderBillingBody }).then(
-            async function (response) {
-              //console.log(response.data.createOrderBilling);
-              if (response.data.createOrderBilling !== null) {
-                orderBody.BillingInfo = response.data.createOrderBilling._id;
-                await createOrder({ variables: orderBody }).then(
-                  async function (response) {
-                    //console.log("create orer result");
-                    if (response.data.createOrder !== null) {
-                      //console.log("Order Exist");
-                      ////console.log(response.data.createOrder);
-                      payload.cartItems = [];
-                      payload.selectedRestaurant = undefined;
-                      payload.receiptDetails = response.data.createOrder;
-                      if (
-                        state.ContactNum !== payload.userInfo.contactNumber ||
-                        state.Street !== payload.userInfo.addressLine1 ||
-                        state.Town !== payload.userInfo.city
-                      ) {
-                        let user = {
-                          ContactNumber: state.ContactNum,
-                          Email: payload.userInfo.email,
-                          FullName: payload.userInfo.fullName,
-                          AddressLine1: state.Street,
-                          AddressLine2: "",
-                          City: state.Town,
-                        };
+          let RiderRes = [] as riderObj[];
+          try {
+            RiderRes = res.filter(
+              (item) => item.isAvailable === true && item.disabled === false
+            );
+          } catch (e) {
+            console.log(e);
+          }
 
-                        await UpdateUserInfo(payload, user)
-                          .then(() => {
-                            dispatch({
-                              type: "checkout",
-                              payload: payload,
+          //console.log("riders length is: " + RiderRes.length);
+          if (RiderRes.length === 0) {
+            RiderRes.push(res[0]);
+          }
+
+          //console.log("sorted rider res is: ", RiderRes);
+          const min = 0;
+          const max = RiderRes.length;
+          //console.log(max);
+          const randRider = Math.floor(Math.random() * max + min);
+          //const randRider = parseInt(rand.toString());
+          // console.log(randRider);
+
+          const orderBody = {
+            Id: payload.currentUser.uid,
+            OrderItems: orderItems,
+            OrderStatus: "Pending",
+            OrderTotal: Number(Total.Cost),
+            OrderDate: estTime,
+            Rider:
+              RiderRes[randRider]._id !== undefined
+                ? RiderRes[randRider]._id
+                : "",
+            BillingInfo: "",
+            DeliveryAddress: state.Street + "," + state.Town + ",Clarendon",
+            PaymentMethod: state.PaymentMethod,
+            AdditionalInfo:
+              state.ContactNum +
+              " " +
+              payload.userInfo.email +
+              " " +
+              payload.userInfo.fullName,
+            DeliveryFee: Number(deliveryFee.Cost),
+            GCT: Number(GCT.Cost),
+            ServiceCharge: Number(serviceFee.Cost),
+            CartTotal: Number(cartItemsSum.Cost),
+            OrderType: "Food",
+            Restaurant: restaurantID,
+          };
+
+          //console.log("billing id is: " + billingID);
+          if (billingID === null) {
+            const orderBillingBody = {
+              oId: "",
+              txndate: estTime,
+              ccbin: "",
+              processor: "",
+              saddr2: state.Town,
+              saddr1: state.Street,
+              cccountry: "",
+              Expmonth: "",
+              hashalgorithm: "",
+              endpointTransactionId: "",
+              currency: "JMD",
+              processorresponse_code: "",
+              chargetotal: cartItemsSum.Cost,
+              email: payload.userInfo.email,
+              terminalid: "",
+              associationResponseCode: "",
+              approvalcode: "",
+              expyear: "",
+              responsehash: "",
+              responsecode3dsecure: "",
+              bstate: "",
+              schemeTransactionId: "",
+              tdate: estTime,
+              installmentsinterest: "",
+              bname: payload.userInfo.fullName,
+              phone: state.ContactNum,
+              ccbrand: "CASH",
+              sname: payload.userInfo.fullName,
+              sstate: "",
+              refnumber: "",
+              txntype: state.PaymentMethod,
+              paymentMethod: state.PaymentMethod,
+              txndatetime: estTime,
+              cardnumber: "",
+              ipgTransactionId: "",
+              scountry: "JA",
+              baddr1: state.Street,
+              bcountry: "JA",
+              baddr2: state.Town,
+              status: "APPROVED",
+            };
+
+            await createOrderBilling({ variables: orderBillingBody }).then(
+              async function (response) {
+                //console.log(response.data.createOrderBilling);
+                if (response.data.createOrderBilling !== null) {
+                  orderBody.BillingInfo = response.data.createOrderBilling._id;
+                  await createOrder({ variables: orderBody }).then(
+                    async function (response) {
+                      //console.log("create orer result");
+                      if (response.data.createOrder !== null) {
+                        //console.log("Order Exist");
+                        ////console.log(response.data.createOrder);
+                        payload.cartItems = [];
+                        payload.selectedRestaurant = undefined;
+                        payload.receiptDetails = response.data.createOrder;
+                        if (
+                          state.ContactNum !== payload.userInfo.contactNumber ||
+                          state.Street !== payload.userInfo.addressLine1 ||
+                          state.Town !== payload.userInfo.city
+                        ) {
+                          let user = {
+                            ContactNumber: state.ContactNum,
+                            Email: payload.userInfo.email,
+                            FullName: payload.userInfo.fullName,
+                            AddressLine1: state.Street,
+                            AddressLine2: "",
+                            City: state.Town,
+                          };
+
+                          await UpdateUserInfo(payload, user)
+                            .then(() => {
+                              dispatch({
+                                type: "checkout",
+                                payload: payload,
+                              });
+                            })
+                            .catch(() => {
+                              dispatch({
+                                type: "checkout",
+                                payload: payload,
+                              });
                             });
-                          })
-                          .catch(() => {
-                            dispatch({
-                              type: "checkout",
-                              payload: payload,
-                            });
+                        } else {
+                          //console.log("address up to date");
+                          dispatch({
+                            type: "checkout",
+                            payload: payload,
                           });
-                      } else {
-                        //console.log("address up to date");
-                        dispatch({
-                          type: "checkout",
-                          payload: payload,
-                        });
+                        }
+
+                        // await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
+                        //   if (response.data.getOrdersByUserId !== null) {
+                        //     payload.orders = response.data.getOrdersByUserId;
+                        //     dispatch({
+                        //       type: "checkout",
+                        //       payload: payload
+                        //     })
+                        //   }
+                        // });
                       }
-
-                      // await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
-                      //   if (response.data.getOrdersByUserId !== null) {
-                      //     payload.orders = response.data.getOrdersByUserId;
-                      //     dispatch({
-                      //       type: "checkout",
-                      //       payload: payload
-                      //     })
-                      //   }
-                      // });
                     }
-                  }
-                );
+                  );
+                }
               }
-            }
-          );
-        } else {
-          //console.log("billing id is not null");
-          orderBody.BillingInfo = billingID;
-          await createOrder({ variables: orderBody }).then(async function (
-            response
-          ) {
-            //console.log("create orer result: ");
-            //console.log(response.data.createOrder);
-            if (response.data.createOrder !== null) {
-              //console.log("Order Exist");
-              ////console.log(response.data.createOrder);
-              payload.cartItems = [];
-              payload.selectedRestaurant = undefined;
-              payload.receiptDetails = response.data.createOrder;
-              if (
-                state.ContactNum !== payload.userInfo.contactNumber ||
-                state.Street !== payload.userInfo.addressLine1 ||
-                state.Town !== payload.userInfo.city
-              ) {
-                let user = {
-                  ContactNumber: state.ContactNum,
-                  Email: payload.userInfo.email,
-                  FullName: payload.userInfo.fullName,
-                  AddressLine1: state.Street,
-                  AddressLine2: "",
-                  City: state.Town,
-                };
+            );
+          } else {
+            //console.log("billing id is not null");
+            orderBody.BillingInfo = billingID;
+            await createOrder({ variables: orderBody }).then(async function (
+              response
+            ) {
+              //console.log("create orer result: ");
+              //console.log(response.data.createOrder);
+              if (response.data.createOrder !== null) {
+                //console.log("Order Exist");
+                ////console.log(response.data.createOrder);
+                payload.cartItems = [];
+                payload.selectedRestaurant = undefined;
+                payload.receiptDetails = response.data.createOrder;
+                if (
+                  state.ContactNum !== payload.userInfo.contactNumber ||
+                  state.Street !== payload.userInfo.addressLine1 ||
+                  state.Town !== payload.userInfo.city
+                ) {
+                  let user = {
+                    ContactNumber: state.ContactNum,
+                    Email: payload.userInfo.email,
+                    FullName: payload.userInfo.fullName,
+                    AddressLine1: state.Street,
+                    AddressLine2: "",
+                    City: state.Town,
+                  };
 
-                await UpdateUserInfo(payload, user)
-                  .then(() => {
-                    dispatch({
-                      type: "checkout",
-                      payload: payload,
+                  await UpdateUserInfo(payload, user)
+                    .then(() => {
+                      dispatch({
+                        type: "checkout",
+                        payload: payload,
+                      });
+                    })
+                    .catch(() => {
+                      dispatch({
+                        type: "checkout",
+                        payload: payload,
+                      });
                     });
-                  })
-                  .catch(() => {
-                    dispatch({
-                      type: "checkout",
-                      payload: payload,
-                    });
+                } else {
+                  //console.log("address up to date");
+                  dispatch({
+                    type: "checkout",
+                    payload: payload,
                   });
-              } else {
-                //console.log("address up to date");
-                dispatch({
-                  type: "checkout",
-                  payload: payload,
-                });
-              }
+                }
 
-              // await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
-              //   if (response.data.getOrdersByUserId !== null) {
-              //     payload.orders = response.data.getOrdersByUserId;
-              //     dispatch({
-              //       type: "checkout",
-              //       payload: payload
-              //     })
-              //   }
-              // });
-            }
-          });
+                // await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
+                //   if (response.data.getOrdersByUserId !== null) {
+                //     payload.orders = response.data.getOrdersByUserId;
+                //     dispatch({
+                //       type: "checkout",
+                //       payload: payload
+                //     })
+                //   }
+                // });
+              }
+            });
+          }
         }
-      });
+      );
     }
   };
 
@@ -2770,15 +2792,19 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       });
   };
 
-  var fetchRidersForOrder = async function fetchRidersForOrder() {
+  var fetchRidersForOrder = async function fetchRidersForOrder(
+    generalUserLocation
+  ) {
     ////console.log("about to fetch restaurants");
-    return await getRiders()
+    return await getRidersByParish({
+      variables: { Parish: generalUserLocation },
+    })
       .then(async function (response) {
-        if (response.data.getRiders !== null) {
+        if (response.data.getRidersByParish !== null) {
           ////console.log("got list of restaurants");
           ////console.log(response);
 
-          var restList = response.data.getRiders;
+          var restList = response.data.getRidersByParish;
 
           if (restList !== null) {
             return restList;
@@ -2803,16 +2829,19 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  var fetchPaySettings = async function fetchPaySettings(payload) {
+  var getPaySettingsData = async function getPaySettingsData(payload) {
     //console.log("about to fetch pay settings");
     try {
-      await getPaySettings()
+      // Now client is available here
+      await client.resetStore();
+
+      await fetchPaySettings()
         .then((response) => {
-          if (response.data.getPaySettings !== null) {
+          if (response.data.fetchPaySettings !== null) {
             //console.log("got list of restaurants");
             //console.log(response);
 
-            var paySet = response.data.getPaySettings;
+            var paySet = response.data.fetchPaySettings;
             //console.log(paySet);
 
             if (paySet !== null) {
@@ -2839,6 +2868,8 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     payload,
     paysetting
   ) {
+    // Now client is available here
+    await client.resetStore();
     if (paysetting !== null && paysetting !== undefined) {
       let newPaySetting = paysetting;
       console.log(newPaySetting);
@@ -3295,6 +3326,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
           MenuItems: any;
           ImageName: any;
           Parish: any;
+          deliveryFee: any;
         }
       | null
       | undefined
@@ -3317,6 +3349,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
           MenuItems: restaurant.MenuItems,
           ImageName: restaurant.ImageName,
           Parish: restaurant.Parish,
+          deliveryFee: parseFloat(restaurant.deliveryFee),
         },
       }).then(async function (response) {
         ////console.log("create orer result");
@@ -3509,7 +3542,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     serviceWorkerInit,
     serviceWorkerUpdate,
     sendContactUsEmail,
-    fetchPaySettings,
+    getPaySettingsData,
     UpdatePaySettings,
     viewRiderDetails,
     createPreAlert,

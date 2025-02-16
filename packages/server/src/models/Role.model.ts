@@ -1,11 +1,7 @@
 import mongoose from "mongoose";
 
 const roleSchema = new mongoose.Schema({
-  RoleName: {
-    type: String,
-    required: true,
-  },
-  RoleDescription: {
+  description: {
     type: String,
     required: true,
   },

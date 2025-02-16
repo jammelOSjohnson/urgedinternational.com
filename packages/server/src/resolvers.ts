@@ -376,6 +376,7 @@ const resolvers = {
         MenuItems,
         ImageName,
         Parish,
+        deliveryFee,
       }
     ) => {
       const user = new User({
@@ -394,6 +395,7 @@ const resolvers = {
         disabled: false,
         isAvailable: false,
         Parish,
+        deliveryFee,
       });
       return user.save();
     },
@@ -414,6 +416,7 @@ const resolvers = {
         disabled,
         ImageName,
         Position,
+        Parish,
       }
     ) => {
       const checkUser = await User.findOne({ Id });
@@ -432,6 +435,7 @@ const resolvers = {
           disabled,
           ImageName,
           Position,
+          Parish,
         });
         return user.save();
       } else {
@@ -455,6 +459,7 @@ const resolvers = {
         disabled,
         ImageName,
         Position,
+        Parish,
       }
     ) => {
       const newUser = {
@@ -471,6 +476,7 @@ const resolvers = {
         disabled,
         ImageName,
         Position,
+        Parish,
       };
       const user = await User.findOne({ _id });
       Object.assign(user, newUser);
@@ -878,6 +884,20 @@ const resolvers = {
       //return res;
     },
 
+    getRidersByParish: async (_, { Parish }) => {
+      return await User.find()
+        .where("isAvailable")
+        .ne(null)
+        .where("disabled")
+        .ne(null)
+        .where("Position")
+        .equals("Rider")
+        .where("Parish")
+        .equals(Parish);
+      //console.log(res);
+      //return res;
+    },
+
     //Staff
     getStaff: async () => {
       return await User.find()
@@ -885,8 +905,8 @@ const resolvers = {
         .ne(null)
         .where("disabled")
         .ne(null)
-        .where("Parish")
-        .eq(null);
+        .where("category")
+        .equals(null);
       //console.log(res);
       //return res;
     },

@@ -40,3 +40,27 @@ export namespace NodeJS {
     REACT_APP_LIVECHAT_LICENSE: string;
   }
 }
+
+declare global {
+  interface Window {
+    google: any;
+  }
+}
+
+// Add these to relax the Google Maps types
+declare module 'google-maps-react' {
+  export class Map extends React.Component<any, any> {}
+  export class GoogleApiWrapper(opts: any): any;
+  export class Polygon extends React.Component<any, any> {}
+}
+
+// Relax the font weight types
+declare module '@material-ui/core/styles' {
+  interface Theme {
+    typography: {
+      fontWeightRegular: any;
+    }
+  }
+}
+
+export {};

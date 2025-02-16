@@ -301,9 +301,12 @@ export const CheckGps: React.FC<Props> = function CheckGps({ setLoading }) {
   };
 
   var getCoords = function getCoords(Address) {
+    // @ts-ignore
     var geocoder = new google.maps.Geocoder();
 
+    // @ts-ignore
     geocoder.geocode({ address: Address }, function (results, status) {
+      // @ts-ignore
       if (status == google.maps.GeocoderStatus.OK) {
         var latitude =
           results !== null ? results[0].geometry.location.lat() : 0;

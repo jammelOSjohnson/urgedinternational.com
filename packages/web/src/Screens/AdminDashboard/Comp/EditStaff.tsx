@@ -35,6 +35,7 @@ interface State {
   ImageName: String;
   isAvailable: boolean;
   disabled: boolean;
+  Parish: string;
   _id: string;
 }
 
@@ -162,6 +163,7 @@ export const EditStaff: React.FC = () => {
         : "",
     isAvailable: false,
     disabled: false,
+    Parish: "Select Parish",
     _id: "",
   });
 
@@ -188,6 +190,8 @@ export const EditStaff: React.FC = () => {
         ? setError("Please enter a valid Email")
         : values.Role === "Select Staff Role"
         ? setError("Please select user postition")
+        : values.Parish === "Select Parish"
+        ? setError("Please select a Parish")
         : await editStaff(value, values).then(async function (res1) {
             if (res1) {
               setSuccess("Member updated successfully.");
@@ -260,6 +264,12 @@ export const EditStaff: React.FC = () => {
           riders[selectedRider].Position !== undefined
             ? riders[selectedRider].Position
             : "Select Staff Role",
+
+        Parish:
+          riders[selectedRider].Parish !== null &&
+          riders[selectedRider].Parish !== undefined
+            ? riders[selectedRider].Parish
+            : "Select Parish",
         _id:
           riders[selectedRider]._id != null &&
           riders[selectedRider]._id != undefined
@@ -446,6 +456,36 @@ export const EditStaff: React.FC = () => {
                         </FormGroup>
                       </Grid>
                       <Grid item xs={12} sm={6}></Grid>
+                      <Grid item xs={12}>
+                        <FormControl
+                          variant="outlined"
+                          className={classes.formControl}
+                          fullWidth
+                          required
+                        >
+                          <InputLabel id="parish-label">Parish</InputLabel>
+                          <Select
+                            labelId="parish-label"
+                            id="demo-simple-select-outlined-parish"
+                            value={values.Parish}
+                            onChange={handleChange}
+                            label="Parish"
+                            name="Parish"
+                            className={classes.root}
+                            required
+                          >
+                            <MenuItem value={"Select Parish"} key={0}>
+                              Select Parish
+                            </MenuItem>
+                            <MenuItem value={"Clarendon"} key={1}>
+                              Clarendon
+                            </MenuItem>
+                            <MenuItem value={"Kingston"} key={2}>
+                              Kingston
+                            </MenuItem>
+                          </Select>
+                        </FormControl>
+                      </Grid>
                       <Grid item xs={12}>
                         <FormControl
                           variant="outlined"

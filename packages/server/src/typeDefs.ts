@@ -106,6 +106,7 @@ const typeDefs = /* GraphQL */ `
     isAvailable: Boolean
     disabled: Boolean
     Parish: String
+    deliveryFee: Float
   }
 
   type User2 {
@@ -125,6 +126,7 @@ const typeDefs = /* GraphQL */ `
     isAvailable: Boolean
     disabled: Boolean
     Position: String
+    Parish: String
   }
 
   type OrderRejection {
@@ -417,6 +419,7 @@ const typeDefs = /* GraphQL */ `
       category: ID
       MenuItems: JSONObject
       ImageName: String
+      deliveryFee: Float
     ): User!
 
     createStaff(
@@ -433,6 +436,7 @@ const typeDefs = /* GraphQL */ `
       disabled: Boolean
       ImageName: String
       Position: String
+      Parish: String
     ): User!
 
     updateStaff(
@@ -449,11 +453,14 @@ const typeDefs = /* GraphQL */ `
       disabled: Boolean
       ImageName: String
       Position: String
+      Parish: String
     ): User!
 
     getRestaurants: [User!]!
 
     getRiders: [User2!]!
+
+    getRidersByParish(Parish: String): [User2!]!
 
     getStaff: [User2!]!
 
@@ -638,6 +645,7 @@ const typeDefs = /* GraphQL */ `
       MenuItems: JSONObject
       ImageName: String
       Parish: String
+      deliveryFee: Float!
     ): User
 
     getCategories: [Category!]!

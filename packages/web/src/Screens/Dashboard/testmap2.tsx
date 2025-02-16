@@ -239,12 +239,14 @@ class MapContainer extends Component<MyProps> {
 
   getCoords = async (Address) => {
     //console.log(Address)
+    // @ts-ignore
     var geocoder = new google.maps.Geocoder();
 
     var latitude = 0;
     var longitude = 0;
 
     await geocoder.geocode({ address: Address }, function (results, status) {
+      // @ts-ignore
       if (status == google.maps.GeocoderStatus.OK) {
         latitude = results !== null ? results[0].geometry.location.lat() : 0;
         longitude = results !== null ? results[0].geometry.location.lng() : 0;
@@ -415,6 +417,7 @@ class MapContainer extends Component<MyProps> {
             width: document.location.pathname !== "/testmap" ? "0%" : "100%",
             height: document.location.pathname !== "/testmap" ? "0%" : "100%",
           }}
+          // @ts-ignore
           zoom={12}
           initialCenter={{
             lat: 17.96454,

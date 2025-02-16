@@ -54,6 +54,7 @@ interface State {
   Menu: MenuItem[];
   OpeningHrs: OpenHrs;
   Parish: string;
+  deliveryFee: number;
 }
 
 interface MenuItem {
@@ -404,6 +405,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
       Saturday: "",
     },
     Parish: "",
+    deliveryFee: 0,
   });
   const [ohrs, setOhrs] = React.useState<OpenHrs>({
     Sunday: "",
@@ -475,6 +477,11 @@ export const OrgDetails: React.FC = function OrgDetails() {
           Menu: restaurant.MenuItems,
           OpeningHrs: restaurant.OpeningHrs,
           Parish: restaurant.Parish,
+          deliveryFee:
+            restaurant.deliveryFee !== null &&
+            restaurant.deliveryFee !== undefined
+              ? restaurant.deliveryFee
+              : 0,
         });
 
         //console.log(restaurant.MenuItems.length);
@@ -677,6 +684,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
       //final_restaurant.category = values.Category;
       final_restaurant.MenuItems = values.Menu;
       final_restaurant.OpeningHrs = ohrs;
+      final_restaurant.deliveryFee = values.deliveryFee;
 
       UpdateRestaurantBy_ID(value, final_restaurant).then(() => {
         setSuccess("Restaurant Updated Seccessfully");
@@ -1034,6 +1042,24 @@ export const OrgDetails: React.FC = function OrgDetails() {
                           onChange={handleChange2("StreetAddress")}
                           variant="outlined"
                           placeholder="Enter Street Address"
+                          fullWidth
+                        />
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <FormControl
+                        variant="outlined"
+                        className={classes.formControl}
+                        fullWidth
+                      >
+                        <TextField
+                          id="outlined-multiline-static1"
+                          label="Delivery Fee"
+                          type="number"
+                          value={values.deliveryFee}
+                          onChange={handleChange2("deliveryFee")}
+                          variant="outlined"
+                          placeholder="Enter Delivery Fee"
                           fullWidth
                         />
                       </FormControl>

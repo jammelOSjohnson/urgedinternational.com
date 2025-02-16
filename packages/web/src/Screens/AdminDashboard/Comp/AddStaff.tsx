@@ -33,6 +33,7 @@ interface State {
   ImageName: String;
   isAvailable: Boolean;
   disabled: Boolean;
+  Parish: String;
   password: string;
 }
 
@@ -160,6 +161,7 @@ export const AddStaff: React.FC = () => {
         : "",
     isAvailable: false,
     disabled: false,
+    Parish: "Select Parish",
     password:
       import.meta.env.REACT_APP_DEFAULT_USER_PSW !== undefined
         ? import.meta.env.REACT_APP_DEFAULT_USER_PSW
@@ -189,6 +191,8 @@ export const AddStaff: React.FC = () => {
         ? setError("Please enter a valid Email")
         : values.Role === "Select Staff Role"
         ? setError("Please select user postition")
+        : values.Parish === "Select Parish"
+        ? setError("Please select a Parish")
         : await signup2(values, value).then(async function (res1) {
             if (res1 != null) {
               if (
@@ -220,6 +224,7 @@ export const AddStaff: React.FC = () => {
                             : "",
                         isAvailable: false,
                         disabled: false,
+                        Parish: "Select Parish",
                         password: "12345678",
                       });
                     }, 1500);
@@ -428,6 +433,36 @@ export const AddStaff: React.FC = () => {
                           placeholder="Enter Contact"
                           fullWidth
                         />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FormControl
+                          variant="outlined"
+                          className={classes.formControl}
+                          fullWidth
+                          required
+                        >
+                          <InputLabel id="parish-label">Parish</InputLabel>
+                          <Select
+                            labelId="parish-label"
+                            id="demo-simple-select-outlined-parish"
+                            value={values.Parish}
+                            onChange={handleChange}
+                            label="Parish"
+                            name="Parish"
+                            className={classes.root}
+                            required
+                          >
+                            <MenuItem value={"Select Parish"} key={0}>
+                              Select Parish
+                            </MenuItem>
+                            <MenuItem value={"Clarendon"} key={1}>
+                              Clarendon
+                            </MenuItem>
+                            <MenuItem value={"Kingston"} key={2}>
+                              Kingston
+                            </MenuItem>
+                          </Select>
+                        </FormControl>
                       </Grid>
                       <Grid item xs={12}>
                         <FormControl

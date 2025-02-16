@@ -36,6 +36,7 @@ interface State {
   disabled: Boolean;
   password: string;
   Parish: string;
+  deliveryFee: number;
 }
 
 interface MenuItemm {
@@ -184,6 +185,7 @@ export const AddOrg: React.FC = () => {
     disabled: false,
     password: "12345678",
     Parish: "Select Parish",
+    deliveryFee: 0,
   });
 
   var [error, setError] = useState("");
@@ -217,6 +219,8 @@ export const AddOrg: React.FC = () => {
         : values.Email === "" ||
           !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.Email)
         ? setError("Please enter a valid Email")
+        : values.deliveryFee === 0 || values.deliveryFee === null
+        ? setError("Please enter the delivery fee")
         : await signup2(values, value).then(async function (res1) {
             if (res1 != null) {
               if (
@@ -258,6 +262,7 @@ export const AddOrg: React.FC = () => {
                         disabled: false,
                         password: "12345678",
                         Parish: "Select Parish",
+                        deliveryFee: 0,
                       });
                       setOhrs({
                         Sunday: "",
@@ -498,6 +503,24 @@ export const AddOrg: React.FC = () => {
                           placeholder="Enter Contact"
                           fullWidth
                         />
+                      </Grid>
+                      <Grid item xs={12} sm={12}>
+                        <FormControl
+                          variant="outlined"
+                          className={classes.formControl}
+                          fullWidth
+                        >
+                          <TextField
+                            id="outlined-multiline-static1"
+                            label="Delivery Fee"
+                            type="number"
+                            value={values.deliveryFee}
+                            onChange={handleChange4("deliveryFee")}
+                            variant="outlined"
+                            placeholder="Enter Delivery Fee"
+                            fullWidth
+                          />
+                        </FormControl>
                       </Grid>
                       <Grid item xs={12}>
                         <FormControl

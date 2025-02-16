@@ -15,6 +15,14 @@ import { userInfo } from "os";
 //     }),
 // );
 
+declare global {
+  interface Window {
+    google: any;
+  }
+}
+
+const google = (window as any).google;
+
 type MyProps = {
   google: any;
   setLoading: any;
@@ -456,6 +464,7 @@ class MapContainer extends Component<MyProps> {
             width: document.location.pathname !== "/testmap" ? "0%" : "100%",
             height: document.location.pathname !== "/testmap" ? "0%" : "100%",
           }}
+          // @ts-ignore
           zoom={12}
           initialCenter={{
             lat: 17.96454,

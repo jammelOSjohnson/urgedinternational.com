@@ -68,7 +68,7 @@ const userSchema = new mongoose.Schema({
   },
   deliveryFee: {
     type: Number,
-    default: 500, // Default delivery fee
+    //default: 500, // Default delivery fee
     required: false,
   },
 });

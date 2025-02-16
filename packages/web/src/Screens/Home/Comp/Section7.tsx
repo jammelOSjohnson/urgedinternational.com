@@ -1,106 +1,115 @@
-import React from 'react';
+import React from "react";
 //import CSS
-import { Container, Typography, makeStyles, createStyles, Theme, Accordion, AccordionSummary, AccordionDetails, Button} from '@material-ui/core';
+import {
+  Container,
+  Typography,
+  makeStyles,
+  createStyles,
+  Theme,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  Button,
+} from "@material-ui/core";
 
-const useStyles = makeStyles((theme: Theme) => 
-    createStyles({
-        heroText1: {
-            fontSize: '2.5rem',
-            fontWeight: 700,
-            paddingTop: "5%",
-            textAlign: "center",
-            fontFamily: "Inter"
-        },
-        heroText2: {
-            fontSize: '20px',
-            fontWeight: 400,
-            paddingTop: "2%",
-            paddingBottom: "2%",
-            textAlign: "center",
-            fontFamily: "Inter"
-        },
-        heroText3: {
-            fontSize: '1.7rem',
-            fontWeight: 700,
-            paddingTop: "5%",
-            textAlign: "center",
-            fontFamily: "Inter"
-        },
-        heroText4: {
-            fontSize: '20px',
-            fontWeight: 400,
-            paddingTop: "2%",
-            paddingBottom: "2%",
-            textAlign: "center",
-            fontFamily: "Inter"
-        },
-        heroSubText: {
-            fontSize: '6vh',
-            color: "#F7B614",
-        },
-        heroBackground: {
-            background: "#F9FAFB",
-            padding: 0,
-        },
-        heroBackground2: {
-            paddingTop: "5%",
-            padding: "0 0 5% 0",
-            background: "#F9FAFB"
-        },
-        heroBackground2Inner: {
-            padding: "0 0 5% 0",
-            background: "#FFFFFF",
-            width: "90%",
-            borderRadius: "16px" 
-        },
-        heroTruckIcon: {
-            paddingTop: "2.5%"
-        },
-        heroSocialIcons: {
-            paddingTop: "10%",
-            paddingBottom: "5%"
-        },
-        heroTextMargin: {
-            marginLeft: "auto",
-            marginRight: "auto",
-        },
-        heading: {
-            fontSize: theme.typography.pxToRem(15),
-            fontWeight: theme.typography.fontWeightRegular,
-        },
-        accord: {
-            width: "70%", 
-            marginLeft: "auto !important", 
-            marginRight: "auto !important",
-            borderLeft: 0,
-            borderRight: 0,
-            background: "#F9FAFB"
-        },
-        btn: {
-            color: "#FFFFFF",
-            backgroundColor: "#F7B614",
-            borderRadius: "46px",
-            width: "130px",
-            height: "44px"
-        },
-        links: {
-            textDecoration: "none"
-        }
-    }),
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    heroText1: {
+      fontSize: "2.5rem",
+      fontWeight: 700,
+      paddingTop: "5%",
+      textAlign: "center",
+      fontFamily: "Inter",
+    },
+    heroText2: {
+      fontSize: "20px",
+      fontWeight: 400,
+      paddingTop: "2%",
+      paddingBottom: "2%",
+      textAlign: "center",
+      fontFamily: "Inter",
+    },
+    heroText3: {
+      fontSize: "1.7rem",
+      fontWeight: 700,
+      paddingTop: "5%",
+      textAlign: "center",
+      fontFamily: "Inter",
+    },
+    heroText4: {
+      fontSize: "20px",
+      fontWeight: 400,
+      paddingTop: "2%",
+      paddingBottom: "2%",
+      textAlign: "center",
+      fontFamily: "Inter",
+    },
+    heroSubText: {
+      fontSize: "6vh",
+      color: "#F7B614",
+    },
+    heroBackground: {
+      background: "#F9FAFB",
+      padding: 0,
+    },
+    heroBackground2: {
+      paddingTop: "5%",
+      padding: "0 0 5% 0",
+      background: "#F9FAFB",
+    },
+    heroBackground2Inner: {
+      padding: "0 0 5% 0",
+      background: "#FFFFFF",
+      width: "90%",
+      borderRadius: "16px",
+    },
+    heroTruckIcon: {
+      paddingTop: "2.5%",
+    },
+    heroSocialIcons: {
+      paddingTop: "10%",
+      paddingBottom: "5%",
+    },
+    heroTextMargin: {
+      marginLeft: "auto",
+      marginRight: "auto",
+    },
+    heading: {
+      fontSize: theme.typography.pxToRem(15),
+      // @ts-ignore
+      fontWeight: theme.typography.fontWeightRegular,
+    },
+    accord: {
+      width: "70%",
+      marginLeft: "auto !important",
+      marginRight: "auto !important",
+      borderLeft: 0,
+      borderRight: 0,
+      background: "#F9FAFB",
+    },
+    btn: {
+      color: "#FFFFFF",
+      backgroundColor: "#F7B614",
+      borderRadius: "46px",
+      width: "130px",
+      height: "44px",
+    },
+    links: {
+      textDecoration: "none",
+    },
+  })
 );
 
 export const Section7: React.FC = function Section7() {
-    const classes = useStyles();
-    return (
-        <>
-            <Container maxWidth="xl" className={classes.heroBackground}>
-                <Typography className={classes.heroText1}>
-                    Need Help?
-                </Typography>
-                <Typography className={classes.heroText2}>
-                    {/* Everything you need to know about the product and billing. */}
-                </Typography>
-                {/* <Accordion className={classes.accord}>
+  const classes = useStyles();
+  return (
+    <>
+      <Container maxWidth="xl" className={classes.heroBackground}>
+        <Typography className={classes.heroText1}>Need Help?</Typography>
+        <Typography className={classes.heroText2}>
+          {/* Everything you need to know about the product and billing. */}
+        </Typography>
+        {/* <Accordion className={classes.accord}>
                     <AccordionSummary
                     expandIcon={<img src="Images/expandIcon.png" alt="expandIcon" />}
                     aria-controls="panel1a-content"
@@ -124,207 +133,306 @@ export const Section7: React.FC = function Section7() {
                         </Typography>
                     </AccordionDetails>
                 </Accordion> */}
-                <Accordion className={classes.accord}>
-                    <AccordionSummary
-                    expandIcon={<img src="Images/expandIcon.png" alt="expandIcon" />}
-                    aria-controls="panel2a-content"
-                    id="panel2a-header"
-                    >
-                    <Typography className={classes.heading}>My order never arrived</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                    <Typography>
-                        If your order has been marked complete by our delivery partner 
-                        in the webapp but you haven't received it, tap Contact Us and 
-                        then follow the on-screen instructions to get in touch with your 
-                        delivery partner.
-                        <br />
-                        <br />
-                        You can also call us via <a target="_blank" rel="noreferrer" href="tel:8769601004" title="Contact Us" className={classes.links} style={{color: "#F7B614"}}>876 773 5015</a> for help.
-                    </Typography>
-                    </AccordionDetails>
-                </Accordion>
-                <Accordion className={classes.accord}>
-                    <AccordionSummary
-                    expandIcon={<img src="Images/expandIcon.png" alt="expandIcon" />}
-                    aria-controls="panel3a-content"
-                    id="panel3a-header"
-                    >
-                    <Typography className={classes.heading}>I received someone else's order</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                    <Typography>
-                        If you were charged for your order but received someone else's 
-                        order with the incorrect items, please let us know here. Please 
-                        indicate any missing or inaccurate goods as well as the amounts 
-                        you were charged for each so we may review and make any required 
-                        corrections.
-                        <br />
-                        <br />
-                        To speak to someone immediately, please reach out to your local <a target="_blank" rel="noreferrer" href="tel:8769601004" title="Contact Us" className={classes.links} style={{color: "#F7B614"}}>876 773 5015</a> for help.
-                    </Typography>
-                    </AccordionDetails>
-                </Accordion>
-                <Accordion className={classes.accord}>
-                    <AccordionSummary
-                    expandIcon={<img src="Images/expandIcon.png" alt="expandIcon" />}
-                    aria-controls="panel4a-content"
-                    id="panel4a-header"
-                    >
-                    <Typography className={classes.heading}>I had a food safety issue with my order</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                    <Typography>
-                        Merchants and delivery people are expected to adhere to food safety regulations and 
-                        industry best practices when preparing or otherwise handling your order.
-                        <br />
-                        <br />
-                        Please <a target="_blank" href="/ContactUs" title="Contact Us" className={classes.links} style={{color: "#F7B614"}}>Contact</a> Us if your order:<br />
-                        - Did not follow the allergy or dietary restrictions you communicated<br />
-                        - Posed a potential food safety risk<br />
-                        - Resulted in a food-related illness or injury
-                        <br />
-                        <br />
-                        We'll review the details of your issue and follow up accordingly. 
-                        We may also need to inform the merchant of your report to help solve this issue.
-                    </Typography>
-                    </AccordionDetails>
-                </Accordion>
-                <Accordion className={classes.accord}>
-                    <AccordionSummary
-                    expandIcon={<img src="Images/expandIcon.png" alt="expandIcon" />}
-                    aria-controls="panel5a-content"
-                    id="panel5a-header"
-                    >
-                    <Typography className={classes.heading}>My order was damaged</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                    <Typography>
-                        Restaurants and delivery partners do their best to package and deliver food safely and securely.
-                    <br />
-                    <br />
-                        If your order arrived damaged in any way, please let us know <a target="_blank" href="/ContactUs" title="Contact Us" className={classes.links} style={{color: "#F7B614"}}>here</a>. 
-                        We'll review your order and make adjustments as necessary. We're sorry your meal wasn't perfect!
-                    </Typography>
-                    </AccordionDetails>
-                </Accordion>
-                <Accordion className={classes.accord}>
-                    <AccordionSummary
-                    expandIcon={<img src="Images/expandIcon.png" alt="expandIcon" />}
-                    aria-controls="panel6a-content"
-                    id="panel6a-header"
-                    >
-                    <Typography className={classes.heading}>My order is taking longer than expected</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                    <Typography>
-                        While restaurants and our delivery partners try to bring your 
-                        meal within the estimated delivery window, unforeseen 
-                        circumstances (such as a busy restaurant, a large order, 
-                        unexpected traffic, or terrible weather) may result in delays. <br /><br />
-
-                        Check your delivery partner's ETA in the app or get in touch with 
-                        them directly for more information if your order is taking longer 
-                        than expected. <br /><br />
-
-                        NOTE: You will be charged for the order if 
-                        your delivery partner tried to reach you after 
-                        arriving and being unable to do so. In such 
-                        cases, we are unable to issue a refund.
-                    </Typography>
-                    </AccordionDetails>
-                </Accordion>
-                <Accordion className={classes.accord}>
-                    <AccordionSummary
-                    expandIcon={<img src="Images/expandIcon.png" alt="expandIcon" />}
-                    aria-controls="panel6a-content"
-                    id="panel7a-header"
-                    >
-                    <Typography className={classes.heading}>Food damage or quality issue</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                    <Typography>
-                        We're sorry the food you received didn't meet your expectations. You'll have the 
-                        opportunity to rate each item in your order so you can give specific feedback about 
-                        each dish. Your ratings are an important way for Urged International to ensure that we partner 
-                        with only the highest quality restaurants.
-                        <br />
-                        <br />
-                        If you believe the food you received was unacceptable, please <a target="_blank" href="/ContactUs" title="Contact Us" className={classes.links} style={{color: "#F7B614"}}>share</a> a few details 
-                        about what was wrong so our team can help.
-                    </Typography>
-                    </AccordionDetails>
-                </Accordion>
-                <Accordion className={classes.accord}>
-                    <AccordionSummary
-                    expandIcon={<img src="Images/expandIcon.png" alt="expandIcon" />}
-                    aria-controls="panel6a-content"
-                    id="panel8a-header"
-                    >
-                    <Typography className={classes.heading}>Report a serious incident with a delivery person</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                    <Typography>
-                        This page is for reporting severe behaviours; extreme words or actions that have 
-                        caused you harm or extreme discomfort, or material loss.
-                        <br />
-                        <br />
-                        If you want to report rude behaviour, please click <a target="_blank" href="/ContactUs" title="Contact Us" className={classes.links} style={{color: "#F7B614"}}>here</a>.
-                        <br />
-                        <br />
-                        Thank you for taking the time to report this incident. Keeping you and other users 
-                        safe on the platform is a top priority for Urged International.
-                    </Typography>
-                    </AccordionDetails>
-                </Accordion>
-                <Accordion className={classes.accord}>
-                    <AccordionSummary
-                    expandIcon={<img src="Images/expandIcon.png" alt="expandIcon" />}
-                    aria-controls="panel6a-content"
-                    id="panel8a-header"
-                    >
-                    <Typography className={classes.heading}>Report a safety incident involving a delivery person</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                    <Typography>
-                        We take reported safety incidents very seriously. Any behavior involving violence, 
-                        sexual misconduct, or illegal activity is explicitly prohibited in Urged International's Community 
-                        Guidelines.
-                        <br />
-                        <br />
-                        If you had an uncomfortable or unsafe experience with a delivery person, please let 
-                        us know by filling out the <a target="_blank" href="/ContactUs" title="Contact Us" className={classes.links} style={{color: "#F7B614"}}>form</a>. A member of our safety team will review your 
-                        report and will follow up if additional information is needed.
-                    </Typography>
-                    </AccordionDetails>
-                </Accordion>
-            </Container>
-            <Container maxWidth="xl" className={classes.heroBackground2}>
-                <Container maxWidth="lg" className={classes.heroBackground2Inner}>
-                    <Typography className={classes.heroText3}>
-                        Still have questions?
-                    </Typography>
-                    <Typography className={classes.heroText4}>
-                        Can’t find the answer you’re looking for? Please chat to our friendly team.
-                    </Typography>
-                    <Typography style={{textAlign: "center"}}>
-                        <a href="/ContactUs" target="_blank" title="Contact Us" className={classes.links}>
-                            <Button className={classes.btn}>
-                                Get In Touch
-                            </Button>
-                        </a>
-                    </Typography>
-                </Container>
-            </Container>
-            <style>
-                {
-                    `
+        <Accordion className={classes.accord}>
+          <AccordionSummary
+            expandIcon={<img src="Images/expandIcon.png" alt="expandIcon" />}
+            aria-controls="panel2a-content"
+            id="panel2a-header"
+          >
+            <Typography className={classes.heading}>
+              My order never arrived
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              If your order has been marked complete by our delivery partner in
+              the webapp but you haven't received it, tap Contact Us and then
+              follow the on-screen instructions to get in touch with your
+              delivery partner.
+              <br />
+              <br />
+              You can also call us via{" "}
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href="tel:8769601004"
+                title="Contact Us"
+                className={classes.links}
+                style={{ color: "#F7B614" }}
+              >
+                876 773 5015
+              </a>{" "}
+              for help.
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion className={classes.accord}>
+          <AccordionSummary
+            expandIcon={<img src="Images/expandIcon.png" alt="expandIcon" />}
+            aria-controls="panel3a-content"
+            id="panel3a-header"
+          >
+            <Typography className={classes.heading}>
+              I received someone else's order
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              If you were charged for your order but received someone else's
+              order with the incorrect items, please let us know here. Please
+              indicate any missing or inaccurate goods as well as the amounts
+              you were charged for each so we may review and make any required
+              corrections.
+              <br />
+              <br />
+              To speak to someone immediately, please reach out to your local{" "}
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href="tel:8769601004"
+                title="Contact Us"
+                className={classes.links}
+                style={{ color: "#F7B614" }}
+              >
+                876 773 5015
+              </a>{" "}
+              for help.
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion className={classes.accord}>
+          <AccordionSummary
+            expandIcon={<img src="Images/expandIcon.png" alt="expandIcon" />}
+            aria-controls="panel4a-content"
+            id="panel4a-header"
+          >
+            <Typography className={classes.heading}>
+              I had a food safety issue with my order
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              Merchants and delivery people are expected to adhere to food
+              safety regulations and industry best practices when preparing or
+              otherwise handling your order.
+              <br />
+              <br />
+              Please{" "}
+              <a
+                target="_blank"
+                href="/ContactUs"
+                title="Contact Us"
+                className={classes.links}
+                style={{ color: "#F7B614" }}
+              >
+                Contact
+              </a>{" "}
+              Us if your order:
+              <br />
+              - Did not follow the allergy or dietary restrictions you
+              communicated
+              <br />
+              - Posed a potential food safety risk
+              <br />
+              - Resulted in a food-related illness or injury
+              <br />
+              <br />
+              We'll review the details of your issue and follow up accordingly.
+              We may also need to inform the merchant of your report to help
+              solve this issue.
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion className={classes.accord}>
+          <AccordionSummary
+            expandIcon={<img src="Images/expandIcon.png" alt="expandIcon" />}
+            aria-controls="panel5a-content"
+            id="panel5a-header"
+          >
+            <Typography className={classes.heading}>
+              My order was damaged
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              Restaurants and delivery partners do their best to package and
+              deliver food safely and securely.
+              <br />
+              <br />
+              If your order arrived damaged in any way, please let us know{" "}
+              <a
+                target="_blank"
+                href="/ContactUs"
+                title="Contact Us"
+                className={classes.links}
+                style={{ color: "#F7B614" }}
+              >
+                here
+              </a>
+              . We'll review your order and make adjustments as necessary. We're
+              sorry your meal wasn't perfect!
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion className={classes.accord}>
+          <AccordionSummary
+            expandIcon={<img src="Images/expandIcon.png" alt="expandIcon" />}
+            aria-controls="panel6a-content"
+            id="panel6a-header"
+          >
+            <Typography className={classes.heading}>
+              My order is taking longer than expected
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              While restaurants and our delivery partners try to bring your meal
+              within the estimated delivery window, unforeseen circumstances
+              (such as a busy restaurant, a large order, unexpected traffic, or
+              terrible weather) may result in delays. <br />
+              <br />
+              Check your delivery partner's ETA in the app or get in touch with
+              them directly for more information if your order is taking longer
+              than expected. <br />
+              <br />
+              NOTE: You will be charged for the order if your delivery partner
+              tried to reach you after arriving and being unable to do so. In
+              such cases, we are unable to issue a refund.
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion className={classes.accord}>
+          <AccordionSummary
+            expandIcon={<img src="Images/expandIcon.png" alt="expandIcon" />}
+            aria-controls="panel6a-content"
+            id="panel7a-header"
+          >
+            <Typography className={classes.heading}>
+              Food damage or quality issue
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              We're sorry the food you received didn't meet your expectations.
+              You'll have the opportunity to rate each item in your order so you
+              can give specific feedback about each dish. Your ratings are an
+              important way for Urged International to ensure that we partner
+              with only the highest quality restaurants.
+              <br />
+              <br />
+              If you believe the food you received was unacceptable, please{" "}
+              <a
+                target="_blank"
+                href="/ContactUs"
+                title="Contact Us"
+                className={classes.links}
+                style={{ color: "#F7B614" }}
+              >
+                share
+              </a>{" "}
+              a few details about what was wrong so our team can help.
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion className={classes.accord}>
+          <AccordionSummary
+            expandIcon={<img src="Images/expandIcon.png" alt="expandIcon" />}
+            aria-controls="panel6a-content"
+            id="panel8a-header"
+          >
+            <Typography className={classes.heading}>
+              Report a serious incident with a delivery person
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              This page is for reporting severe behaviours; extreme words or
+              actions that have caused you harm or extreme discomfort, or
+              material loss.
+              <br />
+              <br />
+              If you want to report rude behaviour, please click{" "}
+              <a
+                target="_blank"
+                href="/ContactUs"
+                title="Contact Us"
+                className={classes.links}
+                style={{ color: "#F7B614" }}
+              >
+                here
+              </a>
+              .
+              <br />
+              <br />
+              Thank you for taking the time to report this incident. Keeping you
+              and other users safe on the platform is a top priority for Urged
+              International.
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion className={classes.accord}>
+          <AccordionSummary
+            expandIcon={<img src="Images/expandIcon.png" alt="expandIcon" />}
+            aria-controls="panel6a-content"
+            id="panel8a-header"
+          >
+            <Typography className={classes.heading}>
+              Report a safety incident involving a delivery person
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              We take reported safety incidents very seriously. Any behavior
+              involving violence, sexual misconduct, or illegal activity is
+              explicitly prohibited in Urged International's Community
+              Guidelines.
+              <br />
+              <br />
+              If you had an uncomfortable or unsafe experience with a delivery
+              person, please let us know by filling out the{" "}
+              <a
+                target="_blank"
+                href="/ContactUs"
+                title="Contact Us"
+                className={classes.links}
+                style={{ color: "#F7B614" }}
+              >
+                form
+              </a>
+              . A member of our safety team will review your report and will
+              follow up if additional information is needed.
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+      </Container>
+      <Container maxWidth="xl" className={classes.heroBackground2}>
+        <Container maxWidth="lg" className={classes.heroBackground2Inner}>
+          <Typography className={classes.heroText3}>
+            Still have questions?
+          </Typography>
+          <Typography className={classes.heroText4}>
+            Can’t find the answer you’re looking for? Please chat to our
+            friendly team.
+          </Typography>
+          <Typography style={{ textAlign: "center" }}>
+            <a
+              href="/ContactUs"
+              target="_blank"
+              title="Contact Us"
+              className={classes.links}
+            >
+              <Button className={classes.btn}>Get In Touch</Button>
+            </a>
+          </Typography>
+        </Container>
+      </Container>
+      <style>
+        {`
                         .MuiButtonBase-root:hover {
                             background-color: #F7B614;
                         }
-                    `
-                }
-            </style>
-        </>
-    )
-}
+                    `}
+      </style>
+    </>
+  );
+};

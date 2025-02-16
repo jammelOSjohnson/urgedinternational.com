@@ -261,6 +261,7 @@ export const CREATE_STAFF_MUTATION = gql`
     $disabled: Boolean
     $ImageName: String
     $Position: String!
+    $Parish: String!
   ) {
     createStaff(
       MenuItems: $MenuItems
@@ -276,6 +277,7 @@ export const CREATE_STAFF_MUTATION = gql`
       disabled: $disabled
       ImageName: $ImageName
       Position: $Position
+      Parish: $Parish
     ) {
       _id
       Id
@@ -297,6 +299,7 @@ export const CREATE_STAFF_MUTATION = gql`
       disabled
       ImageName
       Position
+      Parish
     }
   }
 `;
@@ -316,6 +319,7 @@ export const UPDATE_STAFF_MUTATION = gql`
     $disabled: Boolean
     $ImageName: String
     $Position: String
+    $Parish: String
   ) {
     updateStaff(
       _id: $_id
@@ -331,6 +335,7 @@ export const UPDATE_STAFF_MUTATION = gql`
       disabled: $disabled
       ImageName: $ImageName
       Position: $Position
+      Parish: $Parish
     ) {
       _id
       FirstName
@@ -340,6 +345,7 @@ export const UPDATE_STAFF_MUTATION = gql`
       AddressLine2
       City
       ContactNumber
+      Parish
     }
   }
 `;
@@ -406,6 +412,27 @@ export const GET_RIDERS = gql`
   }
 `;
 
+export const GET_RIDERS_BY_PARISH = gql`
+  mutation getRidersByParish($Parish: String) {
+    getRiders(Parish: $Parish) {
+      _id
+      Id
+      FirstName
+      LastName
+      Email
+      AddressLine1
+      AddressLine2
+      City
+      ContactNumber
+      isAvailable
+      disabled
+      ImageName
+      Position
+      Parish
+    }
+  }
+`;
+
 export const GET_STAFF = gql`
   mutation getStaff {
     getStaff {
@@ -422,6 +449,7 @@ export const GET_STAFF = gql`
       disabled
       ImageName
       Position
+      Parish
     }
   }
 `;
@@ -480,6 +508,7 @@ export const GET_RESTAURANT = gql`
       }
       ImageName
       Parish
+      deliveryFee
     }
   }
 `;
@@ -1194,7 +1223,7 @@ export const UPDATE_RESTAURANT_BYID = gql`
     $MenuItems: JSONObject
     $ImageName: String
     $Parish: String
-    $deliveryFee: Float
+    $deliveryFee: Float!
   ) {
     updateRestaurantById(
       _id: $_id

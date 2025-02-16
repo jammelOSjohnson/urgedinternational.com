@@ -259,6 +259,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
     createPaymentHash,
     generalLocation,
     targetLocation,
+    getPaySettingsData,
   } = value;
   const [values, setValues] = React.useState<State>({
     Street: "",
@@ -537,12 +538,23 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
     //Calc Delivery Fee
     let delFee = "";
     if (cartItems.length !== 0) {
-      if (
-        cartItems[0].restaurantName === "Fyahside" ||
-        cartItems[0].restaurantName === "Murray’s Fish & Jerk Hut"
-      ) {
-        delFee = "800";
+      // if (
+      //  cartItems[0].restaurantName === "Fyahside" ||
+      //  cartItems[0].restaurantName === "Murray’s Fish & Jerk Hut"
+      // ) {
+      //  delFee = "800";
+      // Find the restaurant for the current order
+      const restaurant = restaurants.find(
+        (r) =>
+          r.FirstName === cartItems[0].restaurantName &&
+          r.Parish === values.Town
+      );
+
+      if (restaurant && restaurant.deliveryFee) {
+        // Use restaurant's delivery fee if available
+        delFee = restaurant.deliveryFee.toString();
       } else {
+        // Fallback to default fee if not set
         delFee = "500";
       }
     }
@@ -675,6 +687,10 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
     }
   }, [cartItems, value]);
   // generalLocation, values.Town
+
+  useEffect(() => {
+    getPaySettingsData(value);
+  }, []);
 
   if (cartItems.length > 0) {
     return (

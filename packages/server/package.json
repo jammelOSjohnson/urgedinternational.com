@@ -51,7 +51,7 @@
     "dev": "nodemon src/index.ts",
     "clean": "rimraf dist",
     "build": "npm run clean && tsc -p .",
-    "dockbuild": "docker build -t gcr.io/urgedinternational-f9e78/urgedinternationalsite/server:server .",
+    "dockbuild": "docker build --no-cache -t gcr.io/urgedinternational-f9e78/urgedinternationalsite/server:server .",
     "dockstart": "docker-compose up",
     "dockstop": "docker-compose down -v",
     "dockgcloudpush": "docker push gcr.io/urgedinternational-f9e78/urgedinternationalsite/server:server ",
