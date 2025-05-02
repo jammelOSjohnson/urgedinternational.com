@@ -369,9 +369,8 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                 {[
                   "Overview",
                   "Food Delivery",
-                  "Errands Solution",
-                  "Uship",
-                  "Sally's Pantry",
+                  "Haulage",
+                  "Marketplace",
                   "Orders",
                   "Profile",
                 ].map((text, index) =>
@@ -516,72 +515,9 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                         <ListItemText className="link-font" primary={text} />
                       </ListItem>
                     </Link>
-                  ) : referralPath === "/PackageDelivery" &&
-                    text === "Errands Solution" ? (
-                    <ListItem button key={text} className={classes.activeItem}>
-                      <ListItemIcon>
-                        {index === 0 ? (
-                          <img
-                            src={
-                              window.location.origin +
-                              "/" +
-                              "Images/GroupSquareIcon.png"
-                            }
-                            alt="square icon"
-                          />
-                        ) : index === 1 ? (
-                          <img
-                            src={
-                              window.location.origin +
-                              "/" +
-                              "Images/BlackFoodDeliveryService.png"
-                            }
-                            alt="Food icon"
-                          />
-                        ) : index === 2 ? (
-                          <img
-                            src={
-                              window.location.origin +
-                              "/" +
-                              "Images/BlackUShip.png"
-                            }
-                            alt="truck icon"
-                          />
-                        ) : index === 3 ? (
-                          <img
-                            src={
-                              window.location.origin +
-                              "/" +
-                              "Images/blacktruckIconImage.png"
-                            }
-                            alt="BlackMarket icon"
-                          />
-                        ) : index === 4 ? (
-                          <img
-                            src={
-                              window.location.origin +
-                              "/" +
-                              "Images/BackMarketPlaceIcon.png"
-                            }
-                            alt="BlackMarket icon"
-                          />
-                        ) : index === 5 ? (
-                          <HistoryRounded
-                            style={{ width: "36px", height: "38px" }}
-                          />
-                        ) : index === 5 ? (
-                          <PersonRounded
-                            style={{ width: "36px", height: "38px" }}
-                          />
-                        ) : (
-                          <MailIcon />
-                        )}
-                      </ListItemIcon>
-                      <ListItemText className="link-font" primary={text} />
-                    </ListItem>
-                  ) : (referralPath === "/Uship" ||
+                  ) : (referralPath === "/Haulage" ||
                       referralPath === "/Rates") &&
-                    text === "Uship" ? (
+                    text === "Haulage" ? (
                     <ListItem button key={text} className={classes.activeItem}>
                       <ListItemIcon>
                         {index === 0 ? (
@@ -855,207 +791,17 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                         <ListItemText className="link-fontH" primary={text} />
                       </ListItem>
                     </Link>
-                  ) : // : text === "Errands Solution" ? (
-                  //   <ListItem button key={text} onClick={handleOpen2}>
-                  //     <ListItemIcon>
-                  //       {index === 0 ? (
-                  //         <img
-                  //           src={
-                  //             window.location.origin +
-                  //             "/" +
-                  //             "Images/GroupSquareIcon.png"
-                  //           }
-                  //           alt="square icon"
-                  //         />
-                  //       ) : index === 1 ? (
-                  //         <img
-                  //           src={
-                  //             window.location.origin +
-                  //             "/" +
-                  //             "Images/BlackFoodDeliveryService.png"
-                  //           }
-                  //           alt="Food icon"
-                  //         />
-                  //       ) : index === 2 ? (
-                  //         <img
-                  //           src={
-                  //             window.location.origin +
-                  //             "/" +
-                  //             "Images/BlackUShip.png"
-                  //           }
-                  //           alt="truck icon"
-                  //         />
-                  //       ) : index === 3 ? (
-                  //         <img
-                  //           src={
-                  //             window.location.origin +
-                  //             "/" +
-                  //             "Images/blacktruckIconImage.png"
-                  //           }
-                  //           alt="BlackMarket icon"
-                  //         />
-                  //       ) : index === 4 ? (
-                  //         <img
-                  //           src={
-                  //             window.location.origin +
-                  //             "/" +
-                  //             "Images/BackMarketPlaceIcon.png"
-                  //           }
-                  //           alt="BlackMarket icon"
-                  //         />
-                  //       ) : index === 5 ? (
-                  //         <HistoryRounded
-                  //           style={{ width: "36px", height: "38px" }}
-                  //         />
-                  //       ) : index === 5 ? (
-                  //         <PersonRounded
-                  //           style={{ width: "36px", height: "38px" }}
-                  //         />
-                  //       ) : (
-                  //         <MailIcon />
-                  //       )}
-                  //     </ListItemIcon>
-                  //     <ListItemText className="link-fontH" primary={text} />
-                  //   </ListItem>
-                  // ) :
-                  text === "Errands Solution" ? (
-                    <LightTooltip title="Coming Soon" placement="top-end">
-                      <ListItem button key={text}>
-                        <ListItemIcon>
-                          {index === 0 ? (
-                            <img
-                              src={
-                                window.location.origin +
-                                "/" +
-                                "Images/GroupSquareIcon.png"
-                              }
-                              alt="square icon"
-                            />
-                          ) : index === 1 ? (
-                            <img
-                              src={
-                                window.location.origin +
-                                "/" +
-                                "Images/BlackFoodDeliveryService.png"
-                              }
-                              alt="Food icon"
-                            />
-                          ) : index === 2 ? (
-                            <img
-                              src={
-                                window.location.origin +
-                                "/" +
-                                "Images/BlackUShip.png"
-                              }
-                              alt="truck icon"
-                            />
-                          ) : index === 3 ? (
-                            <img
-                              src={
-                                window.location.origin +
-                                "/" +
-                                "Images/blacktruckIconImage.png"
-                              }
-                              alt="BlackMarket icon"
-                            />
-                          ) : index === 4 ? (
-                            <img
-                              src={
-                                window.location.origin +
-                                "/" +
-                                "Images/BackMarketPlaceIcon.png"
-                              }
-                              alt="BlackMarket icon"
-                            />
-                          ) : index === 5 ? (
-                            <HistoryRounded
-                              style={{ width: "36px", height: "38px" }}
-                            />
-                          ) : index === 5 ? (
-                            <PersonRounded
-                              style={{ width: "36px", height: "38px" }}
-                            />
-                          ) : (
-                            <MailIcon />
-                          )}
-                        </ListItemIcon>
-                        <ListItemText className="link-fontH" primary={text} />
-                      </ListItem>
-                    </LightTooltip>
-                  ) : // : text === "Uship" ? (
-                  //   <Link
-                  //     to="/Uship"
-                  //     key={text}
-                  //     className={clsx(
-                  //       classes.inactiveItemLink,
-                  //       "inactiveLinkHover"
-                  //     )}
-                  //   >
-                  //     <ListItem button>
-                  //       <ListItemIcon>
-                  //         {index === 0 ? (
-                  //           <img
-                  //             src={
-                  //               window.location.origin +
-                  //               "/" +
-                  //               "Images/GroupSquareIcon.png"
-                  //             }
-                  //             alt="square icon"
-                  //           />
-                  //         ) : index === 1 ? (
-                  //           <img
-                  //             src={
-                  //               window.location.origin +
-                  //               "/" +
-                  //               "Images/BlackFoodDeliveryService.png"
-                  //             }
-                  //             alt="Food icon"
-                  //           />
-                  //         ) : index === 2 ? (
-                  //           <img
-                  //             src={
-                  //               window.location.origin +
-                  //               "/" +
-                  //               "Images/BlackUShip.png"
-                  //             }
-                  //             alt="truck icon"
-                  //           />
-                  //         ) : index === 3 ? (
-                  //           <img
-                  //             src={
-                  //               window.location.origin +
-                  //               "/" +
-                  //               "Images/blacktruckIconImage.png"
-                  //             }
-                  //             alt="BlackMarket icon"
-                  //           />
-                  //         ) : index === 4 ? (
-                  //           <img
-                  //             src={
-                  //               window.location.origin +
-                  //               "/" +
-                  //               "Images/BackMarketPlaceIcon.png"
-                  //             }
-                  //             alt="BlackMarket icon"
-                  //           />
-                  //         ) : index === 5 ? (
-                  //           <HistoryRounded
-                  //             style={{ width: "36px", height: "38px" }}
-                  //           />
-                  //         ) : index === 5 ? (
-                  //           <PersonRounded
-                  //             style={{ width: "36px", height: "38px" }}
-                  //           />
-                  //         ) : (
-                  //           <MailIcon />
-                  //         )}
-                  //       </ListItemIcon>
-                  //       <ListItemText className="link-fontH" primary={text} />
-                  //     </ListItem>
-                  //   </Link>
-                  // ) :
-                  text === "Uship" ? (
-                    <LightTooltip title="Coming Soon" placement="top-end">
+                  ) : text === "Haulage" ? (
+                    <a
+                      href="http://wa.me/18767735015"
+                      target="_blank"
+                      rel="nofollow noreferrer"
+                      style={{ textDecoration: "none" }}
+                      className={clsx(
+                        classes.inactiveItemLink,
+                        "inactiveLinkHover"
+                      )}
+                    >
                       <ListItem button>
                         <ListItemIcon>
                           {index === 0 ? (
@@ -1117,10 +863,10 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                         </ListItemIcon>
                         <ListItemText className="link-fontH" primary={text} />
                       </ListItem>
-                    </LightTooltip>
+                    </a>
                   ) : // :
-                  // text === "Sally's Pantry" ?
-                  //   <a key={text} href='https://sallyspantry.com/' target="_blank" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")} title="Sally's Pantry">
+                  // text === "Marketplace" ?
+                  //   <a key={text} href='https://sallyspantry.com/' target="_blank" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")} title="Marketplace">
                   //     <ListItem button  >
                   //         <ListItemIcon>
                   //           {
@@ -1136,7 +882,7 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                   //         <ListItemText className="link-fontH" primary={text} />
                   //     </ListItem>
                   //   </a>
-                  text === "Sally's Pantry" ? (
+                  text === "Marketplace" ? (
                     <LightTooltip title="Coming Soon" placement="top-end">
                       <Typography key={text}>
                         <ListItem button>
@@ -1747,9 +1493,8 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                 {[
                   "Overview",
                   "Food Delivery",
-                  "Errands Solution",
-                  "Uship",
-                  "Sally's Pantry",
+                  "Haulage",
+                  "Marketplace",
                   "Orders",
                   "Profile",
                 ].map((text, index) =>
@@ -1894,72 +1639,9 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                         <ListItemText className="link-font" primary={text} />
                       </ListItem>
                     </Link>
-                  ) : referralPath === "/PackageDelivery" &&
-                    text === "Errands Solution" ? (
-                    <ListItem button key={text} className={classes.activeItem}>
-                      <ListItemIcon>
-                        {index === 0 ? (
-                          <img
-                            src={
-                              window.location.origin +
-                              "/" +
-                              "Images/GroupSquareIcon.png"
-                            }
-                            alt="square icon"
-                          />
-                        ) : index === 1 ? (
-                          <img
-                            src={
-                              window.location.origin +
-                              "/" +
-                              "Images/BlackFoodDeliveryService.png"
-                            }
-                            alt="Food icon"
-                          />
-                        ) : index === 2 ? (
-                          <img
-                            src={
-                              window.location.origin +
-                              "/" +
-                              "Images/BlackUShip.png"
-                            }
-                            alt="truck icon"
-                          />
-                        ) : index === 3 ? (
-                          <img
-                            src={
-                              window.location.origin +
-                              "/" +
-                              "Images/blacktruckIconImage.png"
-                            }
-                            alt="BlackMarket icon"
-                          />
-                        ) : index === 4 ? (
-                          <img
-                            src={
-                              window.location.origin +
-                              "/" +
-                              "Images/BackMarketPlaceIcon.png"
-                            }
-                            alt="BlackMarket icon"
-                          />
-                        ) : index === 5 ? (
-                          <HistoryRounded
-                            style={{ width: "36px", height: "38px" }}
-                          />
-                        ) : index === 6 ? (
-                          <PersonRounded
-                            style={{ width: "36px", height: "38px" }}
-                          />
-                        ) : (
-                          <MailIcon />
-                        )}
-                      </ListItemIcon>
-                      <ListItemText className="link-font" primary={text} />
-                    </ListItem>
-                  ) : (referralPath === "/Uship" ||
+                  ) : (referralPath === "/Haulage" ||
                       referralPath === "/Rates") &&
-                    text === "Uship" ? (
+                    text === "Haulage" ? (
                     <ListItem button key={text} className={classes.activeItem}>
                       <ListItemIcon>
                         {index === 0 ? (
@@ -2393,207 +2075,17 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                         <ListItemText className="link-font" primary={text} />
                       </ListItem>
                     </Link>
-                  ) : // : text === "Errands Solution" ? (
-                  //   <ListItem button key={text} onClick={handleOpen2}>
-                  //     <ListItemIcon>
-                  //       {index === 0 ? (
-                  //         <img
-                  //           src={
-                  //             window.location.origin +
-                  //             "/" +
-                  //             "Images/GroupSquareIcon.png"
-                  //           }
-                  //           alt="square icon"
-                  //         />
-                  //       ) : index === 1 ? (
-                  //         <img
-                  //           src={
-                  //             window.location.origin +
-                  //             "/" +
-                  //             "Images/BlackFoodDeliveryService.png"
-                  //           }
-                  //           alt="Food icon"
-                  //         />
-                  //       ) : index === 2 ? (
-                  //         <img
-                  //           src={
-                  //             window.location.origin +
-                  //             "/" +
-                  //             "Images/BlackUShip.png"
-                  //           }
-                  //           alt="truck icon"
-                  //         />
-                  //       ) : index === 3 ? (
-                  //         <img
-                  //           src={
-                  //             window.location.origin +
-                  //             "/" +
-                  //             "Images/blacktruckIconImage.png"
-                  //           }
-                  //           alt="BlackMarket icon"
-                  //         />
-                  //       ) : index === 4 ? (
-                  //         <img
-                  //           src={
-                  //             window.location.origin +
-                  //             "/" +
-                  //             "Images/BackMarketPlaceIcon.png"
-                  //           }
-                  //           alt="BlackMarket icon"
-                  //         />
-                  //       ) : index === 5 ? (
-                  //         <HistoryRounded
-                  //           style={{ width: "36px", height: "38px" }}
-                  //         />
-                  //       ) : index === 6 ? (
-                  //         <PersonRounded
-                  //           style={{ width: "36px", height: "38px" }}
-                  //         />
-                  //       ) : (
-                  //         <MailIcon />
-                  //       )}
-                  //     </ListItemIcon>
-                  //     <ListItemText className="link-fontH" primary={text} />
-                  //   </ListItem>
-                  // ) :
-                  text === "Errands Solution" ? (
-                    <LightTooltip title="Coming Soon" placement="top-end">
-                      <ListItem button key={text}>
-                        <ListItemIcon>
-                          {index === 0 ? (
-                            <img
-                              src={
-                                window.location.origin +
-                                "/" +
-                                "Images/GroupSquareIcon.png"
-                              }
-                              alt="square icon"
-                            />
-                          ) : index === 1 ? (
-                            <img
-                              src={
-                                window.location.origin +
-                                "/" +
-                                "Images/BlackFoodDeliveryService.png"
-                              }
-                              alt="Food icon"
-                            />
-                          ) : index === 2 ? (
-                            <img
-                              src={
-                                window.location.origin +
-                                "/" +
-                                "Images/BlackUShip.png"
-                              }
-                              alt="truck icon"
-                            />
-                          ) : index === 3 ? (
-                            <img
-                              src={
-                                window.location.origin +
-                                "/" +
-                                "Images/blacktruckIconImage.png"
-                              }
-                              alt="BlackMarket icon"
-                            />
-                          ) : index === 4 ? (
-                            <img
-                              src={
-                                window.location.origin +
-                                "/" +
-                                "Images/BackMarketPlaceIcon.png"
-                              }
-                              alt="BlackMarket icon"
-                            />
-                          ) : index === 5 ? (
-                            <HistoryRounded
-                              style={{ width: "36px", height: "38px" }}
-                            />
-                          ) : index === 6 ? (
-                            <PersonRounded
-                              style={{ width: "36px", height: "38px" }}
-                            />
-                          ) : (
-                            <MailIcon />
-                          )}
-                        </ListItemIcon>
-                        <ListItemText className="link-fontH" primary={text} />
-                      </ListItem>
-                    </LightTooltip>
-                  ) : // : text === "Uship" ? (
-                  //   <Link
-                  //     to="/Uship"
-                  //     key={text}
-                  //     className={clsx(
-                  //       classes.inactiveItemLink,
-                  //       "inactiveLinkHover"
-                  //     )}
-                  //   >
-                  //     <ListItem button>
-                  //       <ListItemIcon>
-                  //         {index === 0 ? (
-                  //           <img
-                  //             src={
-                  //               window.location.origin +
-                  //               "/" +
-                  //               "Images/GroupSquareIcon.png"
-                  //             }
-                  //             alt="square icon"
-                  //           />
-                  //         ) : index === 1 ? (
-                  //           <img
-                  //             src={
-                  //               window.location.origin +
-                  //               "/" +
-                  //               "Images/BlackFoodDeliveryService.png"
-                  //             }
-                  //             alt="Food icon"
-                  //           />
-                  //         ) : index === 2 ? (
-                  //           <img
-                  //             src={
-                  //               window.location.origin +
-                  //               "/" +
-                  //               "Images/BlackUShip.png"
-                  //             }
-                  //             alt="truck icon"
-                  //           />
-                  //         ) : index === 3 ? (
-                  //           <img
-                  //             src={
-                  //               window.location.origin +
-                  //               "/" +
-                  //               "Images/blacktruckIconImage.png"
-                  //             }
-                  //             alt="BlackMarket icon"
-                  //           />
-                  //         ) : index === 4 ? (
-                  //           <img
-                  //             src={
-                  //               window.location.origin +
-                  //               "/" +
-                  //               "Images/BackMarketPlaceIcon.png"
-                  //             }
-                  //             alt="BlackMarket icon"
-                  //           />
-                  //         ) : index === 5 ? (
-                  //           <HistoryRounded
-                  //             style={{ width: "36px", height: "38px" }}
-                  //           />
-                  //         ) : index === 6 ? (
-                  //           <PersonRounded
-                  //             style={{ width: "36px", height: "38px" }}
-                  //           />
-                  //         ) : (
-                  //           <MailIcon />
-                  //         )}
-                  //       </ListItemIcon>
-                  //       <ListItemText className="link-fontH" primary={text} />
-                  //     </ListItem>
-                  //   </Link>
-                  // ) :
-                  text === "Uship" ? (
-                    <LightTooltip title="Coming Soon" placement="top-end">
+                  ) : text === "Haulage" ? (
+                    <a
+                      href="http://wa.me/18767735015"
+                      target="_blank"
+                      rel="nofollow noreferrer"
+                      style={{ textDecoration: "none" }}
+                      className={clsx(
+                        classes.inactiveItemLink,
+                        "inactiveLinkHover"
+                      )}
+                    >
                       <ListItem button>
                         <ListItemIcon>
                           {index === 0 ? (
@@ -2655,10 +2147,10 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                         </ListItemIcon>
                         <ListItemText className="link-fontH" primary={text} />
                       </ListItem>
-                    </LightTooltip>
+                    </a>
                   ) : // :
-                  // text === "Sally's Pantry" ?
-                  // <a href='https://sallyspantry.com/' target="_blank" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")} title="Sally's Pantry">
+                  // text === "Marketplace" ?
+                  // <a href='https://sallyspantry.com/' target="_blank" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")} title="Marketplace">
                   //     <ListItem button key={text} >
                   //         <ListItemIcon>
                   //           {
@@ -2674,7 +2166,7 @@ export const Sidebar: React.FC = function Sidebar({ children }) {
                   //         <ListItemText className="link-fontH" primary={text} />
                   //     </ListItem>
                   //   </a>
-                  text === "Sally's Pantry" ? (
+                  text === "Marketplace" ? (
                     <LightTooltip title="Coming Soon" placement="top-end">
                       <Typography key={text}>
                         <ListItem button>
