@@ -255,7 +255,7 @@ export const Section2: React.FC = function Section2() {
                   }
                   className={classes.btn}
                 >
-                  Online Grocery Shopping
+                  Marketplace
                 </Button>
               </a>
             </Grid>
@@ -342,7 +342,7 @@ export const Section2: React.FC = function Section2() {
                     }
                     className={classes.btnMobile}
                   >
-                    Online Grocery Shopping
+                    Marketplace
                   </Button>
                 </a>
               </Typography>
