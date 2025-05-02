@@ -111,8 +111,14 @@ export const Footer: React.FC = function Footer() {
             <a href="/Restaurants" className={classes.linkDisabled}>
               <Typography>Food Delivery</Typography>
             </a>
-            <a href="/Uship" className={classes.linkDisabled}>
-              <Typography>Package Delivery</Typography>
+            <a
+              href="http://wa.me/18767735015"
+              target="_blank"
+              rel="nofollow noreferrer"
+              style={{ textDecoration: "none" }}
+              className={classes.linkDisabled}
+            >
+              <Typography>Haulage</Typography>
             </a>
             <Typography>Market Place</Typography>
           </Grid>
