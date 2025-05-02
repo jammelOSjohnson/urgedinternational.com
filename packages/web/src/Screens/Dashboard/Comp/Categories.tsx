@@ -413,7 +413,7 @@ export const Categories: React.FC = function Categories() {
         className={classes.root}
         alignItems="center"
       >
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={4}>
           <Link to="/FoodDelivery" className={classes.links} id="categories">
             <Card className={classes.card}>
               <CardMedia className={classes.cardImage}>
@@ -430,31 +430,7 @@ export const Categories: React.FC = function Categories() {
             </Card>
           </Link>
         </Grid>
-        <Grid item xs={12} md={3}>
-          {/* <Link
-            to={`${referralPath}`}
-            className={classes.links}
-            onClick={handleOpen2}
-            title="Errand Services"
-          > */}
-          <LightTooltip title="Coming Soon" placement="top-end">
-            <Card className={classes.card}>
-              <CardMedia className={classes.cardImage}>
-                <img
-                  src="Images/UShip.png"
-                  alt="lightbluetruckIconImageSM"
-                ></img>
-              </CardMedia>
-              <CardContent className={classes.cardContent}>
-                <Typography gutterBottom className={classes.cardTitle2}>
-                  Express &amp; Errand
-                </Typography>
-              </CardContent>
-            </Card>
-          </LightTooltip>
-          {/* </Link> */}
-        </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={4}>
           {/* <Link to={`${referralPath}`} className={classes.links} title="Market Place" onClick={(e) => {
                         e.preventDefault(); 
                         if(currentUser !== undefined){
@@ -463,7 +439,13 @@ export const Categories: React.FC = function Categories() {
                             history.push("/Login", { from: "/Uship"})
                         }
                     }}> */}
-          <LightTooltip title="Coming Soon" placement="top-end">
+          <a
+            href="http://wa.me/18767735015"
+            target="_blank"
+            rel="nofollow noreferrer"
+            style={{ textDecoration: "none" }}
+            className={classes.links}
+          >
             <Card className={classes.card}>
               <CardMedia className={classes.cardImage}>
                 <img
@@ -473,16 +455,16 @@ export const Categories: React.FC = function Categories() {
               </CardMedia>
               <CardContent className={classes.cardContent}>
                 <Typography gutterBottom className={classes.cardTitle3}>
-                  UShip
+                  Haulage
                 </Typography>
               </CardContent>
             </Card>
-          </LightTooltip>
+          </a>
           {/* </Link> */}
         </Grid>
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md={4}>
           {/* UNDO */}
-          {/* <a href='https://sallyspantry.com/' target="_blank" className={classes.links} title="Sally's Pantry"> */}
+          {/* <a href='https://sallyspantry.com/' target="_blank" className={classes.links} title="Marketplace"> */}
           <LightTooltip title="Coming Soon" placement="top-end">
             <Card className={classes.card}>
               <CardMedia className={classes.cardImage}>
@@ -493,7 +475,7 @@ export const Categories: React.FC = function Categories() {
               </CardMedia>
               <CardContent className={classes.cardContent}>
                 <Typography gutterBottom className={classes.cardTitle4}>
-                  Sally's Pantry
+                  Marketplace
                 </Typography>
               </CardContent>
             </Card>
