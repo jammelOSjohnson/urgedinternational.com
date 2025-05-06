@@ -179,7 +179,7 @@ const useStyles = makeStyles((theme: Theme) =>
       top: 18,
       right: 10,
     },
-  })
+  }),
 );
 
 type Anchor = "top" | "bottom" | "right";
@@ -344,7 +344,7 @@ export const Header2: React.FC = function Header2() {
       }
       // react-hooks/exhaustive-deps
     },
-    [value.userRolef, data, paySettings]
+    [value.userRolef, data, paySettings],
   );
 
   var fetchUserDetails = function fetchUserDetails(payload) {
