@@ -1,0 +1,15 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+
+# Technical Stack  
+
+- Firebase for the Hosting
+- html/js(React, Vite, TS, material ui) for the front end
+- This front end connects to a mongo graphql backend
+- emailjs.com for emails
+- firebase authentication for user signup and login
+- Jest tests
+

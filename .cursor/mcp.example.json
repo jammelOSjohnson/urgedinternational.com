@@ -1,0 +1,7 @@
+{
+  "mcpServers": {
+    "browser-tools": {
+      "command": "node /path/to/your/browser-tools-mcp/mcp-server.ts"
+    }
+  }
+}
