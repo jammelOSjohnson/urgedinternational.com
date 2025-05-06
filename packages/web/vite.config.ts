@@ -13,7 +13,6 @@ export default defineConfig({
     svgrPlugin({
       svgrOptions: {
         icon: true,
-        // ...svgr options (https://react-svgr.com/docs/options/)
       },
     }),
   ],
@@ -31,7 +30,6 @@ export default defineConfig({
     include: /src\/.*\.[tj]sx?$/, // This includes .js, .jsx, .ts, .tsx files
   },
   optimizeDeps: {
-    force: true,
     esbuildOptions: {
       loader: {
         ".js": "tsx",
@@ -45,6 +43,26 @@ export default defineConfig({
   },
   build: {
     outDir: "build",
+    chunkSizeWarningLimit: 2000, // Increase warning limit to 2000KB
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "react-vendor": ["react", "react-dom", "react-router-dom"],
+          "utils-vendor": ["date-fns", "axios", "lodash"],
+          "graphql-vendor": ["@apollo/client", "graphql"],
+          "firebase-vendor": [
+            "firebase/app",
+            "firebase/auth",
+            "firebase/functions",
+          ],
+          "chart-vendor": ["chart.js", "react-chartjs-2"],
+          "maps-vendor": ["@googlemaps/react-wrapper", "google-maps-react"],
+        },
+        chunkFileNames: "assets/[name]-[hash].js",
+        entryFileNames: "assets/[name]-[hash].js",
+        assetFileNames: "assets/[name]-[hash].[ext]",
+      },
+    },
   },
   // Removed the 'test' block as it's not a valid configuration option for Vite
 });

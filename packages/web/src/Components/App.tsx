@@ -77,26 +77,26 @@ import React from "react";
 import { Spinner } from "./spinner";
 import { OrderCompleted } from "../Screens/Checkout/OrderCompleted";
 const PaymentProcessScreen = React.lazy(
-  () => import("../Screens/Dashboard/PaymentProcessScreen")
+  () => import("../Screens/Dashboard/PaymentProcessScreen"),
 );
 const SalesExport = React.lazy(
-  () => import("../Screens/AdminDashboard/SalesExport")
+  () => import("../Screens/AdminDashboard/SalesExport"),
 );
 const NotFound = React.lazy(() => import("./NotFound"));
 const RegisterScreen = React.lazy(
-  () => import("../Screens/Auth/RegisterScreen")
+  () => import("../Screens/Auth/RegisterScreen"),
 );
 const LoginScreen = React.lazy(() => import("../Screens/Auth/LoginScreen"));
 const AppDataProvider = React.lazy(() => import("../Context/AppDataContext"));
 const TermsOfServiceScreen = React.lazy(
-  () => import("../Screens/Dashboard/TermsOfServiceScreen")
+  () => import("../Screens/Dashboard/TermsOfServiceScreen"),
 );
 const CargoAndFreight = React.lazy(
-  () => import("../Screens/Dashboard/CargoAndFreight")
+  () => import("../Screens/Dashboard/CargoAndFreight"),
 );
 
 const RestaurantProfileDetailsScreen = React.lazy(
-  () => import("../Screens/RestaurantDashboard/RestaurantProfileDetailsScreen")
+  () => import("../Screens/RestaurantDashboard/RestaurantProfileDetailsScreen"),
 );
 
 const theme = createTheme({
@@ -194,7 +194,7 @@ const wsLink = new WebSocketLink(
     connectionParams: {
       reconnect: true,
     },
-  })
+  }),
 );
 
 //{
@@ -217,7 +217,7 @@ const link = split(
     );
   },
   wsLink,
-  httpLink
+  httpLink,
 );
 
 const client = new ApolloClient({

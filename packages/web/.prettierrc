@@ -1,0 +1,28 @@
+{
+  "overrides": [
+    {
+      "files": "mcp.json",
+      "options": {
+        "parser": "none"
+      }
+    },
+    {
+      "files": "*.min.css",
+      "options": {
+        "parser": "none"
+      }
+    },
+    {
+      "files": "*.min.js",
+      "options": {
+        "parser": "none"
+      }
+    },
+    {
+      "files": "firebase.js",
+      "options": {
+        "singleQuote": true
+      }
+    }
+  ]
+}
