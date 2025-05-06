@@ -1,9 +1,11 @@
 import { makeStyles, createStyles, Typography, Theme } from "@material-ui/core";
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import FooterTop from "../../../Components/FooterTop";
-//Import Components
+import { Spinner } from "../../../Components/spinner";
+
+// Lazy load the FooterTop component
+const FooterTop = lazy(() => import("../../../Components/FooterTop"));
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -77,7 +79,9 @@ export const DashboardFooter: React.FC = function DashboardFooter() {
       {/* className="hideOnMobile" */}
       {referralPath !== "/Dashboard" ? (
         <>
-          <FooterTop />
+          <Suspense fallback={<Spinner />}>
+            <FooterTop />
+          </Suspense>
           <Typography
             variant="h6"
             style={{
