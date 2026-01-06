@@ -91,9 +91,9 @@ const AppDataProvider = React.lazy(() => import("../Context/AppDataContext"));
 const TermsOfServiceScreen = React.lazy(
   () => import("../Screens/Dashboard/TermsOfServiceScreen"),
 );
-const CargoAndFreight = React.lazy(
-  () => import("../Screens/Dashboard/CargoAndFreight"),
-);
+// const CargoAndFreight = React.lazy(
+//   () => import("../Screens/Dashboard/CargoAndFreight"),
+// );
 
 const RestaurantProfileDetailsScreen = React.lazy(
   () => import("../Screens/RestaurantDashboard/RestaurantProfileDetailsScreen"),
