@@ -1,23 +1,6 @@
-import {
-  Grid,
-  makeStyles,
-  createStyles,
-  Typography,
-  Theme,
-  Card,
-  CardMedia,
-  CardContent,
-  useMediaQuery,
-  useTheme,
-  Backdrop,
-  Modal,
-  Fade,
-  Button,
-  Snackbar,
-  Tooltip,
-  withStyles,
-} from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
+import { Grid, Typography, Theme, Card, CardMedia, CardContent, useMediaQuery, useTheme, Backdrop, Modal, Fade, Button, Snackbar, Tooltip, withStyles,  } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
+import { Alert } from '@mui/lab';
 import clsx from "clsx";
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
@@ -127,7 +110,8 @@ const LightTooltip = withStyles((theme: Theme) => ({
     boxShadow: theme.shadows[1],
     fontSize: 11,
   },
-}))(Tooltip);
+}))(Tooltip) as typeof Tooltip;
+//}))(Tooltip);
 
 export const Categories: React.FC = function Categories() {
   const classes = useStyles();

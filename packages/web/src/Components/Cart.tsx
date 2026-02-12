@@ -1,9 +1,10 @@
 import { useAppData } from '../Context/AppDataContext';
-import { Badge , makeStyles, createStyles, Theme, Popper, Paper, Grow, MenuList, ClickAwayListener, MenuItem, Grid, Typography, Button } from '@material-ui/core';
+import { Badge, Theme, Popper, Paper, Grow, MenuList, ClickAwayListener, MenuItem, Grid, Typography, Button } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
-import { PlayArrowRounded, ShoppingCartRounded } from "@material-ui/icons/";
+import { PlayArrowRounded, ShoppingCartRounded } from "@mui/icons-material/";
 import { Link } from "react-router-dom";
 //const useAppData = React.lazy(() => import('../Context/AppDataContext'));
 //import { textAlign } from 'html2canvas/dist/types/css/property-descriptors/text-align';
@@ -83,7 +84,8 @@ export const Cart: React.FC = function Cart() {
         setOpen((prevOpen) => !prevOpen);
       };
     
-    const handleClose = (event: React.MouseEvent<EventTarget>) => {
+    //const handleClose = (event: React.MouseEvent<Document, MouseEvent>) => {
+    const handleClose = (event: MouseEvent | TouchEvent) => {
       if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
         return;
       }

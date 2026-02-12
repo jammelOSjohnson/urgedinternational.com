@@ -2,8 +2,6 @@ import { useAppData } from "../../Context/AppDataContext";
 import {
   Container,
   Grid,
-  makeStyles,
-  createStyles,
   Typography,
   Theme,
   Button,
@@ -17,9 +15,10 @@ import {
   Modal,
   Fade,
   Backdrop,
-} from "@material-ui/core";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import clsx from "clsx";
@@ -27,8 +26,8 @@ import {
   LockRounded,
   EmailOutlined,
   PlayArrowRounded,
-} from "@material-ui/icons/";
-import Alert from "@material-ui/lab/Alert";
+} from "@mui/icons-material/";
+import Alert from "@mui/lab/Alert";
 import { Link } from "react-router-dom";
 import { auth } from "../../firebase";
 import { LiveChatWidget } from "@livechat/widget-react";
@@ -254,7 +253,7 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 800,
       color: "inherit",
     },
-  })
+  }),
 );
 
 const mobileStyles = makeStyles((theme: Theme) =>
@@ -279,7 +278,7 @@ const mobileStyles = makeStyles((theme: Theme) =>
       },
       color: "#000",
     },
-  })
+  }),
 );
 
 export const LoginScreen: React.FC = function LoginScreen() {
@@ -321,7 +320,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
   };
 
   const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
+    event: React.MouseEvent<HTMLButtonElement>,
   ) => {
     event.preventDefault();
   };
@@ -366,7 +365,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
             setLoading(false);
             setError(res1);
           }
-        }
+        },
       );
     } catch (err) {
       //console.log(err);
@@ -596,7 +595,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
                           </InputAdornment>
                         }
                         color="secondary"
-                        labelWidth={103}
+                        //labelWidth={103}
                         required={true}
                         placeholder="Enter Email Address"
                       />
@@ -728,7 +727,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
                             </InputAdornment>
                           }
                           color="secondary"
-                          labelWidth={103}
+                          //labelWidth={103}
                           required={true}
                         />
                       </FormControl>
@@ -771,7 +770,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
                             </InputAdornment>
                           }
                           color="secondary"
-                          labelWidth={70}
+                          //labelWidth={103}
                           required={true}
                         />
                       </FormControl>
@@ -898,7 +897,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
                 <OutlinedInput
                   className={clsx(
                     classes.firstTextFieldMobile,
-                    mobClasses.root
+                    mobClasses.root,
                   )}
                   id="email"
                   type="text"
@@ -911,7 +910,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
                       </IconButton>
                     </InputAdornment>
                   }
-                  labelWidth={103}
+                  //labelWidth={103}
                   required={true}
                 />
               </FormControl>
@@ -948,7 +947,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
                       </IconButton>
                     </InputAdornment>
                   }
-                  labelWidth={70}
+                  //labelWidth={103}
                   required={true}
                 />
               </FormControl>

@@ -1,8 +1,9 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { Grid, makeStyles, createStyles, withStyles, Typography, Theme, CardMedia, Card, CardContent, Stepper, Step, StepLabel, StepIconProps, StepConnector, CardHeader, Button } from '@material-ui/core';
-import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
-import LocalShippingOutlinedIcon from '@material-ui/icons/LocalShippingOutlined';
-import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
+import { Grid, withStyles, Typography, Theme, CardMedia, Card, CardContent, Stepper, Step, StepLabel, StepIconProps, StepConnector, CardHeader, Button } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
+import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import React, { useEffect } from 'react';
 import clsx from 'clsx';
 import { useHistory } from 'react-router-dom';
@@ -82,7 +83,8 @@ export const CurrentPackage: React.FC = function CurrentPackage() {
       backgroundColor: '#eaeaf0',
       borderRadius: 1,
     },
-  })(StepConnector);
+  })(StepConnector) as typeof StepConnector;
+  //})(StepConnector);
   
   const useColorlibStepIconStyles = makeStyles({
     root: {

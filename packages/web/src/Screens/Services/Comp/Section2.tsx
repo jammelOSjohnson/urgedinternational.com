@@ -1,29 +1,11 @@
 import React, { useState } from "react";
 //import CSS
-import {
-  Container,
-  Grid,
-  Typography,
-  makeStyles,
-  createStyles,
-  Theme,
-  Button,
-  useMediaQuery,
-  useTheme,
-  AppBar,
-  Tabs,
-  Box,
-  Tab,
-  FormControl,
-  InputLabel,
-  OutlinedInput,
-  Select,
-  MenuItem,
-} from "@material-ui/core";
+import { Container, Grid, Typography, Theme, Button, useMediaQuery, useTheme, AppBar, Tabs, Box, Tab, FormControl, InputLabel, OutlinedInput, Select, MenuItem,  } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import SwipeableViews from "react-swipeable-views";
 import clsx from "clsx";
 import { useAppData } from "../../../Context/AppDataContext";
-import { Alert } from "@material-ui/lab";
+import { Alert } from '@mui/lab';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -405,7 +387,8 @@ export const Section2: React.FC = function Section2() {
               <br />
               platform.
             </Typography>
-            <AppBar position="static" color="default">
+            {/*<AppBar position="static" color="default">*/}
+            <AppBar position="static">
               <Tabs
                 value={value2}
                 onChange={handleChange}
@@ -744,10 +727,10 @@ export const Section2: React.FC = function Section2() {
                               type="text"
                               value={values.fullname}
                               onChange={handleChange2("fullname")}
-                              labelWidth={103}
                               required={true}
-                              notched={true}
                               fullWidth
+                              //labelWidth={103}
+                              //notched={true}
                             />
                           </FormControl>
                           <FormControl variant="outlined" fullWidth required>
@@ -766,9 +749,9 @@ export const Section2: React.FC = function Section2() {
                               type="text"
                               value={values.businessname}
                               onChange={handleChange2("businessname")}
-                              labelWidth={103}
                               required={true}
-                              notched={true}
+                              //labelWidth={103}
+                              //notched={true}
                               fullWidth
                             />
                           </FormControl>
@@ -788,10 +771,10 @@ export const Section2: React.FC = function Section2() {
                               type="text"
                               value={values.businessemail}
                               onChange={handleChange2("businessemail")}
-                              labelWidth={103}
                               required={true}
-                              notched={true}
                               fullWidth
+                              //labelWidth={103}
+                              //notched={true}
                             />
                           </FormControl>
                           <FormControl variant="outlined" fullWidth required>
@@ -810,9 +793,9 @@ export const Section2: React.FC = function Section2() {
                               type="text"
                               value={values.contact}
                               onChange={handleChange2("contact")}
-                              labelWidth={103}
                               required={true}
-                              notched={true}
+                              //labelWidth={103}
+                              //notched={true}
                               fullWidth
                             />
                           </FormControl>
@@ -892,7 +875,8 @@ export const Section2: React.FC = function Section2() {
               <br />
               platform.
             </Typography>
-            <AppBar position="static" color="default">
+            {/*<AppBar position="static" color="default">*/}
+            <AppBar position="static">
               <Tabs
                 value={value2}
                 onChange={handleChange}
@@ -1225,9 +1209,9 @@ export const Section2: React.FC = function Section2() {
                               type="text"
                               value={values.fullname}
                               onChange={handleChange2("fullname")}
-                              labelWidth={103}
                               required={true}
-                              notched={true}
+                              //labelWidth={103}
+                              //notched={true}
                               fullWidth
                             />
                           </FormControl>
@@ -1247,9 +1231,9 @@ export const Section2: React.FC = function Section2() {
                               type="text"
                               value={values.businessname}
                               onChange={handleChange2("businessname")}
-                              labelWidth={103}
                               required={true}
-                              notched={true}
+                              //labelWidth={103}
+                              //notched={true}
                               fullWidth
                             />
                           </FormControl>
@@ -1269,9 +1253,9 @@ export const Section2: React.FC = function Section2() {
                               type="text"
                               value={values.businessemail}
                               onChange={handleChange2("businessemail")}
-                              labelWidth={103}
                               required={true}
-                              notched={true}
+                              //labelWidth={103}
+                              //notched={true}
                               fullWidth
                             />
                           </FormControl>
@@ -1291,9 +1275,9 @@ export const Section2: React.FC = function Section2() {
                               type="text"
                               value={values.contact}
                               onChange={handleChange2("contact")}
-                              labelWidth={103}
                               required={true}
-                              notched={true}
+                              //labelWidth={103}
+                              //notched={true}
                               fullWidth
                             />
                           </FormControl>

@@ -1,29 +1,6 @@
 import { useAppData } from "../../../Context/AppDataContext";
-import {
-  AppBar,
-  Grid,
-  makeStyles,
-  createStyles,
-  Typography,
-  Theme,
-  Card,
-  CardContent,
-  TextField,
-  FormControl,
-  MenuItem,
-  Button,
-  Box,
-  Tabs,
-  Tab,
-  Modal,
-  Backdrop,
-  Fade,
-  FormGroup,
-  FormControlLabel,
-  Switch,
-  InputLabel,
-  Select,
-} from "@material-ui/core";
+import { AppBar, Grid, Typography, Theme, Card, CardContent, TextField, FormControl, MenuItem, Button, Box, Tabs, Tab, Modal, Backdrop, Fade, FormGroup, FormControlLabel, Switch, InputLabel, Select,  } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import MUIDataTable from "mui-datatables";
@@ -31,8 +8,8 @@ import MUIDataTable from "mui-datatables";
 //Import Components
 //import { ItemRating } from '../../../Components/ItemRating';
 import { Link } from "react-router-dom";
-import { Alert } from "@material-ui/lab";
-import { DeleteOutlineRounded, EditRounded } from "@material-ui/icons";
+import { Alert } from '@mui/lab';
+import { DeleteOutlineRounded, EditRounded } from '@mui/icons-material';
 import clsx from "clsx";
 
 // interface State {
@@ -896,7 +873,8 @@ export const OrgDetails: React.FC = function OrgDetails() {
         <Grid item xs={12}>
           <Card>
             <CardContent>
-              <AppBar position="static" color="default">
+              {/*<AppBar position="static" color="default">*/}
+              <AppBar position="static">
                 <Tabs
                   value={tab}
                   onChange={handleChange3}

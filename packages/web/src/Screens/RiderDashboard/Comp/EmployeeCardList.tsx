@@ -1,12 +1,13 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardHeader, Avatar, CardMedia, CardContent } from '@material-ui/core';
+import { Container, Grid, Typography, Theme, TextField, Button, Input, InputAdornment, IconButton, OutlinedInput, InputLabel, FormControl, Card, CardHeader, Avatar, CardMedia, CardContent } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 //Import Components
 import { ItemRating } from '../../../Components/ItemRating';
 import { Link } from "react-router-dom";
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 
 
@@ -183,7 +184,7 @@ export const EmployeeCardList: React.FC = function EmployeeCardList(props) {
                                     <CardContent>
                                         <Grid container xs={12} direction="row" spacing={1} className={classes.root} alignItems="center">
                                             <Grid item xs={12}>
-                                                <Avatar variant="circle" aria-label="restaurant" className={classes.avatar}>
+                                                <Avatar variant="circular" aria-label="restaurant" className={classes.avatar}>
                                                     <CardMedia className={classes.cardImage}>
                                                         <img className={classes.kfcImage} src={restaurant.ImageName}></img>
                                                     </CardMedia>

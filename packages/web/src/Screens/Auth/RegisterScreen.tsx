@@ -2,8 +2,6 @@ import { useAppData } from "../../Context/AppDataContext";
 import {
   Container,
   Grid,
-  makeStyles,
-  createStyles,
   Typography,
   Theme,
   Button,
@@ -18,9 +16,10 @@ import {
   Checkbox,
   FormControlLabel,
   CheckboxProps,
-} from "@material-ui/core";
-import Visibility from "@material-ui/icons/Visibility";
-import VisibilityOff from "@material-ui/icons/VisibilityOff";
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import clsx from "clsx";
@@ -29,8 +28,8 @@ import {
   EmailOutlined,
   PlayArrowRounded,
   PersonRounded,
-} from "@material-ui/icons/";
-import Alert from "@material-ui/lab/Alert";
+} from "@mui/icons-material/";
+import Alert from "@mui/lab/Alert";
 import { auth } from "../../firebase";
 import { LiveChatWidget } from "@livechat/widget-react";
 
@@ -239,7 +238,7 @@ const useStyles = makeStyles((theme: Theme) =>
     alert: {
       marginBottom: "5%",
     },
-  })
+  }),
 );
 
 const GreenCheckbox = withStyles({
@@ -250,7 +249,10 @@ const GreenCheckbox = withStyles({
     },
   },
   checked: {},
-})((props: CheckboxProps) => <Checkbox color="default" {...props} />);
+})((props: CheckboxProps) => (
+  <Checkbox {...props} />
+)) as React.ComponentType<CheckboxProps>;
+//})((props: CheckboxProps) => <Checkbox color="default" {...props} />);
 
 const mobileStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -273,7 +275,7 @@ const mobileStyles = makeStyles((theme: Theme) =>
       },
       color: "#000",
     },
-  })
+  }),
 );
 
 export const RegisterScreen: React.FC = function RegisterScreen() {
@@ -319,7 +321,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
   };
 
   const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
+    event: React.MouseEvent<HTMLButtonElement>,
   ) => {
     event.preventDefault();
   };
@@ -345,46 +347,48 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
       !iAgree
         ? setError("Please agree to our Terms of Use and Privacy Policy")
         : values.fullname === ""
-        ? setError("Please enter your Full Name")
-        : values.email === "" ||
-          !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.email)
-        ? setError("Please enter a valid Email")
-        : values.password === ""
-        ? setError("Please enter a valid Password")
-        : await signup(values, value).then(async function (res1) {
-            if (res1 != null) {
-              if (
-                res1 !==
-                "The email address is already in use by another account."
-              ) {
-                await fetchUserDetailsSignUp(res1).then(function (res) {
-                  if (res) {
-                    // ////console.log("About to navigate to dashboard.");
-                    // ////console.log(userRolef);
-                    // setSuccess('Sign Up Successful.');
-                    // setTimeout(() => {
-                    //     setSuccess('');
-                    //     //console.log("about to go to dashboard");
-                    //     if(history.location.state === undefined){
-                    //         history.push("/Dashboard");
-                    //     }else{
-                    //         history.push(history.location.state.from)
-                    //     }
-                    //     //history.push("/");
-                    // }, 1500);
+          ? setError("Please enter your Full Name")
+          : values.email === "" ||
+              !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
+                values.email,
+              )
+            ? setError("Please enter a valid Email")
+            : values.password === ""
+              ? setError("Please enter a valid Password")
+              : await signup(values, value).then(async function (res1) {
+                  if (res1 != null) {
+                    if (
+                      res1 !==
+                      "The email address is already in use by another account."
+                    ) {
+                      await fetchUserDetailsSignUp(res1).then(function (res) {
+                        if (res) {
+                          // ////console.log("About to navigate to dashboard.");
+                          // ////console.log(userRolef);
+                          // setSuccess('Sign Up Successful.');
+                          // setTimeout(() => {
+                          //     setSuccess('');
+                          //     //console.log("about to go to dashboard");
+                          //     if(history.location.state === undefined){
+                          //         history.push("/Dashboard");
+                          //     }else{
+                          //         history.push(history.location.state.from)
+                          //     }
+                          //     //history.push("/");
+                          // }, 1500);
+                        } else {
+                          setError("Unable to Sign Up at this time");
+                        }
+                      });
+                    } else {
+                      setError(
+                        "The email address is already in use by another account.",
+                      );
+                    }
                   } else {
-                    setError("Unable to Sign Up at this time");
+                    setError("Unable to Sign Up at this time.");
                   }
                 });
-              } else {
-                setError(
-                  "The email address is already in use by another account."
-                );
-              }
-            } else {
-              setError("Unable to Sign Up at this time.");
-            }
-          });
     } catch {
       setError("Failed to Sign Up");
     }
@@ -558,9 +562,9 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                             </IconButton>
                           </InputAdornment>
                         }
-                        labelWidth={103}
                         required={true}
-                        notched={true}
+                        //labelWidth={103}
+                        //notched={true}
                       />
                     </FormControl>
                     <br />
@@ -581,9 +585,9 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                             </IconButton>
                           </InputAdornment>
                         }
-                        labelWidth={103}
                         required={true}
-                        notched={true}
+                        //labelWidth={103}
+                        //notched={true}
                       />
                     </FormControl>
                     <br />
@@ -620,9 +624,9 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                             </IconButton>
                           </InputAdornment>
                         }
-                        labelWidth={70}
                         required={true}
-                        notched={true}
+                        //labelWidth={103}
+                        //notched={true}
                         autoComplete={"off"}
                       />
                     </FormControl>
@@ -788,7 +792,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                   className={clsx(
                     classes.firstTextFieldMobile,
                     mobClasses.root,
-                    "MuiOutlinedInput-notchedOutline"
+                    "MuiOutlinedInput-notchedOutline",
                   )}
                   id="fullname"
                   type="text"
@@ -801,9 +805,9 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                       </IconButton>
                     </InputAdornment>
                   }
-                  //labelWidth={70}
                   required={true}
-                  notched={true}
+                  //labelWidth={103}
+                  //notched={true}
                   label="Full Name"
                 />
               </FormControl>
@@ -815,7 +819,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                 <OutlinedInput
                   className={clsx(
                     classes.firstTextFieldMobile,
-                    mobClasses.root
+                    mobClasses.root,
                   )}
                   id="email"
                   type="text"
@@ -828,9 +832,9 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                       </IconButton>
                     </InputAdornment>
                   }
-                  labelWidth={103}
                   required={true}
-                  notched={true}
+                  //labelWidth={103}
+                  //notched={true}
                 />
               </FormControl>
               <br />
@@ -866,9 +870,9 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
                       </IconButton>
                     </InputAdornment>
                   }
-                  labelWidth={70}
                   required={true}
-                  notched={true}
+                  //labelWidth={103}
+                  //notched={true}
                   autoComplete={"off"}
                 />
               </FormControl>

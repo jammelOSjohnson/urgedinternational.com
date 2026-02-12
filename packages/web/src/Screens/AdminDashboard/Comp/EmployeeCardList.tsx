@@ -1,24 +1,13 @@
 import { useAppData } from "../../../Context/AppDataContext";
-import {
-  Grid,
-  makeStyles,
-  createStyles,
-  Typography,
-  Theme,
-  IconButton,
-  Card,
-  CardHeader,
-  Avatar,
-  CardMedia,
-  CardContent,
-} from "@material-ui/core";
+import { Grid, Typography, Theme, IconButton, Card, CardHeader, Avatar, CardMedia, CardContent,  } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 //import clsx from 'clsx';
 //Import Components
 //import { ItemRating } from '../../../Components/ItemRating';
 import { Link } from "react-router-dom";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 // interface State {
 //     email: string;
@@ -222,7 +211,7 @@ export const EmployeeCardList: React.FC = function EmployeeCardList(props) {
                       >
                         <Grid item xs={12}>
                           <Avatar
-                            variant="circle"
+                            variant="circular"
                             aria-label="rider"
                             className={classes.avatar}
                           >

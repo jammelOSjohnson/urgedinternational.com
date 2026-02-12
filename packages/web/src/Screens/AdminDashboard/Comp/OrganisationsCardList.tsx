@@ -1,28 +1,14 @@
 import { useAppData } from "../../../Context/AppDataContext";
-import {
-  Grid,
-  makeStyles,
-  createStyles,
-  Typography,
-  Theme,
-  Card,
-  CardHeader,
-  Avatar,
-  CardMedia,
-  CardContent,
-  AppBar,
-  Tabs,
-  Tab,
-  Box,
-} from "@material-ui/core";
+import { Grid, Typography, Theme, Card, CardHeader, Avatar, CardMedia, CardContent, AppBar, Tabs, Tab, Box,  } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 //import clsx from 'clsx';
 //Import Components
 //import { ItemRating } from '../../../Components/ItemRating';
 import { Link } from "react-router-dom";
-import LocationOnIcon from "@material-ui/icons/LocationOn";
-import PhoneEnabledIcon from "@material-ui/icons/PhoneEnabled";
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import PhoneEnabledIcon from '@mui/icons-material/PhoneEnabled';
 
 // interface State {
 //     email: string;
@@ -246,7 +232,8 @@ export const OrganisationsCardList: React.FC = function OrganisationsCardList(
         <br />
         <Card>
           <CardContent>
-            <AppBar position="static" color="default">
+            {/*<AppBar position="static" color="default">*/}
+            <AppBar position="static">
               <Tabs
                 value={tab}
                 onChange={handleChange3}

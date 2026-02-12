@@ -1,8 +1,6 @@
 import { useAppData } from "../../../Context/AppDataContext";
 import {
   IconButton,
-  makeStyles,
-  createStyles,
   Typography,
   Theme,
   useMediaQuery,
@@ -19,22 +17,23 @@ import {
   MenuItem,
   withStyles,
   Tooltip,
-} from "@material-ui/core";
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
 import React, { useEffect } from "react";
 import { useHistory, Link } from "react-router-dom";
-import { HistoryRounded, PersonRounded } from "@material-ui/icons/";
+import { HistoryRounded, PersonRounded } from "@mui/icons-material/";
 import clsx from "clsx";
 
-import Drawer from "@material-ui/core/Drawer";
-import Button from "@material-ui/core/Button";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import MailIcon from "@material-ui/icons/Mail";
-import { Alert } from "@material-ui/lab";
-import { CloseRounded } from "@material-ui/icons";
+import Drawer from "@mui/material/Drawer";
+import Button from "@mui/material/Button";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import MailIcon from "@mui/icons-material/Mail";
+import { Alert } from "@mui/lab";
+import { CloseRounded } from "@mui/icons-material";
 import { DashboardBreadCrumbs } from "./DashboardBreadCrumbs";
 import PortalSearch from "./PortalSrearch";
 
@@ -176,7 +175,7 @@ const useStyles = makeStyles((theme: Theme) =>
     alert: {
       marginBottom: "5%",
     },
-  })
+  }),
 );
 
 const LightTooltip = withStyles((theme: Theme) => ({
@@ -186,7 +185,8 @@ const LightTooltip = withStyles((theme: Theme) => ({
     boxShadow: theme.shadows[1],
     fontSize: 11,
   },
-}))(Tooltip);
+}))(Tooltip) as typeof Tooltip;
+//}))(Tooltip);
 
 type Anchor = "top" | "left" | "bottom" | "right";
 
@@ -1155,7 +1155,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
               </ListItemIcon>
               <ListItemText className="link-font" primary={text} />
             </ListItem>
-          )
+          ),
         )}
       </List>
       <Divider />
@@ -1171,7 +1171,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                   onClick={handleLogout}
                   className={clsx(
                     classes.inactiveItemLink,
-                    "inactiveLinkHover"
+                    "inactiveLinkHover",
                   )}
                 >
                   <ListItem button>
@@ -1212,7 +1212,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                   </ListItemIcon>
                   <ListItemText className="link-font" primary={text} />
                 </ListItem>
-              )
+              ),
             )
           : ["Login"].map((text, index) =>
               text === "Login" ? (
@@ -1222,7 +1222,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                   onClick={handleLogin}
                   className={clsx(
                     classes.inactiveItemLink,
-                    "inactiveLinkHover"
+                    "inactiveLinkHover",
                   )}
                 >
                   <ListItem button>
@@ -1264,7 +1264,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                   </ListItemIcon>
                   <ListItemText className="link-font" primary={text} />
                 </ListItem>
-              )
+              ),
             )}
         {/* <IconButton
                             color="inherit"

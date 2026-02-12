@@ -1,14 +1,15 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { Container, Grid , makeStyles, createStyles, Theme, Card, Typography, CardHeader, Avatar, IconButton, CardMedia, CardContent } from '@material-ui/core';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-// import Visibility from '@material-ui/icons/Visibility';
-// import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import { Container, Grid, Theme, Card, Typography, CardHeader, Avatar, IconButton, CardMedia, CardContent } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+// import Visibility from '@mui/icons-material/Visibility';
+// import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import React, { useEffect } from 'react';
 //import { Calendar } from './Calendar';
 import clsx from 'clsx';
 // import { useHistory } from 'react-router-dom';
 // import clsx from 'clsx';
-// import { NotificationImportantRounded, ShoppingCartRounded } from "@material-ui/icons/";
+// import { NotificationImportantRounded, ShoppingCartRounded } from "@mui/icons-material/";
 
 // interface Props {
     
@@ -140,7 +141,7 @@ export const EmployeeDetailsRight: React.FC = function EmployeeDetailsRight() {
                                 <CardContent>
                                     <Grid container xs={12} direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
                                         <Grid item xs={12}>
-                                            <Avatar variant="circle" aria-label="rider" className={classes.avatar}>
+                                            <Avatar variant="circular" aria-label="rider" className={classes.avatar}>
                                                 <CardMedia className={classes.cardImage}>
                                                     {/* <img className={classes.kfcImage} src={rider.ImageName}></img> */}
                                                     <img className={classes.kfcImage} src={riderState.image} alt=""></img> 

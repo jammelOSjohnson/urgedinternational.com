@@ -1,26 +1,13 @@
 import { useAppData } from "../../../Context/AppDataContext";
-import {
-  makeStyles,
-  createStyles,
-  Theme,
-  IconButton,
-  useTheme,
-  CssBaseline,
-  Drawer,
-  Divider,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  useMediaQuery,
-} from "@material-ui/core";
+import { Theme, IconButton, useTheme, CssBaseline, Drawer, Divider, List, ListItem, ListItemIcon, ListItemText, useMediaQuery,  } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import clsx from "clsx";
 import "../CSS/sidebar.css";
-import MailIcon from "@material-ui/icons/Mail";
-import { CloudDownloadRounded } from "@material-ui/icons/";
+import MailIcon from '@mui/icons-material/Mail';
+import { CloudDownloadRounded } from "@mui/icons-material/";
 
 interface State {
   email: string;
@@ -147,8 +134,10 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-export const Sidebar: React.FC = function Sidebar({ children }) {
-  const classes = useStyles();
+/* export const Sidebar: React.FC = function Sidebar({ children }) {
+  const classes = useStyles(); */
+export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sidebar({ children }) {
+  const classes = useStyles({});
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("lg"));
   const isMatchMedium = useMediaQuery(theme.breakpoints.up("xl"));

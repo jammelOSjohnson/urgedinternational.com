@@ -1,19 +1,7 @@
 import React from "react";
 //import CSS
-import {
-  Container,
-  Grid,
-  Typography,
-  makeStyles,
-  createStyles,
-  Theme,
-  Card,
-  CardMedia,
-  CardContent,
-  Button,
-  useMediaQuery,
-  useTheme,
-} from "@material-ui/core";
+import { Container, Grid, Typography, Theme, Card, CardMedia, CardContent, Button, useMediaQuery, useTheme,  } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -206,7 +194,7 @@ export const Section2: React.FC = function Section2() {
               >
                 <Button
                   variant="outlined"
-                  color="default"
+                  //color="default"
                   startIcon={
                     <img
                       src="Images/YellowRectangle.png"
@@ -229,7 +217,7 @@ export const Section2: React.FC = function Section2() {
               >
                 <Button
                   variant="outlined"
-                  color="default"
+                  //color="default"
                   startIcon={
                     <img
                       src="Images/YellowRectangle.png"
@@ -245,7 +233,7 @@ export const Section2: React.FC = function Section2() {
               <a className={classes.links} href="/" title="Coming Soon">
                 <Button
                   variant="outlined"
-                  color="default"
+                  //color="default"
                   startIcon={
                     <img
                       src="Images/YellowRectangle.png"
@@ -290,7 +278,7 @@ export const Section2: React.FC = function Section2() {
                 >
                   <Button
                     variant="outlined"
-                    color="default"
+                    //color="default"
                     startIcon={
                       <img
                         src="Images/YellowRectangle.png"
@@ -314,7 +302,7 @@ export const Section2: React.FC = function Section2() {
                 >
                   <Button
                     variant="outlined"
-                    color="default"
+                    //color="default"
                     startIcon={
                       <img
                         src="Images/YellowRectangle.png"
@@ -332,7 +320,7 @@ export const Section2: React.FC = function Section2() {
                 <a className={classes.links} href="/" title="Coming Soon">
                   <Button
                     variant="outlined"
-                    color="default"
+                    //color="default"
                     startIcon={
                       <img
                         src="Images/YellowRectangle.png"

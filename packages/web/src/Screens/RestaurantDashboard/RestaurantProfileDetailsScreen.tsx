@@ -1,29 +1,6 @@
 import { useAppData } from "../../Context/AppDataContext";
-import {
-  AppBar,
-  Grid,
-  makeStyles,
-  createStyles,
-  Typography,
-  Theme,
-  Card,
-  Tabs,
-  Tab,
-  Modal,
-  Backdrop,
-  Fade,
-  Container,
-  useTheme,
-  useMediaQuery,
-  CardContent,
-  TextField,
-  FormControl,
-  Button,
-  Box,
-  MenuItem,
-  InputLabel,
-  Select,
-} from "@material-ui/core";
+import { AppBar, Grid, Typography, Theme, Card, Tabs, Tab, Modal, Backdrop, Fade, Container, useTheme, useMediaQuery, CardContent, TextField, FormControl, Button, Box, MenuItem, InputLabel, Select,  } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import MUIDataTable from "mui-datatables";
@@ -31,8 +8,8 @@ import MUIDataTable from "mui-datatables";
 //Import Components
 //import { ItemRating } from '../../../Components/ItemRating';
 import { Link } from "react-router-dom";
-import { Alert } from "@material-ui/lab";
-import { EditRounded, DeleteOutlineRounded } from "@material-ui/icons";
+import { Alert } from '@mui/lab';
+import { EditRounded, DeleteOutlineRounded } from '@mui/icons-material';
 import clsx from "clsx";
 import { HeaderRight } from "./Comp/HeaderRight";
 import { Spinner } from "../../Components/spinner";
@@ -845,7 +822,8 @@ export const RestaurantProfileDetailsScreen: React.FC =
                     <Grid item xs={12}>
                       <Card>
                         <CardContent>
-                          <AppBar position="static" color="default">
+                          {/*<AppBar position="static" color="default">*/}
+                          <AppBar position="static">
                             <Tabs
                               value={tab}
                               onChange={handleChange3}

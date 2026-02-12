@@ -325,13 +325,13 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   const [updatePaySetting] = useMutation(UPDATE_PAY_SETTING);
   const [getOrdersByRiderId] = useMutation(GET_ORDERS_BY_RIDERID);
   const [getOrdersByRiderIdAnDate] = useMutation(
-    GET_ORDERS_BY_RIDERID_AND_DATE
+    GET_ORDERS_BY_RIDERID_AND_DATE,
   );
 
   const [getPackageById] = useMutation(GET_PACKAGE_BYID_MUTATION);
   const [addPackage] = useMutation(ADD_PACKAGE_MUTATION);
   const [updateContactAndAddress] = useMutation(
-    UPDATE_CONTACT_AND_ADDRESS_BYID_MUTATION
+    UPDATE_CONTACT_AND_ADDRESS_BYID_MUTATION,
   );
   const [addMailbox] = useMutation(ADD_MAILBOXNUM_MUTATION);
   const [getMailboxById] = useMutation(GET_MAILBOX_BYID_MUTATION);
@@ -430,7 +430,14 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
         phone: paymentReq.phone,
         responseFailURL: paymentReq.responseFailURL,
         responseSuccessURL: paymentReq.responseSuccessURL,
-        sharedsecret: "",
+        sharedsecret:
+          import.meta.env.MODE === "development"
+            ? import.meta.env.REACT_APP_SECRET !== undefined
+              ? import.meta.env.REACT_APP_SECRET
+              : ""
+            : import.meta.env.REACT_APP_SECRET_LIVE !== undefined
+              ? import.meta.env.REACT_APP_SECRET_LIVE
+              : "",
         sname: paymentReq.sname,
         saddr1: paymentReq.saddr1,
         saddr2: paymentReq.saddr2,
@@ -455,7 +462,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     var result = auth
       .createUserWithEmailAndPassword(
         currentstate.email.trim(),
-        currentstate.password.trim()
+        currentstate.password.trim(),
       )
       .then(async function (result) {
         // This gives you a Google Access Token. You can use it to access the Google API.
@@ -495,7 +502,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   var signup2 = function signup2(currentstate, payload) {
     //retuns a promise
     const creatRestauranteUser = functions.httpsCallable(
-      "creatRestauranteUser"
+      "creatRestauranteUser",
     );
     let email = currentstate.Email.trim();
     let password = currentstate.password.trim();
@@ -671,7 +678,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
         // console.log("Checking userRole result");
         // console.log(response);
         return response.data.getUserInRole;
-      }
+      },
     );
 
     if (result !== null) {
@@ -711,12 +718,12 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
           userType === "restaurant"
             ? import.meta.env.REACT_APP_RESTAURANT_ROLE_ID
             : userType === "Admin"
-            ? import.meta.env.REACT_APP_ADMIN_ROLE_ID
-            : userType === "Urged_Staff"
-            ? import.meta.env.REACT_APP_URGEDSTAFF_ROLE_ID
-            : userType === "Rider"
-            ? import.meta.env.REACT_APP_RIDER_ROLE_ID
-            : import.meta.env.REACT_APP_CUSTOMER_ROLE_ID;
+              ? import.meta.env.REACT_APP_ADMIN_ROLE_ID
+              : userType === "Urged_Staff"
+                ? import.meta.env.REACT_APP_URGEDSTAFF_ROLE_ID
+                : userType === "Rider"
+                  ? import.meta.env.REACT_APP_RIDER_ROLE_ID
+                  : import.meta.env.REACT_APP_CUSTOMER_ROLE_ID;
       }
       var userInRole = {
         UserID: uid,
@@ -752,7 +759,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   var fetchUserInfoForSignUp = async function fetchUserInfoForSignUp(
     uid,
     payload,
-    currentState
+    currentState,
   ) {
     // console.log("User id is: ");
     // console.log(uid);
@@ -787,19 +794,19 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
           payload.userInfo.city =
             user.City !== null && user.City !== undefined ? user.City : "";
           var userRoleResf = undefined;
-          return await userHasRole(uid, payload, undefined).then(function (
-            userRoleRes
-          ) {
-            // console.log("Final user ref after fetch role is: ");
-            // console.log(userRoleRes);
-            userRoleResf = userRoleRes;
-            //Send Welcome Email
-            dispatch({
-              type: "fetch_userinfo",
-              payload: userRoleResf,
-            });
-            return true;
-          });
+          return await userHasRole(uid, payload, undefined).then(
+            function (userRoleRes) {
+              // console.log("Final user ref after fetch role is: ");
+              // console.log(userRoleRes);
+              userRoleResf = userRoleRes;
+              //Send Welcome Email
+              dispatch({
+                type: "fetch_userinfo",
+                payload: userRoleResf,
+              });
+              return true;
+            },
+          );
         } else {
           // console.log("No such user!");
           // console.log("creating new user");
@@ -869,7 +876,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
                       emailServiceId,
                       emailNewCustomerTemplate,
                       RequestParams,
-                      emailUserId
+                      emailUserId,
                     )
                       .then(function (res) {
                         if (res === true) {
@@ -895,7 +902,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
                         });
                         return true;
                       });
-                  }
+                  },
                 );
               }
             })
@@ -918,7 +925,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     uid,
     payload,
     currentState,
-    newRestaurant
+    newRestaurant,
   ) {
     ////console.log("User id is: ");
     ////console.log(uid);
@@ -1011,30 +1018,30 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
                 // payload.userInfo.city = user2.City !== null && user2.City !== undefined ? user2.City : "";
 
                 //var userRoleResf = undefined;
-                await userHasRole(uid, payload, "restaurant").then(function (
-                  userRoleRes
-                ) {
-                  ////console.log("Final user ref after fetch role is: ");
-                  ////console.log(userRoleRes);
-                  //userRoleResf = userRoleRes;
-                  //Send Welcome Email
-                  // var RequestParams = {
-                  //   from_name: payload.userInfo.fullName,
-                  //   user_email: payload.userInfo.email,
-                  // }
+                await userHasRole(uid, payload, "restaurant").then(
+                  function (userRoleRes) {
+                    ////console.log("Final user ref after fetch role is: ");
+                    ////console.log(userRoleRes);
+                    //userRoleResf = userRoleRes;
+                    //Send Welcome Email
+                    // var RequestParams = {
+                    //   from_name: payload.userInfo.fullName,
+                    //   user_email: payload.userInfo.email,
+                    // }
 
-                  // sendEmail(emailServiceId, emailNewCustomerTemplate, RequestParams, emailUserId).then(function (res) {
-                  //   dispatch({
-                  //     type: "fetch_userinfo",
-                  //     payload: userRoleResf
-                  //   });
-                  // })
+                    // sendEmail(emailServiceId, emailNewCustomerTemplate, RequestParams, emailUserId).then(function (res) {
+                    //   dispatch({
+                    //     type: "fetch_userinfo",
+                    //     payload: userRoleResf
+                    //   });
+                    // })
 
-                  //get updated restaurant list
-                  console.log("get updated restaurant list");
-                  fetchRestaurants(currentState);
-                  return userRoleRes;
-                });
+                    //get updated restaurant list
+                    console.log("get updated restaurant list");
+                    fetchRestaurants(currentState);
+                    return userRoleRes;
+                  },
+                );
 
                 return true;
               }
@@ -1058,7 +1065,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     uid,
     payload,
     currentState,
-    newStaff
+    newStaff,
   ) {
     ////console.log("User id is: ");
     ////console.log(uid);
@@ -1159,30 +1166,30 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
                 // payload.userInfo.city = user2.City !== null && user2.City !== undefined ? user2.City : "";
 
                 //var userRoleResf = undefined;
-                await userHasRole(uid, payload, newStaff.Role).then(function (
-                  userRoleRes
-                ) {
-                  ////console.log("Final user ref after fetch role is: ");
-                  ////console.log(userRoleRes);
-                  //userRoleResf = userRoleRes;
-                  //Send Welcome Email
-                  // var RequestParams = {
-                  //   from_name: payload.userInfo.fullName,
-                  //   user_email: payload.userInfo.email,
-                  // }
+                await userHasRole(uid, payload, newStaff.Role).then(
+                  function (userRoleRes) {
+                    ////console.log("Final user ref after fetch role is: ");
+                    ////console.log(userRoleRes);
+                    //userRoleResf = userRoleRes;
+                    //Send Welcome Email
+                    // var RequestParams = {
+                    //   from_name: payload.userInfo.fullName,
+                    //   user_email: payload.userInfo.email,
+                    // }
 
-                  // sendEmail(emailServiceId, emailNewCustomerTemplate, RequestParams, emailUserId).then(function (res) {
-                  //   dispatch({
-                  //     type: "fetch_userinfo",
-                  //     payload: userRoleResf
-                  //   });
-                  // })
+                    // sendEmail(emailServiceId, emailNewCustomerTemplate, RequestParams, emailUserId).then(function (res) {
+                    //   dispatch({
+                    //     type: "fetch_userinfo",
+                    //     payload: userRoleResf
+                    //   });
+                    // })
 
-                  //get updated restaurant list
-                  console.log("get updated restaurant list");
-                  fetchRiders(currentState);
-                  return userRoleRes;
-                });
+                    //get updated restaurant list
+                    console.log("get updated restaurant list");
+                    fetchRiders(currentState);
+                    return userRoleRes;
+                  },
+                );
 
                 return true;
               }
@@ -1220,20 +1227,20 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
         Position: StaffInfo.Role,
         Parish: StaffInfo.Parish,
       };
-      return await updateStaff({ variables: newUpdate }).then(async function (
-        response
-      ) {
-        ////console.log("update user result");
-        if (response.data.updateStaff !== null) {
-          //console.log(response.data.updateOrder);
+      return await updateStaff({ variables: newUpdate }).then(
+        async function (response) {
+          ////console.log("update user result");
+          if (response.data.updateStaff !== null) {
+            //console.log(response.data.updateOrder);
 
-          await fetchStaff(payload);
-          return true;
-        } else {
-          //console.log("not same")
-          return false;
-        }
-      });
+            await fetchStaff(payload);
+            return true;
+          } else {
+            //console.log("not same")
+            return false;
+          }
+        },
+      );
     } else {
       return false;
     }
@@ -1310,7 +1317,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
             payload: userRoleRes,
           });
           return true;
-        }
+        },
       );
 
       //console.log("after user has role")
@@ -1393,7 +1400,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
         emailServiceId,
         emailNewCustomerTemplate,
         RequestParams,
-        emailUserId
+        emailUserId,
       )
         .then(function (res) {
           if (res === true) {
@@ -1501,43 +1508,43 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
 
   var getMenuCats = async function getMenuCats(payload, Id) {
     if (Id !== null && Id !== undefined) {
-      await getMenucategories({ variables: { Id: Id } }).then(async function (
-        response
-      ) {
-        //////console.log("menu categories result");
-        if (response.data.getMenucategories.MenuItems !== null) {
-          //////console.log("menu categories exist");
-          //////console.log(response.data.getMenucategories.MenuItems);
+      await getMenucategories({ variables: { Id: Id } }).then(
+        async function (response) {
+          //////console.log("menu categories result");
+          if (response.data.getMenucategories.MenuItems !== null) {
+            //////console.log("menu categories exist");
+            //////console.log(response.data.getMenucategories.MenuItems);
 
-          // eslint-disable-next-line
-          var distinct = (value, index, self) => {
-            return self.indexOf(value) === index;
-          };
+            // eslint-disable-next-line
+            var distinct = (value, index, self) => {
+              return self.indexOf(value) === index;
+            };
 
-          var menuRes = response.data.getMenucategories.MenuItems;
-          const menuResF = [] as any;
-          menuRes.forEach((element) => {
-            //////console.log(element);
-            if (menuResF.indexOf(element.MenuCategory) === -1) {
-              menuResF.push(element.MenuCategory);
-            }
-          });
+            var menuRes = response.data.getMenucategories.MenuItems;
+            const menuResF = [] as any;
+            menuRes.forEach((element) => {
+              //////console.log(element);
+              if (menuResF.indexOf(element.MenuCategory) === -1) {
+                menuResF.push(element.MenuCategory);
+              }
+            });
 
-          payload.menuCategories = menuResF;
+            payload.menuCategories = menuResF;
 
-          dispatch({
-            type: "menu_categories",
-            payload: payload,
-          });
-        }
-      });
+            dispatch({
+              type: "menu_categories",
+              payload: payload,
+            });
+          }
+        },
+      );
     }
   };
 
   var getMenuBycategory = async function getMenuBycategory(
     payload,
     restaurant,
-    category
+    category,
   ) {
     if (category !== "All") {
       var newMenuItems = [] as Object[];
@@ -1615,7 +1622,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     payload,
     items,
     restaurants,
-    checkoutOrder
+    checkoutOrder,
   ) {
     if (items !== null && items !== undefined) {
       payload.cartItems = items;
@@ -1632,7 +1639,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   var removeCartItem = async function removeCartItem(
     index,
     payload,
-    cartItems
+    cartItems,
   ) {
     if (cartItems.length > 0) {
       cartItems.splice(index, 1);
@@ -1664,7 +1671,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     cartItemsSum,
     Total,
     restaurantID,
-    billingID
+    billingID,
   ) {
     //console.log("inside checkout. \n cart item length is: ");
     //console.log(cartItems.length);
@@ -1713,7 +1720,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
           let RiderRes = [] as riderObj[];
           try {
             RiderRes = res.filter(
-              (item) => item.isAvailable === true && item.disabled === false
+              (item) => item.isAvailable === true && item.disabled === false,
             );
           } catch (e) {
             console.log(e);
@@ -1863,73 +1870,73 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
                         //   }
                         // });
                       }
-                    }
+                    },
                   );
                 }
-              }
+              },
             );
           } else {
             //console.log("billing id is not null");
             orderBody.BillingInfo = billingID;
-            await createOrder({ variables: orderBody }).then(async function (
-              response
-            ) {
-              //console.log("create orer result: ");
-              //console.log(response.data.createOrder);
-              if (response.data.createOrder !== null) {
-                //console.log("Order Exist");
-                ////console.log(response.data.createOrder);
-                payload.cartItems = [];
-                payload.selectedRestaurant = undefined;
-                payload.receiptDetails = response.data.createOrder;
-                if (
-                  state.ContactNum !== payload.userInfo.contactNumber ||
-                  state.Street !== payload.userInfo.addressLine1 ||
-                  state.Town !== payload.userInfo.city
-                ) {
-                  let user = {
-                    ContactNumber: state.ContactNum,
-                    Email: payload.userInfo.email,
-                    FullName: payload.userInfo.fullName,
-                    AddressLine1: state.Street,
-                    AddressLine2: "",
-                    City: state.Town,
-                  };
+            await createOrder({ variables: orderBody }).then(
+              async function (response) {
+                //console.log("create orer result: ");
+                //console.log(response.data.createOrder);
+                if (response.data.createOrder !== null) {
+                  //console.log("Order Exist");
+                  ////console.log(response.data.createOrder);
+                  payload.cartItems = [];
+                  payload.selectedRestaurant = undefined;
+                  payload.receiptDetails = response.data.createOrder;
+                  if (
+                    state.ContactNum !== payload.userInfo.contactNumber ||
+                    state.Street !== payload.userInfo.addressLine1 ||
+                    state.Town !== payload.userInfo.city
+                  ) {
+                    let user = {
+                      ContactNumber: state.ContactNum,
+                      Email: payload.userInfo.email,
+                      FullName: payload.userInfo.fullName,
+                      AddressLine1: state.Street,
+                      AddressLine2: "",
+                      City: state.Town,
+                    };
 
-                  await UpdateUserInfo(payload, user)
-                    .then(() => {
-                      dispatch({
-                        type: "checkout",
-                        payload: payload,
+                    await UpdateUserInfo(payload, user)
+                      .then(() => {
+                        dispatch({
+                          type: "checkout",
+                          payload: payload,
+                        });
+                      })
+                      .catch(() => {
+                        dispatch({
+                          type: "checkout",
+                          payload: payload,
+                        });
                       });
-                    })
-                    .catch(() => {
-                      dispatch({
-                        type: "checkout",
-                        payload: payload,
-                      });
+                  } else {
+                    //console.log("address up to date");
+                    dispatch({
+                      type: "checkout",
+                      payload: payload,
                     });
-                } else {
-                  //console.log("address up to date");
-                  dispatch({
-                    type: "checkout",
-                    payload: payload,
-                  });
-                }
+                  }
 
-                // await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
-                //   if (response.data.getOrdersByUserId !== null) {
-                //     payload.orders = response.data.getOrdersByUserId;
-                //     dispatch({
-                //       type: "checkout",
-                //       payload: payload
-                //     })
-                //   }
-                // });
-              }
-            });
+                  // await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
+                  //   if (response.data.getOrdersByUserId !== null) {
+                  //     payload.orders = response.data.getOrdersByUserId;
+                  //     dispatch({
+                  //       type: "checkout",
+                  //       payload: payload
+                  //     })
+                  //   }
+                  // });
+                }
+              },
+            );
           }
-        }
+        },
       );
     }
   };
@@ -1964,7 +1971,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
                   async (res) => {
                     await fetchOrders(payload);
                     return true;
-                  }
+                  },
                 );
               } else {
                 return await fetchOrders(payload).then((res) => {
@@ -1978,7 +1985,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
               });
             }
           }
-        }
+        },
       );
 
       if (updateRes !== undefined) {
@@ -2014,7 +2021,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
               return true;
             });
           }
-        }
+        },
       );
 
       if (updateRes !== undefined) {
@@ -2032,13 +2039,13 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       return await getOrderRejection({ variables: { OrderId } }).then(
         async function (response) {
           return response.data.getOrderRejection;
-        }
+        },
       );
     }
   };
 
   var CreateOrderRejectionList = async function CreateOrderRejectionList(
-    order
+    order,
   ) {
     if (order._id !== undefined) {
       let OrderId = order._id;
@@ -2055,7 +2062,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
 
   var UpdateOrderRejectionList = async function UpdateOrderRejectionList(
     order,
-    _id
+    _id,
   ) {
     if (order._id !== undefined) {
       let OrderId = order._id;
@@ -2105,7 +2112,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
 
   var refreshingOrderTables = async function refreshingOrderTables(
     payload,
-    Orders
+    Orders,
   ) {
     if (payload.currentUser !== undefined) {
       if (payload.orders !== undefined && Orders !== undefined) {
@@ -2142,7 +2149,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     payload,
     RiderId,
     StartDate,
-    EndDate
+    EndDate,
   ) {
     if (payload.currentUser !== undefined) {
       //console.log("Rider Id is:");
@@ -2164,7 +2171,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   };
 
   var sendNewApplicationEmail = async function sendNewApplicationEmail(
-    formVals
+    formVals,
   ) {
     // var data1 = {event: 'staff add package send new package email',
     //                 value:{"Wtf is in formVals: " : "Wtf is in formVals:", formVals: formVals}
@@ -2205,7 +2212,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       emailServiceId,
       emailNewJobAppTemplate,
       RequestParams,
-      emailUserId
+      emailUserId,
     )
       .then(function (res) {
         if (res) {
@@ -2240,8 +2247,8 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
             ? cartItems[length - 1].drink + " | "
             : " "
         }\n${cartItems[length - 1].otherIntructions + " | "}\n${
-              "Not Available? " + cartItems[length - 1].ifnotAvailable
-            }`
+          "Not Available? " + cartItems[length - 1].ifnotAvailable
+        }`
           : `${cartItems[length - 1].itemName + ": "}\n${
               cartItems[length - 1].drink !== "Select Drink"
                 ? cartItems[length - 1].drink + " | "
@@ -2261,7 +2268,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
 
   var buildTableItemCost = function buildTableItemCost(
     length: number,
-    cartItems
+    cartItems,
   ) {
     if (length <= cartItems.length) {
       let result = "$" + cartItems[length - 1].itemCost;
@@ -2276,7 +2283,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     file,
     UserInfo,
     orderNum,
-    receiptInfo
+    receiptInfo,
   ) {
     //var fileType = fileType;
     //console.log(receiptInfo);
@@ -2296,8 +2303,8 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
         receiptInfo.PaymentMethod === "M"
           ? "MASTERCARD"
           : receiptInfo.PaymentMethod === "V"
-          ? "VISA"
-          : receiptInfo.PaymentMethod,
+            ? "VISA"
+            : receiptInfo.PaymentMethod,
       currency: "JMD",
       order_total: receiptInfo.OrderTotal,
       order_pfee: receiptInfo.ServiceCharge.toString(),
@@ -2352,7 +2359,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
 
   var uploadInvoiceEmail = async function uploadInvoiceEmail(
     formVals,
-    filetype
+    filetype,
   ) {
     ////console.log("Wtf is in formVals");
     ////console.log(formVals);
@@ -2415,7 +2422,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       emailServiceId,
       emailNewInvoiceUploadTemplate,
       RequestParams,
-      emailUserId
+      emailUserId,
     )
       .then(function (res) {
         if (res) {
@@ -2434,7 +2441,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     user_name,
     user_email,
     subject,
-    message
+    message,
   ) {
     // var data1 = {event: 'staff add package send new package email',
     //                 value:{"Wtf is in formVals: " : "Wtf is in formVals:", formVals: formVals}
@@ -2461,7 +2468,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       emailServiceId,
       emailContactUsTemplate,
       RequestParams,
-      emailUserId
+      emailUserId,
     )
       .then(function (res) {
         if (res) {
@@ -2486,7 +2493,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     businessemail,
     businessname,
     contact,
-    role
+    role,
   ) {
     // var data1 = {event: 'staff add package send new package email',
     //                 value:{"Wtf is in formVals: " : "Wtf is in formVals:", formVals: formVals}
@@ -2514,7 +2521,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       emailServiceId,
       emailNewMerchantAppTemplate,
       RequestParams,
-      emailUserId
+      emailUserId,
     )
       .then(function (res) {
         if (res) {
@@ -2535,7 +2542,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   };
 
   var sendNewOrderStatusEmail = async function sendNewOrderStatusEmail(
-    formVals
+    formVals,
   ) {
     // var data1 = {event: 'staff add package send new package email',
     //                 value:{"Wtf is in formVals: " : "Wtf is in formVals:", formVals: formVals}
@@ -2592,7 +2599,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       emailServiceId,
       emailNewOrderStatusTemplate,
       RequestParams,
-      emailUserId
+      emailUserId,
     )
       .then(function (res) {
         if (res) {
@@ -2731,7 +2738,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     id: string,
     isAvailable: boolean,
     disabled: boolean,
-    restIndex: number
+    restIndex: number,
   ) {
     ////console.log("about to fetch restaurants");
     await updateRestaurantStatus({
@@ -2763,7 +2770,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     payload,
     id: string,
     isAvailable: boolean,
-    disabled: boolean
+    disabled: boolean,
   ) {
     ////console.log("about to fetch restaurants");
     await updateRiderStatus({
@@ -2793,7 +2800,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   };
 
   var fetchRidersForOrder = async function fetchRidersForOrder(
-    generalUserLocation
+    generalUserLocation,
   ) {
     ////console.log("about to fetch restaurants");
     return await getRidersByParish({
@@ -2819,7 +2826,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   var AddGeneralLocation = async function AddGeneralLocation(
     payload,
     location,
-    target
+    target,
   ) {
     payload.generalLocation = location;
     payload.targetLocation = target;
@@ -2866,7 +2873,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
 
   var UpdatePaySettings = async function UpdatePaySettings(
     payload,
-    paysetting
+    paysetting,
   ) {
     // Now client is available here
     await client.resetStore();
@@ -2880,7 +2887,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
             await fetchPaySettings(payload);
             return true;
           }
-        }
+        },
       );
 
       if (updateRes !== undefined) {
@@ -2926,7 +2933,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
 
   var UpdateShippingAddress = async function UpdateShippingAddress(
     payload,
-    shippingaddress
+    shippingaddress,
   ) {
     if (shippingaddress !== null && shippingaddress !== undefined) {
       let newShippingAdd = shippingaddress;
@@ -2959,7 +2966,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     file,
     uid,
     UserInfo,
-    mbNum
+    mbNum,
   ) {
     //var tstamp = ''
     let PackageInfo = {
@@ -3039,7 +3046,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
                   .then(async function (emailSentRes) {
                     if (Deliver) {
                       console.log(
-                        "about to update contact and address details."
+                        "about to update contact and address details.",
                       );
                       let updateCAndAddress = await updateContactAndAddress({
                         variables: {
@@ -3147,7 +3154,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       emailServiceId,
       emailNewPreAlertTemplate,
       RequestParams,
-      emailUserId
+      emailUserId,
     )
       .then(function (res) {
         if (res) {
@@ -3164,7 +3171,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
 
   var fetchMailBoxNumberByUserId = async function fetchMailBoxNumberByUserId(
     uid,
-    payload
+    payload,
   ) {
     //console.log("User id inside fetchMailBoxNumberByUserId is: ");
     //console.log(uid);
@@ -3329,7 +3336,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
           deliveryFee: any;
         }
       | null
-      | undefined
+      | undefined,
   ) {
     if (restaurant !== null && restaurant !== undefined) {
       //console.log(restaurant);
@@ -3402,7 +3409,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
 
   var uploadToFirebaseCloud = async function uploadToFirebaseCloud(
     payload,
-    file
+    file,
   ) {
     try {
       if (!file) return;
@@ -3436,28 +3443,28 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
         City: user.City !== "" ? user.City : "Maypen",
         _id: payload.userInfo._id,
       };
-      return await updateUser({ variables: newUser }).then(async function (
-        response
-      ) {
-        ////console.log("update user result");
-        if (response.data.updateUser !== null) {
-          //console.log(response.data.updateOrder);
-          payload.userInfo = {
-            fullName: user.FullName,
-            email: user.Email,
-            addressLine1: user.AddressLine1,
-            addressLine2: newUser.AddressLine2,
-            contactNumber: user.ContactNumber,
-            city: newUser.City,
-            _id: payload.userInfo._id,
-          };
-          dispatch({ type: "fetch_userinfo", payload: payload });
-          return true;
-        } else {
-          //console.log("not same")
-          return false;
-        }
-      });
+      return await updateUser({ variables: newUser }).then(
+        async function (response) {
+          ////console.log("update user result");
+          if (response.data.updateUser !== null) {
+            //console.log(response.data.updateOrder);
+            payload.userInfo = {
+              fullName: user.FullName,
+              email: user.Email,
+              addressLine1: user.AddressLine1,
+              addressLine2: newUser.AddressLine2,
+              contactNumber: user.ContactNumber,
+              city: newUser.City,
+              _id: payload.userInfo._id,
+            };
+            dispatch({ type: "fetch_userinfo", payload: payload });
+            return true;
+          } else {
+            //console.log("not same")
+            return false;
+          }
+        },
+      );
     } else {
       return false;
     }

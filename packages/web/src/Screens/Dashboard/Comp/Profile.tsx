@@ -1,6 +1,7 @@
-import { Button, Container, FormControl, Grid, InputLabel, makeStyles, OutlinedInput, Theme, createStyles, InputAdornment, IconButton, Typography } from "@material-ui/core"
-import { EmailOutlined, PersonRounded, PhoneAndroidRounded, LocationCityRounded } from "@material-ui/icons";
-import { Alert } from "@material-ui/lab";
+import { Button, Container, FormControl, Grid, InputLabel, OutlinedInput, Theme, InputAdornment, IconButton, Typography } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';
+import { EmailOutlined, PersonRounded, PhoneAndroidRounded, LocationCityRounded } from '@mui/icons-material';
+import { Alert } from '@mui/lab';
 import clsx from "clsx"
 import React,{ useEffect, useState } from "react";
 import { useAppData } from "../../../Context/AppDataContext";
@@ -314,9 +315,9 @@ export const Profile: React.FC = function Profile(){
                                                             <PersonRounded />
                                                         </IconButton>
                                                     </InputAdornment>}
-                                                labelWidth={103}
                                                 required={true}
-                                                notched={true}
+                                                //labelWidth={103}
+                                                //notched={true}
                                         />
                                         </FormControl>
                                     </Grid>
@@ -335,9 +336,9 @@ export const Profile: React.FC = function Profile(){
                                                             <PhoneAndroidRounded />
                                                         </IconButton>
                                                     </InputAdornment>}
-                                                labelWidth={103}
                                                 required={true}
-                                                notched={true}
+                                                //labelWidth={103}
+                                                //notched={true}
                                         />
                                         </FormControl>
                                     </Grid>
@@ -356,10 +357,10 @@ export const Profile: React.FC = function Profile(){
                                                             <EmailOutlined />
                                                         </IconButton>
                                                     </InputAdornment>}
-                                                labelWidth={103}
                                                 required={true}
-                                                notched={true}
                                                 disabled={true}
+                                                //labelWidth={103}
+                                                //notched={true}
                                             />
                                         </FormControl>
                                     </Grid>
@@ -378,9 +379,9 @@ export const Profile: React.FC = function Profile(){
                                                             <LocationCityRounded />
                                                         </IconButton>
                                                     </InputAdornment>}
-                                                labelWidth={103}
                                                 required={true}
-                                                notched={true}
+                                                //labelWidth={103}
+                                                //notched={true}
                                         />
                                         </FormControl>
                                     </Grid>
@@ -399,9 +400,9 @@ export const Profile: React.FC = function Profile(){
                                                             <LocationCityRounded />
                                                         </IconButton>
                                                     </InputAdornment>}
-                                                labelWidth={103}
                                                 required={true}
-                                                notched={true}
+                                                //labelWidth={103}
+                                                //notched={true}
                                         />
                                         </FormControl>
                                     </Grid>
@@ -420,9 +421,9 @@ export const Profile: React.FC = function Profile(){
                                                             <LocationCityRounded />
                                                         </IconButton>
                                                     </InputAdornment>}
-                                                labelWidth={103}
                                                 required={true}
-                                                notched={true}
+                                                //labelWidth={103}
+                                                //notched={true}
                                         />
                                         </FormControl>
                                     </Grid>
