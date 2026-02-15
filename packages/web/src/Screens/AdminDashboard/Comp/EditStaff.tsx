@@ -1,7 +1,11 @@
+import React, { useEffect, useState } from "react";
+import clsx from "clsx";
+import { Link, useHistory } from "react-router-dom";
+import ArrowForwardRounded from "@mui/icons-material/ArrowForwardRounded";
+import { useAppData } from "../../../Context/AppDataContext";
+import { Alert } from "@mui/lab";
 import {
   Grid,
-  makeStyles,
-  createStyles,
   Theme,
   Button,
   Modal,
@@ -15,13 +19,8 @@ import {
   FormGroup,
   FormControlLabel,
   Switch,
-} from "@material-ui/core";
-import React, { useEffect, useState } from "react";
-import clsx from "clsx";
-import { Link, useHistory } from "react-router-dom";
-import { ArrowForwardRounded } from "@material-ui/icons/";
-import { useAppData } from "../../../Context/AppDataContext";
-import { Alert } from "@material-ui/lab";
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
 
 interface State {
   Name: string;
@@ -140,7 +139,7 @@ const useStyles = makeStyles((theme: Theme) =>
     alert: {
       marginBottom: "5%",
     },
-  })
+  }),
 );
 
 export const EditStaff: React.FC = () => {
@@ -186,22 +185,22 @@ export const EditStaff: React.FC = () => {
       values.Name === ""
         ? setError("Please enter FullName")
         : values.Email === "" ||
-          !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.Email)
-        ? setError("Please enter a valid Email")
-        : values.Role === "Select Staff Role"
-        ? setError("Please select user postition")
-        : values.Parish === "Select Parish"
-        ? setError("Please select a Parish")
-        : await editStaff(value, values).then(async function (res1) {
-            if (res1) {
-              setSuccess("Member updated successfully.");
-              setTimeout(() => {
-                setSuccess("");
-              }, 3000);
-            } else {
-              setError("Unable to update info at this time.");
-            }
-          });
+            !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.Email)
+          ? setError("Please enter a valid Email")
+          : values.Role === "Select Staff Role"
+            ? setError("Please select user postition")
+            : values.Parish === "Select Parish"
+              ? setError("Please select a Parish")
+              : await editStaff(value, values).then(async function (res1) {
+                  if (res1) {
+                    setSuccess("Member updated successfully.");
+                    setTimeout(() => {
+                      setSuccess("");
+                    }, 3000);
+                  } else {
+                    setError("Unable to update info at this time.");
+                  }
+                });
     } catch (error) {
       console.log(error);
       setError("Failed to create restaurant");

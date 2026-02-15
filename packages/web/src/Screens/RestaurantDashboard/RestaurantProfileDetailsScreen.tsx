@@ -1,18 +1,42 @@
-import { useAppData } from "../../Context/AppDataContext";
-import { AppBar, Grid, Typography, Theme, Card, Tabs, Tab, Modal, Backdrop, Fade, Container, useTheme, useMediaQuery, CardContent, TextField, FormControl, Button, Box, MenuItem, InputLabel, Select,  } from '@mui/material';
-import { makeStyles, createStyles } from '@mui/styles';;
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import MUIDataTable from "mui-datatables";
-//import clsx from 'clsx';
-//Import Components
-//import { ItemRating } from '../../../Components/ItemRating';
 import { Link } from "react-router-dom";
-import { Alert } from '@mui/lab';
-import { EditRounded, DeleteOutlineRounded } from '@mui/icons-material';
+import { Alert } from "@mui/lab";
+import EditRounded from "@mui/icons-material/EditRounded";
+import DeleteOutlineRounded from "@mui/icons-material/DeleteOutlineRounded";
 import clsx from "clsx";
 import { HeaderRight } from "./Comp/HeaderRight";
 import { Spinner } from "../../Components/spinner";
+import MUIDataTable from "mui-datatables";
+import { useAppData } from "../../Context/AppDataContext";
+import {
+  AppBar,
+  Grid,
+  Typography,
+  Theme,
+  Card,
+  Tabs,
+  Tab,
+  Modal,
+  Backdrop,
+  Fade,
+  Container,
+  useTheme,
+  useMediaQuery,
+  CardContent,
+  TextField,
+  FormControl,
+  Button,
+  Box,
+  MenuItem,
+  InputLabel,
+  Select,
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
+//import clsx from 'clsx';
+//Import Components
+//import { ItemRating } from '../../../Components/ItemRating';
+
 const Sidebar = React.lazy(() => import("./Comp/Sidebar"));
 const HeaderLeft = React.lazy(() => import("./Comp/HeaderLeft"));
 
@@ -325,7 +349,7 @@ const useStyles = makeStyles((theme: Theme) =>
       zIndex: theme.zIndex.drawer + 1,
       color: "#fff",
     },
-  })
+  }),
 );
 
 const columns = [
@@ -639,7 +663,7 @@ export const RestaurantProfileDetailsScreen: React.FC =
 
     const handleClose3 = () => {
       let newMenu = values.Menu.filter(
-        (item, index) => index !== selectedMenuItemIndex
+        (item, index) => index !== selectedMenuItemIndex,
       );
       //console.log(newMenu);
       setValues({ ...values, Menu: newMenu });
@@ -683,7 +707,7 @@ export const RestaurantProfileDetailsScreen: React.FC =
       try {
         setSelectedMenuItemIndex(index);
         setSelectedMenuItem(
-          restaurantInfo.MenuItems[parseInt(index.toString())]
+          restaurantInfo.MenuItems[parseInt(index.toString())],
         );
         setOpen2(true);
       } catch (err) {}
@@ -693,7 +717,7 @@ export const RestaurantProfileDetailsScreen: React.FC =
       try {
         setSelectedMenuItemIndex(index);
         setSelectedMenuItem(
-          restaurantInfo.MenuItems[parseInt(index.toString())]
+          restaurantInfo.MenuItems[parseInt(index.toString())],
         );
         setOpen3(true);
       } catch (err) {}
@@ -1062,7 +1086,7 @@ export const RestaurantProfileDetailsScreen: React.FC =
                                     <div
                                       className={clsx(
                                         classes.paper,
-                                        "modalMobile"
+                                        "modalMobile",
                                       )}
                                     >
                                       <h3
@@ -1112,7 +1136,7 @@ export const RestaurantProfileDetailsScreen: React.FC =
                                                       selectedMenuItem.ItemName
                                                     }
                                                     onChange={handleChange4(
-                                                      "ItemName"
+                                                      "ItemName",
                                                     )}
                                                     variant="outlined"
                                                     placeholder="Enter Item Name"
@@ -1136,7 +1160,7 @@ export const RestaurantProfileDetailsScreen: React.FC =
                                                         selectedMenuItem.ItemDescription
                                                       }
                                                       onChange={handleChange4(
-                                                        "ItemDescription"
+                                                        "ItemDescription",
                                                       )}
                                                       variant="outlined"
                                                       placeholder="Enter Item Description"
@@ -1161,7 +1185,7 @@ export const RestaurantProfileDetailsScreen: React.FC =
                                                         selectedMenuItem.MenuCategory
                                                       }
                                                       onChange={handleChange4(
-                                                        "MenuCategory"
+                                                        "MenuCategory",
                                                       )}
                                                       variant="outlined"
                                                       placeholder="Enter Category"
@@ -1179,7 +1203,7 @@ export const RestaurantProfileDetailsScreen: React.FC =
                                                       selectedMenuItem.ItemCost
                                                     }
                                                     onChange={handleChange4(
-                                                      "ItemCost"
+                                                      "ItemCost",
                                                     )}
                                                     variant="outlined"
                                                     placeholder="Enter Item Cost"
@@ -1229,7 +1253,7 @@ export const RestaurantProfileDetailsScreen: React.FC =
                                     <div
                                       className={clsx(
                                         classes.paper,
-                                        "modalMobile"
+                                        "modalMobile",
                                       )}
                                     >
                                       <h3
@@ -1313,7 +1337,7 @@ export const RestaurantProfileDetailsScreen: React.FC =
                                     <div
                                       className={clsx(
                                         classes.paper,
-                                        "modalMobile"
+                                        "modalMobile",
                                       )}
                                     >
                                       <h3
@@ -1363,7 +1387,7 @@ export const RestaurantProfileDetailsScreen: React.FC =
                                                       selectedMenuItem.ItemName
                                                     }
                                                     onChange={handleChange4(
-                                                      "ItemName"
+                                                      "ItemName",
                                                     )}
                                                     variant="outlined"
                                                     placeholder="Enter Item Name"
@@ -1387,7 +1411,7 @@ export const RestaurantProfileDetailsScreen: React.FC =
                                                         selectedMenuItem.ItemDescription
                                                       }
                                                       onChange={handleChange4(
-                                                        "ItemDescription"
+                                                        "ItemDescription",
                                                       )}
                                                       variant="outlined"
                                                       placeholder="Enter Item Description"
@@ -1412,7 +1436,7 @@ export const RestaurantProfileDetailsScreen: React.FC =
                                                         selectedMenuItem.MenuCategory
                                                       }
                                                       onChange={handleChange4(
-                                                        "MenuCategory"
+                                                        "MenuCategory",
                                                       )}
                                                       variant="outlined"
                                                       placeholder="Enter Category"
@@ -1430,7 +1454,7 @@ export const RestaurantProfileDetailsScreen: React.FC =
                                                       selectedMenuItem.ItemCost
                                                     }
                                                     onChange={handleChange4(
-                                                      "ItemCost"
+                                                      "ItemCost",
                                                     )}
                                                     variant="outlined"
                                                     placeholder="Enter Item Cost"

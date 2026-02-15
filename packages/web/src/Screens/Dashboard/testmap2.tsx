@@ -1,9 +1,13 @@
-//import { createStyles, makeStyles, Theme } from "@material-ui/core";
-import { Component } from "react";
+//import { Theme } from '@mui/material';
+import { createStyles, makeStyles } from '@mui/styles';;
+import React, { Component } from "react";
 //import Autocomplete from "react-google-autocomplete";
 import { Map, GoogleApiWrapper, Polygon } from "google-maps-react";
-import { Alert } from "@material-ui/lab";
-import { Typography } from "@material-ui/core";
+
+/** Map from google-maps-react; IMapProps is incomplete (missing children, zoom, initialCenter). */
+const MapWithChildren = Map as React.ComponentType<any>;
+import { Alert } from '@mui/lab';
+import { Typography } from '@mui/material';
 import { userInfo } from "os";
 
 // const useStyles = makeStyles((theme: Theme) =>
@@ -411,13 +415,12 @@ class MapContainer extends Component<MyProps> {
   render() {
     return (
       <div id="generated">
-        <Map
+        <MapWithChildren
           google={this.props.google}
           style={{
             width: document.location.pathname !== "/testmap" ? "0%" : "100%",
             height: document.location.pathname !== "/testmap" ? "0%" : "100%",
           }}
-          // @ts-ignore
           zoom={12}
           initialCenter={{
             lat: 17.96454,
@@ -432,7 +435,7 @@ class MapContainer extends Component<MyProps> {
             fillColor="#0000FF"
             fillOpacity={0.35}
           />
-        </Map>
+        </MapWithChildren>
         {this.state.open2 !== undefined ? (
           this.state.open2 && (
             <Typography

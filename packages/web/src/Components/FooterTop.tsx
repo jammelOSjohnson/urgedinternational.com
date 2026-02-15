@@ -1,11 +1,5 @@
-import {
-  Container,
-  createStyles,
-  Grid,
-  makeStyles,
-  Theme,
-  Typography,
-} from "@material-ui/core";
+import { Container, Grid, Theme, Typography,  } from '@mui/material';
+import { createStyles, makeStyles } from '@mui/styles';;
 import clsx from "clsx";
 import { useHistory } from "react-router-dom";
 

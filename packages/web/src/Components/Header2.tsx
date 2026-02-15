@@ -8,9 +8,7 @@ import {
   Typography,
   AppBar,
   Toolbar,
-  makeStyles,
   Theme,
-  createStyles,
   Button,
   Drawer,
   List,
@@ -22,22 +20,22 @@ import {
   Fade,
   Backdrop,
   Modal,
-} from "@material-ui/core";
-// eslint-disable-next-line
-import { auth } from "../firebase";
+  Box,
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
 import clsx from "clsx";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import {
-  HomeRounded,
-  InfoRounded,
-  ContactMailRounded,
-  HelpRounded,
-  RoomServiceRounded,
-} from "@material-ui/icons";
-import MailIcon from "@material-ui/icons/Mail";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import HomeRounded from "@mui/icons-material/HomeRounded";
+import InfoRounded from "@mui/icons-material/InfoRounded";
+import ContactMailRounded from "@mui/icons-material/ContactMailRounded";
+import HelpRounded from "@mui/icons-material/HelpRounded";
+import RoomServiceRounded from "@mui/icons-material/RoomServiceRounded";
+import MailIcon from "@mui/icons-material/Mail";
 import { useSubscription } from "@apollo/client";
 import { ORDERS_SUBSCRIPTION } from "../GraphQL/Subscriptions";
 import { Link } from "react-router-dom";
+// eslint-disable-next-line
+import { auth } from "../firebase";
 
 // interface State {
 //   genralLocation: string;
@@ -729,7 +727,7 @@ export const Header2: React.FC = function Header2() {
               </>
             ) : (
               <>
-                <Typography style={{ textAlign: "right", width: "100%" }}>
+                <Box component="nav" sx={{ textAlign: "right", width: "100%" }}>
                   {headersData.map(({ label, href }) => {
                     return referralPath === "/" && href === "/" ? (
                       <Button
@@ -803,7 +801,7 @@ export const Header2: React.FC = function Header2() {
                       Sign In
                     </Button>
                   </a>
-                </Typography>
+                </Box>
               </>
             )}
           </Toolbar>

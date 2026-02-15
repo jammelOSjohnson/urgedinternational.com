@@ -1,6 +1,7 @@
-import { makeStyles, createStyles, Theme} from '@material-ui/core';
+import { Theme } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React from 'react';
-import { Rating } from '@material-ui/lab';
+import { Rating } from '@mui/lab';
 //Import Components
 
 // interface Props {

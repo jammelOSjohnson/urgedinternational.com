@@ -1,6 +1,7 @@
 import React from 'react';
 //import CSS
-import { Container, Grid, Typography, makeStyles, createStyles, Theme, Button, Card, CardMedia, CardContent, useMediaQuery, useTheme} from '@material-ui/core';
+import { Container, Grid, Typography, Theme, Button, Card, CardMedia, CardContent, useMediaQuery, useTheme } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import { Link } from "react-router-dom";
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';

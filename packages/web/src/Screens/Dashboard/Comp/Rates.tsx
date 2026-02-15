@@ -1,4 +1,5 @@
-import { Container, Grid, makeStyles, createStyles, Theme, Typography } from '@material-ui/core';
+import { Container, Grid, Theme, Typography } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React from 'react';
 
 

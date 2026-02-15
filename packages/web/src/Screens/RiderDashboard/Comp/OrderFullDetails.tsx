@@ -3,8 +3,6 @@ import {
   Button,
   Container,
   Grid,
-  makeStyles,
-  createStyles,
   Typography,
   Theme,
   Card,
@@ -14,12 +12,13 @@ import {
   Select,
   MenuItem,
   Snackbar,
-} from "@material-ui/core";
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import clsx from "clsx";
 import moment from "moment";
-import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
+import MuiAlert, { AlertProps } from "@mui/lab/Alert";
 //Import Components
 
 function Alert(props: AlertProps) {
@@ -108,7 +107,7 @@ const useStyles = makeStyles((theme: Theme) =>
     boldSubtitle: {
       fontWeight: 700,
     },
-  })
+  }),
 );
 
 export const OrderFullDetails: React.FC = () => {
@@ -125,7 +124,7 @@ export const OrderFullDetails: React.FC = () => {
     window.location.href = url;
   }
   const orderIndex = parseInt(
-    history.location.state !== undefined ? history.location.state.from : 0
+    history.location.state !== undefined ? history.location.state.from : 0,
   );
   const [rider, setRider] = useState("");
   const [selectedRider, setSelectedRider] = useState();
@@ -161,7 +160,7 @@ export const OrderFullDetails: React.FC = () => {
     (item) =>
       item.OrderStatus !== "Delivered" &&
       item.OrderStatus !== "Cancelled" &&
-      item.OrderStatus !== "Not Assigned"
+      item.OrderStatus !== "Not Assigned",
   );
 
   const handleSubmit = async (finalselectedRider, orderIndex) => {
@@ -287,7 +286,7 @@ export const OrderFullDetails: React.FC = () => {
                             </Grid>
                           ) : (
                             <></>
-                          )
+                          ),
                       )}
                       <Grid item xs={12}>
                         {filteredOrders[orderIndex].OrderStatus !==
@@ -456,7 +455,7 @@ export const OrderFullDetails: React.FC = () => {
                                 </Typography>
                               </Grid>
                             </>
-                          )
+                          ),
                         )}
                       </Grid>
                     </Typography>
@@ -522,7 +521,7 @@ export const OrderFullDetails: React.FC = () => {
                         </Typography>
                         <Typography>
                           {`$${parseFloat(
-                            filteredOrders[orderIndex].OrderTotal
+                            filteredOrders[orderIndex].OrderTotal,
                           ).toFixed(2)}`}
                         </Typography>
                       </Grid>

@@ -1,25 +1,24 @@
 import React, { useEffect } from "react";
 import { useAppData } from "../../../Context/AppDataContext";
-//import { DataGrid, GridColDef } from '@material-ui/data-grid';
+import { useQuery } from "@apollo/client";
+import { GET_ORDERS_BY_RIDERID } from "../../../GraphQL/Queries";
+import { Alert } from "@mui/lab";
+import clsx from "clsx";
+//import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import MUIDataTable from "mui-datatables";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
-import { EditRounded } from "@material-ui/icons/";
+import EditRounded from "@mui/icons-material/EditRounded";
 import {
   Button,
-  createStyles,
   FormControl,
-  makeStyles,
   MenuItem,
   Select,
   Snackbar,
   Theme,
   Typography,
-} from "@material-ui/core";
-import { useQuery } from "@apollo/client";
-import { GET_ORDERS_BY_RIDERID } from "../../../GraphQL/Queries";
-import { Alert } from "@material-ui/lab";
-import clsx from "clsx";
+} from "@mui/material";
+import { createStyles, makeStyles } from "@mui/styles";
 
 const columns = [
   {
@@ -136,7 +135,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: "auto",
       marginRight: "auto",
     },
-  })
+  }),
 );
 
 export const OrdersTable: React.FC = function OrdersTable() {
@@ -193,7 +192,7 @@ export const OrdersTable: React.FC = function OrdersTable() {
     (item) =>
       item.OrderStatus !== "Delivered" &&
       item.OrderStatus !== "Cancelled" &&
-      item.OrderStatus !== "Not Assigned"
+      item.OrderStatus !== "Not Assigned",
   );
 
   const handleSubmit = async (status, orderIndex) => {
@@ -238,7 +237,7 @@ export const OrdersTable: React.FC = function OrdersTable() {
             (rider) =>
               rider.disabled === false &&
               rider.isAvailable === true &&
-              rider._id !== filteredOrders[orderIndex].Rider._id
+              rider._id !== filteredOrders[orderIndex].Rider._id,
           );
           //console.log(filteredRiders);
           if (filteredRiders.length > 0) {
@@ -268,12 +267,12 @@ export const OrdersTable: React.FC = function OrdersTable() {
             (rider) =>
               rider.disabled === false &&
               rider.isAvailable === true &&
-              rider._id !== filteredOrders[orderIndex].Rider._id
+              rider._id !== filteredOrders[orderIndex].Rider._id,
           );
           console.log(filteredRiders);
           if (filteredRiders.length > 0) {
             let unrestricktedRiders = filteredRiders.filter(
-              (rider) => !res.RejectionList.includes(rider._id)
+              (rider) => !res.RejectionList.includes(rider._id),
             );
             console.log("unrestricted", unrestricktedRiders);
             if (unrestricktedRiders.length !== 0) {

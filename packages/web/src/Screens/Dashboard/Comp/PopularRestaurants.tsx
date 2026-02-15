@@ -1,18 +1,6 @@
 import { useAppData } from "../../../Context/AppDataContext";
-import {
-  Grid,
-  makeStyles,
-  createStyles,
-  Typography,
-  Theme,
-  Button,
-  Card,
-  CardMedia,
-  CardContent,
-  CardHeader,
-  Avatar,
-  CircularProgress,
-} from "@material-ui/core";
+import { Grid, Typography, Theme, Button, Card, CardMedia, CardContent, CardHeader, Avatar, CircularProgress,  } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";

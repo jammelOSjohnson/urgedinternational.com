@@ -1,4 +1,5 @@
-import { makeStyles, createStyles, Typography, Theme } from "@material-ui/core";
+import { Typography, Theme } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React, { lazy, Suspense } from "react";
 import { Link } from "react-router-dom";
 import { useHistory } from "react-router-dom";

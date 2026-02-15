@@ -1,5 +1,6 @@
 //import { useAppData } from '../../../Context/AppDataContext';
-import { Grid, makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent, useMediaQuery, useTheme} from '@material-ui/core';
+import { Grid, Typography, Theme, Card, CardMedia, CardContent, useMediaQuery, useTheme } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React from 'react';
 
 const useStyles = makeStyles((theme: Theme) => 

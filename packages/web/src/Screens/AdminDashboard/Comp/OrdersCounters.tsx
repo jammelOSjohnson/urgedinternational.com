@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client';
-import { Grid, makeStyles, createStyles, Typography, Theme, Card, CardContent } from '@material-ui/core';
+import { Grid, Typography, Theme, Card, CardContent } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import moment from 'moment';
 import React, { useEffect, useState } from 'react';
 //import { useHistory } from 'react-router-dom';

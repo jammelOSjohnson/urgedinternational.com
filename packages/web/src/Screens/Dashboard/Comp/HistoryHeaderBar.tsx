@@ -1,9 +1,10 @@
-import React from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import { Grid } from '@material-ui/core';
+import React from "react";
+import { Theme } from "@mui/material";
+import { createStyles, makeStyles } from "@mui/styles";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import { Grid } from "@mui/material";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -14,10 +15,10 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: theme.spacing(2),
     },
     bar: {
-        background: theme.palette.primary.main,
-        borderRadius: "10px",
-        marginBottom: "1%"
-    }
+      background: theme.palette.primary.main,
+      borderRadius: "10px",
+      marginBottom: "1%",
+    },
   }),
 );
 
@@ -28,35 +29,25 @@ export const HistoryHeaderBar: React.FC = function HistoryHeaderBar() {
     <div className={classes.root}>
       <AppBar position="static" className={classes.bar}>
         <Toolbar variant="dense">
-        <Grid container direction="row" spacing={0}>
+          <Grid container direction="row" spacing={0}>
             <Grid item xs={4}>
-                <Typography color="inherit">
-                    Transaction Type
-                </Typography>
+              <Typography color="inherit">Transaction Type</Typography>
             </Grid>
             <Grid item xs={2}>
-                <Typography color="inherit">
-                    Date
-                </Typography>
+              <Typography color="inherit">Date</Typography>
             </Grid>
             <Grid item xs={2}>
-                <Typography color="inherit">
-                    Status
-                </Typography>
+              <Typography color="inherit">Status</Typography>
             </Grid>
             <Grid item xs={2}>
-                <Typography color="inherit">
-                    Cost
-                </Typography>
+              <Typography color="inherit">Cost</Typography>
             </Grid>
             <Grid item xs={2}>
-                <Typography color="inherit">
-                    Actions
-                </Typography>
+              <Typography color="inherit">Actions</Typography>
             </Grid>
-        </Grid>
+          </Grid>
         </Toolbar>
       </AppBar>
     </div>
   );
-}
+};

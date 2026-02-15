@@ -1,42 +1,31 @@
-import {
-  Backdrop,
-  CircularProgress,
-  createStyles,
-  makeStyles,
-  Theme,
-  Typography,
-} from "@material-ui/core";
 import React from "react";
+import { CircularProgress } from "@mui/material";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    spinner: {
-      paddingTop: 0,
-      paddingBottom: 0,
-      height: "80vh",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    backdrop: {
-      zIndex: theme.zIndex.drawer + 1,
-      color: "#fff",
-    },
-  })
-);
+const spinnerStyle: React.CSSProperties = {
+  paddingTop: 0,
+  paddingBottom: 0,
+  height: "80vh",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
+const overlayStyle: React.CSSProperties = {
+  zIndex: 1300,
+  position: "fixed",
+  inset: 0,
+  backgroundColor: "rgba(0, 0, 0, 0.7)",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  color: "#fff",
+};
+
 export const Spinner: React.FC = function Spinner() {
-  const classes = useStyles();
-  //@typescript-eslint/no-unused-vars
-  const [open, setOpen] = React.useState(true);
-
-  const handleClose = () => {
-    //setOpen3(false);
-  };
   return (
-    <div className={classes.spinner}>
-      <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
+    <div style={spinnerStyle}>
+      <div style={overlayStyle} aria-hidden>
         <CircularProgress color="secondary" />
-      </Backdrop>
+      </div>
     </div>
   );
 };

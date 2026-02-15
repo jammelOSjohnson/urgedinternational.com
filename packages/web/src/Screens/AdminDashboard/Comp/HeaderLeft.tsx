@@ -1,29 +1,29 @@
+import React from "react";
+import { useHistory } from "react-router-dom";
+//import clsx from 'clsx';
+//import { PlayArrowRounded } from "@mui/icons-material/";
+import { Link } from "react-router-dom";
+import Drawer from "@mui/material/Drawer";
+import Button from "@mui/material/Button";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import MailIcon from "@mui/icons-material/Mail";
+import CloudDownloadRounded from "@mui/icons-material/CloudDownloadRounded";
+import HistoryRounded from "@mui/icons-material/HistoryRounded";
+import CloseRounded from "@mui/icons-material/CloseRounded";
+import clsx from "clsx";
+import { useAppData } from "../../../Context/AppDataContext";
 import {
-  makeStyles,
-  createStyles,
   Typography,
   Theme,
   useMediaQuery,
   useTheme,
   IconButton,
-} from "@material-ui/core";
-import React from "react";
-import { useHistory } from "react-router-dom";
-//import clsx from 'clsx';
-//import { PlayArrowRounded } from "@material-ui/icons/";
-import { Link } from "react-router-dom";
-import Drawer from "@material-ui/core/Drawer";
-import Button from "@material-ui/core/Button";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import MailIcon from "@material-ui/icons/Mail";
-import { CloudDownloadRounded, HistoryRounded } from "@material-ui/icons/";
-import { CloseRounded } from "@material-ui/icons";
-import clsx from "clsx";
-import { useAppData } from "../../../Context/AppDataContext";
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
 
 // interface State {
 //     email: string;
@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme: Theme) =>
       transform: "rotate(180deg)",
       bottom: "-102%",
     },
-  })
+  }),
 );
 
 type Anchor = "top" | "left" | "bottom" | "right";
@@ -503,7 +503,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
               </ListItemIcon>
               <ListItemText primary={text} />
             </ListItem>
-          )
+          ),
         )}
       </List>
       <Divider />
@@ -579,7 +579,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                     <ListItemText primary={text} />
                   </ListItem>
                 </Link>
-              )
+              ),
             )
           : ["Settings", "Login"].map((text, index) =>
               text === "Login" ? (
@@ -656,7 +656,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                     <ListItemText primary={text} />
                   </ListItem>
                 </Link>
-              )
+              ),
             )}
         <IconButton
           color="inherit"

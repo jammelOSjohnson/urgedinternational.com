@@ -22,11 +22,9 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import clsx from "clsx";
-import {
-  LockRounded,
-  EmailOutlined,
-  PlayArrowRounded,
-} from "@mui/icons-material/";
+import LockRounded from "@mui/icons-material/LockRounded";
+import EmailOutlined from "@mui/icons-material/EmailOutlined";
+import PlayArrowRounded from "@mui/icons-material/PlayArrowRounded";
 import Alert from "@mui/lab/Alert";
 import { Link } from "react-router-dom";
 import { auth } from "../../firebase";

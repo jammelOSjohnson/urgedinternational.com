@@ -1,9 +1,13 @@
 {
-    "private": "true",
-    "workspaces": [
-        "packages/*"
-    ],
-    "dependencies": {
-        "@material-ui/lab": "^4.0.0-alpha.60"
-    }
+  "private": "true",
+  "workspaces": [
+    "packages/*"
+  ],
+  "dependencies": {
+    "@mui/lab": "^5.0.0-alpha.170"
+  },
+  "resolutions": {
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  }
 }

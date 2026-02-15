@@ -65,8 +65,9 @@ import { WebSocketLink } from "@apollo/client/link/ws";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { SubscriptionClient } from "subscriptions-transport-ws";
 
-import CssBaseline from "@material-ui/core/CssBaseline";
-import { createTheme, ThemeProvider } from "@material-ui/core";
+import CssBaseline from "@mui/material/CssBaseline";
+import { createTheme, ThemeProvider, StyledEngineProvider } from "@mui/material/styles";
+import { ThemeProvider as JssThemeProvider } from "@mui/styles";
 import { Suspense, useEffect } from "react";
 import "../css/custom.css";
 import "jspdf/dist/polyfills.es.js";
@@ -115,54 +116,61 @@ const theme = createTheme({
       light: "#C5C5C5",
     },
   },
-  overrides: {
+  components: {
     MuiOutlinedInput: {
-      root: {
-        color: "#ffffff",
-        position: "relative",
-        "& $notchedOutline": {
-          borderColor: "#ffffff",
-        },
-        "&:hover:not($disabled):not($focused):not($error) $notchedOutline": {
-          borderColor: "#ffffff",
+      styleOverrides: {
+        root: {
           color: "#ffffff",
-          // Reset on touch devices, it doesn't add specificity
-          "@media (hover: none)": {
+          position: "relative",
+          "& .MuiOutlinedInput-notchedOutline": {
             borderColor: "#ffffff",
+          },
+          "&:hover:not(.Mui-disabled):not(.Mui-focused):not(.Mui-error) .MuiOutlinedInput-notchedOutline":
+            {
+              borderColor: "#ffffff",
+              color: "#ffffff",
+            },
+          "@media (hover: none)": {
+            "&:hover:not(.Mui-disabled):not(.Mui-focused):not(.Mui-error) .MuiOutlinedInput-notchedOutline":
+              {
+                borderColor: "#ffffff",
+                color: "#ffffff",
+              },
+          },
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#ffffff",
+            borderWidth: 1,
+            color: "#ffffff",
+          },
+          "&:not(.Mui-focused) .MuiOutlinedInput-notchedOutline": {
             color: "#ffffff",
           },
         },
-        "&$focused $notchedOutline": {
-          borderColor: "#ffffff",
-          borderWidth: 1,
+        colorSecondary: {
           color: "#ffffff",
         },
-        "&not($focused) $notchedOutline": {
-          color: "#ffffff",
-        },
-      },
-      colorSecondary: {
-        color: "#ffffff",
       },
     },
     MuiInputLabel: {
-      root: {
-        "&$focused": {
-          color: "#ffffff",
+      styleOverrides: {
+        root: {
+          "&.Mui-focused": {
+            color: "#ffffff",
+          },
         },
       },
     },
     MuiButton: {
-      // Name of the rule
-      root: {
-        // Some CSS
-        "&$focused": {
-          backgroundColor: "#FFF",
+      styleOverrides: {
+        root: {
+          "&.Mui-focused": {
+            backgroundColor: "#FFF",
+          },
         },
-      },
-      outlinedSecondary: {
-        color: "#ffffff",
-        border: "1px solid #ffffff",
+        outlinedSecondary: {
+          color: "#ffffff",
+          border: "1px solid #ffffff",
+        },
       },
     },
   },
@@ -262,160 +270,180 @@ const App: React.FC = function App() {
 
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <CssBaseline>
-          <main>
-            <div>
-              <Router>
-                <Header2 />
-                <Switch>
-                  {/* <Sidebar/> */}
-                  {/* <Route path="/" exact component={AboutScreen} /> */}
-                  <Route path="/" exact component={HomeScreen} />
-                  <Route path="/testmap" exact component={testmap2} />
-                  {/* Customer Screens */}
-                  <Route path="/Services" exact component={ServicesScreen} />
-                  <Route path="/ContactUs" exact component={ContactUsScreen} />
-                  <Route path="/Login">
-                    <LoginScreen />
-                  </Route>
-                  <Route path="/Register" component={RegisterScreen} />
-                  <Route
-                    path="/Dashboard"
-                    exact
-                    component={CustomerDashboardScreen}
-                  />
-                  <Route
-                    path="/FoodDelivery"
-                    exact
-                    component={FoodDeliveryDashboardScreen}
-                  />
-                  <Route
-                    path="/Restaurants"
-                    exact
-                    component={RestaurantsScreen}
-                  />
-                  <Route
-                    path="/RestaurantItem"
-                    exact
-                    component={ViewRestaurantItem}
-                  />
-                  {/* <Route path="/Uship" exact component={CargoAndFreight} /> */}
-                  <Route path="/Rates" exact component={RatesScreen} />
-                  <Route
-                    path="/ShoppingCart"
-                    exact
-                    component={ShoppingCartScreen}
-                  />
-                  <Route
-                    path="/OrderCompleted"
-                    exact
-                    component={OrderCompleted}
-                  />
-                  <Route path="/OrderHistory" exact component={OrdersHistory} />
-                  <Route path="/Errands" exact component={ErrandScreen} />
-                  <Route path="/Profile" exact component={UserProfileScreen} />
-                  <Route
-                    path="/Privacy"
-                    exact
-                    component={PrivacyPolicyScreen}
-                  />
-                  <Route path="/Tos" exact component={TermsOfServiceScreen} />
-                  {/* Restaurant Screens */}
-                  <Route
-                    path="/RestaurantDashboard"
-                    exact
-                    component={RestaurantDashboardScreen}
-                  />
-                  <Route
-                    path="/ViewOrdersDetails"
-                    exact
-                    component={RestaurantOrderDetailsScreen}
-                  />
-                  <Route
-                    path="/RestaurantProfile"
-                    exact
-                    component={RestaurantProfileDetailsScreen}
-                  />
-                  {/* Admin Screens */}
-                  <Route
-                    path="/AdminDashboard"
-                    exact
-                    component={AdminDashboard}
-                  />
-                  <Route path="/AdminOrders" exact component={OrdersScreen} />
-                  <Route
-                    path="/AdminOrderSDetails"
-                    exact
-                    component={OrdersDetailsScreen}
-                  />
-                  <Route path="/Employees" exact component={EmployeesScreen} />
-                  <Route
-                    path="/EmployeeDetails"
-                    exact
-                    component={EmployeeDetailsScreen}
-                  />
-                  <Route
-                    path="/Organisations"
-                    exact
-                    component={OrganisationsScreen}
-                  />
-                  <Route
-                    path="/AdminSettings"
-                    exact
-                    component={SettingsScreen}
-                  />
-                  <Route
-                    path="/PaySettings"
-                    exact
-                    component={PaySettingsScreen}
-                  />
-                  <Route
-                    path="/OrgDetails"
-                    exact
-                    component={OrgDetailsScreen}
-                  />
-                  <Route
-                    path="/ShippingAddressSettings"
-                    exact
-                    component={ShippingAddressSettingsScreen}
-                  />
-                  <Route path="/SalesExport" exact component={SalesExport} />
-                  {/* Rider Screens */}
-                  <Route
-                    path="/DeliveryOrders"
-                    exact
-                    component={RiderOrdersScreen}
-                  />
-                  <Route
-                    path="/DeliveryOrdersDetails"
-                    exact
-                    component={RiderOrderDetailsScreen}
-                  />
-                  <Route
-                    path="/OrgDetails"
-                    exact
-                    component={OrgDetailsScreen}
-                  />
-                  <Route
-                    path="/ProcessPaymentResult/:id"
-                    exact
-                    component={PaymentProcessScreen}
-                  />
-                  <Route path="/:id" exact component={RestaurantMenuScreen} />
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <JssThemeProvider theme={theme}>
+          <CssBaseline>
+            <main>
+              <div>
+                <Router>
+                  <Header2 />
+                  <Switch>
+                    {/* <Sidebar/> */}
+                    {/* <Route path="/" exact component={AboutScreen} /> */}
+                    <Route path="/" exact component={HomeScreen} />
+                    <Route path="/testmap" exact component={testmap2} />
+                    {/* Customer Screens */}
+                    <Route path="/Services" exact component={ServicesScreen} />
+                    <Route
+                      path="/ContactUs"
+                      exact
+                      component={ContactUsScreen}
+                    />
+                    <Route path="/Login">
+                      <LoginScreen />
+                    </Route>
+                    <Route path="/Register" component={RegisterScreen} />
+                    <Route
+                      path="/Dashboard"
+                      exact
+                      component={CustomerDashboardScreen}
+                    />
+                    <Route
+                      path="/FoodDelivery"
+                      exact
+                      component={FoodDeliveryDashboardScreen}
+                    />
+                    <Route
+                      path="/Restaurants"
+                      exact
+                      component={RestaurantsScreen}
+                    />
+                    <Route
+                      path="/RestaurantItem"
+                      exact
+                      component={ViewRestaurantItem}
+                    />
+                    {/* <Route path="/Uship" exact component={CargoAndFreight} /> */}
+                    <Route path="/Rates" exact component={RatesScreen} />
+                    <Route
+                      path="/ShoppingCart"
+                      exact
+                      component={ShoppingCartScreen}
+                    />
+                    <Route
+                      path="/OrderCompleted"
+                      exact
+                      component={OrderCompleted}
+                    />
+                    <Route
+                      path="/OrderHistory"
+                      exact
+                      component={OrdersHistory}
+                    />
+                    <Route path="/Errands" exact component={ErrandScreen} />
+                    <Route
+                      path="/Profile"
+                      exact
+                      component={UserProfileScreen}
+                    />
+                    <Route
+                      path="/Privacy"
+                      exact
+                      component={PrivacyPolicyScreen}
+                    />
+                    <Route path="/Tos" exact component={TermsOfServiceScreen} />
+                    {/* Restaurant Screens */}
+                    <Route
+                      path="/RestaurantDashboard"
+                      exact
+                      component={RestaurantDashboardScreen}
+                    />
+                    <Route
+                      path="/ViewOrdersDetails"
+                      exact
+                      component={RestaurantOrderDetailsScreen}
+                    />
+                    <Route
+                      path="/RestaurantProfile"
+                      exact
+                      component={RestaurantProfileDetailsScreen}
+                    />
+                    {/* Admin Screens */}
+                    <Route
+                      path="/AdminDashboard"
+                      exact
+                      component={AdminDashboard}
+                    />
+                    <Route path="/AdminOrders" exact component={OrdersScreen} />
+                    <Route
+                      path="/AdminOrderSDetails"
+                      exact
+                      component={OrdersDetailsScreen}
+                    />
+                    <Route
+                      path="/Employees"
+                      exact
+                      component={EmployeesScreen}
+                    />
+                    <Route
+                      path="/EmployeeDetails"
+                      exact
+                      component={EmployeeDetailsScreen}
+                    />
+                    <Route
+                      path="/Organisations"
+                      exact
+                      component={OrganisationsScreen}
+                    />
+                    <Route
+                      path="/AdminSettings"
+                      exact
+                      component={SettingsScreen}
+                    />
+                    <Route
+                      path="/PaySettings"
+                      exact
+                      component={PaySettingsScreen}
+                    />
+                    <Route
+                      path="/OrgDetails"
+                      exact
+                      component={OrgDetailsScreen}
+                    />
+                    <Route
+                      path="/ShippingAddressSettings"
+                      exact
+                      component={ShippingAddressSettingsScreen}
+                    />
+                    <Route path="/SalesExport" exact component={SalesExport} />
+                    {/* Rider Screens */}
+                    <Route
+                      path="/DeliveryOrders"
+                      exact
+                      component={RiderOrdersScreen}
+                    />
+                    <Route
+                      path="/DeliveryOrdersDetails"
+                      exact
+                      component={RiderOrderDetailsScreen}
+                    />
+                    <Route
+                      path="/OrgDetails"
+                      exact
+                      component={OrgDetailsScreen}
+                    />
+                    <Route
+                      path="/ProcessPaymentResult/:id"
+                      exact
+                      component={PaymentProcessScreen}
+                    />
+                    <Route path="/:id" exact component={RestaurantMenuScreen} />
 
-                  {/* <Route path="/Menu" exact component={RestaurantMenuScreen} /> */}
+                    {/* <Route path="/Menu" exact component={RestaurantMenuScreen} /> */}
 
-                  <Route path="/Checkout" exact component={CheckoutScreen} />
-                  <Route path="/404" component={NotFound} />
-                  <Redirect from="*" to="/404" />
-                </Switch>
-                <Footer />
-              </Router>
-            </div>
-          </main>
-        </CssBaseline>
-      </ThemeProvider>
+                    <Route path="/Checkout" exact component={CheckoutScreen} />
+                    <Route path="/404" component={NotFound} />
+                    <Redirect from="*" to="/404" />
+                  </Switch>
+                  <Footer />
+                </Router>
+              </div>
+            </main>
+          </CssBaseline>
+          </JssThemeProvider>
+        </ThemeProvider>
+      </StyledEngineProvider>
     </>
   );
 };

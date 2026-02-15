@@ -11,7 +11,7 @@ import {
   Fade,
 } from "@mui/material";
 import { makeStyles, createStyles } from "@mui/styles";
-import { SearchRounded } from "@mui/icons-material";
+import SearchRounded from "@mui/icons-material/SearchRounded";
 import { useHistory, Link } from "react-router-dom";
 import React, { useEffect } from "react";
 import clsx from "clsx";

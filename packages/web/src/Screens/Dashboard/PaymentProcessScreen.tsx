@@ -2,14 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useAppData } from "../../Context/AppDataContext";
 import { Spinner } from "../../Components/spinner";
-import {
-  Card,
-  Container,
-  Grid,
-  Theme,
-  createStyles,
-  makeStyles,
-} from "@material-ui/core";
+import { Card, Container, Grid, Theme,  } from '@mui/material';
+import { createStyles, makeStyles } from '@mui/styles';;
 import { ShoppingCartItems } from "./Comp/ShoppingCartItems";
 import DashboardFooter from "./Comp/DashboardFooter";
 import { HeaderRight } from "./Comp/HeaderRight";

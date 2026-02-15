@@ -1,4 +1,5 @@
-import { Container, Grid, makeStyles, createStyles,Theme, useMediaQuery, useTheme, FormGroup, FormControlLabel, Switch } from '@material-ui/core';
+import { Container, Grid, Theme, useMediaQuery, useTheme, FormGroup, FormControlLabel, Switch } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React, { useEffect } from 'react';
 import { Notification } from "../../../Components/Notification";
 import { User } from "../../../Components/User"

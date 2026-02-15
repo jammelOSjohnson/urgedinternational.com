@@ -1,11 +1,6 @@
 import { LiveChatWidget } from "@livechat/widget-react";
-import {
-  Container,
-  Grid,
-  makeStyles,
-  createStyles,
-  Theme,
-} from "@material-ui/core";
+import { Container, Grid, Theme,  } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React from "react";
 // import { useHistory } from 'react-router-dom';
 // import clsx from 'clsx';

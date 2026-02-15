@@ -1,13 +1,13 @@
 import React, {useEffect} from 'react';
 import { useAppData } from '../../../Context/AppDataContext';
-//import { DataGrid, GridColDef } from '@material-ui/data-grid';
+//import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import MUIDataTable from "mui-datatables";
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
-//import { EditRounded } from "@material-ui/icons/";
-import { Snackbar } from '@material-ui/core';
+//import { EditRounded } from "@mui/icons-material/";
+import { Snackbar } from '@mui/material';
 //import { useQuery } from '@apollo/client';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/lab';
   
 
   const columns = [

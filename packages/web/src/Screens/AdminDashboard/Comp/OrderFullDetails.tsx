@@ -3,8 +3,6 @@ import {
   Button,
   Container,
   Grid,
-  makeStyles,
-  createStyles,
   Typography,
   Theme,
   Card,
@@ -14,13 +12,13 @@ import {
   Select,
   MenuItem,
   Snackbar,
-  CardActions,
-} from "@material-ui/core";
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import clsx from "clsx";
 import moment from "moment";
-import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
+import MuiAlert, { AlertProps } from "@mui/lab/Alert";
 //Import Components
 
 // interface Props {
@@ -114,7 +112,7 @@ const useStyles = makeStyles((theme: Theme) =>
     boldSubtitle: {
       fontWeight: 700,
     },
-  })
+  }),
 );
 
 export const OrderFullDetails: React.FC = () => {
@@ -132,7 +130,7 @@ export const OrderFullDetails: React.FC = () => {
     window.location.href = url;
   }
   const orderIndex = parseInt(
-    history.location.state !== undefined ? history.location.state.from : 0
+    history.location.state !== undefined ? history.location.state.from : 0,
   );
   const [rider, setRider] = useState("");
   const [selectedRider, setSelectedRider] = useState();
@@ -231,7 +229,6 @@ export const OrderFullDetails: React.FC = () => {
     const estTime = moment
       .tz(now, "America/Jamaica")
       .format("YYYY-MM-DD h:mm a");
-    var region = orders[orderIndex].DeliveryAddress.split(",");
     var personalInfo = orders[orderIndex].AdditionalInfo.split(" ");
     var email = "";
     var contactnum = "";
@@ -295,7 +292,7 @@ export const OrderFullDetails: React.FC = () => {
                           </Grid>
                         ) : (
                           <></>
-                        )
+                        ),
                       )}
                       <Grid item xs={12}>
                         <form>
@@ -376,6 +373,7 @@ export const OrderFullDetails: React.FC = () => {
                               href={`https://maps.google.com/?q=${orders[orderIndex].Restaurant.AddressLine1}`}
                               style={{ color: "#F7B614" }}
                               target="_blank"
+                              rel="noreferrer"
                             >
                               {orders[orderIndex].Restaurant.AddressLine1}
                             </a>
@@ -498,6 +496,7 @@ export const OrderFullDetails: React.FC = () => {
                             href={`https://www.google.com/maps/place/${orders[orderIndex].Restaurant.AddressLine1}`}
                             style={{ color: "#F7B614" }}
                             target="_blank"
+                            rel="noreferrer"
                           >
                             {orders[orderIndex].Restaurant.AddressLine1}
                           </a>
@@ -509,7 +508,7 @@ export const OrderFullDetails: React.FC = () => {
                         </Typography>
                         <Typography>
                           {`$${parseFloat(
-                            orders[orderIndex].OrderTotal
+                            orders[orderIndex].OrderTotal,
                           ).toFixed(2)}`}
                         </Typography>
                       </Grid>
@@ -607,6 +606,7 @@ export const OrderFullDetails: React.FC = () => {
                         style={{ color: "#F7B614" }}
                         href={`tel:${contactnum}`}
                         target="_blank"
+                        rel="noreferrer"
                       >
                         + {contactnum}
                       </a>
@@ -617,6 +617,7 @@ export const OrderFullDetails: React.FC = () => {
                         href={`https://maps.google.com/?q=${orders[orderIndex].DeliveryAddress}`}
                         style={{ color: "#F7B614" }}
                         target="_blank"
+                        rel="noreferrer"
                       >
                         {orders[orderIndex].DeliveryAddress}
                       </a>
@@ -626,6 +627,7 @@ export const OrderFullDetails: React.FC = () => {
                         href={`https://www.google.com/maps/place/${orders[orderIndex].DeliveryAddress}`}
                         style={{ color: "#F7B614" }}
                         target="_blank"
+                        rel="noreferrer"
                       >
                         {orders[orderIndex].DeliveryAddress}
                       </a>

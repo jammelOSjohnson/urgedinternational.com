@@ -1,34 +1,16 @@
 import { useAppData } from "../../../Context/AppDataContext";
-import {
-  Select,
-  Grid,
-  makeStyles,
-  createStyles,
-  Typography,
-  Theme,
-  TextField,
-  Button,
-  InputLabel,
-  FormControl,
-  Card,
-  CardActionArea,
-  CardMedia,
-  CardContent,
-  CardActions,
-  MenuItem,
-  useMediaQuery,
-  useTheme,
-} from "@material-ui/core";
+import { Select, Grid, Typography, Theme, TextField, Button, InputLabel, FormControl, Card, CardActionArea, CardMedia, CardContent, CardActions, MenuItem, useMediaQuery, useTheme,  } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 //Import Components
 import { ItemRating } from "../../../Components/ItemRating";
 import { FastFoodChickenFlavor } from "./FastFoodChickenFlavor";
-import Modal from "@material-ui/core/Modal";
-import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
+import Modal from '@mui/material/Modal';
+import Backdrop from '@mui/material/Backdrop';
+import Fade from '@mui/material/Fade';
 import clsx from "clsx";
-import { Alert } from "@material-ui/lab";
+import { Alert } from '@mui/lab';
 import MapContainer from "../MapContainer";
 import CheckGps from "./CheckGps";
 import { useParams } from "react-router-dom";
@@ -191,6 +173,8 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "center",
     },
     paper: {
+      position: "relative" as const,
+      zIndex: theme.zIndex.modal + 1,
       backgroundColor: theme.palette.background.paper,
       border: "2px solid #000",
       boxShadow: theme.shadows[5],

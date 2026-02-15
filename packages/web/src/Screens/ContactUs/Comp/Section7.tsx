@@ -1,17 +1,8 @@
 import React, { useState } from "react";
 //import CSS
-import {
-  Container,
-  Typography,
-  makeStyles,
-  createStyles,
-  Theme,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Button,
-} from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { Container, Typography, Theme, Accordion, AccordionSummary, AccordionDetails, Button,  } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

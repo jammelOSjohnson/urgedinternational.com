@@ -1,5 +1,6 @@
 import { useAppData } from '../../../Context/AppDataContext';
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent } from '@material-ui/core';
+import { Container, Grid, Typography, Theme, Card, CardMedia, CardContent } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 //import clsx from 'clsx';

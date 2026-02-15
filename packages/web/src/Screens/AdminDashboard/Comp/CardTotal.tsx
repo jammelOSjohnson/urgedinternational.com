@@ -1,4 +1,5 @@
-import { Card, Grid, makeStyles, createStyles, Typography, Theme, CardContent } from "@material-ui/core";
+import { Card, Grid, Typography, Theme, CardContent } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAppData } from '../../../Context/AppDataContext';

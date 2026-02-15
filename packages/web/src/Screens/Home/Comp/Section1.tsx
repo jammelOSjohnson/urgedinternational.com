@@ -1,11 +1,15 @@
 import React from "react";
 //import CSS
+import { Link } from "react-router-dom";
+import Carousel from "react-bootstrap/Carousel";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../CSS/slider.css";
+import clsx from "clsx";
+import CloseRounded from "@mui/icons-material/CloseRounded";
 import {
   Container,
   Grid,
   Typography,
-  makeStyles,
-  createStyles,
   Theme,
   Button,
   Card,
@@ -15,13 +19,8 @@ import {
   useTheme,
   SnackbarContent,
   IconButton,
-} from "@material-ui/core";
-import { Link } from "react-router-dom";
-import Carousel from "react-bootstrap/Carousel";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "../CSS/slider.css";
-import clsx from "clsx";
-import { CloseRounded } from "@material-ui/icons";
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -167,7 +166,7 @@ const useStyles = makeStyles((theme: Theme) =>
       top: "7%",
       width: "40%",
     },
-  })
+  }),
 );
 
 export const Section1: React.FC = function Section1() {
@@ -525,7 +524,7 @@ export const Section1: React.FC = function Section1() {
                   <Typography
                     className={clsx(
                       classes.heroText1Slide2,
-                      "mobileheroSlideText2"
+                      "mobileheroSlideText2",
                     )}
                     align="left"
                   >

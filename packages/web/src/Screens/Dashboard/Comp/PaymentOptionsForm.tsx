@@ -2,27 +2,11 @@ import { useAppData } from "../../../Context/AppDataContext";
 import { GeoMap } from "./GeoMap";
 import Moment from "moment";
 import postPayment from "../../../Apis/payment";
-import {
-  makeStyles,
-  createStyles,
-  Typography,
-  Theme,
-  Grid,
-  Paper,
-  Divider,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-  TextField,
-  Button,
-  Box,
-  CircularProgress,
-} from "@material-ui/core";
+import { Typography, Theme, Grid, Paper, Divider, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, TextField, Button, Box, CircularProgress,  } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import Alert from "@material-ui/lab/Alert";
+import Alert from "@mui/lab/Alert";
 import MapContainer from "../MapContainer";
 import CheckGps from "./CheckGps";
 

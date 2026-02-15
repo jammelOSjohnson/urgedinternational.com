@@ -1,7 +1,8 @@
-import { useAppData } from "../Context/AppDataContext";
-import { makeStyles, createStyles, Theme, Grid } from "@material-ui/core";
 import React from "react";
-import { PersonRounded } from "@material-ui/icons/";
+import PersonRounded from "@mui/icons-material/PersonRounded";
+import { useAppData } from "../Context/AppDataContext";
+import { Theme, Grid } from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
 
 // eslint-disable-next-line
 const useStyles = makeStyles((theme: Theme) =>
@@ -9,7 +10,7 @@ const useStyles = makeStyles((theme: Theme) =>
     noti: {
       color: "#FF5E14",
     },
-  })
+  }),
 );
 
 export const User: React.FC = function User() {

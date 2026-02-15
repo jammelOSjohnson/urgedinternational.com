@@ -1,7 +1,12 @@
+import React, { useState } from "react";
+import clsx from "clsx";
+import { Link, useHistory } from "react-router-dom";
+import ArrowForwardRounded from "@mui/icons-material/ArrowForwardRounded";
+import { Categories } from "./Categories";
+import { useAppData } from "../../../Context/AppDataContext";
+import { Alert } from "@mui/lab";
 import {
   Grid,
-  makeStyles,
-  createStyles,
   Theme,
   Button,
   Modal,
@@ -12,14 +17,8 @@ import {
   MenuItem,
   Select,
   InputLabel,
-} from "@material-ui/core";
-import React, { useState } from "react";
-import clsx from "clsx";
-import { Link, useHistory } from "react-router-dom";
-import { ArrowForwardRounded } from "@material-ui/icons/";
-import { Categories } from "./Categories";
-import { useAppData } from "../../../Context/AppDataContext";
-import { Alert } from "@material-ui/lab";
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
 
 interface State {
   Name: string;
@@ -150,7 +149,7 @@ const useStyles = makeStyles((theme: Theme) =>
     alert: {
       marginBottom: "5%",
     },
-  })
+  }),
 );
 
 export const AddOrg: React.FC = () => {
@@ -217,78 +216,79 @@ export const AddOrg: React.FC = () => {
       values.Name === ""
         ? setError("Please enter your Restaurant Name")
         : values.Email === "" ||
-          !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.Email)
-        ? setError("Please enter a valid Email")
-        : values.deliveryFee === 0 || values.deliveryFee === null
-        ? setError("Please enter the delivery fee")
-        : await signup2(values, value).then(async function (res1) {
-            if (res1 != null) {
-              if (
-                res1 !==
-                "The email address is already in use by another account."
-              ) {
-                await fetchUserDetailsSignUp(res1).then(function (res) {
-                  if (res) {
-                    ////console.log("About to navigate to dashboard.");
-                    ////console.log(userRolef);
-                    setSuccess("Restaurant Created Successfully");
-                    setTimeout(() => {
-                      setSuccess("");
-                      //console.log("about to go to dashboard");
-                      setValues({
-                        Name: "",
-                        Email: "",
-                        StreetAddress: "",
-                        StreetAddress2: "",
-                        City: "",
-                        Contact: "",
-                        Category: "Select Category",
-                        Menu: [],
-                        OpeningHrs: {
-                          Sunday: "",
-                          Monday: "",
-                          Tuesday: "",
-                          Wednesday: "",
-                          Thursday: "",
-                          Friday: "",
-                          Saturday: "",
-                        },
-                        ImageName:
-                          import.meta.env.REACT_APP_DEFAULT_RESTAURANT_LOGO !==
-                          undefined
-                            ? import.meta.env.REACT_APP_DEFAULT_RESTAURANT_LOGO
-                            : "",
-                        isAvailable: true,
-                        disabled: false,
-                        password: "12345678",
-                        Parish: "Select Parish",
-                        deliveryFee: 0,
-                      });
-                      setOhrs({
-                        Sunday: "",
-                        Monday: "",
-                        Tuesday: "",
-                        Wednesday: "",
-                        Thursday: "",
-                        Friday: "",
-                        Saturday: "",
-                      });
-                      setOpen2(false);
-                    }, 1500);
+            !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.Email)
+          ? setError("Please enter a valid Email")
+          : values.deliveryFee === 0 || values.deliveryFee === null
+            ? setError("Please enter the delivery fee")
+            : await signup2(values, value).then(async function (res1) {
+                if (res1 != null) {
+                  if (
+                    res1 !==
+                    "The email address is already in use by another account."
+                  ) {
+                    await fetchUserDetailsSignUp(res1).then(function (res) {
+                      if (res) {
+                        ////console.log("About to navigate to dashboard.");
+                        ////console.log(userRolef);
+                        setSuccess("Restaurant Created Successfully");
+                        setTimeout(() => {
+                          setSuccess("");
+                          //console.log("about to go to dashboard");
+                          setValues({
+                            Name: "",
+                            Email: "",
+                            StreetAddress: "",
+                            StreetAddress2: "",
+                            City: "",
+                            Contact: "",
+                            Category: "Select Category",
+                            Menu: [],
+                            OpeningHrs: {
+                              Sunday: "",
+                              Monday: "",
+                              Tuesday: "",
+                              Wednesday: "",
+                              Thursday: "",
+                              Friday: "",
+                              Saturday: "",
+                            },
+                            ImageName:
+                              import.meta.env
+                                .REACT_APP_DEFAULT_RESTAURANT_LOGO !== undefined
+                                ? import.meta.env
+                                    .REACT_APP_DEFAULT_RESTAURANT_LOGO
+                                : "",
+                            isAvailable: true,
+                            disabled: false,
+                            password: "12345678",
+                            Parish: "Select Parish",
+                            deliveryFee: 0,
+                          });
+                          setOhrs({
+                            Sunday: "",
+                            Monday: "",
+                            Tuesday: "",
+                            Wednesday: "",
+                            Thursday: "",
+                            Friday: "",
+                            Saturday: "",
+                          });
+                          setOpen2(false);
+                        }, 1500);
+                      } else {
+                        setError("Unable to Create Restaurant at this time");
+                      }
+                    });
+                    console.log(res1, "user account created");
                   } else {
-                    setError("Unable to Create Restaurant at this time");
+                    setError(
+                      "The email address is already in use by another account.",
+                    );
                   }
-                });
-                console.log(res1, "user account created");
-              } else {
-                setError(
-                  "The email address is already in use by another account."
-                );
-              }
-            } else {
-              setError("Unable to Sign Up at this time.");
-            }
-          });
+                } else {
+                  setError("Unable to Sign Up at this time.");
+                }
+              });
     } catch (error) {
       console.log(error);
       setError("Failed to create restaurant");

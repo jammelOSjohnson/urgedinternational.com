@@ -1,61 +1,31 @@
 import { LiveChatWidget } from "@livechat/widget-react";
-import {
-  Container,
-  Grid,
-  makeStyles,
-  createStyles,
-  Typography,
-  Theme,
-} from "@material-ui/core";
+import { Container, Grid, Typography } from "@mui/material";
 import React from "react";
-// import { useHistory } from 'react-router-dom';
-// import clsx from 'clsx';
 //Import Components
 import { HeaderRight } from "./Comp/HeaderRight";
 import { RestaurantList } from "./Comp/RestaurantList";
+import RestaurantCategories from "./Comp/RestaurantCategories";
 const DashboardFooter = React.lazy(() => import("./Comp/DashboardFooter"));
-const RestaurantCategories = React.lazy(
-  () => import("./Comp/RestaurantCategories")
-);
 const HeaderLeft = React.lazy(() => import("./Comp/HeaderLeft"));
 const Sidebar = React.lazy(() => import("./Comp/Sidebar"));
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    gridRoot: {
-      padding: "0px",
-      width: "95%",
-      marginLeft: "auto",
-      marginRight: "auto",
-    },
-    main: {
-      padding: 0,
-      backgroundImage: "url(Images/FoodPortalBackground.png)",
-      height: "100vh",
-    },
-    content: {
-      flexGrow: 1,
-      padding: theme.spacing(3),
-    },
-  })
-);
+const gridRootSx = { padding: "0px", width: "95%", marginLeft: "auto", marginRight: "auto" };
+const mainSx = { padding: 0, backgroundImage: "url(Images/FoodPortalBackground.png)", height: "100vh" };
 
 export const RestaurantsScreen: React.FC = function RestaurantsScreen() {
-  const classes = useStyles();
-
   return (
     <>
       <Sidebar>
         <Container
           maxWidth="xl"
           style={{ paddingLeft: "8px", paddingRight: "8px" }}
-          className={classes.main}
+          sx={mainSx}
         >
           <Grid
             container
             direction="row"
             spacing={0}
-            className={classes.gridRoot}
+            sx={gridRootSx}
             alignItems="center"
           >
             <Grid

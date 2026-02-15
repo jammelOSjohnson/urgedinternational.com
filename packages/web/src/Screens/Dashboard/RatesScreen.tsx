@@ -1,11 +1,6 @@
 import { LiveChatWidget } from "@livechat/widget-react";
-import {
-  Container,
-  Grid,
-  makeStyles,
-  createStyles,
-  Theme,
-} from "@material-ui/core";
+import { Container, Grid, Theme,  } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React from "react";
 //Import Components
 import { HeaderRight } from "./Comp/HeaderRight";

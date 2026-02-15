@@ -1,10 +1,7 @@
 import { useAppData } from "../../../Context/AppDataContext";
 import {
   Grid,
-  makeStyles,
-  createStyles,
   Typography,
-  Theme,
   IconButton,
   Card,
   CardHeader,
@@ -12,111 +9,23 @@ import {
   CardMedia,
   CardContent,
   CircularProgress,
-} from "@material-ui/core";
+} from "@mui/material";
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-//Import Components
 import { ItemRating } from "../../../Components/ItemRating";
 import { Link } from "react-router-dom";
-import MapContainer from "../MapContainer";
+//import MapContainer from "../MapContainer";
 import CheckGps from "./CheckGps";
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      padding: "0% 0px 5% 0px",
-      borderRadius: "22px",
-    },
-    category: {
-      fontWeight: "bold",
-    },
-    cardTitle: {
-      fontSize: "20px",
-      fontWeight: 700,
-      color: "#1D2635",
-      fontFamily: "PT Sans",
-    },
-    cardContent: {
-      flexGrow: 1,
-      textAlign: "left",
-      paddingBottom: "0px",
-      paddingTop: "0px",
-    },
-    cardImage: {
-      textAlign: "left",
-      position: "relative",
-    },
-    card: {
-      background: "#FFFFFF",
-      border: "0.813791px solid #E2E2E2",
-      boxSizing: "border-box",
-      boxShadow: "0px 4.64215px 12.2069px rgba(0, 0, 0, 0.11)",
-      borderRadius: "34.3745px",
-    },
-    OrderResult1: {
-      position: "absolute",
-      top: "23%",
-      right: "9%",
-      color: "#13ADD1",
-      fontFamily: "PT Sans",
-      fontWeight: "bold",
-    },
-    OrderResult2: {
-      position: "absolute",
-      top: "23%",
-      right: "9%",
-      color: "#13ADD1",
-      fontFamily: "PT Sans",
-      fontWeight: "bold",
-    },
-    gridSpacing: {
-      marginLeft: "auto",
-      marginRight: "auto",
-    },
-    avatar: {
-      width: "52px",
-      height: "52px",
-      backgroundColor: "#FFFFFF",
-    },
-    kfcImage: {
-      marginTop: "-24%",
-    },
-    btnLayout: {
-      textAlign: "left",
-      width: "100%",
-      left: "50%",
-      // top: "-108%",
-      position: "relative",
-      paddingTop: "3%",
-      zIndex: 1,
-    },
-    inactiveItemLink: {
-      textDecoration: "none",
-      color: "inherit",
-    },
-    Button: {
-      backgroundColor: "#FF5E14",
-      border: "1.21951px solid #FFFFFF",
-      height: "41px",
-      width: "113px",
-      borderRadius: 36,
-    },
-    btnfonts: {
-      fontFamily: "PT Sans",
-      fontSize: "13px",
-      lineHeight: "16.82px",
-      fontWeight: "bolder",
-      color: "#FAFAFA",
-      textTransform: "none",
-    },
-    menuImages: {
-      borderRadius: "10px",
-    },
-    link: {
-      textDecoration: "none",
-    },
-  })
-);
+const sx = {
+  root: { padding: "0% 0px 5% 0px", borderRadius: "22px" },
+  gridSpacing: { marginLeft: "auto", marginRight: "auto" },
+  avatar: { width: 52, height: 52, backgroundColor: "#FFFFFF" },
+  cardImage: { textAlign: "left" as const, position: "relative" as const },
+  kfcImage: { marginTop: "-24%" },
+  menuImages: { borderRadius: "10px" },
+  link: { textDecoration: "none" },
+};
 
 interface NoGps {
   open2: boolean;
@@ -124,8 +33,6 @@ interface NoGps {
 }
 
 export const RestaurantList: React.FC = function RestaurantList(props) {
-  const classes = useStyles();
-
   var { value } = useAppData();
   var {
     fetchRestaurants,
@@ -193,7 +100,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
           container
           direction="row"
           spacing={1}
-          className={classes.root}
+          sx={sx.root}
           alignItems="center"
         >
           {filteredRestItems.length !== 0
@@ -217,7 +124,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                         md={6}
                         lg={3}
                         xl={3}
-                        className={classes.gridSpacing}
+                        sx={sx.gridSpacing}
                         key={index}
                       >
                         <Link
@@ -226,22 +133,22 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                             e.preventDefault();
                             handleSelectedRestaurant(
                               index,
-                              restaurant.FirstName
+                              restaurant.FirstName,
                             );
                           }}
-                          className={classes.link}
+                          style={sx.link}
                         >
-                          <Card className={classes.root}>
+                          <Card sx={sx.root}>
                             <CardHeader
                               avatar={
                                 <Avatar
                                   variant="square"
                                   aria-label="restaurant"
-                                  className={classes.avatar}
+                                  sx={sx.avatar}
                                 >
-                                  <CardMedia className={classes.cardImage}>
+                                  <CardMedia sx={sx.cardImage}>
                                     <img
-                                      className={classes.kfcImage}
+                                      style={sx.kfcImage}
                                       src={restaurant.ImageName}
                                       alt="kfcImage"
                                     ></img>
@@ -251,7 +158,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                               action={
                                 <IconButton aria-label="settings">
                                   <img
-                                    className={classes.kfcImage}
+                                    style={sx.kfcImage}
                                     src="Images/FavIcon.png"
                                     alt="FavIcon"
                                   ></img>
@@ -265,7 +172,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                                 container
                                 direction="row"
                                 spacing={1}
-                                className={classes.root}
+                                sx={sx.root}
                                 alignItems="center"
                               >
                                 <Grid item xs={6}>
@@ -279,12 +186,12 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                                   </Typography>
                                 </Grid>
                                 {restaurant.MenuItems.filter(
-                                  (item, index) => index < 3
+                                  (item, index) => index < 3,
                                 ).map((item, index) => {
                                   return (
                                     <Grid item xs={4} key={index}>
                                       <img
-                                        className={classes.menuImages}
+                                        style={sx.menuImages}
                                         src={item.ImageName}
                                         height="81px"
                                         width="100%"
@@ -311,7 +218,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                       md={6}
                       lg={3}
                       xl={3}
-                      className={classes.gridSpacing}
+                      sx={sx.gridSpacing}
                       key={index}
                     >
                       <Link
@@ -320,19 +227,19 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                           e.preventDefault();
                           handleSelectedRestaurant(index, restaurant.FirstName);
                         }}
-                        className={classes.link}
+                        style={sx.link}
                       >
-                        <Card className={classes.root}>
+                        <Card sx={sx.root}>
                           <CardHeader
                             avatar={
                               <Avatar
                                 variant="square"
                                 aria-label="restaurant"
-                                className={classes.avatar}
+                                sx={sx.avatar}
                               >
-                                <CardMedia className={classes.cardImage}>
+                                <CardMedia sx={sx.cardImage}>
                                   <img
-                                    className={classes.kfcImage}
+                                    style={sx.kfcImage}
                                     src={restaurant.ImageName}
                                     alt="kfcImage"
                                   ></img>
@@ -342,7 +249,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                             action={
                               <IconButton aria-label="settings">
                                 <img
-                                  className={classes.kfcImage}
+                                  style={sx.kfcImage}
                                   src="Images/FavIcon.png"
                                   alt="FavIcon"
                                 ></img>
@@ -356,7 +263,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                               container
                               direction="row"
                               spacing={1}
-                              className={classes.root}
+                              sx={sx.root}
                               alignItems="center"
                             >
                               <Grid item xs={6}>
@@ -370,12 +277,12 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                                 </Typography>
                               </Grid>
                               {restaurant.MenuItems.filter(
-                                (item, index) => index < 3
+                                (item, index) => index < 3,
                               ).map((item, index) => {
                                 return (
                                   <Grid item xs={4} key={index}>
                                     <img
-                                      className={classes.menuImages}
+                                      style={sx.menuImages}
                                       src={item.ImageName}
                                       height="81px"
                                       width="100%"
@@ -412,7 +319,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                         md={6}
                         lg={3}
                         xl={3}
-                        className={classes.gridSpacing}
+                        sx={sx.gridSpacing}
                         key={index}
                       >
                         <Link
@@ -421,22 +328,22 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                             e.preventDefault();
                             handleSelectedRestaurant(
                               index,
-                              restaurant.FirstName
+                              restaurant.FirstName,
                             );
                           }}
-                          className={classes.link}
+                          style={sx.link}
                         >
-                          <Card className={classes.root}>
+                          <Card sx={sx.root}>
                             <CardHeader
                               avatar={
                                 <Avatar
                                   variant="square"
                                   aria-label="restaurant"
-                                  className={classes.avatar}
+                                  sx={sx.avatar}
                                 >
-                                  <CardMedia className={classes.cardImage}>
+                                  <CardMedia sx={sx.cardImage}>
                                     <img
-                                      className={classes.kfcImage}
+                                      style={sx.kfcImage}
                                       src={restaurant.ImageName}
                                       alt="kfcImage"
                                     ></img>
@@ -446,7 +353,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                               action={
                                 <IconButton aria-label="settings">
                                   <img
-                                    className={classes.kfcImage}
+                                    style={sx.kfcImage}
                                     src="Images/FavIcon.png"
                                     alt="FavIcon"
                                   ></img>
@@ -460,7 +367,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                                 container
                                 direction="row"
                                 spacing={1}
-                                className={classes.root}
+                                sx={sx.root}
                                 alignItems="center"
                               >
                                 <Grid item xs={6}>
@@ -474,12 +381,12 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                                   </Typography>
                                 </Grid>
                                 {restaurant.MenuItems.filter(
-                                  (item, index) => index < 3
+                                  (item, index) => index < 3,
                                 ).map((item, index) => {
                                   return (
                                     <Grid item xs={4} key={index}>
                                       <img
-                                        className={classes.menuImages}
+                                        style={sx.menuImages}
                                         src={item.ImageName}
                                         height="81px"
                                         width="100%"
@@ -506,7 +413,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                       md={6}
                       lg={3}
                       xl={3}
-                      className={classes.gridSpacing}
+                      sx={sx.gridSpacing}
                       key={index}
                     >
                       <Link
@@ -515,19 +422,19 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                           e.preventDefault();
                           handleSelectedRestaurant(index, restaurant.FirstName);
                         }}
-                        className={classes.link}
+                        style={sx.link}
                       >
-                        <Card className={classes.root}>
+                        <Card sx={sx.root}>
                           <CardHeader
                             avatar={
                               <Avatar
                                 variant="square"
                                 aria-label="restaurant"
-                                className={classes.avatar}
+                                sx={sx.avatar}
                               >
-                                <CardMedia className={classes.cardImage}>
+                                <CardMedia sx={sx.cardImage}>
                                   <img
-                                    className={classes.kfcImage}
+                                    style={sx.kfcImage}
                                     src={restaurant.ImageName}
                                     alt="kfcImage"
                                   ></img>
@@ -537,7 +444,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                             action={
                               <IconButton aria-label="settings">
                                 <img
-                                  className={classes.kfcImage}
+                                  style={sx.kfcImage}
                                   src="Images/FavIcon.png"
                                   alt="FavIcon"
                                 ></img>
@@ -551,7 +458,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                               container
                               direction="row"
                               spacing={1}
-                              className={classes.root}
+                              sx={sx.root}
                               alignItems="center"
                             >
                               <Grid item xs={6}>
@@ -565,12 +472,12 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
                                 </Typography>
                               </Grid>
                               {restaurant.MenuItems.filter(
-                                (item, index) => index < 3
+                                (item, index) => index < 3,
                               ).map((item, index) => {
                                 return (
                                   <Grid item xs={4} key={index}>
                                     <img
-                                      className={classes.menuImages}
+                                      style={sx.menuImages}
                                       src={item.ImageName}
                                       height="81px"
                                       width="100%"

@@ -1,17 +1,11 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 //import CSS
-import {
-  Container,
-  Typography,
-  makeStyles,
-  createStyles,
-  Theme,
-  Grid,
-} from "@material-ui/core";
-import Twitter from "@material-ui/icons/Twitter";
-import Facebook from "@material-ui/icons/Facebook";
-import Instagram from "@material-ui/icons/Instagram";
+import { Container, Typography, Theme, Grid,  } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
+import Twitter from '@mui/icons-material/Twitter';
+import Facebook from '@mui/icons-material/Facebook';
+import Instagram from '@mui/icons-material/Instagram';
 // import { Link } from "react-router-dom";
 // import clsx from 'clsx';
 import FooterTop from "./FooterTop";

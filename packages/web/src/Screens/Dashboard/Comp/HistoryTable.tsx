@@ -3,20 +3,10 @@ import { useAppData } from "../../../Context/AppDataContext";
 import moment from "moment";
 import { Link, useHistory } from "react-router-dom";
 import MUIDataTable from "mui-datatables";
-import {
-  Backdrop,
-  Button,
-  createStyles,
-  Fade,
-  Grid,
-  makeStyles,
-  Modal,
-  Snackbar,
-  Theme,
-  Typography,
-} from "@material-ui/core";
+import { Backdrop, Button, Fade, Grid, Modal, Snackbar, Theme, Typography,  } from '@mui/material';
+import { createStyles, makeStyles } from '@mui/styles';;
 import clsx from "clsx";
-import { Alert } from "@material-ui/lab";
+import { Alert } from '@mui/lab';
 
 const columns = [
   {

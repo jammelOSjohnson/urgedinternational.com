@@ -1,25 +1,14 @@
 import { useAppData } from "../../Context/AppDataContext";
-import {
-  Container,
-  Grid,
-  makeStyles,
-  createStyles,
-  Typography,
-  Theme,
-  FormGroup,
-  TextField,
-  Card,
-  Button,
-  Snackbar,
-} from "@material-ui/core";
+import { Container, Grid, Typography, Theme, FormGroup, TextField, Card, Button, Snackbar,  } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React, { useEffect, useState } from "react";
 //Import Components
 import { HeaderRight } from "./Comp/HeaderRight";
-import { FormControlLabel } from "@material-ui/core";
-import Switch from "@material-ui/core/Switch";
+import { FormControlLabel } from '@mui/material';
+import Switch from '@mui/material/Switch';
 import { GET_PAY_SETTINGS } from "../../GraphQL/Queries";
 import { useQuery } from "@apollo/client";
-import { Alert } from "@material-ui/lab";
+import { Alert } from '@mui/lab';
 const Sidebar = React.lazy(() => import("./Comp/Sidebar"));
 const HeaderLeft = React.lazy(() => import("./Comp/HeaderLeft"));
 

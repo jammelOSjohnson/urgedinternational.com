@@ -12,7 +12,6 @@ import {
   FormControl,
   useTheme,
   useMediaQuery,
-  withStyles,
   Checkbox,
   FormControlLabel,
   CheckboxProps,
@@ -23,14 +22,11 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import clsx from "clsx";
-import {
-  LockRounded,
-  EmailOutlined,
-  PlayArrowRounded,
-  PersonRounded,
-} from "@mui/icons-material/";
+import LockRounded from "@mui/icons-material/LockRounded";
+import EmailOutlined from "@mui/icons-material/EmailOutlined";
+import PlayArrowRounded from "@mui/icons-material/PlayArrowRounded";
+import PersonRounded from "@mui/icons-material/PersonRounded";
 import Alert from "@mui/lab/Alert";
-import { auth } from "../../firebase";
 import { LiveChatWidget } from "@livechat/widget-react";
 
 interface State {
@@ -241,18 +237,17 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const GreenCheckbox = withStyles({
-  root: {
-    color: "#FEC109",
-    "&$checked": {
-      color: "green",
-    },
-  },
-  checked: {},
-})((props: CheckboxProps) => (
-  <Checkbox {...props} />
-)) as React.ComponentType<CheckboxProps>;
-//})((props: CheckboxProps) => <Checkbox color="default" {...props} />);
+function GreenCheckbox(props: CheckboxProps) {
+  return (
+    <Checkbox
+      {...props}
+      sx={{
+        color: "#FEC109",
+        "&.Mui-checked": { color: "green" },
+      }}
+    />
+  );
+}
 
 const mobileStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -300,8 +295,6 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
   const [iAgree, setIAgree] = React.useState(false);
 
   var history = useHistory();
-  var location = history.location;
-  var referralPath = location.pathname;
 
   var [error, setError] = useState("");
   var [success, setSuccess] = useState("");
@@ -349,7 +342,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
         : values.fullname === ""
           ? setError("Please enter your Full Name")
           : values.email === "" ||
-              !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
+              !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(
                 values.email,
               )
             ? setError("Please enter a valid Email")
@@ -483,7 +476,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
         }
       }, 1500);
     }
-  }, [userRolef]);
+  }, [userRolef, history]);
 
   return (
     <>

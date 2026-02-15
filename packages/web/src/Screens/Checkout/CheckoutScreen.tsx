@@ -2,8 +2,6 @@ import { useAppData } from "../../Context/AppDataContext";
 import {
   Container,
   Grid,
-  makeStyles,
-  createStyles,
   Typography,
   Theme,
   FormControl,
@@ -12,12 +10,13 @@ import {
   TextField,
   MenuItem,
   Button,
-} from "@material-ui/core";
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 //Import Components
 import { HeaderRight } from "../Dashboard/Comp/HeaderRight";
-import Alert from "@material-ui/lab/Alert";
+import Alert from "@mui/lab/Alert";
 import { DashboardFooter } from "../Dashboard/Comp/DashboardFooter";
 import { LiveChatWidget } from "@livechat/widget-react";
 const Sidebar = React.lazy(() => import("../Dashboard/Comp/Sidebar"));
@@ -90,7 +89,7 @@ const useStyles = makeStyles((theme: Theme) =>
     alert: {
       marginBottom: "5%",
     },
-  })
+  }),
 );
 
 export const CheckoutScreen: React.FC = function CheckoutScreen() {

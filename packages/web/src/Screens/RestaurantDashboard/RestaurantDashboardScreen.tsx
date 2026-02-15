@@ -1,4 +1,5 @@
-import { Container, Grid, makeStyles, createStyles, Theme, useTheme, useMediaQuery } from '@material-ui/core';
+import { Container, Grid, Theme, useTheme, useMediaQuery } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React from 'react';
 //Import Components
 import { HeaderRight } from './Comp/HeaderRight';

@@ -1,13 +1,25 @@
-import { useAppData } from "../../../Context/AppDataContext";
-import { Theme, IconButton, useTheme, CssBaseline, Drawer, Divider, List, ListItem, ListItemIcon, ListItemText, useMediaQuery,  } from '@mui/material';
-import { makeStyles, createStyles } from '@mui/styles';;
 import React from "react";
 import { useHistory } from "react-router-dom";
 import { Link } from "react-router-dom";
 import clsx from "clsx";
 import "../CSS/sidebar.css";
-import MailIcon from '@mui/icons-material/Mail';
-import { CloudDownloadRounded } from "@mui/icons-material/";
+import MailIcon from "@mui/icons-material/Mail";
+import CloudDownloadRounded from "@mui/icons-material/CloudDownloadRounded";
+import { useAppData } from "../../../Context/AppDataContext";
+import {
+  Theme,
+  IconButton,
+  useTheme,
+  CssBaseline,
+  Drawer,
+  Divider,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  useMediaQuery,
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
 
 interface State {
   email: string;
@@ -136,931 +148,124 @@ const useStyles = makeStyles((theme: Theme) =>
 
 /* export const Sidebar: React.FC = function Sidebar({ children }) {
   const classes = useStyles(); */
-export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sidebar({ children }) {
-  const classes = useStyles({});
-  const theme = useTheme();
-  const isMatch = useMediaQuery(theme.breakpoints.down("lg"));
-  const isMatchMedium = useMediaQuery(theme.breakpoints.up("xl"));
-  var { value } = useAppData();
-  var { logout, userInfo, userRolef } = value;
+export const Sidebar: React.FC<{ children?: React.ReactNode }> =
+  function Sidebar({ children }) {
+    const classes = useStyles({});
+    const theme = useTheme();
+    const isMatch = useMediaQuery(theme.breakpoints.down("lg"));
+    const isMatchMedium = useMediaQuery(theme.breakpoints.up("xl"));
+    var { value } = useAppData();
+    var { logout, userInfo, userRolef } = value;
 
-  const [open, setOpen] = React.useState(true);
-  const [open1, setOpen1] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
+    const [open1, setOpen1] = React.useState(false);
 
-  var history = useHistory();
-  var location = history.location;
-  var referralPath = location.pathname;
+    var history = useHistory();
+    var location = history.location;
+    var referralPath = location.pathname;
 
-  //check if user is admin / has access to this page
-  React.useEffect(() => {
-    // role not loaded yet — do nothing
-    if (userRolef === undefined || userRolef === null) return;
+    //check if user is admin / has access to this page
+    React.useEffect(() => {
+      // role not loaded yet — do nothing
+      if (userRolef === undefined || userRolef === null) return;
 
-    const allowedRoles = ["Admin", "Urged_Staff"];
+      const allowedRoles = ["Admin", "Urged_Staff"];
 
-    if (!allowedRoles.includes(userRolef)) {
-      history.replace("/Login"); // replace avoids back button issues
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userRolef]);
+      if (!allowedRoles.includes(userRolef)) {
+        history.replace("/Login"); // replace avoids back button issues
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [userRolef]);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
+    const handleDrawerOpen = () => {
+      setOpen(true);
+    };
 
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+    const handleDrawerClose = () => {
+      setOpen(false);
+    };
 
-  const handleDrawerOpen1 = () => {
-    setOpen1(true);
-  };
+    const handleDrawerOpen1 = () => {
+      setOpen1(true);
+    };
 
-  const handleDrawerClose1 = () => {
-    setOpen1(false);
-  };
+    const handleDrawerClose1 = () => {
+      setOpen1(false);
+    };
 
-  const handleLogout = async (event) => {
-    try {
-      event.preventDefault();
-      logout(value);
-      setTimeout(() => {
-        history.push("/Login");
-      }, 3000);
-    } catch {
-      ////////console.log('Failed to logout.');
-    }
-  };
+    const handleLogout = async (event) => {
+      try {
+        event.preventDefault();
+        logout(value);
+        setTimeout(() => {
+          history.push("/Login");
+        }, 3000);
+      } catch {
+        ////////console.log('Failed to logout.');
+      }
+    };
 
-  const handleLogin = (event) => {
-    try {
-      event.preventDefault();
-      history.push("/Login", { from: history.location.pathname });
-    } catch {
-      ////////console.log('Failed to logout.');
-    }
-  };
+    const handleLogin = (event) => {
+      try {
+        event.preventDefault();
+        history.push("/Login", { from: history.location.pathname });
+      } catch {
+        ////////console.log('Failed to logout.');
+      }
+    };
 
-  return (
-    <>
-      {isMatchMedium ? (
-        <div className={classes.root}>
-          <CssBaseline />
-          <Drawer
-            variant="permanent"
-            className={clsx(classes.drawer, {
-              [classes.drawerOpen]: open,
-              [classes.drawerClose]: !open,
-            })}
-            classes={{
-              paper: clsx({
+    return (
+      <>
+        {isMatchMedium ? (
+          <div className={classes.root}>
+            <CssBaseline />
+            <Drawer
+              variant="permanent"
+              className={clsx(classes.drawer, {
                 [classes.drawerOpen]: open,
                 [classes.drawerClose]: !open,
-              }),
-            }}
-          >
-            {/* <div className={classes.toolbar}>
+              })}
+              classes={{
+                paper: clsx({
+                  [classes.drawerOpen]: open,
+                  [classes.drawerClose]: !open,
+                }),
+              }}
+            >
+              {/* <div className={classes.toolbar}>
                         <IconButton onClick={handleDrawerClose}>
                             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                         </IconButton>
                     </div> */}
 
-            {open && (
-              <img
-                className={classes.logo}
-                src="Images/urged logo.jpg"
-                alt="Urged Logo"
-              ></img>
-            )}
-            {!open && (
-              <img
-                className={classes.logosmall}
-                src="Images/urged logoR.png"
-                alt="Urged Logo"
-              ></img>
-            )}
-            <List style={{ marginTop: "20%" }}>
-              {[
-                "Overview",
-                "Employees",
-                "Admin Orders",
-                "Organisations",
-                "Sales Export",
-              ].map((text, index) =>
-                referralPath === "/AdminDashboard" && text === "Overview" ? (
-                  <ListItem button key={text}>
-                    <ListItemIcon>
-                      {index === 0 ? (
-                        <img
-                          src="Images/OverviewActive.png"
-                          alt="square icon"
-                        />
-                      ) : index === 1 ? (
-                        <img
-                          src="Images/blacktruckIconImage.png"
-                          alt="truck icon"
-                        />
-                      ) : index === 2 ? (
-                        <img
-                          src="Images/BackMarketPlaceIcon.png"
-                          alt="BlackMarket icon"
-                        />
-                      ) : index === 3 ? (
-                        <img
-                          src="Images/OrganizationsIActive.png"
-                          alt="OrganizationsIActive icon"
-                        />
-                      ) : (
-                        <MailIcon />
-                      )}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                ) : referralPath === "/Employees" && text === "Employees" ? (
-                  <ListItem button key={text}>
-                    <ListItemIcon>
-                      {index === 0 ? (
-                        <img
-                          src="Images/GroupSquareIcon2.png"
-                          alt="square icon"
-                        />
-                      ) : index === 1 ? (
-                        <img
-                          src="Images/EmployeesActive.png"
-                          alt="truck icon"
-                        />
-                      ) : index === 2 ? (
-                        <img
-                          src="Images/OrdersActive.png"
-                          alt="BlackMarket icon"
-                        />
-                      ) : index === 3 ? (
-                        <img
-                          src="Images/OrganizationsIActive.png"
-                          alt="OrganizationsIActive icon"
-                        />
-                      ) : (
-                        <MailIcon />
-                      )}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                ) : referralPath === "/AdminOrderSDetails" &&
-                  text === "Admin Orders" ? (
-                  <ListItem button key={text}>
-                    <ListItemIcon>
-                      {index === 0 ? (
-                        <img
-                          src="Images/GroupSquareIcon2.png"
-                          alt="square icon"
-                        />
-                      ) : index === 1 ? (
-                        <img
-                          src="Images/EmployeesIActive.png"
-                          alt="truck icon"
-                        />
-                      ) : index === 2 ? (
-                        <img
-                          src="Images/OrdersActive.png"
-                          alt="BlackMarket icon"
-                        />
-                      ) : index === 3 ? (
-                        <img
-                          src="Images/OrganizationsIActive.png"
-                          alt="OrganizationsIActive icon"
-                        />
-                      ) : (
-                        <MailIcon />
-                      )}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                ) : referralPath === "/AdminOrders" &&
-                  text === "Admin Orders" ? (
-                  <ListItem button key={text}>
-                    <ListItemIcon>
-                      {index === 0 ? (
-                        <img
-                          src="Images/GroupSquareIcon2.png"
-                          alt="square icon"
-                        />
-                      ) : index === 1 ? (
-                        <img
-                          src="Images/EmployeesIActive.png"
-                          alt="truck icon"
-                        />
-                      ) : index === 2 ? (
-                        <img
-                          src="Images/OrdersActive.png"
-                          alt="BlackMarket icon"
-                        />
-                      ) : index === 3 ? (
-                        <img
-                          src="Images/OrganizationsIActive.png"
-                          alt="OrganizationsIActive icon"
-                        />
-                      ) : (
-                        <MailIcon />
-                      )}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                ) : referralPath === "/Organisations" &&
-                  text === "Organisations" ? (
-                  <ListItem button key={text}>
-                    <ListItemIcon>
-                      {index === 0 ? (
-                        <img
-                          src="Images/GroupSquareIcon2.png"
-                          alt="square icon"
-                        />
-                      ) : index === 1 ? (
-                        <img
-                          src="Images/blacktruckIconImage.png"
-                          alt="truck icon"
-                        />
-                      ) : index === 2 ? (
-                        <img
-                          src="Images/OrdersActive.png"
-                          alt="BlackMarket icon"
-                        />
-                      ) : index === 3 ? (
-                        <img
-                          src="Images/OrganizationsIActive.png"
-                          alt="OrganizationsIActive icon"
-                        />
-                      ) : (
-                        <MailIcon />
-                      )}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                ) : referralPath === "/SalesExport" &&
-                  text === "Sales Export" ? (
-                  <ListItem button key={text}>
-                    <ListItemIcon>
-                      {index === 0 ? (
-                        <img
-                          src="Images/GroupSquareIcon2.png"
-                          alt="square icon"
-                        />
-                      ) : index === 1 ? (
-                        <img
-                          src="Images/blacktruckIconImage.png"
-                          alt="truck icon"
-                        />
-                      ) : index === 2 ? (
-                        <img
-                          src="Images/OrdersActive.png"
-                          alt="BlackMarket icon"
-                        />
-                      ) : index === 3 ? (
-                        <img
-                          src="Images/OrganizationsIActive.png"
-                          alt="OrganizationsIActive icon"
-                        />
-                      ) : index === 4 ? (
-                        <CloudDownloadRounded
-                          style={{
-                            color: "#FF5E14",
-                            width: "30px",
-                            height: "31px",
-                          }}
-                        />
-                      ) : (
-                        <MailIcon />
-                      )}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                ) : text === "Overview" ? (
-                  <Link
-                    to="/AdminDashboard"
-                    className={classes.inactiveItemLink}
-                  >
-                    <ListItem button key={text}>
-                      <ListItemIcon>
-                        {index === 0 ? (
-                          <img
-                            src="Images/OverviewIActive.png"
-                            alt="square icon"
-                          />
-                        ) : index === 1 ? (
-                          <img
-                            src="Images/EmployeesIActive.png"
-                            alt="truck icon"
-                          />
-                        ) : index === 2 ? (
-                          <img
-                            src="Images/OrdersIActive.png"
-                            alt="BlackMarket icon"
-                          />
-                        ) : index === 3 ? (
-                          <img
-                            src="Images/OrganizationsIActive.png"
-                            alt="OrganizationsIActive icon"
-                          />
-                        ) : (
-                          <MailIcon />
-                        )}
-                      </ListItemIcon>
-                      <ListItemText primary={text} />
-                    </ListItem>
-                  </Link>
-                ) : text === "Employees" ? (
-                  <Link to="/Employees" className={classes.inactiveItemLink}>
-                    <ListItem button key={text}>
-                      <ListItemIcon>
-                        {index === 0 ? (
-                          <img
-                            src="Images/GroupSquareIcon2.png"
-                            alt="square icon"
-                          />
-                        ) : index === 1 ? (
-                          <img
-                            src="Images/EmployeesIActive.png"
-                            alt="truck icon"
-                          />
-                        ) : index === 2 ? (
-                          <img
-                            src="Images/OrdersIActive.png"
-                            alt="BlackMarket icon"
-                          />
-                        ) : index === 3 ? (
-                          <img
-                            src="Images/OrganizationsIActive.png"
-                            alt="OrganizationsIActive icon"
-                          />
-                        ) : (
-                          <MailIcon />
-                        )}
-                      </ListItemIcon>
-                      <ListItemText primary={text} />
-                    </ListItem>
-                  </Link>
-                ) : text === "Admin Orders" ? (
-                  <Link to="/AdminOrders" className={classes.inactiveItemLink}>
-                    <ListItem button key={text}>
-                      <ListItemIcon>
-                        {index === 0 ? (
-                          <img
-                            src="Images/GroupSquareIcon2.png"
-                            alt="square icon"
-                          />
-                        ) : index === 1 ? (
-                          <img
-                            src="Images/EmployeesIActive.png"
-                            alt="truck icon"
-                          />
-                        ) : index === 2 ? (
-                          <img
-                            src="Images/OrdersIActive.png"
-                            alt="BlackMarket icon"
-                          />
-                        ) : index === 3 ? (
-                          <img
-                            src="Images/OrganizationsIActive.png"
-                            alt="OrganizationsIActive icon"
-                          />
-                        ) : (
-                          <MailIcon />
-                        )}
-                      </ListItemIcon>
-                      <ListItemText primary={text} />
-                    </ListItem>
-                  </Link>
-                ) : text === "Organisations" ? (
-                  <Link
-                    to="/Organisations"
-                    className={classes.inactiveItemLink}
-                  >
-                    <ListItem button key={text}>
-                      <ListItemIcon>
-                        {index === 0 ? (
-                          <img
-                            src="Images/GroupSquareIcon2.png"
-                            alt="square icon"
-                          />
-                        ) : index === 1 ? (
-                          <img
-                            src="Images/EmployeesIActive.png"
-                            alt="truck icon"
-                          />
-                        ) : index === 2 ? (
-                          <img
-                            src="Images/OrdersIActive.png"
-                            alt="BlackMarket icon"
-                          />
-                        ) : index === 3 ? (
-                          <img
-                            src="Images/OrganizationsNActive.png"
-                            alt="OrganizationsIActive icon"
-                          />
-                        ) : (
-                          <MailIcon />
-                        )}
-                      </ListItemIcon>
-                      <ListItemText primary={text} />
-                    </ListItem>
-                  </Link>
-                ) : text === "Sales Export" ? (
-                  <Link to="/SalesExport" className={classes.inactiveItemLink}>
-                    <ListItem button key={text}>
-                      <ListItemIcon>
-                        {index === 0 ? (
-                          <img
-                            src="Images/GroupSquareIcon2.png"
-                            alt="square icon"
-                          />
-                        ) : index === 1 ? (
-                          <img
-                            src="Images/EmployeesIActive.png"
-                            alt="truck icon"
-                          />
-                        ) : index === 2 ? (
-                          <img
-                            src="Images/OrdersIActive.png"
-                            alt="BlackMarket icon"
-                          />
-                        ) : index === 3 ? (
-                          <img
-                            src="Images/OrganizationsIActive.png"
-                            alt="OrganizationsIActive icon"
-                          />
-                        ) : index === 4 ? (
-                          <CloudDownloadRounded
-                            style={{
-                              color: "#D2D3D8",
-                              width: "30px",
-                              height: "31px",
-                            }}
-                          />
-                        ) : (
-                          <MailIcon />
-                        )}
-                      </ListItemIcon>
-                      <ListItemText primary={text} />
-                    </ListItem>
-                  </Link>
-                ) : (
-                  <ListItem button key={text}>
-                    <ListItemIcon>
-                      {index === 0 ? (
-                        <img
-                          src="Images/GroupSquareIcon2.png"
-                          alt="square icon"
-                        />
-                      ) : index === 1 ? (
-                        <img
-                          src="Images/EmployeesIActive.png"
-                          alt="truck icon"
-                        />
-                      ) : index === 2 ? (
-                        <img
-                          src="Images/OrdersIActive.png"
-                          alt="BlackMarket icon"
-                        />
-                      ) : index === 3 ? (
-                        <img
-                          src="Images/OrganizationsIActive.png"
-                          alt="OrganizationsIActive icon"
-                        />
-                      ) : index === 4 ? (
-                        <CloudDownloadRounded
-                          style={{
-                            color: "#D2D3D8",
-                            width: "30px",
-                            height: "31px",
-                          }}
-                        />
-                      ) : (
-                        <MailIcon />
-                      )}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                ),
+              {open && (
+                <img
+                  className={classes.logo}
+                  src="Images/urged logo.jpg"
+                  alt="Urged Logo"
+                ></img>
               )}
-            </List>
-            <Divider />
-            <List>
-              {userInfo.fullName !== null &&
-              userInfo.fullName !== "" &&
-              userInfo.fullName !== undefined
-                ? ["Settings", "Logout"].map((text, index) =>
-                    text === "Logout" ? (
-                      <a
-                        href="/"
-                        onClick={handleLogout}
-                        className={classes.inactiveItemLink}
-                      >
-                        <ListItem button key={text}>
-                          <ListItemIcon>
-                            {index === 0 ? (
-                              <img
-                                src="Images/SettingNActive.png"
-                                alt="BlackMarket icon"
-                              />
-                            ) : index === 1 ? (
-                              <img
-                                src="Images/LogoutIActive.png"
-                                alt="BlackMarket icon"
-                              />
-                            ) : (
-                              <MailIcon />
-                            )}
-                          </ListItemIcon>
-                          <ListItemText primary={text} />
-                        </ListItem>
-                      </a>
-                    ) : referralPath === "AdminSettings" &&
-                      text === "Settings" ? (
-                      <Link
-                        to="/AdminSettings"
-                        className={classes.inactiveItemLink}
-                      >
-                        <ListItem button key={text}>
-                          <ListItemIcon>
-                            {index === 0 ? (
-                              <img
-                                src="Images/SettingIActive.png"
-                                alt="BlackMarket icon"
-                              />
-                            ) : index === 1 ? (
-                              <img
-                                src="Images/LogoutIActive.png"
-                                alt="BlackMarket icon"
-                              />
-                            ) : (
-                              <MailIcon />
-                            )}
-                          </ListItemIcon>
-                          <ListItemText primary={text} />
-                        </ListItem>
-                      </Link>
-                    ) : (
-                      <Link
-                        to="/AdminSettings"
-                        className={classes.inactiveItemLink}
-                      >
-                        <ListItem button key={text}>
-                          <ListItemIcon>
-                            {index === 0 ? (
-                              <img
-                                src="Images/SettingNActive.png"
-                                alt="BlackMarket icon"
-                              />
-                            ) : index === 1 ? (
-                              <img
-                                src="Images/LogoutIActive.png"
-                                alt="BlackMarket icon"
-                              />
-                            ) : (
-                              <MailIcon />
-                            )}
-                          </ListItemIcon>
-                          <ListItemText primary={text} />
-                        </ListItem>
-                      </Link>
-                    ),
-                  )
-                : ["Settings", "Login"].map((text, index) =>
-                    text === "Login" ? (
-                      <a
-                        href="/Login"
-                        onClick={handleLogin}
-                        className={classes.inactiveItemLink}
-                      >
-                        <ListItem button key={text}>
-                          <ListItemIcon>
-                            {index === 0 ? (
-                              <img
-                                src="Images/SettingIActive.png"
-                                alt="BlackMarket icon"
-                              />
-                            ) : index === 1 ? (
-                              <img
-                                src="Images/LogoutIActive.png"
-                                className={classes.loginIconStyle}
-                                alt="BlackMarket icon"
-                              />
-                            ) : (
-                              <MailIcon />
-                            )}
-                          </ListItemIcon>
-                          <ListItemText primary={text} />
-                        </ListItem>
-                      </a>
-                    ) : (
-                      <Link
-                        to="/AdminSettings"
-                        className={classes.inactiveItemLink}
-                      >
-                        <ListItem button key={text}>
-                          <ListItemIcon>
-                            {index === 0 ? (
-                              <img
-                                src="Images/SettingIActive.png"
-                                alt="BlackMarket icon"
-                              />
-                            ) : index === 1 ? (
-                              <img
-                                src="Images/LogoutIActive.png"
-                                alt="BlackMarket icon"
-                              />
-                            ) : (
-                              <MailIcon />
-                            )}
-                          </ListItemIcon>
-                          <ListItemText primary={text} />
-                        </ListItem>
-                      </Link>
-                    ),
-                  )}
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={handleDrawerOpen}
-                edge="start"
-                className={clsx(classes.expandIconStyle, {
-                  [classes.hide]: open,
-                })}
-              >
+              {!open && (
                 <img
-                  src="Images/collapse_icon1.svg"
-                  style={{ width: "100%" }}
-                  alt="icon"
-                />
-              </IconButton>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={handleDrawerClose}
-                edge="start"
-                className={clsx(classes.callapsibleIconStyle, {
-                  [classes.hide]: !open,
-                })}
-              >
-                <img
-                  src="Images/collapse_icon1.svg"
-                  style={{ width: "100%" }}
-                  alt="icon"
-                />
-              </IconButton>
-            </List>
-          </Drawer>
-          <main className={classes.content} style={{ padding: "0px" }}>
-            {children}
-          </main>
-        </div>
-      ) : (
-        <></>
-      )}
-
-      {isMatch ? (
-        <div className={classes.root}>
-          <CssBaseline />
-          <Drawer
-            variant="permanent"
-            className={clsx(
-              classes.drawer,
-              {
-                [classes.drawerOpen]: open1,
-                [classes.drawerClose]: !open1,
-              },
-              "hideOnMobile",
-            )}
-            classes={{
-              paper: clsx({
-                [classes.drawerOpen]: open1,
-                [classes.drawerClose]: !open1,
-              }),
-            }}
-          >
-            {/* <div className={classes.toolbar}>
-                        <IconButton onClick={handleDrawerClose}>
-                            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-                        </IconButton>
-                    </div> */}
-
-            {open1 && (
-              <img
-                className={classes.logo}
-                src="Images/urged logo.jpg"
-                alt="Urged Logo"
-              ></img>
-            )}
-            {!open1 && (
-              <img
-                className={classes.logosmall}
-                src="Images/urged logoR.png"
-                alt="Urged Logo"
-              ></img>
-            )}
-            <List>
-              {[
-                "Overview",
-                "Employees",
-                "Admin Orders",
-                "Organisations",
-                "Sales Export",
-              ].map((text, index) =>
-                referralPath === "/AdminDashboard" && text === "Overview" ? (
-                  <ListItem button key={text}>
-                    <ListItemIcon>
-                      {index === 0 ? (
-                        <img
-                          src="Images/OverviewActive.png"
-                          alt="square icon"
-                        />
-                      ) : index === 1 ? (
-                        <img
-                          src="Images/EmployeesActive.png"
-                          alt="truck icon"
-                        />
-                      ) : index === 2 ? (
-                        <img
-                          src="Images/OrdersActive.png"
-                          alt="BlackMarket icon"
-                        />
-                      ) : index === 3 ? (
-                        <img
-                          src="Images/OrganizationsIActive.png"
-                          alt="OrganizationsIActive icon"
-                        />
-                      ) : (
-                        <MailIcon />
-                      )}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                ) : referralPath === "/AdminOrderSDetails" &&
-                  text === "Admin Orders" ? (
-                  <ListItem button key={text}>
-                    <ListItemIcon>
-                      {index === 0 ? (
-                        <img
-                          src="Images/GroupSquareIcon2.png"
-                          alt="square icon"
-                        />
-                      ) : index === 1 ? (
-                        <img
-                          src="Images/EmployeesIActive.png"
-                          alt="truck icon"
-                        />
-                      ) : index === 2 ? (
-                        <img
-                          src="Images/OrdersActive.png"
-                          alt="BlackMarket icon"
-                        />
-                      ) : index === 3 ? (
-                        <img
-                          src="Images/OrganizationsIActive.png"
-                          alt="OrganizationsIActive icon"
-                        />
-                      ) : (
-                        <MailIcon />
-                      )}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                ) : referralPath === "/AdminOrders" &&
-                  text === "Admin Orders" ? (
-                  <ListItem button key={text}>
-                    <ListItemIcon>
-                      {index === 0 ? (
-                        <img
-                          src="Images/GroupSquareIcon2.png"
-                          alt="square icon"
-                        />
-                      ) : index === 1 ? (
-                        <img
-                          src="Images/EmployeesIActive.png"
-                          alt="truck icon"
-                        />
-                      ) : index === 2 ? (
-                        <img
-                          src="Images/OrdersActive.png"
-                          alt="BlackMarket icon"
-                        />
-                      ) : index === 3 ? (
-                        <img
-                          src="Images/OrganizationsIActive.png"
-                          alt="OrganizationsIActive icon"
-                        />
-                      ) : (
-                        <MailIcon />
-                      )}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                ) : referralPath === "/Employees" && text === "Employees" ? (
-                  <ListItem button key={text}>
-                    <ListItemIcon>
-                      {index === 0 ? (
-                        <img
-                          src="Images/GroupSquareIcon2.png"
-                          alt="square icon"
-                        />
-                      ) : index === 1 ? (
-                        <img
-                          src="Images/EmployeesActive.png"
-                          alt="AEmployeees"
-                        />
-                      ) : index === 2 ? (
-                        <img
-                          src="Images/OrdersIActive.png"
-                          alt="BlackMarket icon"
-                        />
-                      ) : index === 3 ? (
-                        <img
-                          src="Images/OrganizationsIActive.png"
-                          alt="OrganizationsIActive icon"
-                        />
-                      ) : (
-                        <MailIcon />
-                      )}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                ) : referralPath === "/Organisations" &&
-                  text === "Organisations" ? (
-                  <ListItem button key={text}>
-                    <ListItemIcon>
-                      {index === 0 ? (
-                        <img
-                          src="Images/GroupSquareIcon2.png"
-                          alt="square icon"
-                        />
-                      ) : index === 1 ? (
-                        <img
-                          src="Images/EmployeesActive.png"
-                          alt="AEmployeees"
-                        />
-                      ) : index === 2 ? (
-                        <img
-                          src="Images/OrdersActive.png"
-                          alt="BlackMarket icon"
-                        />
-                      ) : index === 3 ? (
-                        <img
-                          src="Images/OrganizationsIActive.png"
-                          alt="OrganizationsIActive icon"
-                        />
-                      ) : (
-                        <MailIcon />
-                      )}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                ) : referralPath === "/SalesExport" &&
-                  text === "Sales Export" ? (
-                  <ListItem button key={text}>
-                    <ListItemIcon>
-                      {index === 0 ? (
-                        <img
-                          src="Images/GroupSquareIcon2.png"
-                          alt="square icon"
-                        />
-                      ) : index === 1 ? (
-                        <img
-                          src="Images/EmployeesActive.png"
-                          alt="AEmployeees"
-                        />
-                      ) : index === 2 ? (
-                        <img
-                          src="Images/OrdersActive.png"
-                          alt="BlackMarket icon"
-                        />
-                      ) : index === 3 ? (
-                        <img
-                          src="Images/OrganizationsIActive.png"
-                          alt="OrganizationsIActive icon"
-                        />
-                      ) : index === 4 ? (
-                        <CloudDownloadRounded
-                          style={{
-                            color: "#FF5E14",
-                            width: "30px",
-                            height: "31px",
-                          }}
-                        />
-                      ) : (
-                        <MailIcon />
-                      )}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                ) : text === "Overview" ? (
-                  <Link
-                    to="/AdminDashboard"
-                    className={classes.inactiveItemLink}
-                  >
+                  className={classes.logosmall}
+                  src="Images/urged logoR.png"
+                  alt="Urged Logo"
+                ></img>
+              )}
+              <List style={{ marginTop: "20%" }}>
+                {[
+                  "Overview",
+                  "Employees",
+                  "Admin Orders",
+                  "Organisations",
+                  "Sales Export",
+                ].map((text, index) =>
+                  referralPath === "/AdminDashboard" && text === "Overview" ? (
                     <ListItem button key={text}>
                       <ListItemIcon>
                         {index === 0 ? (
                           <img
-                            src="Images/OverviewIActive.png"
+                            src="Images/OverviewActive.png"
                             alt="square icon"
                           />
                         ) : index === 1 ? (
@@ -1084,24 +289,22 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
                       </ListItemIcon>
                       <ListItemText primary={text} />
                     </ListItem>
-                  </Link>
-                ) : text === "Admin Orders" ? (
-                  <Link to="/AdminOrders" className={classes.inactiveItemLink}>
+                  ) : referralPath === "/Employees" && text === "Employees" ? (
                     <ListItem button key={text}>
                       <ListItemIcon>
                         {index === 0 ? (
                           <img
-                            src="Images/GroupSquareIcon.png"
+                            src="Images/GroupSquareIcon2.png"
                             alt="square icon"
                           />
                         ) : index === 1 ? (
                           <img
-                            src="Images/EmployeesIActive.png"
+                            src="Images/EmployeesActive.png"
                             alt="truck icon"
                           />
                         ) : index === 2 ? (
                           <img
-                            src="Images/OrdersIActive.png"
+                            src="Images/OrdersActive.png"
                             alt="BlackMarket icon"
                           />
                         ) : index === 3 ? (
@@ -1115,43 +318,8 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
                       </ListItemIcon>
                       <ListItemText primary={text} />
                     </ListItem>
-                  </Link>
-                ) : text === "Employees" ? (
-                  <Link to="/Employees" className={classes.inactiveItemLink}>
-                    <ListItem button key={text}>
-                      <ListItemIcon>
-                        {index === 0 ? (
-                          <img
-                            src="Images/GroupSquareIcon.png"
-                            alt="square icon"
-                          />
-                        ) : index === 1 ? (
-                          <img
-                            src="Images/EmployeesIActive.png"
-                            alt="IEmployeees"
-                          />
-                        ) : index === 2 ? (
-                          <img
-                            src="Images/BackMarketPlaceIcon.png"
-                            alt="BlackMarket icon"
-                          />
-                        ) : index === 3 ? (
-                          <img
-                            src="Images/OrganizationsIActive.png"
-                            alt="OrganizationsIActive icon"
-                          />
-                        ) : (
-                          <MailIcon />
-                        )}
-                      </ListItemIcon>
-                      <ListItemText primary={text} />
-                    </ListItem>
-                  </Link>
-                ) : text === "Organisations" ? (
-                  <Link
-                    to="/Organisations"
-                    className={classes.inactiveItemLink}
-                  >
+                  ) : referralPath === "/AdminOrderSDetails" &&
+                    text === "Admin Orders" ? (
                     <ListItem button key={text}>
                       <ListItemIcon>
                         {index === 0 ? (
@@ -1166,12 +334,12 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
                           />
                         ) : index === 2 ? (
                           <img
-                            src="Images/OrdersIActive.png"
+                            src="Images/OrdersActive.png"
                             alt="BlackMarket icon"
                           />
                         ) : index === 3 ? (
                           <img
-                            src="Images/OrganizationsNActive.png"
+                            src="Images/OrganizationsIActive.png"
                             alt="OrganizationsIActive icon"
                           />
                         ) : (
@@ -1180,9 +348,280 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
                       </ListItemIcon>
                       <ListItemText primary={text} />
                     </ListItem>
-                  </Link>
-                ) : text === "Sales Export" ? (
-                  <Link to="/SalesExport" className={classes.inactiveItemLink}>
+                  ) : referralPath === "/AdminOrders" &&
+                    text === "Admin Orders" ? (
+                    <ListItem button key={text}>
+                      <ListItemIcon>
+                        {index === 0 ? (
+                          <img
+                            src="Images/GroupSquareIcon2.png"
+                            alt="square icon"
+                          />
+                        ) : index === 1 ? (
+                          <img
+                            src="Images/EmployeesIActive.png"
+                            alt="truck icon"
+                          />
+                        ) : index === 2 ? (
+                          <img
+                            src="Images/OrdersActive.png"
+                            alt="BlackMarket icon"
+                          />
+                        ) : index === 3 ? (
+                          <img
+                            src="Images/OrganizationsIActive.png"
+                            alt="OrganizationsIActive icon"
+                          />
+                        ) : (
+                          <MailIcon />
+                        )}
+                      </ListItemIcon>
+                      <ListItemText primary={text} />
+                    </ListItem>
+                  ) : referralPath === "/Organisations" &&
+                    text === "Organisations" ? (
+                    <ListItem button key={text}>
+                      <ListItemIcon>
+                        {index === 0 ? (
+                          <img
+                            src="Images/GroupSquareIcon2.png"
+                            alt="square icon"
+                          />
+                        ) : index === 1 ? (
+                          <img
+                            src="Images/blacktruckIconImage.png"
+                            alt="truck icon"
+                          />
+                        ) : index === 2 ? (
+                          <img
+                            src="Images/OrdersActive.png"
+                            alt="BlackMarket icon"
+                          />
+                        ) : index === 3 ? (
+                          <img
+                            src="Images/OrganizationsIActive.png"
+                            alt="OrganizationsIActive icon"
+                          />
+                        ) : (
+                          <MailIcon />
+                        )}
+                      </ListItemIcon>
+                      <ListItemText primary={text} />
+                    </ListItem>
+                  ) : referralPath === "/SalesExport" &&
+                    text === "Sales Export" ? (
+                    <ListItem button key={text}>
+                      <ListItemIcon>
+                        {index === 0 ? (
+                          <img
+                            src="Images/GroupSquareIcon2.png"
+                            alt="square icon"
+                          />
+                        ) : index === 1 ? (
+                          <img
+                            src="Images/blacktruckIconImage.png"
+                            alt="truck icon"
+                          />
+                        ) : index === 2 ? (
+                          <img
+                            src="Images/OrdersActive.png"
+                            alt="BlackMarket icon"
+                          />
+                        ) : index === 3 ? (
+                          <img
+                            src="Images/OrganizationsIActive.png"
+                            alt="OrganizationsIActive icon"
+                          />
+                        ) : index === 4 ? (
+                          <CloudDownloadRounded
+                            style={{
+                              color: "#FF5E14",
+                              width: "30px",
+                              height: "31px",
+                            }}
+                          />
+                        ) : (
+                          <MailIcon />
+                        )}
+                      </ListItemIcon>
+                      <ListItemText primary={text} />
+                    </ListItem>
+                  ) : text === "Overview" ? (
+                    <Link
+                      to="/AdminDashboard"
+                      className={classes.inactiveItemLink}
+                    >
+                      <ListItem button key={text}>
+                        <ListItemIcon>
+                          {index === 0 ? (
+                            <img
+                              src="Images/OverviewIActive.png"
+                              alt="square icon"
+                            />
+                          ) : index === 1 ? (
+                            <img
+                              src="Images/EmployeesIActive.png"
+                              alt="truck icon"
+                            />
+                          ) : index === 2 ? (
+                            <img
+                              src="Images/OrdersIActive.png"
+                              alt="BlackMarket icon"
+                            />
+                          ) : index === 3 ? (
+                            <img
+                              src="Images/OrganizationsIActive.png"
+                              alt="OrganizationsIActive icon"
+                            />
+                          ) : (
+                            <MailIcon />
+                          )}
+                        </ListItemIcon>
+                        <ListItemText primary={text} />
+                      </ListItem>
+                    </Link>
+                  ) : text === "Employees" ? (
+                    <Link to="/Employees" className={classes.inactiveItemLink}>
+                      <ListItem button key={text}>
+                        <ListItemIcon>
+                          {index === 0 ? (
+                            <img
+                              src="Images/GroupSquareIcon2.png"
+                              alt="square icon"
+                            />
+                          ) : index === 1 ? (
+                            <img
+                              src="Images/EmployeesIActive.png"
+                              alt="truck icon"
+                            />
+                          ) : index === 2 ? (
+                            <img
+                              src="Images/OrdersIActive.png"
+                              alt="BlackMarket icon"
+                            />
+                          ) : index === 3 ? (
+                            <img
+                              src="Images/OrganizationsIActive.png"
+                              alt="OrganizationsIActive icon"
+                            />
+                          ) : (
+                            <MailIcon />
+                          )}
+                        </ListItemIcon>
+                        <ListItemText primary={text} />
+                      </ListItem>
+                    </Link>
+                  ) : text === "Admin Orders" ? (
+                    <Link
+                      to="/AdminOrders"
+                      className={classes.inactiveItemLink}
+                    >
+                      <ListItem button key={text}>
+                        <ListItemIcon>
+                          {index === 0 ? (
+                            <img
+                              src="Images/GroupSquareIcon2.png"
+                              alt="square icon"
+                            />
+                          ) : index === 1 ? (
+                            <img
+                              src="Images/EmployeesIActive.png"
+                              alt="truck icon"
+                            />
+                          ) : index === 2 ? (
+                            <img
+                              src="Images/OrdersIActive.png"
+                              alt="BlackMarket icon"
+                            />
+                          ) : index === 3 ? (
+                            <img
+                              src="Images/OrganizationsIActive.png"
+                              alt="OrganizationsIActive icon"
+                            />
+                          ) : (
+                            <MailIcon />
+                          )}
+                        </ListItemIcon>
+                        <ListItemText primary={text} />
+                      </ListItem>
+                    </Link>
+                  ) : text === "Organisations" ? (
+                    <Link
+                      to="/Organisations"
+                      className={classes.inactiveItemLink}
+                    >
+                      <ListItem button key={text}>
+                        <ListItemIcon>
+                          {index === 0 ? (
+                            <img
+                              src="Images/GroupSquareIcon2.png"
+                              alt="square icon"
+                            />
+                          ) : index === 1 ? (
+                            <img
+                              src="Images/EmployeesIActive.png"
+                              alt="truck icon"
+                            />
+                          ) : index === 2 ? (
+                            <img
+                              src="Images/OrdersIActive.png"
+                              alt="BlackMarket icon"
+                            />
+                          ) : index === 3 ? (
+                            <img
+                              src="Images/OrganizationsNActive.png"
+                              alt="OrganizationsIActive icon"
+                            />
+                          ) : (
+                            <MailIcon />
+                          )}
+                        </ListItemIcon>
+                        <ListItemText primary={text} />
+                      </ListItem>
+                    </Link>
+                  ) : text === "Sales Export" ? (
+                    <Link
+                      to="/SalesExport"
+                      className={classes.inactiveItemLink}
+                    >
+                      <ListItem button key={text}>
+                        <ListItemIcon>
+                          {index === 0 ? (
+                            <img
+                              src="Images/GroupSquareIcon2.png"
+                              alt="square icon"
+                            />
+                          ) : index === 1 ? (
+                            <img
+                              src="Images/EmployeesIActive.png"
+                              alt="truck icon"
+                            />
+                          ) : index === 2 ? (
+                            <img
+                              src="Images/OrdersIActive.png"
+                              alt="BlackMarket icon"
+                            />
+                          ) : index === 3 ? (
+                            <img
+                              src="Images/OrganizationsIActive.png"
+                              alt="OrganizationsIActive icon"
+                            />
+                          ) : index === 4 ? (
+                            <CloudDownloadRounded
+                              style={{
+                                color: "#D2D3D8",
+                                width: "30px",
+                                height: "31px",
+                              }}
+                            />
+                          ) : (
+                            <MailIcon />
+                          )}
+                        </ListItemIcon>
+                        <ListItemText primary={text} />
+                      </ListItem>
+                    </Link>
+                  ) : (
                     <ListItem button key={text}>
                       <ListItemIcon>
                         {index === 0 ? (
@@ -1219,260 +658,846 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
                       </ListItemIcon>
                       <ListItemText primary={text} />
                     </ListItem>
-                  </Link>
-                ) : text !== "Overview" ? (
-                  <ListItem button key={text} style={{ marginTop: "5%" }}>
-                    <ListItemIcon>
-                      {index === 0 ? (
-                        <img
-                          src="Images/GroupSquareIcon2.png"
-                          alt="square icon"
-                        />
-                      ) : index === 1 ? (
-                        <img
-                          src="Images/blacktruckIconImage.png"
-                          alt="truck icon"
-                        />
-                      ) : index === 2 ? (
-                        <img
-                          src="Images/BackMarketPlaceIcon.png"
-                          alt="BlackMarket icon"
-                        />
-                      ) : index === 3 ? (
-                        <img
-                          src="Images/OrganizationsIActive.png"
-                          alt="OrganizationsIActive icon"
-                        />
-                      ) : index === 4 ? (
-                        <CloudDownloadRounded
-                          style={{
-                            color: "#D2D3D8",
-                            width: "30px",
-                            height: "31px",
-                          }}
-                        />
+                  ),
+                )}
+              </List>
+              <Divider />
+              <List>
+                {userInfo.fullName !== null &&
+                userInfo.fullName !== "" &&
+                userInfo.fullName !== undefined
+                  ? ["Settings", "Logout"].map((text, index) =>
+                      text === "Logout" ? (
+                        <a
+                          href="/"
+                          onClick={handleLogout}
+                          className={classes.inactiveItemLink}
+                        >
+                          <ListItem button key={text}>
+                            <ListItemIcon>
+                              {index === 0 ? (
+                                <img
+                                  src="Images/SettingNActive.png"
+                                  alt="BlackMarket icon"
+                                />
+                              ) : index === 1 ? (
+                                <img
+                                  src="Images/LogoutIActive.png"
+                                  alt="BlackMarket icon"
+                                />
+                              ) : (
+                                <MailIcon />
+                              )}
+                            </ListItemIcon>
+                            <ListItemText primary={text} />
+                          </ListItem>
+                        </a>
+                      ) : referralPath === "AdminSettings" &&
+                        text === "Settings" ? (
+                        <Link
+                          to="/AdminSettings"
+                          className={classes.inactiveItemLink}
+                        >
+                          <ListItem button key={text}>
+                            <ListItemIcon>
+                              {index === 0 ? (
+                                <img
+                                  src="Images/SettingIActive.png"
+                                  alt="BlackMarket icon"
+                                />
+                              ) : index === 1 ? (
+                                <img
+                                  src="Images/LogoutIActive.png"
+                                  alt="BlackMarket icon"
+                                />
+                              ) : (
+                                <MailIcon />
+                              )}
+                            </ListItemIcon>
+                            <ListItemText primary={text} />
+                          </ListItem>
+                        </Link>
                       ) : (
-                        <MailIcon />
-                      )}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                ) : (
-                  <ListItem button key={text}>
-                    <ListItemIcon>
-                      {index === 0 ? (
-                        <img
-                          src="Images/GroupSquareIcon.png"
-                          alt="square icon"
-                        />
-                      ) : index === 1 ? (
-                        <img
-                          src="Images/EmployeesIActive.png"
-                          alt="truck icon"
-                        />
-                      ) : index === 2 ? (
-                        <img
-                          src="Images/OrdersIActive.png"
-                          alt="BlackMarket icon"
-                        />
-                      ) : index === 3 ? (
-                        <img
-                          src="Images/OrganizationsIActive.png"
-                          alt="OrganizationsIActive icon"
-                        />
-                      ) : index === 4 ? (
-                        <CloudDownloadRounded
-                          style={{
-                            color: "#D2D3D8",
-                            width: "30px",
-                            height: "31px",
-                          }}
-                        />
+                        <Link
+                          to="/AdminSettings"
+                          className={classes.inactiveItemLink}
+                        >
+                          <ListItem button key={text}>
+                            <ListItemIcon>
+                              {index === 0 ? (
+                                <img
+                                  src="Images/SettingNActive.png"
+                                  alt="BlackMarket icon"
+                                />
+                              ) : index === 1 ? (
+                                <img
+                                  src="Images/LogoutIActive.png"
+                                  alt="BlackMarket icon"
+                                />
+                              ) : (
+                                <MailIcon />
+                              )}
+                            </ListItemIcon>
+                            <ListItemText primary={text} />
+                          </ListItem>
+                        </Link>
+                      ),
+                    )
+                  : ["Settings", "Login"].map((text, index) =>
+                      text === "Login" ? (
+                        <a
+                          href="/Login"
+                          onClick={handleLogin}
+                          className={classes.inactiveItemLink}
+                        >
+                          <ListItem button key={text}>
+                            <ListItemIcon>
+                              {index === 0 ? (
+                                <img
+                                  src="Images/SettingIActive.png"
+                                  alt="BlackMarket icon"
+                                />
+                              ) : index === 1 ? (
+                                <img
+                                  src="Images/LogoutIActive.png"
+                                  className={classes.loginIconStyle}
+                                  alt="BlackMarket icon"
+                                />
+                              ) : (
+                                <MailIcon />
+                              )}
+                            </ListItemIcon>
+                            <ListItemText primary={text} />
+                          </ListItem>
+                        </a>
                       ) : (
-                        <MailIcon />
-                      )}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItem>
-                ),
+                        <Link
+                          to="/AdminSettings"
+                          className={classes.inactiveItemLink}
+                        >
+                          <ListItem button key={text}>
+                            <ListItemIcon>
+                              {index === 0 ? (
+                                <img
+                                  src="Images/SettingIActive.png"
+                                  alt="BlackMarket icon"
+                                />
+                              ) : index === 1 ? (
+                                <img
+                                  src="Images/LogoutIActive.png"
+                                  alt="BlackMarket icon"
+                                />
+                              ) : (
+                                <MailIcon />
+                              )}
+                            </ListItemIcon>
+                            <ListItemText primary={text} />
+                          </ListItem>
+                        </Link>
+                      ),
+                    )}
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={handleDrawerOpen}
+                  edge="start"
+                  className={clsx(classes.expandIconStyle, {
+                    [classes.hide]: open,
+                  })}
+                >
+                  <img
+                    src="Images/collapse_icon1.svg"
+                    style={{ width: "100%" }}
+                    alt="icon"
+                  />
+                </IconButton>
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={handleDrawerClose}
+                  edge="start"
+                  className={clsx(classes.callapsibleIconStyle, {
+                    [classes.hide]: !open,
+                  })}
+                >
+                  <img
+                    src="Images/collapse_icon1.svg"
+                    style={{ width: "100%" }}
+                    alt="icon"
+                  />
+                </IconButton>
+              </List>
+            </Drawer>
+            <main className={classes.content} style={{ padding: "0px" }}>
+              {children}
+            </main>
+          </div>
+        ) : (
+          <></>
+        )}
+
+        {isMatch ? (
+          <div className={classes.root}>
+            <CssBaseline />
+            <Drawer
+              variant="permanent"
+              className={clsx(
+                classes.drawer,
+                {
+                  [classes.drawerOpen]: open1,
+                  [classes.drawerClose]: !open1,
+                },
+                "hideOnMobile",
               )}
-            </List>
-            <Divider />
-            <List>
-              {userInfo.fullName !== null &&
-              userInfo.fullName !== "" &&
-              userInfo.fullName !== undefined
-                ? ["Settings", "Logout"].map((text, index) =>
-                    text === "Logout" ? (
-                      <a
-                        href="/"
-                        onClick={handleLogout}
-                        className={classes.inactiveItemLink}
-                      >
-                        <ListItem button key={text}>
-                          <ListItemIcon>
-                            {index === 0 ? (
-                              <img
-                                src="Images/SettingIActive.png"
-                                alt="BlackMarket icon"
-                              />
-                            ) : index === 1 ? (
-                              <img
-                                src="Images/LogoutIActive.png"
-                                alt="BlackMarket icon"
-                              />
-                            ) : (
-                              <MailIcon />
-                            )}
-                          </ListItemIcon>
-                          <ListItemText primary={text} />
-                        </ListItem>
-                      </a>
-                    ) : referralPath === "/AdminSettings" &&
-                      text === "Settings" ? (
-                      <Link
-                        to="/AdminSettings"
-                        className={classes.inactiveItemLink}
-                      >
-                        <ListItem button key={text}>
-                          <ListItemIcon>
-                            {index === 0 ? (
-                              <img
-                                src="Images/SettingIActive.png"
-                                alt="BlackMarket icon"
-                              />
-                            ) : index === 1 ? (
-                              <img
-                                src="Images/LogoutIActive.png"
-                                alt="BlackMarket icon"
-                              />
-                            ) : (
-                              <MailIcon />
-                            )}
-                          </ListItemIcon>
-                          <ListItemText primary={text} />
-                        </ListItem>
-                      </Link>
-                    ) : (
-                      <Link
-                        to="/AdminSettings"
-                        className={classes.inactiveItemLink}
-                      >
-                        <ListItem button key={text}>
-                          <ListItemIcon>
-                            {index === 0 ? (
-                              <img
-                                src="Images/SettingNActive.png"
-                                alt="BlackMarket icon"
-                              />
-                            ) : index === 1 ? (
-                              <img
-                                src="Images/LogoutIActive.png"
-                                alt="BlackMarket icon"
-                              />
-                            ) : (
-                              <MailIcon />
-                            )}
-                          </ListItemIcon>
-                          <ListItemText primary={text} />
-                        </ListItem>
-                      </Link>
-                    ),
-                  )
-                : ["Settings", "Login"].map((text, index) =>
-                    text === "Login" ? (
-                      <a
-                        href="/Login"
-                        onClick={handleLogin}
-                        className={classes.inactiveItemLink}
-                      >
-                        <ListItem button key={text}>
-                          <ListItemIcon>
-                            {index === 0 ? (
-                              <img
-                                src="Images/SettingIActive.png"
-                                alt="BlackMarket icon"
-                              />
-                            ) : index === 1 ? (
-                              <img
-                                src="Images/LogoutIActive.png"
-                                className={classes.loginIconStyle}
-                                alt="BlackMarket icon"
-                              />
-                            ) : (
-                              <MailIcon />
-                            )}
-                          </ListItemIcon>
-                          <ListItemText primary={text} />
-                        </ListItem>
-                      </a>
-                    ) : (
-                      <Link
-                        href="/AdminSettings"
-                        className={classes.inactiveItemLink}
-                      >
-                        <ListItem button key={text}>
-                          <ListItemIcon>
-                            {index === 0 ? (
-                              <img
-                                src="Images/SettingIActive.png"
-                                alt="BlackMarket icon"
-                              />
-                            ) : index === 1 ? (
-                              <img
-                                src="Images/LogoutIActive.png"
-                                alt="BlackMarket icon"
-                              />
-                            ) : (
-                              <MailIcon />
-                            )}
-                          </ListItemIcon>
-                          <ListItemText primary={text} />
-                        </ListItem>
-                      </Link>
-                    ),
-                  )}
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={handleDrawerOpen1}
-                edge="start"
-                className={clsx(classes.expandIconStyle, {
-                  [classes.hide]: open1,
-                })}
-              >
+              classes={{
+                paper: clsx({
+                  [classes.drawerOpen]: open1,
+                  [classes.drawerClose]: !open1,
+                }),
+              }}
+            >
+              {/* <div className={classes.toolbar}>
+                        <IconButton onClick={handleDrawerClose}>
+                            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                        </IconButton>
+                    </div> */}
+
+              {open1 && (
                 <img
-                  src="Images/collapse_icon1.svg"
-                  style={{ width: "100%" }}
-                  alt="icon"
-                />
-              </IconButton>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={handleDrawerClose1}
-                edge="start"
-                className={clsx(classes.callapsibleIconStyle, {
-                  [classes.hide]: !open1,
-                })}
-              >
+                  className={classes.logo}
+                  src="Images/urged logo.jpg"
+                  alt="Urged Logo"
+                ></img>
+              )}
+              {!open1 && (
                 <img
-                  src="Images/collapse_icon1.svg"
-                  style={{ width: "100%" }}
-                  alt="icon"
-                />
-              </IconButton>
-            </List>
-          </Drawer>
-          <main className={classes.content} style={{ padding: "0px" }}>
-            {children}
-          </main>
-        </div>
-      ) : (
-        <></>
-      )}
-    </>
-  );
-};
+                  className={classes.logosmall}
+                  src="Images/urged logoR.png"
+                  alt="Urged Logo"
+                ></img>
+              )}
+              <List>
+                {[
+                  "Overview",
+                  "Employees",
+                  "Admin Orders",
+                  "Organisations",
+                  "Sales Export",
+                ].map((text, index) =>
+                  referralPath === "/AdminDashboard" && text === "Overview" ? (
+                    <ListItem button key={text}>
+                      <ListItemIcon>
+                        {index === 0 ? (
+                          <img
+                            src="Images/OverviewActive.png"
+                            alt="square icon"
+                          />
+                        ) : index === 1 ? (
+                          <img
+                            src="Images/EmployeesActive.png"
+                            alt="truck icon"
+                          />
+                        ) : index === 2 ? (
+                          <img
+                            src="Images/OrdersActive.png"
+                            alt="BlackMarket icon"
+                          />
+                        ) : index === 3 ? (
+                          <img
+                            src="Images/OrganizationsIActive.png"
+                            alt="OrganizationsIActive icon"
+                          />
+                        ) : (
+                          <MailIcon />
+                        )}
+                      </ListItemIcon>
+                      <ListItemText primary={text} />
+                    </ListItem>
+                  ) : referralPath === "/AdminOrderSDetails" &&
+                    text === "Admin Orders" ? (
+                    <ListItem button key={text}>
+                      <ListItemIcon>
+                        {index === 0 ? (
+                          <img
+                            src="Images/GroupSquareIcon2.png"
+                            alt="square icon"
+                          />
+                        ) : index === 1 ? (
+                          <img
+                            src="Images/EmployeesIActive.png"
+                            alt="truck icon"
+                          />
+                        ) : index === 2 ? (
+                          <img
+                            src="Images/OrdersActive.png"
+                            alt="BlackMarket icon"
+                          />
+                        ) : index === 3 ? (
+                          <img
+                            src="Images/OrganizationsIActive.png"
+                            alt="OrganizationsIActive icon"
+                          />
+                        ) : (
+                          <MailIcon />
+                        )}
+                      </ListItemIcon>
+                      <ListItemText primary={text} />
+                    </ListItem>
+                  ) : referralPath === "/AdminOrders" &&
+                    text === "Admin Orders" ? (
+                    <ListItem button key={text}>
+                      <ListItemIcon>
+                        {index === 0 ? (
+                          <img
+                            src="Images/GroupSquareIcon2.png"
+                            alt="square icon"
+                          />
+                        ) : index === 1 ? (
+                          <img
+                            src="Images/EmployeesIActive.png"
+                            alt="truck icon"
+                          />
+                        ) : index === 2 ? (
+                          <img
+                            src="Images/OrdersActive.png"
+                            alt="BlackMarket icon"
+                          />
+                        ) : index === 3 ? (
+                          <img
+                            src="Images/OrganizationsIActive.png"
+                            alt="OrganizationsIActive icon"
+                          />
+                        ) : (
+                          <MailIcon />
+                        )}
+                      </ListItemIcon>
+                      <ListItemText primary={text} />
+                    </ListItem>
+                  ) : referralPath === "/Employees" && text === "Employees" ? (
+                    <ListItem button key={text}>
+                      <ListItemIcon>
+                        {index === 0 ? (
+                          <img
+                            src="Images/GroupSquareIcon2.png"
+                            alt="square icon"
+                          />
+                        ) : index === 1 ? (
+                          <img
+                            src="Images/EmployeesActive.png"
+                            alt="AEmployeees"
+                          />
+                        ) : index === 2 ? (
+                          <img
+                            src="Images/OrdersIActive.png"
+                            alt="BlackMarket icon"
+                          />
+                        ) : index === 3 ? (
+                          <img
+                            src="Images/OrganizationsIActive.png"
+                            alt="OrganizationsIActive icon"
+                          />
+                        ) : (
+                          <MailIcon />
+                        )}
+                      </ListItemIcon>
+                      <ListItemText primary={text} />
+                    </ListItem>
+                  ) : referralPath === "/Organisations" &&
+                    text === "Organisations" ? (
+                    <ListItem button key={text}>
+                      <ListItemIcon>
+                        {index === 0 ? (
+                          <img
+                            src="Images/GroupSquareIcon2.png"
+                            alt="square icon"
+                          />
+                        ) : index === 1 ? (
+                          <img
+                            src="Images/EmployeesActive.png"
+                            alt="AEmployeees"
+                          />
+                        ) : index === 2 ? (
+                          <img
+                            src="Images/OrdersActive.png"
+                            alt="BlackMarket icon"
+                          />
+                        ) : index === 3 ? (
+                          <img
+                            src="Images/OrganizationsIActive.png"
+                            alt="OrganizationsIActive icon"
+                          />
+                        ) : (
+                          <MailIcon />
+                        )}
+                      </ListItemIcon>
+                      <ListItemText primary={text} />
+                    </ListItem>
+                  ) : referralPath === "/SalesExport" &&
+                    text === "Sales Export" ? (
+                    <ListItem button key={text}>
+                      <ListItemIcon>
+                        {index === 0 ? (
+                          <img
+                            src="Images/GroupSquareIcon2.png"
+                            alt="square icon"
+                          />
+                        ) : index === 1 ? (
+                          <img
+                            src="Images/EmployeesActive.png"
+                            alt="AEmployeees"
+                          />
+                        ) : index === 2 ? (
+                          <img
+                            src="Images/OrdersActive.png"
+                            alt="BlackMarket icon"
+                          />
+                        ) : index === 3 ? (
+                          <img
+                            src="Images/OrganizationsIActive.png"
+                            alt="OrganizationsIActive icon"
+                          />
+                        ) : index === 4 ? (
+                          <CloudDownloadRounded
+                            style={{
+                              color: "#FF5E14",
+                              width: "30px",
+                              height: "31px",
+                            }}
+                          />
+                        ) : (
+                          <MailIcon />
+                        )}
+                      </ListItemIcon>
+                      <ListItemText primary={text} />
+                    </ListItem>
+                  ) : text === "Overview" ? (
+                    <Link
+                      to="/AdminDashboard"
+                      className={classes.inactiveItemLink}
+                    >
+                      <ListItem button key={text}>
+                        <ListItemIcon>
+                          {index === 0 ? (
+                            <img
+                              src="Images/OverviewIActive.png"
+                              alt="square icon"
+                            />
+                          ) : index === 1 ? (
+                            <img
+                              src="Images/blacktruckIconImage.png"
+                              alt="truck icon"
+                            />
+                          ) : index === 2 ? (
+                            <img
+                              src="Images/BackMarketPlaceIcon.png"
+                              alt="BlackMarket icon"
+                            />
+                          ) : index === 3 ? (
+                            <img
+                              src="Images/OrganizationsIActive.png"
+                              alt="OrganizationsIActive icon"
+                            />
+                          ) : (
+                            <MailIcon />
+                          )}
+                        </ListItemIcon>
+                        <ListItemText primary={text} />
+                      </ListItem>
+                    </Link>
+                  ) : text === "Admin Orders" ? (
+                    <Link
+                      to="/AdminOrders"
+                      className={classes.inactiveItemLink}
+                    >
+                      <ListItem button key={text}>
+                        <ListItemIcon>
+                          {index === 0 ? (
+                            <img
+                              src="Images/GroupSquareIcon.png"
+                              alt="square icon"
+                            />
+                          ) : index === 1 ? (
+                            <img
+                              src="Images/EmployeesIActive.png"
+                              alt="truck icon"
+                            />
+                          ) : index === 2 ? (
+                            <img
+                              src="Images/OrdersIActive.png"
+                              alt="BlackMarket icon"
+                            />
+                          ) : index === 3 ? (
+                            <img
+                              src="Images/OrganizationsIActive.png"
+                              alt="OrganizationsIActive icon"
+                            />
+                          ) : (
+                            <MailIcon />
+                          )}
+                        </ListItemIcon>
+                        <ListItemText primary={text} />
+                      </ListItem>
+                    </Link>
+                  ) : text === "Employees" ? (
+                    <Link to="/Employees" className={classes.inactiveItemLink}>
+                      <ListItem button key={text}>
+                        <ListItemIcon>
+                          {index === 0 ? (
+                            <img
+                              src="Images/GroupSquareIcon.png"
+                              alt="square icon"
+                            />
+                          ) : index === 1 ? (
+                            <img
+                              src="Images/EmployeesIActive.png"
+                              alt="IEmployeees"
+                            />
+                          ) : index === 2 ? (
+                            <img
+                              src="Images/BackMarketPlaceIcon.png"
+                              alt="BlackMarket icon"
+                            />
+                          ) : index === 3 ? (
+                            <img
+                              src="Images/OrganizationsIActive.png"
+                              alt="OrganizationsIActive icon"
+                            />
+                          ) : (
+                            <MailIcon />
+                          )}
+                        </ListItemIcon>
+                        <ListItemText primary={text} />
+                      </ListItem>
+                    </Link>
+                  ) : text === "Organisations" ? (
+                    <Link
+                      to="/Organisations"
+                      className={classes.inactiveItemLink}
+                    >
+                      <ListItem button key={text}>
+                        <ListItemIcon>
+                          {index === 0 ? (
+                            <img
+                              src="Images/GroupSquareIcon2.png"
+                              alt="square icon"
+                            />
+                          ) : index === 1 ? (
+                            <img
+                              src="Images/EmployeesIActive.png"
+                              alt="truck icon"
+                            />
+                          ) : index === 2 ? (
+                            <img
+                              src="Images/OrdersIActive.png"
+                              alt="BlackMarket icon"
+                            />
+                          ) : index === 3 ? (
+                            <img
+                              src="Images/OrganizationsNActive.png"
+                              alt="OrganizationsIActive icon"
+                            />
+                          ) : (
+                            <MailIcon />
+                          )}
+                        </ListItemIcon>
+                        <ListItemText primary={text} />
+                      </ListItem>
+                    </Link>
+                  ) : text === "Sales Export" ? (
+                    <Link
+                      to="/SalesExport"
+                      className={classes.inactiveItemLink}
+                    >
+                      <ListItem button key={text}>
+                        <ListItemIcon>
+                          {index === 0 ? (
+                            <img
+                              src="Images/GroupSquareIcon2.png"
+                              alt="square icon"
+                            />
+                          ) : index === 1 ? (
+                            <img
+                              src="Images/EmployeesIActive.png"
+                              alt="truck icon"
+                            />
+                          ) : index === 2 ? (
+                            <img
+                              src="Images/OrdersIActive.png"
+                              alt="BlackMarket icon"
+                            />
+                          ) : index === 3 ? (
+                            <img
+                              src="Images/OrganizationsIActive.png"
+                              alt="OrganizationsIActive icon"
+                            />
+                          ) : index === 4 ? (
+                            <CloudDownloadRounded
+                              style={{
+                                color: "#D2D3D8",
+                                width: "30px",
+                                height: "31px",
+                              }}
+                            />
+                          ) : (
+                            <MailIcon />
+                          )}
+                        </ListItemIcon>
+                        <ListItemText primary={text} />
+                      </ListItem>
+                    </Link>
+                  ) : text !== "Overview" ? (
+                    <ListItem button key={text} style={{ marginTop: "5%" }}>
+                      <ListItemIcon>
+                        {index === 0 ? (
+                          <img
+                            src="Images/GroupSquareIcon2.png"
+                            alt="square icon"
+                          />
+                        ) : index === 1 ? (
+                          <img
+                            src="Images/blacktruckIconImage.png"
+                            alt="truck icon"
+                          />
+                        ) : index === 2 ? (
+                          <img
+                            src="Images/BackMarketPlaceIcon.png"
+                            alt="BlackMarket icon"
+                          />
+                        ) : index === 3 ? (
+                          <img
+                            src="Images/OrganizationsIActive.png"
+                            alt="OrganizationsIActive icon"
+                          />
+                        ) : index === 4 ? (
+                          <CloudDownloadRounded
+                            style={{
+                              color: "#D2D3D8",
+                              width: "30px",
+                              height: "31px",
+                            }}
+                          />
+                        ) : (
+                          <MailIcon />
+                        )}
+                      </ListItemIcon>
+                      <ListItemText primary={text} />
+                    </ListItem>
+                  ) : (
+                    <ListItem button key={text}>
+                      <ListItemIcon>
+                        {index === 0 ? (
+                          <img
+                            src="Images/GroupSquareIcon.png"
+                            alt="square icon"
+                          />
+                        ) : index === 1 ? (
+                          <img
+                            src="Images/EmployeesIActive.png"
+                            alt="truck icon"
+                          />
+                        ) : index === 2 ? (
+                          <img
+                            src="Images/OrdersIActive.png"
+                            alt="BlackMarket icon"
+                          />
+                        ) : index === 3 ? (
+                          <img
+                            src="Images/OrganizationsIActive.png"
+                            alt="OrganizationsIActive icon"
+                          />
+                        ) : index === 4 ? (
+                          <CloudDownloadRounded
+                            style={{
+                              color: "#D2D3D8",
+                              width: "30px",
+                              height: "31px",
+                            }}
+                          />
+                        ) : (
+                          <MailIcon />
+                        )}
+                      </ListItemIcon>
+                      <ListItemText primary={text} />
+                    </ListItem>
+                  ),
+                )}
+              </List>
+              <Divider />
+              <List>
+                {userInfo.fullName !== null &&
+                userInfo.fullName !== "" &&
+                userInfo.fullName !== undefined
+                  ? ["Settings", "Logout"].map((text, index) =>
+                      text === "Logout" ? (
+                        <a
+                          href="/"
+                          onClick={handleLogout}
+                          className={classes.inactiveItemLink}
+                        >
+                          <ListItem button key={text}>
+                            <ListItemIcon>
+                              {index === 0 ? (
+                                <img
+                                  src="Images/SettingIActive.png"
+                                  alt="BlackMarket icon"
+                                />
+                              ) : index === 1 ? (
+                                <img
+                                  src="Images/LogoutIActive.png"
+                                  alt="BlackMarket icon"
+                                />
+                              ) : (
+                                <MailIcon />
+                              )}
+                            </ListItemIcon>
+                            <ListItemText primary={text} />
+                          </ListItem>
+                        </a>
+                      ) : referralPath === "/AdminSettings" &&
+                        text === "Settings" ? (
+                        <Link
+                          to="/AdminSettings"
+                          className={classes.inactiveItemLink}
+                        >
+                          <ListItem button key={text}>
+                            <ListItemIcon>
+                              {index === 0 ? (
+                                <img
+                                  src="Images/SettingIActive.png"
+                                  alt="BlackMarket icon"
+                                />
+                              ) : index === 1 ? (
+                                <img
+                                  src="Images/LogoutIActive.png"
+                                  alt="BlackMarket icon"
+                                />
+                              ) : (
+                                <MailIcon />
+                              )}
+                            </ListItemIcon>
+                            <ListItemText primary={text} />
+                          </ListItem>
+                        </Link>
+                      ) : (
+                        <Link
+                          to="/AdminSettings"
+                          className={classes.inactiveItemLink}
+                        >
+                          <ListItem button key={text}>
+                            <ListItemIcon>
+                              {index === 0 ? (
+                                <img
+                                  src="Images/SettingNActive.png"
+                                  alt="BlackMarket icon"
+                                />
+                              ) : index === 1 ? (
+                                <img
+                                  src="Images/LogoutIActive.png"
+                                  alt="BlackMarket icon"
+                                />
+                              ) : (
+                                <MailIcon />
+                              )}
+                            </ListItemIcon>
+                            <ListItemText primary={text} />
+                          </ListItem>
+                        </Link>
+                      ),
+                    )
+                  : ["Settings", "Login"].map((text, index) =>
+                      text === "Login" ? (
+                        <a
+                          href="/Login"
+                          onClick={handleLogin}
+                          className={classes.inactiveItemLink}
+                        >
+                          <ListItem button key={text}>
+                            <ListItemIcon>
+                              {index === 0 ? (
+                                <img
+                                  src="Images/SettingIActive.png"
+                                  alt="BlackMarket icon"
+                                />
+                              ) : index === 1 ? (
+                                <img
+                                  src="Images/LogoutIActive.png"
+                                  className={classes.loginIconStyle}
+                                  alt="BlackMarket icon"
+                                />
+                              ) : (
+                                <MailIcon />
+                              )}
+                            </ListItemIcon>
+                            <ListItemText primary={text} />
+                          </ListItem>
+                        </a>
+                      ) : (
+                        <Link
+                          href="/AdminSettings"
+                          className={classes.inactiveItemLink}
+                        >
+                          <ListItem button key={text}>
+                            <ListItemIcon>
+                              {index === 0 ? (
+                                <img
+                                  src="Images/SettingIActive.png"
+                                  alt="BlackMarket icon"
+                                />
+                              ) : index === 1 ? (
+                                <img
+                                  src="Images/LogoutIActive.png"
+                                  alt="BlackMarket icon"
+                                />
+                              ) : (
+                                <MailIcon />
+                              )}
+                            </ListItemIcon>
+                            <ListItemText primary={text} />
+                          </ListItem>
+                        </Link>
+                      ),
+                    )}
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={handleDrawerOpen1}
+                  edge="start"
+                  className={clsx(classes.expandIconStyle, {
+                    [classes.hide]: open1,
+                  })}
+                >
+                  <img
+                    src="Images/collapse_icon1.svg"
+                    style={{ width: "100%" }}
+                    alt="icon"
+                  />
+                </IconButton>
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={handleDrawerClose1}
+                  edge="start"
+                  className={clsx(classes.callapsibleIconStyle, {
+                    [classes.hide]: !open1,
+                  })}
+                >
+                  <img
+                    src="Images/collapse_icon1.svg"
+                    style={{ width: "100%" }}
+                    alt="icon"
+                  />
+                </IconButton>
+              </List>
+            </Drawer>
+            <main className={classes.content} style={{ padding: "0px" }}>
+              {children}
+            </main>
+          </div>
+        ) : (
+          <></>
+        )}
+      </>
+    );
+  };
 
 export default Sidebar;

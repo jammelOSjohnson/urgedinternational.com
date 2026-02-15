@@ -1,8 +1,11 @@
+import React from "react";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
+import CloseRounded from "@mui/icons-material/CloseRounded";
+import { useAppData } from "../../../Context/AppDataContext";
 import {
   Avatar,
   Grid,
-  makeStyles,
-  createStyles,
   Typography,
   Theme,
   CardMedia,
@@ -10,12 +13,9 @@ import {
   CardContent,
   CardHeader,
   IconButton,
-} from "@material-ui/core";
-import { useAppData } from "../../../Context/AppDataContext";
-import React from "react";
-import RemoveIcon from "@material-ui/icons/Remove";
-import AddIcon from "@material-ui/icons/Add";
-import { CloseRounded } from "@material-ui/icons";
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
+
 const PaymentOptionsForm = React.lazy(() => import("./PaymentOptionsForm"));
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -98,7 +98,7 @@ const useStyles = makeStyles((theme: Theme) =>
     avatar: {
       background: theme.palette.primary.main,
     },
-  })
+  }),
 );
 
 type Props = {
@@ -354,7 +354,7 @@ export const ShoppingCartItems: React.FC<Props> = function ShoppingCartItems({
                       </div>
                     </Card>
                   </>
-                )
+                ),
               )}
             </Grid>
             <Grid item xs={12} md={5}>

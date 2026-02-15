@@ -1,11 +1,12 @@
 import { useAppData } from '../../Context/AppDataContext';
-import { Container, Grid, makeStyles, createStyles, Typography, Theme, FormGroup, TextField, Card, Button, Snackbar, CircularProgress } from '@material-ui/core';
+import { Container, Grid, Typography, Theme, FormGroup, TextField, Card, Button, Snackbar, CircularProgress } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React, { useEffect, useState } from 'react';
 //Import Components
 import { HeaderRight } from './Comp/HeaderRight';
-import { FormControlLabel } from '@material-ui/core';
+import { FormControlLabel } from '@mui/material';
 import { useQuery } from '@apollo/client';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/lab';
 const Sidebar = React.lazy(() => import('./Comp/Sidebar'));
 const HeaderLeft = React.lazy(() => import('./Comp/HeaderLeft'));
 

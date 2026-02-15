@@ -1,6 +1,9 @@
 import { Button, Container, FormControl, Grid, InputLabel, OutlinedInput, Theme, InputAdornment, IconButton, Typography } from '@mui/material';
 import { makeStyles, createStyles } from '@mui/styles';
-import { EmailOutlined, PersonRounded, PhoneAndroidRounded, LocationCityRounded } from '@mui/icons-material';
+import EmailOutlined from '@mui/icons-material/EmailOutlined';
+import PersonRounded from '@mui/icons-material/PersonRounded';
+import PhoneAndroidRounded from '@mui/icons-material/PhoneAndroidRounded';
+import LocationCityRounded from '@mui/icons-material/LocationCityRounded';
 import { Alert } from '@mui/lab';
 import clsx from "clsx"
 import React,{ useEffect, useState } from "react";

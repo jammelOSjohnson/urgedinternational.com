@@ -1,6 +1,7 @@
 import React from 'react';
 //import CSS
-import { Container, Grid, Typography, makeStyles, createStyles, Theme, AppBar, Tabs, Tab, Box, TextField, Button} from '@material-ui/core';
+import { Container, Grid, Typography, Theme, AppBar, Tabs, Tab, Box, TextField, Button } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import { JobAppForm } from './JobAppForm';
 
 interface Props {

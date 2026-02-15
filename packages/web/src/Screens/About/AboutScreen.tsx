@@ -1,4 +1,4 @@
-import { Container } from '@material-ui/core';
+import { Container } from '@mui/material';
 import React from 'react'
 import { ExternalApp } from '../Home/Comp/ExternalApp';
 //import { Section8 } from '../Home/Comp/Section8';

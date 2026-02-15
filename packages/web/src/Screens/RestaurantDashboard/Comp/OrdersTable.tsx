@@ -1,15 +1,15 @@
 import React, {useEffect} from 'react';
 import { useAppData } from '../../../Context/AppDataContext';
-//import { DataGrid, GridColDef } from '@material-ui/data-grid';
+//import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import MUIDataTable from "mui-datatables";
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
-import { SearchRounded } from "@material-ui/icons/";
-import { Snackbar, Typography } from '@material-ui/core';
+import SearchRounded from "@mui/icons-material/SearchRounded";
+import { Snackbar, Typography } from '@mui/material';
 import { useQuery } from '@apollo/client';
 //import { GET_ORDERS_BY_RIDERID } from '../../../GraphQL/Queries';
 import { GET_ORDERS_BY_RESTAURANTID } from '../../../GraphQL/Queries';
-import { Alert } from '@material-ui/lab';
+import { Alert } from '@mui/lab';
   
  
   const columns = [

@@ -1,11 +1,24 @@
-import { Grid, Typography, Theme, Card, CardMedia, CardContent, useMediaQuery, useTheme, Backdrop, Modal, Fade, Button, Snackbar, Tooltip, withStyles,  } from '@mui/material';
-import { makeStyles, createStyles } from '@mui/styles';;
-import { Alert } from '@mui/lab';
+import {
+  Grid,
+  Typography,
+  Theme,
+  Card,
+  CardMedia,
+  CardContent,
+  useMediaQuery,
+  useTheme,
+  Backdrop,
+  Modal,
+  Fade,
+  Button,
+  Snackbar,
+  Tooltip,
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
+import { Alert } from "@mui/lab";
 import clsx from "clsx";
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import { useAppData } from "../../../Context/AppDataContext";
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -100,24 +113,12 @@ const useStyles = makeStyles((theme: Theme) =>
       opacity: 0.5,
       textDecoration: "none",
     },
-  })
+  }),
 );
-
-const LightTooltip = withStyles((theme: Theme) => ({
-  tooltip: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.common.white,
-    boxShadow: theme.shadows[1],
-    fontSize: 11,
-  },
-}))(Tooltip) as typeof Tooltip;
-//}))(Tooltip);
 
 export const Categories: React.FC = function Categories() {
   const classes = useStyles();
   const theme = useTheme();
-  var { value } = useAppData();
-  var { currentUser } = value;
 
   const [open2, setOpen2] = React.useState(false);
   const [open, setOpen] = React.useState(false);
@@ -141,12 +142,6 @@ export const Categories: React.FC = function Categories() {
 
   const handleClose = () => {
     setOpen(false);
-  };
-
-  const handleOpen = () => {
-    try {
-      setOpen(true);
-    } catch (err) {}
   };
 
   return (
@@ -449,7 +444,20 @@ export const Categories: React.FC = function Categories() {
         <Grid item xs={12} md={4}>
           {/* UNDO */}
           {/* <a href='https://sallyspantry.com/' target="_blank" className={classes.links} title="Marketplace"> */}
-          <LightTooltip title="Coming Soon" placement="top-end">
+          <Tooltip
+            title="Coming Soon"
+            placement="top-end"
+            slotProps={{
+              tooltip: {
+                sx: {
+                  backgroundColor: theme.palette.primary.main,
+                  color: theme.palette.common.white,
+                  boxShadow: theme.shadows[1],
+                  fontSize: 11,
+                },
+              },
+            }}
+          >
             <Card className={classes.card}>
               <CardMedia className={classes.cardImage}>
                 <img
@@ -463,7 +471,7 @@ export const Categories: React.FC = function Categories() {
                 </Typography>
               </CardContent>
             </Card>
-          </LightTooltip>
+          </Tooltip>
           {/* </a> */}
         </Grid>
       </Grid>

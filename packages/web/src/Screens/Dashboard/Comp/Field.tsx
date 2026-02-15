@@ -1,5 +1,5 @@
 import { ChangeEventHandler } from "react";
-import BackupIcon from '@material-ui/icons/Backup';
+import BackupIcon from '@mui/icons-material/Backup';
 
 interface props {
     name: string,

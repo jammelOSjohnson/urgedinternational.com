@@ -1,23 +1,6 @@
 import { useAppData } from "../../../Context/AppDataContext";
-import {
-  Grid,
-  makeStyles,
-  createStyles,
-  Typography,
-  Theme,
-  useMediaQuery,
-  Card,
-  CardMedia,
-  CardContent,
-  TableContainer,
-  Table,
-  Paper,
-  TableHead,
-  TableRow,
-  TableCell,
-  TableBody,
-  useTheme,
-} from "@material-ui/core";
+import { Grid, Typography, Theme, useMediaQuery, Card, CardMedia, CardContent, TableContainer, Table, Paper, TableHead, TableRow, TableCell, TableBody, useTheme,  } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React, { useEffect } from "react";
 import clsx from "clsx";
 import "../CSS/RestaurantCategories.css";

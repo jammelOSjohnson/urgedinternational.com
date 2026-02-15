@@ -1,5 +1,6 @@
 import React from 'react';
-import { useMediaQuery , useTheme,Typography, makeStyles, Theme, createStyles, Grid } from '@material-ui/core';
+import { useMediaQuery, useTheme, Typography, Theme, Grid } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 
 
 
@@ -128,14 +129,14 @@ export const HeaderLogo: React.FC = function HeaderLogo() {
             {isMaatchMedium? (
               <>
                   <Grid item xs={12} sm={12} md={12} style={{textAlign: "center", marginTop: "2.5%", marginBottom: "2.5%"}}>
-                    <Typography className={classes.logoArea} style={{textAlign: "center"}}>
+                    <Typography component="div" className={classes.logoArea} style={{textAlign: "center"}}>
                         <img className={classes.logo} src="Images/urged logo.jpg" alt="Urged Logo"></img>
                     </Typography>
                   </Grid>
               </>
             ): (
               <>
-                    <Typography className={classes.logoArea} style={{textAlign: "left"}}>
+                    <Typography component="div" className={classes.logoArea} style={{textAlign: "left"}}>
                         <img className={classes.logo} src="Images/urged logo.jpg" alt="Urged Logo"></img>
                     </Typography>
               </>

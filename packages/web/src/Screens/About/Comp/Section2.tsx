@@ -1,4 +1,5 @@
-import { Container, Grid, Typography, makeStyles, Theme, createStyles, Card, CardContent, CardMedia } from '@material-ui/core'
+import { Container, Grid, Typography, Theme, Card, CardContent, CardMedia } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';
 import React from 'react'
 // import styles from '../CSS/section2.css'
 

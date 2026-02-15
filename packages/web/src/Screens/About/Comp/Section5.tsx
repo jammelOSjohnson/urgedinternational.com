@@ -1,6 +1,7 @@
 import React from 'react'
 //import css
-import { Container, Grid, Typography, makeStyles, createStyles, Theme, Card, CardContent} from '@material-ui/core';
+import { Container, Grid, Typography, Theme, Card, CardContent } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 
 
 const useStyles = makeStyles((theme: Theme) => 

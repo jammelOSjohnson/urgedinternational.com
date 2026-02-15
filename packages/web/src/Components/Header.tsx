@@ -1,15 +1,16 @@
 import { useAppData } from "../Context/AppDataContext";
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { Container } from "@mui/material";
+import { Alert } from "@mui/lab";
+import SvgIcon, { SvgIconProps } from "@mui/material/SvgIcon";
 import {
   useMediaQuery,
   useTheme,
   Typography,
   AppBar,
   Toolbar,
-  makeStyles,
   Theme,
-  createStyles,
   Grid,
   Modal,
   Fade,
@@ -19,12 +20,11 @@ import {
   MenuItem,
   Backdrop,
   Button,
-} from "@material-ui/core";
-import SvgIcon, { SvgIconProps } from "@material-ui/core/SvgIcon";
-import { Container } from "@material-ui/core";
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
+
 // eslint-disable-next-line
 import { auth, socialAuth } from "../firebase";
-import { Alert } from "@material-ui/lab";
 
 interface State {
   genralLocation: string;
@@ -132,7 +132,7 @@ const useStyles = makeStyles((theme: Theme) =>
     //     color: "#FFFFFF",
     // },
     toolbar: theme.mixins.toolbar,
-  })
+  }),
 );
 
 function PhoneIcon(props: SvgIconProps) {
@@ -245,7 +245,7 @@ export const Header: React.FC = function Header() {
       //   }
       // });
     },
-    [value.userRolef, generalLocation]
+    [value.userRolef, generalLocation],
   );
 
   var fetchUserDetails = function fetchUserDetails(payload) {

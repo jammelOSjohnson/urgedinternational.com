@@ -1,6 +1,7 @@
 import React from 'react';
 //import CSS
-import { Container, Grid, Typography, makeStyles, createStyles, Theme, Button} from '@material-ui/core';
+import { Container, Grid, Typography, Theme, Button } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 
 
 // interface TabPanelProps {

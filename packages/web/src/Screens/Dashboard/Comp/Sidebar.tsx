@@ -17,8 +17,6 @@ import {
   Typography,
   Backdrop,
   Button,
-  withStyles,
-  Tooltip,
 } from "@mui/material";
 import { makeStyles, createStyles } from "@mui/styles";
 import React from "react";
@@ -28,7 +26,8 @@ import clsx from "clsx";
 import "../CSS/sidebar.css";
 
 import MailIcon from "@mui/icons-material/Mail";
-import { HistoryRounded, PersonRounded } from "@mui/icons-material";
+import HistoryRounded from "@mui/icons-material/HistoryRounded";
+import PersonRounded from "@mui/icons-material/PersonRounded";
 
 // const drawerWidth = "16.5%";
 const drawerWidth = 240;
@@ -187,16 +186,6 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const LightTooltip = withStyles((theme: Theme) => ({
-  tooltip: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.common.white,
-    boxShadow: theme.shadows[1],
-    fontSize: 11,
-  },
-}))(Tooltip) as typeof Tooltip;
-//}))(Tooltip);
-
 /* export const Sidebar: React.FC = function Sidebar({ children }) {
   const classes = useStyles(); */
 export const Sidebar: React.FC<{ children?: React.ReactNode }> =
@@ -204,7 +193,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
     const classes = useStyles({});
     const theme = useTheme();
     const isMatch = useMediaQuery(theme.breakpoints.down("lg"));
-    const isMatchMedium = useMediaQuery(theme.breakpoints.up("xl"));
+    const isMatchMedium = useMediaQuery(theme.breakpoints.up("lg"));
 
     var { value } = useAppData();
     var { logout, userInfo } = value;
@@ -362,7 +351,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                 {open && (
                   <img
                     className={classes.logo}
-                    src={window.location.origin + "/" + "Images/urged logo.jpg"}
+                    src={window.location.origin + "/Images/urged logo.jpg"}
                     alt="Urged Logo"
                   ></img>
                 )}
@@ -370,7 +359,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                   <img
                     className={classes.logosmall}
                     src={
-                      window.location.origin + "/" + "Images/urged logoR.png"
+                      window.location.origin + "/Images/urged logoR.png"
                     }
                     alt="Urged Logo"
                   ></img>
@@ -383,11 +372,11 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                     "Marketplace",
                     "Orders",
                     "Profile",
-                  ].map((text, index) =>
-                    referralPath === "/Dashboard" && text === "Overview" ? (
+                  ].map((text, index) => (
+                    <React.Fragment key={text}>
+                    {referralPath === "/Dashboard" && text === "Overview" ? (
                       <ListItem
                         button
-                        key={text}
                         className={clsx(classes.activeItem, "activeLinkHover")}
                       >
                         <ListItemIcon>
@@ -448,7 +437,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                             <MailIcon />
                           )}
                         </ListItemIcon>
-                        <ListItemText className="link-font" primary={text} />
+                        <ListItemText className="link-font" primary={text} primaryTypographyProps={{ component: "div" }} />
                       </ListItem>
                     ) : (referralPath === "/FoodDelivery" ||
                         referralPath === "/Restaurants" ||
@@ -522,7 +511,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                               <MailIcon />
                             )}
                           </ListItemIcon>
-                          <ListItemText className="link-font" primary={text} />
+                          <ListItemText className="link-font" primary={text} primaryTypographyProps={{ component: "div" }} />
                         </ListItem>
                       </Link>
                     ) : (referralPath === "/Haulage" ||
@@ -591,7 +580,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                             <MailIcon />
                           )}
                         </ListItemIcon>
-                        <ListItemText className="link-font" primary={text} />
+                        <ListItemText className="link-font" primary={text} primaryTypographyProps={{ component: "div" }} />
                       </ListItem>
                     ) : referralPath === "/Orders" && text === "Orders" ? (
                       <Link
@@ -665,7 +654,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                               <MailIcon />
                             )}
                           </ListItemIcon>
-                          <ListItemText className="link-fontH" primary={text} />
+                          <ListItemText className="link-fontH" primary={text} primaryTypographyProps={{ component: "div" }} />
                         </ListItem>
                       </Link>
                     ) : text === "Overview" ? (
@@ -734,7 +723,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                               <MailIcon />
                             )}
                           </ListItemIcon>
-                          <ListItemText className="link-font" primary={text} />
+                          <ListItemText className="link-font" primary={text} primaryTypographyProps={{ component: "div" }} />
                         </ListItem>
                       </Link>
                     ) : text === "Food Delivery" ? (
@@ -805,11 +794,12 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                               <MailIcon />
                             )}
                           </ListItemIcon>
-                          <ListItemText className="link-fontH" primary={text} />
+                          <ListItemText className="link-fontH" primary={text} primaryTypographyProps={{ component: "div" }} />
                         </ListItem>
                       </Link>
                     ) : text === "Haulage" ? (
                       <a
+                        key={text}
                         href="http://wa.me/18767735015"
                         target="_blank"
                         rel="nofollow noreferrer"
@@ -878,7 +868,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                               <MailIcon />
                             )}
                           </ListItemIcon>
-                          <ListItemText className="link-fontH" primary={text} />
+                          <ListItemText className="link-fontH" primary={text} primaryTypographyProps={{ component: "div" }} />
                         </ListItem>
                       </a>
                     ) : // :
@@ -896,78 +886,79 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                     //             index === 5 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                     //           }
                     //         </ListItemIcon>
-                    //         <ListItemText className="link-fontH" primary={text} />
+                    //         <ListItemText className="link-fontH" primary={text} primaryTypographyProps={{ component: "div" }} />
                     //     </ListItem>
                     //   </a>
+                    /*<LightTooltip title="Coming Soon" placement="top-end">
+                        <Typography key={text}> */
                     text === "Marketplace" ? (
-                      <LightTooltip title="Coming Soon" placement="top-end">
-                        <Typography key={text}>
-                          <ListItem button>
-                            <ListItemIcon>
-                              {index === 0 ? (
-                                <img
-                                  src={
-                                    window.location.origin +
-                                    "/" +
-                                    "Images/GroupSquareIcon.png"
-                                  }
-                                  alt="square icon"
-                                />
-                              ) : index === 1 ? (
-                                <img
-                                  src={
-                                    window.location.origin +
-                                    "/" +
-                                    "Images/BlackFoodDeliveryService.png"
-                                  }
-                                  alt="Food icon"
-                                />
-                              ) : index === 2 ? (
-                                <img
-                                  src={
-                                    window.location.origin +
-                                    "/" +
-                                    "Images/BlackUShip.png"
-                                  }
-                                  alt="truck icon"
-                                />
-                              ) : index === 3 ? (
-                                <img
-                                  src={
-                                    window.location.origin +
-                                    "/" +
-                                    "Images/blacktruckIconImage.png"
-                                  }
-                                  alt="BlackMarket icon"
-                                />
-                              ) : index === 4 ? (
-                                <img
-                                  src={
-                                    window.location.origin +
-                                    "/" +
-                                    "Images/BackMarketPlaceIcon.png"
-                                  }
-                                  alt="BlackMarket icon"
-                                />
-                              ) : index === 5 ? (
-                                <HistoryRounded
-                                  style={{ width: "36px", height: "38px" }}
-                                />
-                              ) : index === 5 ? (
-                                <PersonRounded
-                                  style={{ width: "36px", height: "38px" }}
-                                />
-                              ) : (
-                                <MailIcon />
-                              )}
-                            </ListItemIcon>
-                            <ListItemText
-                              className="link-fontH"
-                              primary={text}
-                            />
-                          </ListItem>
-                        </Typography>
-                      </LightTooltip>
+                      <span key={text} title="Coming Soon" style={{ display: "block" }}>
+                        <ListItem button>
+                          <ListItemIcon>
+                            {index === 0 ? (
+                              <img
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/GroupSquareIcon.png"
+                                }
+                                alt="square icon"
+                              />
+                            ) : index === 1 ? (
+                              <img
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/BlackFoodDeliveryService.png"
+                                }
+                                alt="Food icon"
+                              />
+                            ) : index === 2 ? (
+                              <img
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/BlackUShip.png"
+                                }
+                                alt="truck icon"
+                              />
+                            ) : index === 3 ? (
+                              <img
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/blacktruckIconImage.png"
+                                }
+                                alt="BlackMarket icon"
+                              />
+                            ) : index === 4 ? (
+                              <img
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/BackMarketPlaceIcon.png"
+                                }
+                                alt="BlackMarket icon"
+                              />
+                            ) : index === 5 ? (
+                              <HistoryRounded
+                                style={{ width: "36px", height: "38px" }}
+                              />
+                            ) : index === 5 ? (
+                              <PersonRounded
+                                style={{ width: "36px", height: "38px" }}
+                              />
+                            ) : (
+                              <MailIcon />
+                            )}
+                          </ListItemIcon>
+                          <ListItemText
+                            className="link-fontH"
+                            primary={text}
+                            primaryTypographyProps={{ component: "div" }}
+                          />
+                        </ListItem>
+                      </span>
                     ) : text === "Orders" ? (
                       userInfo?.email !== null &&
                       userInfo?.email !== "" &&
@@ -1043,14 +1034,15 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                                 <MailIcon />
                               )}
                             </ListItemIcon>
-                            <ListItemText
-                              className="link-fontH"
-                              primary={text}
-                            />
+                          <ListItemText
+                            className="link-fontH"
+                            primary={text}
+                            primaryTypographyProps={{ component: "div" }}
+                          />
                           </ListItem>
                         </Link>
                       ) : (
-                        <></>
+                        <React.Fragment key={text} />
                       )
                     ) : text === "Profile" ? (
                       userInfo?.email !== null &&
@@ -1131,19 +1123,19 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                                 <MailIcon />
                               )}
                             </ListItemIcon>
-                            <ListItemText
-                              className="link-fontH"
-                              primary={text}
-                            />
+                          <ListItemText
+                            className="link-fontH"
+                            primary={text}
+                            primaryTypographyProps={{ component: "div" }}
+                          />
                           </ListItem>
                         </Link>
                       ) : (
-                        <></>
+                        <React.Fragment key={text} />
                       )
                     ) : (
                       <ListItem
                         button
-                        key={text}
                         style={{ paddingLeft: "12px" }}
                       >
                         <ListItemIcon>
@@ -1204,8 +1196,10 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                             <MailIcon />
                           )}
                         </ListItemIcon>
-                        <ListItemText className="link-font" primary={text} />
+                        <ListItemText className="link-font" primary={text} primaryTypographyProps={{ component: "div" }} />
                       </ListItem>
+                    )}
+                    </React.Fragment>
                     ),
                   )}
                 </List>
@@ -1244,10 +1238,11 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                                   )
                                 }
                               </ListItemIcon>
-                              <ListItemText
-                                className="link-fontH"
-                                primary={text}
-                              />
+                          <ListItemText
+                            className="link-fontH"
+                            primary={text}
+                            primaryTypographyProps={{ component: "div" }}
+                          />
                             </ListItem>
                           </a>
                         ) : (
@@ -1272,6 +1267,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                             <ListItemText
                               className="link-font"
                               primary={text}
+                              primaryTypographyProps={{ component: "div" }}
                             />
                           </ListItem>
                         ),
@@ -1307,10 +1303,11 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                                   )
                                 }
                               </ListItemIcon>
-                              <ListItemText
-                                className="link-fontH"
-                                primary={text}
-                              />
+                          <ListItemText
+                            className="link-fontH"
+                            primary={text}
+                            primaryTypographyProps={{ component: "div" }}
+                          />
                             </ListItem>
                           </a>
                         ) : (
@@ -1335,6 +1332,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                             <ListItemText
                               className="link-font"
                               primary={text}
+                              primaryTypographyProps={{ component: "div" }}
                             />
                           </ListItem>
                         ),
@@ -1523,7 +1521,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                 {open1 && (
                   <img
                     className={classes.logo}
-                    src={window.location.origin + "/" + "Images/urged logo.jpg"}
+                    src={window.location.origin + "/Images/urged logo.jpg"}
                     alt="Urged Logo"
                   ></img>
                 )}
@@ -1531,7 +1529,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                   <img
                     className={classes.logosmall}
                     src={
-                      window.location.origin + "/" + "Images/urged logoR.png"
+                      window.location.origin + "/Images/urged logoR.png"
                     }
                     alt="Urged Logo"
                   ></img>
@@ -1544,11 +1542,11 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                     "Marketplace",
                     "Orders",
                     "Profile",
-                  ].map((text, index) =>
-                    referralPath === "/Dashboard" && text === "Overview" ? (
+                  ].map((text, index) => (
+                    <React.Fragment key={text}>
+                    {referralPath === "/Dashboard" && text === "Overview" ? (
                       <ListItem
                         button
-                        key={text}
                         className={clsx(classes.activeItem, "activeLinkHover")}
                       >
                         <ListItemIcon>
@@ -1609,7 +1607,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                             <MailIcon />
                           )}
                         </ListItemIcon>
-                        <ListItemText className="link-font" primary={text} />
+                        <ListItemText className="link-font" primary={text} primaryTypographyProps={{ component: "div" }} />
                       </ListItem>
                     ) : (referralPath === "/FoodDelivery" ||
                         referralPath === "/Restaurants" ||
@@ -1683,7 +1681,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                               <MailIcon />
                             )}
                           </ListItemIcon>
-                          <ListItemText className="link-font" primary={text} />
+                          <ListItemText className="link-font" primary={text} primaryTypographyProps={{ component: "div" }} />
                         </ListItem>
                       </Link>
                     ) : (referralPath === "/Haulage" ||
@@ -1752,7 +1750,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                             <MailIcon />
                           )}
                         </ListItemIcon>
-                        <ListItemText className="link-font" primary={text} />
+                        <ListItemText className="link-font" primary={text} primaryTypographyProps={{ component: "div" }} />
                       </ListItem>
                     ) : referralPath === "/OrderHistory" &&
                       text === "Orders" ? (
@@ -1824,7 +1822,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                               <MailIcon />
                             )}
                           </ListItemIcon>
-                          <ListItemText className="link-fontH" primary={text} />
+                          <ListItemText className="link-fontH" primary={text} primaryTypographyProps={{ component: "div" }} />
                         </ListItem>
                       </Link>
                     ) : text === "Overview" ? (
@@ -1893,7 +1891,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                               <MailIcon />
                             )}
                           </ListItemIcon>
-                          <ListItemText className="link-font" primary={text} />
+                          <ListItemText className="link-font" primary={text} primaryTypographyProps={{ component: "div" }} />
                         </ListItem>
                       </Link>
                     ) : text === "Orders" ? (
@@ -1971,11 +1969,12 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                             <ListItemText
                               className="link-font"
                               primary={text}
+                              primaryTypographyProps={{ component: "div" }}
                             />
                           </ListItem>
                         </Link>
                       ) : (
-                        <></>
+                        <React.Fragment key={text} />
                       )
                     ) : text === "Profile" ? (
                       userInfo?.email !== null &&
@@ -2056,11 +2055,12 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                             <ListItemText
                               className="link-font"
                               primary={text}
+                              primaryTypographyProps={{ component: "div" }}
                             />
                           </ListItem>
                         </Link>
                       ) : (
-                        <></>
+                        <React.Fragment key={text} />
                       )
                     ) : text === "Food Delivery" ? (
                       <Link
@@ -2130,11 +2130,12 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                               <MailIcon />
                             )}
                           </ListItemIcon>
-                          <ListItemText className="link-font" primary={text} />
+                          <ListItemText className="link-font" primary={text} primaryTypographyProps={{ component: "div" }} />
                         </ListItem>
                       </Link>
                     ) : text === "Haulage" ? (
                       <a
+                        key={text}
                         href="http://wa.me/18767735015"
                         target="_blank"
                         rel="nofollow noreferrer"
@@ -2203,7 +2204,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                               <MailIcon />
                             )}
                           </ListItemIcon>
-                          <ListItemText className="link-fontH" primary={text} />
+                          <ListItemText className="link-fontH" primary={text} primaryTypographyProps={{ component: "div" }} />
                         </ListItem>
                       </a>
                     ) : // :
@@ -2221,78 +2222,79 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                     //             index === 6 ? <PersonRounded style={{width: "36px", height: "38px"}}  /> : <MailIcon />
                     //           }
                     //         </ListItemIcon>
-                    //         <ListItemText className="link-fontH" primary={text} />
+                    //         <ListItemText className="link-fontH" primary={text} primaryTypographyProps={{ component: "div" }} />
                     //     </ListItem>
                     //   </a>
+                    /*<LightTooltip title="Coming Soon" placement="top-end">
+                        <Typography key={text}>*/
                     text === "Marketplace" ? (
-                      <LightTooltip title="Coming Soon" placement="top-end">
-                        <Typography key={text}>
-                          <ListItem button>
-                            <ListItemIcon>
-                              {index === 0 ? (
-                                <img
-                                  src={
-                                    window.location.origin +
-                                    "/" +
-                                    "Images/GroupSquareIcon.png"
-                                  }
-                                  alt="square icon"
-                                />
-                              ) : index === 1 ? (
-                                <img
-                                  src={
-                                    window.location.origin +
-                                    "/" +
-                                    "Images/BlackFoodDeliveryService.png"
-                                  }
-                                  alt="Food icon"
-                                />
-                              ) : index === 2 ? (
-                                <img
-                                  src={
-                                    window.location.origin +
-                                    "/" +
-                                    "Images/BlackUShip.png"
-                                  }
-                                  alt="truck icon"
-                                />
-                              ) : index === 3 ? (
-                                <img
-                                  src={
-                                    window.location.origin +
-                                    "/" +
-                                    "Images/blacktruckIconImage.png"
-                                  }
-                                  alt="BlackMarket icon"
-                                />
-                              ) : index === 4 ? (
-                                <img
-                                  src={
-                                    window.location.origin +
-                                    "/" +
-                                    "Images/BackMarketPlaceIcon.png"
-                                  }
-                                  alt="BlackMarket icon"
-                                />
-                              ) : index === 5 ? (
-                                <HistoryRounded
-                                  style={{ width: "36px", height: "38px" }}
-                                />
-                              ) : index === 6 ? (
-                                <PersonRounded
-                                  style={{ width: "36px", height: "38px" }}
-                                />
-                              ) : (
-                                <MailIcon />
-                              )}
-                            </ListItemIcon>
-                            <ListItemText
-                              className="link-fontH"
-                              primary={text}
-                            />
-                          </ListItem>
-                        </Typography>
-                      </LightTooltip>
+                      <span key={text} title="Coming Soon" style={{ display: "block" }}>
+                        <ListItem button>
+                          <ListItemIcon>
+                            {index === 0 ? (
+                              <img
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/GroupSquareIcon.png"
+                                }
+                                alt="square icon"
+                              />
+                            ) : index === 1 ? (
+                              <img
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/BlackFoodDeliveryService.png"
+                                }
+                                alt="Food icon"
+                              />
+                            ) : index === 2 ? (
+                              <img
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/BlackUShip.png"
+                                }
+                                alt="truck icon"
+                              />
+                            ) : index === 3 ? (
+                              <img
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/blacktruckIconImage.png"
+                                }
+                                alt="BlackMarket icon"
+                              />
+                            ) : index === 4 ? (
+                              <img
+                                src={
+                                  window.location.origin +
+                                  "/" +
+                                  "Images/BackMarketPlaceIcon.png"
+                                }
+                                alt="BlackMarket icon"
+                              />
+                            ) : index === 5 ? (
+                              <HistoryRounded
+                                style={{ width: "36px", height: "38px" }}
+                              />
+                            ) : index === 6 ? (
+                              <PersonRounded
+                                style={{ width: "36px", height: "38px" }}
+                              />
+                            ) : (
+                              <MailIcon />
+                            )}
+                          </ListItemIcon>
+                          <ListItemText
+                            className="link-fontH"
+                            primary={text}
+                            primaryTypographyProps={{ component: "div" }}
+                          />
+                        </ListItem>
+                      </span>
                     ) : text !== "Overview" ? (
                       <ListItem button key={text} style={{ marginTop: "5%" }}>
                         <ListItemIcon>
@@ -2353,7 +2355,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                             <MailIcon />
                           )}
                         </ListItemIcon>
-                        <ListItemText className="link-font" primary={text} />
+                        <ListItemText className="link-font" primary={text} primaryTypographyProps={{ component: "div" }} />
                       </ListItem>
                     ) : (
                       <ListItem
@@ -2419,10 +2421,12 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                             <MailIcon />
                           )}
                         </ListItemIcon>
-                        <ListItemText className="link-font" primary={text} />
+                        <ListItemText className="link-font" primary={text} primaryTypographyProps={{ component: "div" }} />
                       </ListItem>
-                    ),
-                  )}
+                    )
+                    }
+                    </React.Fragment>
+                  ))}
                 </List>
                 <Divider />
                 <List>
@@ -2459,10 +2463,11 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                                   )
                                 }
                               </ListItemIcon>
-                              <ListItemText
-                                className="link-fontH"
-                                primary={text}
-                              />
+                          <ListItemText
+                            className="link-fontH"
+                            primary={text}
+                            primaryTypographyProps={{ component: "div" }}
+                          />
                             </ListItem>
                           </a>
                         ) : (
@@ -2487,6 +2492,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                             <ListItemText
                               className="link-font"
                               primary={text}
+                              primaryTypographyProps={{ component: "div" }}
                             />
                           </ListItem>
                         ),
@@ -2522,10 +2528,11 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                                   )
                                 }
                               </ListItemIcon>
-                              <ListItemText
-                                className="link-fontH"
-                                primary={text}
-                              />
+                          <ListItemText
+                            className="link-fontH"
+                            primary={text}
+                            primaryTypographyProps={{ component: "div" }}
+                          />
                             </ListItem>
                           </a>
                         ) : (
@@ -2550,6 +2557,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                             <ListItemText
                               className="link-font"
                               primary={text}
+                              primaryTypographyProps={{ component: "div" }}
                             />
                           </ListItem>
                         ),

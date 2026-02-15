@@ -1,4 +1,5 @@
-import { Grid, makeStyles, createStyles, Typography, Theme, Card, CardMedia, CardContent, useMediaQuery, useTheme, TableContainer, TableHead, TableRow, TableBody, TableCell, Table, Paper } from '@material-ui/core';
+import { Grid, Typography, Theme, Card, CardMedia, CardContent, useMediaQuery, useTheme, TableContainer, TableHead, TableRow, TableBody, TableCell, Table, Paper } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React from 'react';
 import clsx from 'clsx';
 import { Link, useHistory } from "react-router-dom";

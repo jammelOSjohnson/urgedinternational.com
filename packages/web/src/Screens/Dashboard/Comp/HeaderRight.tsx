@@ -1,34 +1,17 @@
-import { Container, Grid, makeStyles, createStyles, Theme } from '@material-ui/core';
-import clsx from 'clsx';
-import React, { useEffect } from 'react';
+import { Container, Grid } from "@mui/material";
+import React, { useEffect } from "react";
 import { Cart } from "../../../Components/Cart";
 import { Notification } from "../../../Components/Notification";
-import { User } from "../../../Components/User"
-import { useHistory } from 'react-router-dom';
+import { User } from "../../../Components/User";
+import { useHistory } from "react-router-dom";
 
-
-
-
-
-const useStyles = makeStyles((theme: Theme) => 
-    createStyles({
-        noti: {
-            color: "#FF5E14"
-        },
-        main: {
-            padding: 0,
-        },
-        gridRoot: {
-            padding: "0px"
-        },
-        notScrolled:{
-            backgroundColor: "transparent",
-        }
-    }),
-);
+const sx = {
+  main: { padding: 0 },
+  gridRoot: { padding: "0px" },
+  notScrolled: { backgroundColor: "transparent" },
+};
 
 export const HeaderRight: React.FC = function HeaderRight() {
-    const classes = useStyles();
     const [scrolled, setScrolled] = React.useState(false);
     var history = useHistory();
     var location = history.location;
@@ -69,8 +52,8 @@ export const HeaderRight: React.FC = function HeaderRight() {
     if(!scrolled){
         return (
             <>
-                <Container id='right-container' maxWidth="xl" className={clsx(classes.main, classes.notScrolled)} onScroll={handleScroll}>
-                    <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
+                <Container id="right-container" maxWidth="xl" sx={{ ...sx.main, ...sx.notScrolled }} onScroll={handleScroll}>
+                    <Grid container direction="row" spacing={0} sx={sx.gridRoot} alignItems="center">
                         <Grid item xs={6}>
                             <User />
                         </Grid>
@@ -100,11 +83,11 @@ export const HeaderRight: React.FC = function HeaderRight() {
                 </style>
             </>
         )
-    }else if(referralPath.toLowerCase() == "/shoppingcart") {
+    }else if(referralPath.toLowerCase() === "/shoppingcart") {
         return (
             <>
-                <Container id='right-container' maxWidth="xl" className={clsx(classes.main, classes.notScrolled)} onScroll={handleScroll}>
-                    <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
+                <Container id="right-container" maxWidth="xl" sx={{ ...sx.main, ...sx.notScrolled }} onScroll={handleScroll}>
+                    <Grid container direction="row" spacing={0} sx={sx.gridRoot} alignItems="center">
                         <Grid item xs={6}>
                             <User />
                         </Grid>

@@ -1,21 +1,15 @@
-import { useAppData } from "../../../Context/AppDataContext";
-import {
-  Container,
-  Grid,
-  makeStyles,
-  createStyles,
-  Typography,
-  Theme,
-  Avatar,
-} from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { LocationOnRounded, ScheduleRounded } from "@material-ui/icons/";
+import LocationOnRounded from "@mui/icons-material/LocationOnRounded";
+import ScheduleRounded from "@mui/icons-material/ScheduleRounded";
 import moment from "moment-timezone";
 import { useHistory } from "react-router-dom";
 import fetchCurrentTime from "../../../Apis/timePI";
 import { DateTime } from "luxon";
 import { useParams } from "react-router-dom";
 import { Spinner } from "../../../Components/spinner";
+import { useAppData } from "../../../Context/AppDataContext";
+import { Container, Grid, Typography, Theme, Avatar } from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -62,7 +56,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: "8px",
       width: "69px",
     },
-  })
+  }),
 );
 
 export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
@@ -81,7 +75,7 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
   } = value;
   var restaurant = restaurants.filter(
     (item) =>
-      item.FirstName === restaurantName && item.Parish === generalLocation
+      item.FirstName === restaurantName && item.Parish === generalLocation,
   );
   //console.log(restaurant);
   //console.log(restaurants);
@@ -126,36 +120,36 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
               innerDay === 7
                 ? OpeningHrs.Sunday
                 : innerDay === 1
-                ? OpeningHrs.Monday
-                : innerDay === 2
-                ? OpeningHrs.Tuesday
-                : innerDay === 3
-                ? OpeningHrs.Wednesday
-                : innerDay === 4
-                ? OpeningHrs.Thursday
-                : innerDay === 5
-                ? OpeningHrs.Friday
-                : innerDay === 6
-                ? OpeningHrs.Saturday
-                : ""
+                  ? OpeningHrs.Monday
+                  : innerDay === 2
+                    ? OpeningHrs.Tuesday
+                    : innerDay === 3
+                      ? OpeningHrs.Wednesday
+                      : innerDay === 4
+                        ? OpeningHrs.Thursday
+                        : innerDay === 5
+                          ? OpeningHrs.Friday
+                          : innerDay === 6
+                            ? OpeningHrs.Saturday
+                            : "",
             );
 
             let innerOpeningHrs =
               innerDay === 7
                 ? OpeningHrs.Sunday
                 : innerDay === 1
-                ? OpeningHrs.Monday
-                : innerDay === 2
-                ? OpeningHrs.Tuesday
-                : innerDay === 3
-                ? OpeningHrs.Wednesday
-                : innerDay === 4
-                ? OpeningHrs.Thursday
-                : innerDay === 5
-                ? OpeningHrs.Friday
-                : innerDay === 6
-                ? OpeningHrs.Saturday
-                : "";
+                  ? OpeningHrs.Monday
+                  : innerDay === 2
+                    ? OpeningHrs.Tuesday
+                    : innerDay === 3
+                      ? OpeningHrs.Wednesday
+                      : innerDay === 4
+                        ? OpeningHrs.Thursday
+                        : innerDay === 5
+                          ? OpeningHrs.Friday
+                          : innerDay === 6
+                            ? OpeningHrs.Saturday
+                            : "";
             //console.log(OpeningHrs);
             //console.log(innerOpeningHrs)
             //console.log(currentTime);
@@ -169,12 +163,12 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
             let jaTimeFinal = jaTime.split(":");
             let openTime = innerOpeningHrs.slice(
               0,
-              innerOpeningHrs.indexOf("a")
+              innerOpeningHrs.indexOf("a"),
             );
             let openTimeFinal = openTime.trim();
             let closeTime = innerOpeningHrs.slice(
               innerOpeningHrs.indexOf("-") + 1,
-              innerOpeningHrs.indexOf("p")
+              innerOpeningHrs.indexOf("p"),
             );
             //console.log(innerOpeningHrs)
             //console.log(closeTime);
@@ -219,47 +213,47 @@ export const RestaurantMenuHeader: React.FC = function RestaurantMenuHeader() {
               innerDay === 0
                 ? OpeningHrs.Sunday
                 : innerDay === 1
-                ? OpeningHrs.Monday
-                : innerDay === 2
-                ? OpeningHrs.Tuesday
-                : innerDay === 3
-                ? OpeningHrs.Wednesday
-                : innerDay === 4
-                ? OpeningHrs.Thursday
-                : innerDay === 5
-                ? OpeningHrs.Friday
-                : innerDay === 6
-                ? OpeningHrs.Saturday
-                : ""
+                  ? OpeningHrs.Monday
+                  : innerDay === 2
+                    ? OpeningHrs.Tuesday
+                    : innerDay === 3
+                      ? OpeningHrs.Wednesday
+                      : innerDay === 4
+                        ? OpeningHrs.Thursday
+                        : innerDay === 5
+                          ? OpeningHrs.Friday
+                          : innerDay === 6
+                            ? OpeningHrs.Saturday
+                            : "",
             );
 
             let innerOpeningHrs =
               innerDay === 0
                 ? OpeningHrs.Sunday
                 : innerDay === 1
-                ? OpeningHrs.Monday
-                : innerDay === 2
-                ? OpeningHrs.Tuesday
-                : innerDay === 3
-                ? OpeningHrs.Wednesday
-                : innerDay === 4
-                ? OpeningHrs.Thursday
-                : innerDay === 5
-                ? OpeningHrs.Friday
-                : innerDay === 6
-                ? OpeningHrs.Saturday
-                : "";
+                  ? OpeningHrs.Monday
+                  : innerDay === 2
+                    ? OpeningHrs.Tuesday
+                    : innerDay === 3
+                      ? OpeningHrs.Wednesday
+                      : innerDay === 4
+                        ? OpeningHrs.Thursday
+                        : innerDay === 5
+                          ? OpeningHrs.Friday
+                          : innerDay === 6
+                            ? OpeningHrs.Saturday
+                            : "";
 
             let jaTime = moment.tz(jaday, "America/Jamaica").format("h:mm a");
             let jaTimeFinal = jaTime.split(" ");
             let openTime = innerOpeningHrs.slice(
               0,
-              innerOpeningHrs.indexOf("a")
+              innerOpeningHrs.indexOf("a"),
             );
             let openTimeFinal = openTime.trim();
             let closeTime = innerOpeningHrs.slice(
               innerOpeningHrs.indexOf("-") + 1,
-              innerOpeningHrs.indexOf("p")
+              innerOpeningHrs.indexOf("p"),
             );
             let closeTimeFinal = closeTime.trim();
             let isAm: boolean = jaTime.includes("a");

@@ -1,6 +1,11 @@
+import React from "react";
+import clsx from "clsx";
+import Carousel from "react-bootstrap/Carousel";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../CSS/FoodSlider.css";
+import { Link } from "react-router-dom";
+import LocationOnRounded from "@mui/icons-material/LocationOnRounded";
 import {
-  makeStyles,
-  createStyles,
   Typography,
   Theme,
   Button,
@@ -13,15 +18,10 @@ import {
   useTheme,
   useMediaQuery,
   Input,
-} from "@material-ui/core";
-import React from "react";
-import clsx from "clsx";
-import Carousel from "react-bootstrap/Carousel";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "../CSS/FoodSlider.css";
-import { Link } from "react-router-dom";
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
+
 //import { useAppData } from '../../../Context/AppDataContext';
-import { LocationOnRounded } from "@material-ui/icons/";
 
 interface State {
   address: string;
@@ -210,7 +210,7 @@ const useStyles = makeStyles((theme: Theme) =>
     searchBtn: {
       padding: "0px",
     },
-  })
+  }),
 );
 
 const useMobileStyles = makeStyles((theme: Theme) =>
@@ -256,7 +256,7 @@ const useMobileStyles = makeStyles((theme: Theme) =>
       left: "59%",
       // top: "-760%"
     },
-  })
+  }),
 );
 
 export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {

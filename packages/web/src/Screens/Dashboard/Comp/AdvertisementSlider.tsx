@@ -1,4 +1,5 @@
-import { makeStyles, createStyles, Typography, Theme, Button, useMediaQuery, useTheme } from '@material-ui/core';
+import { Typography, Theme, Button, useMediaQuery, useTheme } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import 'bootstrap/dist/css/bootstrap.min.css';

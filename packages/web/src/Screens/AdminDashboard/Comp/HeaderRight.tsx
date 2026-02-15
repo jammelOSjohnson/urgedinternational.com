@@ -1,10 +1,11 @@
-import { Container, Grid , makeStyles, createStyles, Theme } from '@material-ui/core';
-// import Visibility from '@material-ui/icons/Visibility';
-// import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import { Container, Grid, Theme } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
+// import Visibility from '@mui/icons-material/Visibility';
+// import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import React from 'react';
 // import { useHistory } from 'react-router-dom';
 // import clsx from 'clsx';
-// import { NotificationImportantRounded, ShoppingCartRounded } from "@material-ui/icons/";
+// import { NotificationImportantRounded, ShoppingCartRounded } from "@mui/icons-material/";
 import { Notification } from "../../../Components/Notification";
 import { User } from "../../../Components/User"
 

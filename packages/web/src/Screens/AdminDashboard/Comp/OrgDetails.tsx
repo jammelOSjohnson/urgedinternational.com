@@ -1,16 +1,40 @@
-import { useAppData } from "../../../Context/AppDataContext";
-import { AppBar, Grid, Typography, Theme, Card, CardContent, TextField, FormControl, MenuItem, Button, Box, Tabs, Tab, Modal, Backdrop, Fade, FormGroup, FormControlLabel, Switch, InputLabel, Select,  } from '@mui/material';
-import { makeStyles, createStyles } from '@mui/styles';;
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import MUIDataTable from "mui-datatables";
+import { Link } from "react-router-dom";
+import { Alert } from "@mui/lab";
+import DeleteOutlineRounded from "@mui/icons-material/DeleteOutlineRounded";
+import EditRounded from "@mui/icons-material/EditRounded";
+import clsx from "clsx";
+import { useAppData } from "../../../Context/AppDataContext";
+import {
+  AppBar,
+  Grid,
+  Typography,
+  Theme,
+  Card,
+  CardContent,
+  TextField,
+  FormControl,
+  MenuItem,
+  Button,
+  Box,
+  Tabs,
+  Tab,
+  Modal,
+  Backdrop,
+  Fade,
+  FormGroup,
+  FormControlLabel,
+  Switch,
+  InputLabel,
+  Select,
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
+
 //import clsx from 'clsx';
 //Import Components
 //import { ItemRating } from '../../../Components/ItemRating';
-import { Link } from "react-router-dom";
-import { Alert } from '@mui/lab';
-import { DeleteOutlineRounded, EditRounded } from '@mui/icons-material';
-import clsx from "clsx";
 
 // interface State {
 //     email: string;
@@ -314,7 +338,7 @@ const useStyles = makeStyles((theme: Theme) =>
       top: 18,
       right: 10,
     },
-  })
+  }),
 );
 
 const columns = [
@@ -727,7 +751,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
       restaurants[selectedRestaurant]._id,
       event.target.checked,
       restaurants[selectedRestaurant].disabled,
-      selectedRestaurant
+      selectedRestaurant,
     );
   };
 
@@ -741,7 +765,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
 
   const handleClose3 = () => {
     let newMenu = values.Menu.filter(
-      (item, index) => index != selectedMenuItemIndex
+      (item, index) => index != selectedMenuItemIndex,
     );
     //console.log(newMenu);
     setValues({ ...values, Menu: newMenu });
@@ -778,7 +802,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
     try {
       setSelectedMenuItemIndex(index);
       setSelectedMenuItem(
-        restaurants[selectedRestaurant].MenuItems[parseInt(index.toString())]
+        restaurants[selectedRestaurant].MenuItems[parseInt(index.toString())],
       );
       setOpen3(true);
     } catch (err) {}
@@ -788,7 +812,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
     try {
       setSelectedMenuItemIndex(index);
       setSelectedMenuItem(
-        restaurants[selectedRestaurant].MenuItems[parseInt(index.toString())]
+        restaurants[selectedRestaurant].MenuItems[parseInt(index.toString())],
       );
       setOpen2(true);
     } catch (err) {}
@@ -1148,7 +1172,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
                                             selectedMenuItem.ItemDescription
                                           }
                                           onChange={handleChange4(
-                                            "ItemDescription"
+                                            "ItemDescription",
                                           )}
                                           variant="outlined"
                                           placeholder="Enter Item Description"
@@ -1169,7 +1193,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
                                           // rows={4}
                                           value={selectedMenuItem.MenuCategory}
                                           onChange={handleChange4(
-                                            "MenuCategory"
+                                            "MenuCategory",
                                           )}
                                           variant="outlined"
                                           placeholder="Enter Category"
@@ -1352,7 +1376,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
                                             selectedMenuItem.ItemDescription
                                           }
                                           onChange={handleChange4(
-                                            "ItemDescription"
+                                            "ItemDescription",
                                           )}
                                           variant="outlined"
                                           placeholder="Enter Item Description"
@@ -1373,7 +1397,7 @@ export const OrgDetails: React.FC = function OrgDetails() {
                                           // rows={4}
                                           value={selectedMenuItem.MenuCategory}
                                           onChange={handleChange4(
-                                            "MenuCategory"
+                                            "MenuCategory",
                                           )}
                                           variant="outlined"
                                           placeholder="Enter Category"

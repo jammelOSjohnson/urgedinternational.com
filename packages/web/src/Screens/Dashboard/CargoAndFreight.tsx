@@ -1,8 +1,6 @@
 import {
   Container,
   Grid,
-  makeStyles,
-  createStyles,
   Theme,
   Typography,
   CardContent,
@@ -17,7 +15,8 @@ import {
   FormGroup,
   FormControlLabel,
   Checkbox,
-} from "@material-ui/core";
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 // import clsx from 'clsx';
@@ -26,13 +25,13 @@ import { HeaderRight } from "./Comp/HeaderRight";
 import { useAppData } from "../../Context/AppDataContext";
 import { Link } from "react-router-dom";
 import clsx from "clsx";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-import HelpIcon from "@material-ui/icons/Help";
-import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
-import GpsFixedIcon from "@material-ui/icons/GpsFixed";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import HelpIcon from "@mui/icons-material/Help";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import GpsFixedIcon from "@mui/icons-material/GpsFixed";
 import { Field } from "./Comp/Field";
-import DescriptionIcon from "@material-ui/icons/Description";
-import Alert from "@material-ui/lab/Alert";
+import DescriptionIcon from "@mui/icons-material/Description";
+import Alert from "@mui/lab/Alert";
 import { ShippingAddress } from "./Comp/ShippingAddress";
 import { LiveChatWidget } from "@livechat/widget-react";
 const MailBoxNumber = React.lazy(() => import("./Comp/MailBoxNumber"));
@@ -207,7 +206,7 @@ const useStyles = makeStyles((theme: Theme) =>
     alert: {
       marginBottom: "5%",
     },
-  })
+  }),
 );
 
 interface content {
@@ -277,12 +276,6 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
 
   const handleClose4 = () => {
     setOpen4(false);
-  };
-
-  const handleOpen4 = () => {
-    try {
-      setOpen4(true);
-    } catch (err) {}
   };
 
   const handleClose3 = () => {
@@ -424,7 +417,7 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                   data,
                   currentUser.uid,
                   userInfo,
-                  mailbox_Num
+                  mailbox_Num,
                 )
                   .then(function (res) {
                     if (res === true) {
@@ -460,7 +453,7 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                     } else if (res === "Tracking number exist") {
                       setError(
                         "A package was already added with tracking number " +
-                          state.trackingNum2
+                          state.trackingNum2,
                       );
                       // if(createPreAlertBtn !== null){
                       //     if(createPreAlertBtn.disabled === true){
@@ -486,17 +479,17 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
             });
           } else {
             setError(
-              "Please upload a valid invoice. Only Pdf, Png, Jpg/Jpeg and Svg files are allowed."
+              "Please upload a valid invoice. Only Pdf, Png, Jpg/Jpeg and Svg files are allowed.",
             );
           }
         } else {
           setError(
-            "Please upload a valid invoice. Only Pdf, Png, Jpg/Jpeg and Svg files are allowed."
+            "Please upload a valid invoice. Only Pdf, Png, Jpg/Jpeg and Svg files are allowed.",
           );
         }
       } else {
         setError(
-          "Please upload a valid invoice. Only Pdf, Png, Jpg/Jpeg and Svg files are allowed."
+          "Please upload a valid invoice. Only Pdf, Png, Jpg/Jpeg and Svg files are allowed.",
         );
       }
     }
@@ -1069,8 +1062,8 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                               href={`${"https://www.aftership.com/track/"}${
                                 state.trackingNum
                               }`}
-                              target={"_blank"}
-                              rel={"no-refer"}
+                              target="_blank"
+                              rel="noreferrer"
                               className={classes.links}
                             >
                               <Button className={classes.trackBtn}>
@@ -1194,6 +1187,7 @@ export const CargoAndFreight: React.FC = function CargoAndFreight() {
                               href="https://www.jacustoms.gov.jm/"
                               title="jacustoms"
                               target="_blank"
+                              rel="noreferrer"
                             >
                               www.jacustoms.gov.jm
                             </a>

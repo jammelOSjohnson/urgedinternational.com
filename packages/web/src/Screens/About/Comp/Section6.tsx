@@ -1,5 +1,6 @@
-import { useMediaQuery, makeStyles, createStyles,Theme, Container, Grid, Typography } from '@material-ui/core';
-import {  } from '@material-ui/core';
+import { useMediaQuery, Theme, Container, Grid, Typography } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
+import {  } from '@mui/material';
 import React from 'react'
 
 const useStyles = makeStyles((theme: Theme) => 

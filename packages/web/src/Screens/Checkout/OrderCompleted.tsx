@@ -1,5 +1,6 @@
 import { useAppData } from "../../Context/AppDataContext";
-import { Container, makeStyles, createStyles, Theme } from "@material-ui/core";
+import { Container, Theme } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import jsPDF from "jspdf";

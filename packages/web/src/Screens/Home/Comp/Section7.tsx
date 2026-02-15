@@ -1,16 +1,7 @@
 import React from "react";
 //import CSS
-import {
-  Container,
-  Typography,
-  makeStyles,
-  createStyles,
-  Theme,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Button,
-} from "@material-ui/core";
+import { Container, Typography, Theme, Accordion, AccordionSummary, AccordionDetails, Button,  } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

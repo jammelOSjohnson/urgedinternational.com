@@ -1,10 +1,11 @@
 import React from 'react';
 //import CSS
-import { Container, Grid, Typography, makeStyles, createStyles, Theme} from '@material-ui/core';
+import { Container, Grid, Typography, Theme } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';;
 //import icons
-import Twitter from '@material-ui/icons/Twitter';
-import Facebook from '@material-ui/icons/Facebook';
-import Instagram from "@material-ui/icons/Instagram";
+import Twitter from '@mui/icons-material/Twitter';
+import Facebook from '@mui/icons-material/Facebook';
+import Instagram from '@mui/icons-material/Instagram';
 
 
 const useStyles = makeStyles((theme: Theme) => 
