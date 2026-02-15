@@ -1,11 +1,21 @@
-import { Button, Fade, FormControl, Grid, Modal, TextField, Theme, Backdrop, Typography,  } from '@mui/material';
-import { makeStyles, createStyles } from '@mui/styles';;
-import { Alert } from '@mui/lab';
+import { Alert } from "@mui/lab";
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useAppData } from "../../../Context/AppDataContext";
 import MapContainer from "../MapContainer";
+import {
+  Button,
+  Fade,
+  FormControl,
+  Grid,
+  Modal,
+  TextField,
+  Theme,
+  Backdrop,
+  Typography,
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
 
 interface NoGps {
   open: boolean;
@@ -120,7 +130,7 @@ const useStyles = makeStyles((theme: Theme) =>
     alert: {
       marginBottom: "5%",
     },
-  })
+  }),
 );
 
 export const CheckGps: React.FC<Props> = function CheckGps({ setLoading }) {
@@ -319,7 +329,7 @@ export const CheckGps: React.FC<Props> = function CheckGps({ setLoading }) {
 
       const contains = window.google.maps.geometry.poly.containsLocation(
         new window.google.maps.LatLng(lat, lng),
-        polygon
+        polygon,
       );
 
       //console.log(contains)

@@ -1,14 +1,14 @@
-//import { Theme } from '@mui/material';
-import { createStyles, makeStyles } from '@mui/styles';;
 import React, { Component } from "react";
-//import Autocomplete from "react-google-autocomplete";
-import { Map, GoogleApiWrapper, Polygon } from "google-maps-react";
+import { Map, GoogleApiWrapper, Polygon } from "google-maps-react"; //import Autocomplete from "react-google-autocomplete";
+
+import { Alert } from "@mui/lab";
+import { Typography } from "@mui/material";
+import { userInfo } from "os";
+import { Theme } from "@mui/material";
+import { createStyles, makeStyles } from "@mui/styles";
 
 /** Map from google-maps-react; IMapProps is incomplete (missing children, zoom, initialCenter). */
 const MapWithChildren = Map as React.ComponentType<any>;
-import { Alert } from '@mui/lab';
-import { Typography } from '@mui/material';
-import { userInfo } from "os";
 
 // const useStyles = makeStyles((theme: Theme) =>
 //     createStyles({
@@ -151,7 +151,7 @@ class MapContainer extends Component<MyProps> {
 
       const contains = window.google.maps.geometry.poly.containsLocation(
         new window.google.maps.LatLng(lat, lng),
-        polygon
+        polygon,
       );
 
       if (!contains) {
@@ -179,6 +179,7 @@ class MapContainer extends Component<MyProps> {
               if (this.props.setgpsCheck !== undefined) {
                 this.props.setgpsCheck({ ...this.props.gpsCheck, open2: true });
               }
+              this.setState({ ...this.state, open2: true });
             }
           }
         });
@@ -194,7 +195,7 @@ class MapContainer extends Component<MyProps> {
 
       const contains = window.google.maps.geometry.poly.containsLocation(
         new window.google.maps.LatLng(lat, lng),
-        polygon
+        polygon,
       );
 
       if (!contains) {
@@ -227,7 +228,7 @@ class MapContainer extends Component<MyProps> {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           this.getCoordinates,
-          this.handleLocationError
+          this.handleLocationError,
         );
       } else {
         //alert("Geolocation is not supported by this browser.");
@@ -283,137 +284,54 @@ class MapContainer extends Component<MyProps> {
       if (this.props.setgpsCheck !== undefined) {
         this.props.setgpsCheck({ ...this.props.gpsCheck, open2: true });
       }
+      this.setState({ ...this.state, open2: true });
+    }
+  };
+
+  handleLocationErrorFallback = () => {
+    if (
+      this.props.userInfo.email !== "" &&
+      this.props.userInfo.email !== undefined &&
+      this.props.userInfo.addressLine1 !== "" &&
+      this.props.userInfo.addressLine1 !== undefined
+    ) {
+      this.getCoords(this.props.userInfo.addressLine1)
+        .catch(() => {
+          if (
+            this.props.setLoading !== "none" &&
+            this.props.setLoading !== undefined
+          ) {
+            this.props.setLoading(true);
+          }
+          if (this.props.setgpsCheck !== undefined) {
+            this.props.setgpsCheck({ ...this.props.gpsCheck, open2: true });
+          }
+          this.setState({ ...this.state, open2: true });
+        });
+    } else {
+      if (this.props.setgpsCheck !== undefined) {
+        this.props.setgpsCheck({ ...this.props.gpsCheck, open2: true });
+      }
+      this.setState({ ...this.state, open2: true });
     }
   };
 
   handleLocationError = (error) => {
     switch (error.code) {
       case error.PERMISSION_DENIED:
-        //console.log("User denied the request for Geolocation.");
-        // if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
-        //   this.props.setLoading(true);
-        // }
-        // this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
-        if (
-          this.props.userInfo.email !== "" &&
-          this.props.userInfo.email !== undefined
-        ) {
-          this.getCoords(this.props.userInfo.addressLine1)
-            .then(() => console.log("hmmm"))
-            .catch((err) => {
-              //console.log(err);
-              if (
-                this.props.setLoading !== "none" &&
-                this.props.setLoading !== undefined
-              ) {
-                this.props.setLoading(true);
-              }
-              if (this.props.setgpsCheck !== undefined) {
-                this.props.setgpsCheck({ ...this.props.gpsCheck, open2: true });
-              }
-            });
-        }
-
+        this.handleLocationErrorFallback();
         break;
       case error.POSITION_UNAVAILABLE:
-        //console.log("Location information is unavailable.");
-        // if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
-        //   this.props.setLoading(true);
-        // }
-        // this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
-        if (
-          this.props.userInfo.email !== "" &&
-          this.props.userInfo.email !== undefined
-        ) {
-          this.getCoords(this.props.userInfo.addressLine1)
-            .then(() => console.log("hmmm"))
-            .catch((err) => {
-              //console.log(err);
-              if (
-                this.props.setLoading !== "none" &&
-                this.props.setLoading !== undefined
-              ) {
-                this.props.setLoading(true);
-              }
-              if (this.props.setgpsCheck !== undefined) {
-                this.props.setgpsCheck({ ...this.props.gpsCheck, open2: true });
-              }
-            });
-        }
+        this.handleLocationErrorFallback();
         break;
       case error.TIMEOUT:
-        //console.log("The request to get user location timed out.");
-        // if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
-        //   this.props.setLoading(true);
-        // }
-        // this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
-        if (
-          this.props.userInfo.email !== "" &&
-          this.props.userInfo.email !== undefined
-        ) {
-          this.getCoords(this.props.userInfo.addressLine1)
-            .then(() => console.log("hmmm"))
-            .catch((err) => {
-              //console.log(err);
-              if (
-                this.props.setLoading !== "none" &&
-                this.props.setLoading !== undefined
-              ) {
-                this.props.setLoading(true);
-              }
-              if (this.props.setgpsCheck !== undefined) {
-                this.props.setgpsCheck({ ...this.props.gpsCheck, open2: true });
-              }
-            });
-        }
+        this.handleLocationErrorFallback();
         break;
       case error.UNKNOWN_ERROR:
-        //console.log("An unknown error occurred.");
-        // if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
-        //   this.props.setLoading(true);
-        // }
-        // this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
-        if (
-          this.props.userInfo.email !== "" &&
-          this.props.userInfo.email !== undefined
-        ) {
-          this.getCoords(this.props.userInfo.addressLine1)
-            .then(() => console.log("hmmm"))
-            .catch((err) => {
-              //console.log(err);
-              if (
-                this.props.setLoading !== "none" &&
-                this.props.setLoading !== undefined
-              ) {
-                this.props.setLoading(true);
-              }
-              if (this.props.setgpsCheck !== undefined) {
-                this.props.setgpsCheck({ ...this.props.gpsCheck, open2: true });
-              }
-            });
-        }
+        this.handleLocationErrorFallback();
         break;
       default:
-        // this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
-        if (
-          this.props.userInfo.email !== "" &&
-          this.props.userInfo.email !== undefined
-        ) {
-          this.getCoords(this.props.userInfo.addressLine1)
-            .then(() => console.log("hmmm"))
-            .catch((err) => {
-              //console.log(err);
-              if (
-                this.props.setLoading !== "none" &&
-                this.props.setLoading !== undefined
-              ) {
-                this.props.setLoading(true);
-              }
-              if (this.props.setgpsCheck !== undefined) {
-                this.props.setgpsCheck({ ...this.props.gpsCheck, open2: true });
-              }
-            });
-        }
+        this.handleLocationErrorFallback();
         break;
     }
   };
@@ -421,7 +339,19 @@ class MapContainer extends Component<MyProps> {
   componentDidMount() {
     //console.log("Mounted");
     setTimeout(() => {
-      if (
+      const { userInfo } = this.props;
+      const hasCompleteProfile =
+        userInfo.addressLine1 && userInfo.addressLine1.trim() !== "" &&
+        userInfo.contactNumber && userInfo.contactNumber.trim() !== "";
+
+      if (hasCompleteProfile) {
+        this.getCoords(userInfo.addressLine1).catch(() => {
+          if (this.props.setgpsCheck !== undefined) {
+            this.props.setgpsCheck({ ...this.props.gpsCheck, open2: true });
+          }
+          this.setState({ ...this.state, open2: true });
+        });
+      } else if (
         this.state.compCoords.lat === null &&
         this.state.compCoords.lng === null &&
         !this.state.open2
@@ -434,11 +364,17 @@ class MapContainer extends Component<MyProps> {
   componentDidUpdate(
     prevProps: Readonly<MyProps>,
     prevState: Readonly<{}>,
-    snapshot?: any
+    snapshot?: any,
   ): void {
-    //console.log("updated",this.state.compCoords.lat)
-    //console.log(prevState);
-    //console.log(this.props.userInfo.email);
+    const { userInfo } = this.props;
+    const hasCompleteProfile =
+      userInfo.addressLine1 && userInfo.addressLine1.trim() !== "" &&
+      userInfo.contactNumber && userInfo.contactNumber.trim() !== "";
+
+    if (hasCompleteProfile) {
+      return;
+    }
+
     if (
       this.state.compCoords.lat !== null &&
       this.state.compCoords.lat !== undefined &&
@@ -448,13 +384,10 @@ class MapContainer extends Component<MyProps> {
       this.props.userInfo.email !== "" &&
       this.props.userInfo.email !== undefined
     ) {
-      //console.log("got in");
-      //console.log(this.state.compCoords.lat)
-      //console.log(this.state.compCoords.lng)
       this.checkFence(
         this.state.coords,
         this.state.compCoords.lat,
-        this.state.compCoords.lng
+        this.state.compCoords.lng,
       );
     }
   }
