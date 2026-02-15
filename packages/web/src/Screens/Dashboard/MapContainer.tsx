@@ -2,9 +2,7 @@ import React, { Component } from "react";
 import { Map, GoogleApiWrapper, Polygon } from "google-maps-react"; //import Autocomplete from "react-google-autocomplete";
 
 import { Alert } from "@mui/lab";
-import { Typography } from "@mui/material";
-import { userInfo } from "os";
-import { Theme } from "@mui/material";
+import { Typography, Theme } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
 
 /** Map from google-maps-react; IMapProps is incomplete (missing children, zoom, initialCenter). */
@@ -24,8 +22,6 @@ declare global {
     google: any;
   }
 }
-
-const google = (window as any).google;
 
 type MyProps = {
   google: any;
@@ -251,30 +247,21 @@ class MapContainer extends Component<MyProps> {
   };
 
   getCoords = async (Address) => {
-    //console.log(Address)
-    var geocoder = new google.maps.Geocoder();
+    var geocoder = new window.google.maps.Geocoder();
 
     var latitude = 0;
     var longitude = 0;
 
     await geocoder.geocode({ address: Address }, function (results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
+      if (status == window.google.maps.GeocoderStatus.OK) {
         latitude = results !== null ? results[0].geometry.location.lat() : 0;
         longitude = results !== null ? results[0].geometry.location.lng() : 0;
-        //console.log(`${latitude},${longitude}`);
-      } else {
-        //console.log(status);
-        //setError("We can't deliver to this address.")
       }
     });
 
-    //console.log("outside")
-
     if (latitude !== 0 && longitude !== 0) {
-      //console.log("here")
       this.checkWithAddyFence(this.state.coords, latitude, longitude);
     } else {
-      //console.log("no address")
       if (
         this.props.setLoading !== "none" &&
         this.props.setLoading !== undefined
@@ -337,13 +324,50 @@ class MapContainer extends Component<MyProps> {
   };
 
   componentDidMount() {
-    //console.log("Mounted");
-    setTimeout(() => {
-      const { userInfo } = this.props;
-      const hasCompleteProfile =
-        userInfo.addressLine1 && userInfo.addressLine1.trim() !== "" &&
-        userInfo.contactNumber && userInfo.contactNumber.trim() !== "";
+    const { userInfo } = this.props;
 
+    // If user data hasn't loaded yet (_id is empty), skip — componentDidUpdate will handle it
+    if (!userInfo._id || userInfo._id === "") {
+      return;
+    }
+
+    const hasCompleteProfile =
+      userInfo.addressLine1 && userInfo.addressLine1.trim() !== "" &&
+      userInfo.contactNumber && userInfo.contactNumber.trim() !== "";
+
+    if (hasCompleteProfile) {
+      this.getCoords(userInfo.addressLine1).catch(() => {
+        if (this.props.setgpsCheck !== undefined) {
+          this.props.setgpsCheck({ ...this.props.gpsCheck, open2: true });
+        }
+        this.setState({ ...this.state, open2: true });
+      });
+    } else if (
+      this.state.compCoords.lat === null &&
+      this.state.compCoords.lng === null &&
+      !this.state.open2
+    ) {
+      this.getLocation();
+    }
+  }
+
+  componentDidUpdate(
+    prevProps: Readonly<MyProps>,
+    prevState: Readonly<{}>,
+    snapshot?: any,
+  ): void {
+    const { userInfo } = this.props;
+    const hasCompleteProfile =
+      userInfo.addressLine1 && userInfo.addressLine1.trim() !== "" &&
+      userInfo.contactNumber && userInfo.contactNumber.trim() !== "";
+
+    // Detect when userInfo just loaded (_id transitions from empty to populated)
+    const userInfoJustLoaded =
+      (!prevProps.userInfo._id || prevProps.userInfo._id === "") &&
+      userInfo._id && userInfo._id !== "";
+
+    if (userInfoJustLoaded) {
+      // User data just arrived — run the geofence logic now
       if (hasCompleteProfile) {
         this.getCoords(userInfo.addressLine1).catch(() => {
           if (this.props.setgpsCheck !== undefined) {
@@ -358,20 +382,22 @@ class MapContainer extends Component<MyProps> {
       ) {
         this.getLocation();
       }
-    }, 2000);
-  }
-
-  componentDidUpdate(
-    prevProps: Readonly<MyProps>,
-    prevState: Readonly<{}>,
-    snapshot?: any,
-  ): void {
-    const { userInfo } = this.props;
-    const hasCompleteProfile =
-      userInfo.addressLine1 && userInfo.addressLine1.trim() !== "" &&
-      userInfo.contactNumber && userInfo.contactNumber.trim() !== "";
+      return;
+    }
 
     if (hasCompleteProfile) {
+      if (this.state.open2) {
+        this.setState({ ...this.state, open2: false });
+        if (this.props.setgpsCheck !== undefined) {
+          this.props.setgpsCheck({ ...this.props.gpsCheck, open2: false });
+        }
+        this.getCoords(userInfo.addressLine1).catch(() => {
+          if (this.props.setgpsCheck !== undefined) {
+            this.props.setgpsCheck({ ...this.props.gpsCheck, open2: true });
+          }
+          this.setState({ ...this.state, open2: true });
+        });
+      }
       return;
     }
 
