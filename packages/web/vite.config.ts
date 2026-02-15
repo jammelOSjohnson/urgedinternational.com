@@ -27,6 +27,7 @@ export default defineConfig({
     // Force react-dom/server to stub during dep optimization and transform (for google-maps-react)
     {
       name: "react-dom-server-stub",
+      enforce: 'pre',
       resolveId(id) {
         if (
           id === "react-dom/server" ||
