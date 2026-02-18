@@ -1,14 +1,29 @@
-import { useAppData } from "../../../Context/AppDataContext";
-import { GeoMap } from "./GeoMap";
-import Moment from "moment";
-import postPayment from "../../../Apis/payment";
-import { Typography, Theme, Grid, Paper, Divider, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, TextField, Button, Box, CircularProgress,  } from '@mui/material';
-import { makeStyles, createStyles } from '@mui/styles';;
 import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Alert from "@mui/lab/Alert";
 import MapContainer from "../MapContainer";
 import CheckGps from "./CheckGps";
+import { useAppData } from "../../../Context/AppDataContext";
+import { GeoMap } from "./GeoMap";
+import Moment from "moment";
+import postPayment from "../../../Apis/payment";
+import {
+  Typography,
+  Theme,
+  Grid,
+  Paper,
+  Divider,
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  TextField,
+  Button,
+  Box,
+  CircularProgress,
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
 
 interface State {
   Street: string;
@@ -226,7 +241,7 @@ const useStyles = makeStyles((theme: Theme) =>
       color: "#4A4A4A",
       fontWeight: 600,
     },
-  })
+  }),
 );
 
 export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
@@ -287,8 +302,8 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
           ? import.meta.env.REACT_APP_currency_code
           : ""
         : import.meta.env.REACT_APP_currency_code_LIVE !== undefined
-        ? import.meta.env.REACT_APP_currency_code_LIVE
-        : "",
+          ? import.meta.env.REACT_APP_currency_code_LIVE
+          : "",
     email: "",
     hash_algorithm:
       import.meta.env.REACT_APP_hash_algorithm !== undefined
@@ -307,18 +322,18 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
           ? import.meta.env.REACT_APP_responseSuccess_OR_FAIL_URL
           : ""
         : import.meta.env.REACT_APP_responseSuccess_OR_FAIL_URL_LIVE !==
-          undefined
-        ? import.meta.env.REACT_APP_responseSuccess_OR_FAIL_URL_LIVE
-        : "",
+            undefined
+          ? import.meta.env.REACT_APP_responseSuccess_OR_FAIL_URL_LIVE
+          : "",
     responseSuccessURL:
       import.meta.env.MODE === "development"
         ? import.meta.env.REACT_APP_responseSuccess_OR_FAIL_URL !== undefined
           ? import.meta.env.REACT_APP_responseSuccess_OR_FAIL_URL
           : ""
         : import.meta.env.REACT_APP_responseSuccess_OR_FAIL_URL_LIVE !==
-          undefined
-        ? import.meta.env.REACT_APP_responseSuccess_OR_FAIL_URL_LIVE
-        : "",
+            undefined
+          ? import.meta.env.REACT_APP_responseSuccess_OR_FAIL_URL_LIVE
+          : "",
     sname: "",
     saddr1: "",
     saddr2: "",
@@ -334,8 +349,8 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
           ? import.meta.env.REACT_APP_StoreID
           : ""
         : import.meta.env.REACT_APP_StoreID_LIVE !== undefined
-        ? import.meta.env.REACT_APP_StoreID_LIVE
-        : "",
+          ? import.meta.env.REACT_APP_StoreID_LIVE
+          : "",
     timezone:
       import.meta.env.REACT_APP_timezone !== undefined
         ? import.meta.env.REACT_APP_timezone
@@ -387,7 +402,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
           checkoutVals.cartItemsSum,
           checkoutVals.Total,
           restaurants[selectedRestaurant]._id,
-          null
+          null,
         ).then((res) => {
           if (res === null || res === undefined) {
             setValues({
@@ -410,7 +425,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
             history.push("/OrderCompleted");
           } else if (res === "no rider") {
             setError(
-              "We are unable to take your order at this time. Please try again in a few minutes."
+              "We are unable to take your order at this time. Please try again in a few minutes.",
             );
             setLoading(false);
           }
@@ -469,7 +484,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
   const hash = () => {
     setError("");
     // console.log("about to start");
-    const button = document.getElementById("makePayment");
+    //const button = document.getElementById("makePayment");
 
     //store important state info
     const session = {
@@ -486,24 +501,24 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
     payment.paymentMethod === ""
       ? setError("Please select payment method.")
       : values.Street === ""
-      ? setError("Please enter street address")
-      : values.Town === ""
-      ? setError("Please enter Town")
-      : values.Parish === ""
-      ? setError("Please select Parish")
-      : createPaymentHash(payment).then(function (hashResult) {
-          // console.log(hashResult.hash);
-          setPayment({
-            ...payment,
-            hashExtended:
-              hashResult != null && hashResult !== undefined
-                ? hashResult.hash
-                : "",
-          });
-          // console.log("about to send payment data");
-          // console.log(payment);
-          button?.click();
-        });
+        ? setError("Please enter street address")
+        : values.Town === ""
+          ? setError("Please enter Town")
+          : values.Parish === ""
+            ? setError("Please select Parish")
+            : createPaymentHash(payment).then(function (hashResult) {
+                //console.log("hashResult", hashResult.hash);
+                setPayment({
+                  ...payment,
+                  hashExtended:
+                    hashResult != null && hashResult !== undefined
+                      ? hashResult.hash
+                      : "",
+                });
+                //console.log("about to send payment data");
+                //console.log(payment);
+                //button?.click();
+              });
     //return hashHex;
   };
 
@@ -517,7 +532,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
         setError("Unable to process payment at this time.");
       }
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
     //Calc Delivery Fee
     let delFee = "";
@@ -531,7 +546,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
       const restaurant = restaurants.find(
         (r) =>
           r.FirstName === cartItems[0].restaurantName &&
-          r.Parish === values.Town
+          r.Parish === values.Town,
       );
 
       if (restaurant && restaurant.deliveryFee) {
@@ -560,7 +575,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
       ) {
         //Add || for the other restaurants and add side to the receipt
         let sidePrice = 0;
-        console.log(restaurants[selectedRestaurant]);
+        // console.log(restaurants[selectedRestaurant]);
         restaurants[selectedRestaurant].MenuItems.map((item2, index) => {
           //console.log("item name is : " + item2.ItemName + " and item side is " + item1.side);
           if (item2.ItemName === item1.side) {
@@ -675,6 +690,20 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
   useEffect(() => {
     getPaySettingsData(value);
   }, []);
+
+  useEffect(() => {
+    //console.log(payment);
+    try {
+      if (payment.hashExtended !== "" && payment.hashExtended !== undefined) {
+        const button = document.getElementById("makePayment");
+        if (button) {
+          button.click();
+        }
+      }
+    } catch (e) {
+      //console.log(e);
+    }
+  }, [payment]);
 
   if (cartItems.length > 0) {
     return (
@@ -1111,13 +1140,15 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
                             <Typography
                               style={{ fontFamily: "Inter", fontSize: "14px" }}
                             >
-                              <span className={classes.fees}>Cart Items:</span>{" "}
+                              <span className={classes.fees}>
+                                Cart Items:
+                              </span>{" "}
                             </Typography>
                           </Grid>
                           <Grid item xs={3}>
                             <Typography>
                               <span>{`$ ${parseFloat(
-                                checkoutVals.cartItemsSum.Cost
+                                checkoutVals.cartItemsSum.Cost,
                               ).toFixed(2)}`}</span>
                             </Typography>
                           </Grid>
@@ -1133,7 +1164,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
                           <Grid item xs={3}>
                             <Typography>
                               <span>{`$ ${parseFloat(
-                                checkoutVals.deliveryFee.Cost
+                                checkoutVals.deliveryFee.Cost,
                               ).toFixed(2)}`}</span>
                             </Typography>
                           </Grid>
@@ -1149,7 +1180,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
                           <Grid item xs={3}>
                             <Typography>
                               <span>{`$ ${parseFloat(
-                                checkoutVals.serviceFee.Cost
+                                checkoutVals.serviceFee.Cost,
                               ).toFixed(2)}`}</span>
                             </Typography>
                           </Grid>
@@ -1163,7 +1194,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
                           <Grid item xs={3}>
                             <Typography>
                               <span>{`$ ${parseFloat(
-                                checkoutVals.GCT.Cost
+                                checkoutVals.GCT.Cost,
                               ).toFixed(2)}`}</span>
                             </Typography>
                           </Grid>
@@ -1179,7 +1210,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
                               <span
                                 style={{ color: "#FF5E14", fontWeight: 600 }}
                               >{`$ ${parseFloat(
-                                checkoutVals.Total.Cost
+                                checkoutVals.Total.Cost,
                               ).toFixed(2)}`}</span>
                             </Typography>
                           </Grid>
