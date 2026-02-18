@@ -179,7 +179,7 @@ const resolvers = {
         transactionNotificationURL,
         txndatetime,
         txntype,
-      }
+      },
     ) => {
       // string to be hashed
       // authenticateTransaction +
@@ -255,7 +255,7 @@ const resolvers = {
       // create a sha-256 hasher
       if (!sharedsecret || !secret) {
         throw new Error(
-          "sharedsecret and secret is required for HMAC creation"
+          "sharedsecret and secret is required for HMAC creation",
         );
       }
       const sha256Hasher = crypto.createHmac("sha256", secret);
@@ -263,7 +263,7 @@ const resolvers = {
       // hash the string
       // and set the output format
       const hash = sha256Hasher.update(str).digest("base64");
-      console.log(hash);
+      //console.log(hash);
       // A unique sha256 hash 😃
       return { hash: hash };
     },
@@ -308,7 +308,7 @@ const resolvers = {
         OpeningHrs,
         category,
         MenuItems,
-      }
+      },
     ) => {
       const checkUser = await User.findOne({ Id });
       // console.log(checkUser);
@@ -343,7 +343,7 @@ const resolvers = {
         AddressLine2,
         City,
         ContactNumber,
-      }
+      },
     ) => {
       const newUser = {
         _id,
@@ -377,7 +377,7 @@ const resolvers = {
         ImageName,
         Parish,
         deliveryFee,
-      }
+      },
     ) => {
       const user = new User({
         Id,
@@ -417,7 +417,7 @@ const resolvers = {
         ImageName,
         Position,
         Parish,
-      }
+      },
     ) => {
       const checkUser = await User.findOne({ Id });
       if (checkUser === null) {
@@ -460,7 +460,7 @@ const resolvers = {
         ImageName,
         Position,
         Parish,
-      }
+      },
     ) => {
       const newUser = {
         _id,
@@ -503,7 +503,7 @@ const resolvers = {
     //Menus
     createMenuItem: (
       _,
-      { RetaurantID, MenuCategory, ItemName, ItemCost, ItemDescription }
+      { RetaurantID, MenuCategory, ItemName, ItemCost, ItemDescription },
     ) => {
       const menuItem = new MenuItem({
         RetaurantID,
@@ -540,7 +540,7 @@ const resolvers = {
         CartTotal,
         OrderType,
         Restaurant,
-      }
+      },
     ) => {
       const orderItem = new Order({
         Id,
@@ -621,7 +621,7 @@ const resolvers = {
         bcountry,
         baddr2,
         status,
-      }
+      },
     ) => {
       console.log("oId is", oId);
       console.log("order date is ", txndate);
@@ -739,7 +739,7 @@ const resolvers = {
         ServiceCharge,
         CartTotal,
         OrderType,
-      }
+      },
     ) => {
       let newOrder = {
         _id,
@@ -833,7 +833,7 @@ const resolvers = {
         badWeather,
         holiday,
         message,
-      }
+      },
     ) => {
       try {
         console.log("Updating pay settings");
@@ -943,7 +943,7 @@ const resolvers = {
     //Packages
     getPackageById: async (_, { TrackingNumber }) => {
       let packFound = await Package.findOne({ TrackingNumber }).populate(
-        "Customer"
+        "Customer",
       );
       //console.log('pack found is')
       //console.log(packFound);
@@ -952,7 +952,7 @@ const resolvers = {
 
     addPackage: async (
       _,
-      { PackageInfo, Customer, TrackingNumber, Pickup, Deliver }
+      { PackageInfo, Customer, TrackingNumber, Pickup, Deliver },
     ) => {
       //console.log('im here');
       let id = new mongoose.Types.ObjectId(Customer);
@@ -981,7 +981,7 @@ const resolvers = {
 
     updateContactAndAddress: async (
       _,
-      { _id, ALine1, ALine2, City, Contact }
+      { _id, ALine1, ALine2, City, Contact },
     ) => {
       let newUser = {
         _id,
@@ -1060,7 +1060,7 @@ const resolvers = {
         ImageName,
         Parish,
         deliveryFee,
-      }
+      },
     ) => {
       let newRestaurantUser = {
         _id,
@@ -1120,7 +1120,7 @@ const resolvers = {
       let orderrejection = await OrderRejection.findOne({ _id });
       //console.log(orderrejection)
       let refListUpdated = orderrejection.RejectionList.concat(
-        RejectionList[RejectionList.length - 1]
+        RejectionList[RejectionList.length - 1],
       );
       orderrejection.RejectionList = refListUpdated;
       //console.log(orderrejection);
