@@ -1698,46 +1698,46 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
         orderItems.push(body);
         return null;
       });
-      return await fetchRidersForOrder(payload.generalLocation).then(
-        async (res) => {
-          //Generate rand number
-          // console.log("res is: ", res);
-          type riderObj = {
-            _id: string;
-            Id: string;
-            FirstName: string;
-            LastName: string;
-            Email: string;
-            AddressLine1: string;
-            AddressLine2: string;
-            City: string;
-            ContactNumber: string;
-            isAvailable: boolean;
-            disabled: boolean;
-            ImageName: string;
-          };
+      const ridersRaw = await Promise.resolve(
+        fetchRidersForOrder(payload.generalLocation),
+      ).then((r) => (Array.isArray(r) ? r : []));
+      const riders = ridersRaw;
 
-          let RiderRes = [] as riderObj[];
-          try {
-            RiderRes = res.filter(
-              (item) => item.isAvailable === true && item.disabled === false,
-            );
-          } catch (e) {
-            console.log(e);
-          }
+      type riderObj = {
+        _id: string;
+        Id: string;
+        FirstName: string;
+        LastName: string;
+        Email: string;
+        AddressLine1: string;
+        AddressLine2: string;
+        City: string;
+        ContactNumber: string;
+        isAvailable: boolean;
+        disabled: boolean;
+        ImageName: string;
+      };
 
-          //console.log("riders length is: " + RiderRes.length);
-          if (RiderRes.length === 0) {
-            RiderRes.push(res[0]);
-          }
+      const ridersList = Array.isArray(riders) ? riders : [];
+      let RiderRes = [] as riderObj[];
+      try {
+        RiderRes = ridersList.filter(
+          (item) => item != null && item.isAvailable === true && item.disabled === false,
+        );
+      } catch (e) {
+        console.log(e);
+      }
 
-          //console.log("sorted rider res is: ", RiderRes);
-          const min = 0;
-          const max = RiderRes.length;
-          //console.log(max);
-          const randRider = Math.floor(Math.random() * max + min);
-          //const randRider = parseInt(rand.toString());
-          // console.log(randRider);
+      if (RiderRes.length === 0 && ridersList.length > 0) {
+        RiderRes.push(ridersList[0]);
+      }
+
+      //console.log("sorted rider res is: ", RiderRes);
+      const min = 0;
+      const max = RiderRes.length;
+      //console.log(max);
+      const randRider = max > 0 ? Math.floor(Math.random() * max + min) : 0;
+      const selectedRider = RiderRes[randRider] ?? null;
 
           const orderBody = {
             Id: payload.currentUser.uid,
@@ -1746,9 +1746,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
             OrderTotal: Number(Total.Cost),
             OrderDate: estTime,
             Rider:
-              RiderRes[randRider]._id !== undefined
-                ? RiderRes[randRider]._id
-                : "",
+              selectedRider?._id !== undefined ? selectedRider._id : "",
             BillingInfo: "",
             DeliveryAddress: state.Street + "," + state.Town + ",Clarendon",
             PaymentMethod: state.PaymentMethod,
@@ -1933,11 +1931,9 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
                   //   }
                   // });
                 }
-              },
+              }
             );
           }
-        },
-      );
     }
   };
 
@@ -2802,25 +2798,19 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   var fetchRidersForOrder = async function fetchRidersForOrder(
     generalUserLocation,
   ) {
-    ////console.log("about to fetch restaurants");
-    return await getRidersByParish({
-      variables: { Parish: generalUserLocation },
-    })
-      .then(async function (response) {
-        if (response.data.getRidersByParish !== null) {
-          ////console.log("got list of restaurants");
-          ////console.log(response);
-
-          var restList = response.data.getRidersByParish;
-
-          if (restList !== null) {
-            return restList;
-          }
-        }
-      })
-      .catch(function (err) {
-        ////console.log(err);
+    try {
+      const response = await getRidersByParish({
+        variables: { Parish: generalUserLocation ?? "" },
       });
+      if (response.errors?.length) return [];
+      // Support both response shapes (getRidersByParish and getRiders) so we use riders whichever the server returns
+      const byParish = response.data?.getRidersByParish;
+      const allRiders = response.data?.getRiders;
+      const restList = Array.isArray(byParish) ? byParish : Array.isArray(allRiders) ? allRiders : [];
+      return restList;
+    } catch (err) {
+      return [];
+    }
   };
 
   var AddGeneralLocation = async function AddGeneralLocation(

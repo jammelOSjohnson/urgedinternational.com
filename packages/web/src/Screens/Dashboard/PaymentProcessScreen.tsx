@@ -109,15 +109,17 @@ export const PaymentProcessScreen: React.FC = function PaymentProcessScreen() {
       setBillingID(id);
     }
 
-    //console.log("restaurant length is " + restaurants.length);
+    // Defer auto-submit so state and any lazy-loaded code are ready (avoids stale bundle / race after payment redirect)
     if (
       restaurants.length > 0 &&
       billingID !== null &&
       billingID !== undefined &&
       billingID !== "Fail"
     ) {
-      //console.log("here");
-      handleSubmit();
+      const t = setTimeout(() => {
+        handleSubmit();
+      }, 0);
+      return () => clearTimeout(t);
     }
   }, [paymentObject, billingID]);
 

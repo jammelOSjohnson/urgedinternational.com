@@ -75,7 +75,6 @@ import "jspdf/dist/polyfills.es.js";
 //not found page
 import { PrivacyPolicyScreen } from "../Screens/Dashboard/PrivacyPolicyScreen";
 import React from "react";
-import { Spinner } from "./spinner";
 import { OrderCompleted } from "../Screens/Checkout/OrderCompleted";
 const PaymentProcessScreen = React.lazy(
   () => import("../Screens/Dashboard/PaymentProcessScreen"),
@@ -448,10 +447,48 @@ const App: React.FC = function App() {
   );
 };
 
+// Minimal fallback with no MUI/emotion to avoid duplicate-React crash when lazy chunks load
+// (MUI CircularProgress in Spinner can see a different React instance and throw "useContext" null)
+// Styling aligned with Spinner: same overlay and a CSS-only circular indicator.
+const spinnerOuterStyle = {
+  paddingTop: 0,
+  paddingBottom: 0,
+  height: "80vh",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+};
+const overlayStyle = {
+  zIndex: 1300,
+  position: "fixed" as const,
+  inset: 0,
+  backgroundColor: "rgba(0, 0, 0, 0.35)",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  color: "#fff",
+};
+const cssSpinnerStyle = {
+  width: 40,
+  height: 40,
+  border: "4px solid rgba(255,255,255,0.3)",
+  borderTopColor: "#fff",
+  borderRadius: "50%",
+  animation: "suspenseFallbackSpin 0.8s linear infinite",
+};
+const SuspenseFallback = () => (
+  <div style={spinnerOuterStyle}>
+    <style>{`@keyframes suspenseFallbackSpin { to { transform: rotate(360deg); } }`}</style>
+    <div style={overlayStyle} aria-hidden>
+      <div style={cssSpinnerStyle} />
+    </div>
+  </div>
+);
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function () {
   return (
-    <Suspense fallback={<Spinner />}>
+    <Suspense fallback={<SuspenseFallback />}>
       <ApolloProvider client={client}>
         <AppDataProvider>
           <App />

@@ -90,7 +90,7 @@ export async function startServer() {
       async onConnect(
         connectionParams: Object,
         webSocket: WebSocket,
-        context: ConnectionContext
+        context: ConnectionContext,
       ) {
         // If an object is returned here, it will be passed as the `context`
         // argument to your subscription resolvers.
@@ -101,7 +101,7 @@ export async function startServer() {
       server: httpServer,
       // This `server` is the instance returned from `new ApolloServer`.
       path: server.graphqlPath,
-    }
+    },
   );
 
   try {
@@ -203,32 +203,38 @@ export async function startServer() {
       axios
         .post(url, { query: query, variables: variables })
         .then((response) => {
-          //console.log(response.data);
-          let result = response.data;
-          let orderOID = undefined;
-          let orderStatus = "";
-          if (
-            result.data.createOrderBilling !== null &&
-            result.data.createOrderBilling !== undefined
-          ) {
-            orderOID = result.data.createOrderBilling._id;
-            orderStatus = result.data.createOrderBilling.status;
+          const result = response.data;
+          const billing = result.data?.createOrderBilling;
+          const hasErrors =
+            Array.isArray(result.errors) && result.errors.length > 0;
+
+          if (hasErrors) {
+            console.log("GraphQL errors on createOrderBilling:", result.errors);
+            return res.redirect(
+              `${process.env.FRONTEND_HOST}/ProcessPaymentResult/Fail`,
+            );
           }
 
-          if (orderStatus === "APPROVED") {
-            res.redirect(
-              `${process.env.FRONTEND_HOST}/ProcessPaymentResult/${orderOID}`
-            );
-          } else {
-            res.redirect(
-              `${process.env.FRONTEND_HOST}/ProcessPaymentResult/Fail`
-            );
+          if (billing != null) {
+            const orderOID = billing._id;
+            const orderStatus = (billing.status || "").trim().toUpperCase();
+            //console.log("order result is", billing);
+
+            if (orderStatus === "APPROVED") {
+              return res.redirect(
+                `${process.env.FRONTEND_HOST}/ProcessPaymentResult/${orderOID}`,
+              );
+            }
           }
+
+          res.redirect(
+            `${process.env.FRONTEND_HOST}/ProcessPaymentResult/Fail`,
+          );
         })
         .catch((error) => {
           console.log(error);
           res.redirect(
-            `${process.env.FRONTEND_HOST}/ProcessPaymentResult/Fail`
+            `${process.env.FRONTEND_HOST}/ProcessPaymentResult/Fail`,
           );
         });
     });
@@ -248,12 +254,7 @@ export async function startServer() {
     // console.log("host is: " + process.env.FRONTEND_HOST);
     // console.log("redis domain name is: " + process.env.REDIS_DOMAIN_NAME);
     await mongoose
-      .connect(conn_string, {
-        useUnifiedTopology: true,
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useFindAndModify: false,
-      })
+      .connect(conn_string)
       .then((db) => console.log("Mongoose connected..."))
       .catch((err) => console.log(err));
   } catch (err) {
@@ -265,10 +266,10 @@ export async function startServer() {
 
   const PORT = 8080;
   await new Promise<void>((resolve) =>
-    httpServer.listen({ port: PORT }, resolve)
+    httpServer.listen({ port: PORT }, resolve),
   );
   console.log(
-    `🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`
+    `🚀 Server ready at http://localhost:${PORT}${server.graphqlPath}`,
   );
 
   // console.log(

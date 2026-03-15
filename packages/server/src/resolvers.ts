@@ -21,10 +21,13 @@ import ShippingAddress from "./models/ShippingAddress.js";
 import OrderRejection from "./models/OrderRejection.model.js";
 import OrderBilling from "./models/OrderBilling.model.js";
 
+const isProd = process.env.NODE_ENV === "production";
+
 const pubsub = new RedisPubSub({
   connection: {
     host: process.env.REDIS_DOMAIN_NAME,
     port: 6379,
+    ...(isProd && { password: process.env.REDIS_PASSWORD }),
     retryStrategy: (times) => {
       // reconnect after
       return Math.max(times * 100, 3000);
@@ -136,7 +139,7 @@ const resolvers = {
         .populate("Restaurant")
         .populate("BillingInfo")
         .where("OrderDate")
-        .lte(endConverted);
+        .lte(endConverted.getTime());
       //console.log(res.length);
       return res;
     },
@@ -356,6 +359,7 @@ const resolvers = {
         ContactNumber,
       };
       const user = await User.findOne({ _id });
+      if (!user) throw new Error("User not found");
       Object.assign(user, newUser);
       return user.save();
     },
@@ -479,13 +483,14 @@ const resolvers = {
         Parish,
       };
       const user = await User.findOne({ _id });
+      if (!user) throw new Error("User not found");
       Object.assign(user, newUser);
       return user.save();
     },
 
     getUser: async (_, { Id }) => {
       return await User.findOne({ Id }).populate({
-        path: "categories",
+        path: "category",
         model: "category",
       });
     },
@@ -668,16 +673,7 @@ const resolvers = {
         status,
       });
       const newBilling = await orderBilling.save();
-      const billingId = newBilling._id;
-      // console.log(newOrder)
-      // console.log(orderId);
-
-      const finalBilling = await OrderBilling.find()
-        .where("_id")
-        .equals(billingId)
-        .populate("OrderInfo");
-
-      return finalBilling[0];
+      return newBilling;
     },
 
     getOrdersByUserId: async (_, { Id }) => {
@@ -712,7 +708,7 @@ const resolvers = {
         .where("OrderStatus")
         .equals("Delivered")
         .where("OrderDate")
-        .lte(endConverted);
+        .lte(endConverted.getTime());
       //console.log(res);
       return res;
     },
@@ -760,11 +756,13 @@ const resolvers = {
       };
       //console.log(newOrder);
       const order = await Order.findOne({ _id });
+      if (!order) throw new Error("Order not found");
       if (order.OrderStatus === "Cancelled") {
         console.log("Already Cancelled");
         return order;
       }
       const user = await User.findOne({ Id });
+      if (!user) throw new Error("User not found");
       Object.assign(order, newOrder);
       order.save();
       const order2 = await Order.find()
@@ -846,6 +844,7 @@ const resolvers = {
         };
         //console.log(newPaySetting);
         const paySetting = await PaySetting.findOne({ _id });
+        if (!paySetting) throw new Error("PaySetting not found");
         Object.assign(paySetting, newPaySetting);
         return paySetting.save();
       } catch (err) {
@@ -871,17 +870,19 @@ const resolvers = {
       //return res;
     },
 
-    //Riders
-    getRiders: async () => {
-      return await User.find()
+    //Riders (Parish optional for backward compatibility with clients that send getRiders(Parish))
+    getRiders: async (_, { Parish }) => {
+      const query = User.find()
         .where("isAvailable")
         .ne(null)
         .where("disabled")
         .ne(null)
         .where("Position")
         .equals("Rider");
-      //console.log(res);
-      //return res;
+      if (Parish != null && Parish !== "") {
+        query.where("Parish").equals(Parish);
+      }
+      return await query;
     },
 
     getRidersByParish: async (_, { Parish }) => {
@@ -923,6 +924,7 @@ const resolvers = {
 
     updateRestaurantStatus: async (_, { _id, isAvailable, disabled }) => {
       const user = await User.findOne({ _id });
+      if (!user) throw new Error("User not found");
       user.isAvailable =
         isAvailable !== null && isAvailable !== undefined ? isAvailable : true;
       user.disabled =
@@ -933,6 +935,7 @@ const resolvers = {
     updateRiderStatus: async (_, { _id, isAvailable, disabled }) => {
       //console.log(newPaySetting);
       const user = await User.findOne({ _id });
+      if (!user) throw new Error("User not found");
       user.isAvailable =
         isAvailable !== null && isAvailable !== undefined ? isAvailable : true;
       user.disabled =
@@ -995,9 +998,10 @@ const resolvers = {
       };
       //console.log(newPaySetting);
       const user = await User.findOne({ _id });
-      newUser.FirstName = user.FirstName;
-      newUser.LastName = user.LastName;
-      newUser.Email = user.LastName;
+      if (!user) throw new Error("User not found");
+      newUser.FirstName = user.FirstName ?? "";
+      newUser.LastName = user.LastName ?? "";
+      newUser.Email = user.LastName ?? "";
       Object.assign(user, newUser);
       return user.save();
     },
@@ -1081,6 +1085,7 @@ const resolvers = {
       };
 
       const user = await User.findOne({ _id });
+      if (!user) throw new Error("User not found");
       Object.assign(user, newRestaurantUser);
       return user.save();
     },
@@ -1095,6 +1100,7 @@ const resolvers = {
       //console.log(newShippingAddress);
 
       const shippingAddress = await ShippingAddress.findOne({ _id });
+      if (!shippingAddress) throw new Error("ShippingAddress not found");
       //console.log(shippingAddress);
       shippingAddress.AirFreight = newShippingAddress.AirFreight;
       shippingAddress.SeaFreight = newShippingAddress.SeaFreight;
@@ -1118,6 +1124,7 @@ const resolvers = {
     updateOrderRejection: async (_, { _id, OrderId, RejectionList }) => {
       //console.log('im here', _id)
       let orderrejection = await OrderRejection.findOne({ _id });
+      if (!orderrejection) throw new Error("OrderRejection not found");
       //console.log(orderrejection)
       let refListUpdated = orderrejection.RejectionList.concat(
         RejectionList[RejectionList.length - 1],

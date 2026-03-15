@@ -412,9 +412,10 @@ export const GET_RIDERS = gql`
   }
 `;
 
+/** Used by checkout; must request field getRidersByParish (not getRiders) so server returns data. */
 export const GET_RIDERS_BY_PARISH = gql`
   mutation getRidersByParish($Parish: String) {
-    getRiders(Parish: $Parish) {
+    getRidersByParish(Parish: $Parish) {
       _id
       Id
       FirstName

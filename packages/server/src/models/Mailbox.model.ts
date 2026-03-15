@@ -7,7 +7,7 @@ const MailboxSchema = new mongoose.Schema({
   },
   Uid: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "user",
+    ref: "User",
     required: false,
   },
   MailboxNum: {

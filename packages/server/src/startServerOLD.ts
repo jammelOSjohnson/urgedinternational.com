@@ -62,12 +62,7 @@ export async function startServer() {
     console.log("host is: " + process.env.FRONTEND_HOST);
     console.log("redis domain name is: " + process.env.REDIS_DOMAIN_NAME);
     await mongoose
-      .connect(conn_string, {
-        useUnifiedTopology: true,
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useFindAndModify: false,
-      })
+      .connect(conn_string)
       .then((db) => console.log("Mongoose connected..."))
       .catch((err) => console.log(err));
   } catch (err) {

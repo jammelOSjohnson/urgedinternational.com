@@ -143,8 +143,9 @@
     // }
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {
+        var swUrl = "/serviceworker.js";
         navigator.serviceWorker
-          .register("./serviceworker.js")
+          .register(swUrl)
           .then((reg) => {
             console.log("Success: ", reg.scope);
           })

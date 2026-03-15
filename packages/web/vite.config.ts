@@ -1,8 +1,30 @@
 import path from "path";
+import fs from "fs";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import svgrPlugin from "vite-plugin-svgr";
 import envCompatible from "vite-plugin-env-compatible";
+
+/** Injects cache version into serviceworker.js at build so each deploy gets a new cache name. */
+function serviceWorkerCacheVersion() {
+  return {
+    name: "service-worker-cache-version",
+    closeBundle() {
+      const outDir = path.resolve(__dirname, "build");
+      const swPath = path.join(outDir, "serviceworker.js");
+      if (!fs.existsSync(swPath)) return;
+      const pkgPath = path.resolve(__dirname, "package.json");
+      const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf8"));
+      const version = `${pkg.version}-${Date.now()}`;
+      let content = fs.readFileSync(swPath, "utf8");
+      content = content.replace(
+        /const CACHE_NAME = "version-[^"]+";/,
+        `const CACHE_NAME = "version-${version}";`
+      );
+      fs.writeFileSync(swPath, content);
+    },
+  };
+}
 
 const reactDomServerStub = path.resolve(__dirname, "vite-react-dom-server-stub.js");
 
@@ -48,6 +70,7 @@ export default defineConfig({
         icon: true,
       },
     }),
+    serviceWorkerCacheVersion(),
   ] as import("vite").PluginOption[],
     resolve: {
     alias: {
@@ -124,6 +147,7 @@ export default defineConfig({
       "@mui/material/ListItemIcon",
       "@mui/material/ListItemText",
       "@mui/material/Modal",
+      "@mui/material/CircularProgress",
       "@mui/material/Switch",
       "@mui/material/Toolbar",
       "@mui/material/Typography",

@@ -1,5 +1,5 @@
-const CACHE_NAME = "version-1.2";
-const urlsToCache = ["index.html", "offline.html"];
+const CACHE_NAME = "version-1.3";
+const urlsToCache = ["offline.html"];
 
 const self = this;
 
@@ -14,21 +14,53 @@ self.addEventListener("install", (event) => {
   self.skipWaiting();
 });
 
+// Network-first for app shell (HTML/JS) so deploys serve fresh code; cache-only for offline.html
+function isAppShellRequest(request) {
+  const u = new URL(request.url);
+  if (request.mode === "navigate") return true;
+  return /\.(html|js|css)(\?|$)/i.test(u.pathname);
+}
+
+function isOfflinePageRequest(request) {
+  try {
+    const u = new URL(request.url);
+    return /offline\.html(\?|$)/i.test(u.pathname);
+  } catch (_) {
+    return false;
+  }
+}
+
 //Listen for requests
 self.addEventListener("fetch", (event) => {
-  // Only handle http(s) requests
   if (!event.request.url.startsWith("http")) return;
 
+  // offline.html: cache-first so it works when offline
+  if (isOfflinePageRequest(event.request)) {
+    event.respondWith(
+      caches.match(event.request).then((cached) => cached || fetch(event.request))
+    );
+    return;
+  }
+
+  // App shell (navigate, HTML, JS, CSS): network-first, do not cache (fresh after deploy)
+  if (isAppShellRequest(event.request)) {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => response)
+        .catch(() => {
+          if (event.request.mode === "navigate") return caches.match("offline.html");
+          return caches.match(event.request);
+        })
+    );
+    return;
+  }
+
+  // Other (e.g. images, fonts): cache-first then network, cache 200 responses
   event.respondWith(
     caches.match(event.request).then((response) => {
-      // Return cached response if found
-      if (response) {
-        return response;
-      }
-      // Otherwise, fetch from network
+      if (response) return response;
       return fetch(event.request)
         .then((response) => {
-          // Check if we received a valid response
           if (
             !response ||
             response.status !== 200 ||
@@ -36,19 +68,16 @@ self.addEventListener("fetch", (event) => {
           ) {
             return response;
           }
-          // Clone the response
           const responseToCache = response.clone();
-          // Cache the new response
           caches.open(CACHE_NAME).then((cache) => {
             cache.put(event.request, responseToCache);
           });
           return response;
         })
-        .catch(() => {
-          // If fetch fails, return offline page
-          return caches.match("offline.html");
-        });
-    }),
+        .catch(() =>
+          event.request.mode === "navigate" ? caches.match("offline.html") : undefined
+        );
+    })
   );
 });
 

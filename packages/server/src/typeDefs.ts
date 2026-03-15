@@ -458,7 +458,7 @@ const typeDefs = /* GraphQL */ `
 
     getRestaurants: [User!]!
 
-    getRiders: [User2!]!
+    getRiders(Parish: String): [User2!]!
 
     getRidersByParish(Parish: String): [User2!]!
 
