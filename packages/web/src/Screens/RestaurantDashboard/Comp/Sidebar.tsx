@@ -134,7 +134,6 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
   const classes = useStyles({});
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("lg"));
-  const isMatchMedium = useMediaQuery(theme.breakpoints.up("xl"));
   var { value } = useAppData();
   var { logout, userInfo, userRolef } = value;
 
@@ -197,7 +196,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
 
   return (
     <>
-      {isMatchMedium ? (
+      {!isMatch ? (
         <div className={classes.root}>
           <CssBaseline />
           <Drawer
