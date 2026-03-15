@@ -352,12 +352,12 @@ export const OrderFullDetails: React.FC = () => {
                     </Typography>
                     <Typography>
                       <Grid container direction="row" spacing={1}>
-                        <Grid item xs={12} md={2}>
+                        <Grid item xs={12} sm={12} md={6} lg={3}>
                           <Typography style={{ fontWeight: 700 }}>
                             Restaurant:
                           </Typography>
                         </Grid>
-                        <Grid item xs={12} md={10}>
+                        <Grid item xs={12} sm={12} md={6} lg={9}>
                           <Typography
                             style={{ color: "#FF5E14", fontWeight: 800 }}
                           >
