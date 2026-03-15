@@ -29,7 +29,7 @@ export const User: React.FC = function User() {
               {userInfo?.fullName !== null &&
               userInfo?.fullName !== "" &&
               userInfo?.fullName !== undefined
-                ? userInfo?.fullName
+                ? userInfo?.fullName?.split(" ")[0]
                 : "user"}
             </span>
           </Grid>
@@ -38,7 +38,7 @@ export const User: React.FC = function User() {
                     <Grid item xs={6} spacing={1}>
                         <Grid item xs={12} spacing={1}>
                             <PersonRounded style={{color: "#FF5E14"}} /> <span style={{color: "#FF5E14"}}>Hello,</span>
-                            <span style={{textAlign: "right"}}>{userInfo.fullName !== null && userInfo.fullName !== "" && userInfo.fullName !== undefined? userInfo.fullName : "user"}</span>
+                            <span style={{textAlign: "right"}}>{userInfo.fullName !== null && userInfo.fullName !== "" && userInfo.fullName !== undefined? userInfo.fullName?.split(" ")[0] : "user"}</span>
                         </Grid>
                     </Grid>
                 </Grid> */}
