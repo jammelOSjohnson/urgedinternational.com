@@ -1823,6 +1823,10 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
                         payload.cartItems = [];
                         payload.selectedRestaurant = undefined;
                         payload.receiptDetails = response.data.createOrder;
+                        payload.orders = [
+                          response.data.createOrder,
+                          ...(Array.isArray(payload.orders) ? payload.orders : []),
+                        ];
                         if (
                           state.ContactNum !== payload.userInfo.contactNumber ||
                           state.Street !== payload.userInfo.addressLine1 ||
@@ -1886,6 +1890,10 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
                   payload.cartItems = [];
                   payload.selectedRestaurant = undefined;
                   payload.receiptDetails = response.data.createOrder;
+                  payload.orders = [
+                    response.data.createOrder,
+                    ...(Array.isArray(payload.orders) ? payload.orders : []),
+                  ];
                   if (
                     state.ContactNum !== payload.userInfo.contactNumber ||
                     state.Street !== payload.userInfo.addressLine1 ||
