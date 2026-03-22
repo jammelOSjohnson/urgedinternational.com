@@ -1,4 +1,4 @@
-import { Container, Grid } from "@mui/material";
+import { Box, Container, Grid, useMediaQuery, useTheme } from "@mui/material";
 import React, { useEffect } from "react";
 import { Cart } from "../../../Components/Cart";
 import { Notification } from "../../../Components/Notification";
@@ -10,6 +10,28 @@ const sx = {
   gridRoot: { padding: "0px" },
   notScrolled: { backgroundColor: "transparent" },
 };
+
+/** Mirrors HeaderLeft menu: `left: theme.spacing(1)` → cart uses same inset from the right on compact headers. */
+function MobileFixedCart({ children }: { children: React.ReactNode }) {
+  const theme = useTheme();
+  /** Align with Dashboard HeaderLeft `isMobile` (md) so cart mirrors menu inset. */
+  const isCompact = useMediaQuery(theme.breakpoints.down("md"));
+  if (!isCompact) return <>{children}</>;
+  return (
+    <Box
+      sx={{
+        position: "fixed",
+        right: theme.spacing(1),
+        top: `calc(env(safe-area-inset-top, 0px) + ${theme.spacing(2)})`,
+        zIndex: 2,
+        display: "inline-flex",
+        alignItems: "center",
+      }}
+    >
+      {children}
+    </Box>
+  );
+}
 
 export const HeaderRight: React.FC = function HeaderRight() {
   const [scrolled, setScrolled] = React.useState(false);
@@ -72,7 +94,9 @@ export const HeaderRight: React.FC = function HeaderRight() {
               <Grid container direction="row" spacing={0}>
                 <Grid item xs={12} style={{ marginTop: "0%" }}>
                   <Notification /> <span style={{ marginRight: "10%" }}></span>
-                  <Cart />
+                  <MobileFixedCart>
+                    <Cart />
+                  </MobileFixedCart>
                 </Grid>
               </Grid>
             </Grid>
@@ -117,7 +141,9 @@ export const HeaderRight: React.FC = function HeaderRight() {
               <Grid container direction="row" spacing={1}>
                 <Grid item xs={12} style={{ marginTop: "10%" }}>
                   <Notification /> <span style={{ marginRight: "10%" }}></span>
-                  <Cart />
+                  <MobileFixedCart>
+                    <Cart />
+                  </MobileFixedCart>
                 </Grid>
               </Grid>
             </Grid>
@@ -143,7 +169,9 @@ export const HeaderRight: React.FC = function HeaderRight() {
     return (
       <>
         <div id="right-container">
-          <Cart />
+          <MobileFixedCart>
+            <Cart />
+          </MobileFixedCart>
         </div>
         <style>
           {`

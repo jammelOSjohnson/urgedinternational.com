@@ -162,10 +162,25 @@ const useStyles = makeStyles((theme: Theme) =>
       maxHeight: "400px",
       overflowY: "scroll",
     },
-    mobileSearchContainer: {
+    /** Reserves row height; search control is fixed to viewport center (see mobileSearchIcon). */
+    mobileSearchIconWrap: {
+      flex: 1,
+      minHeight: 48,
+    },
+    /** Between menu and cart the midpoint is slightly left of 50vw; nudge with translate. */
+    mobileSearchIcon: {
       position: "fixed",
-      top: "-3px",
-      right: "46%",
+      left: "50%",
+      top: `calc(env(safe-area-inset-top, 0px) + ${theme.spacing(1.5)})`,
+      transform: "translateX(calc(-50% - 0px))",
+      zIndex: 2,
+      /* Match Dashboard HeaderRight `.cart-scrolled` pill */
+      backgroundColor: "#ffffff",
+      borderRadius: "50px",
+      padding: "15px",
+      "&:hover": {
+        backgroundColor: "#f5f5f5",
+      },
     },
   }),
 );
@@ -176,6 +191,7 @@ const PortalSearch: React.FC<Props> = function PortalSearch({
   screen,
 }) {
   const classes = useStyles();
+  const theme = useTheme();
   const [searchTerm, setSearchTerm] = React.useState("");
   const [open, setOpen] = React.useState(false);
   const [restItems, setRestItems] = React.useState<restItemsArr[]>([]);
@@ -291,7 +307,9 @@ const PortalSearch: React.FC<Props> = function PortalSearch({
                     placeholder="Portal Search"
                     startAdornment={
                       <InputAdornment position="start">
-                        <IconButton style={{ color: "#374957" }}>
+                        <IconButton
+                          style={{ color: theme.palette.primary.light }}
+                        >
                           <SearchRounded />
                         </IconButton>
                       </InputAdornment>
@@ -384,17 +402,21 @@ const PortalSearch: React.FC<Props> = function PortalSearch({
             </div>
           </Fade>
         </Modal>
-        <div className={classes.mobileSearchContainer}>
+
+        <div className={classes.mobileSearchIconWrap}>
           <IconButton
-            style={{ color: "#374957", marginLeft: "auto" }}
+            style={{ color: theme.palette.primary.light }}
+            className={classes.mobileSearchIcon}
             onClick={handleOpen}
+            aria-label="Open portal search"
           >
             <SearchRounded />
           </IconButton>
         </div>
+
         <style>
           {`
-                      @media only screen and (min-width: 769px){
+                      @media only screen and (min-width: ${theme.breakpoints.values.md}px){
                         .mobileMenuToggle{
                           display: none;
                         }
@@ -444,7 +466,7 @@ const PortalSearch: React.FC<Props> = function PortalSearch({
               placeholder="Portal Search"
               startAdornment={
                 <InputAdornment position="start">
-                  <IconButton style={{ color: "#374957" }}>
+                  <IconButton style={{ color: theme.palette.primary.light }}>
                     <SearchRounded />
                   </IconButton>
                 </InputAdornment>

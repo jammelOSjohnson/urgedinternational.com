@@ -131,8 +131,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
   //console.log(userInfo)
   //const [availability, setAvailability] = React.useState(rider !== undefined ? rider.isAvailable : false);
 
-  const isMatch = useMediaQuery(theme.breakpoints.down("sm"));
-  const isMatchMedium = useMediaQuery(theme.breakpoints.up("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   var { value } = useAppData();
   var { logout, userInfo } = value;
 
@@ -444,7 +443,40 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
 
   return (
     <>
-      {isMatchMedium ? (
+      {isMobile ? (
+        <>
+          <Grid container className={classes.root} spacing={2}>
+            <Grid item xs={3}>
+              <div style={{ marginTop: "1%", marginBottom: "1%" }}>
+                {(["left"] as Anchor[]).map((anchor) => (
+                  <React.Fragment key={anchor}>
+                    <div style={{ display: "flex" }}>
+                      <Button
+                        style={{ zIndex: 2, position: "fixed" }}
+                        onClick={toggleDrawer(anchor, true)}
+                        className="mobileMenuToggle"
+                      >
+                        <img
+                          src="Images/MobileMenuIcon.png"
+                          style={{ marginTop: "10px" }}
+                          alt="MobileMenuIcon"
+                        ></img>
+                      </Button>
+                    </div>
+                    <Drawer
+                      anchor={anchor}
+                      open={state[anchor]}
+                      onClose={toggleDrawer(anchor, false)}
+                    >
+                      {list(anchor)}
+                    </Drawer>
+                  </React.Fragment>
+                ))}
+              </div>
+            </Grid>
+          </Grid>
+        </>
+      ) : (
         <Typography
           variant="h6"
           style={{ fontWeight: "bold", background: "transparent" }}
@@ -492,45 +524,6 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
             ""
           )}
         </Typography>
-      ) : (
-        <></>
-      )}
-
-      {isMatch ? (
-        <>
-          <Grid container className={classes.root} spacing={2}>
-            <Grid item xs={3}>
-              <div style={{ marginTop: "1%", marginBottom: "1%" }}>
-                {(["left"] as Anchor[]).map((anchor) => (
-                  <React.Fragment key={anchor}>
-                    <div style={{ display: "flex" }}>
-                      <Button
-                        style={{ zIndex: 2, position: "fixed" }}
-                        onClick={toggleDrawer(anchor, true)}
-                        className="mobileMenuToggle"
-                      >
-                        <img
-                          src="Images/MobileMenuIcon.png"
-                          style={{ marginTop: "10px" }}
-                          alt="MobileMenuIcon"
-                        ></img>
-                      </Button>
-                    </div>
-                    <Drawer
-                      anchor={anchor}
-                      open={state[anchor]}
-                      onClose={toggleDrawer(anchor, false)}
-                    >
-                      {list(anchor)}
-                    </Drawer>
-                  </React.Fragment>
-                ))}
-              </div>
-            </Grid>
-          </Grid>
-        </>
-      ) : (
-        <></>
       )}
     </>
   );

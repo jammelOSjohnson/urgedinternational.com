@@ -32,8 +32,13 @@ import ListItemText from "@mui/material/ListItemText";
 import MailIcon from "@mui/icons-material/Mail";
 import { Alert } from "@mui/lab";
 import CloseRounded from "@mui/icons-material/CloseRounded";
+import SvgIcon from "@mui/material/SvgIcon";
 import { DashboardBreadCrumbs } from "./DashboardBreadCrumbs";
 import PortalSearch from "./PortalSrearch";
+
+/** Same path as @mui/icons-material/MenuRounded — avoids Vite deep-import CJS default export issues. */
+const MENU_ROUNDED_PATH =
+  "M4 18h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1m0-5h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1s.45 1 1 1M3 7c0 .55.45 1 1 1h16c.55 0 1-.45 1-1s-.45-1-1-1H4c-.55 0-1 .45-1 1";
 
 interface restItemsArr {
   ImageName: string;
@@ -198,8 +203,8 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
     />
   );
 
-  const isMatch = useMediaQuery(theme.breakpoints.down("sm"));
-  const isMatchMedium = useMediaQuery(theme.breakpoints.up("md"));
+  /** Tablet widths (e.g. 768px) need the drawer toggle; sm-only left a 600–899px gap with no menu. */
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   var { value } = useAppData();
   var {
@@ -289,9 +294,9 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
         {[
           "Overview",
           "Food Delivery",
-          "Errands Solution",
-          "Uship",
-          "Sally's Pantry",
+          "Haulage",
+          /*"Uship",*/
+          "Marketplace",
           "Orders",
           "Profile",
         ].map((text, index) =>
@@ -342,7 +347,11 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                   <MailIcon />
                 )}
               </ListItemIcon>
-              <ListItemText className="link-font" primary={text} primaryTypographyProps={{ component: "div" }} />
+              <ListItemText
+                className="link-font"
+                primary={text}
+                primaryTypographyProps={{ component: "div" }}
+              />
             </ListItem>
           ) : (referralPath === "/FoodDelivery" ||
               referralPath === "/Restaurants" ||
@@ -400,11 +409,14 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                     <MailIcon />
                   )}
                 </ListItemIcon>
-                <ListItemText className="link-font" primary={text} primaryTypographyProps={{ component: "div" }} />
+                <ListItemText
+                  className="link-font"
+                  primary={text}
+                  primaryTypographyProps={{ component: "div" }}
+                />
               </ListItem>
             </Link>
-          ) : referralPath === "/PackageDelivery" &&
-            text === "Errands Solution" ? (
+          ) : referralPath === "/Haulage" && text === "Haulage" ? (
             <ListItem button key={text} className={classes.activeItem}>
               <ListItemIcon>
                 {index === 0 ? (
@@ -447,9 +459,12 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                   <MailIcon />
                 )}
               </ListItemIcon>
-              <ListItemText className="link-font" primary={text} primaryTypographyProps={{ component: "div" }} />
-            </ListItem>
-          ) : (referralPath === "/Uship" || referralPath === "/Rates") &&
+              <ListItemText
+                className="link-font"
+                primary={text}
+                primaryTypographyProps={{ component: "div" }}
+              />
+            </ListItem> /*: (referralPath === "/Uship" || referralPath === "/Rates") &&
             text === "Uship" ? (
             <ListItem button key={text} className={classes.activeItem}>
               <ListItemIcon>
@@ -493,8 +508,13 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                   <MailIcon />
                 )}
               </ListItemIcon>
-              <ListItemText className="link-font" primary={text} primaryTypographyProps={{ component: "div" }} />
+              <ListItemText
+                className="link-font"
+                primary={text}
+                primaryTypographyProps={{ component: "div" }}
+              />
             </ListItem>
+          )*/
           ) : referralPath === "/OrderHistory" && text === "Orders" ? (
             <Link
               to="/OrdersHistory"
@@ -547,7 +567,11 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                     <MailIcon />
                   )}
                 </ListItemIcon>
-                <ListItemText className="link-fontH" primary={text} primaryTypographyProps={{ component: "div" }} />
+                <ListItemText
+                  className="link-fontH"
+                  primary={text}
+                  primaryTypographyProps={{ component: "div" }}
+                />
               </ListItem>
             </Link>
           ) : text === "Overview" ? (
@@ -601,7 +625,11 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                     <MailIcon />
                   )}
                 </ListItemIcon>
-                <ListItemText className="link-font" primary={text} primaryTypographyProps={{ component: "div" }} />
+                <ListItemText
+                  className="link-font"
+                  primary={text}
+                  primaryTypographyProps={{ component: "div" }}
+                />
               </ListItem>
             </Link>
           ) : text === "Orders" ? (
@@ -663,7 +691,11 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                       <MailIcon />
                     )}
                   </ListItemIcon>
-                  <ListItemText className="link-font" primary={text} primaryTypographyProps={{ component: "div" }} />
+                  <ListItemText
+                    className="link-font"
+                    primary={text}
+                    primaryTypographyProps={{ component: "div" }}
+                  />
                 </ListItem>
               </Link>
             ) : (
@@ -728,7 +760,11 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                       <MailIcon />
                     )}
                   </ListItemIcon>
-                  <ListItemText className="link-font" primary={text} primaryTypographyProps={{ component: "div" }} />
+                  <ListItemText
+                    className="link-font"
+                    primary={text}
+                    primaryTypographyProps={{ component: "div" }}
+                  />
                 </ListItem>
               </Link>
             ) : (
@@ -786,10 +822,14 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                     <MailIcon />
                   )}
                 </ListItemIcon>
-                <ListItemText className="link-font" primary={text} primaryTypographyProps={{ component: "div" }} />
+                <ListItemText
+                  className="link-font"
+                  primary={text}
+                  primaryTypographyProps={{ component: "div" }}
+                />
               </ListItem>
             </Link>
-          ) : //: text === "Errands Solution" ? (
+          ) : //: text === "Haulage" ? (
           //   <ListItem button key={text} onClick={handleOpen2}>
           //     <ListItemIcon>
           //       {index === 0 ? (
@@ -884,63 +924,68 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                 </ListItemIcon>
                 <ListItemText className="link-fontH" primary={text} primaryTypographyProps={{ component: "div" }} />
               </ListItem>*/
-          text === "Errands Solution" ? (
-            <LightTooltip key={text} title="Coming Soon" placement="top-end">
-              <span>
-                <ListItem button>
-                  <ListItemIcon>
-                    {index === 0 ? (
-                      <img
-                        src={
-                          window.location.origin + "/Images/GroupSquareIcon.png"
-                        }
-                        alt="square icon"
-                      />
-                    ) : index === 1 ? (
-                      <img
-                        src={
-                          window.location.origin +
-                          "/Images/BlackFoodDeliveryService.png"
-                        }
-                        alt="Food icon"
-                      />
-                    ) : index === 2 ? (
-                      <img
-                        src={window.location.origin + "/Images/BlackUShip.png"}
-                        alt="truck icon"
-                      />
-                    ) : index === 3 ? (
-                      <img
-                        src={
-                          window.location.origin +
-                          "/Images/blacktruckIconImage.png"
-                        }
-                        alt="BlackMarket icon"
-                      />
-                    ) : index === 4 ? (
-                      <img
-                        src={
-                          window.location.origin +
-                          "/Images/BackMarketPlaceIcon.png"
-                        }
-                        alt="BlackMarket icon"
-                      />
-                    ) : index === 5 ? (
-                      <HistoryRounded
-                        style={{ width: "36px", height: "38px" }}
-                      />
-                    ) : index === 6 ? (
-                      <PersonRounded
-                        style={{ width: "36px", height: "38px" }}
-                      />
-                    ) : (
-                      <MailIcon />
-                    )}
-                  </ListItemIcon>
-                  <ListItemText className="link-fontH" primary={text} primaryTypographyProps={{ component: "div" }} />
-                </ListItem>
-              </span>
-            </LightTooltip>
+          text === "Haulage" ? (
+            <a
+              key={text}
+              href="http://wa.me/18767735015"
+              target="_blank"
+              rel="nofollow noreferrer"
+              style={{ textDecoration: "none" }}
+              className={clsx(classes.inactiveItemLink, "inactiveLinkHover")}
+            >
+              <ListItem button>
+                <ListItemIcon>
+                  {index === 0 ? (
+                    <img
+                      src={
+                        window.location.origin + "/Images/GroupSquareIcon.png"
+                      }
+                      alt="square icon"
+                    />
+                  ) : index === 1 ? (
+                    <img
+                      src={
+                        window.location.origin +
+                        "/Images/BlackFoodDeliveryService.png"
+                      }
+                      alt="Food icon"
+                    />
+                  ) : index === 2 ? (
+                    <img
+                      src={window.location.origin + "/Images/BlackUShip.png"}
+                      alt="truck icon"
+                    />
+                  ) : index === 3 ? (
+                    <img
+                      src={
+                        window.location.origin +
+                        "/Images/blacktruckIconImage.png"
+                      }
+                      alt="BlackMarket icon"
+                    />
+                  ) : index === 4 ? (
+                    <img
+                      src={
+                        window.location.origin +
+                        "/Images/BackMarketPlaceIcon.png"
+                      }
+                      alt="BlackMarket icon"
+                    />
+                  ) : index === 5 ? (
+                    <HistoryRounded style={{ width: "36px", height: "38px" }} />
+                  ) : index === 6 ? (
+                    <PersonRounded style={{ width: "36px", height: "38px" }} />
+                  ) : (
+                    <MailIcon />
+                  )}
+                </ListItemIcon>
+                <ListItemText
+                  className="link-fontH"
+                  primary={text}
+                  primaryTypographyProps={{ component: "div" }}
+                />
+              </ListItem>
+            </a>
           ) : // : text === "Uship" ? (
           //   <Link
           //     to="/Uship"
@@ -1046,7 +1091,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                 </ListItemIcon>
                 <ListItemText className="link-fontH" primary={text} primaryTypographyProps={{ component: "div" }} />
               </ListItem>*/
-          text === "Uship" ? (
+          /*text === "Uship" ? (
             <LightTooltip key={text} title="Coming Soon" placement="top-end">
               <span>
                 <ListItem button>
@@ -1099,12 +1144,16 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                       <MailIcon />
                     )}
                   </ListItemIcon>
-                  <ListItemText className="link-fontH" primary={text} primaryTypographyProps={{ component: "div" }} />
+                  <ListItemText
+                    className="link-fontH"
+                    primary={text}
+                    primaryTypographyProps={{ component: "div" }}
+                  />
                 </ListItem>
               </span>
             </LightTooltip>
-          ) : // text === "Sally's Pantry" ?
-          // <a href='https://sallyspantry.com/' target="_blank" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")} title="Sally's Pantry">
+          ) : */ // text === "Marketplace" ?
+          // <a href='https://sallyspantry.com/' target="_blank" className={clsx(classes.inactiveItemLink, "inactiveLinkHover")} title="Marketplace">
           //     <ListItem button key={text} >
           //         <ListItemIcon>
           //           {
@@ -1122,7 +1171,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
           //   </a>
           /*<LightTooltip title="Coming Soon" placement="top-end">
               <Typography key={text}>*/
-          text === "Sally's Pantry" ? (
+          text === "Marketplace" ? (
             <LightTooltip key={text} title="Coming Soon" placement="top-end">
               <span>
                 <ListItem button>
@@ -1175,7 +1224,11 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                       <MailIcon />
                     )}
                   </ListItemIcon>
-                  <ListItemText className="link-fontH" primary={text} primaryTypographyProps={{ component: "div" }} />
+                  <ListItemText
+                    className="link-fontH"
+                    primary={text}
+                    primaryTypographyProps={{ component: "div" }}
+                  />
                 </ListItem>
               </span>
             </LightTooltip>
@@ -1222,7 +1275,11 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                   <MailIcon />
                 )}
               </ListItemIcon>
-              <ListItemText className="link-font" primary={text} primaryTypographyProps={{ component: "div" }} />
+              <ListItemText
+                className="link-font"
+                primary={text}
+                primaryTypographyProps={{ component: "div" }}
+              />
             </ListItem>
           ) : (
             <ListItem button key={text} style={{ paddingLeft: "12px" }}>
@@ -1267,7 +1324,11 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                   <MailIcon />
                 )}
               </ListItemIcon>
-              <ListItemText className="link-font" primary={text} primaryTypographyProps={{ component: "div" }} />
+              <ListItemText
+                className="link-font"
+                primary={text}
+                primaryTypographyProps={{ component: "div" }}
+              />
             </ListItem>
           ),
         )}
@@ -1304,7 +1365,11 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                         <MailIcon />
                       )}
                     </ListItemIcon>
-                    <ListItemText className="link-fontH" primary={text} primaryTypographyProps={{ component: "div" }} />
+                    <ListItemText
+                      className="link-fontH"
+                      primary={text}
+                      primaryTypographyProps={{ component: "div" }}
+                    />
                   </ListItem>
                 </a>
               ) : (
@@ -1324,7 +1389,11 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                       <MailIcon />
                     )}
                   </ListItemIcon>
-                  <ListItemText className="link-font" primary={text} primaryTypographyProps={{ component: "div" }} />
+                  <ListItemText
+                    className="link-font"
+                    primary={text}
+                    primaryTypographyProps={{ component: "div" }}
+                  />
                 </ListItem>
               ),
             )
@@ -1343,11 +1412,6 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                     <ListItemIcon>
                       {index === 0 ? (
                         <img
-                          src={window.location.origin + "/Images/Setting.png"}
-                          alt="BlackMarket icon"
-                        />
-                      ) : index === 1 ? (
-                        <img
                           src={window.location.origin + "/Images/Logout.png"}
                           className={classes.loginIconStyle}
                           alt="BlackMarket icon"
@@ -1356,7 +1420,11 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                         <MailIcon />
                       )}
                     </ListItemIcon>
-                    <ListItemText className="link-fontH" primary={text} primaryTypographyProps={{ component: "div" }} />
+                    <ListItemText
+                      className="link-fontH"
+                      primary={text}
+                      primaryTypographyProps={{ component: "div" }}
+                    />
                   </ListItem>
                 </a>
               ) : (
@@ -1376,7 +1444,11 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
                       <MailIcon />
                     )}
                   </ListItemIcon>
-                  <ListItemText className="link-font" primary={text} primaryTypographyProps={{ component: "div" }} />
+                  <ListItemText
+                    className="link-font"
+                    primary={text}
+                    primaryTypographyProps={{ component: "div" }}
+                  />
                 </ListItem>
               ),
             )}
@@ -1474,27 +1546,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
 
   return (
     <>
-      {isMatchMedium ? (
-        <>
-          <PortalSearch
-            backgroundColor={"#FFF"}
-            color={"#4D4D4D"}
-            screen={"desktop"}
-          />
-          <DashboardBreadCrumbs />
-          <style>
-            {`
-                    .MuiInputLabel-root.Mui-focused {
-                      color: #4D4D4D
-                    }
-                  `}
-          </style>
-        </>
-      ) : (
-        <></>
-      )}
-
-      {isMatch ? (
+      {isMobile ? (
         <>
           <Modal
             aria-labelledby="transition-modal-title"
@@ -1564,18 +1616,32 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
             {(["left"] as Anchor[]).map((anchor) => (
               <React.Fragment key={anchor}>
                 <div style={{ display: "flex" }}>
-                  <Button
-                    style={{ zIndex: 2, position: "fixed" }}
+                  <IconButton
+                    style={{
+                      zIndex: 2,
+                      position: "fixed",
+                      top: `calc(env(safe-area-inset-top, 0px) + ${theme.spacing(1)})`,
+                      left: theme.spacing(1),
+                      color: theme.palette.primary.light,
+                    }}
+                    sx={{
+                      /* Match HeaderRight `.cart-scrolled` (scrolled cart pill) */
+                      backgroundColor: "#ffffff",
+                      borderRadius: "50px",
+                      padding: "15px",
+                      "&:hover": {
+                        backgroundColor: "#f5f5f5",
+                      },
+                    }}
                     onClick={toggleDrawer(anchor, true)}
                     className="mobileMenuToggle"
+                    aria-label="Open menu"
+                    size="medium"
                   >
-                    <img
-                      src={
-                        window.location.origin + "/Images/MobileMenuIcon.png"
-                      }
-                      alt="MobileMenuIcon"
-                    ></img>
-                  </Button>
+                    <SvgIcon sx={{ fontSize: 28 }}>
+                      <path d={MENU_ROUNDED_PATH} />
+                    </SvgIcon>
+                  </IconButton>
                   <PortalSearch
                     backgroundColor={"#FFF"}
                     color={"#4D4D4D"}
@@ -1594,7 +1660,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
           </div>
           <style>
             {`
-                          @media only screen and (min-width: 769px){
+                          @media only screen and (min-width: ${theme.breakpoints.values.md}px){
                             .mobileMenuToggle{
                               display: none;
                             }
@@ -1631,7 +1697,21 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
           </style>
         </>
       ) : (
-        <></>
+        <>
+          <PortalSearch
+            backgroundColor={"#FFF"}
+            color={"#4D4D4D"}
+            screen={"desktop"}
+          />
+          <DashboardBreadCrumbs />
+          <style>
+            {`
+                    .MuiInputLabel-root.Mui-focused {
+                      color: #4D4D4D
+                    }
+                  `}
+          </style>
+        </>
       )}
 
       <>
