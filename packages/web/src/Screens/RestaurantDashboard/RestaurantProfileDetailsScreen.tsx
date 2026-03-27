@@ -399,8 +399,7 @@ export const RestaurantProfileDetailsScreen: React.FC =
   function RestaurantProfileDetailsScreen() {
     const classes = useStyles();
     const theme = useTheme();
-    const isMatch = useMediaQuery(theme.breakpoints.down("sm"));
-    const isMatchMedium = useMediaQuery(theme.breakpoints.up("md"));
+    const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
     const [values, setValues] = React.useState<State>({
       Name: "",
@@ -767,7 +766,7 @@ export const RestaurantProfileDetailsScreen: React.FC =
               alignItems="center"
             >
               <Grid container direction="row" spacing={0}>
-                {isMatchMedium ? (
+                {!isMobile ? (
                   <>
                     <Grid
                       item
@@ -795,7 +794,7 @@ export const RestaurantProfileDetailsScreen: React.FC =
                 ) : (
                   <></>
                 )}
-                {isMatch ? (
+                {isMobile ? (
                   <>
                     <Grid
                       item

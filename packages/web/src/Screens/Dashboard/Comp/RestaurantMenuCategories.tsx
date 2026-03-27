@@ -1,6 +1,22 @@
 import { useAppData } from "../../../Context/AppDataContext";
-import { Grid, Typography, Theme, useMediaQuery, Card, CardMedia, CardContent, TableContainer, Table, Paper, TableHead, TableRow, TableCell, TableBody, useTheme,  } from '@mui/material';
-import { makeStyles, createStyles } from '@mui/styles';;
+import {
+  Grid,
+  Typography,
+  Theme,
+  useMediaQuery,
+  Card,
+  CardMedia,
+  CardContent,
+  TableContainer,
+  Table,
+  Paper,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  useTheme,
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
 import React, { useEffect } from "react";
 import clsx from "clsx";
 import "../CSS/RestaurantCategories.css";
@@ -116,7 +132,7 @@ const useStyles = makeStyles((theme: Theme) =>
     tableHead: {
       display: "none",
     },
-  })
+  }),
 );
 
 export const RestaurantMenuCategories: React.FC =
@@ -137,11 +153,10 @@ export const RestaurantMenuCategories: React.FC =
     } = value;
     //var restaurant = restaurants[selectedRestaurant];
     var restaurant = restaurants.filter(
-      (item) => item.FirstName === restaurantName
+      (item) => item.FirstName === restaurantName,
     );
 
-    const isMatch = useMediaQuery(theme.breakpoints.down("sm"));
-    const isMatchMedium = useMediaQuery(theme.breakpoints.up("md"));
+    const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
     useEffect(
       function () {
@@ -154,7 +169,7 @@ export const RestaurantMenuCategories: React.FC =
         }
         // eslint-disable-next-line
       },
-      [restaurants]
+      [restaurants],
     );
 
     var filterCat = function (event, category) {
@@ -186,7 +201,7 @@ export const RestaurantMenuCategories: React.FC =
               </Grid>
             </Grid>
           </Grid>
-          {isMatchMedium ? (
+          {!isMobile ? (
             <Grid
               container
               direction="row"
@@ -202,7 +217,7 @@ export const RestaurantMenuCategories: React.FC =
                       href="javascript()"
                       className={clsx(
                         classes.inactiveItemLink,
-                        classes.gridSpacing
+                        classes.gridSpacing,
                       )}
                       onClick={(e) => filterCat(e, "All")}
                       key={"All"}
@@ -211,7 +226,7 @@ export const RestaurantMenuCategories: React.FC =
                         <Card
                           className={clsx(
                             classes.card,
-                            "cardSizeCategoriesRestarants2"
+                            "cardSizeCategoriesRestarants2",
                           )}
                         >
                           <CardContent className={classes.cardContent2}>
@@ -230,7 +245,7 @@ export const RestaurantMenuCategories: React.FC =
                       href="javascript()"
                       className={clsx(
                         classes.inactiveItemLink,
-                        classes.gridSpacing
+                        classes.gridSpacing,
                       )}
                       onClick={(e) => filterCat(e, "All")}
                       key={"All"}
@@ -239,7 +254,7 @@ export const RestaurantMenuCategories: React.FC =
                         <Card
                           className={clsx(
                             classes.card,
-                            "cardSizeCategoriesRestarants3"
+                            "cardSizeCategoriesRestarants3",
                           )}
                         >
                           <CardContent className={classes.cardContent2}>
@@ -262,7 +277,7 @@ export const RestaurantMenuCategories: React.FC =
                             href="javascript()"
                             className={clsx(
                               classes.inactiveItemLink,
-                              classes.gridSpacing
+                              classes.gridSpacing,
                             )}
                             onClick={(e) => filterCat(e, item)}
                             key={item}
@@ -271,7 +286,7 @@ export const RestaurantMenuCategories: React.FC =
                               <Card
                                 className={clsx(
                                   classes.card,
-                                  "cardSizeCategoriesRestarants2"
+                                  "cardSizeCategoriesRestarants2",
                                 )}
                               >
                                 <CardMedia className={classes.cardImage}>
@@ -298,7 +313,7 @@ export const RestaurantMenuCategories: React.FC =
                             href="javascript()"
                             className={clsx(
                               classes.inactiveItemLink,
-                              classes.gridSpacing
+                              classes.gridSpacing,
                             )}
                             onClick={(e) => filterCat(e, item)}
                             key={item}
@@ -307,7 +322,7 @@ export const RestaurantMenuCategories: React.FC =
                               <Card
                                 className={clsx(
                                   classes.card,
-                                  "cardSizeCategoriesRestarants"
+                                  "cardSizeCategoriesRestarants",
                                 )}
                               >
                                 <CardMedia className={classes.cardImage}>
@@ -336,7 +351,7 @@ export const RestaurantMenuCategories: React.FC =
                             href="javascript()"
                             className={clsx(
                               classes.inactiveItemLink,
-                              classes.gridSpacing
+                              classes.gridSpacing,
                             )}
                             onClick={(e) => filterCat(e, item)}
                             key={item}
@@ -345,7 +360,7 @@ export const RestaurantMenuCategories: React.FC =
                               <Card
                                 className={clsx(
                                   classes.card,
-                                  "cardSizeCategoriesRestarants"
+                                  "cardSizeCategoriesRestarants",
                                 )}
                               >
                                 <CardMedia className={classes.cardImage}>
@@ -375,7 +390,7 @@ export const RestaurantMenuCategories: React.FC =
             <></>
           )}
 
-          {isMatch ? (
+          {isMobile ? (
             <>
               <TableContainer
                 component={Paper}
@@ -405,7 +420,7 @@ export const RestaurantMenuCategories: React.FC =
                             <Card
                               className={clsx(
                                 classes.cardMobile,
-                                "cardSizeCategoriesRestarants2"
+                                "cardSizeCategoriesRestarants2",
                               )}
                             >
                               <CardMedia className={classes.cardImage}>
@@ -437,7 +452,7 @@ export const RestaurantMenuCategories: React.FC =
                             <Card
                               className={clsx(
                                 classes.cardMobile,
-                                "cardSizeCategoriesRestarants3"
+                                "cardSizeCategoriesRestarants3",
                               )}
                             >
                               <CardMedia className={classes.cardImage}>
@@ -473,7 +488,7 @@ export const RestaurantMenuCategories: React.FC =
                                   <Card
                                     className={clsx(
                                       classes.cardMobile,
-                                      "cardSizeCategoriesRestarants2"
+                                      "cardSizeCategoriesRestarants2",
                                     )}
                                   >
                                     <CardMedia className={classes.cardImage}>
@@ -491,7 +506,7 @@ export const RestaurantMenuCategories: React.FC =
                                         gutterBottom
                                         className={clsx(
                                           classes.cardTitle2,
-                                          "selected"
+                                          "selected",
                                         )}
                                       >
                                         {item}
@@ -524,7 +539,7 @@ export const RestaurantMenuCategories: React.FC =
                                         gutterBottom
                                         className={clsx(
                                           classes.cardTitle,
-                                          "selected"
+                                          "selected",
                                         )}
                                       >
                                         {item}
@@ -560,7 +575,7 @@ export const RestaurantMenuCategories: React.FC =
                                         gutterBottom
                                         className={clsx(
                                           classes.cardTitle,
-                                          "selected"
+                                          "selected",
                                         )}
                                       >
                                         {item}

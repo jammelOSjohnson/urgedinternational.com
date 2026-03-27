@@ -1,7 +1,18 @@
 import React from "react";
 //import CSS
-import { Container, Grid, Typography, Theme, Card, CardMedia, CardContent, Button, useMediaQuery, useTheme,  } from '@mui/material';
-import { makeStyles, createStyles } from '@mui/styles';;
+import {
+  Container,
+  Grid,
+  Typography,
+  Theme,
+  Card,
+  CardMedia,
+  CardContent,
+  Button,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -122,18 +133,17 @@ const useStyles = makeStyles((theme: Theme) =>
     links: {
       textDecoration: "none",
     },
-  })
+  }),
 );
 
 export const Section2: React.FC = function Section2() {
   const classes = useStyles();
   const theme = useTheme();
 
-  const isMatch = useMediaQuery(theme.breakpoints.down("sm"));
-  const isMatchMedium = useMediaQuery(theme.breakpoints.up("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   return (
     <>
-      {isMatchMedium ? (
+      {!isMobile ? (
         <Container maxWidth="xl" className={classes.mainContainer}>
           <Grid
             container
@@ -253,7 +263,7 @@ export const Section2: React.FC = function Section2() {
         <></>
       )}
 
-      {isMatch ? (
+      {isMobile ? (
         <Container maxWidth="xl" className={classes.mainContainer}>
           <Grid
             container

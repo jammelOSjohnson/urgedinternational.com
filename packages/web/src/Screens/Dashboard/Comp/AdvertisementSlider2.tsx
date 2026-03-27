@@ -263,8 +263,7 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
   const classes = useStyles();
   const classesMobile = useMobileStyles();
   const theme = useTheme();
-  const isMatch = useMediaQuery(theme.breakpoints.down("sm"));
-  const isMatchMedium = useMediaQuery(theme.breakpoints.up("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   //var { value }  = useAppData();
   const [values, setValues] = React.useState<State>({
@@ -296,7 +295,7 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
 
   return (
     <>
-      {isMatchMedium ? (
+      {!isMobile ? (
         <div style={{ position: "relative" }} id="FoodSlide">
           <img
             className={classes.image}
@@ -400,7 +399,7 @@ export const AdvertisementSlider2: React.FC = function AdvertisementSlider2() {
       ) : (
         <></>
       )}
-      {isMatch ? (
+      {isMobile ? (
         <div style={{ position: "relative" }} id="FoodSlide">
           <img className="image" src="Images/JuiciFood.png" alt="KFC Bucket" />
           <Carousel nextIcon={false} prevIcon={false}>

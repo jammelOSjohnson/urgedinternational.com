@@ -30,8 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const RiderOrdersScreen: React.FC = function RiderOrdersScreen () {
     const classes = useStyles();
     const theme = useTheme();
-    const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
-    const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     
     return (
         <>
@@ -39,7 +38,7 @@ export const RiderOrdersScreen: React.FC = function RiderOrdersScreen () {
                 <Container maxWidth="xl" style={{ paddingLeft: "8px", paddingRight: "8px" }} className={classes.main}>
                     <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
                         <Grid container direction="row" spacing={0}>
-                            {isMatchMedium? (
+                            {!isMobile? (
                                 <>
                                     <Grid item xs={8} style={{ marginBottom: "2%", marginTop: "1%", background: "transparent" }}>
                                         <HeaderLeft />
@@ -49,7 +48,7 @@ export const RiderOrdersScreen: React.FC = function RiderOrdersScreen () {
                                     </Grid>
                                 </>
                             ):<></>}
-                            {isMatch? (
+                            {isMobile? (
                                 <>
                                     <Grid item xs={4} style={{ marginBottom: "2%", marginTop: "1%", background: "transparent" }}>
                                         <HeaderLeft />

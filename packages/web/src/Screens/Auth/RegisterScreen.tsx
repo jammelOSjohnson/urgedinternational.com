@@ -279,8 +279,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
   //Breakpoints
   const theme = useTheme();
 
-  const isMatch = useMediaQuery(theme.breakpoints.down("sm"));
-  const isMatchMedium = useMediaQuery(theme.breakpoints.up("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   var { value } = useAppData();
   var { signup, gLogin, fetchUserInfoForSignUp, fetchUserInfo, userRolef } =
@@ -342,9 +341,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
         : values.fullname === ""
           ? setError("Please enter your Full Name")
           : values.email === "" ||
-              !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(
-                values.email,
-              )
+              !/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(values.email)
             ? setError("Please enter a valid Email")
             : values.password === ""
               ? setError("Please enter a valid Password")
@@ -480,7 +477,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
 
   return (
     <>
-      {isMatchMedium ? (
+      {!isMobile ? (
         <Container
           maxWidth="xl"
           style={{
@@ -738,7 +735,7 @@ export const RegisterScreen: React.FC = function RegisterScreen() {
         <></>
       )}
 
-      {isMatch ? (
+      {isMobile ? (
         <Container
           maxWidth="xl"
           style={{

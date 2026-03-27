@@ -1,20 +1,37 @@
-import { useAppData } from "../../../Context/AppDataContext";
-import { Select, Grid, Typography, Theme, TextField, Button, InputLabel, FormControl, Card, CardActionArea, CardMedia, CardContent, CardActions, MenuItem, useMediaQuery, useTheme,  } from '@mui/material';
-import { makeStyles, createStyles } from '@mui/styles';;
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 //Import Components
 import { ItemRating } from "../../../Components/ItemRating";
 import { FastFoodChickenFlavor } from "./FastFoodChickenFlavor";
-import Modal from '@mui/material/Modal';
-import Backdrop from '@mui/material/Backdrop';
-import Fade from '@mui/material/Fade';
+import Modal from "@mui/material/Modal";
+import Backdrop from "@mui/material/Backdrop";
+import Fade from "@mui/material/Fade";
 import clsx from "clsx";
-import { Alert } from '@mui/lab';
+import { Alert } from "@mui/lab";
 import MapContainer from "../MapContainer";
 import CheckGps from "./CheckGps";
 import { useParams } from "react-router-dom";
 import { Spinner } from "../../../Components/spinner";
+import { useAppData } from "../../../Context/AppDataContext";
+import {
+  Select,
+  Grid,
+  Typography,
+  Theme,
+  TextField,
+  Button,
+  InputLabel,
+  FormControl,
+  Card,
+  CardActionArea,
+  CardMedia,
+  CardContent,
+  CardActions,
+  MenuItem,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
 
 interface State {
   chickenFlavour1: string;
@@ -195,7 +212,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: "auto",
       marginRight: "auto",
     },
-  })
+  }),
 );
 
 export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
@@ -217,7 +234,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
     paySettings,
   } = value;
   var restaurant = restaurants.filter(
-    (item) => item.FirstName === restaurantName
+    (item) => item.FirstName === restaurantName,
   );
   //var restaurant = restaurants[selectedRestaurant];
   // //console.log("Menu Screen Menu");
@@ -393,30 +410,30 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
       item.chickenFlavour1 === "Select Flavour"
         ? setError("Please Select Flavor")
         : item.chickenFlavour2 === "Select Flavour"
-        ? setError("Please Select Flavor")
-        : item.drink === "Select Drink"
-        ? setError("Please Select Drink")
-        : await addItemToCart(payload, item).then(() => {
-            ////console.log("item should be successfully added");
-            setValues({
-              chickenFlavour1: "Select Flavour",
-              chickenFlavour2: "Select Flavour",
-              drink: "Select Drink",
-              otherIntructions: "",
-              itemName: "",
-              itemCost: 0.0,
-              imageName: "",
-              orderStatus: "New",
-              deliveredBy: "No one",
-              itemCategory: "",
-              ifnotAvailable: "Contact me",
-              itemDescription: "",
-              quantity: 1,
-              restaurantName: "",
-              side: "Select Side",
-            });
-            setOpen(false);
-          });
+          ? setError("Please Select Flavor")
+          : item.drink === "Select Drink"
+            ? setError("Please Select Drink")
+            : await addItemToCart(payload, item).then(() => {
+                ////console.log("item should be successfully added");
+                setValues({
+                  chickenFlavour1: "Select Flavour",
+                  chickenFlavour2: "Select Flavour",
+                  drink: "Select Drink",
+                  otherIntructions: "",
+                  itemName: "",
+                  itemCost: 0.0,
+                  imageName: "",
+                  orderStatus: "New",
+                  deliveredBy: "No one",
+                  itemCategory: "",
+                  ifnotAvailable: "Contact me",
+                  itemDescription: "",
+                  quantity: 1,
+                  restaurantName: "",
+                  side: "Select Side",
+                });
+                setOpen(false);
+              });
     }
   };
 
@@ -467,28 +484,28 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
       item.chickenFlavour1 === "Select Flavour"
         ? setError("Please Select Flavor")
         : item.drink === "Select Drink"
-        ? setError("Please Select Drink")
-        : await addItemToCart(payload, item).then(() => {
-            ////console.log("item should be successfully added");
-            setValues({
-              chickenFlavour1: "Select Flavour",
-              chickenFlavour2: "Select Flavour",
-              drink: "Select Drink",
-              otherIntructions: "",
-              itemName: "",
-              itemCost: 0.0,
-              imageName: "",
-              orderStatus: "New",
-              deliveredBy: "No one",
-              itemCategory: "",
-              ifnotAvailable: "Contact me",
-              itemDescription: "",
-              quantity: 1,
-              restaurantName: "",
-              side: "Select Side",
+          ? setError("Please Select Drink")
+          : await addItemToCart(payload, item).then(() => {
+              ////console.log("item should be successfully added");
+              setValues({
+                chickenFlavour1: "Select Flavour",
+                chickenFlavour2: "Select Flavour",
+                drink: "Select Drink",
+                otherIntructions: "",
+                itemName: "",
+                itemCost: 0.0,
+                imageName: "",
+                orderStatus: "New",
+                deliveredBy: "No one",
+                itemCategory: "",
+                ifnotAvailable: "Contact me",
+                itemDescription: "",
+                quantity: 1,
+                restaurantName: "",
+                side: "Select Side",
+              });
+              setOpen(false);
             });
-            setOpen(false);
-          });
     }
   };
 
@@ -588,7 +605,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                       <Typography className={classes.priceText}>
                         <span>$</span>
                         {parseFloat(selectedItem.ItemCost.toString()).toFixed(
-                          2
+                          2,
                         )}
                       </Typography>
                     </Grid>
@@ -1411,11 +1428,11 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                             key={index}
                                             value={item2.ItemName}
                                           >{`${item2.ItemName} $${parseFloat(
-                                            item2.ItemCost
+                                            item2.ItemCost,
                                           ).toFixed(2)}`}</MenuItem>
                                         );
                                       }
-                                    }
+                                    },
                                   )}
                                 </Select>
                               </FormControl>
@@ -1537,7 +1554,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                             </MenuItem>
                                           );
                                         }
-                                      }
+                                      },
                                     )}
                                   </Select>
                                 </FormControl>
@@ -1724,12 +1741,12 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                               value={item2.ItemName}
                                             >
                                               {`${item2.ItemName} $${parseFloat(
-                                                item2.ItemCost
+                                                item2.ItemCost,
                                               ).toFixed(2)}`}
                                             </MenuItem>
                                           );
                                         }
-                                      }
+                                      },
                                     )}
                                   </Select>
                                 </FormControl>
@@ -2196,12 +2213,12 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                               value={item2.ItemName}
                                             >
                                               {`${item2.ItemName} $${parseFloat(
-                                                item2.ItemCost
+                                                item2.ItemCost,
                                               ).toFixed(2)}`}
                                             </MenuItem>
                                           );
                                         }
-                                      }
+                                      },
                                     )}
                                   </Select>
                                 </FormControl>
@@ -2311,12 +2328,12 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                               value={item2.ItemName}
                                             >
                                               {`${item2.ItemName} $${parseFloat(
-                                                item2.ItemCost
+                                                item2.ItemCost,
                                               ).toFixed(2)}`}
                                             </MenuItem>
                                           );
                                         }
-                                      }
+                                      },
                                     )}
                                   </Select>
                                 </FormControl>
@@ -2426,12 +2443,12 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                               value={item2.ItemName}
                                             >
                                               {`${item2.ItemName} $${parseFloat(
-                                                item2.ItemCost
+                                                item2.ItemCost,
                                               ).toFixed(2)}`}
                                             </MenuItem>
                                           );
                                         }
-                                      }
+                                      },
                                     )}
                                   </Select>
                                 </FormControl>
@@ -2851,7 +2868,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                       <Typography className={classes.priceText}>
                         <span>$</span>
                         {parseFloat(selectedItem.ItemCost.toString()).toFixed(
-                          2
+                          2,
                         )}
                       </Typography>
                     </Grid>
@@ -3681,11 +3698,11 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                               key={index}
                                               value={item2.ItemName}
                                             >{`${item2.ItemName} $${parseFloat(
-                                              item2.ItemCost
+                                              item2.ItemCost,
                                             ).toFixed(2)}`}</MenuItem>
                                           );
                                         }
-                                      }
+                                      },
                                     )}
                                   </Select>
                                 </FormControl>
@@ -3800,7 +3817,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                             </MenuItem>
                                           );
                                         }
-                                      }
+                                      },
                                     )}
                                   </Select>
                                 </FormControl>
@@ -3987,12 +4004,12 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                               value={item2.ItemName}
                                             >
                                               {`${item2.ItemName} $${parseFloat(
-                                                item2.ItemCost
+                                                item2.ItemCost,
                                               ).toFixed(2)}`}
                                             </MenuItem>
                                           );
                                         }
-                                      }
+                                      },
                                     )}
                                   </Select>
                                 </FormControl>
@@ -4459,12 +4476,12 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                               value={item2.ItemName}
                                             >
                                               {`${item2.ItemName} $${parseFloat(
-                                                item2.ItemCost
+                                                item2.ItemCost,
                                               ).toFixed(2)}`}
                                             </MenuItem>
                                           );
                                         }
-                                      }
+                                      },
                                     )}
                                   </Select>
                                 </FormControl>
@@ -4574,12 +4591,12 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                               value={item2.ItemName}
                                             >
                                               {`${item2.ItemName} $${parseFloat(
-                                                item2.ItemCost
+                                                item2.ItemCost,
                                               ).toFixed(2)}`}
                                             </MenuItem>
                                           );
                                         }
-                                      }
+                                      },
                                     )}
                                   </Select>
                                 </FormControl>
@@ -4689,12 +4706,12 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
                                               value={item2.ItemName}
                                             >
                                               {`${item2.ItemName} $${parseFloat(
-                                                item2.ItemCost
+                                                item2.ItemCost,
                                               ).toFixed(2)}`}
                                             </MenuItem>
                                           );
                                         }
-                                      }
+                                      },
                                     )}
                                   </Select>
                                 </FormControl>

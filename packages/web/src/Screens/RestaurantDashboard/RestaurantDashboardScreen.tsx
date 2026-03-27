@@ -31,8 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const RestaurantDashboardScreen: React.FC = function RestaurantDashboardScreen () {
     const classes = useStyles();
     const theme = useTheme();
-    const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
-    const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     
     return (
         <>
@@ -40,7 +39,7 @@ export const RestaurantDashboardScreen: React.FC = function RestaurantDashboardS
                 <Container maxWidth="xl" style={{ paddingLeft: "8px", paddingRight: "8px" }} className={classes.main}>
                     <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
                         <Grid container direction="row" spacing={0}>
-                            {isMatchMedium? (
+                            {!isMobile? (
                                 <>
                                     <Grid item xs={8} style={{ marginBottom: "2%", marginTop: "1%", background: "transparent" }}>
                                         <HeaderLeft />
@@ -50,7 +49,7 @@ export const RestaurantDashboardScreen: React.FC = function RestaurantDashboardS
                                     </Grid>
                                 </>
                             ):<></>}
-                            {isMatch? (
+                            {isMobile? (
                                 <>
                                     <Grid item xs={4} style={{ marginBottom: "2%", marginTop: "1%", background: "transparent" }}>
                                         <HeaderLeft />

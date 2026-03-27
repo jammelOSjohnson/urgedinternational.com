@@ -127,8 +127,7 @@ export const Categories: React.FC = function Categories() {
   var location = history.location;
   var referralPath = location.pathname;
 
-  const isMatch = useMediaQuery(theme.breakpoints.down("sm"));
-  const isMatchMedium = useMediaQuery(theme.breakpoints.up("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const handleClose2 = () => {
     setOpen2(false);
@@ -146,7 +145,7 @@ export const Categories: React.FC = function Categories() {
 
   return (
     <>
-      {isMatchMedium ? (
+      {!isMobile ? (
         <>
           <Modal
             aria-labelledby="transition-modal-title"
@@ -247,7 +246,7 @@ export const Categories: React.FC = function Categories() {
       ) : (
         <></>
       )}
-      {isMatch ? (
+      {isMobile ? (
         <>
           <Modal
             aria-labelledby="transition-modal-title"

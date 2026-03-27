@@ -51,8 +51,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export const HeaderRight: React.FC = function HeaderRight() {
     const classes = useStyles();
     const theme = useTheme();
-    const isMatch = useMediaQuery(theme.breakpoints.down('sm'));
-    const isMatchMedium = useMediaQuery(theme.breakpoints.up('md'));
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     //var { value }  = useAppData();
     //, rider, fetchRiderInfo, udateRiderStatusInfo
     //var { userInfo } = value;
@@ -80,7 +79,7 @@ export const HeaderRight: React.FC = function HeaderRight() {
         <>
             <Container maxWidth="xl" className={classes.main} style={{background: "transparent"}}>
                 <Grid container direction="row" spacing={0} className={classes.gridRoot} alignItems="center">
-                    {isMatchMedium? (
+                    {!isMobile? (
                         <>
                             <Grid item xs={6}>
                                 <User />
@@ -90,7 +89,7 @@ export const HeaderRight: React.FC = function HeaderRight() {
                             </Grid>
                         </>
                     ):<></>}
-                    {isMatch? (
+                    {isMobile? (
                         <>
                             {/* <Grid container direction="row" className={classes.gridRoot} alignItems="center">
                                 <Grid item xs={12}>

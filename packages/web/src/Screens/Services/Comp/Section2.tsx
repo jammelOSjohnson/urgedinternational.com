@@ -1,11 +1,28 @@
 import React, { useState } from "react";
 //import CSS
-import { Container, Grid, Typography, Theme, Button, useMediaQuery, useTheme, AppBar, Tabs, Box, Tab, FormControl, InputLabel, OutlinedInput, Select, MenuItem,  } from '@mui/material';
-import { makeStyles, createStyles } from '@mui/styles';;
+import {
+  Container,
+  Grid,
+  Typography,
+  Theme,
+  Button,
+  useMediaQuery,
+  useTheme,
+  AppBar,
+  Tabs,
+  Box,
+  Tab,
+  FormControl,
+  InputLabel,
+  OutlinedInput,
+  Select,
+  MenuItem,
+} from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
 import SwipeableViews from "react-swipeable-views";
 import clsx from "clsx";
 import { useAppData } from "../../../Context/AppDataContext";
-import { Alert } from '@mui/lab';
+import { Alert } from "@mui/lab";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -210,7 +227,7 @@ const useStyles = makeStyles((theme: Theme) =>
     alert: {
       marginBottom: "5%",
     },
-  })
+  }),
 );
 
 interface TabPanelProps {
@@ -262,8 +279,7 @@ export const Section2: React.FC = function Section2() {
   var { value } = useAppData();
   var { sendMerchantFormEmail } = value;
 
-  const isMatch = useMediaQuery(theme.breakpoints.down("sm"));
-  const isMatchMedium = useMediaQuery(theme.breakpoints.up("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const [values, setValues] = React.useState<State>({
     fullname: "",
@@ -325,55 +341,55 @@ export const Section2: React.FC = function Section2() {
       values.fullname === ""
         ? setError("Please enter your Full Name")
         : values.businessname === ""
-        ? setError("Please enter your Business Name")
-        : // eslint-disable-next-line no-useless-escape
-        values.businessemail === "" ||
-          !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
-            values.businessemail
-          )
-        ? setError("Please enter a valid Email")
-        : values.contact === ""
-        ? setError("Please enter a valid Subject")
-        : values.role === "Select Role"
-        ? setError("Please select a role")
-        : await sendMerchantFormEmail(
-            values.fullname,
-            values.businessemail,
-            values.businessname,
-            values.contact,
-            values.role
-          ).then(async function (res1) {
-            if (res1 != null) {
-              ////console.log("About to navigate to dashboard.");
-              ////console.log(userRolef);
-              setSuccess("Thank you, we will respond shortly.");
-              setValues({
-                ...values,
-                fullname: "",
-                businessname: "",
-                businessemail: "",
-                contact: "",
-                role: "Select Role",
-              });
-              setTimeout(() => {
-                setSuccess("");
-              }, 6000);
-            } else {
-              setError(
-                "Unable to leave a message at this time. Please try again later."
-              );
-            }
-          });
+          ? setError("Please enter your Business Name")
+          : // eslint-disable-next-line no-useless-escape
+            values.businessemail === "" ||
+              !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
+                values.businessemail,
+              )
+            ? setError("Please enter a valid Email")
+            : values.contact === ""
+              ? setError("Please enter a valid Subject")
+              : values.role === "Select Role"
+                ? setError("Please select a role")
+                : await sendMerchantFormEmail(
+                    values.fullname,
+                    values.businessemail,
+                    values.businessname,
+                    values.contact,
+                    values.role,
+                  ).then(async function (res1) {
+                    if (res1 != null) {
+                      ////console.log("About to navigate to dashboard.");
+                      ////console.log(userRolef);
+                      setSuccess("Thank you, we will respond shortly.");
+                      setValues({
+                        ...values,
+                        fullname: "",
+                        businessname: "",
+                        businessemail: "",
+                        contact: "",
+                        role: "Select Role",
+                      });
+                      setTimeout(() => {
+                        setSuccess("");
+                      }, 6000);
+                    } else {
+                      setError(
+                        "Unable to leave a message at this time. Please try again later.",
+                      );
+                    }
+                  });
     } catch {
       setError(
-        "Unable to leave a message at this time. Please try again later."
+        "Unable to leave a message at this time. Please try again later.",
       );
     }
   };
 
   return (
     <>
-      {isMatchMedium ? (
+      {!isMobile ? (
         <Container maxWidth="xl" className={classes.mainContainer}>
           <Container maxWidth="lg">
             <Typography
@@ -721,7 +737,7 @@ export const Section2: React.FC = function Section2() {
                             <OutlinedInput
                               className={clsx(
                                 classes.firstTextField,
-                                classes.root
+                                classes.root,
                               )}
                               id="fullname"
                               type="text"
@@ -743,7 +759,7 @@ export const Section2: React.FC = function Section2() {
                             <OutlinedInput
                               className={clsx(
                                 classes.firstTextField,
-                                classes.root
+                                classes.root,
                               )}
                               id="businessname"
                               type="text"
@@ -765,7 +781,7 @@ export const Section2: React.FC = function Section2() {
                             <OutlinedInput
                               className={clsx(
                                 classes.firstTextField,
-                                classes.root
+                                classes.root,
                               )}
                               id="businessemail"
                               type="text"
@@ -787,7 +803,7 @@ export const Section2: React.FC = function Section2() {
                             <OutlinedInput
                               className={clsx(
                                 classes.firstTextField,
-                                classes.root
+                                classes.root,
                               )}
                               id="contact"
                               type="text"
@@ -809,7 +825,7 @@ export const Section2: React.FC = function Section2() {
                             <Select
                               className={clsx(
                                 classes.firstTextField,
-                                classes.root
+                                classes.root,
                               )}
                               labelId="demo-simple-select-outlined-label"
                               id="demo-simple-select-outlined"
@@ -865,7 +881,7 @@ export const Section2: React.FC = function Section2() {
         <></>
       )}
 
-      {isMatch ? (
+      {isMobile ? (
         <Container maxWidth="xl" className={classes.mainContainer}>
           <Container maxWidth="lg">
             <Typography variant="h2" className={classes.s2Heading}>
@@ -1203,7 +1219,7 @@ export const Section2: React.FC = function Section2() {
                             <OutlinedInput
                               className={clsx(
                                 classes.firstTextField,
-                                classes.root
+                                classes.root,
                               )}
                               id="fullname"
                               type="text"
@@ -1225,7 +1241,7 @@ export const Section2: React.FC = function Section2() {
                             <OutlinedInput
                               className={clsx(
                                 classes.firstTextField,
-                                classes.root
+                                classes.root,
                               )}
                               id="businessname"
                               type="text"
@@ -1247,7 +1263,7 @@ export const Section2: React.FC = function Section2() {
                             <OutlinedInput
                               className={clsx(
                                 classes.firstTextField,
-                                classes.root
+                                classes.root,
                               )}
                               id="businessemail"
                               type="text"
@@ -1269,7 +1285,7 @@ export const Section2: React.FC = function Section2() {
                             <OutlinedInput
                               className={clsx(
                                 classes.firstTextField,
-                                classes.root
+                                classes.root,
                               )}
                               id="contact"
                               type="text"
@@ -1291,7 +1307,7 @@ export const Section2: React.FC = function Section2() {
                             <Select
                               className={clsx(
                                 classes.firstTextField,
-                                classes.root
+                                classes.root,
                               )}
                               labelId="demo-simple-select-outlined-label"
                               id="demo-simple-select-outlined"
