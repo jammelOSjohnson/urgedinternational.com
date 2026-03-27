@@ -1,4 +1,4 @@
-const CACHE_NAME = "version-1.3";
+const CACHE_NAME = "version-1.7";
 const urlsToCache = ["offline.html"];
 
 const self = this;
@@ -37,7 +37,9 @@ self.addEventListener("fetch", (event) => {
   // offline.html: cache-first so it works when offline
   if (isOfflinePageRequest(event.request)) {
     event.respondWith(
-      caches.match(event.request).then((cached) => cached || fetch(event.request))
+      caches
+        .match(event.request)
+        .then((cached) => cached || fetch(event.request)),
     );
     return;
   }
@@ -48,9 +50,10 @@ self.addEventListener("fetch", (event) => {
       fetch(event.request)
         .then((response) => response)
         .catch(() => {
-          if (event.request.mode === "navigate") return caches.match("offline.html");
+          if (event.request.mode === "navigate")
+            return caches.match("offline.html");
           return caches.match(event.request);
-        })
+        }),
     );
     return;
   }
@@ -75,9 +78,11 @@ self.addEventListener("fetch", (event) => {
           return response;
         })
         .catch(() =>
-          event.request.mode === "navigate" ? caches.match("offline.html") : undefined
+          event.request.mode === "navigate"
+            ? caches.match("offline.html")
+            : undefined,
         );
-    })
+    }),
   );
 });
 
