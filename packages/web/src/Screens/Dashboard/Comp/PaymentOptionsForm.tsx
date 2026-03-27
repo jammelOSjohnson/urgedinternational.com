@@ -527,6 +527,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
     //const testObj = Object.fromEntries(Object.entries(payment).sort());
     //console.log(testObj);
     // console.log(payment);
+    // console.log("selectedRestaurant", restaurants[selectedRestaurant]);
     try {
       if (Fail) {
         setError("Unable to process payment at this time.");
@@ -543,17 +544,22 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
       // ) {
       //  delFee = "800";
       // Find the restaurant for the current order
-      const restaurant = restaurants.find(
-        (r) =>
-          r.FirstName === cartItems[0].restaurantName &&
-          r.Parish === values.Town,
-      );
+      const restaurant = restaurants[selectedRestaurant];
 
       if (restaurant && restaurant.deliveryFee) {
         // Use restaurant's delivery fee if available
+        // console.log(
+        //  "using restaurant's delivery fee",
+        //  restaurant?.deliveryFee?.toString(),
+        //);
         delFee = restaurant.deliveryFee.toString();
       } else {
         // Fallback to default fee if not set
+        // console.log("restaurant", restaurant);
+        // console.log(
+        //  "fallback to default fee",
+        //  restaurant?.deliveryFee?.toString(),
+        //);
         delFee = "500";
       }
     }
@@ -684,7 +690,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
       // console.log("setting charge total2", finalTotal.toString());
       setPayment({ ...payment, chargetotal: finalTotal.toString() });
     }
-  }, [cartItems, value]);
+  }, [restaurants, selectedRestaurant, cartItems, value]);
   // generalLocation, values.Town
 
   useEffect(() => {
