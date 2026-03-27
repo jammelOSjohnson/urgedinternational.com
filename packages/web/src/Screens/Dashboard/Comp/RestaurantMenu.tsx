@@ -239,8 +239,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
 
   const theme = useTheme();
   var history = useHistory();
-  const isMatch = useMediaQuery(theme.breakpoints.down("md"));
-  const isMaatchMedium = useMediaQuery(theme.breakpoints.up("lg"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   var [error, setError] = useState("");
   const [values, setValues] = React.useState<State>({
@@ -550,7 +549,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
   } else {
     return (
       <>
-        {isMaatchMedium ? (
+        {!isMobile ? (
           <>
             <Modal
               aria-labelledby="transition-modal-title"
@@ -2813,7 +2812,7 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
           <></>
         )}
 
-        {isMatch ? (
+        {isMobile ? (
           <>
             <Modal
               aria-labelledby="transition-modal-title"
