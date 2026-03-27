@@ -289,8 +289,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
   const theme = useTheme();
   const [open2, setOpen2] = React.useState(false);
 
-  const isMatch = useMediaQuery(theme.breakpoints.down("sm"));
-  const isMatchMedium = useMediaQuery(theme.breakpoints.up("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   var { value } = useAppData();
   var { login, gLogin, resetPassword, fetchUserInfo, userRolef } = value;
@@ -628,7 +627,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
         </Fade>
       </Modal>
 
-      {isMatchMedium ? (
+      {!isMobile ? (
         <>
           <Container
             maxWidth="xl"
@@ -853,7 +852,7 @@ export const LoginScreen: React.FC = function LoginScreen() {
         <></>
       )}
 
-      {isMatch ? (
+      {isMobile ? (
         <Container
           maxWidth="xl"
           style={{
