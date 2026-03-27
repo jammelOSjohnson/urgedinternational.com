@@ -1,17 +1,18 @@
-import { LiveChatWidget } from "@livechat/widget-react";
-import { Container, Grid, Theme,  } from '@mui/material';
-import { makeStyles, createStyles } from '@mui/styles';;
 import React from "react";
+import { HeaderRight } from "./Comp/HeaderRight";
+import { RestaurantMenuHeader } from "./Comp/RestaurantMenuHeader";
+import { LiveChatWidget } from "@livechat/widget-react";
+import { Container, Grid, Theme } from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
+
 // import { useHistory } from 'react-router-dom';
 // import clsx from 'clsx';
 //Import Components
 
-import { HeaderRight } from "./Comp/HeaderRight";
-import { RestaurantMenuHeader } from "./Comp/RestaurantMenuHeader";
 const HeaderLeft = React.lazy(() => import("./Comp/HeaderLeft"));
 const Sidebar = React.lazy(() => import("./Comp/Sidebar"));
 const RestaurantMenuCategories = React.lazy(
-  () => import("./Comp/RestaurantMenuCategories")
+  () => import("./Comp/RestaurantMenuCategories"),
 );
 const RestaurantMenu = React.lazy(() => import("./Comp/RestaurantMenu"));
 const DashboardFooter = React.lazy(() => import("./Comp/DashboardFooter"));
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1,
       padding: theme.spacing(3),
     },
-  })
+  }),
 );
 
 export const RestaurantMenuScreen: React.FC = function RestaurantMenuScreen() {
