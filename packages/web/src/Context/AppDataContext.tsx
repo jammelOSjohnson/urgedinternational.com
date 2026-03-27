@@ -1459,8 +1459,8 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     await getRestaurants()
       .then(async function (response) {
         if (response.data.getRestaurants !== null) {
-          console.log("got list of restaurants");
-          console.log(response);
+          // console.log("got list of restaurants");
+          // console.log(response);
 
           var restList = response.data.getRestaurants;
 
@@ -1472,7 +1472,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
         }
       })
       .catch(function (err) {
-        console.log(err);
+        // console.log(err);
       });
 
     dispatch({
@@ -1722,7 +1722,10 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       let RiderRes = [] as riderObj[];
       try {
         RiderRes = ridersList.filter(
-          (item) => item != null && item.isAvailable === true && item.disabled === false,
+          (item) =>
+            item != null &&
+            item.isAvailable === true &&
+            item.disabled === false,
         );
       } catch (e) {
         console.log(e);
@@ -1739,209 +1742,209 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       const randRider = max > 0 ? Math.floor(Math.random() * max + min) : 0;
       const selectedRider = RiderRes[randRider] ?? null;
 
-          const orderBody = {
-            Id: payload.currentUser.uid,
-            OrderItems: orderItems,
-            OrderStatus: "Pending",
-            OrderTotal: Number(Total.Cost),
-            OrderDate: estTime,
-            Rider:
-              selectedRider?._id !== undefined ? selectedRider._id : "",
-            BillingInfo: "",
-            DeliveryAddress: state.Street + "," + state.Town + ",Clarendon",
-            PaymentMethod: state.PaymentMethod,
-            AdditionalInfo:
-              state.ContactNum +
-              " " +
-              payload.userInfo.email +
-              " " +
-              payload.userInfo.fullName,
-            DeliveryFee: Number(deliveryFee.Cost),
-            GCT: Number(GCT.Cost),
-            ServiceCharge: Number(serviceFee.Cost),
-            CartTotal: Number(cartItemsSum.Cost),
-            OrderType: "Food",
-            Restaurant: restaurantID,
-          };
+      const orderBody = {
+        Id: payload.currentUser.uid,
+        OrderItems: orderItems,
+        OrderStatus: "Pending",
+        OrderTotal: Number(Total.Cost),
+        OrderDate: estTime,
+        Rider: selectedRider?._id !== undefined ? selectedRider._id : "",
+        BillingInfo: "",
+        DeliveryAddress: state.Street + "," + state.Town + ",Clarendon",
+        PaymentMethod: state.PaymentMethod,
+        AdditionalInfo:
+          state.ContactNum +
+          " " +
+          payload.userInfo.email +
+          " " +
+          payload.userInfo.fullName,
+        DeliveryFee: Number(deliveryFee.Cost),
+        GCT: Number(GCT.Cost),
+        ServiceCharge: Number(serviceFee.Cost),
+        CartTotal: Number(cartItemsSum.Cost),
+        OrderType: "Food",
+        Restaurant: restaurantID,
+      };
 
-          //console.log("billing id is: " + billingID);
-          if (billingID === null) {
-            const orderBillingBody = {
-              oId: "",
-              txndate: estTime,
-              ccbin: "",
-              processor: "",
-              saddr2: state.Town,
-              saddr1: state.Street,
-              cccountry: "",
-              Expmonth: "",
-              hashalgorithm: "",
-              endpointTransactionId: "",
-              currency: "JMD",
-              processorresponse_code: "",
-              chargetotal: cartItemsSum.Cost,
-              email: payload.userInfo.email,
-              terminalid: "",
-              associationResponseCode: "",
-              approvalcode: "",
-              expyear: "",
-              responsehash: "",
-              responsecode3dsecure: "",
-              bstate: "",
-              schemeTransactionId: "",
-              tdate: estTime,
-              installmentsinterest: "",
-              bname: payload.userInfo.fullName,
-              phone: state.ContactNum,
-              ccbrand: "CASH",
-              sname: payload.userInfo.fullName,
-              sstate: "",
-              refnumber: "",
-              txntype: state.PaymentMethod,
-              paymentMethod: state.PaymentMethod,
-              txndatetime: estTime,
-              cardnumber: "",
-              ipgTransactionId: "",
-              scountry: "JA",
-              baddr1: state.Street,
-              bcountry: "JA",
-              baddr2: state.Town,
-              status: "APPROVED",
-            };
+      //console.log("billing id is: " + billingID);
+      if (billingID === null) {
+        const orderBillingBody = {
+          oId: "",
+          txndate: estTime,
+          ccbin: "",
+          processor: "",
+          saddr2: state.Town,
+          saddr1: state.Street,
+          cccountry: "",
+          Expmonth: "",
+          hashalgorithm: "",
+          endpointTransactionId: "",
+          currency: "JMD",
+          processorresponse_code: "",
+          chargetotal: cartItemsSum.Cost,
+          email: payload.userInfo.email,
+          terminalid: "",
+          associationResponseCode: "",
+          approvalcode: "",
+          expyear: "",
+          responsehash: "",
+          responsecode3dsecure: "",
+          bstate: "",
+          schemeTransactionId: "",
+          tdate: estTime,
+          installmentsinterest: "",
+          bname: payload.userInfo.fullName,
+          phone: state.ContactNum,
+          ccbrand: "CASH",
+          sname: payload.userInfo.fullName,
+          sstate: "",
+          refnumber: "",
+          txntype: state.PaymentMethod,
+          paymentMethod: state.PaymentMethod,
+          txndatetime: estTime,
+          cardnumber: "",
+          ipgTransactionId: "",
+          scountry: "JA",
+          baddr1: state.Street,
+          bcountry: "JA",
+          baddr2: state.Town,
+          status: "APPROVED",
+        };
 
-            await createOrderBilling({ variables: orderBillingBody }).then(
-              async function (response) {
-                //console.log(response.data.createOrderBilling);
-                if (response.data.createOrderBilling !== null) {
-                  orderBody.BillingInfo = response.data.createOrderBilling._id;
-                  await createOrder({ variables: orderBody }).then(
-                    async function (response) {
-                      //console.log("create orer result");
-                      if (response.data.createOrder !== null) {
-                        //console.log("Order Exist");
-                        ////console.log(response.data.createOrder);
-                        payload.cartItems = [];
-                        payload.selectedRestaurant = undefined;
-                        payload.receiptDetails = response.data.createOrder;
-                        payload.orders = [
-                          response.data.createOrder,
-                          ...(Array.isArray(payload.orders) ? payload.orders : []),
-                        ];
-                        if (
-                          state.ContactNum !== payload.userInfo.contactNumber ||
-                          state.Street !== payload.userInfo.addressLine1 ||
-                          state.Town !== payload.userInfo.city
-                        ) {
-                          let user = {
-                            ContactNumber: state.ContactNum,
-                            Email: payload.userInfo.email,
-                            FullName: payload.userInfo.fullName,
-                            AddressLine1: state.Street,
-                            AddressLine2: "",
-                            City: state.Town,
-                          };
+        await createOrderBilling({ variables: orderBillingBody }).then(
+          async function (response) {
+            //console.log(response.data.createOrderBilling);
+            if (response.data.createOrderBilling !== null) {
+              orderBody.BillingInfo = response.data.createOrderBilling._id;
+              //console.log("orderBody", orderBody);
+              await createOrder({ variables: orderBody }).then(
+                async function (response) {
+                  //console.log("create orer result");
+                  if (response.data.createOrder !== null) {
+                    //console.log("Order Exist");
+                    ////console.log(response.data.createOrder);
+                    payload.cartItems = [];
+                    payload.selectedRestaurant = undefined;
+                    payload.receiptDetails = response.data.createOrder;
+                    payload.orders = [
+                      response.data.createOrder,
+                      ...(Array.isArray(payload.orders) ? payload.orders : []),
+                    ];
+                    if (
+                      state.ContactNum !== payload.userInfo.contactNumber ||
+                      state.Street !== payload.userInfo.addressLine1 ||
+                      state.Town !== payload.userInfo.city
+                    ) {
+                      let user = {
+                        ContactNumber: state.ContactNum,
+                        Email: payload.userInfo.email,
+                        FullName: payload.userInfo.fullName,
+                        AddressLine1: state.Street,
+                        AddressLine2: "",
+                        City: state.Town,
+                      };
 
-                          await UpdateUserInfo(payload, user)
-                            .then(() => {
-                              dispatch({
-                                type: "checkout",
-                                payload: payload,
-                              });
-                            })
-                            .catch(() => {
-                              dispatch({
-                                type: "checkout",
-                                payload: payload,
-                              });
-                            });
-                        } else {
-                          //console.log("address up to date");
+                      await UpdateUserInfo(payload, user)
+                        .then(() => {
                           dispatch({
                             type: "checkout",
                             payload: payload,
                           });
-                        }
-
-                        // await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
-                        //   if (response.data.getOrdersByUserId !== null) {
-                        //     payload.orders = response.data.getOrdersByUserId;
-                        //     dispatch({
-                        //       type: "checkout",
-                        //       payload: payload
-                        //     })
-                        //   }
-                        // });
-                      }
-                    },
-                  );
-                }
-              },
-            );
-          } else {
-            //console.log("billing id is not null");
-            orderBody.BillingInfo = billingID;
-            await createOrder({ variables: orderBody }).then(
-              async function (response) {
-                //console.log("create orer result: ");
-                //console.log(response.data.createOrder);
-                if (response.data.createOrder !== null) {
-                  //console.log("Order Exist");
-                  ////console.log(response.data.createOrder);
-                  payload.cartItems = [];
-                  payload.selectedRestaurant = undefined;
-                  payload.receiptDetails = response.data.createOrder;
-                  payload.orders = [
-                    response.data.createOrder,
-                    ...(Array.isArray(payload.orders) ? payload.orders : []),
-                  ];
-                  if (
-                    state.ContactNum !== payload.userInfo.contactNumber ||
-                    state.Street !== payload.userInfo.addressLine1 ||
-                    state.Town !== payload.userInfo.city
-                  ) {
-                    let user = {
-                      ContactNumber: state.ContactNum,
-                      Email: payload.userInfo.email,
-                      FullName: payload.userInfo.fullName,
-                      AddressLine1: state.Street,
-                      AddressLine2: "",
-                      City: state.Town,
-                    };
-
-                    await UpdateUserInfo(payload, user)
-                      .then(() => {
-                        dispatch({
-                          type: "checkout",
-                          payload: payload,
+                        })
+                        .catch(() => {
+                          dispatch({
+                            type: "checkout",
+                            payload: payload,
+                          });
                         });
-                      })
-                      .catch(() => {
-                        dispatch({
-                          type: "checkout",
-                          payload: payload,
-                        });
+                    } else {
+                      //console.log("address up to date");
+                      dispatch({
+                        type: "checkout",
+                        payload: payload,
                       });
-                  } else {
-                    //console.log("address up to date");
+                    }
+
+                    // await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
+                    //   if (response.data.getOrdersByUserId !== null) {
+                    //     payload.orders = response.data.getOrdersByUserId;
+                    //     dispatch({
+                    //       type: "checkout",
+                    //       payload: payload
+                    //     })
+                    //   }
+                    // });
+                  }
+                },
+              );
+            }
+          },
+        );
+      } else {
+        //console.log("billing id is not null");
+        orderBody.BillingInfo = billingID;
+        await createOrder({ variables: orderBody }).then(
+          async function (response) {
+            //console.log("create orer result: ");
+            //console.log(response.data.createOrder);
+            if (response.data.createOrder !== null) {
+              //console.log("Order Exist");
+              ////console.log(response.data.createOrder);
+              payload.cartItems = [];
+              payload.selectedRestaurant = undefined;
+              payload.receiptDetails = response.data.createOrder;
+              payload.orders = [
+                response.data.createOrder,
+                ...(Array.isArray(payload.orders) ? payload.orders : []),
+              ];
+              if (
+                state.ContactNum !== payload.userInfo.contactNumber ||
+                state.Street !== payload.userInfo.addressLine1 ||
+                state.Town !== payload.userInfo.city
+              ) {
+                let user = {
+                  ContactNumber: state.ContactNum,
+                  Email: payload.userInfo.email,
+                  FullName: payload.userInfo.fullName,
+                  AddressLine1: state.Street,
+                  AddressLine2: "",
+                  City: state.Town,
+                };
+
+                await UpdateUserInfo(payload, user)
+                  .then(() => {
                     dispatch({
                       type: "checkout",
                       payload: payload,
                     });
-                  }
-
-                  // await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
-                  //   if (response.data.getOrdersByUserId !== null) {
-                  //     payload.orders = response.data.getOrdersByUserId;
-                  //     dispatch({
-                  //       type: "checkout",
-                  //       payload: payload
-                  //     })
-                  //   }
-                  // });
-                }
+                  })
+                  .catch(() => {
+                    dispatch({
+                      type: "checkout",
+                      payload: payload,
+                    });
+                  });
+              } else {
+                //console.log("address up to date");
+                dispatch({
+                  type: "checkout",
+                  payload: payload,
+                });
               }
-            );
-          }
+
+              // await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
+              //   if (response.data.getOrdersByUserId !== null) {
+              //     payload.orders = response.data.getOrdersByUserId;
+              //     dispatch({
+              //       type: "checkout",
+              //       payload: payload
+              //     })
+              //   }
+              // });
+            }
+          },
+        );
+      }
     }
   };
 
@@ -2814,7 +2817,11 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       // Support both response shapes (getRidersByParish and getRiders) so we use riders whichever the server returns
       const byParish = response.data?.getRidersByParish;
       const allRiders = response.data?.getRiders;
-      const restList = Array.isArray(byParish) ? byParish : Array.isArray(allRiders) ? allRiders : [];
+      const restList = Array.isArray(byParish)
+        ? byParish
+        : Array.isArray(allRiders)
+          ? allRiders
+          : [];
       return restList;
     } catch (err) {
       return [];
