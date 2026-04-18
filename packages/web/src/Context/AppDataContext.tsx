@@ -280,7 +280,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   const client = useApolloClient();
 
   //Email variables
-  const emailServiceId = "service_9xw19wc";
+  const emailServiceId = import.meta.env.REACT_APP_emailservice_ID;
   const emailNewJobAppTemplate = "template_vt5fmwm";
   const emailNewPreAlertTemplate = "template_k8ycohd";
   const emailContactUsTemplate = "template_lwlimnm";
@@ -288,7 +288,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   const emailNewOrderStatusTemplate = "template_chhqfeg";
   const emailNewCustomerTemplate = "template_jqixj7b";
   const emailNewMerchantAppTemplate = "template_lc6ix4j";
-  const emailUserId = "user_bDLFbepm6Arcdgh7Akzo3";
+  const emailUserId = import.meta.env.REACT_APP_emailuser_ID;
   //Declare necessary variables
   const [createUser] = useMutation(CREATE_USER_MUTATION);
   const [updateUser] = useMutation(UPDATE_USER_MUTATION);
