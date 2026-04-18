@@ -222,6 +222,12 @@ const useStyles = makeStyles((theme: Theme) =>
       color: "#FEC109",
       fontFamily: "PT Sans",
     },
+    skipSignupRowMobile: {
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      width: "100%",
+    },
     alert: {
       marginBottom: "5%",
     },
@@ -1000,21 +1006,35 @@ export const LoginScreen: React.FC = function LoginScreen() {
                 Continue With Google
               </Button>
             </form>
-            <Typography display="inline" className={classes.skipBtnMobile}>
+            <div className={classes.skipSignupRowMobile}>
               <IconButton
                 style={{ paddingTop: "6px", color: "#FEC109" }}
-                onClick={handleClickSkip}
+                onClick={handleClickSignUp}
               >
                 <Typography
                   display="inline"
                   variant="h6"
                   style={{ color: "#FEC109", fontFamily: "PT Sans" }}
                 >
-                  SKIP
+                  SIGN UP
                 </Typography>
-                <PlayArrowRounded />
               </IconButton>
-            </Typography>
+              <Typography display="inline" className={classes.skipBtnMobile}>
+                <IconButton
+                  style={{ paddingTop: "6px", color: "#FEC109" }}
+                  onClick={handleClickSkip}
+                >
+                  <Typography
+                    display="inline"
+                    variant="h6"
+                    style={{ color: "#FEC109", fontFamily: "PT Sans" }}
+                  >
+                    SKIP
+                  </Typography>
+                  <PlayArrowRounded />
+                </IconButton>
+              </Typography>
+            </div>
           </div>
         </Container>
       ) : (
