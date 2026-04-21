@@ -27,9 +27,7 @@ import MuiAlert, { AlertProps } from "@mui/lab/Alert";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
   function Alert(props, ref) {
-    return (
-      <MuiAlert elevation={6} variant="filled" ref={ref} {...props} />
-    );
+    return <MuiAlert elevation={6} variant="filled" ref={ref} {...props} />;
   },
 );
 
@@ -172,9 +170,9 @@ export const OrderFullDetails: React.FC = () => {
     try {
       setOpen(false);
       setOpen2(false);
-      console.log("trying to see id");
-      console.log(finalselectedRider);
-      console.log(riders[finalselectedRider]);
+      //console.log("trying to see id");
+      //console.log(finalselectedRider);
+      //console.log(riders[finalselectedRider]);
       console.log(orderIndex);
       let OrdertoUpdate = orders.filter((item, index) => orderIndex === index);
 
@@ -266,7 +264,7 @@ export const OrderFullDetails: React.FC = () => {
             alignItems="center"
           >
             <Grid container direction="row" spacing={1}>
-              <Grid item xs={12} md={8}>
+              <Grid item xs={12} xl={8}>
                 <Card
                   style={{ marginBottom: "12px" }}
                   className={clsx(classes.card, "mobile-display")}
@@ -356,12 +354,12 @@ export const OrderFullDetails: React.FC = () => {
                     </Typography>
                     <Typography>
                       <Grid container direction="row" spacing={1}>
-                        <Grid item xs={12} sm={12} md={6} lg={3}>
+                        <Grid item xs={12} md={2}>
                           <Typography style={{ fontWeight: 700 }}>
                             Restaurant:
                           </Typography>
                         </Grid>
-                        <Grid item xs={12} sm={12} md={6} lg={9}>
+                        <Grid item xs={12} md={10}>
                           <Typography
                             style={{ color: "#FF5E14", fontWeight: 800 }}
                           >
@@ -567,7 +565,7 @@ export const OrderFullDetails: React.FC = () => {
                         </Typography>
                       </Grid>
                       <br />
-                      <Grid xs={12}>
+                      <Grid item xs={12}>
                         <Typography>
                           FSERVE OID:{" "}
                           <span style={{ color: "#FF5E14", fontWeight: 800 }}>
@@ -579,7 +577,7 @@ export const OrderFullDetails: React.FC = () => {
                   </CardContent>
                 </Card>
               </Grid>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} xl={4}>
                 <Card
                   style={{
                     marginBottom: "12px",
