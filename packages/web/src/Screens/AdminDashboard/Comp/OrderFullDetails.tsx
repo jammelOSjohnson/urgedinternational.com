@@ -25,9 +25,13 @@ import MuiAlert, { AlertProps } from "@mui/lab/Alert";
 
 // }
 
-function Alert(props: AlertProps) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
+  function Alert(props, ref) {
+    return (
+      <MuiAlert elevation={6} variant="filled" ref={ref} {...props} />
+    );
+  },
+);
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -567,10 +571,7 @@ export const OrderFullDetails: React.FC = () => {
                         <Typography>
                           FSERVE OID:{" "}
                           <span style={{ color: "#FF5E14", fontWeight: 800 }}>
-                            {orders[orderIndex].BillingInfo.oId !== undefined &&
-                            orders[orderIndex].BillingInfo.oId !== null
-                              ? orders[orderIndex].BillingInfo.oId
-                              : ""}
+                            {orders[orderIndex].BillingInfo?.oId ?? ""}
                           </span>
                         </Typography>
                       </Grid>
@@ -642,12 +643,22 @@ export const OrderFullDetails: React.FC = () => {
             </Grid>
           </Grid>
         </Container>
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        >
           <Alert onClose={handleClose} severity="success">
             Order Updated Successfully.
           </Alert>
         </Snackbar>
-        <Snackbar open={open2} autoHideDuration={6000} onClose={handleClose2}>
+        <Snackbar
+          open={open2}
+          autoHideDuration={6000}
+          onClose={handleClose2}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        >
           <Alert onClose={handleClose2} severity="error">
             Unable to update order at this time.
           </Alert>
