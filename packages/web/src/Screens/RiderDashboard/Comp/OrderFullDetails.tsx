@@ -23,9 +23,7 @@ import MuiAlert, { AlertProps } from "@mui/lab/Alert";
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
   function Alert(props, ref) {
-    return (
-      <MuiAlert elevation={6} variant="filled" ref={ref} {...props} />
-    );
+    return <MuiAlert elevation={6} variant="filled" ref={ref} {...props} />;
   },
 );
 
@@ -38,6 +36,7 @@ const useStyles = makeStyles((theme: Theme) =>
         borderColor: "#888888",
         border: "none",
         marginBottom: "0%",
+        borderRadius: "12px",
         width: "70%",
       },
       "& .MuiSelect-select:$focus": {
@@ -259,7 +258,7 @@ export const OrderFullDetails: React.FC = () => {
             alignItems="center"
           >
             <Grid container direction="row" spacing={1}>
-              <Grid item xs={12} md={8}>
+              <Grid item xs={12} xl={8}>
                 <Card
                   style={{ marginBottom: "12px" }}
                   className={clsx(classes.card, "mobile-display")}
@@ -280,7 +279,7 @@ export const OrderFullDetails: React.FC = () => {
                       {filteredOrders[orderIndex].OrderItems.map(
                         (item, index) =>
                           index !== 0 ? (
-                            <Grid item xs={4}>
+                            <Grid item xs={4} key={index}>
                               <img
                                 style={{ maxWidth: "73.42px" }}
                                 src={item.imageName}
@@ -580,7 +579,7 @@ export const OrderFullDetails: React.FC = () => {
                   </CardContent>
                 </Card>
               </Grid>
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} xl={4}>
                 <Card
                   style={{
                     marginBottom: "12px",
