@@ -262,15 +262,25 @@ import { Alert } from '@mui/lab';
           columns={columns}
           options={options}
         />
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        >
           <Alert onClose={handleClose} severity="success">
-              Order Updated Successfully.
+            Order Updated Successfully.
           </Alert>
         </Snackbar>
-        <Snackbar open={open2} autoHideDuration={6000} onClose={handleClose2}>
-            <Alert onClose={handleClose2} severity="error">
-                Unable to update order at this time.
-            </Alert>
+        <Snackbar
+          open={open2}
+          autoHideDuration={6000}
+          onClose={handleClose2}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        >
+          <Alert onClose={handleClose2} severity="error">
+            Unable to update order at this time.
+          </Alert>
         </Snackbar>
          <style>
           {`
