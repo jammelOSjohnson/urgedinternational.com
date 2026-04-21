@@ -229,23 +229,27 @@ export const AddStaff: React.FC = () => {
                               password: "12345678",
                             });
                           }, 1500);
+                          console.log(res1, "user account created");
                         } else {
-                          setError("Unable to Create Restaurant at this time");
+                          setError(
+                            "Unable to add Account for Staff at this time",
+                          );
                         }
                       });
-                      console.log(res1, "user account created");
                     } else {
                       setError(
                         "The email address is already in use by another account.",
                       );
                     }
                   } else {
-                    setError("Unable to Sign Up at this time.");
+                    setError(
+                      "Unable to Create Account for Staff at this time.",
+                    );
                   }
                 });
     } catch (error) {
       console.log(error);
-      setError("Failed to create restaurant");
+      setError("Failed to create Account for Staff");
     }
     setLoading(false);
   };
