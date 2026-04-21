@@ -12,6 +12,7 @@ import ReactGa from "react-ga";
 //import { Header } from '../Components/Header';
 import { Header2 } from "../Components/Header2";
 import { Footer } from "../Components/Footer";
+import { RoleProtectedRoute } from "../Components/RoleProtectedRoute";
 import { HomeScreen } from "../Screens/Home/HomeScreen";
 import { ServicesScreen } from "../Screens/Services/ServicesScreen";
 import { ContactUsScreen } from "../Screens/ContactUs/ContactUsScreen";
@@ -359,53 +360,72 @@ const App: React.FC = function App() {
                       component={RestaurantProfileDetailsScreen}
                     />
                     {/* Admin Screens */}
-                    <Route
+                    <RoleProtectedRoute
                       path="/AdminDashboard"
                       exact
                       component={AdminDashboard}
+                      allowedRoles={["Admin", "Urged_Staff"]}
                     />
-                    <Route path="/AdminOrders" exact component={OrdersScreen} />
-                    <Route
+                    <RoleProtectedRoute
+                      path="/AdminOrders"
+                      exact
+                      component={OrdersScreen}
+                      allowedRoles={["Admin", "Urged_Staff"]}
+                    />
+                    <RoleProtectedRoute
                       path="/AdminOrderSDetails"
                       exact
                       component={OrdersDetailsScreen}
+                      allowedRoles={["Admin", "Urged_Staff"]}
                     />
-                    <Route
+                    <RoleProtectedRoute
                       path="/Employees"
                       exact
                       component={EmployeesScreen}
+                      allowedRoles={["Admin", "Urged_Staff"]}
                     />
-                    <Route
+                    <RoleProtectedRoute
                       path="/EmployeeDetails"
                       exact
                       component={EmployeeDetailsScreen}
+                      allowedRoles={["Admin", "Urged_Staff"]}
                     />
-                    <Route
+                    <RoleProtectedRoute
                       path="/Organisations"
                       exact
                       component={OrganisationsScreen}
+                      allowedRoles={["Admin", "Urged_Staff"]}
                     />
-                    <Route
+                    <RoleProtectedRoute
                       path="/AdminSettings"
                       exact
                       component={SettingsScreen}
+                      allowedRoles={["Admin", "Urged_Staff"]}
                     />
-                    <Route
+                    <RoleProtectedRoute
                       path="/PaySettings"
                       exact
                       component={PaySettingsScreen}
+                      allowedRoles={["Admin", "Urged_Staff"]}
                     />
-                    <Route
+                    <RoleProtectedRoute
                       path="/OrgDetails"
                       exact
                       component={OrgDetailsScreen}
+                      allowedRoles={["Admin", "Urged_Staff"]}
                     />
-                    <Route
+                    <RoleProtectedRoute
                       path="/ShippingAddressSettings"
                       exact
                       component={ShippingAddressSettingsScreen}
+                      allowedRoles={["Admin", "Urged_Staff"]}
                     />
-                    <Route path="/SalesExport" exact component={SalesExport} />
+                    <RoleProtectedRoute
+                      path="/SalesExport"
+                      exact
+                      component={SalesExport}
+                      allowedRoles={["Admin", "Urged_Staff"]}
+                    />
                     {/* Rider Screens */}
                     <Route
                       path="/DeliveryOrders"
@@ -416,11 +436,6 @@ const App: React.FC = function App() {
                       path="/DeliveryOrdersDetails"
                       exact
                       component={RiderOrderDetailsScreen}
-                    />
-                    <Route
-                      path="/OrgDetails"
-                      exact
-                      component={OrgDetailsScreen}
                     />
                     <Route
                       path="/ProcessPaymentResult/:id"
