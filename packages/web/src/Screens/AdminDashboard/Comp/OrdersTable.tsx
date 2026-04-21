@@ -476,12 +476,22 @@ export const OrdersTable: React.FC = function OrdersTable() {
         columns={columns}
         options={options}
       />
-      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
         <Alert onClose={handleClose} severity="success">
           Order Updated Successfully.
         </Alert>
       </Snackbar>
-      <Snackbar open={open2} autoHideDuration={6000} onClose={handleClose2}>
+      <Snackbar
+        open={open2}
+        autoHideDuration={6000}
+        onClose={handleClose2}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
         <Alert onClose={handleClose2} severity="error">
           Unable to update order at this time.
         </Alert>
