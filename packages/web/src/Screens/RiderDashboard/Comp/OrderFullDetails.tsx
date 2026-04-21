@@ -21,9 +21,13 @@ import moment from "moment";
 import MuiAlert, { AlertProps } from "@mui/lab/Alert";
 //Import Components
 
-function Alert(props: AlertProps) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
+  function Alert(props, ref) {
+    return (
+      <MuiAlert elevation={6} variant="filled" ref={ref} {...props} />
+    );
+  },
+);
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -563,6 +567,15 @@ export const OrderFullDetails: React.FC = () => {
                           {rider}
                         </Typography>
                       </Grid>
+                      <br />
+                      <Grid item xs={12}>
+                        <Typography>
+                          FSERVE OID:{" "}
+                          <span style={{ color: "#FF5E14", fontWeight: 800 }}>
+                            {filteredOrders[orderIndex].BillingInfo?.oId ?? ""}
+                          </span>
+                        </Typography>
+                      </Grid>
                     </Grid>
                   </CardContent>
                 </Card>
@@ -629,12 +642,22 @@ export const OrderFullDetails: React.FC = () => {
             </Grid>
           </Grid>
         </Container>
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Snackbar
+          open={open}
+          autoHideDuration={6000}
+          onClose={handleClose}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        >
           <Alert onClose={handleClose} severity="success">
             Order Updated Successfully.
           </Alert>
         </Snackbar>
-        <Snackbar open={open2} autoHideDuration={6000} onClose={handleClose2}>
+        <Snackbar
+          open={open2}
+          autoHideDuration={6000}
+          onClose={handleClose2}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        >
           <Alert onClose={handleClose2} severity="error">
             Unable to update order at this time.
           </Alert>
