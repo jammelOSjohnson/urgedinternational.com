@@ -153,6 +153,31 @@ export const Calendar: React.FC<Props> =  function Calendar ({type, setStartDate
   //console.log(new Date().getMonth())
   //console.log(date2);
 
+  const textPrimary = "#11263C";
+  const datetimeFieldSx = {
+    "& .MuiInputBase-root": {
+      flexWrap: "nowrap",
+      alignItems: "center",
+    },
+    "& .MuiOutlinedInput-input": {
+      color: textPrimary,
+      WebkitTextFillColor: textPrimary,
+    },
+    '& input[type="datetime-local"]': {
+      color: textPrimary,
+      WebkitTextFillColor: textPrimary,
+    },
+    "& .MuiInputLabel-root": {
+      color: "rgba(0, 0, 0, 0.6)",
+    },
+    "& .MuiInputLabel-root.Mui-focused": {
+      color: textPrimary,
+    },
+    "& .MuiInputLabel-root.MuiInputLabel-shrink": {
+      color: "rgba(0, 0, 0, 0.75)",
+    },
+  };
+
   return (
     <>
       {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -167,14 +192,15 @@ export const Calendar: React.FC<Props> =  function Calendar ({type, setStartDate
       </Paper>
     </MuiPickersUtilsProvider> */}
     <form className={classes.container} noValidate >
-    <Grid container direction="row" spacing={1} className={classes.root} alignItems="flex-start">
+    <Grid container direction="row" spacing={1} className={classes.root} alignItems="center">
       <Grid item xs={12} sm={4}>
         <TextField
           id="datetime-local"
           label="Select Start Date"
           type="datetime-local"
           defaultValue={date}
-          className={classes.textField}
+          fullWidth
+          sx={datetimeFieldSx}
           InputLabelProps={{
             shrink: true,
           }}
@@ -187,7 +213,8 @@ export const Calendar: React.FC<Props> =  function Calendar ({type, setStartDate
           label="Select End Date"
           type="datetime-local"
           defaultValue={date2}
-          className={classes.textField}
+          fullWidth
+          sx={datetimeFieldSx}
           InputLabelProps={{
             shrink: true,
           }}
