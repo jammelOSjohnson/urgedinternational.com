@@ -1,5 +1,5 @@
 import { useAppData } from "../Context/AppDataContext";
-import React, { useEffect } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { Container } from "@mui/material";
 import { Alert } from "@mui/lab";
@@ -23,8 +23,6 @@ import {
 } from "@mui/material";
 import { makeStyles, createStyles } from "@mui/styles";
 
-// eslint-disable-next-line
-import { auth, socialAuth } from "../firebase";
 
 interface State {
   genralLocation: string;
@@ -157,8 +155,6 @@ export const Header: React.FC = function Header() {
   var referralPath = location.pathname;
   var { value } = useAppData();
   var {
-    fetchUserInfo,
-    generalLocation,
     AddGeneralLocation,
     serviceWorkerUpdated,
     serviceWorkerRegistration,
@@ -180,89 +176,6 @@ export const Header: React.FC = function Header() {
   });
 
   //const isServiceWorkerUpdated  = serviceWorkerUpdated;
-
-  useEffect(
-    function () {
-      // if(generalLocation === undefined){
-      //   setOpen(true);
-      // }else{
-      //   setOpen(false);
-      // }
-
-      auth.onAuthStateChanged(function (user) {
-        ////console.log("auth");
-        if (referralPath !== "/Register" && referralPath !== "/Login") {
-          //update the state for current user to the user logged in
-          //console.log("about to set current user");
-          //console.log(user);
-          //var userInfo = fetchUserInfo();
-          //const payload = {currentUser : user, loading: false, userInfo: userInfo}
-          var signonStatus = false;
-          if (user !== null) {
-            signonStatus =
-              user.uid !== null && user.uid !== undefined ? true : false;
-
-            var payload = {
-              ...value,
-              currentUser: user,
-              loading: false,
-              loggedIn: signonStatus,
-            };
-            if (value.userInfo.email === "") {
-              fetchUserDetails(payload);
-              //  .then(function(res){
-              //     if(!res){
-              //         ////console.log('Unable to fetch user data at this time');
-              //     }
-              // });
-            }
-          }
-          // eslint-disable-next-line
-        }
-      });
-
-      // socialAuth.onAuthStateChanged( function (user) {
-      //   //console.log("Soical auth");
-      //   if(referralPath !== "/Register"){
-      //     //update the state for current user to the user logged in
-      //     ////console.log("about to set current user google");
-      //     ////console.log(user);
-      //     //var userInfo = fetchUserInfo();
-      //     //var payload = {currentUser : user, loading: false, userInfo: userInfo}
-      //     var signonStatus = false;
-      //     if(user !== null){
-      //         signonStatus = user.uid !== null && user.uid !== undefined? true : false;
-      //         var payload = {...value,currentUser : user, loading: false, loggedIn: signonStatus}
-      //         if(value.userInfo.email === "" ){
-      //             fetchUserDetails(payload)
-      //             // .then(function(res){
-      //             //     if(!res){
-      //             //         ////console.log('Unable to fetch user data at this time');
-      //             //     }
-      //             // });
-      //         }
-      //     }
-      //   }
-      // });
-    },
-    [value.userRolef, generalLocation],
-  );
-
-  var fetchUserDetails = function fetchUserDetails(payload) {
-    ////console.log("Is current user null");
-    ////console.log(payload);
-    if (payload.currentUser !== null && payload.currentUser !== undefined) {
-      if (
-        payload.currentUser.uid !== null &&
-        payload.currentUser.uid !== undefined
-      ) {
-        ////console.log("Fetching user info");
-        fetchUserInfo(payload.currentUser.uid, payload);
-        return true;
-      }
-    }
-    return false;
-  };
 
   const handleChange = (event) => {
     try {

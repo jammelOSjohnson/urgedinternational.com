@@ -34,8 +34,6 @@ import MailIcon from "@mui/icons-material/Mail";
 import { useSubscription } from "@apollo/client";
 import { ORDERS_SUBSCRIPTION } from "../GraphQL/Subscriptions";
 import { Link } from "react-router-dom";
-// eslint-disable-next-line
-import { auth } from "../firebase";
 
 // interface State {
 //   genralLocation: string;
@@ -213,7 +211,6 @@ export const Header2: React.FC = function Header2() {
   var {
     orders,
     refreshingOrderTables,
-    fetchUserInfo,
     fetchPaySettings,
     paySettings,
   } = value;
@@ -295,48 +292,6 @@ export const Header2: React.FC = function Header2() {
           });
         }
 
-        auth.onAuthStateChanged(function (user) {
-          // console.log(referralPath);
-          // console.log(history.location.state);
-          if (
-            referralPath !== "/Register" &&
-            referralPath !== "/Login" &&
-            history.location.state === undefined
-          ) {
-            //update the state for current user to the user logged in
-            //console.log("about to set current user");
-            //console.log(user);
-            //var userInfo = fetchUserInfo();
-            //const payload = {currentUser : user, loading: false, userInfo: userInfo}
-            var signonStatus = false;
-            if (user !== null) {
-              //console.log("auth");
-              signonStatus =
-                user.uid !== null && user.uid !== undefined ? true : false;
-
-              var payload = {
-                ...value,
-                currentUser: user,
-                loading: false,
-                loggedIn: signonStatus,
-              };
-              if (value.userInfo !== undefined) {
-                if (value.userInfo.email !== undefined) {
-                  if (value.userInfo.email === "") {
-                    //console.log("about to fetch user details")
-                    fetchUserDetails(payload);
-                    //  .then(function(res){
-                    //     if(!res){
-                    //         ////console.log('Unable to fetch user data at this time');
-                    //     }
-                    // });
-                  }
-                }
-              }
-            }
-            // eslint-disable-next-line
-          }
-        });
       } catch (err) {
         //console.log(err);
       }
@@ -344,22 +299,6 @@ export const Header2: React.FC = function Header2() {
     },
     [value.userRolef, data, paySettings],
   );
-
-  var fetchUserDetails = function fetchUserDetails(payload) {
-    ////console.log("Is current user null");
-    ////console.log(payload);
-    if (payload.currentUser !== null && payload.currentUser !== undefined) {
-      if (
-        payload.currentUser.uid !== null &&
-        payload.currentUser.uid !== undefined
-      ) {
-        ////console.log("Fetching user info");
-        fetchUserInfo(payload.currentUser.uid, payload);
-        return true;
-      }
-    }
-    return false;
-  };
 
   // const handleChange = (event) => {
   //   try{

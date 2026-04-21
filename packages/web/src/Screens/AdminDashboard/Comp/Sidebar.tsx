@@ -154,7 +154,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
     const theme = useTheme();
     const isMatch = useMediaQuery(theme.breakpoints.down("lg"));
     var { value } = useAppData();
-    var { logout, userInfo, userRolef } = value;
+    var { logout, userInfo, userRolef, currentUser, loading } = value;
 
     const [open, setOpen] = React.useState(true);
     const [open1, setOpen1] = React.useState(false);
@@ -165,16 +165,25 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
 
     //check if user is admin / has access to this page
     React.useEffect(() => {
-      // role not loaded yet — do nothing
-      if (userRolef === undefined || userRolef === null) return;
+      // Wait until the initial auth restore is complete.
+      if (loading) return;
+
+      // If there is no authenticated user after hydration, redirect to login.
+      if (currentUser === undefined || currentUser === null) {
+        history.replace("/Login");
+        return;
+      }
+
+      // Role can lag behind auth restore; avoid false redirects while loading role.
+      if (userRolef === undefined || userRolef === null || userRolef === "") {
+        return;
+      }
 
       const allowedRoles = ["Admin", "Urged_Staff"];
-
       if (!allowedRoles.includes(userRolef)) {
-        history.replace("/Login"); // replace avoids back button issues
+        history.replace("/Login");
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [userRolef]);
+    }, [currentUser, history, loading, userRolef]);
 
     const handleDrawerOpen = () => {
       setOpen(true);
