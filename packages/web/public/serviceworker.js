@@ -1,4 +1,4 @@
-const CACHE_NAME = "version-1.9";
+const CACHE_NAME = "version-2.0";
 const urlsToCache = ["offline.html"];
 
 const self = this;
