@@ -437,7 +437,7 @@ const typeDefs = /* GraphQL */ `
       ImageName: String
       Position: String
       Parish: String
-    ): User!
+    ): User2!
 
     updateStaff(
       _id: String
@@ -454,7 +454,7 @@ const typeDefs = /* GraphQL */ `
       ImageName: String
       Position: String
       Parish: String
-    ): User!
+    ): User2!
 
     getRestaurants: [User!]!
 
