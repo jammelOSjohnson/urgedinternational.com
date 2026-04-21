@@ -92,6 +92,10 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "90%",
       marginLeft: "auto",
       marginRight: "auto",
+      "&:hover": {
+        backgroundColor: "#FEC109",
+        color: "#FFFFFF",
+      },
     },
     activeItem2: {
       backgroundColor: "#FF5E14",
@@ -141,6 +145,11 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
   var history = useHistory();
   var location = history.location;
   var referralPath = location.pathname;
+  const deliveryOrdersPath = "/DeliveryOrders";
+  const deliveryOrdersDetailsPath = "/DeliveryOrdersDetails";
+  const isDeliveryOrdersPath =
+    referralPath === deliveryOrdersPath || referralPath === deliveryOrdersDetailsPath;
+  const isOverviewPath = referralPath === deliveryOrdersPath;
 
   //check if user is rider / has access to this page
   React.useEffect(() => {
@@ -221,6 +230,8 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
                 className={classes.logo}
                 src="Images/urged logo.jpg"
                 alt="Urged Logo"
+                onClick={() => history.push(deliveryOrdersPath)}
+                style={{ cursor: "pointer" }}
               ></img>
             )}
             {!open && (
@@ -228,12 +239,14 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
                 className={classes.logosmall}
                 src="Images/urged logoR.png"
                 alt="Urged Logo"
+                onClick={() => history.push(deliveryOrdersPath)}
+                style={{ cursor: "pointer" }}
               ></img>
             )}
             <List style={{ marginTop: "20%" }}>
-              {["Overview", "Delivery Orders"].map((text, index) =>
-                referralPath === "/AdminDashboard" && text === "Overview" ? (
-                  <ListItem button key={0} className={classes.activeItem}>
+              {["Delivery Orders"].map((text, index) =>
+                isOverviewPath && text === "Overview" ? (
+                  <ListItem button key={0} className={classes.activeItem} onClick={() => history.push(deliveryOrdersPath)}>
                     <ListItemIcon>
                       {index === 0 ? (
                         <img
@@ -257,10 +270,8 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
                     <ListItemText primary={text} />
                   </ListItem>
                 ) : //eslint-disable-next-line no-mixed-operators
-                referralPath === "/DeliveryOrdersDetails" ||
-                  (referralPath === "/DeliveryOrders" &&
-                    text === "Delivery Orders") ? (
-                  <ListItem button key={1} className={classes.activeItem}>
+                text === "Delivery Orders" && isDeliveryOrdersPath ? (
+                  <ListItem button key={1} className={classes.activeItem} onClick={() => history.push(deliveryOrdersPath)}>
                     <ListItemIcon>
                       {index === 0 ? (
                         <img
@@ -285,7 +296,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
                   </ListItem>
                 ) : text === "Overview" ? (
                   // <Link to="/AdminDashboard" className={classes.inactiveItemLink}>
-                  <ListItem button key={2}>
+                  <ListItem button key={2} onClick={() => history.push(deliveryOrdersPath)}>
                     <ListItemIcon>
                       {index === 0 ? (
                         <img
@@ -310,7 +321,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
                   </ListItem>
                 ) : (
                   // </Link>
-                  <ListItem button key={3}>
+                  <ListItem button key={3} onClick={() => history.push(deliveryOrdersPath)}>
                     <ListItemIcon>
                       {index === 0 ? (
                         <img
@@ -341,7 +352,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
               {userInfo.fullName !== null &&
               userInfo.fullName !== "" &&
               userInfo.fullName !== undefined
-                ? ["Settings", "Logout"].map((text, index) =>
+                ? ["Logout"].map((text, index) =>
                     text === "Logout" ? (
                       <a
                         href="/"
@@ -352,11 +363,6 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
                         <ListItem button>
                           <ListItemIcon>
                             {index === 0 ? (
-                              <img
-                                src="Images/Setting.png"
-                                alt="BlackMarket icon"
-                              />
-                            ) : index === 1 ? (
                               <img
                                 src="Images/Logout.png"
                                 alt="BlackMarket icon"
@@ -389,7 +395,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
                       </ListItem>
                     ),
                   )
-                : ["Settings", "Login"].map((text, index) =>
+                : ["Login"].map((text, index) =>
                     text === "Login" ? (
                       <a
                         href="/Login"
@@ -400,11 +406,6 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
                         <ListItem button>
                           <ListItemIcon>
                             {index === 0 ? (
-                              <img
-                                src="Images/Setting.png"
-                                alt="BlackMarket icon"
-                              />
-                            ) : index === 1 ? (
                               <img
                                 src="Images/Logout.png"
                                 className={classes.loginIconStyle}
@@ -511,6 +512,8 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
                 className={classes.logo}
                 src="Images/urged logo.jpg"
                 alt="Urged Logo"
+                onClick={() => history.push(deliveryOrdersPath)}
+                style={{ cursor: "pointer" }}
               ></img>
             )}
             {!open1 && (
@@ -518,12 +521,14 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
                 className={classes.logosmall}
                 src="Images/urged logoR.png"
                 alt="Urged Logo"
+                onClick={() => history.push(deliveryOrdersPath)}
+                style={{ cursor: "pointer" }}
               ></img>
             )}
             <List>
-              {["Overview", "Delivery Orders"].map((text, index) =>
-                referralPath === "/AdminDashboard" && text === "Overview" ? (
-                  <ListItem button key={8} className={classes.activeItem}>
+              {["Delivery Orders"].map((text, index) =>
+                isOverviewPath && text === "Overview" ? (
+                  <ListItem button key={8} className={classes.activeItem} onClick={() => history.push(deliveryOrdersPath)}>
                     <ListItemIcon>
                       {index === 0 ? (
                         <img
@@ -547,10 +552,8 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
                     <ListItemText primary={text} />
                   </ListItem>
                 ) : //eslint-disable-next-line no-mixed-operators
-                referralPath === "/DeliveryOrdersDetails" ||
-                  (referralPath === "/DeliveryOrders" &&
-                    text === "Delivery Orders") ? (
-                  <ListItem button key={9} className={classes.activeItem}>
+                text === "Delivery Orders" && isDeliveryOrdersPath ? (
+                  <ListItem button key={9} className={classes.activeItem} onClick={() => history.push(deliveryOrdersPath)}>
                     <ListItemIcon>
                       {index === 0 ? (
                         <img
@@ -575,7 +578,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
                   </ListItem>
                 ) : text === "Overview" ? (
                   // <Link to="/AdminDashboard" className={classes.inactiveItemLink}>
-                  <ListItem button key={10}>
+                  <ListItem button key={10} onClick={() => history.push(deliveryOrdersPath)}>
                     <ListItemIcon>
                       {index === 0 ? (
                         <img
@@ -600,7 +603,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
                   </ListItem>
                 ) : // </Link>
                 text !== "Overview" ? (
-                  <ListItem button key={11} style={{ marginTop: "5%" }}>
+                  <ListItem button key={11} style={{ marginTop: "5%" }} onClick={() => history.push(deliveryOrdersPath)}>
                     <ListItemIcon>
                       {index === 0 ? (
                         <img
@@ -624,7 +627,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
                     <ListItemText primary={text} />
                   </ListItem>
                 ) : (
-                  <ListItem button key={12}>
+                  <ListItem button key={12} onClick={() => history.push(deliveryOrdersPath)}>
                     <ListItemIcon>
                       {index === 0 ? (
                         <img
@@ -655,7 +658,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
               {userInfo.fullName !== null &&
               userInfo.fullName !== "" &&
               userInfo.fullName !== undefined
-                ? ["Settings", "Logout"].map((text, index) =>
+                ? ["Logout"].map((text, index) =>
                     text === "Logout" ? (
                       <a
                         href="/"
@@ -666,11 +669,6 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
                         <ListItem button>
                           <ListItemIcon>
                             {index === 0 ? (
-                              <img
-                                src="Images/Setting.png"
-                                alt="BlackMarket icon"
-                              />
-                            ) : index === 1 ? (
                               <img
                                 src="Images/Logout.png"
                                 alt="BlackMarket icon"
@@ -703,7 +701,7 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
                       </ListItem>
                     ),
                   )
-                : ["Settings", "Login"].map((text, index) =>
+                : ["Login"].map((text, index) =>
                     text === "Login" ? (
                       <a
                         href="/Login"
@@ -714,11 +712,6 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> = function Sideba
                         <ListItem button>
                           <ListItemIcon>
                             {index === 0 ? (
-                              <img
-                                src="Images/Setting.png"
-                                alt="BlackMarket icon"
-                              />
-                            ) : index === 1 ? (
                               <img
                                 src="Images/Logout.png"
                                 className={classes.loginIconStyle}
