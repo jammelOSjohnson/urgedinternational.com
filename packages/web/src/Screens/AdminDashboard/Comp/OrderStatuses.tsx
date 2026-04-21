@@ -115,12 +115,11 @@ export const OrderStatuses: React.FC = () => {
     const [status, setStatus] = useState(orders.lengh > 0 ?orders[orderIndex].OrderStatus: "");
 
     const handleStatus = async (status) => {
-        // setStatus(status);
-        var payload = value;
-        payload.orders[orderIndex].OrderStatus = status;
-
-        await changeOrderStatus(payload);
-    }
+        const nextOrders = orders.map((order, idx) =>
+            idx === orderIndex ? { ...order, OrderStatus: status } : order,
+        );
+        await changeOrderStatus({ ...value, orders: nextOrders });
+    };
 
     
 
