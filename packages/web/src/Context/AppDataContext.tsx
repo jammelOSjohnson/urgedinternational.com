@@ -51,7 +51,8 @@ import {
   CREATE_ORDER_Billing,
   FETCH_PAY_SETTINGS,
 } from "../GraphQL/Mutations";
-import { useMutation, useApolloClient } from "@apollo/client";
+import { GET_ORDERS_BY_RESTAURANTID } from "../GraphQL/Queries";
+import { useMutation, useLazyQuery, useApolloClient } from "@apollo/client";
 import sendEmail from "../email.js";
 import moment from "moment-timezone";
 
@@ -327,6 +328,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   const [getOrdersByRiderIdAnDate] = useMutation(
     GET_ORDERS_BY_RIDERID_AND_DATE,
   );
+  const [getOrdersByRestaurantId] = useLazyQuery(GET_ORDERS_BY_RESTAURANTID);
 
   const [getPackageById] = useMutation(GET_PACKAGE_BYID_MUTATION);
   const [addPackage] = useMutation(ADD_PACKAGE_MUTATION);
@@ -1976,20 +1978,24 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
               ) {
                 return await sendNewOrderStatusEmail(formVals).then(
                   async (res) => {
-                    await fetchOrders(payload);
+                    await refreshOrdersAfterUpdateOrder(payload);
                     return true;
                   },
                 );
               } else {
-                return await fetchOrders(payload).then((res) => {
-                  return true;
-                });
+                return await refreshOrdersAfterUpdateOrder(payload).then(
+                  (res) => {
+                    return true;
+                  },
+                );
               }
             } else {
               //console.log("not same")
-              return await fetchOrders(payload).then((res) => {
-                return "Already Accepted";
-              });
+              return await refreshOrdersAfterUpdateOrder(payload).then(
+                (res) => {
+                  return "Already Accepted";
+                },
+              );
             }
           }
         },
@@ -2132,6 +2138,26 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  var fetchOrdersByRestaurant = async function fetchOrdersByRestaurant(
+    payload,
+  ) {
+    if (payload.currentUser !== undefined && payload.userInfo?._id) {
+      await getOrdersByRestaurantId({
+        variables: { Restaurant: payload.userInfo._id },
+      }).then(async function (response) {
+        if (response.data.getOrdersByRestaurantId !== null) {
+          if (payload.orders === undefined) {
+            payload.orders = [];
+          }
+          await refreshingOrderTables(
+            payload,
+            response.data.getOrdersByRestaurantId,
+          );
+        }
+      });
+    }
+  };
+
   var fetchOrdersForRider = async function fetchOrdersForRider(payload) {
     if (payload.currentUser !== undefined) {
       //console.log("Rider Id is:");
@@ -2176,6 +2202,30 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       }
     }
   };
+
+  var refreshOrdersAfterUpdateOrder =
+    async function refreshOrdersAfterUpdateOrder(payload) {
+      const role = payload.userRolef;
+      if (role === "Customer") {
+        await fetchOrdersByUser(payload);
+      } else if (role === "Rider") {
+        if (payload.userInfo?._id) {
+          await fetchOrdersForRider(payload);
+        } else {
+          await fetchOrders(payload);
+        }
+      } else if (role === "Restaurant" || role === "Restaurant_Admin") {
+        if (payload.userInfo?._id) {
+          await fetchOrdersByRestaurant(payload);
+        } else {
+          await fetchOrders(payload);
+        }
+      } else if (role === "Admin" || role === "Urged_Staff") {
+        await fetchOrders(payload);
+      } else {
+        await fetchOrders(payload);
+      }
+    };
 
   var sendNewApplicationEmail = async function sendNewApplicationEmail(
     formVals,
@@ -3541,6 +3591,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     checkoutOrder,
     fetchOrdersByUser,
     fetchOrders,
+    fetchOrdersByRestaurant,
     refreshingOrderTables,
     fetchOrdersForRider,
     fetchOrdersForRider2,
