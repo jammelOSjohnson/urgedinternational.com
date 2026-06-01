@@ -1,7 +1,4 @@
-import { Container, Grid, Theme,  } from '@mui/material';
-import { makeStyles, createStyles } from '@mui/styles';;
 import React from "react";
-//Import Components
 import { OrderTotals } from "./Comp/OrderTotals";
 import { Favourites } from "./Comp/Favourites";
 import { CurrentPackage } from "./Comp/CurrentPackage";
@@ -10,6 +7,9 @@ import { AdvertisementSlider } from "./Comp/AdvertisementSlider";
 import { HeaderRight } from "./Comp/HeaderRight";
 import { DashboardFooter } from "./Comp/DashboardFooter";
 import { LiveChatWidget } from "@livechat/widget-react";
+import { Container, Grid, Theme } from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
+
 const HeaderLeft = React.lazy(() => import("./Comp/HeaderLeft"));
 const Sidebar = React.lazy(() => import("./Comp/Sidebar"));
 
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: 0,
       backgroundImage: "url(Images/FoodPortalBackground.png)",
     },
-  })
+  }),
 );
 
 export const CustomerDashboardScreen: React.FC =
