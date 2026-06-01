@@ -1,6 +1,6 @@
 import { useAppData } from "../../Context/AppDataContext";
-import { Container, Theme } from '@mui/material';
-import { makeStyles, createStyles } from '@mui/styles';;
+import { Container, Theme } from "@mui/material";
+import { makeStyles, createStyles } from "@mui/styles";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
 import jsPDF from "jspdf";
@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
     link: {
       textDecoration: "none",
     },
-  })
+  }),
 );
 
 export const OrderCompleted: React.FC = function OrderCompleted() {
@@ -73,7 +73,7 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
             file,
             userInfo,
             receiptDetails._id,
-            receiptDetails
+            receiptDetails,
           ).then((res) => {
             setTimeout(() => {
               history.push("/OrderHistory");
@@ -1673,11 +1673,12 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
                                                           ? item.drink + " | "
                                                           : "" + " | "
                                                       }\n${
-                                                  item.otherIntructions + " | "
-                                                }\n${
-                                                  "Not Available? " +
-                                                  item.ifnotAvailable
-                                                }`
+                                                        item.otherIntructions +
+                                                        " | "
+                                                      }\n${
+                                                        "Not Available? " +
+                                                        item.ifnotAvailable
+                                                      }`
                                               : `${item.itemName + ": "}\n${
                                                   item.drink !== "Select Drink"
                                                     ? item.drink + " | "
@@ -3303,7 +3304,7 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
                                                   target="_blank"
                                                 >
                                                   <img
-                                                    src="images/image-3.png"
+                                                    src="Images/image-3.png"
                                                     alt="Twitter"
                                                     title="Twitter"
                                                     width={32}
@@ -3362,7 +3363,7 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
                                                   target="_blank"
                                                 >
                                                   <img
-                                                    src="images/image-2.png"
+                                                    src="Images/image-2.png"
                                                     alt="Facebook"
                                                     title="Facebook"
                                                     width={32}
@@ -3420,7 +3421,7 @@ export const OrderCompleted: React.FC = function OrderCompleted() {
                                                   target="_blank"
                                                 >
                                                   <img
-                                                    src="images/image-1.png"
+                                                    src="Images/image-1.png"
                                                     alt="Instagram"
                                                     title="Instagram"
                                                     width={32}
