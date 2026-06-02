@@ -1,5 +1,44 @@
 import { gql } from "@apollo/client";
 
+export const GET_ORDER_BY_BILLING_INFO = gql`
+  query getOrderByBillingInfo($BillingInfo: String!) {
+    getOrderByBillingInfo(BillingInfo: $BillingInfo) {
+      _id
+      Id
+      OrderItems
+      OrderStatus
+      OrderTotal
+      OrderDate
+      DeliveryAddress
+      PaymentMethod
+      AdditionalInfo
+      DeliveryFee
+      GCT
+      ServiceCharge
+      CartTotal
+      OrderType
+      Rider {
+        _id
+        Id
+        FirstName
+        LastName
+      }
+      Restaurant {
+        _id
+        Id
+        FirstName
+        LastName
+      }
+      BillingInfo {
+        _id
+        status
+        chargetotal
+        ccbrand
+      }
+    }
+  }
+`;
+
 export const GET_ALL_ROLES = gql`
   query {
     getAllRoles {

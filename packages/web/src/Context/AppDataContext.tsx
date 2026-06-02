@@ -55,9 +55,10 @@ import {
   UPDATE_STAFF_MUTATION,
   CREATE_HASH_MUTATION,
   CREATE_ORDER_Billing,
+  CREATE_PENDING_CHECKOUT,
   FETCH_PAY_SETTINGS,
 } from "../GraphQL/Mutations";
-import { GET_ORDERS_BY_RESTAURANTID } from "../GraphQL/Queries";
+import { GET_ORDERS_BY_RESTAURANTID, GET_ORDER_BY_BILLING_INFO } from "../GraphQL/Queries";
 import { useMutation, useLazyQuery, useApolloClient } from "@apollo/client";
 import sendEmail from "../email.js";
 import moment from "moment-timezone";
@@ -326,6 +327,8 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
 
   const [getOrders] = useMutation(GET_ORDERS);
   const [createOrderBilling] = useMutation(CREATE_ORDER_Billing);
+  const [createPendingCheckoutMutation] = useMutation(CREATE_PENDING_CHECKOUT);
+  const [getOrderByBillingInfo] = useLazyQuery(GET_ORDER_BY_BILLING_INFO);
   const [getOrdersByUserId] = useMutation(GET_ORDERS_BY_USERID);
   const [createOrder] = useMutation(CREATE_ORDER);
   const [updateOrder] = useMutation(UPDATE_ORDER);
@@ -1669,6 +1672,156 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     }
   };
 
+  var applyCheckoutSuccess = async function applyCheckoutSuccess(
+    payload,
+    state,
+    order,
+  ) {
+    payload.cartItems = [];
+    payload.selectedRestaurant = undefined;
+    payload.receiptDetails = order;
+    payload.orders = [
+      order,
+      ...(Array.isArray(payload.orders) ? payload.orders : []),
+    ];
+
+    if (
+      state.ContactNum !== payload.userInfo.contactNumber ||
+      state.Street !== payload.userInfo.addressLine1 ||
+      state.Town !== payload.userInfo.city
+    ) {
+      const user = {
+        ContactNumber: state.ContactNum,
+        Email: payload.userInfo.email,
+        FullName: payload.userInfo.fullName,
+        AddressLine1: state.Street,
+        AddressLine2: "",
+        City: state.Town,
+      };
+
+      try {
+        await UpdateUserInfo(payload, user);
+      } catch {
+        // Still complete checkout if profile update fails.
+      }
+    }
+
+    dispatch({
+      type: "checkout",
+      payload: payload,
+    });
+  };
+
+  var createPendingCheckout = async function createPendingCheckout(
+    payload,
+    cartItems,
+    state,
+    deliveryFee,
+    GCT,
+    serviceFee,
+    cartItemsSum,
+    Total,
+    restaurantID,
+  ) {
+    if (cartItems.length === 0) {
+      return { ok: false as const, reason: "Cart is empty" };
+    }
+
+    const orderItems: object[] = [];
+    cartItems.forEach((item) => {
+      orderItems.push({
+        itemName: item.itemName,
+        chickenFlavour1: item.chickenFlavour1,
+        chickenFlavour2: item.chickenFlavour2,
+        drink: item.drink,
+        otherIntructions: item.otherIntructions,
+        itemCost: item.itemCost,
+        imageName: item.imageName,
+        ifnotAvailable: item.ifnotAvailable,
+        quantity: item.quantity,
+        side: item.side,
+        restaurantName: item.restaurantName,
+      });
+    });
+
+    try {
+      const response = await createPendingCheckoutMutation({
+        variables: {
+          userId: payload.currentUser.uid,
+          cartItems,
+          orderItems,
+          deliveryAddress: state.Street + "," + state.Town + ",Clarendon",
+          paymentMethod: state.PaymentMethod,
+          additionalInfo:
+            state.ContactNum +
+            " " +
+            payload.userInfo.email +
+            " " +
+            payload.userInfo.fullName,
+          orderTotal: Number(Total.Cost),
+          deliveryFee: Number(deliveryFee.Cost),
+          gct: Number(GCT.Cost),
+          serviceCharge: Number(serviceFee.Cost),
+          cartTotal: Number(cartItemsSum.Cost),
+          restaurant: restaurantID,
+          generalLocation: payload.generalLocation ?? "",
+        },
+      });
+
+      if (response.errors?.length) {
+        return {
+          ok: false as const,
+          reason: response.errors[0].message,
+        };
+      }
+
+      const pending = response.data?.createPendingCheckout;
+      if (!pending?.pendingId) {
+        return {
+          ok: false as const,
+          reason: "Unable to start card checkout",
+        };
+      }
+
+      return {
+        ok: true as const,
+        pendingId: pending.pendingId,
+        checkoutTraceId: pending.checkoutTraceId,
+      };
+    } catch (error: any) {
+      return {
+        ok: false as const,
+        reason: error?.message ?? "Unable to start card checkout",
+      };
+    }
+  };
+
+  var fetchOrderByBillingInfo = async function fetchOrderByBillingInfo(
+    billingId,
+  ) {
+    try {
+      const response = await getOrderByBillingInfo({
+        variables: { BillingInfo: billingId },
+        fetchPolicy: "network-only",
+      });
+      if (response.error) {
+        return null;
+      }
+      return response.data?.getOrderByBillingInfo ?? null;
+    } catch {
+      return null;
+    }
+  };
+
+  var completeCheckoutWithExistingOrder =
+    async function completeCheckoutWithExistingOrder(payload, state, order) {
+      if (!order) {
+        return { ok: false as const, reason: "Order not found" };
+      }
+      await applyCheckoutSuccess(payload, state, order);
+      return { ok: true as const, order };
+    };
+
   var checkoutOrder = async function checkoutOrder(
     payload,
     cartItems,
@@ -1681,101 +1834,97 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     restaurantID,
     billingID,
   ) {
-    //console.log("inside checkout. \n cart item length is: ");
-    //console.log(cartItems.length);
-    if (cartItems.length !== 0) {
-      var orderItems: object[] = [];
-      const now = new Date();
-      const estTime = moment.tz(now, "America/Jamaica").format();
-      ////console.log("Jamaican Time is:");
-      ////console.log(estTime);
-      cartItems.map((item, index) => {
-        var body = {
-          itemName: item.itemName,
-          chickenFlavour1: item.chickenFlavour1,
-          chickenFlavour2: item.chickenFlavour2,
-          drink: item.drink,
-          otherIntructions: item.otherIntructions,
-          itemCost: item.itemCost,
-          imageName: item.imageName,
-          ifnotAvailable: item.ifnotAvailable,
-          quantity: item.quantity,
-          side: item.side,
-          restaurantName: item.restaurantName,
-        } as object;
-        orderItems.push(body);
-        return null;
+    if (cartItems.length === 0) {
+      console.error("checkoutOrder failed: empty cart", { billingID });
+      return { ok: false as const, reason: "Cart is empty" };
+    }
+
+    const orderItems: object[] = [];
+    const now = new Date();
+    const estTime = moment.tz(now, "America/Jamaica").format();
+
+    cartItems.forEach((item) => {
+      orderItems.push({
+        itemName: item.itemName,
+        chickenFlavour1: item.chickenFlavour1,
+        chickenFlavour2: item.chickenFlavour2,
+        drink: item.drink,
+        otherIntructions: item.otherIntructions,
+        itemCost: item.itemCost,
+        imageName: item.imageName,
+        ifnotAvailable: item.ifnotAvailable,
+        quantity: item.quantity,
+        side: item.side,
+        restaurantName: item.restaurantName,
       });
-      const ridersRaw = await Promise.resolve(
-        fetchRidersForOrder(payload.generalLocation),
-      ).then((r) => (Array.isArray(r) ? r : []));
-      const riders = ridersRaw;
+    });
 
-      type riderObj = {
-        _id: string;
-        Id: string;
-        FirstName: string;
-        LastName: string;
-        Email: string;
-        AddressLine1: string;
-        AddressLine2: string;
-        City: string;
-        ContactNumber: string;
-        isAvailable: boolean;
-        disabled: boolean;
-        ImageName: string;
-      };
+    const ridersRaw = await Promise.resolve(
+      fetchRidersForOrder(payload.generalLocation),
+    ).then((r) => (Array.isArray(r) ? r : []));
+    const ridersList = Array.isArray(ridersRaw) ? ridersRaw : [];
 
-      const ridersList = Array.isArray(riders) ? riders : [];
-      let RiderRes = [] as riderObj[];
-      try {
-        RiderRes = ridersList.filter(
-          (item) =>
-            item != null &&
-            item.isAvailable === true &&
-            item.disabled === false,
-        );
-      } catch (e) {
-        console.log(e);
-      }
+    type riderObj = {
+      _id: string;
+      Id: string;
+      FirstName: string;
+      LastName: string;
+      Email: string;
+      AddressLine1: string;
+      AddressLine2: string;
+      City: string;
+      ContactNumber: string;
+      isAvailable: boolean;
+      disabled: boolean;
+      ImageName: string;
+    };
 
-      if (RiderRes.length === 0 && ridersList.length > 0) {
-        RiderRes.push(ridersList[0]);
-      }
+    let RiderRes = [] as riderObj[];
+    try {
+      RiderRes = ridersList.filter(
+        (item) =>
+          item != null &&
+          item.isAvailable === true &&
+          item.disabled === false,
+      );
+    } catch (e) {
+      console.log(e);
+    }
 
-      //console.log("sorted rider res is: ", RiderRes);
-      const min = 0;
-      const max = RiderRes.length;
-      //console.log(max);
-      const randRider = max > 0 ? Math.floor(Math.random() * max + min) : 0;
-      const selectedRider = RiderRes[randRider] ?? null;
+    if (RiderRes.length === 0 && ridersList.length > 0) {
+      RiderRes.push(ridersList[0]);
+    }
 
-      const orderBody = {
-        Id: payload.currentUser.uid,
-        OrderItems: orderItems,
-        OrderStatus: "Pending",
-        OrderTotal: Number(Total.Cost),
-        OrderDate: estTime,
-        Rider: selectedRider?._id !== undefined ? selectedRider._id : "",
-        BillingInfo: "",
-        DeliveryAddress: state.Street + "," + state.Town + ",Clarendon",
-        PaymentMethod: state.PaymentMethod,
-        AdditionalInfo:
-          state.ContactNum +
-          " " +
-          payload.userInfo.email +
-          " " +
-          payload.userInfo.fullName,
-        DeliveryFee: Number(deliveryFee.Cost),
-        GCT: Number(GCT.Cost),
-        ServiceCharge: Number(serviceFee.Cost),
-        CartTotal: Number(cartItemsSum.Cost),
-        OrderType: "Food",
-        Restaurant: restaurantID,
-      };
+    const max = RiderRes.length;
+    const randRider = max > 0 ? Math.floor(Math.random() * max) : 0;
+    const selectedRider = RiderRes[randRider] ?? null;
 
-      //console.log("billing id is: " + billingID);
-      if (billingID === null) {
+    const orderBody = {
+      Id: payload.currentUser.uid,
+      OrderItems: orderItems,
+      OrderStatus: "Pending",
+      OrderTotal: Number(Total.Cost),
+      OrderDate: estTime,
+      Rider: selectedRider?._id !== undefined ? selectedRider._id : "",
+      BillingInfo: "",
+      DeliveryAddress: state.Street + "," + state.Town + ",Clarendon",
+      PaymentMethod: state.PaymentMethod,
+      AdditionalInfo:
+        state.ContactNum +
+        " " +
+        payload.userInfo.email +
+        " " +
+        payload.userInfo.fullName,
+      DeliveryFee: Number(deliveryFee.Cost),
+      GCT: Number(GCT.Cost),
+      ServiceCharge: Number(serviceFee.Cost),
+      CartTotal: Number(cartItemsSum.Cost),
+      OrderType: "Food",
+      Restaurant: restaurantID,
+    };
+
+    try {
+      if (billingID === null || billingID === undefined) {
         const orderBillingBody = {
           oId: "",
           txndate: estTime,
@@ -1819,140 +1968,44 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
           status: "APPROVED",
         };
 
-        await createOrderBilling({ variables: orderBillingBody }).then(
-          async function (response) {
-            //console.log(response.data.createOrderBilling);
-            if (response.data.createOrderBilling !== null) {
-              orderBody.BillingInfo = response.data.createOrderBilling._id;
-              //console.log("orderBody", orderBody);
-              await createOrder({ variables: orderBody }).then(
-                async function (response) {
-                  //console.log("create orer result");
-                  if (response.data.createOrder !== null) {
-                    //console.log("Order Exist");
-                    ////console.log(response.data.createOrder);
-                    payload.cartItems = [];
-                    payload.selectedRestaurant = undefined;
-                    payload.receiptDetails = response.data.createOrder;
-                    payload.orders = [
-                      response.data.createOrder,
-                      ...(Array.isArray(payload.orders) ? payload.orders : []),
-                    ];
-                    if (
-                      state.ContactNum !== payload.userInfo.contactNumber ||
-                      state.Street !== payload.userInfo.addressLine1 ||
-                      state.Town !== payload.userInfo.city
-                    ) {
-                      let user = {
-                        ContactNumber: state.ContactNum,
-                        Email: payload.userInfo.email,
-                        FullName: payload.userInfo.fullName,
-                        AddressLine1: state.Street,
-                        AddressLine2: "",
-                        City: state.Town,
-                      };
-
-                      await UpdateUserInfo(payload, user)
-                        .then(() => {
-                          dispatch({
-                            type: "checkout",
-                            payload: payload,
-                          });
-                        })
-                        .catch(() => {
-                          dispatch({
-                            type: "checkout",
-                            payload: payload,
-                          });
-                        });
-                    } else {
-                      //console.log("address up to date");
-                      dispatch({
-                        type: "checkout",
-                        payload: payload,
-                      });
-                    }
-
-                    // await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
-                    //   if (response.data.getOrdersByUserId !== null) {
-                    //     payload.orders = response.data.getOrdersByUserId;
-                    //     dispatch({
-                    //       type: "checkout",
-                    //       payload: payload
-                    //     })
-                    //   }
-                    // });
-                  }
-                },
-              );
-            }
-          },
-        );
+        const billingResponse = await createOrderBilling({
+          variables: orderBillingBody,
+        });
+        if (billingResponse.errors?.length) {
+          throw new Error(billingResponse.errors[0].message);
+        }
+        if (!billingResponse.data?.createOrderBilling) {
+          return { ok: false as const, reason: "Billing creation failed" };
+        }
+        orderBody.BillingInfo = billingResponse.data.createOrderBilling._id;
       } else {
-        //console.log("billing id is not null");
         orderBody.BillingInfo = billingID;
-        await createOrder({ variables: orderBody }).then(
-          async function (response) {
-            //console.log("create orer result: ");
-            //console.log(response.data.createOrder);
-            if (response.data.createOrder !== null) {
-              //console.log("Order Exist");
-              ////console.log(response.data.createOrder);
-              payload.cartItems = [];
-              payload.selectedRestaurant = undefined;
-              payload.receiptDetails = response.data.createOrder;
-              payload.orders = [
-                response.data.createOrder,
-                ...(Array.isArray(payload.orders) ? payload.orders : []),
-              ];
-              if (
-                state.ContactNum !== payload.userInfo.contactNumber ||
-                state.Street !== payload.userInfo.addressLine1 ||
-                state.Town !== payload.userInfo.city
-              ) {
-                let user = {
-                  ContactNumber: state.ContactNum,
-                  Email: payload.userInfo.email,
-                  FullName: payload.userInfo.fullName,
-                  AddressLine1: state.Street,
-                  AddressLine2: "",
-                  City: state.Town,
-                };
-
-                await UpdateUserInfo(payload, user)
-                  .then(() => {
-                    dispatch({
-                      type: "checkout",
-                      payload: payload,
-                    });
-                  })
-                  .catch(() => {
-                    dispatch({
-                      type: "checkout",
-                      payload: payload,
-                    });
-                  });
-              } else {
-                //console.log("address up to date");
-                dispatch({
-                  type: "checkout",
-                  payload: payload,
-                });
-              }
-
-              // await getOrdersByUserId({variables: {Id: payload.currentUser.uid}}).then(async function(response) {
-              //   if (response.data.getOrdersByUserId !== null) {
-              //     payload.orders = response.data.getOrdersByUserId;
-              //     dispatch({
-              //       type: "checkout",
-              //       payload: payload
-              //     })
-              //   }
-              // });
-            }
-          },
-        );
       }
+
+      const orderResponse = await createOrder({ variables: orderBody });
+      if (orderResponse.errors?.length) {
+        throw new Error(orderResponse.errors[0].message);
+      }
+      if (!orderResponse.data?.createOrder) {
+        return { ok: false as const, reason: "Order creation failed" };
+      }
+
+      await applyCheckoutSuccess(
+        payload,
+        state,
+        orderResponse.data.createOrder,
+      );
+      return { ok: true as const, order: orderResponse.data.createOrder };
+    } catch (error: any) {
+      console.error("checkoutOrder failed", {
+        billingID,
+        error: error?.message ?? error,
+      });
+      return {
+        ok: false as const,
+        reason: error?.message ?? "Unable to process order",
+        billingId: billingID ?? undefined,
+      };
     }
   };
 
@@ -3595,6 +3648,9 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     clearCartItems,
     getMenuCats,
     checkoutOrder,
+    createPendingCheckout,
+    fetchOrderByBillingInfo,
+    completeCheckoutWithExistingOrder,
     fetchOrdersByUser,
     fetchOrders,
     fetchOrdersByRestaurant,

@@ -257,6 +257,12 @@ const typeDefs = /* GraphQL */ `
     hash: String
   }
 
+  type PendingCheckout {
+    pendingId: String!
+    checkoutTraceId: String
+    status: String
+  }
+
   type OrderBilling {
     _id: ID
     oId: String
@@ -317,6 +323,8 @@ const typeDefs = /* GraphQL */ `
     getOrdersByDateAndTime(StartDate: String, EndDate: String): [Order]
 
     getPaySettings: [PaySetting!]!
+
+    getOrderByBillingInfo(BillingInfo: String!): Order
   }
 
   type Subscription {
@@ -510,6 +518,23 @@ const typeDefs = /* GraphQL */ `
       OrderType: String
       Restaurant: String
     ): Order
+
+    createPendingCheckout(
+      userId: String!
+      cartItems: JSONObject!
+      orderItems: JSONObject!
+      deliveryAddress: String!
+      paymentMethod: String!
+      additionalInfo: String
+      orderTotal: Float!
+      deliveryFee: Float!
+      gct: Float!
+      serviceCharge: Float!
+      cartTotal: Float!
+      restaurant: String!
+      generalLocation: String
+      riderId: String
+    ): PendingCheckout
 
     createOrderBilling(
       oId: String

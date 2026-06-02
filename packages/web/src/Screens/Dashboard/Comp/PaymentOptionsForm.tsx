@@ -64,6 +64,7 @@ interface Payment {
   transactionNotificationURL: string;
   txndatetime: string;
   txntype: string;
+  oid: string;
 }
 
 interface Payment2 {
@@ -256,6 +257,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
     selectedRestaurant,
     userInfo,
     createPaymentHash,
+    createPendingCheckout,
     generalLocation,
     targetLocation,
     getPaySettingsData,
@@ -355,12 +357,20 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
       import.meta.env.REACT_APP_timezone !== undefined
         ? import.meta.env.REACT_APP_timezone
         : "",
-    transactionNotificationURL: "https://urgedservices.com/ShoppingCart",
-    txndatetime: Moment().format("YYYY:MM:DD-HH:mm:ss").toString(), //"2023:06:08-17:20:09",
+    transactionNotificationURL:
+      import.meta.env.MODE === "development"
+        ? import.meta.env.REACT_APP_TRANSACTION_NOTIFICATION_URL !== undefined
+          ? import.meta.env.REACT_APP_TRANSACTION_NOTIFICATION_URL
+          : ""
+        : import.meta.env.REACT_APP_TRANSACTION_NOTIFICATION_URL_LIVE !== undefined
+          ? import.meta.env.REACT_APP_TRANSACTION_NOTIFICATION_URL_LIVE
+          : "",
+    txndatetime: Moment().format("YYYY:MM:DD-HH:mm:ss").toString(),
     txntype:
       import.meta.env.REACT_APP_txntype !== undefined
         ? import.meta.env.REACT_APP_txntype
         : "",
+    oid: "",
   });
 
   const [gpsCheck, setgpsCheck] = React.useState<NoGps>({
@@ -404,7 +414,7 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
           restaurants[selectedRestaurant]._id,
           null,
         ).then((res) => {
-          if (res === null || res === undefined) {
+          if (res?.ok) {
             setValues({
               Street: "",
               Town: "Select Town",
@@ -423,10 +433,11 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
               Total: { Cost: "0.00" },
             });
             history.push("/OrderCompleted");
-          } else if (res === "no rider") {
-            setError(
-              "We are unable to take your order at this time. Please try again in a few minutes.",
-            );
+          } else if (res?.reason) {
+            setError(res.reason);
+            setLoading(false);
+          } else {
+            setError("Unable to process your order at this time.");
             setLoading(false);
           }
         });
@@ -481,12 +492,26 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
       setPayment({ ...payment, [prop]: event.target.value });
     };
 
-  const hash = () => {
+  const hash = async () => {
     setError("");
-    // console.log("about to start");
-    //const button = document.getElementById("makePayment");
 
-    //store important state info
+    if (payment.paymentMethod === "") {
+      setError("Please select payment method.");
+      return;
+    }
+    if (values.Street === "") {
+      setError("Please enter street address");
+      return;
+    }
+    if (values.Town === "") {
+      setError("Please enter Town");
+      return;
+    }
+    if (values.Parish === "") {
+      setError("Please select Parish");
+      return;
+    }
+
     const session = {
       value,
       cartItems,
@@ -496,30 +521,37 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
       selectedRestaurant: selectedRestaurant,
     };
     localStorage.setItem("paymentObject", JSON.stringify(session));
-    // console.log(payment.paymentMethod);
 
-    payment.paymentMethod === ""
-      ? setError("Please select payment method.")
-      : values.Street === ""
-        ? setError("Please enter street address")
-        : values.Town === ""
-          ? setError("Please enter Town")
-          : values.Parish === ""
-            ? setError("Please select Parish")
-            : createPaymentHash(payment).then(function (hashResult) {
-                //console.log("hashResult", hashResult.hash);
-                setPayment({
-                  ...payment,
-                  hashExtended:
-                    hashResult != null && hashResult !== undefined
-                      ? hashResult.hash
-                      : "",
-                });
-                //console.log("about to send payment data");
-                //console.log(payment);
-                //button?.click();
-              });
-    //return hashHex;
+    const pendingResult = await createPendingCheckout(
+      value,
+      cartItems,
+      values,
+      checkoutVals.deliveryFee,
+      checkoutVals.GCT,
+      checkoutVals.serviceFee,
+      checkoutVals.cartItemsSum,
+      checkoutVals.Total,
+      restaurants[selectedRestaurant]._id,
+    );
+
+    if (!pendingResult.ok) {
+      setError(pendingResult.reason);
+      return;
+    }
+
+    const paymentWithOid = {
+      ...payment,
+      oid: pendingResult.pendingId,
+      paymentMethod: payment.paymentMethod,
+    };
+    setPayment(paymentWithOid);
+
+    const hashResult = await createPaymentHash(paymentWithOid);
+    setPayment({
+      ...paymentWithOid,
+      hashExtended:
+        hashResult != null && hashResult !== undefined ? hashResult.hash : "",
+    });
   };
 
   useEffect(() => {
@@ -850,6 +882,22 @@ export const PaymentOptionsForm: React.FC<Props> = function PaymentOptionsForm({
                             onChange={handleChange3("authenticateTransaction")}
                           />
                         </Grid> */}
+                          <Grid item xs={5}>
+                            <input
+                              name="transactionNotificationURL"
+                              value={payment.transactionNotificationURL}
+                              onChange={handleChange3("transactionNotificationURL")}
+                              type="hidden"
+                            />
+                          </Grid>
+                          <Grid item xs={5}>
+                            <input
+                              name="oid"
+                              value={payment.oid}
+                              onChange={handleChange3("oid")}
+                              type="hidden"
+                            />
+                          </Grid>
                           <Grid item xs={5}>
                             <input
                               type="hidden"

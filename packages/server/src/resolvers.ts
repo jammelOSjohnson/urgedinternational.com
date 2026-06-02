@@ -12,41 +12,17 @@ import { GraphQLScalarType, Kind } from "graphql";
 import mongoose from "mongoose";
 import crypto from "crypto";
 
-//subscriptions test
-import { PubSub } from "graphql-subscriptions";
-//import { GooglePubSub } from '@axelspringer/graphql-google-pubsub';// For Production
-import { RedisPubSub } from "graphql-redis-subscriptions"; // For Production
 import Mailbox from "./models/Mailbox.model.js";
 import ShippingAddress from "./models/ShippingAddress.js";
 import OrderRejection from "./models/OrderRejection.model.js";
 import OrderBilling from "./models/OrderBilling.model.js";
-
-const isProd = process.env.NODE_ENV === "production";
-
-const pubsub = new RedisPubSub({
-  connection: {
-    host: process.env.REDIS_DOMAIN_NAME,
-    port: 6379,
-    ...(isProd && { password: process.env.REDIS_PASSWORD }),
-    retryStrategy: (times) => {
-      // reconnect after
-      return Math.max(times * 100, 3000);
-    },
-  },
-});
-// const pubsub = new RedisPubSub({
-//                     connection: {
-//                         host: process.env.REDIS_DOMAIN_NAME as any || "localhost",
-//                         port: process.env.PORT_NUMBER as any || "6379",
-//                         password: process.env.REDIS_PASSWORD as any || "eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81"
-//                         // retryStrategy: options => {
-//                         //   // reconnect after
-//                         //   return Math.max(options.attempt * 100, 3000);
-//                         // }
-//                       }
-//                 });
-//const pubsubProd = new GooglePubSub();
-//subscriptions test
+import PendingCheckout from "./models/PendingCheckout.model.js";
+import { log } from "./logger.js";
+import { pubsub, ORDER_CREATED } from "./pubsub.js";
+import {
+  fulfillOrderFromPending,
+  generateCheckoutTraceId,
+} from "./services/fulfillOrder.js";
 
 const dateScalar = new GraphQLScalarType({
   name: "Date",
@@ -75,8 +51,6 @@ const jsonScalar = new GraphQLScalarType({
     return json(value); // Convert incoming integer to Date
   },
 });
-
-const ORDER_CREATED = "ORDER_CREATED";
 
 const resolvers = {
   Subscription: {
@@ -146,6 +120,13 @@ const resolvers = {
 
     getPaySettings: async () => {
       return await PaySetting.find();
+    },
+
+    getOrderByBillingInfo: async (_, { BillingInfo }) => {
+      return await Order.findOne({ BillingInfo })
+        .populate("Rider")
+        .populate("Restaurant")
+        .populate("BillingInfo");
     },
   },
 
@@ -583,6 +564,67 @@ const resolvers = {
     },
 
     //Billing
+    createPendingCheckout: async (
+      _,
+      {
+        userId,
+        cartItems,
+        orderItems,
+        deliveryAddress,
+        paymentMethod,
+        additionalInfo,
+        orderTotal,
+        deliveryFee,
+        gct,
+        serviceCharge,
+        cartTotal,
+        restaurant,
+        generalLocation,
+        riderId,
+      },
+    ) => {
+      const pendingId = crypto.randomUUID();
+      const checkoutTraceId = generateCheckoutTraceId();
+
+      const pending = new PendingCheckout({
+        pendingId,
+        userId,
+        cartItems,
+        orderItems,
+        deliveryAddress,
+        paymentMethod,
+        additionalInfo,
+        orderTotal,
+        deliveryFee,
+        gct,
+        serviceCharge,
+        cartTotal,
+        restaurant,
+        generalLocation,
+        riderId: riderId || undefined,
+        status: "pending",
+        checkoutTraceId,
+      });
+
+      await pending.save();
+
+      log.info({
+        event: "checkout.pending_created",
+        pendingId,
+        checkoutTraceId,
+        userId,
+        restaurantId: restaurant,
+        cartItemCount: Array.isArray(orderItems) ? orderItems.length : 0,
+        chargetotal: orderTotal,
+      });
+
+      return {
+        pendingId,
+        checkoutTraceId,
+        status: pending.status,
+      };
+    },
+
     createOrderBilling: async (
       _,
       {
@@ -628,8 +670,6 @@ const resolvers = {
         status,
       },
     ) => {
-      console.log("oId is", oId);
-      console.log("order date is ", txndate);
       const orderBilling = new OrderBilling({
         oId,
         txndate,
@@ -673,6 +713,12 @@ const resolvers = {
         status,
       });
       const newBilling = await orderBilling.save();
+      log.info({
+        event: "payment.billing_created",
+        billingId: newBilling._id,
+        oId,
+        status: newBilling.status,
+      });
       return newBilling;
     },
 

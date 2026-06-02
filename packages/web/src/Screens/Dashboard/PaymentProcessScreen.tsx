@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useAppData } from "../../Context/AppDataContext";
 import { Spinner } from "../../Components/spinner";
-import { Card, Container, Grid, Theme,  } from '@mui/material';
-import { createStyles, makeStyles } from '@mui/styles';;
+import { Container, Grid, Theme, Typography, Alert, Box } from "@mui/material";
+import { createStyles, makeStyles } from "@mui/styles";
 import { ShoppingCartItems } from "./Comp/ShoppingCartItems";
 import DashboardFooter from "./Comp/DashboardFooter";
 import { HeaderRight } from "./Comp/HeaderRight";
@@ -33,6 +33,15 @@ interface checkoutCalc {
   Total: Fee;
 }
 
+interface PaymentSession {
+  value?: Record<string, unknown>;
+  cartItems?: unknown[];
+  values?: State;
+  checkoutVals?: checkoutCalc;
+  restaurants?: unknown[];
+  selectedRestaurant?: number;
+}
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     gridRoot: {
@@ -43,17 +52,17 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundImage: "url(Images/FoodPortalBackground.png)",
       height: "100vh",
     },
-  })
+  }),
 );
 
 export const PaymentProcessScreen: React.FC = function PaymentProcessScreen() {
-  let { id } = useParams();
+  const { id } = useParams<{ id: string }>();
   const classes = useStyles();
-  const [paymentObject, setPaymentObject] = useState();
-  const [billingID, setBillingID] = useState();
-  var [error, setError] = useState("");
-  var [success, setSuccess] = useState("");
-  var [loading, setLoading] = useState(false);
+  const [billingID, setBillingID] = useState<string | undefined>();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [sessionReady, setSessionReady] = useState(false);
+  const submitStarted = useRef(false);
   const { value } = useAppData();
   const {
     cartItems,
@@ -61,6 +70,8 @@ export const PaymentProcessScreen: React.FC = function PaymentProcessScreen() {
     restaurants,
     selectedRestaurant,
     reinitstate,
+    fetchOrderByBillingInfo,
+    completeCheckoutWithExistingOrder,
   } = value;
   const history = useHistory();
 
@@ -82,115 +93,211 @@ export const PaymentProcessScreen: React.FC = function PaymentProcessScreen() {
     Total: { Cost: "0.00" },
   });
 
-  // console.log(id);
+  const [restoredCartItems, setRestoredCartItems] = useState<unknown[]>([]);
+  const [restoredRestaurantIndex, setRestoredRestaurantIndex] = useState(0);
+
   useEffect(() => {
-    const retrievedObject = localStorage.getItem("paymentObject");
-
-    // console.log(
-    //   "retrievedObject: ",
-    //   retrievedObject !== null ? JSON.parse(retrievedObject) : "none"
-    // );
-    const finalRetObj =
-      retrievedObject !== null ? JSON.parse(retrievedObject) : null;
-    setValues(finalRetObj.values);
-    setCheckoutVals(finalRetObj.checkoutVals);
-
-    if (restaurants.length === 0) {
-      reinitstate(finalRetObj.value);
+    if (id === "Fail") {
+      setBillingID("Fail");
+      return;
     }
 
-    // console.log(billingID);
-    if (
-      (billingID === null || billingID === undefined) &&
-      id !== null &&
-      id !== undefined
-    ) {
-      // console.log(id);
+    if (id) {
       setBillingID(id);
     }
 
-    // Defer auto-submit so state and any lazy-loaded code are ready (avoids stale bundle / race after payment redirect)
-    if (
-      restaurants.length > 0 &&
-      billingID !== null &&
-      billingID !== undefined &&
-      billingID !== "Fail"
-    ) {
-      const t = setTimeout(() => {
-        handleSubmit();
-      }, 0);
-      return () => clearTimeout(t);
+    const retrievedObject = localStorage.getItem("paymentObject");
+    if (!retrievedObject) {
+      setError(
+        "Your checkout session was not found. Payment was received — please contact support with your billing reference.",
+      );
+      setSessionReady(true);
+      return;
     }
-  }, [paymentObject, billingID]);
 
-  const handleSubmit = async () => {
+    try {
+      const finalRetObj = JSON.parse(retrievedObject) as PaymentSession;
+      if (!finalRetObj?.values || !finalRetObj?.checkoutVals) {
+        throw new Error("Invalid payment session");
+      }
+
+      setValues(finalRetObj.values);
+      setCheckoutVals(finalRetObj.checkoutVals);
+      setRestoredCartItems(
+        Array.isArray(finalRetObj.cartItems) ? finalRetObj.cartItems : [],
+      );
+      setRestoredRestaurantIndex(
+        typeof finalRetObj.selectedRestaurant === "number"
+          ? finalRetObj.selectedRestaurant
+          : 0,
+      );
+
+      const basePayload = finalRetObj.value ?? {};
+      reinitstate({
+        ...basePayload,
+        cartItems: finalRetObj.cartItems ?? basePayload.cartItems ?? [],
+        restaurants:
+          finalRetObj.restaurants ?? basePayload.restaurants ?? [],
+        selectedRestaurant:
+          finalRetObj.selectedRestaurant ?? basePayload.selectedRestaurant,
+      });
+      setSessionReady(true);
+    } catch (parseError) {
+      console.error("Failed to restore payment session", parseError);
+      setError(
+        "Unable to restore your order details after payment. Please contact support.",
+      );
+      setSessionReady(true);
+    }
+  }, [id, reinitstate]);
+
+  const activeCartItems =
+    cartItems.length > 0 ? cartItems : restoredCartItems;
+  const activeRestaurantIndex =
+    restaurants.length > 0 ? selectedRestaurant : restoredRestaurantIndex;
+
+  const handleSubmit = useCallback(async () => {
+    if (submitStarted.current) {
+      return;
+    }
+    submitStarted.current = true;
+
     try {
       setLoading(true);
       setError("");
-      setSuccess("");
+
+      if (!billingID || billingID === "Fail") {
+        setError("Payment was not approved.");
+        setLoading(false);
+        submitStarted.current = false;
+        return;
+      }
 
       if (values.Street === "") {
         setError("Please enter Street Address");
         setLoading(false);
-      } else if (values.ContactNum.length < 7) {
+        submitStarted.current = false;
+        return;
+      }
+      if (values.ContactNum.length < 7) {
         setError("Please enter Contact number");
         setLoading(false);
-      } else {
-        await checkoutOrder(
+        submitStarted.current = false;
+        return;
+      }
+
+      if (activeCartItems.length === 0) {
+        setError(
+          `Your cart could not be restored. Payment reference: ${billingID}. Please contact support.`,
+        );
+        setLoading(false);
+        submitStarted.current = false;
+        return;
+      }
+
+      const restaurantList = restaurants;
+      const restaurant = restaurantList[activeRestaurantIndex];
+      if (!restaurant?._id) {
+        setError(
+          `Restaurant information is missing. Payment reference: ${billingID}. Please contact support.`,
+        );
+        setLoading(false);
+        submitStarted.current = false;
+        return;
+      }
+
+      const existingOrder = await fetchOrderByBillingInfo(billingID);
+      let result;
+      if (existingOrder) {
+        result = await completeCheckoutWithExistingOrder(
           value,
-          cartItems,
+          values,
+          existingOrder,
+        );
+      } else {
+        result = await checkoutOrder(
+          value,
+          activeCartItems,
           values,
           checkoutVals.deliveryFee,
           checkoutVals.GCT,
           checkoutVals.serviceFee,
           checkoutVals.cartItemsSum,
           checkoutVals.Total,
-          restaurants[selectedRestaurant]._id,
-          billingID
-        ).then((res) => {
-          if (res === null || res === undefined) {
-            setValues({
-              Street: "",
-              Town: "Select Town",
-              ContactNum: "",
-              PaymentMethod: "Cash on Delivery",
-              Parish: "Clarendon",
-              lat: null,
-              long: null,
-            });
-            setLoading(false);
-            setCheckoutVals({
-              deliveryFee: { Cost: "0.00" },
-              cartItemsSum: { Cost: "0.00" },
-              serviceFee: { Cost: "0.00" },
-              GCT: { Cost: "0.00" },
-              Total: { Cost: "0.00" },
-            });
-            history.push("/OrderCompleted");
-          } else if (res === "no rider") {
-            setError(
-              "We are unable to take your order at this time. Please try again in a few minutes."
-            );
-            setLoading(false);
-          }
-        });
-      }
-    } catch (e: any) {
-      // console.log(e.message);
-      let path = e.message;
-      //console.log(path)
-      let result = path.split("Path");
-      //console.log(result)
-      if (result.length > 1) {
-        setError(result[1]);
-      } else {
-        setError("Unable to process your order at this time.");
-        //setError(result[0]); //DEBUG ON DEV
+          restaurant._id,
+          billingID,
+        );
       }
 
+      if (result?.ok) {
+        localStorage.removeItem("paymentObject");
+        history.push("/OrderCompleted");
+        return;
+      }
+
+      const billingHint = result?.billingId ?? billingID;
+      console.error("Post-payment checkout failed", {
+        billingId: billingHint,
+        reason: result?.reason,
+      });
+      setError(
+        result?.reason ??
+          `We received your payment but could not finalize the order. Reference: ${billingHint}. Please contact support.`,
+      );
       setLoading(false);
+      submitStarted.current = false;
+    } catch (e: unknown) {
+      const message = e instanceof Error ? e.message : "Unknown error";
+      console.error("Post-payment checkout error", { billingID, message });
+      setError(
+        `Unable to process your order. Payment reference: ${billingID}. Please contact support.`,
+      );
+      setLoading(false);
+      submitStarted.current = false;
     }
-  };
+  }, [
+    activeCartItems,
+    activeRestaurantIndex,
+    billingID,
+    checkoutOrder,
+    checkoutVals,
+    completeCheckoutWithExistingOrder,
+    fetchOrderByBillingInfo,
+    history,
+    restaurants,
+    value,
+    values,
+  ]);
+
+  useEffect(() => {
+    if (
+      !sessionReady ||
+      !billingID ||
+      billingID === "Fail" ||
+      error !== "" ||
+      loading
+    ) {
+      return;
+    }
+
+    if (
+      values.Street !== "" &&
+      values.ContactNum.length >= 7 &&
+      (restaurants.length > 0 || restoredCartItems.length > 0)
+    ) {
+      void handleSubmit();
+    }
+  }, [
+    sessionReady,
+    billingID,
+    values.Street,
+    values.ContactNum,
+    restaurants.length,
+    restoredCartItems.length,
+    error,
+    loading,
+    handleSubmit,
+  ]);
 
   if (billingID === "Fail") {
     return (
@@ -204,47 +311,24 @@ export const PaymentProcessScreen: React.FC = function PaymentProcessScreen() {
               className={classes.gridRoot}
               alignItems="center"
             >
-              {/* <Grid item xs={2} spacing={1}>
-                        <Sidebar />
-                    </Grid> */}
               <Grid
                 container
                 direction="row"
                 spacing={1}
                 className={classes.main}
               >
-                <Grid
-                  item
-                  xs={8}
-                  style={{
-                    marginBottom: "1%",
-                    marginTop: "1%",
-                    background: "transparent",
-                  }}
-                >
+                <Grid item xs={8} style={{ marginBottom: "1%", marginTop: "1%" }}>
                   <HeaderLeft />
                 </Grid>
-                <Grid
-                  item
-                  xs={4}
-                  style={{
-                    marginBottom: "1%",
-                    marginTop: "1%",
-                    background: "transparent",
-                  }}
-                >
+                <Grid item xs={4} style={{ marginBottom: "1%", marginTop: "1%" }}>
                   <HeaderRight />
                 </Grid>
-                {/*Row 1*/}
                 <Grid item xs={12}>
                   <ShoppingCartItems Fail={true} />
                 </Grid>
                 <Grid item xs={12}>
                   <DashboardFooter />
                 </Grid>
-                {/* <Grid item xs={4}>
-                            <PaymentOptionsForm />
-                        </Grid> */}
               </Grid>
             </Grid>
           </Container>
@@ -257,12 +341,30 @@ export const PaymentProcessScreen: React.FC = function PaymentProcessScreen() {
                 : ""
             }
           />
-        ) : (
-          <></>
-        )}
+        ) : null}
       </>
     );
   }
+
+  if (error) {
+    return (
+      <Box sx={{ p: 4, maxWidth: 720, margin: "0 auto" }}>
+        <Alert severity="error" sx={{ mb: 2 }}>
+          {error}
+        </Alert>
+        {billingID && billingID !== "Fail" ? (
+          <Typography variant="body2" color="text.secondary">
+            Payment reference: {billingID}
+          </Typography>
+        ) : null}
+      </Box>
+    );
+  }
+
+  if (loading) {
+    return <Spinner />;
+  }
+
   return <Spinner />;
 };
 

@@ -1289,6 +1289,46 @@ export const GET_CATEGORIES = gql`
   }
 `;
 
+export const CREATE_PENDING_CHECKOUT = gql`
+  mutation createPendingCheckout(
+    $userId: String!
+    $cartItems: JSONObject!
+    $orderItems: JSONObject!
+    $deliveryAddress: String!
+    $paymentMethod: String!
+    $additionalInfo: String
+    $orderTotal: Float!
+    $deliveryFee: Float!
+    $gct: Float!
+    $serviceCharge: Float!
+    $cartTotal: Float!
+    $restaurant: String!
+    $generalLocation: String
+    $riderId: String
+  ) {
+    createPendingCheckout(
+      userId: $userId
+      cartItems: $cartItems
+      orderItems: $orderItems
+      deliveryAddress: $deliveryAddress
+      paymentMethod: $paymentMethod
+      additionalInfo: $additionalInfo
+      orderTotal: $orderTotal
+      deliveryFee: $deliveryFee
+      gct: $gct
+      serviceCharge: $serviceCharge
+      cartTotal: $cartTotal
+      restaurant: $restaurant
+      generalLocation: $generalLocation
+      riderId: $riderId
+    ) {
+      pendingId
+      checkoutTraceId
+      status
+    }
+  }
+`;
+
 export const CREATE_ORDER_Billing = gql`
   mutation CreateOrderBilling(
     $oId: String
