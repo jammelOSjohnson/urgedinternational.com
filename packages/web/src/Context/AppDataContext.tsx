@@ -2777,8 +2777,13 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
           var restList = response.data.getStaff;
 
           if (restList !== null) {
-            payload.riders =
-              restList !== undefined && restList !== null ? restList : [];
+            const sortedList = [...(restList ?? [])].sort((a, b) => {
+              const aDisabled = a.disabled === true ? 1 : 0;
+              const bDisabled = b.disabled === true ? 1 : 0;
+              if (aDisabled !== bDisabled) return aDisabled - bDisabled;
+              return (a.FirstName ?? "").localeCompare(b.FirstName ?? "");
+            });
+            payload.riders = sortedList;
             return payload;
           }
         }
