@@ -12,6 +12,12 @@ import {
   Select,
   MenuItem,
   Snackbar,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  FormControlLabel,
+  Checkbox,
 } from "@mui/material";
 import { makeStyles, createStyles } from "@mui/styles";
 import React, { useEffect, useState } from "react";
@@ -30,6 +36,24 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
     return <MuiAlert elevation={6} variant="filled" ref={ref} {...props} />;
   },
 );
+
+const isRiderAssignable = (rider: {
+  isAvailable?: boolean;
+  disabled?: boolean;
+}) => rider?.isAvailable === true && rider?.disabled === false;
+
+const getRiderMenuStyle = (rider: {
+  isAvailable?: boolean;
+  disabled?: boolean;
+}) => {
+  if (rider.disabled) {
+    return { background: "#555", color: "#FFF" };
+  }
+  if (!rider.isAvailable) {
+    return { background: "red", color: "#FFF" };
+  }
+  return undefined;
+};
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -140,6 +164,12 @@ export const OrderFullDetails: React.FC = () => {
   // var [success, setSuccess] = useState('');
   const [open, setOpen] = React.useState(false);
   const [open2, setOpen2] = React.useState(false);
+  const [showUnavailableRiders, setShowUnavailableRiders] = useState(false);
+  const [overrideDialogOpen, setOverrideDialogOpen] = useState(false);
+  const [pendingAssignment, setPendingAssignment] = useState<{
+    riderIndex: number;
+    orderIndex: number;
+  } | null>(null);
 
   const handleChange = (event) => {
     // //console.log(event.target.name);
@@ -166,23 +196,38 @@ export const OrderFullDetails: React.FC = () => {
     setOpen2(false);
   };
 
-  const handleSubmit = async (finalselectedRider, orderIndex) => {
+  const handleSubmit = async (
+    finalselectedRider,
+    orderIndex,
+    forceRiderAssignment = false,
+  ) => {
     try {
       setOpen(false);
       setOpen2(false);
-      //console.log("trying to see id");
-      //console.log(finalselectedRider);
-      //console.log(riders[finalselectedRider]);
       console.log(orderIndex);
       let OrdertoUpdate = orders.filter((item, index) => orderIndex === index);
 
       console.log("updatedOrders", OrdertoUpdate);
       if (finalselectedRider !== undefined) {
+        const selectedRiderRecord = riders[finalselectedRider];
+        if (
+          !forceRiderAssignment &&
+          selectedRiderRecord &&
+          !isRiderAssignable(selectedRiderRecord)
+        ) {
+          setPendingAssignment({
+            riderIndex: finalselectedRider,
+            orderIndex,
+          });
+          setOverrideDialogOpen(true);
+          return;
+        }
+
         let OrdertoUpdateFinal = {
           ...OrdertoUpdate[0],
           Rider: riders[finalselectedRider]._id,
+          forceRiderAssignment,
         };
-        //OrdertoUpdate[0].Rider = riders[finalselectedRider]._id;
         await UpdateOrder(value, OrdertoUpdateFinal).then((res) => {
           if (res) {
             setOpen(true);
@@ -197,7 +242,6 @@ export const OrderFullDetails: React.FC = () => {
           ...OrdertoUpdate[0],
           Rider: OrdertoUpdate[0].Rider._id,
         };
-        //OrdertoUpdate[0].Rider = OrdertoUpdate[0].Rider._id;
         await UpdateOrder(value, OrdertoUpdateFinal).then((res) => {
           if (res) {
             setOpen(true);
@@ -212,6 +256,31 @@ export const OrderFullDetails: React.FC = () => {
       setOpen2(true);
     }
   };
+
+  const handleOverrideConfirm = () => {
+    if (pendingAssignment == null) {
+      return;
+    }
+    setOverrideDialogOpen(false);
+    handleSubmit(
+      pendingAssignment.riderIndex,
+      pendingAssignment.orderIndex,
+      true,
+    );
+    setPendingAssignment(null);
+  };
+
+  const handleOverrideCancel = () => {
+    setOverrideDialogOpen(false);
+    setPendingAssignment(null);
+  };
+
+  const visibleRiders = riders
+    .map((rider, index) => ({ rider, index }))
+    .filter(({ rider }) => showUnavailableRiders || isRiderAssignable(rider));
+
+  const overrideRider =
+    pendingAssignment != null ? riders[pendingAssignment.riderIndex] : null;
 
   useEffect(() => {
     try {
@@ -515,6 +584,18 @@ export const OrderFullDetails: React.FC = () => {
                         </Typography>
                       </Grid>
                       <Grid item xs={12} md={4}>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={showUnavailableRiders}
+                              onChange={(e) =>
+                                setShowUnavailableRiders(e.target.checked)
+                              }
+                              color="primary"
+                            />
+                          }
+                          label="Show unavailable riders"
+                        />
                         <FormControl
                           variant="outlined"
                           className={clsx(classes.formControl, classes.root)}
@@ -536,23 +617,22 @@ export const OrderFullDetails: React.FC = () => {
                             >
                               Assigned To
                             </MenuItem>
-                            {riders.map((item, index) => {
-                              if (!item.isAvailable)
-                                return (
-                                  <MenuItem
-                                    style={{ background: "red", color: "#FFF" }}
-                                    key={index}
-                                    value={index}
-                                  >
-                                    {item.FirstName}
-                                  </MenuItem>
-                                );
-                              else
-                                return (
-                                  <MenuItem key={index} value={index}>
-                                    {item.FirstName}
-                                  </MenuItem>
-                                );
+                            {visibleRiders.map(({ rider: item, index }) => {
+                              const labelSuffix = item.disabled
+                                ? " (disabled)"
+                                : !item.isAvailable
+                                  ? " (unavailable)"
+                                  : "";
+                              return (
+                                <MenuItem
+                                  style={getRiderMenuStyle(item)}
+                                  key={index}
+                                  value={index}
+                                >
+                                  {item.FirstName}
+                                  {labelSuffix}
+                                </MenuItem>
+                              );
                             })}
                           </Select>
                         </FormControl>
@@ -661,6 +741,27 @@ export const OrderFullDetails: React.FC = () => {
             Unable to update order at this time.
           </Alert>
         </Snackbar>
+        <Dialog open={overrideDialogOpen} onClose={handleOverrideCancel}>
+          <DialogTitle>Assign unavailable rider?</DialogTitle>
+          <DialogContent>
+            <Typography>
+              {overrideRider?.FirstName ?? "This rider"} is{" "}
+              {[
+                overrideRider?.disabled ? "disabled" : null,
+                overrideRider && !overrideRider.isAvailable ? "unavailable" : null,
+              ]
+                .filter(Boolean)
+                .join(" and ") || "not assignable"}
+              . Assign anyway?
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleOverrideCancel}>Cancel</Button>
+            <Button onClick={handleOverrideConfirm} color="primary">
+              Assign anyway
+            </Button>
+          </DialogActions>
+        </Dialog>
         <style>
           {`
                             .main-image{

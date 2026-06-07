@@ -23,6 +23,11 @@ import {
   fulfillOrderFromPending,
   generateCheckoutTraceId,
 } from "./services/fulfillOrder.js";
+import {
+  assertRiderAssignable,
+  resolveRiderForAssignment,
+  shouldValidateRiderChange,
+} from "./services/riderAssignment.js";
 
 const dateScalar = new GraphQLScalarType({
   name: "Date",
@@ -528,13 +533,22 @@ const resolvers = {
         Restaurant,
       },
     ) => {
+      if (Rider != null && Rider !== "") {
+        const riderUser = await resolveRiderForAssignment(Rider);
+        if (riderUser == null) {
+          throw new Error("Rider is not available for assignment");
+        }
+      } else if (OrderStatus === "Not Assigned") {
+        log.info({ event: "order.no_assignable_rider", orderStatus: OrderStatus });
+      }
+
       const orderItem = new Order({
         Id,
         OrderItems,
         OrderStatus,
         OrderTotal,
         OrderDate,
-        Rider,
+        ...(Rider != null && Rider !== "" ? { Rider } : {}),
         BillingInfo,
         DeliveryAddress,
         PaymentMethod,
@@ -583,6 +597,13 @@ const resolvers = {
         riderId,
       },
     ) => {
+      if (riderId != null && riderId !== "") {
+        const riderUser = await resolveRiderForAssignment(riderId);
+        if (riderUser == null) {
+          throw new Error("Rider is not available for assignment");
+        }
+      }
+
       const pendingId = crypto.randomUUID();
       const checkoutTraceId = generateCheckoutTraceId();
 
@@ -781,6 +802,7 @@ const resolvers = {
         ServiceCharge,
         CartTotal,
         OrderType,
+        forceRiderAssignment,
       },
     ) => {
       let newOrder = {
@@ -809,6 +831,12 @@ const resolvers = {
       }
       const user = await User.findOne({ Id });
       if (!user) throw new Error("User not found");
+
+      const currentRiderId = order.Rider?.toString() ?? "";
+      if (shouldValidateRiderChange(currentRiderId, Rider)) {
+        await assertRiderAssignable(Rider, forceRiderAssignment);
+      }
+
       Object.assign(order, newOrder);
       order.save();
       const order2 = await Order.find()

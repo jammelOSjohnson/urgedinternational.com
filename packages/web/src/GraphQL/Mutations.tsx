@@ -931,6 +931,7 @@ export const UPDATE_ORDER = gql`
     $ServiceCharge: Float
     $CartTotal: Float
     $OrderType: String
+    $forceRiderAssignment: Boolean
   ) {
     updateOrder(
       _id: $_id
@@ -948,6 +949,7 @@ export const UPDATE_ORDER = gql`
       ServiceCharge: $ServiceCharge
       CartTotal: $CartTotal
       OrderType: $OrderType
+      forceRiderAssignment: $forceRiderAssignment
     ) {
       _id
       Id

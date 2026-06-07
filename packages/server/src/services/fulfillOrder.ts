@@ -1,37 +1,10 @@
 import crypto from "crypto";
 import moment from "moment-timezone";
 import Order from "../models/Order.model.js";
-import User from "../models/User.model.js";
 import PendingCheckout from "../models/PendingCheckout.model.js";
 import { log } from "../logger.js";
 import { pubsub, ORDER_CREATED } from "../pubsub.js";
-
-async function selectRider(parish?: string | null) {
-  const query = User.find()
-    .where("isAvailable")
-    .ne(null)
-    .where("disabled")
-    .ne(null)
-    .where("Position")
-    .equals("Rider");
-
-  if (parish != null && parish !== "") {
-    query.where("Parish").equals(parish);
-  }
-
-  const ridersList = await query;
-  let available = ridersList.filter(
-    (r) => r.isAvailable === true && r.disabled === false,
-  );
-  if (available.length === 0 && ridersList.length > 0) {
-    available = [ridersList[0]];
-  }
-  if (available.length === 0) {
-    return null;
-  }
-  const index = Math.floor(Math.random() * available.length);
-  return available[index];
-}
+import { resolveRiderForAssignment } from "./riderAssignment.js";
 
 export async function fulfillOrderFromPending(
   pendingId: string,
@@ -76,20 +49,29 @@ export async function fulfillOrderFromPending(
     }
   }
 
-  const rider =
-    pending.riderId != null
-      ? await User.findById(pending.riderId)
-      : await selectRider(pending.generalLocation);
+  const rider = await resolveRiderForAssignment(
+    pending.riderId?.toString(),
+    pending.generalLocation,
+  );
 
   const estTime = moment.tz(new Date(), "America/Jamaica").format();
+  const orderStatus = rider != null ? "Pending" : "Not Assigned";
+
+  if (rider == null) {
+    log.info({
+      event: "order.no_assignable_rider",
+      ...traceFields,
+      generalLocation: pending.generalLocation,
+    });
+  }
 
   const orderItem = new Order({
     Id: pending.userId,
     OrderItems: pending.orderItems,
-    OrderStatus: "Pending",
+    OrderStatus: orderStatus,
     OrderTotal: pending.orderTotal,
     OrderDate: estTime,
-    Rider: rider?._id ?? "",
+    ...(rider != null ? { Rider: rider._id } : {}),
     BillingInfo: billingId,
     DeliveryAddress: pending.deliveryAddress,
     PaymentMethod: pending.paymentMethod,
@@ -122,6 +104,7 @@ export async function fulfillOrderFromPending(
       event: "order.created",
       ...traceFields,
       orderId: newOrder._id,
+      orderStatus,
     });
 
     return finalOrder[0];

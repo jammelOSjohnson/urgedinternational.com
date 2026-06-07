@@ -607,6 +607,7 @@ const typeDefs = /* GraphQL */ `
       ServiceCharge: Float
       CartTotal: Float
       OrderType: String
+      forceRiderAssignment: Boolean
     ): OrderUpdated
 
     updatePaySetting(

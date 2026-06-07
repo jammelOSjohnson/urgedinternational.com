@@ -1891,10 +1891,6 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       console.log(e);
     }
 
-    if (RiderRes.length === 0 && ridersList.length > 0) {
-      RiderRes.push(ridersList[0]);
-    }
-
     const max = RiderRes.length;
     const randRider = max > 0 ? Math.floor(Math.random() * max) : 0;
     const selectedRider = RiderRes[randRider] ?? null;
@@ -1902,7 +1898,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     const orderBody = {
       Id: payload.currentUser.uid,
       OrderItems: orderItems,
-      OrderStatus: "Pending",
+      OrderStatus: selectedRider != null ? "Pending" : "Not Assigned",
       OrderTotal: Number(Total.Cost),
       OrderDate: estTime,
       Rider: selectedRider?._id !== undefined ? selectedRider._id : "",
