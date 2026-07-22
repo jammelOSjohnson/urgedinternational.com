@@ -1589,7 +1589,10 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     if (category !== "All") {
       var newRestItems = [] as Object[];
       value.restaurants.map((item, index) => {
-        if (item.category.Name === category) {
+        if (
+          item.category.Name === category &&
+          item.Parish === payload.generalLocation
+        ) {
           newRestItems.push(item);
         }
         return "";
@@ -1599,7 +1602,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
       payload.filterRestCategory = category;
 
       dispatch({
-        type: "filter_menu_category",
+        type: "filter_rest_category",
         payload: payload,
       });
     } else {

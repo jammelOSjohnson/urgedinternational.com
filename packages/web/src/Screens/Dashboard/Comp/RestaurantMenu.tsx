@@ -232,9 +232,11 @@ export const RestaurantMenu: React.FC = function RestaurantMenu(props) {
     filteredMenuItems,
     clearCartItems,
     paySettings,
+    generalLocation,
   } = value;
   var restaurant = restaurants.filter(
-    (item) => item.FirstName === restaurantName,
+    (item) =>
+      item.FirstName === restaurantName && item.Parish === generalLocation,
   );
   //var restaurant = restaurants[selectedRestaurant];
   // //console.log("Menu Screen Menu");
