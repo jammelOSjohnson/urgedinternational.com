@@ -1725,6 +1725,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
           BackdropComponent={Backdrop}
           BackdropProps={{
             timeout: 500,
+            invisible: true,
           }}
         >
           <Fade in={open3}>
