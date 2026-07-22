@@ -150,10 +150,12 @@ export const RestaurantMenuCategories: React.FC =
       menuCategories,
       getMenuBycategory,
       filterCategory,
+      generalLocation,
     } = value;
     //var restaurant = restaurants[selectedRestaurant];
     var restaurant = restaurants.filter(
-      (item) => item.FirstName === restaurantName,
+      (item) =>
+        item.FirstName === restaurantName && item.Parish === generalLocation,
     );
 
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -163,18 +165,24 @@ export const RestaurantMenuCategories: React.FC =
         ////console.log("fetching menu cats");
         ////console.log(restaurant);
         try {
+          if (restaurant.length === 0 || !restaurant[0]?.Id) {
+            return;
+          }
           getMenuCats(value, restaurant[0].Id);
         } catch (err) {
           //console.log(err);
         }
         // eslint-disable-next-line
       },
-      [restaurants],
+      [restaurants, generalLocation],
     );
 
     var filterCat = function (event, category) {
       try {
         event.preventDefault();
+        if (restaurant.length === 0) {
+          return;
+        }
         getMenuBycategory(value, restaurant[0], category).then(() => {
           //setSate
         });
