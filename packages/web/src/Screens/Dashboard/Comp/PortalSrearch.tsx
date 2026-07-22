@@ -196,7 +196,7 @@ const PortalSearch: React.FC<Props> = function PortalSearch({
   const [open, setOpen] = React.useState(false);
   const [restItems, setRestItems] = React.useState<restItemsArr[]>([]);
   var { value } = useAppData();
-  var { restaurants, viewMenuItems } = value;
+  var { restaurants, viewMenuItems, generalLocation } = value;
   var history = useHistory();
   var location = history.location;
   var referralPath = location.pathname;
@@ -259,15 +259,20 @@ const PortalSearch: React.FC<Props> = function PortalSearch({
 
   useEffect(() => {
     if (restaurants.length > 0) {
-      let itemArr = restItems;
-      restaurants.map((val) => {
-        val.MenuItems.map((item) => {
+      const itemArr: restItemsArr[] = [];
+      restaurants.forEach((val) => {
+        if (val.Parish !== generalLocation || val.isAvailable === false) {
+          return;
+        }
+        val.MenuItems.forEach((item) => {
           itemArr.push({ ...item, rest: val });
-          setRestItems(itemArr);
         });
       });
+      setRestItems(itemArr);
+    } else {
+      setRestItems([]);
     }
-  }, [restaurants]);
+  }, [restaurants, generalLocation]);
 
   if (screen === "mobile") {
     return (
@@ -326,7 +331,14 @@ const PortalSearch: React.FC<Props> = function PortalSearch({
                   .filter((val) => {
                     if (searchTerm === "") {
                       return;
-                    } else if (
+                    }
+                    if (
+                      val.Parish !== generalLocation ||
+                      val.isAvailable === false
+                    ) {
+                      return;
+                    }
+                    if (
                       val.FirstName.toLowerCase().includes(
                         searchTerm.toLowerCase(),
                       )
@@ -364,7 +376,11 @@ const PortalSearch: React.FC<Props> = function PortalSearch({
                   .filter((val) => {
                     if (searchTerm === "") {
                       return;
-                    } else if (
+                    }
+                    if ((val.rest as any)?.Parish !== generalLocation) {
+                      return;
+                    }
+                    if (
                       val.ItemName.toLowerCase().includes(
                         searchTerm.toLowerCase(),
                       )
@@ -483,7 +499,14 @@ const PortalSearch: React.FC<Props> = function PortalSearch({
             .filter((val) => {
               if (searchTerm === "") {
                 return;
-              } else if (
+              }
+              if (
+                val.Parish !== generalLocation ||
+                val.isAvailable === false
+              ) {
+                return;
+              }
+              if (
                 val.FirstName.toLowerCase().includes(searchTerm.toLowerCase())
               ) {
                 return val;
@@ -519,7 +542,11 @@ const PortalSearch: React.FC<Props> = function PortalSearch({
             .filter((val) => {
               if (searchTerm === "") {
                 return;
-              } else if (
+              }
+              if ((val.rest as any)?.Parish !== generalLocation) {
+                return;
+              }
+              if (
                 val.ItemName.toLowerCase().includes(searchTerm.toLowerCase())
               ) {
                 return val;

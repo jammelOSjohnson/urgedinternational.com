@@ -178,12 +178,13 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
     // eslint-disable-next-line
   }, [restaurants, generalLocation]);
 
-  var handleSelectedRestaurant = async function (index, restaurantName) {
-    if (index !== undefined || index !== null) {
+  var handleSelectedRestaurant = async function (restaurant, restaurantName) {
+    if (restaurant !== undefined && restaurant !== null) {
       // console.log("Index is");
       // console.log(index, restaurantName);
       var payload = value;
-      payload.selectedRestaurant = index;
+      const fullIndex = restaurants.findIndex((r) => r._id === restaurant._id);
+      payload.selectedRestaurant = fullIndex;
       payload.selectedRestaurantName = restaurantName;
       await viewMenuItems(payload).then(() => {
         history.push(`/Menu-${restaurantName}`);
@@ -233,7 +234,7 @@ export const PopularRestaurants: React.FC = function PopularRestaurants() {
                 >
                   <Link
                     onClick={() =>
-                      handleSelectedRestaurant(index, item.FirstName)
+                      handleSelectedRestaurant(item, item.FirstName)
                     }
                     className={classes.link}
                   >

@@ -58,12 +58,13 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
 
   var history = useHistory();
 
-  var handleSelectedRestaurant = async function (index, restaurantName) {
-    if (index !== undefined || index !== null) {
+  var handleSelectedRestaurant = async function (restaurant, restaurantName) {
+    if (restaurant !== undefined && restaurant !== null) {
       // //console.log("Index is");
       // //console.log(index);
       var payload = value;
-      payload.selectedRestaurant = index;
+      const fullIndex = restaurants.findIndex((r) => r._id === restaurant._id);
+      payload.selectedRestaurant = fullIndex;
       // console.log("payload.selectedRestaurant", payload.selectedRestaurant);
       // console.log("restaurant", restaurants[payload.selectedRestaurant]);
       payload.selectedRestaurantName = restaurantName;
@@ -97,7 +98,7 @@ export const RestaurantList: React.FC = function RestaurantList(props) {
           to={"javascript();"}
           onClick={(e) => {
             e.preventDefault();
-            handleSelectedRestaurant(index, restaurant.FirstName);
+            handleSelectedRestaurant(restaurant, restaurant.FirstName);
           }}
           style={sx.link}
         >

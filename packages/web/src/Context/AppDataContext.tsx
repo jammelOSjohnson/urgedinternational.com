@@ -366,6 +366,19 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   var filterRestCategory = undefined;
   var generalLocation = undefined;
   var targetLocation = undefined;
+  try {
+    const storedRegion = sessionStorage.getItem("urgedRegion");
+    if (storedRegion) {
+      const parsed = JSON.parse(storedRegion);
+      if (parsed && typeof parsed === "object") {
+        generalLocation = parsed.generalLocation;
+        targetLocation = parsed.targetLocation;
+      }
+    }
+  } catch (err) {
+    generalLocation = undefined;
+    targetLocation = undefined;
+  }
   var prevSelectedrestaurant = undefined;
   var loading = true;
   var loggedIn = false;
@@ -2948,6 +2961,17 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
   ) {
     payload.generalLocation = location;
     payload.targetLocation = target;
+    try {
+      sessionStorage.setItem(
+        "urgedRegion",
+        JSON.stringify({
+          generalLocation: location,
+          targetLocation: target,
+        }),
+      );
+    } catch (err) {
+      // Ignore sessionStorage write failures (e.g. private mode quotas)
+    }
     dispatch({
       type: "set_general_location",
       payload: payload,
