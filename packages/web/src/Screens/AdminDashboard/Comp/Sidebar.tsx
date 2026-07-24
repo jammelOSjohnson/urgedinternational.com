@@ -268,7 +268,10 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                   "Organisations",
                   "Sales Export",
                 ].map((text, index) =>
-                  referralPath === "/AdminDashboard" && text === "Overview" ? (
+                  userRolef !== "Admin" &&
+                  (text === "Overview" || text === "Sales Export")
+                    ? null
+                    : referralPath === "/AdminDashboard" && text === "Overview" ? (
                     <ListItem button key={text}>
                       <ListItemIcon>
                         {index === 0 ? (
@@ -675,7 +678,9 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                 userInfo.fullName !== "" &&
                 userInfo.fullName !== undefined
                   ? ["Settings", "Logout"].map((text, index) =>
-                      text === "Logout" ? (
+                      userRolef !== "Admin" && text === "Settings"
+                        ? null
+                        : text === "Logout" ? (
                         <a
                           href="/"
                           onClick={handleLogout}
@@ -752,7 +757,9 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                       ),
                     )
                   : ["Settings", "Login"].map((text, index) =>
-                      text === "Login" ? (
+                      userRolef !== "Admin" && text === "Settings"
+                        ? null
+                        : text === "Login" ? (
                         <a
                           href="/Login"
                           onClick={handleLogin}
@@ -892,7 +899,10 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                   "Organisations",
                   "Sales Export",
                 ].map((text, index) =>
-                  referralPath === "/AdminDashboard" && text === "Overview" ? (
+                  userRolef !== "Admin" &&
+                  (text === "Overview" || text === "Sales Export")
+                    ? null
+                    : referralPath === "/AdminDashboard" && text === "Overview" ? (
                     <ListItem button key={text}>
                       <ListItemIcon>
                         {index === 0 ? (
@@ -1336,7 +1346,9 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                 userInfo.fullName !== "" &&
                 userInfo.fullName !== undefined
                   ? ["Settings", "Logout"].map((text, index) =>
-                      text === "Logout" ? (
+                      userRolef !== "Admin" && text === "Settings"
+                        ? null
+                        : text === "Logout" ? (
                         <a
                           href="/"
                           onClick={handleLogout}
@@ -1413,7 +1425,9 @@ export const Sidebar: React.FC<{ children?: React.ReactNode }> =
                       ),
                     )
                   : ["Settings", "Login"].map((text, index) =>
-                      text === "Login" ? (
+                      userRolef !== "Admin" && text === "Settings"
+                        ? null
+                        : text === "Login" ? (
                         <a
                           href="/Login"
                           onClick={handleLogin}

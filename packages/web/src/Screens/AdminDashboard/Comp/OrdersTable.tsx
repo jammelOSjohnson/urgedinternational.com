@@ -342,7 +342,7 @@ export const OrdersTable: React.FC = function OrdersTable() {
   };
 
   if (userRolef !== undefined && orders.length !== 0) {
-    if (userRolef === "Admin") {
+    if (userRolef === "Admin" || userRolef === "Urged_Staff") {
       orders.map((item, index) => {
         const now = new Date(parseInt(item.OrderDate, 10));
         const estTime = moment

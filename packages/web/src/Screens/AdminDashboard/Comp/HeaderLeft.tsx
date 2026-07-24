@@ -103,7 +103,7 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
   const classes = useStyles();
   const theme = useTheme();
   var { value } = useAppData();
-  var { logout, userInfo } = value;
+  var { logout, userInfo, userRolef } = value;
   const [open1, setOpen1] = React.useState(false);
   // const [values, setValues] = React.useState<State>({
   //     email: '',
@@ -194,7 +194,10 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
           "Organisations",
           "Sales Export",
         ].map((text, index) =>
-          referralPath === "/AdminDashboard" && text === "Overview" ? (
+          userRolef !== "Admin" &&
+          (text === "Overview" || text === "Sales Export")
+            ? null
+            : referralPath === "/AdminDashboard" && text === "Overview" ? (
             <ListItem button key={text}>
               <ListItemIcon>
                 {index === 0 ? (
@@ -511,7 +514,9 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
         userInfo.fullName !== "" &&
         userInfo.fullName !== undefined
           ? ["Settings", "Logout"].map((text, index) =>
-              text === "Logout" ? (
+              userRolef !== "Admin" && text === "Settings"
+                ? null
+                : text === "Logout" ? (
                 <a
                   href="/"
                   onClick={handleLogout}
@@ -581,7 +586,9 @@ export const HeaderLeft: React.FC = function HeaderLeft() {
               ),
             )
           : ["Settings", "Login"].map((text, index) =>
-              text === "Login" ? (
+              userRolef !== "Admin" && text === "Settings"
+                ? null
+                : text === "Login" ? (
                 <a
                   href="/Login"
                   onClick={handleLogin}

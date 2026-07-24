@@ -188,7 +188,7 @@ import { Alert } from '@mui/lab';
     };
     
     if(userRolef !== undefined && rider_orders.length !== 0){
-       if(userRolef === "Admin"){
+       if(userRolef === "Admin" || userRolef === "Urged_Staff"){
         rider_orders.map((item, index) => {
             const now = new Date(parseInt(item.OrderDate, 10));
             const estTime = moment.tz(now, "America/Jamaica").format("YYYY-MM-DD h:mm a");

@@ -364,7 +364,7 @@ const App: React.FC = function App() {
                       path="/AdminDashboard"
                       exact
                       component={AdminDashboard}
-                      allowedRoles={["Admin", "Urged_Staff"]}
+                      allowedRoles={["Admin"]}
                     />
                     <RoleProtectedRoute
                       path="/AdminOrders"
@@ -400,13 +400,13 @@ const App: React.FC = function App() {
                       path="/AdminSettings"
                       exact
                       component={SettingsScreen}
-                      allowedRoles={["Admin", "Urged_Staff"]}
+                      allowedRoles={["Admin"]}
                     />
                     <RoleProtectedRoute
                       path="/PaySettings"
                       exact
                       component={PaySettingsScreen}
-                      allowedRoles={["Admin", "Urged_Staff"]}
+                      allowedRoles={["Admin"]}
                     />
                     <RoleProtectedRoute
                       path="/OrgDetails"
@@ -418,13 +418,13 @@ const App: React.FC = function App() {
                       path="/ShippingAddressSettings"
                       exact
                       component={ShippingAddressSettingsScreen}
-                      allowedRoles={["Admin", "Urged_Staff"]}
+                      allowedRoles={["Admin"]}
                     />
                     <RoleProtectedRoute
                       path="/SalesExport"
                       exact
                       component={SalesExport}
-                      allowedRoles={["Admin", "Urged_Staff"]}
+                      allowedRoles={["Admin"]}
                     />
                     {/* Rider Screens */}
                     <Route
