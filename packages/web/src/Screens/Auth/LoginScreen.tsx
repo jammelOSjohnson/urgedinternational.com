@@ -485,7 +485,11 @@ export const LoginScreen: React.FC = function LoginScreen() {
   useEffect(() => {
     //console.log("Checking role");
     //console.log(userRolef);
-    if (userRolef !== undefined && userRolef === "Admin" && userRolef !== "") {
+    if (
+      userRolef !== undefined &&
+      (userRolef === "Admin" || userRolef === "Urged_Staff") &&
+      userRolef !== ""
+    ) {
       setLoading(false);
       setSuccess("Sign In Successful.");
       setTimeout(() => {
