@@ -255,7 +255,7 @@ export const Header2: React.FC = function Header2() {
       try {
         //Subscribe to order data
         if (value.userRolef !== undefined) {
-          if (value.userRolef === "Admin") {
+          if (value.userRolef === "Admin" || value.userRolef === "Urged_Staff") {
             if (data !== undefined) {
               //console.log(data)
               var OrdersNew = [] as Object[];
