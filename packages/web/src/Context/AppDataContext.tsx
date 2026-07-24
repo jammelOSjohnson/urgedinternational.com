@@ -3026,7 +3026,7 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
         async function (response) {
           ////console.log("create orer result");
           if (response.data.updatePaySetting !== null) {
-            await fetchPaySettings(payload);
+            await getPaySettingsData(payload);
             return true;
           }
         },

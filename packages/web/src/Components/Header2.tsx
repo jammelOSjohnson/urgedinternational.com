@@ -211,7 +211,7 @@ export const Header2: React.FC = function Header2() {
   var {
     orders,
     refreshingOrderTables,
-    fetchPaySettings,
+    getPaySettingsData,
     paySettings,
   } = value;
   const [open2, setOpen2] = React.useState(false);
@@ -287,7 +287,7 @@ export const Header2: React.FC = function Header2() {
             }
           }
         } else {
-          fetchPaySettings(value).then(() => {
+          getPaySettingsData(value).then(() => {
             return;
           });
         }

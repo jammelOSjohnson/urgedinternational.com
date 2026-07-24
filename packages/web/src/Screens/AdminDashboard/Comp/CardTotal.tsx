@@ -70,14 +70,14 @@ const useStyles = makeStyles((theme: Theme) =>
 export const CardTotal: React.FC = function CardTotal() {
     const classes = useStyles();
     var { value }  = useAppData();
-    var { rider_orders, paySettings , fetchPaySettings } = value;
+    var { rider_orders, paySettings , getPaySettingsData } = value;
     const [total, setTotal] = useState(0.00);
 
 
     useEffect(() => {
         try{
             if(paySettings === undefined){
-                fetchPaySettings(value);
+                getPaySettingsData(value);
             }
             
             //console.log("checking to see if i can calculate");
@@ -101,6 +101,8 @@ export const CardTotal: React.FC = function CardTotal() {
                     setTotal(newTotal);
                 }
                 
+            } else if (rider_orders.length === 0) {
+                setTotal(0);
             }
         }catch(err){
             //console.log(err)
