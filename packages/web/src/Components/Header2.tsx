@@ -218,6 +218,7 @@ export const Header2: React.FC = function Header2() {
     userInfo,
     userRolef,
     loggedIn,
+    loading,
   } = value;
   const isSignedIn =
     Boolean(currentUser) ||
@@ -225,6 +226,12 @@ export const Header2: React.FC = function Header2() {
     Boolean(userInfo?.email);
   const accountHref = roleHomeRoute(userRolef);
   const accountLabel = "Dashboard";
+  const OPS_ROLES = new Set(["Admin", "Urged_Staff", "Rider"]);
+  const hideMarketingOnHome =
+    referralPath === "/" &&
+    (OPS_ROLES.has(userRolef) ||
+      (Boolean(currentUser) &&
+        (loading || !userRolef || userRolef === "")));
   const [open2, setOpen2] = React.useState(false);
   const [open3, setOpen3] = React.useState(false);
   // AddGeneralLocation, serviceWorkerUpdated, serviceWorkerRegistration
@@ -350,10 +357,11 @@ export const Header2: React.FC = function Header2() {
   };
 
   if (
-    referralPath !== "/" &&
-    referralPath.toLowerCase() !== "/services" &&
-    referralPath.toLowerCase() !== "/contactus" &&
-    referralPath.toLowerCase() !== "/processpaymentresult"
+    hideMarketingOnHome ||
+    (referralPath !== "/" &&
+      referralPath.toLowerCase() !== "/services" &&
+      referralPath.toLowerCase() !== "/contactus" &&
+      referralPath.toLowerCase() !== "/processpaymentresult")
   ) {
     return (
       <>
