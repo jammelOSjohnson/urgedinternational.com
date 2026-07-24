@@ -182,7 +182,7 @@ export const AddOrg: React.FC = () => {
         : "",
     isAvailable: true,
     disabled: false,
-    password: "12345678",
+    password: import.meta.env.REACT_APP_DEFAULT_USER_PSW ?? "",
     Parish: "Select Parish",
     deliveryFee: 0,
   });
@@ -213,6 +213,7 @@ export const AddOrg: React.FC = () => {
       setSuccess("");
       setError("");
       setLoading(true);
+      values.password = import.meta.env.REACT_APP_DEFAULT_USER_PSW ?? "";
       values.Name === ""
         ? setError("Please enter your Restaurant Name")
         : values.Email === "" ||
@@ -260,7 +261,8 @@ export const AddOrg: React.FC = () => {
                                 : "",
                             isAvailable: true,
                             disabled: false,
-                            password: "12345678",
+                            password:
+                              import.meta.env.REACT_APP_DEFAULT_USER_PSW ?? "",
                             Parish: "Select Parish",
                             deliveryFee: 0,
                           });
