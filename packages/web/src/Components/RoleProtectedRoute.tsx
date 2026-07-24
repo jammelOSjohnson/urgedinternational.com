@@ -1,6 +1,7 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
 import { useAppData } from "../Context/AppDataContext";
+import { roleHomeRoute } from "../utils/roleHomeRoute";
 
 type RoleProtectedRouteProps = {
   component: React.ComponentType<any>;
@@ -46,15 +47,6 @@ const RouteGuardFallback = () => (
     </div>
   </div>
 );
-
-const roleHomeRoute = (role: string | undefined) => {
-  if (role === "Admin" || role === "Urged_Staff") return "/AdminOrders";
-  if (role === "Rider") return "/DeliveryOrders";
-  if (role === "Restaurant" || role === "Restaurant_Admin") {
-    return "/RestaurantDashboard";
-  }
-  return "/Dashboard";
-};
 
 export const RoleProtectedRoute: React.FC<RoleProtectedRouteProps> = ({
   component: Component,

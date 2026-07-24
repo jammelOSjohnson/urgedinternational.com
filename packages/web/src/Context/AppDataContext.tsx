@@ -5,6 +5,7 @@ import {
   createContext,
   useMemo,
   useEffect,
+  useRef,
 } from "react";
 //import fetchAddressApi from '../Apis/fetchAddressApi';
 import {
@@ -88,6 +89,7 @@ function appDataReducer(state, action) {
         loggedIn: action.payload.loggedIn,
         userRolef: action.payload.userRolef,
         currentUser: action.payload.currentUser,
+        loading: false,
       };
     case "reinitstate":
       //console.log("dispatching fetch user info action");
@@ -3718,50 +3720,67 @@ export default function AppDataProvider({ children }: { children: ReactNode }) {
     reinitstate,
   });
 
-  const userEmail = value.userInfo?.email ?? "";
+  const valueRef = useRef(value);
+  const fetchUserInfoRef = useRef(fetchUserInfo);
+  valueRef.current = value;
+  fetchUserInfoRef.current = fetchUserInfo;
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
+      const latest = valueRef.current;
       const signonStatus =
         user !== null && user !== undefined && user.uid !== undefined;
-      const payload = {
-        ...value,
-        userInfo: value.userInfo ?? {
-          _id: "",
-          contactNumber: "",
-          email: "",
-          fullName: "",
-          addressLine1: "",
-          addressLine2: "",
-          city: "",
-        },
-        currentUser: user !== null ? user : undefined,
-        loading: false,
-        loggedIn: signonStatus,
-      };
 
       if (!signonStatus) {
         dispatch({
           type: "auth_change",
-          payload,
+          payload: {
+            currentUser: undefined,
+            loading: false,
+            loggedIn: false,
+          },
         });
         return;
       }
 
-      const payloadEmail = payload.userInfo?.email ?? "";
-      if (payloadEmail === "") {
-        fetchUserInfo(user.uid, payload);
-      } else {
-        dispatch({
-          type: "auth_change",
-          payload,
-        });
+      const userInfo = latest.userInfo ?? {
+        _id: "",
+        contactNumber: "",
+        email: "",
+        fullName: "",
+        addressLine1: "",
+        addressLine2: "",
+        city: "",
+      };
+      const needsProfile =
+        !userInfo.email ||
+        userInfo.email === "" ||
+        !latest.userRolef ||
+        latest.userRolef === "";
+
+      dispatch({
+        type: "auth_change",
+        payload: {
+          currentUser: user,
+          loading: needsProfile,
+          loggedIn: true,
+        },
+      });
+
+      if (needsProfile) {
+        const payload = {
+          ...latest,
+          userInfo: { ...userInfo },
+          currentUser: user,
+          loading: true,
+          loggedIn: true,
+        };
+        fetchUserInfoRef.current(user.uid, payload);
       }
     });
 
     return () => unsubscribe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userEmail]);
+  }, []);
 
   return (
     <AppDataContext.Provider value={{ value }}>

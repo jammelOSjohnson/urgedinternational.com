@@ -2,6 +2,7 @@ import { useAppData } from "../Context/AppDataContext";
 import { HeaderLogo } from "./HeaderLogo";
 import React, { useEffect } from "react";
 import { useHistory, Link as RouterLink } from "react-router-dom";
+import { roleHomeRoute } from "../utils/roleHomeRoute";
 import {
   useMediaQuery,
   useTheme,
@@ -213,7 +214,17 @@ export const Header2: React.FC = function Header2() {
     refreshingOrderTables,
     getPaySettingsData,
     paySettings,
+    currentUser,
+    userInfo,
+    userRolef,
+    loggedIn,
   } = value;
+  const isSignedIn =
+    Boolean(currentUser) ||
+    Boolean(loggedIn) ||
+    Boolean(userInfo?.email);
+  const accountHref = roleHomeRoute(userRolef);
+  const accountLabel = "Dashboard";
   const [open2, setOpen2] = React.useState(false);
   const [open3, setOpen3] = React.useState(false);
   // AddGeneralLocation, serviceWorkerUpdated, serviceWorkerRegistration
@@ -627,11 +638,19 @@ export const Header2: React.FC = function Header2() {
           </a>
         </ListItem>
         <ListItem button key="sign in">
-          <a href="/Login" title="Login" className={classes.linkBtn}>
-            <Button className={classes.btn2} variant="outlined" color="primary">
-              Sign In
-            </Button>
-          </a>
+          {isSignedIn ? (
+            <a href={accountHref} title={accountLabel} className={classes.linkBtn}>
+              <Button className={classes.btn2} variant="outlined" color="primary">
+                {accountLabel}
+              </Button>
+            </a>
+          ) : (
+            <a href="/Login" title="Login" className={classes.linkBtn}>
+              <Button className={classes.btn2} variant="outlined" color="primary">
+                Sign In
+              </Button>
+            </a>
+          )}
         </ListItem>
       </List>
     </div>
@@ -731,15 +750,31 @@ export const Header2: React.FC = function Header2() {
                       Place an Order
                     </Button>
                   </a>
-                  <a href="/Login" title="Login" className={classes.linkBtn}>
-                    <Button
-                      className={classes.btn2}
-                      variant="outlined"
-                      color="primary"
+                  {isSignedIn ? (
+                    <a
+                      href={accountHref}
+                      title={accountLabel}
+                      className={classes.linkBtn}
                     >
-                      Sign In
-                    </Button>
-                  </a>
+                      <Button
+                        className={classes.btn2}
+                        variant="outlined"
+                        color="primary"
+                      >
+                        {accountLabel}
+                      </Button>
+                    </a>
+                  ) : (
+                    <a href="/Login" title="Login" className={classes.linkBtn}>
+                      <Button
+                        className={classes.btn2}
+                        variant="outlined"
+                        color="primary"
+                      >
+                        Sign In
+                      </Button>
+                    </a>
+                  )}
                 </Box>
               </>
             )}
