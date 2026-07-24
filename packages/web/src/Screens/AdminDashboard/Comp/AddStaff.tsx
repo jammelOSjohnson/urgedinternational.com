@@ -140,6 +140,17 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+function defaultPasswordForRole(role: string): string {
+  if (role === "Admin") {
+    return import.meta.env.REACT_APP_DEFAULT_ADMINUSER_PSW ?? "";
+  }
+  if (role === "Urged_Staff") {
+    return import.meta.env.REACT_APP_DEFAULT_STAFFUSER_PSW ?? "";
+  }
+  // Rider and unset default
+  return import.meta.env.REACT_APP_DEFAULT_USER_PSW ?? "";
+}
+
 export const AddStaff: React.FC = () => {
   const classes = useStyles();
   var { value } = useAppData();
@@ -161,10 +172,7 @@ export const AddStaff: React.FC = () => {
     isAvailable: false,
     disabled: false,
     Parish: "Select Parish",
-    password:
-      import.meta.env.REACT_APP_DEFAULT_USER_PSW !== undefined
-        ? import.meta.env.REACT_APP_DEFAULT_USER_PSW
-        : "",
+    password: defaultPasswordForRole("Select Staff Role"),
   });
 
   var [error, setError] = useState("");
@@ -177,12 +185,13 @@ export const AddStaff: React.FC = () => {
 
   var handleSubmit = async function handleSubmit(event) {
     event.preventDefault();
-    //prevents default form refresh
-    console.log("I am inside fuction");
+    // prevents default form refresh
+    // console.log("I am inside fuction");
     try {
       setSuccess("");
       setError("");
       setLoading(true);
+      values.password = defaultPasswordForRole(values.Role);
       values.Name === ""
         ? setError("Please enter FullName")
         : values.Email === "" ||
@@ -226,7 +235,8 @@ export const AddStaff: React.FC = () => {
                               isAvailable: false,
                               disabled: false,
                               Parish: "Select Parish",
-                              password: "12345678",
+                              password:
+                                defaultPasswordForRole("Select Staff Role"),
                             });
                           }, 1500);
                           console.log(res1, "user account created");
@@ -285,6 +295,14 @@ export const AddStaff: React.FC = () => {
     };
 
   const handleChange = (event) => {
+    if (event.target.name === "Role") {
+      setValues({
+        ...values,
+        Role: event.target.value,
+        password: defaultPasswordForRole(event.target.value),
+      });
+      return;
+    }
     setValues({ ...values, [event.target.name]: event.target.value });
   };
 
