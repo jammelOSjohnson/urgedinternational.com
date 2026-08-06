@@ -37,6 +37,13 @@ interface Props {
   setLoading: any;
 }
 
+function buildGeocodeAddress(line1?: string, line2?: string): string {
+  return [line1, line2]
+    .map((s) => (s ?? "").trim())
+    .filter(Boolean)
+    .join(" ");
+}
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -287,11 +294,12 @@ export const CheckGps: React.FC<Props> = function CheckGps({ setLoading }) {
         setError("Please enter contact number");
         setLoading2(false);
       } else {
-        //console.log(values.AddressLine1);
-        getCoords(values.AddressLine1);
-        // .catch((err) => {
-        //     console.log('catch getCoords');
-        // });
+        getCoords(
+          buildGeocodeAddress(
+            values.AddressLine1,
+            values.AddressLine2 || userInfo?.addressLine2,
+          ),
+        );
         setLoading2(false);
       }
     } catch (err) {
@@ -368,6 +376,9 @@ export const CheckGps: React.FC<Props> = function CheckGps({ setLoading }) {
   };
 
   const handleClose = () => {
+    if (setLoading !== "none" && setLoading !== undefined) {
+      setLoading(false);
+    }
     setgpsCheck({ ...gpsCheck, open2: false });
   };
 

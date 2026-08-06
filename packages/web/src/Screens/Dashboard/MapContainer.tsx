@@ -23,6 +23,13 @@ declare global {
   }
 }
 
+function buildGeocodeAddress(line1?: string, line2?: string): string {
+  return [line1, line2]
+    .map((s) => (s ?? "").trim())
+    .filter(Boolean)
+    .join(" ");
+}
+
 type MyProps = {
   google: any;
   setLoading: any;
@@ -151,27 +158,14 @@ class MapContainer extends Component<MyProps> {
       );
 
       if (!contains) {
-        // console.log(document.location.pathname);
-        // console.log(this.props.setLoading);
-        // if(this.props.setLoading !== "none" && this.props.setLoading !== undefined){
-        //   this.props.setLoading(true);
-        // }
-        // if(!this.state.open2){
-        //   this.setState({...this.state, open2: true});
-        //   if(this.props.setgpsCheck !== undefined)
-        //     this.props.setgpsCheck({...this.props.gpsCheck, open2: true})
-        // }
-        //console.log("userInfo check", this.props.userInfo);
-        this.getCoords(this.props.userInfo.addressLine1).catch((err) => {
+        const address = buildGeocodeAddress(
+          this.props.userInfo.addressLine1,
+          this.props.userInfo.addressLine2,
+        );
+        this.getCoords(address).catch((err) => {
           //console.log(err);
           if (this.props.gpsCheck.open2 !== undefined) {
             if (!this.props.gpsCheck.open2) {
-              if (
-                this.props.setLoading !== "none" &&
-                this.props.setLoading !== undefined
-              ) {
-                this.props.setLoading(true);
-              }
               if (this.props.setgpsCheck !== undefined) {
                 this.props.setgpsCheck({ ...this.props.gpsCheck, open2: true });
               }
@@ -195,14 +189,6 @@ class MapContainer extends Component<MyProps> {
       );
 
       if (!contains) {
-        //console.log(document.location.pathname);
-        //console.log(this.props.setLoading);
-        if (
-          this.props.setLoading !== "none" &&
-          this.props.setLoading !== undefined
-        ) {
-          this.props.setLoading(true);
-        }
         if (!this.state.open2) {
           this.setState({ ...this.state, open2: true });
           if (this.props.setgpsCheck !== undefined) {
@@ -246,34 +232,31 @@ class MapContainer extends Component<MyProps> {
     });
   };
 
-  getCoords = async (Address) => {
-    var geocoder = new window.google.maps.Geocoder();
-
-    var latitude = 0;
-    var longitude = 0;
-
-    await geocoder.geocode({ address: Address }, function (results, status) {
-      if (status == window.google.maps.GeocoderStatus.OK) {
-        latitude = results !== null ? results[0].geometry.location.lat() : 0;
-        longitude = results !== null ? results[0].geometry.location.lng() : 0;
-      }
-    });
-
-    if (latitude !== 0 && longitude !== 0) {
-      this.checkWithAddyFence(this.state.coords, latitude, longitude);
-    } else {
-      if (
-        this.props.setLoading !== "none" &&
-        this.props.setLoading !== undefined
-      ) {
-        this.props.setLoading(true);
-      }
-      if (this.props.setgpsCheck !== undefined) {
-        this.props.setgpsCheck({ ...this.props.gpsCheck, open2: true });
-      }
-      this.setState({ ...this.state, open2: true });
+  openLocationModal = () => {
+    if (this.props.setgpsCheck !== undefined) {
+      this.props.setgpsCheck({ ...this.props.gpsCheck, open2: true });
     }
+    this.setState({ ...this.state, open2: true });
   };
+
+  getCoords = (Address: string) =>
+    new Promise<void>((resolve, reject) => {
+      const geocoder = new window.google.maps.Geocoder();
+      geocoder.geocode({ address: Address }, (results, status) => {
+        if (
+          status === window.google.maps.GeocoderStatus.OK &&
+          results?.[0]
+        ) {
+          const lat = results[0].geometry.location.lat();
+          const lng = results[0].geometry.location.lng();
+          this.checkWithAddyFence(this.state.coords, lat, lng);
+          resolve();
+        } else {
+          this.openLocationModal();
+          reject(new Error(String(status)));
+        }
+      });
+    });
 
   handleLocationErrorFallback = () => {
     if (
@@ -282,24 +265,16 @@ class MapContainer extends Component<MyProps> {
       this.props.userInfo.addressLine1 !== "" &&
       this.props.userInfo.addressLine1 !== undefined
     ) {
-      this.getCoords(this.props.userInfo.addressLine1)
-        .catch(() => {
-          if (
-            this.props.setLoading !== "none" &&
-            this.props.setLoading !== undefined
-          ) {
-            this.props.setLoading(true);
-          }
-          if (this.props.setgpsCheck !== undefined) {
-            this.props.setgpsCheck({ ...this.props.gpsCheck, open2: true });
-          }
-          this.setState({ ...this.state, open2: true });
-        });
+      this.getCoords(
+        buildGeocodeAddress(
+          this.props.userInfo.addressLine1,
+          this.props.userInfo.addressLine2,
+        ),
+      ).catch(() => {
+        this.openLocationModal();
+      });
     } else {
-      if (this.props.setgpsCheck !== undefined) {
-        this.props.setgpsCheck({ ...this.props.gpsCheck, open2: true });
-      }
-      this.setState({ ...this.state, open2: true });
+      this.openLocationModal();
     }
   };
 
@@ -336,11 +311,10 @@ class MapContainer extends Component<MyProps> {
       userInfo.contactNumber && userInfo.contactNumber.trim() !== "";
 
     if (hasCompleteProfile) {
-      this.getCoords(userInfo.addressLine1).catch(() => {
-        if (this.props.setgpsCheck !== undefined) {
-          this.props.setgpsCheck({ ...this.props.gpsCheck, open2: true });
-        }
-        this.setState({ ...this.state, open2: true });
+      this.getCoords(
+        buildGeocodeAddress(userInfo.addressLine1, userInfo.addressLine2),
+      ).catch(() => {
+        this.openLocationModal();
       });
     } else if (
       this.state.compCoords.lat === null &&
@@ -369,11 +343,10 @@ class MapContainer extends Component<MyProps> {
     if (userInfoJustLoaded) {
       // User data just arrived — run the geofence logic now
       if (hasCompleteProfile) {
-        this.getCoords(userInfo.addressLine1).catch(() => {
-          if (this.props.setgpsCheck !== undefined) {
-            this.props.setgpsCheck({ ...this.props.gpsCheck, open2: true });
-          }
-          this.setState({ ...this.state, open2: true });
+        this.getCoords(
+          buildGeocodeAddress(userInfo.addressLine1, userInfo.addressLine2),
+        ).catch(() => {
+          this.openLocationModal();
         });
       } else if (
         this.state.compCoords.lat === null &&
@@ -391,11 +364,10 @@ class MapContainer extends Component<MyProps> {
         if (this.props.setgpsCheck !== undefined) {
           this.props.setgpsCheck({ ...this.props.gpsCheck, open2: false });
         }
-        this.getCoords(userInfo.addressLine1).catch(() => {
-          if (this.props.setgpsCheck !== undefined) {
-            this.props.setgpsCheck({ ...this.props.gpsCheck, open2: true });
-          }
-          this.setState({ ...this.state, open2: true });
+        this.getCoords(
+          buildGeocodeAddress(userInfo.addressLine1, userInfo.addressLine2),
+        ).catch(() => {
+          this.openLocationModal();
         });
       }
       return;
