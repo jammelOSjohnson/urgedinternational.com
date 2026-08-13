@@ -495,8 +495,8 @@ export const CheckGps: React.FC<Props> = function CheckGps({ setLoading }) {
                         value={values.AddressLine1}
                         onChange={handleChange4("AddressLine1")}
                         variant="outlined"
-                        placeholder="Eg. 101 Top Hill, Hayes, Clarendon"
-                        helperText="Eg. 101 Top Hill, Hayes, Clarendon"
+                        placeholder="Eg. 101 Top Hill, Hayes"
+                        helperText="Eg. 101 Top Hill, Hayes"
                         fullWidth
                       />
                     </Grid>
