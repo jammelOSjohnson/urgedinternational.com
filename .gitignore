@@ -17,3 +17,4 @@ packages/server/Dockerfile
 packages/server/docker-compose.yaml.bkup
 
 .codegpt
+packages/web/env.example
