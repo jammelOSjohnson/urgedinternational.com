@@ -49,6 +49,7 @@ import testmap2 from "../Screens/Dashboard/testmap2";
 //import { RiderDashboard } from '../Screens/RiderDashboard/RiderDashboard';
 //import { Sidebar } from '../Screens/Dashboard/Comp/Sidebar';
 import { CheckoutScreen } from "../Screens/Checkout/CheckoutScreen";
+import { SiteSuspendedScreen } from "../Screens/SiteSuspendedScreen";
 
 //Import provider
 //import { useAppData } from '../Context/AppDataContext';
@@ -60,6 +61,7 @@ import {
   HttpLink,
   from,
   split,
+  NormalizedCacheObject,
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { WebSocketLink } from "@apollo/client/link/ws";
@@ -77,6 +79,10 @@ import "jspdf/dist/polyfills.es.js";
 import { PrivacyPolicyScreen } from "../Screens/Dashboard/PrivacyPolicyScreen";
 import React from "react";
 import { OrderCompleted } from "../Screens/Checkout/OrderCompleted";
+
+/** Build-time lockout: only the string "true" enables the suspended page. */
+const isSiteSuspended =
+  import.meta.env.REACT_APP_SITE_SUSPENDED === "true";
 const PaymentProcessScreen = React.lazy(
   () => import("../Screens/Dashboard/PaymentProcessScreen"),
 );
@@ -176,62 +182,66 @@ const theme = createTheme({
   },
 });
 
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors) {
-    graphQLErrors.map(({ message, locations, path }) => {
-      if (import.meta.env.MODE === "development") {
-        console.log(`Graphql error ${message}`);
-      }
-      return message;
-    });
-  }
-});
+let client: ApolloClient<NormalizedCacheObject> | null = null;
 
-console.log(import.meta.env.MODE);
-var db_server =
-  import.meta.env.MODE === "development"
-    ? import.meta.env.REACT_APP_DEV_DB_URL
-    : import.meta.env.REACT_APP_PROD_DB_URL;
-var ws_db_server =
-  import.meta.env.MODE === "development"
-    ? import.meta.env.REACT_APP_DEV_WS_DB_URL
-    : import.meta.env.REACT_APP_PROD_WS_DB_URL;
+if (!isSiteSuspended) {
+  const errorLink = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors) {
+      graphQLErrors.map(({ message, locations, path }) => {
+        if (import.meta.env.MODE === "development") {
+          console.log(`Graphql error ${message}`);
+        }
+        return message;
+      });
+    }
+  });
 
-const wsLink = new WebSocketLink(
-  new SubscriptionClient(ws_db_server !== undefined ? ws_db_server : "", {
-    connectionParams: {
-      reconnect: true,
+  console.log(import.meta.env.MODE);
+  var db_server =
+    import.meta.env.MODE === "development"
+      ? import.meta.env.REACT_APP_DEV_DB_URL
+      : import.meta.env.REACT_APP_PROD_DB_URL;
+  var ws_db_server =
+    import.meta.env.MODE === "development"
+      ? import.meta.env.REACT_APP_DEV_WS_DB_URL
+      : import.meta.env.REACT_APP_PROD_WS_DB_URL;
+
+  const wsLink = new WebSocketLink(
+    new SubscriptionClient(ws_db_server !== undefined ? ws_db_server : "", {
+      connectionParams: {
+        reconnect: true,
+      },
+    }),
+  );
+
+  //{
+  // uri: ws_db_server !== undefined ? ws_db_server : "",
+  // options: {
+  //   reconnect: true,
+  // },
+  //}
+  const httpLink = from([
+    errorLink,
+    new HttpLink({ uri: db_server, credentials: "include" }),
+  ]);
+
+  const link = split(
+    ({ query }) => {
+      const definition = getMainDefinition(query);
+      return (
+        definition.kind === "OperationDefinition" &&
+        definition.operation === "subscription"
+      );
     },
-  }),
-);
+    wsLink,
+    httpLink,
+  );
 
-//{
-// uri: ws_db_server !== undefined ? ws_db_server : "",
-// options: {
-//   reconnect: true,
-// },
-//}
-const httpLink = from([
-  errorLink,
-  new HttpLink({ uri: db_server, credentials: "include" }),
-]);
-
-const link = split(
-  ({ query }) => {
-    const definition = getMainDefinition(query);
-    return (
-      definition.kind === "OperationDefinition" &&
-      definition.operation === "subscription"
-    );
-  },
-  wsLink,
-  httpLink,
-);
-
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link: link,
-});
+  client = new ApolloClient({
+    cache: new InMemoryCache(),
+    link: link,
+  });
+}
 
 const App: React.FC = function App() {
   //var { value }  = useAppData();
@@ -502,9 +512,23 @@ const SuspenseFallback = () => (
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function () {
+  if (isSiteSuspended) {
+    return (
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <JssThemeProvider theme={theme}>
+            <CssBaseline>
+              <SiteSuspendedScreen />
+            </CssBaseline>
+          </JssThemeProvider>
+        </ThemeProvider>
+      </StyledEngineProvider>
+    );
+  }
+
   return (
     <Suspense fallback={<SuspenseFallback />}>
-      <ApolloProvider client={client}>
+      <ApolloProvider client={client!}>
         <AppDataProvider>
           <App />
         </AppDataProvider>

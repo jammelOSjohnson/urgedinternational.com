@@ -38,6 +38,7 @@ export namespace NodeJS {
     REACT_APP_DEFAULT_RESTAURANT_LOGO: string;
     REACT_APP_RESTAURANT_ROLE_ID: string;
     REACT_APP_LIVECHAT_LICENSE: string;
+    REACT_APP_SITE_SUSPENDED: string;
   }
 }
 
