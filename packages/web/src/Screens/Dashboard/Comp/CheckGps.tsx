@@ -5,6 +5,12 @@ import { Link, useHistory } from "react-router-dom";
 import { useAppData } from "../../../Context/AppDataContext";
 import MapContainer from "../MapContainer";
 import {
+  readAddressResult,
+  readGpsChecked,
+  readGpsInside,
+  writeAddressResult,
+} from "../../../utils/geofenceSession";
+import {
   Button,
   Fade,
   FormControl,
@@ -320,7 +326,7 @@ export const CheckGps: React.FC<Props> = function CheckGps({ setLoading }) {
         var longitude =
           results !== null ? results[0].geometry.location.lng() : 0;
         // console.log(`${latitude},${longitude}`);
-        checkFence(coords, latitude, longitude);
+        checkFence(coords, latitude, longitude, Address);
       } else {
         console.log(status);
         setError("We can't deliver to this address.");
@@ -328,7 +334,7 @@ export const CheckGps: React.FC<Props> = function CheckGps({ setLoading }) {
     });
   };
 
-  var checkFence = async function checkFence(polygonCoords, lat, lng) {
+  var checkFence = async function checkFence(polygonCoords, lat, lng, address) {
     if (!gpsCheck.open3) {
       //console.log("here")
       var polygon = new window.google.maps.Polygon({
@@ -343,6 +349,7 @@ export const CheckGps: React.FC<Props> = function CheckGps({ setLoading }) {
       //console.log(contains)
 
       if (contains) {
+        if (address) writeAddressResult(address, true);
         //console.log(document.location.pathname);
         //console.log(setLoading);
         if (setLoading !== "none" && setLoading !== undefined) {
@@ -404,6 +411,30 @@ export const CheckGps: React.FC<Props> = function CheckGps({ setLoading }) {
       //console.log(values);
     };
 
+  const addressKey = buildGeocodeAddress(
+    userInfo?.addressLine1,
+    userInfo?.addressLine2,
+  );
+  const cachedAddress = addressKey ? readAddressResult(addressKey) : undefined;
+  const mapsReady =
+    typeof window !== "undefined" && !!window.google?.maps?.Geocoder;
+  const inClarendon =
+    generalLocation !== undefined &&
+    targetLocation !== undefined &&
+    generalLocation === "Clarendon";
+  const gpsChecked = !addressKey && readGpsChecked();
+  const skipMap =
+    cachedAddress === true ||
+    (cachedAddress === false && mapsReady) ||
+    (gpsChecked && (readGpsInside() || mapsReady));
+
+  useEffect(() => {
+    const addressOutside = cachedAddress === false;
+    const gpsOutside = gpsChecked && !readGpsInside();
+    if (!addressOutside && !gpsOutside) return;
+    setgpsCheck((prev) => (prev.open2 ? prev : { ...prev, open2: true }));
+  }, [cachedAddress, gpsChecked]);
+
   return (
     <>
       <Grid
@@ -414,26 +445,14 @@ export const CheckGps: React.FC<Props> = function CheckGps({ setLoading }) {
         alignItems="center"
       >
         <Grid item xs={12}>
-          {(generalLocation !== undefined &&
-            targetLocation !== undefined &&
-            generalLocation === "Clarendon" && (
-              <MapContainer
-                setLoading={setLoading}
-                setgpsCheck={setgpsCheck}
-                gpsCheck={gpsCheck}
-                userInfo={userInfo}
-              />
-            )) ||
-            (generalLocation !== undefined &&
-              targetLocation === "Select Town" &&
-              generalLocation === "Clarendon" && (
-                <MapContainer
-                  setLoading={setLoading}
-                  setgpsCheck={setgpsCheck}
-                  gpsCheck={gpsCheck}
-                  userInfo={userInfo}
-                />
-              ))}
+          {inClarendon && !skipMap && (
+            <MapContainer
+              setLoading={setLoading}
+              setgpsCheck={setgpsCheck}
+              gpsCheck={gpsCheck}
+              userInfo={userInfo}
+            />
+          )}
         </Grid>
       </Grid>
       <Modal

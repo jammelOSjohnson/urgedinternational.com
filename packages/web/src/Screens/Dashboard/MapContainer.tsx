@@ -4,6 +4,13 @@ import { Map, GoogleApiWrapper, Polygon } from "google-maps-react"; //import Aut
 import { Alert } from "@mui/lab";
 import { Typography, Theme } from "@mui/material";
 import { createStyles, makeStyles } from "@mui/styles";
+import {
+  claimGeocode,
+  readAddressResult,
+  releaseGeocode,
+  writeAddressResult,
+  writeGpsResult,
+} from "../../utils/geofenceSession";
 
 /** Map from google-maps-react; IMapProps is incomplete (missing children, zoom, initialCenter). */
 const MapWithChildren = Map as React.ComponentType<any>;
@@ -40,6 +47,11 @@ type MyProps = {
 
 class MapContainer extends Component<MyProps> {
   //classes = useStyles();
+
+  /** Address already sent to the Geocoder this mount. */
+  private geocodeAttemptedFor = "";
+  /** GPS lat,lng already fence-checked this mount. */
+  private fenceCheckedFor = "";
 
   state = {
     coords: [
@@ -146,58 +158,84 @@ class MapContainer extends Component<MyProps> {
     errorMessage: "Sorry we do not offer our service in your area as yet.",
   };
 
-  checkFence(polygonCoords, lat, lng) {
-    if (!this.state.open2) {
-      var polygon = new window.google.maps.Polygon({
-        paths: polygonCoords,
-      });
+  profileAddress = () =>
+    buildGeocodeAddress(
+      this.props.userInfo?.addressLine1,
+      this.props.userInfo?.addressLine2,
+    );
 
-      const contains = window.google.maps.geometry.poly.containsLocation(
-        new window.google.maps.LatLng(lat, lng),
-        polygon,
-      );
+  /** Geocode an address at most once, or reuse the session result. */
+  applyCachedOrGeocode = (address: string) => {
+    const key = address.trim();
+    if (!key) return;
 
-      if (!contains) {
-        const address = buildGeocodeAddress(
-          this.props.userInfo.addressLine1,
-          this.props.userInfo.addressLine2,
-        );
-        this.getCoords(address).catch((err) => {
-          //console.log(err);
-          if (this.props.gpsCheck.open2 !== undefined) {
-            if (!this.props.gpsCheck.open2) {
-              if (this.props.setgpsCheck !== undefined) {
-                this.props.setgpsCheck({ ...this.props.gpsCheck, open2: true });
-              }
-              this.setState({ ...this.state, open2: true });
-            }
-          }
-        });
-      }
+    const cached = readAddressResult(key);
+    if (cached === true) {
+      this.geocodeAttemptedFor = key;
+      return;
     }
+    if (cached === false) {
+      this.geocodeAttemptedFor = key;
+      this.openLocationModal();
+      return;
+    }
+    if (this.geocodeAttemptedFor === key) return;
+    if (!claimGeocode(key)) {
+      this.geocodeAttemptedFor = key;
+      return;
+    }
+
+    this.geocodeAttemptedFor = key;
+    this.getCoords(key)
+      .catch(() => {
+        // Failure opens the modal inside getCoords; do not retry.
+      })
+      .finally(() => {
+        releaseGeocode(key);
+      });
+  };
+
+  checkFence(polygonCoords, lat, lng) {
+    const gpsKey = `${lat},${lng}`;
+    if (this.fenceCheckedFor === gpsKey) return;
+    this.fenceCheckedFor = gpsKey;
+
+    var polygon = new window.google.maps.Polygon({
+      paths: polygonCoords,
+    });
+
+    const contains = window.google.maps.geometry.poly.containsLocation(
+      new window.google.maps.LatLng(lat, lng),
+      polygon,
+    );
+
+    if (contains) {
+      writeGpsResult(true);
+      return;
+    }
+
+    writeGpsResult(false);
+    const address = this.profileAddress();
+    if (!address) {
+      this.openLocationModal();
+      return;
+    }
+    this.applyCachedOrGeocode(address);
   }
 
-  checkWithAddyFence(polygonCoords, lat, lng) {
-    if (!this.state.open2) {
-      var polygon = new window.google.maps.Polygon({
-        paths: polygonCoords,
-      });
+  checkWithAddyFence(polygonCoords, lat, lng, address: string) {
+    var polygon = new window.google.maps.Polygon({
+      paths: polygonCoords,
+    });
 
-      const contains = window.google.maps.geometry.poly.containsLocation(
-        new window.google.maps.LatLng(lat, lng),
-        polygon,
-      );
+    const contains = window.google.maps.geometry.poly.containsLocation(
+      new window.google.maps.LatLng(lat, lng),
+      polygon,
+    );
 
-      if (!contains) {
-        if (!this.state.open2) {
-          this.setState({ ...this.state, open2: true });
-          if (this.props.setgpsCheck !== undefined) {
-            this.props.setgpsCheck({ ...this.props.gpsCheck, open2: true });
-          }
-        }
-      } else {
-        //console.log("all is well")
-      }
+    writeAddressResult(address, contains);
+    if (!contains) {
+      this.openLocationModal();
     }
   }
 
@@ -241,6 +279,16 @@ class MapContainer extends Component<MyProps> {
 
   getCoords = (Address: string) =>
     new Promise<void>((resolve, reject) => {
+      if (!Address.trim()) {
+        this.openLocationModal();
+        reject(new Error("empty-address"));
+        return;
+      }
+      if (!window.google?.maps?.Geocoder) {
+        this.geocodeAttemptedFor = "";
+        reject(new Error("geocode-unavailable"));
+        return;
+      }
       const geocoder = new window.google.maps.Geocoder();
       geocoder.geocode({ address: Address }, (results, status) => {
         if (
@@ -249,9 +297,12 @@ class MapContainer extends Component<MyProps> {
         ) {
           const lat = results[0].geometry.location.lat();
           const lng = results[0].geometry.location.lng();
-          this.checkWithAddyFence(this.state.coords, lat, lng);
+          this.checkWithAddyFence(this.state.coords, lat, lng, Address);
           resolve();
         } else {
+          if (status === window.google.maps.GeocoderStatus.ZERO_RESULTS) {
+            writeAddressResult(Address, false);
+          }
           this.openLocationModal();
           reject(new Error(String(status)));
         }
@@ -259,20 +310,13 @@ class MapContainer extends Component<MyProps> {
     });
 
   handleLocationErrorFallback = () => {
+    const address = this.profileAddress();
     if (
       this.props.userInfo.email !== "" &&
       this.props.userInfo.email !== undefined &&
-      this.props.userInfo.addressLine1 !== "" &&
-      this.props.userInfo.addressLine1 !== undefined
+      address
     ) {
-      this.getCoords(
-        buildGeocodeAddress(
-          this.props.userInfo.addressLine1,
-          this.props.userInfo.addressLine2,
-        ),
-      ).catch(() => {
-        this.openLocationModal();
-      });
+      this.applyCachedOrGeocode(address);
     } else {
       this.openLocationModal();
     }
@@ -311,11 +355,7 @@ class MapContainer extends Component<MyProps> {
       userInfo.contactNumber && userInfo.contactNumber.trim() !== "";
 
     if (hasCompleteProfile) {
-      this.getCoords(
-        buildGeocodeAddress(userInfo.addressLine1, userInfo.addressLine2),
-      ).catch(() => {
-        this.openLocationModal();
-      });
+      this.applyCachedOrGeocode(this.profileAddress());
     } else if (
       this.state.compCoords.lat === null &&
       this.state.compCoords.lng === null &&
@@ -327,66 +367,55 @@ class MapContainer extends Component<MyProps> {
 
   componentDidUpdate(
     prevProps: Readonly<MyProps>,
-    prevState: Readonly<{}>,
-    snapshot?: any,
+    prevState: Readonly<{ compCoords: { lat: number | null; lng: number | null } }>,
   ): void {
     const { userInfo } = this.props;
     const hasCompleteProfile =
       userInfo.addressLine1 && userInfo.addressLine1.trim() !== "" &&
       userInfo.contactNumber && userInfo.contactNumber.trim() !== "";
 
+    const address = this.profileAddress();
+    const prevAddress = buildGeocodeAddress(
+      prevProps.userInfo?.addressLine1,
+      prevProps.userInfo?.addressLine2,
+    );
+
     // Detect when userInfo just loaded (_id transitions from empty to populated)
     const userInfoJustLoaded =
       (!prevProps.userInfo._id || prevProps.userInfo._id === "") &&
       userInfo._id && userInfo._id !== "";
+    const addressChanged = address !== prevAddress;
 
-    if (userInfoJustLoaded) {
-      // User data just arrived — run the geofence logic now
+    if (userInfoJustLoaded || addressChanged) {
       if (hasCompleteProfile) {
-        this.getCoords(
-          buildGeocodeAddress(userInfo.addressLine1, userInfo.addressLine2),
-        ).catch(() => {
-          this.openLocationModal();
-        });
+        this.applyCachedOrGeocode(address);
       } else if (
+        userInfoJustLoaded &&
         this.state.compCoords.lat === null &&
         this.state.compCoords.lng === null &&
         !this.state.open2
       ) {
         this.getLocation();
       }
-      return;
+      if (userInfoJustLoaded || hasCompleteProfile) return;
     }
 
-    if (hasCompleteProfile) {
-      if (this.state.open2) {
-        this.setState({ ...this.state, open2: false });
-        if (this.props.setgpsCheck !== undefined) {
-          this.props.setgpsCheck({ ...this.props.gpsCheck, open2: false });
-        }
-        this.getCoords(
-          buildGeocodeAddress(userInfo.addressLine1, userInfo.addressLine2),
-        ).catch(() => {
-          this.openLocationModal();
-        });
-      }
-      return;
-    }
+    const lat = this.state.compCoords.lat;
+    const lng = this.state.compCoords.lng;
+    const coordsJustSet =
+      lat !== null &&
+      lat !== undefined &&
+      lng !== null &&
+      lng !== undefined &&
+      (lat !== prevState.compCoords?.lat || lng !== prevState.compCoords?.lng);
 
     if (
-      this.state.compCoords.lat !== null &&
-      this.state.compCoords.lat !== undefined &&
-      this.state.compCoords.lng !== null &&
-      this.state.compCoords.lng !== undefined &&
-      !this.state.open2 &&
-      this.props.userInfo.email !== "" &&
-      this.props.userInfo.email !== undefined
+      !hasCompleteProfile &&
+      coordsJustSet &&
+      userInfo.email !== "" &&
+      userInfo.email !== undefined
     ) {
-      this.checkFence(
-        this.state.coords,
-        this.state.compCoords.lat,
-        this.state.compCoords.lng,
-      );
+      this.checkFence(this.state.coords, lat, lng);
     }
   }
 

@@ -1,7 +1,12 @@
 import { Theme } from '@mui/material';
 import { makeStyles, createStyles } from '@mui/styles';;
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import addressPI from "../../../Apis/addressPI";
+
+const reverseGeocodeCache = new Map<
+  string,
+  { Street: string; Town: string }
+>();
 
 interface State {
   lat: any;
@@ -145,6 +150,7 @@ export const GeoMap: React.FC<Props> = function GeoMap({ setValues, values }) {
     lat: null,
     long: null,
   });
+  const reverseRequested = useRef<string | null>(null);
 
   //const [isgeoAllowed, setIsGeoAllowed] = useState(false);
 
@@ -172,7 +178,7 @@ export const GeoMap: React.FC<Props> = function GeoMap({ setValues, values }) {
     });
   };
 
-  const reverseGeoCodeCoordinates = () => {
+  const reverseGeoCodeCoordinates = (key: string) => {
     try {
       addressPI
         .get(
@@ -184,17 +190,21 @@ export const GeoMap: React.FC<Props> = function GeoMap({ setValues, values }) {
           if (response.data !== null) {
             if (response.data.results !== undefined) {
               let resArr = response.data.results;
-              let addressArr = "";
-              resArr.map((item, index) => {
+              let addressArr: string[] = [];
+              resArr.map((item) => {
                 if (item.types[0] === "route") {
                   addressArr = item.formatted_address.split(",");
                 }
               });
-              // resArr[0].formatted_address.split(',');
+              const street = (addressArr[0] ?? "").trim();
+              const town = (addressArr[1] ?? "").trim();
+              if (street || town) {
+                reverseGeocodeCache.set(key, { Street: street, Town: town });
+              }
               setValues({
                 ...values,
-                Street: addressArr[0],
-                Town: addressArr[1],
+                Street: street,
+                Town: town,
               });
             }
           }
@@ -223,12 +233,30 @@ export const GeoMap: React.FC<Props> = function GeoMap({ setValues, values }) {
   };
 
   useEffect(() => {
+    const street = (values.Street ?? "").trim();
+    const town = (values.Town ?? "").trim();
+    if (street && town) return;
+
     if (compCoords.lat === null && compCoords.long === null) {
       getLocation();
-    } else {
-      reverseGeoCodeCoordinates();
+      return;
     }
-  }, [compCoords.lat, compCoords.long]);
+
+    const key = `${compCoords.lat},${compCoords.long}`;
+    if (reverseRequested.current === key) return;
+    reverseRequested.current = key;
+
+    const cached = reverseGeocodeCache.get(key);
+    if (cached) {
+      setValues({
+        ...values,
+        Street: cached.Street,
+        Town: cached.Town,
+      });
+      return;
+    }
+    reverseGeoCodeCoordinates(key);
+  }, [compCoords.lat, compCoords.long, values.Street, values.Town]);
   // generalLocation, values.Town
 
   return (
